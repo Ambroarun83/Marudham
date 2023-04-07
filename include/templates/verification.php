@@ -3,13 +3,14 @@
 if (isset($_GET['upd'])) {
 	echo  $idupd = $_GET['upd'];
 }
-if(isset($_POST['submit_verification']) && $_POST['submit_verification'] != '')
-{
-    
-	$addVerification = $userObj->addVerification($mysqli, $userid);   
-	?>
-    <script>location.href='<?php echo $HOSTPATH;  ?>verification_list&msc=1';</script>
-	<?php
+if (isset($_POST['submit_verification']) && $_POST['submit_verification'] != '') {
+
+	$addVerification = $userObj->addVerification($mysqli, $userid);
+?>
+	<script>
+		location.href = '<?php echo $HOSTPATH;  ?>verification_list&msc=1';
+	</script>
+<?php
 }
 
 $getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
@@ -89,9 +90,11 @@ if (sizeof($getRequestData) > 0) {
 	</div>
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
-    <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
-    Customer Name - <?php if (isset($cus_name)) { echo $cus_name; } ?>
-    </div>
+	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
+		Customer Name - <?php if (isset($cus_name)) {
+							echo $cus_name;
+						} ?>
+	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
 	<a href="verification_list">
@@ -108,8 +111,8 @@ if (sizeof($getRequestData) > 0) {
 	<!--form start-->
 	<form id="request" name="request" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {
-			echo $req_id;
-		} ?>">
+																	echo $req_id;
+																} ?>">
 		<!-- Row start -->
 		<div class="row gutters">
 			<!-- Request Info -->
@@ -251,8 +254,9 @@ if (sizeof($getRequestData) > 0) {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="mobile1">Mobile No 1</label><span class="required">&nbsp;*</span>
-											<input type="number" class="form-control" id="mobile1" name="mobile1" tabindex='15' placeholder="Enter Mobile Number" maxlength="10" 
-											onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile1)) {echo $mobile1;} ?>'>
+											<input type="number" class="form-control" id="mobile1" name="mobile1" tabindex='15' placeholder="Enter Mobile Number" maxlength="10" onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile1)) {
+																																																													echo $mobile1;
+																																																												} ?>'>
 											<span class="text-danger" style='display:none' id='mobile1Check'>Please Enter Mobile Number</span>
 										</div>
 									</div>
@@ -260,16 +264,16 @@ if (sizeof($getRequestData) > 0) {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="mobile2">Mobile No 2</label>
-											<input type="number" class="form-control" id="mobile2" name="mobile2" tabindex='16' placeholder="Enter Mobile Number" maxlength="10" 
-											onKeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile2)) {echo $mobile2;} ?>'>
+											<input type="number" class="form-control" id="mobile2" name="mobile2" tabindex='16' placeholder="Enter Mobile Number" maxlength="10" onKeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile2)) {
+																																																													echo $mobile2;
+																																																												} ?>'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="whatsapp">Whatsapp No </label>
-											<input type="number" class="form-control" id="whatsapp_no" name="whatsapp_no" tabindex='17' placeholder="Enter WhatsApp Number" 
-											maxlength="10" onkeypress="if(this.value.length==10) return false;">
+											<input type="number" class="form-control" id="whatsapp_no" name="whatsapp_no" tabindex='17' placeholder="Enter WhatsApp Number" maxlength="10" onkeypress="if(this.value.length==10) return false;">
 										</div>
 									</div>
 
@@ -280,9 +284,13 @@ if (sizeof($getRequestData) > 0) {
 								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 									<div class="form-group" style="margin-left: 30px;">
 										<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
-										<input type="hidden" name="cus_image" id="cus_image" value="<?php if (isset($pic)) {echo $pic;} ?>">
+										<input type="hidden" name="cus_image" id="cus_image" value="<?php if (isset($pic)) {
+																										echo $pic;
+																									} ?>">
 										<img id='imgshow' class="img_show" src='img/avatar.png' />
-										<input type="file" class="form-control" id="pic" name="pic" tabindex='18' value='<?php if (isset($pic)) {echo $pic;} ?>'>
+										<input type="file" class="form-control" id="pic" name="pic" tabindex='18' value='<?php if (isset($pic)) {
+																																echo $pic;
+																															} ?>'>
 										<span class="text-danger" style='display:none' id='picCheck'>Please Choose Image</span>
 									</div>
 								</div>
@@ -300,22 +308,6 @@ if (sizeof($getRequestData) > 0) {
 					</div>
 					<span class="text-danger" style='display:none' id='family_infoCheck'>Please Fill Family Info </span>
 					<div class="card-body">
-						<div class="row">
-							<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label class="label"> Name </label>&nbsp;<span class="text-danger">*</span>
-									<select type="text" class="form-control" name="name" id="name" >
-										<option> Add Family Name </option>
-									</select>
-								</div>
-							</div> -->
-
-							<!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group">
-									<button type="button" class="btn btn-primary" id="add_group" name="add_group" data-toggle="modal" data-target=".addGroup" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
-								</div>
-							</div> -->
-						</div> 
 
 						<div class="row">
 
@@ -381,7 +373,7 @@ if (sizeof($getRequestData) > 0) {
 										<img id='imgshows' class="img_show" src='img/avatar.png' />
 										<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" value=''>
 										<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
-									</div>								
+									</div>
 								</div>
 							</div>
 
@@ -392,29 +384,11 @@ if (sizeof($getRequestData) > 0) {
 
 				<!-- Group Info START -->
 				<div class="card">
-					<div class="card-header"> Group Info 
-					<button type="button" class="btn btn-primary" id="group_details_add" name="group_details_add" data-toggle="modal" data-target=".addGroupDetails" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
+					<div class="card-header"> Group Info
+						<button type="button" class="btn btn-primary" id="group_details_add" name="group_details_add" data-toggle="modal" data-target=".addGroupDetails" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
 					</div>
 					<span class="text-danger" style='display:none' id='group_infoCheck'>Please Fill Group Info </span>
 					<div class="card-body">
-						<div class="row">
-
-							<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="cus_name"> Name</label><span class="required">&nbsp;*</span>
-									<select type="text" class="form-control" id="group_names" name="group_names" > 
-										<option> Add Group Name</option>
-									</select> 
-								</div>
-							</div> -->
-
-							<!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group">
-									<button type="button" class="btn btn-primary" id="group_details_add" name="group_details_add" data-toggle="modal" data-target=".addGroupDetails" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
-								</div>
-							</div> -->
-						</div> 
-
 						<div class="row">
 
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -489,23 +463,9 @@ if (sizeof($getRequestData) > 0) {
 							</div>
 
 						</div>
-							<div id="cus_check"></div></br>
-							<div id="fam_check"></div></br>
-							<div id="group_check"></div>
-
-					<!-- <table class="table custom-table">
-							<thead>
-								<tr>
-									<th>Customer ID</th>
-									<th>Name</th>
-									<th>Relationship</th>
-								</tr>
-							</thead>
-							<tbody>
-
-							</tbody>
-						</table> -->
-
+						<div id="cus_check"></div></br>
+						<div id="fam_check"></div></br>
+						<div id="group_check"></div>
 					</div>
 				</div>
 				<!-- Data Checking END -->
@@ -642,7 +602,7 @@ if (sizeof($getRequestData) > 0) {
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="areaCnfirm"> Area comfirm </label><span class="required">&nbsp;*</span>
+									<label for="areaCnfirm"> Area confirm </label><span class="required">&nbsp;*</span>
 									<select type="text" class="form-control" name="area_cnfrm" id="area_cnfrm">
 										<option value="">Select Area Type</option>
 										<option value="0"> Residential Area </option>
@@ -657,8 +617,8 @@ if (sizeof($getRequestData) > 0) {
 									<label for="disabledInput">State</label>&nbsp;<span class="text-danger">*</span>
 									<select type="text" class="form-control" id="state" name="state" tabindex="16">
 										<option value="SelectState">Select State</option>
-										<option value="TamilNadu" >Tamil Nadu</option>
-										<option value="Puducherry" >Puducherry</option>
+										<option value="TamilNadu">Tamil Nadu</option>
+										<option value="Puducherry">Puducherry</option>
 									</select>
 									<span class="text-danger" style='display:none' id='stateCheck'>Please Select State</span>
 								</div>
@@ -714,28 +674,11 @@ if (sizeof($getRequestData) > 0) {
 
 				<!-- Property info START -->
 				<div class="card">
-					<div class="card-header"> Property info 
-					<button type="button" class="btn btn-primary" id="property_add" name="property_add" data-toggle="modal" data-target=".addproperty" style="padding: 5px 35px;  float: right; " onclick="propertyHolder()"><span class="icon-add"></span></button>
+					<div class="card-header"> Property info
+						<button type="button" class="btn btn-primary" id="property_add" name="property_add" data-toggle="modal" data-target=".addproperty" style="padding: 5px 35px;  float: right; " onclick="propertyHolder()"><span class="icon-add"></span></button>
 					</div>
 					<span class="text-danger" style='display:none' id='property_infoCheck'>Please Fill Property Info </span>
 					<div class="card-body">
-						<div class="row">
-
-							<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-							<div class="form-group">
-								<label for="PropertyType"> Property Type </label>
-								<select type="text" class="form-control" id="property_types" name="property_types">
-								<option> Add Property Info</option>
-							</select>
-							</div>
-						</div> -->
-
-							<!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group">
-									<button type="button" class="btn btn-primary" id="property_add" name="property_add" data-toggle="modal" data-target=".addproperty" style="padding: 5px 35px;  float: right; " onclick="propertyHolder()"><span class="icon-add"></span></button>
-								</div>
-							</div> -->
-						</div> 
 
 						<div class="row">
 
@@ -766,29 +709,11 @@ if (sizeof($getRequestData) > 0) {
 
 				<!-- Bank info START -->
 				<div class="card">
-					<div class="card-header"> Bank info 
-					<button type="button" class="btn btn-primary" id="bank_add" name="bank_add" data-toggle="modal" data-target=".addbank" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
+					<div class="card-header"> Bank info
+						<button type="button" class="btn btn-primary" id="bank_add" name="bank_add" data-toggle="modal" data-target=".addbank" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
 					</div>
 					<span class="text-danger" style='display:none' id='bank_infoCheck'>Please Fill Bank Info </span>
 					<div class="card-body">
-						<div class="row">
-
-							<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-							<div class="form-group">
-								<label for="BankName"> Bank Name </label>
-								<select type="text" class="form-control" id="bank_name_list" name="bank_name_list"> 
-									<option> Add Bank Info </option>
-								</select>
-							</div>
-						</div> -->
-
-							<!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group">
-									<button type="button" class="btn btn-primary" id="bank_add" name="bank_add" data-toggle="modal" data-target=".addbank" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
-								</div>
-							</div> -->
-
-						</div> 
 
 						<div class="row">
 
@@ -815,40 +740,17 @@ if (sizeof($getRequestData) > 0) {
 
 						</div>
 
-						</div>
+					</div>
 				</div>
 				<!-- Bank info END -->
 
 				<!-- KYC info START -->
 				<div class="card">
-					<div class="card-header"> KYC info 
-					<button type="button" class="btn btn-primary" id="kyc_add" name="kyc_add" data-toggle="modal" data-target=".addkyc" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
+					<div class="card-header"> KYC info
+						<button type="button" class="btn btn-primary" id="kyc_add" name="kyc_add" data-toggle="modal" data-target=".addkyc" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
 					</div>
 					<span class="text-danger" style='display:none' id='kyc_infoCheck'>Please Fill KYC Info </span>
 					<div class="card-body">
-						<div class="row">
-
-							<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-							<div class="form-group">
-								<label for="Proofofkyc"> Proof of </label>
-								<select type="text" class="form-control" id="proof_of" name="proof_of">
-									<option> Select Proof Of </option>
-									<option value="0"> Applicant </option>
-									<option value="1"> Guarantor </option>
-									<option value="2"> Family Members </option>
-									<option value="3"> Group Members </option>
-								</select>
-							</div>
-						</div> -->
-
-							<!-- <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group">
-									<button type="button" class="btn btn-primary" id="kyc_add" name="kyc_add" data-toggle="modal" data-target=".addkyc" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
-								</div>
-							</div> -->
-
-						</div> 
-
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 								<div class="form-group" id="kycListTable">
@@ -873,6 +775,151 @@ if (sizeof($getRequestData) > 0) {
 					</div>
 				</div>
 				<!-- KYC info END -->
+
+				<!-- Customer Summary START -->
+				<div class="card">
+					<div class="card-header"> Customer Summary </div>
+					<!-- <span class="text-danger" style='display:none' id='res_infoCheck'>Please Fill Residential Info </span> -->
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="summarykmnw"> How to Know </label>
+									<select type="text" class="form-control" name="cus_sum_know" id="cus_sum_know">
+										<option> Select How to Know </option>
+										<option value="0"> Customer Reference </option>
+										<option value="1"> Advertisement </option>
+										<option value="2"> Promotion activity </option>
+										<option value="3"> Agent Reference </option>
+										<option value="4"> Staff Reference </option>
+										<option value="5"> Other Reference </option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="loancnt"> Loan Counts </label>
+									<input type="text" class="form-control" name="cus_loan_count" id="cus_loan_count" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="loandate"> First Loan Date </label>
+									<input type="text" class="form-control" name="cus_frst_loanDate" id="cus_frst_loanDate" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="travel"> Travel with Company </label>
+									<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" readonly>
+								</div>
+							</div>
+						</div>
+
+						<hr>
+
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="minvcome"> Monthly Income </label>
+									<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="otherincome"> Other Income </label>
+									<input type="number" class="form-control" name="cus_other_income" id="cus_other_income">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="suppincome"> Support Income </label>
+									<input type="number" class="form-control" name="cus_support_income" id="cus_support_income">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="commit"> Commitment </label>
+									<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="duecapacity"> Monthly Due Capacity </label>
+									<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="loanlimit"> Loan Limit </label>
+									<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit">
+								</div>
+							</div>
+
+						</div>
+
+						<hr>
+
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Character"> Character </label>
+									<input type="text" class="form-control" name="cus_Character" id="cus_Character">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Approach"> Approach </label>
+									<input type="text" class="form-control" name="cus_Approach" id="cus_Approach">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Relationship"> Relationship </label>
+									<input type="text" class="form-control" name="cus_Relationship" id="cus_Relationship">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Attitude"> Attitude </label>
+									<input type="text" class="form-control" name="cus_Attitude" id="cus_Attitude">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Behavior"> Behavior </label>
+									<input type="text" class="form-control" name="cus_Behavior" id="cus_Behavior">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="IncidentsRemarks"> Incidents Remarks </label>
+									<input type="text" class="form-control" name="cus_Incidents_Remarks" id="cus_Incidents_Remarks">
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Customer Summary  END -->
+
 
 				<div class="col-md-12 ">
 					<div class="text-right">
