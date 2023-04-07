@@ -4,14 +4,17 @@ if(isset($_POST['sub_cat_id'])){
     $sub_cat_id = $_POST['sub_cat_id'];
 }
 
+$response = array();
 $result=$con->query("SELECT * FROM loan_calculation where status=0 and sub_category = '".strip_tags($sub_cat_id)."' ");
 if($result->num_rows>0){
     
     $row = $result->fetch_assoc();
-    $advance = $row['collection_info'];
+    $response['advance'] = $row['collection_info'];
+    $response['loan_limit'] = $row['loan_limit'];
+    $response['message'] ="";
 }else{
-    $advance ="No Loan Calculation Made!";
+    $response['message'] ="No Loan Calculation Made!";
 }
 
-echo $advance;
+echo json_encode($response);
 ?>

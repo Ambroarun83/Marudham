@@ -109,7 +109,7 @@ $(document).ready(function () {
         getCategoryInfo(subselected);
 	})
 
-    $('#tot_value').keyup(function(){// to calculate loan amount ant advance percentage
+    $('#tot_value').blur(function(){// to calculate loan amount ant advance percentage
         var amt = $('#tot_value').val();
         var advance = $('#ad_amt').val();
         var per = (advance/amt)*100;
@@ -119,7 +119,7 @@ $(document).ready(function () {
         $('#loan_amt').val(loan_amt.toFixed(0));
     })
 
-    $('#ad_amt').keyup(function(){//To calculate loan amount and advance percentage
+    $('#ad_amt').blur(function(){//To calculate loan amount and advance percentage
         var amt = $('#tot_value').val();
         var advance = $('#ad_amt').val();
         var per = (advance / amt) * 100;
@@ -701,10 +701,11 @@ function getLoaninfo(sub_cat_id){
     $.ajax({
         url:'requestFile/getLoanInfo.php',
         data: {'sub_cat_id':sub_cat_id},
+        dataType:'json',
         type:'post',
         cache:false,
         success:function(response){
-            if(response == 'Yes'){
+            if(response['advance'] == 'Yes'){
                 $('.advance_yes').show();
                 $('#tot_value').val('');
                 $('#ad_amt').val('');
@@ -712,7 +713,34 @@ function getLoaninfo(sub_cat_id){
                 $('.loan_amt').show();
                 $('#loan_amt').val('');
                 $('#loan_amt').attr('readonly',true);
-            }else if(response == 'No'){
+
+                $('#tot_value').unbind('blur').blur(function(){// to calculate loan amount ant advance percentage
+                    var amt = $('#tot_value').val();
+                    var advance = $('#ad_amt').val();
+                    var per = (advance/amt)*100;
+                    $('#ad_perc').val(per.toFixed(1));
+            
+                    var loan_amt = amt - advance;
+                    if(loan_amt <= response['loan_limit']){
+                        $('#loan_amt').val(loan_amt.toFixed(0));
+                    }else{
+                        alert('Please Enter Lesser amount!');
+                        $('#tot_value').val('');
+                        $('#loan_amt').val('');
+                    }
+                })
+            
+                $('#ad_amt').unbind('blur').blur(function(){//To calculate loan amount and advance percentage
+                    var amt = $('#tot_value').val();
+                    var advance = $('#ad_amt').val();
+                    var per = (advance / amt) * 100;
+                    $('#ad_perc').val(per.toFixed(1));
+            
+                    var loan_amt = amt - advance;
+                    $('#loan_amt').val(loan_amt.toFixed(0));
+                })
+            
+            }else if(response['advance'] == 'No'){
                 $('.advance_yes').hide();
                 $('#tot_value').val('');
                 $('#ad_amt').val('');
