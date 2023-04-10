@@ -3089,8 +3089,78 @@ require 'PHPMailerAutoload.php';
             if(isset($_POST['sub_area'])){
                 $sub_area = $_POST['sub_area'];
             }
-            $insertQry="INSERT INTO `verified`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
-            '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','2','".$userid."' )";
+
+            if(isset($_POST['cus_how_know'])){
+                $cus_how_know = $_POST['cus_how_know'];
+            }
+            if(isset($_POST['cus_loan_count'])){
+                $cus_loan_count = $_POST['cus_loan_count'];
+            }
+            if(isset($_POST['cus_frst_loanDate'])){
+                $cus_frst_loanDate = $_POST['cus_frst_loanDate'];
+            }
+            if(isset($_POST['cus_travel_cmpy'])){
+                $cus_travel_cmpy = $_POST['cus_travel_cmpy'];
+            }
+            if(isset($_POST['cus_monthly_income'])){
+                $cus_monthly_income = $_POST['cus_monthly_income'];
+            }
+            if(isset($_POST['cus_other_income'])){
+                $cus_other_income = $_POST['cus_other_income'];
+            }
+            if(isset($_POST['cus_support_income'])){
+                $cus_support_income = $_POST['cus_support_income'];
+            }
+            if(isset($_POST['cus_Commitment'])){
+                $cus_Commitment = $_POST['cus_Commitment'];
+            }
+            if(isset($_POST['cus_monDue_capacity'])){
+                $cus_monDue_capacity = $_POST['cus_monDue_capacity'];
+            }
+            if(isset($_POST['cus_loan_limit'])){
+                $cus_loan_limit = $_POST['cus_loan_limit'];
+            }
+            if(isset($_POST['cus_Character'])){
+                $cus_Character = $_POST['cus_Character'];
+            }
+            if(isset($_POST['cus_Approach'])){
+                $cus_Approach = $_POST['cus_Approach'];
+            }
+            if(isset($_POST['cus_Relationship'])){
+                $cus_Relationship = $_POST['cus_Relationship'];
+            }
+            if(isset($_POST['cus_Attitude'])){
+                $cus_Attitude = $_POST['cus_Attitude'];
+            }
+            if(isset($_POST['cus_Behavior'])){
+                $cus_Behavior = $_POST['cus_Behavior'];
+            }
+            if(isset($_POST['cus_Incidents_Remarks'])){
+                $cus_Incidents_Remarks = $_POST['cus_Incidents_Remarks'];
+            }
+            if(isset($_POST['about_cus'])){
+                $about_cus = $_POST['about_cus'];
+            }
+            if(isset($_POST['Communitcation_to_cus'])){
+                $Communitcation_to_cus = $_POST['Communitcation_to_cus'];
+            }
+
+			if(!empty($_FILES['verification_audio']['name']))
+            {
+                $verify_audio = $_FILES['verification_audio']['name'];
+                $audio_temp = $_FILES['verification_audio']['tmp_name'];
+                $audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
+                move_uploaded_file($audio_temp, $audiofolder);
+            }
+            if(isset($_POST['verifyPerson'])){
+                $verifyPerson = $_POST['verifyPerson'];
+            }
+            if(isset($_POST['verification_location'])){
+                $verification_location = $_POST['verification_location'];
+            }
+
+            $insertQry="INSERT INTO `verified`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
+            '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($Communitcation_to_cus)."','".strip_tags($verify_audio)."','".strip_tags($verifyPerson)."','".strip_tags($verification_location)."','2','".$userid."' )";
             $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
 			$insertQry = "UPDATE request_creation set cus_status = 2 where req_id ='".strip_tags($req_id)."' ";
@@ -3098,6 +3168,10 @@ require 'PHPMailerAutoload.php';
 			
 			$insertQry = "UPDATE in_verification set cus_status = 2 where req_id ='".strip_tags($req_id)."' ";
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+			
+			$updateCus = "UPDATE `customer_register` SET  `how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`cus_character`='".strip_tags($cus_Character)."',`approach`='".strip_tags($cus_Approach)."',`relationship`='".strip_tags($cus_Relationship)."',`attitude`='".strip_tags($cus_Attitude)."',`behavior`='".strip_tags($cus_Behavior)."',`incident_remark`='".strip_tags($cus_Incidents_Remarks)."',`about_customer`='".strip_tags($about_cus)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
+			$insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
+
         }
 
 }//Class End
