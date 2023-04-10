@@ -110,9 +110,8 @@ if (sizeof($getRequestData) > 0) {
 <div class="main-container">
 	<!--form start-->
 	<form id="request" name="request" action="" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {
-																	echo $req_id;
-																} ?>">
+		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>">
+		<input type="hidden" name="loan_amt" id="loan_amt" value="<?php if (isset($tot_value)) {echo $tot_value;} ?>">
 		<!-- Row start -->
 		<div class="row gutters">
 			<!-- Request Info -->
@@ -195,9 +194,7 @@ if (sizeof($getRequestData) > 0) {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="cus_id" name="cus_id" tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" value='<?php if (isset($cus_id)) {
-																																																					echo $cus_id;
-																																																				} ?>'>
+											<input type="text" class="form-control" id="cus_id" name="cus_id" tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" value='<?php if (isset($cus_id)) {echo $cus_id;} ?>'>
 											<span class="text-danger" style='display:none' id='cusidCheck'>Please Enter Customer ID</span>
 										</div>
 									</div>
@@ -205,9 +202,7 @@ if (sizeof($getRequestData) > 0) {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_name">Customer Name</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="cus_name" name="cus_name" tabindex='10' placeholder="Enter Customer Name" onkeydown="return /[a-z ]/i.test(event.key)" value='<?php if (isset($cus_name)) {
-																																																							echo $cus_name;
-																																																						} ?>'>
+											<input type="text" class="form-control" id="cus_name" name="cus_name" tabindex='10' placeholder="Enter Customer Name" onkeydown="return /[a-z ]/i.test(event.key)" value='<?php if (isset($cus_name)) {echo $cus_name;} ?>'>
 											<span class="text-danger" style='display:none' id='cusnameCheck'>Please Enter Customer Name</span>
 										</div>
 									</div>
@@ -776,18 +771,17 @@ if (sizeof($getRequestData) > 0) {
 				</div>
 				<!-- KYC info END -->
 
-				<!-- Customer Summary START -->
+				<!-- ///////////////////////////////////////////////// Customer Summary START ///////////////////////////////////////////////////////////// -->
 				<div class="card">
 					<div class="card-header"> Customer Summary </div>
-					<!-- <span class="text-danger" style='display:none' id='res_infoCheck'>Please Fill Residential Info </span> -->
 					<div class="card-body">
 						<div class="row">
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="summarykmnw"> How to Know </label>
-									<select type="text" class="form-control" name="cus_sum_know" id="cus_sum_know">
-										<option> Select How to Know </option>
+									<label for="summarykmnw"> How to Know </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="cus_how_know" id="cus_how_know">
+										<option value=""> Select How to Know </option>
 										<option value="0"> Customer Reference </option>
 										<option value="1"> Advertisement </option>
 										<option value="2"> Promotion activity </option>
@@ -795,6 +789,7 @@ if (sizeof($getRequestData) > 0) {
 										<option value="4"> Staff Reference </option>
 										<option value="5"> Other Reference </option>
 									</select>
+									<span class="text-danger" style='display:none' id='howToKnowCheck'>Please Select How To Know </span>
 								</div>
 							</div>
 
@@ -818,53 +813,6 @@ if (sizeof($getRequestData) > 0) {
 									<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" readonly>
 								</div>
 							</div>
-						</div>
-
-						<hr>
-
-						<div class="row">
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="minvcome"> Monthly Income </label>
-									<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income">
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="otherincome"> Other Income </label>
-									<input type="number" class="form-control" name="cus_other_income" id="cus_other_income">
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="suppincome"> Support Income </label>
-									<input type="number" class="form-control" name="cus_support_income" id="cus_support_income">
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="commit"> Commitment </label>
-									<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment">
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="duecapacity"> Monthly Due Capacity </label>
-									<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity">
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="loanlimit"> Loan Limit </label>
-									<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit">
-								</div>
-							</div>
 
 						</div>
 
@@ -874,43 +822,111 @@ if (sizeof($getRequestData) > 0) {
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="Character"> Character </label>
-									<input type="text" class="form-control" name="cus_Character" id="cus_Character">
+									<label for="minvcome"> Monthly Income </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income" placeholder="Enter Monthly Income">
+									<span class="text-danger" style='display:none' id='monthlyIncomeCheck'>Please Enter Monthly Income </span>
 								</div>
 							</div>
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="Approach"> Approach </label>
-									<input type="text" class="form-control" name="cus_Approach" id="cus_Approach">
+									<label for="otherincome"> Other Income </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_other_income" id="cus_other_income" placeholder="Enter Other Income">
+									<span class="text-danger" style='display:none' id='otherIncomeCheck'>Please Enter Other Income </span>
 								</div>
 							</div>
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="Relationship"> Relationship </label>
-									<input type="text" class="form-control" name="cus_Relationship" id="cus_Relationship">
+									<label for="suppincome"> Support Income </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_support_income" id="cus_support_income" placeholder="Enter Support Income">
+									<span class="text-danger" style='display:none' id='supportIncomeCheck'>Please Enter Support Income </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group"> 
+									<label for="commit"> Commitment </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment" placeholder="Enter Commitment">
+									<span class="text-danger" style='display:none' id='commitmentCheck'>Please Enter Commitment </span>
 								</div>
 							</div>
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="Attitude"> Attitude </label>
-									<input type="text" class="form-control" name="cus_Attitude" id="cus_Attitude">
+									<label for="duecapacity"> Monthly Due Capacity </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity" placeholder="Enter Monthly Due Capacity">
+									<span class="text-danger" style='display:none' id='monthlyDueCapacityCheck'> Please Enter Monthly Due Capacity </span>
 								</div>
 							</div>
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="Behavior"> Behavior </label>
-									<input type="text" class="form-control" name="cus_Behavior" id="cus_Behavior">
+									<label for="loanlimit"> Loan Limit </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit">
+									<span class="text-danger" style='display:none' id='loanLimitCheck'>Please Enter Loan Limit </span>
+								</div>
+							</div>
+
+						</div>
+
+						<hr>
+
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Character"> Character </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Character" id="cus_Character" placeholder="Enter Character">
+									<span class="text-danger" style='display:none' id='CharacterCheck'>Please Enter Character </span>
 								</div>
 							</div>
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="IncidentsRemarks"> Incidents Remarks </label>
-									<input type="text" class="form-control" name="cus_Incidents_Remarks" id="cus_Incidents_Remarks">
+									<label for="Approach"> Approach </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Approach" id="cus_Approach" placeholder="Enter Approach">
+									<span class="text-danger" style='display:none' id='ApproachCheck'>Please Enter Approach </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Relationship"> Relationship </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Relationship" id="cus_Relationship" placeholder="Relationship">
+									<span class="text-danger" style='display:none' id='cusRelationshipCheck'>Please Enter Relationship </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group"> 
+									<label for="Attitude"> Attitude </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Attitude" id="cus_Attitude" placeholder="Enter Attitude">
+									<span class="text-danger" style='display:none' id='cusAttitudeCheck'>Please Enter Attitude </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Behavior"> Behavior </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Behavior" id="cus_Behavior" placeholder="Enter Behavior">
+									<span class="text-danger" style='display:none' id='cusBehaviorCheck'>Please Enter Behavior </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="IncidentsRemarks"> Incidents Remarks </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Incidents_Remarks" id="cus_Incidents_Remarks" placeholder="Enter Incidents Remarks">
+									<span class="text-danger" style='display:none' id='cusIncidentsRemarksCheck'>Please Enter Incidents Remarks </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="abtCustomer"> About Customer </label> <span class="required">*</span>
+									<textarea class="form-control" name="about_cus" id="about_cus"></textarea>
+									<span class="text-danger" style='display:none' id='aboutcusCheck'> Please Enter About Customer </span>
 								</div>
 							</div>
 
@@ -918,7 +934,65 @@ if (sizeof($getRequestData) > 0) {
 
 					</div>
 				</div>
-				<!-- Customer Summary  END -->
+				<!-- ///////////////////////////////////////////////  Customer Summary  END /////////////////////////////////////////////////////////// -->
+
+
+				<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
+				<div class="card">
+					<div class="card-header"> Verfication Info </div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Communitcation"> Communitcation </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus">
+										<option value=""> Select Communication </option>
+										<option value="0"> Phone </option>
+										<option value="1"> Direct </option>
+									</select>
+									<span class="text-danger" style='display:none' id='communicationCheck'>Please Select communication </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style='display:none' id="verifyaudio">
+								<div class="form-group">
+									<label for="Communitcation"> Audio </label> 
+									<input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*">
+								</div>
+							</div>
+
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Verificationperson"> Verification person </label> <span class="required">*</span>
+									<input type="hidden" id="verifyPerson" name="verifyPerson" value="">
+									<select type="text" class="form-control" name="verification_person" id="verification_person" multiple>
+										<option value=""> Select Verification Person </option>
+									</select>
+									<span class="text-danger" style='display:none' id='verificationPersonCheck'>Please Select Verification Person </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Verificationlocation"> Verification location </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="verification_location" id="verification_location">
+										<option value=""> Select Verification location </option>
+										<option value="0"> On Spot </option>
+										<option value="1"> Customer Spot </option>
+									</select>
+									<span class="text-danger" style='display:none' id='verificationLocCheck'>Please Select Verification Location </span>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- ///////////////////////////////////////////////  Verification Info  END /////////////////////////////////////////////////////////// -->
+
+
 
 
 				<div class="col-md-12 ">

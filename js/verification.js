@@ -1,3 +1,10 @@
+const personMultiselect = new Choices('#verification_person', {
+    removeItemButton: true,
+    noChoicesText: null,
+    placeholder: true,
+    placeholderValue: 'Select Verification Person',
+    });
+
 $(document).ready(function () {
 
     $('input[data-type="adhaar-number"]').keyup(function () { /// AAdhar Validation 
@@ -549,9 +556,39 @@ function closeFamModal() {
 
             resetFamInfo();
             resetFamDetails();
+            verificationPerson(); //To Select verification Person in Verification Info.////// 
         }
     });
 }
+
+// Verification Info Person 
+function verificationPerson() {
+    let req_id = $('#req_id').val();
+
+    $.ajax({
+        url: 'verificationFile/verificationFam.php',
+        type: 'post',
+        data: {"reqId": req_id},
+        dataType: 'json',
+        success: function (response) {
+            personMultiselect.clearStore();
+            var len = response.length;
+            for (var i = 0; i < len; i++) {
+                var fam_name = response[i]['fam_name'];
+                var fam_id = response[i]['fam_id'];
+                var items = [
+                    {
+                        value: fam_id,
+                        label: fam_name,
+                    }
+                ];
+                personMultiselect.setChoices(items);
+                personMultiselect.init();
+            }
+        }
+    });
+}
+
 
 $('#guarentor_name').change(function () { //Select Guarantor Name relationship will show in input.
 
@@ -1741,7 +1778,18 @@ function getAreaBasedSubArea(area){
     });
 }
 
+$('#cus_loan_limit').change(function(){ /// Loan Limit will Check the Loan Amount in Request Loan Category./////
+    let loanLimit = $(this).val();
+    let loanamnt = $('#loan_amt').val();
 
+    if(loanLimit > loanamnt){
+     
+        alert("Kindly Enter Loan Limit Lesser Than Loan Amount " + loanamnt);
+        $(this).val('');
+        return false;
+    }
+
+})
 
 ////////////////////////////////////////////////Submit Verification //////////////////////////////////////////////////////////////////////////////
 
@@ -1754,7 +1802,7 @@ function validation(){
     var district = $('#district1').val();var taluk = $('#taluk1').val();var area = $('#area').val();var sub_area = $('#sub_area').val();var pic = $('#pic').val();var mobile1 = $('#mobile1').val();
     var guarentor_name = $('#guarentor_name').val();var guarentorpic = $('#guarentorpic').val();var area_cnfrm = $('#area_cnfrm').val();var cus_res_type = $('#cus_res_type').val();
     var cus_res_details = $('#cus_res_details').val();var cus_res_address = $('#cus_res_address').val();var cus_res_native = $('#cus_res_native').val();
-    var cus_occ_type = $('#cus_occ_type').val();var cus_occ_detail = $('#cus_occ_detail').val();var cus_occ_income = $('#cus_occ_income').val();var cus_occ_address = $('#cus_occ_address').val();
+    var cus_occ_type = $('#cus_occ_type').val();var cus_occ_detail = $('#cus_occ_detail').val();var cus_occ_income = $('#cus_occ_income').val();var cus_occ_address = $('#cus_occ_address').val(); var cus_how_know = $('#cus_how_know').val(); var cus_monthly_income = $('#cus_monthly_income').val(); var cus_other_income = $('#cus_other_income').val(); var cus_support_income = $('#cus_support_income').val(); var cus_Commitment = $('#cus_Commitment').val(); var cus_monDue_capacity = $('#cus_monDue_capacity').val(); var cus_loan_limit = $('#cus_loan_limit').val(); var cus_Character = $('#cus_Character').val(); var cus_Approach = $('#cus_Approach').val(); var cus_Relationship = $('#cus_Relationship').val(); var cus_Attitude = $('#cus_Attitude').val(); var cus_Behavior = $('#cus_Behavior').val(); var cus_Incidents_Remarks = $('#cus_Incidents_Remarks').val(); var about_cus = $('#about_cus').val(); 
     var req_id = $('#req_id').val();
     
     if(cus_id == ''){
@@ -1865,6 +1913,90 @@ function validation(){
     }else{
         $('#subareaCheck').hide();
     }
+    if(cus_how_know == ''){
+        event.preventDefault();
+        $('#howToKnowCheck').show();
+    }else{
+        $('#howToKnowCheck').hide();
+    }
+    if(cus_monthly_income == ''){
+        event.preventDefault();
+        $('#monthlyIncomeCheck').show();
+    }else{
+        $('#monthlyIncomeCheck').hide();
+    }
+    if(cus_other_income == ''){
+        event.preventDefault();
+        $('#otherIncomeCheck').show();
+    }else{
+        $('#otherIncomeCheck').hide();
+    }
+    if(cus_support_income == ''){
+        event.preventDefault();
+        $('#supportIncomeCheck').show();
+    }else{
+        $('#supportIncomeCheck').hide();
+    }
+    if(cus_Commitment == ''){
+        event.preventDefault();
+        $('#commitmentCheck').show();
+    }else{
+        $('#commitmentCheck').hide();
+    }
+    if(cus_monDue_capacity == ''){
+        event.preventDefault();
+        $('#monthlyDueCapacityCheck').show();
+    }else{
+        $('#monthlyDueCapacityCheck').hide();
+    }
+    if(cus_loan_limit == ''){
+        event.preventDefault();
+        $('#loanLimitCheck').show();
+    }else{
+        $('#loanLimitCheck').hide();
+    }
+    if(cus_Character == ''){
+        event.preventDefault();
+        $('#CharacterCheck').show();
+    }else{
+        $('#CharacterCheck').hide();
+    }
+    if(cus_Approach == ''){
+        event.preventDefault();
+        $('#ApproachCheck').show();
+    }else{
+        $('#ApproachCheck').hide();
+    }
+    if(cus_Relationship == ''){
+        event.preventDefault();
+        $('#cusRelationshipCheck').show();
+    }else{
+        $('#cusRelationshipCheck').hide();
+    }
+    if(cus_Attitude == ''){
+        event.preventDefault();
+        $('#cusAttitudeCheck').show();
+    }else{
+        $('#cusAttitudeCheck').hide();
+    }
+    if(cus_Behavior == ''){
+        event.preventDefault();
+        $('#cusBehaviorCheck').show();
+    }else{
+        $('#cusBehaviorCheck').hide();
+    }
+    if(cus_Incidents_Remarks == ''){
+        event.preventDefault();
+        $('#cusIncidentsRemarksCheck').show();
+    }else{
+        $('#cusIncidentsRemarksCheck').hide();
+    }
+    if(about_cus == ''){
+        event.preventDefault();
+        $('#aboutcusCheck').show();
+    }else{
+        $('#aboutcusCheck').hide();
+    }
 
     $.ajax({
         url:'verificationFile/validateModals.php',
@@ -1936,5 +2068,30 @@ function validation(){
             }
         }
     })
+
+
+            //Verification Person Multi select store
+            var person_list = personMultiselect.getValue();
+            var person = '';
+            for(var i=0;i<person_list.length;i++){
+                if (i > 0) {
+                    person += ',';
+                }
+                person += person_list[i].value;
+            }
+            var arr = person.split(",");
+            arr.sort(function(a,b){return a-b});
+            var sortedStr = arr.join(",");
+            $('#verifyPerson').val(sortedStr);
     
 }
+
+$('#Communitcation_to_cus').change(function(){
+    let com = $(this).val();
+
+    if(com == '0'){
+        $('#verifyaudio').show();
+    }else{
+        $('#verifyaudio').hide(); 
+    }
+})
