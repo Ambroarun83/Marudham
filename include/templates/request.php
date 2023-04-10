@@ -562,12 +562,9 @@ if($idupd>0)
 					</div>
 				</div>
 				<div class="card category_info" style="display:none">
-                    <div class="card-header">Category Info
-					<button type="button" class="btn btn-primary" id="add_category_info" name="add_category_info" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
-					</div>
+                    <div class="card-header">Category Info</div>
 					<div class="card-body">
 						<div class="row">
-							
 						</div>
 					</div>
 				</div>

@@ -2,6 +2,21 @@
 if(isset($_SESSION["userid"])){
 	$userid = $_SESSION["userid"];
 }
+$current_page = isset($_GET['page']) ? $_GET['page'] : null; 
+
+if($current_page == 'edit_company_creation' || $current_page == 'edit_branch_creation' || $current_page == 'edit_loan_category' || $current_page == 'edit_loan_calculation' || 
+$current_page == 'edit_loan_scheme' || $current_page == 'edit_area_creation' || $current_page == 'edit_area_mapping' || $current_page == 'edit_area_approval'){
+	$current_module = 'master';
+}else if($current_page == 'edit_director_creation' || $current_page == 'edit_agent_creation' || $current_page == 'edit_staff_creation' || $current_page == 'edit_manage_user'
+|| $current_page == 'edit_doc_mapping'){
+	$current_module = 'admin';
+}else if($current_page == 'edit_request' ){
+	$current_module = 'request';
+}else if($current_page == 'verification_list' ){
+	$current_module = 'verification';
+}
+$current_module = '';
+
 
 $user_id        = '';
 $full_name      = '';
@@ -33,6 +48,7 @@ $manage_user = '';
 $doc_mapping = '';
 $requestmodule = '';
 $request = '';
+$verificationmodule = '';
 $verification = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
@@ -68,6 +84,7 @@ if (sizeof($getUser)>0) {
 		$doc_mapping          		     = $getUser['doc_mapping'];
 		$requestmodule          		     = $getUser['requestmodule'];
 		$request          		     = $getUser['request'];
+		$verificationmodule          		     = $getUser['verificationmodule'];
 		$verification          		     = $getUser['verification'];
 	}
 }
@@ -194,7 +211,7 @@ if (sizeof($getUser)>0) {
 							<i class="icon-globe"></i>
 							<span class="menu-text">Master</span>
 						</a>
-						<div class="sidebar-submenu">
+						<div class="sidebar-submenu" <?php if($current_module=='master') echo 'style="display:block" '; ?> >
 							<ul>
 								<?php if($company_creation == 0){?>
 									<li>
@@ -239,7 +256,7 @@ if (sizeof($getUser)>0) {
 							<i class="icon-folder"></i>
 							<span class="menu-text">Administration</span>
 						</a>
-						<div class="sidebar-submenu">
+						<div class="sidebar-submenu" <?php if($current_module=='admin') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($director_creation == 0){ ?>
 									<li>
@@ -266,13 +283,13 @@ if (sizeof($getUser)>0) {
 						</div>
 					</li>
 				<?php  } ?>
-				<?php if($requestmodule == 0){?>
+				<?php if($requestmodule == 0){ ?>
 					<li class="sidebar-dropdown request">
 						<a href="javascript:void(0)">
 							<i class="icon-folder"></i>
 							<span class="menu-text">Request</span>
 						</a>
-						<div class="sidebar-submenu">
+						<div class="sidebar-submenu" <?php if($current_module=='request') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($request == 0){ ?>
 									<li>
@@ -280,12 +297,25 @@ if (sizeof($getUser)>0) {
 									</li>
 								<?php  } ?>
 
+								
+
+							</ul>
+						</div>
+					</li>
+				<?php  } ?>
+				<?php if($verificationmodule == 0){?>
+					<li class="sidebar-dropdown request">
+						<a href="javascript:void(0)">
+							<i class="icon-folder"></i>
+							<span class="menu-text">Verification</span>
+						</a>
+						<div class="sidebar-submenu" <?php if($current_module=='verification') echo 'style="display:block" '; ?>>
+							<ul>
 								<?php  if($verification == 0){ ?>
 									<li>
 										<a href="verification_list"><i class="icon-list"></i>Verification</a>
 									</li>
 								<?php  } ?>
-
 							</ul>
 						</div>
 					</li>
@@ -426,5 +456,6 @@ $manage_user = '';
 $doc_mapping = '';
 $requestmodule = '';
 $request = '';
+$verificationmodule = '';
 $verification = '';
 ?>
