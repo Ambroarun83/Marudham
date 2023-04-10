@@ -96,6 +96,7 @@ $(document).ready(function () {
         $('#ad_amt').val('');
         $('#ad_perc').val('');
         $('#loan_amt').val('');
+        $('.category_info .card-body .row').empty();
 		getSubCategory(loanselected);
 	})
 
@@ -105,6 +106,7 @@ $(document).ready(function () {
         $('#ad_amt').val('');
         $('#ad_perc').val('');
         $('#loan_amt').val('');
+        $('.category_info .card-body .row').empty();
         getLoaninfo(subselected);
         getCategoryInfo(subselected);
 	})
@@ -842,87 +844,53 @@ function getCategoryInfo(sub_cat){
         cache:false,
         success:function(response){
             $('.category_info .card-body .row').empty();
-            // $('.category_info .card-body .row').append('<table id="moduleTable" class="table custom-table">');
+            $('.category_info .card-body .row').prepend('<table id="moduleTable" class="table custom-table"><tbody><tr>');
             if(response.length != 0){
                 var tb = 35;
                 for(var i=0;i<response.length;i++){
                     category_info ='';
-                    if(getCategoryInfo != undefined){
-                        category_info = getCategoryInfo[i];
-                    }
-                    // var k = i+1;
-                    // if(k > response.length-1){
-                    //     var div = '<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12" >';
-                    //     var deleterow = '<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12"><div class="form-group" style="margin-top:30px"><span class="icon-x deleterow"></span></div></div>'; 
-                    // }else{
-                    //     var div = '<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">';
-                    //     var deleterow = '';
+                    // if(getCategoryInfo != undefined){
+                    //     category_info = getCategoryInfo[i];
                     // }
-                    $('.category_info .card-body .row').append( `<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"><div class="form-group">
-                        <label for="disabledInput">`+response[i]['loan_category_ref_name']+`</label><span class="required">&nbsp;*</span>
-                        <input type="text" class="form-control" id="category_info" name="category_info[]" value='`+category_info+`' tabindex='`+tb+`'required placeholder='Enter `+response[i]['loan_category_ref_name']+`'> 
-                        </div></div>`);
+                    $('.category_info .card-body .row table tbody tr').append( `<td><label for="disabledInput">`+response[i]['loan_category_ref_name']+`</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
+                    value='`+category_info+`' tabindex='`+tb+`' required placeholder='Enter `+response[i]['loan_category_ref_name']+`'></td>`);
                     $('.category_info').show();
                     tb++;
                     
-                    // $('.category_info .card-body .row .deleterow').eq(0).removeClass('.deleterow'); // to remove the delete option for first 
                     
                 }
-                // if(i == 1 || i == 4){$('.category_info .card-body .row').append(`<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12 "></div>`)}else
-                // if(i == 2 || i == 5 ){$('.category_info .card-body .row').append(`<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 "></div>`)}
+                $('.category_info .card-body .row table tbody tr').append(`<td><button type="button" tabindex='`+tb+`' id="add_category_info[]" name="add_category_info" 
+                class="btn btn-primary add_category_info">Add</button> </td><td><span class='icon-trash-2 deleterow' id='deleterow' tabindex='`+tb+`'></span></td>
+                </tr></tbody></table>`);
                 
-                // var category_content = $('.category_info .card-body .row').html() //To get the appended category list
-
+                category_content = $('#moduleTable tbody').html(); //To get the appended category list
                 
-                
-                // $('#add_category_info').unbind('click').click(function(){
-                //     $('.category_info .card-body .row').append(category_content);
-                    
-                //     // remove delete option for last child
-                //     $('.deleterow').unbind('click').click(function(){
+                // unbind the event handler
+                $(document).off('click', '.add_category_info');
+                $(document).on('click','.add_category_info', function(){
+                        console.log(category_content)
+                        $('#moduleTable tbody').append(category_content);
+                });
 
-                //         $(this).closest('div').parent().prev('div').eq(i-3).remove();
-                //         $(this).closest('div').parent().prev('div').eq(i-2).remove();
-                //         // alert(i-3)
-                //         // alert(i-2)
-                        
-                //         // $(this).closest('div').parent().prev('div').each(function() {
-                //         //     if ($(this).find('input').val() == '') { // Replace this condition with your own logic to check if the div is empty
-                //         //       $(this).remove();
-                //         //     }
-                //         // });
-                //         // for (var j=i+1; i <= j && j < i ; j++) { 
-                        
-                //         //     var prevDiv = $(this).closest('div').parent().prev('div').eq(i-j);
-                //         //     prevDiv.remove();
-                //         //     alert(i-j);
-                //         // }
+                // remove delete option for last child
+                $('#deleterow:last').filter(':last').removeClass('deleterow');
 
-                //         // var div = $(this).closest('div').parent().next('div');
-                //         // if (div.is(':empty')) {
-                //         //     div.remove();
-                //         // }
-                        
-                //         $(this).closest('div').parent().remove();
+                // unbind the event handler
+                $(document).off('click', '.deleterow');
+                $(document).on('click','.deleterow',function(){
+                        $(this).parent().parent().remove();
+                });
 
-
-
-                //     })
-
-                // })
-                
-                // if(getCategoryInfo != undefined){
-                //     for(var i=0;i<getCategoryInfo.length-1;i++){
-                //         $('.category_info .card-body .row').append(category_content)
-                //     }
-                //     $('.category_info .card-body .row input').each(function(index){
-                //         $(this).val(getCategoryInfo[index]);
-                //     });
-                // }
-                
-                
-
-                
+                if(getCategoryInfo != undefined){
+                    for(var i=0;i<getCategoryInfo.length-1;i++){
+                        if(response.length < getCategoryInfo.length){
+                            $('#moduleTable tbody').append(category_content)
+                        }
+                    }
+                    $('#moduleTable tbody input').each(function(index){
+                        $(this).val(getCategoryInfo[index]);
+                    });
+                }
 
             }else{
                 $('.category_info').hide();

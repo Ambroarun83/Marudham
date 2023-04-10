@@ -201,20 +201,16 @@ foreach ($result as $row) {
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
     if($cus_status == '1') {
-        $action .= "<a href='verification&can=$id' class='cancelverification'>Cancel Verification</a>";
+        $action .= "<a href='verification&can=$id' class='cancelverification'>Cancel Verification</a><a href='verification&rev=$id'class='revokeverification'>Revoke Verification</a>";
     }else
     if($cus_status == '5' ){
         $action .= "<a href='verification&del=$id'class='removeverification'>Remove Verification</a>";
     }
-
-    
-    // $action="<label class='dropdown'> <div class='dd-button'></div><input type='checkbox' class='dd-input' id='test'><ul class='dd-menu'>";
-    // if($cus_status == '1') {
-    //     $action .= "<li><a href='verification&can=$id' class='cancelverification'>Cancel Verification</a></li>";
-    // }else
-    // if($cus_status == '5' ){
-    //     $action .= "<li><a href='verification&del=$id'class='removeverification'>Remove Verification</a></li>";
-    // }
+    if($user_type != 'Agent'){
+        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
+    }elseif($userid == 1){
+        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
+    }
 
     
     $action .= "</div></div>";

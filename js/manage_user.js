@@ -153,8 +153,14 @@ $(document).ready(function () {
         checkbox(checkboxesToEnable,requestmodule);
     });
 
+    $("#verificationmodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.verification-checkbox");
+        var verificationmodule = document.querySelector('#verificationmodule');
+        checkbox(checkboxesToEnable,verificationmodule);
+    });
+
     $('#submit_manage_user').click(function(){
-        validation();
+        
         
         var branch_id1 = branchMultiselect.getValue();
         var branch_id = '';
@@ -196,7 +202,8 @@ $(document).ready(function () {
 		var sortedStr = arr.join(",");
         $('#line').val(sortedStr);
         var line = $('#line').val();
-        if(line == ''){event.preventDefault();$('#lineCheck').show();}else{$('#lineCheck').hide();}
+        var role = $('#role').val();
+        if(line == '' && role != '2'){event.preventDefault();$('#lineCheck').show();}else{$('#lineCheck').hide();}
         
         var group1 = groupMultiselect.getValue();
         var group = '';
@@ -212,6 +219,8 @@ $(document).ready(function () {
         $('#group').val(sortedStr);
         var group = $('#group').val();
         if(group == ''){event.preventDefault();$('#groupCheck').show();}else{$('#groupCheck').hide();}
+
+        validation();
     })
 });
 
@@ -248,9 +257,11 @@ $(function(){
         var mastermodule = document.getElementById('mastermodule');
         var adminmodule = document.getElementById('adminmodule');
         var requestmodule = document.getElementById('requestmodule');
+        var verificationmodule = document.getElementById('verificationmodule');
         if(mastermodule.checked){const checkboxesToEnable = document.querySelectorAll("input.master-checkbox");var mastermodule = document.querySelector('#mastermodule');checkbox(checkboxesToEnable,mastermodule);}
         if(adminmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.admin-checkbox");var adminmodule = document.querySelector('#adminmodule');checkbox(checkboxesToEnable,adminmodule);}
         if(requestmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.request-checkbox");var requestmodule = document.querySelector('#requestmodule');checkbox(checkboxesToEnable,requestmodule);}
+        if(verificationmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.verification-checkbox");var verificationmodule = document.querySelector('#verificationmodule');checkbox(checkboxesToEnable,verificationmodule);}
     }else{
 
     }
@@ -703,6 +714,7 @@ function getRoleBasedDetails(role){
     if(role == '2'){
         $('.agent').show();
         $(".role_type").hide();
+        $('.line_div').hide();
         $('.agent_div').hide();
         $('.staff').hide();
         $('.director').hide();

@@ -11,7 +11,42 @@ if(isset($_POST['submit_verification']) && $_POST['submit_verification'] != '')
     <script>location.href='<?php echo $HOSTPATH;  ?>verification_list&msc=1';</script>
 	<?php
 }
-
+$del=0;
+if(isset($_GET['del']))
+{
+$del=$_GET['del'];
+}
+if($del>0)
+{
+	$deleteVerification = $userObj->deleteVerification($mysqli,$del, $userid); 
+	?>
+	<script>location.href='<?php echo $HOSTPATH;  ?>verification_list&msc=3';</script>
+<?php	
+}
+$can=0;
+if(isset($_GET['can']))
+{
+$can=$_GET['can'];
+}
+if($can>0)
+{
+	$cancelVerification = $userObj->cancelVerification($mysqli,$can, $userid);
+	?>
+	<script>location.href='<?php echo $HOSTPATH;  ?>verification_list&msc=4';</script>
+<?php	
+}
+$rev=0;
+if(isset($_GET['rev']))
+{
+$rev=$_GET['rev'];
+}
+if($rev>0)
+{
+	$revokeVerification = $userObj->revokeVerification($mysqli,$rev, $userid);
+	?>
+	<script>location.href='<?php echo $HOSTPATH;  ?>verification_list&msc=8';</script>
+<?php	
+}
 $getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
 
 

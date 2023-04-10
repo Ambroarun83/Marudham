@@ -42,6 +42,7 @@ require 'PHPMailerAutoload.php';
 				$detailrecords['doc_mapping']              = strip_tags($row->doc_mapping);		  	
 				$detailrecords['requestmodule']              = strip_tags($row->requestmodule);		  	
 				$detailrecords['request']              = strip_tags($row->request);		  	
+				$detailrecords['verificationmodule']              = strip_tags($row->verificationmodule);		  	
 				$detailrecords['verification']              = strip_tags($row->verification);		  	
 				$detailrecords['status']                     = strip_tags($row->status);		
 		
@@ -2223,6 +2224,12 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$request=1;
 		}
+		if(isset($_POST['verificationmodule']) &&    $_POST['verificationmodule'] == 'Yes')		
+		{
+			$verificationmodule=0;
+		}else{
+			$verificationmodule=1;
+		}
 		if(isset($_POST['verification']) &&    $_POST['verification'] == 'Yes')		
 		{
 			$verification=0;
@@ -2232,15 +2239,14 @@ require 'PHPMailerAutoload.php';
 		$insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, 
 		`ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, 
 		`loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
-		`request`,`verification`,`insert_login_id`,`created_date`) 
+		`request`,`verificationmodule`,`verification`,`insert_login_id`,`created_date`) 
 		VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
 		'".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
 		'".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
 		'".strip_tags($branch_creation)."','".strip_tags($loan_category)."','".strip_tags($loan_calculation)."','".strip_tags($loan_scheme)."','".strip_tags($area_creation)."',
 		'".strip_tags($area_mapping)."','".strip_tags($area_approval)."','".strip_tags($adminmodule)."','".strip_tags($director_creation)."',
 		'".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
-		'".strip_tags($verification)."','".strip_tags($userid)."',current_timestamp )";
-
+		'".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($userid)."',current_timestamp )";
 		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 	}
 
@@ -2396,6 +2402,12 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$request=1;
 		}
+		if(isset($_POST['verificationmodule']) &&    $_POST['verificationmodule'] == 'Yes')		
+		{
+			$verificationmodule=0;
+		}else{
+			$verificationmodule=1;
+		}
 		if(isset($_POST['verification']) &&    $_POST['verification'] == 'Yes')		
 		{
 			$verification=0;
@@ -2411,7 +2423,7 @@ require 'PHPMailerAutoload.php';
 		`area_mapping` = '".strip_tags($area_mapping)."',`area_approval` = '".strip_tags($area_approval)."',`adminmodule` = '".strip_tags($adminmodule)."',
 		`director_creation` = '".strip_tags($director_creation)."',`agent_creation` = '".strip_tags($agent_creation)."',`staff_creation` = '".strip_tags($staff_creation)."',
 		`manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`requestmodule`='".strip_tags($requestmodule)."',
-		`request`='".strip_tags($request)."',`verification`='".strip_tags($verification)."',`status` = 0,
+		`request`='".strip_tags($request)."',`verificationmodule`='".strip_tags($verificationmodule)."',`verification`='".strip_tags($verification)."',`status` = 0,
 		`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()' 
 		WHERE user_id = '".strip_tags($id)."' ";
 		$result = $mysqli->query($updateQry) or die;
@@ -2930,7 +2942,11 @@ require 'PHPMailerAutoload.php';
 		$qry = $mysqli->query("UPDATE request_creation set cus_status = 5, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
 		$qry = $mysqli->query("UPDATE in_verification set cus_status = 5 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
 	}
-	
+	// Revoke Verification
+	public function revokeVerification($mysqli,$rev, $userid){
+		$revokeQry = $mysqli->query("Update request_creation set cus_status = 9, update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
+		$revokeQry = $mysqli->query("Update in_verification set cus_status = 9 where req_id = $rev ") or die($mysqli->error());
+	}
 	//Delete verification 
 	function deleteVerification($mysqli,$id, $userid){
 		$qry = $mysqli->query("UPDATE request_creation set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Verification');

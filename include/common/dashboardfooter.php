@@ -566,6 +566,10 @@ if($current_page == 'edit_request') { ?>
 if($current_page == 'verification') { ?>
     <script src="js/verification.js"></script>
     <?php }
+    
+if($current_page == 'verification_list') { ?>
+    <script src="js/verification_list.js"></script>
+    <?php }
 
 ?> 
 

@@ -6,7 +6,7 @@ if(isset($_POST['cus_id'])){
 
 $records = array();
 
-$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and cus_status <= 8 ORDER BY created_date DESC ");
+$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and cus_status <= 9 ORDER BY created_date DESC ");
 
 if($result->num_rows>0){
     $i=0;
@@ -32,6 +32,7 @@ if($result->num_rows>0){
             if($cus_status == '6'){$records[$i]['status'] = 'Approval';$records[$i]['sub_status'] = 'Cancelled';}else
             if($cus_status == '7'){$records[$i]['status'] = 'Issue';$records[$i]['sub_status'] = 'Issued';}else
             if($cus_status == '8'){$records[$i]['status'] = 'Request';$records[$i]['sub_status'] = 'Revoked';}
+            if($cus_status == '9'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'Revoked';}
         }
         
         $i++;

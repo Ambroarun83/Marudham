@@ -35,6 +35,7 @@ $manage_user = '';
 $doc_mapping = '';
 $requestmodule = '';
 $request = '';
+$verificationmodule = '';
 $verification = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
@@ -111,6 +112,7 @@ if($idupd>0)
 			$doc_mapping          		     = $getUser['doc_mapping'];
 			$requestmodule          		     = $getUser['requestmodule'];
 			$request          		     = $getUser['request'];
+			$verificationmodule          		     = $getUser['verificationmodule'];
 			$verification          		     = $getUser['verification'];
 		}
 	}
@@ -288,14 +290,14 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Password</label>&nbsp;<span class="text-danger">*</span>
-											<input type='password' class='form-control' id='password' name='password' placeholder="Enter Password" tabindex='5' value='<?php if(isset($password)) echo $password; ?>'>
+											<input type='text' class='form-control' id='password' name='password' placeholder="Enter Password" tabindex='5' value='<?php if(isset($password)) echo $password; ?>'>
 											<span class="text-danger" style='display:none' id='passCheck'>Please Enter Password</span>
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Confirm Password</label>&nbsp;<span class="text-danger">*</span>
-											<input type='password' class='form-control' id='cnf_password' name='cnf_password' placeholder="Confirm Password" tabindex='6' value='<?php if(isset($password)) echo $password; ?>'>
+											<input type='text' class='form-control' id='cnf_password' name='cnf_password' placeholder="Confirm Password" tabindex='6' value='<?php if(isset($password)) echo $password; ?>'>
 											<span class="text-danger" style='display:none' id='cnfpassCheck'>Please Enter Confirm Password</span><br>
                                             <span class="text-danger" style='display:none' id='passworkCheck'>Password not matching!</span>
                                         </div>
@@ -341,7 +343,7 @@ if($idupd>0)
 											<span class="text-danger" style='display:none' id='AgentCheck'>Please select Agent Name</span>
                                         </div>
                                     </div>
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 line_div">
                                         <div class="form-group">
                                             <label for="disabledInput">Line Name</label>&nbsp;<span class="text-danger">*</span>
 											<input type='hidden' class='form-control' id='line' name='line' >
@@ -488,9 +490,21 @@ if($idupd>0)
                                 <label class="custom-control-label" for="request">Request</label>
                             </div>
                         </div>
+					</div>
+					
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($verificationmodule==0){ echo'checked'; }} ?> tabindex="20" class="" id="verificationmodule" name="verificationmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="verificationmodule">
+							<h5>Verification</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
 						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($verification==0){ echo'checked'; }} ?> tabindex="21" class=" request-checkbox" id="verification" name="verification" disabled>&nbsp;&nbsp;
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($verification==0){ echo'checked'; }} ?> tabindex="21" class="verification-checkbox" id="verification" name="verification" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="verification">Verification</label>
                             </div>
                         </div>
