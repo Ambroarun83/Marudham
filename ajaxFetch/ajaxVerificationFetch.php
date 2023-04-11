@@ -64,9 +64,12 @@ if($_POST['search'] != "")
     if (isset($_POST['search'])) {
 
         $query .= "
-            and req_id LIKE '%".$_POST['search']."%'
+            and (req_id LIKE '%".$_POST['search']."%'
             OR dor LIKE '%".$_POST['search']."%'
             OR cus_id LIKE '%".$_POST['search']."%'
+            OR cus_name LIKE '%".$_POST['search']."%'
+            OR cus_name LIKE '%".$_POST['search']."%'
+            OR cus_name LIKE '%".$_POST['search']."%'
             OR cus_name LIKE '%".$_POST['search']."%'
             OR area LIKE '%".$_POST['search']."%'
             OR sub_area LIKE '%".$_POST['search']."%'
@@ -78,7 +81,7 @@ if($_POST['search'] != "")
             OR agent_id LIKE '%".$_POST['search']."%'
             OR responsible LIKE '%".$_POST['search']."%'
             OR cus_data LIKE '%".$_POST['search']."%'
-            OR cus_status LIKE '%".$_POST['search']."%'  ";
+            OR cus_status LIKE '%".$_POST['search']."%' ) ";
     }
 }
 if (isset($_POST['order'])) {

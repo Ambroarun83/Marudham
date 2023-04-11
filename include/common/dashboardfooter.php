@@ -412,6 +412,7 @@ $(document).ready(function() {
         // Request datatable
         var request_table = $('#request_table').DataTable({
             "order": [[ 0, "desc" ]],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -443,6 +444,7 @@ $(document).ready(function() {
             // } ]
             
         });
+        
 
         // Verification datatable
         var verification_table = $('#verification_table').DataTable({
