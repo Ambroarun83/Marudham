@@ -6,7 +6,7 @@ if (isset($_POST['company_id'])) {
 
 $branchDetails = array();
 
-$selectIC = $con->query("SELECT * FROM branch_creation WHERE company_name = '".$company_id."' ");
+$selectIC = $con->query("SELECT * FROM branch_creation WHERE company_name = '".$company_id."' && status = '0' ");
 if($selectIC->num_rows>0)
 {$i=0;
     while($row = $selectIC->fetch_assoc()){

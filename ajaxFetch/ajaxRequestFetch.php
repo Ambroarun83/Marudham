@@ -126,8 +126,11 @@ foreach ($result as $row) {
     //Line name Fetch
     $qry = $mysqli->query("SELECT * FROM area_line_mapping where FIND_IN_SET($sub_area_id,sub_area_id)");
     $row1 = $qry->fetch_assoc();
+    if(mysqli_num_rows($qry) > 0){
     $line_name = $row1['line_name'];
-
+    }else{
+        $line_name ='';
+    }
     $sub_array[] = $branch_name;
     $sub_array[] = $group_name;
     $sub_array[] = $line_name;
