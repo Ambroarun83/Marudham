@@ -12,27 +12,27 @@ $column = array(
     'status'
 );
 
-$query = "SELECT * FROM area_list_creation ";
+$query = "SELECT * FROM area_list_creation WHERE status=0 ";
 
 if($_POST['search'] != "")
 {
     
     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active")
-        {
-            $query .="WHERE status=0 "; 
-        }
-        else if($_POST['search']=="Inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+        // if($_POST['search']=="Active")
+        // {
+        //     $query .="and status=0 "; 
+        // }
+        // else if($_POST['search']=="Inactive")
+        // {
+        //     $query .="and status=1 ";
+        // }
 
-        else{	
-            $query .= "WHERE
-            area_id LIKE '%".$_POST['search']."%' 
-            OR area_name LIKE '%".$_POST['search']."%'  ";
-        }
+        // else{	
+            $query .= "and
+            (area_id LIKE '%".$_POST['search']."%' 
+            OR area_name LIKE '%".$_POST['search']."%' ) ";
+        // }
     }
 }
 // print_r($query);die;

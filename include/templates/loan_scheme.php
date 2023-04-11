@@ -198,6 +198,9 @@ if(isset($_GET['type'])){
 		<input type="hidden" class="form-control" value="<?php if(isset($sub_category1)) echo $sub_category1; ?>"  id="sub_category1_upd" name="sub_category1_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($sub_category2)) echo $sub_category2; ?>"  id="sub_category2_upd" name="sub_category2_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($due_method)) echo $due_method; ?>"  id="due_method_upd" name="due_method_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if(isset($doc_charge_type)) echo $doc_charge_type; ?>"  id="doc_charge_type_upd" name="doc_charge_type_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if(isset($doc_charge_type1)) echo $doc_charge_type1; ?>"  id="doc_charge_type1_upd" name="doc_charge_type1_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if(isset($doc_charge_type2)) echo $doc_charge_type2; ?>"  id="doc_charge_type2_upd" name="doc_charge_type2_upd" aria-describedby="id" placeholder="Enter id">
 		
 		<!-- Row start -->
 		<div class="row gutters">

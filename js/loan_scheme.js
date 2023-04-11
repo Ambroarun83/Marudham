@@ -259,45 +259,66 @@ $(function(){
 
     if(scheme_id_upd != '' && due_method_upd == 'monthly'){
         var loan_category_upd = $('#loan_category_upd').val();
+        var doc_charge_type = $('#doc_charge_type_upd').val();
         getSubCategory(loan_category_upd);
 
         //Scheme Type Change
         $('.monthly_scheme').show();$('.weekly_scheme').hide();$('.daily_scheme').hide();
 
         //for document charge
-        changeAmtinput('docmin','docmax','doc_charge_min','doc_charge_max');
-        changePercentinput('docmin','docmax','doc_charge_min','doc_charge_max');
+        if(doc_charge_type == 'amt'){
+            changeAmtinput('docmin','docmax','doc_charge_min','doc_charge_max');
+        }else if(doc_charge_type == 'percentage'){
+            changePercentinput('docmin','docmax','doc_charge_min','doc_charge_max');
+        }
         //for processing fee
-        changeAmtinput('procmin','procmax','proc_fee_min','proc_fee_max');
-        changePercentinput('procmin','procmax','proc_fee_min','proc_fee_max');
+        if(doc_charge_type == 'amt'){
+            changeAmtinput('procmin','procmax','proc_fee_min','proc_fee_max');
+        }else if(doc_charge_type == 'percentage'){
+            changePercentinput('procmin','procmax','proc_fee_min','proc_fee_max');
+        }
     }
     if(scheme_id_upd != '' && due_method_upd == 'weekly'){
         var loan_category_upd = $('#loan_category1_upd').val();
+        var doc_charge_type = $('#doc_charge_type1_upd').val();
         getSubCategory1(loan_category_upd);
 
         //Scheme Type Change
         $('.monthly_scheme').hide();$('.weekly_scheme').show();$('.daily_scheme').hide();
 
         //for document charge
-        changeAmtinput('docmin1','docmax1','doc_charge_min1','doc_charge_max1');
-        changePercentinput('docmin1','docmax1','doc_charge_min1','doc_charge_max1');
+        if(doc_charge_type == 'amt'){
+            changeAmtinput('docmin1','docmax1','doc_charge_min1','doc_charge_max1');
+        }else if(doc_charge_type == 'percentage'){
+            changePercentinput('docmin1','docmax1','doc_charge_min1','doc_charge_max1');
+        }
         //for processing fee
-        changeAmtinput('procmin1','procmax1','proc_fee_min1','proc_fee_max1');
-        changePercentinput('procmin1','procmax1','proc_fee_min1','proc_fee_max1');
+        if(doc_charge_type == 'amt'){
+            changeAmtinput('procmin1','procmax1','proc_fee_min1','proc_fee_max1');
+        }else if(doc_charge_type == 'percentage'){
+            changePercentinput('procmin1','procmax1','proc_fee_min1','proc_fee_max1');
+        }
     }
     if(scheme_id_upd != '' && due_method_upd == 'daily'){
         var loan_category_upd = $('#loan_category2_upd').val();
+        var doc_charge_type = $('#doc_charge_type2_upd').val();
         getSubCategory2(loan_category_upd);
 
         //Scheme Type Change
         $('.monthly_scheme').hide();$('.weekly_scheme').hide();$('.daily_scheme').show();
 
         //for document charge
-        changeAmtinput('docmin2','docmax2','doc_charge_min2','doc_charge_max2');
-        changePercentinput('docmin2','docmax2','doc_charge_min2','doc_charge_max2');
+        if(doc_charge_type == 'amt'){
+            changeAmtinput('docmin2','docmax2','doc_charge_min2','doc_charge_max2');
+        }else if(doc_charge_type == 'percentage'){
+            changePercentinput('docmin2','docmax2','doc_charge_min2','doc_charge_max2');
+        }
         //for processing fee
-        changeAmtinput('procmin2','procmax2','proc_fee_min2','proc_fee_max2');
-        changePercentinput('procmin2','procmax2','proc_fee_min2','proc_fee_max2');
+        if(doc_charge_type == 'amt'){
+            changeAmtinput('procmin2','procmax2','proc_fee_min2','proc_fee_max2');
+        }else if(doc_charge_type == 'percentage'){
+            changePercentinput('procmin2','procmax2','proc_fee_min2','proc_fee_max2');
+        }
     }
 });
 

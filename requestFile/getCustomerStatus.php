@@ -12,7 +12,7 @@ if($result->num_rows>0){
     $i=0;
     while($row = $result->fetch_assoc()){
 
-        $records[$i]['dor'] = $row['dor'];
+        $records[$i]['dor'] = date('d-m-Y',strtotime($row['dor']));
         
         $loan_category = $row['loan_category'];
         $qry = $con->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
