@@ -65,6 +65,7 @@
         .table-striped tbody tr {
             line-height: 30px;
         }
+		.table-responsive{overflow-x: unset;}
  </style>	
 	<link rel="stylesheet" href="vendor/bs-select/bs-select.css" />
 </head>
