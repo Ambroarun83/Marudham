@@ -249,7 +249,12 @@ $(document).ready(function () {
         }
     };
 
-});   ////////
+    $('#sub_area').change(function(){
+        var sub_area_id = $(this).val();
+        getGroupandLine(sub_area_id);
+    })
+
+});   ////////Document Ready End
 
 $(function () {
     getImage(); // To show customer image when window onload.
@@ -297,6 +302,21 @@ $(function () {
 function getImage(){ // Cus img show onload.
     let imgName = $('#cus_image').val();
     $('#imgshow').attr('src',"uploads/request/customer/"+ imgName + " ");
+}
+
+function getGroupandLine(sub_area_id){
+    
+    $.ajax({
+        url: 'verificationFile/getGroupandLine.php',
+        data: {'sub_area_id':sub_area_id},
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        success: function(response){
+            $('#area_group').val(response['group_name']);
+            $('#area_line').val(response['line_name']);
+        }
+    })
 }
 
 // Modal Box for Agent Group

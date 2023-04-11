@@ -108,8 +108,7 @@ function getDocumentCreationDropdown(){
             if(doc_creation_upd[i] == '3'){var select3 = 'selected';}else
             if(doc_creation_upd[i] == '4'){var select4 = 'selected';}else
             if(doc_creation_upd[i] == '5'){var select5 = 'selected';}else
-            if(doc_creation_upd[i] == '6'){var select6 = 'selected';}else
-            if(doc_creation_upd[i] == '7'){var select7 = 'selected';}
+            if(doc_creation_upd[i] == '6'){var select6 = 'selected';}
         }
     }
     
@@ -143,11 +142,6 @@ function getDocumentCreationDropdown(){
             value:'6',
             label:'Documents',
             selected:select6
-        },
-        {
-            value:'7',
-            label:'Others',
-            selected:select7
         },
     ]
     docMultiselect.clearStore();
