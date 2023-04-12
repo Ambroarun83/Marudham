@@ -182,11 +182,12 @@ if($idupd>0)
                         <div  id="intrest_method" <?php if(!$calcheck){?>style="display: none"<?php } ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="inputReadOnly">Calculate Method</label>
-                                    <select tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" >
+                                     <input tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" value="Monthly" readonly>
+                                    <!-- <select tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" >
                                         <option value="">Select Calculate Method</option> 
                                         <option <?php  if(isset($calculate_method)) { if($calculate_method == "day") echo 'selected'; }?> value="day">Day</option> 
                                         <option <?php  if(isset($calculate_method)) { if($calculate_method == "monthly") echo 'selected'; }?> value="monthly">Monthly</option> 
-                                    </select> 
+                                    </select>  -->
                             </div>
                         </div>
                     </div>
