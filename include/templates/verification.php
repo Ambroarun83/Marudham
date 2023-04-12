@@ -143,10 +143,936 @@ if (sizeof($getRequestData) > 0) {
 
 <!-- Main container start -->
 <div class="main-container">
-	<!--form start-->
-	<form id="request" name="request" action="" method="post" enctype="multipart/form-data">
+
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="form-group" style="text-align:center">
+				<!-- <label for=''style="font-size:16px" >Verification:</label><br><br> -->
+				<input type="radio" name="verification_type" id="cus_profile" value="cus_profile" ></input><label for='cusProfile'>&nbsp;&nbsp; Customer Profile </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="verification_type" id="documentation" value="documentation" ></input><label for='doc' >&nbsp;&nbsp; Documentation </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="verification_type" id="loan_calc" value="loan_calc" ></input><label for='loan_cal' >&nbsp;&nbsp; Loan Calculation </label>
+			</div>
+		</div>
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>">
 		<input type="hidden" name="loan_amt" id="loan_amt" value="<?php if (isset($tot_value)) {echo $tot_value;} ?>">
+
+	<!-- Customer Profile form start-->
+<div  id="customer_profile" style="display: none;">
+	<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
+
+		<!-- Row start -->
+		<div class="row gutters">
+			<!-- Request Info -->
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Request Info</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label for="user_type">User type</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="user_type" name="user_type" readonly value='<?php if (isset($user_type)) echo $user_type; ?>' tabindex="1">
+								</div>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="user">User Name</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="user" name="user" readonly value='<?php if (isset($user_name)) echo $user_name; ?>' tabindex='2'>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {
+																									if ($role != '1') { ?> style="display: none" <?php }
+																																			} ?>>
+								<div class="form-group">
+									<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
+									<input tabindex="4" type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {
+																																		echo 'Yes';
+																																	} else {
+																																		echo 'No';
+																																	} ?>" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {
+																								if ($role != '3') { ?>style="display: none" <?php }
+																																	} ?>>
+								<div class="form-group">
+									<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='5' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {
+																									if ($role == '3') { ?>style="display: none" <?php }
+																																		} ?>>
+								<div class="form-group">
+									<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='4' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="req_code">Request ID</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="req_code" name="req_code" readonly value='<?php if (isset($req_code)) echo $req_code; ?>' tabindex='7'>
+								</div>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="dor">Date Of request</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="dor" name="dor" readonly value='<?php if (isset($dor)) {
+																													echo $dor;
+																												} else {
+																													echo date('Y-m-d');
+																												} ?>' tabindex='8'>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Personal info START -->
+				<div class="card">
+					<div class="card-header">Personal Info</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
+											<input type="text" class="form-control" id="cus_id" name="cus_id" tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" value='<?php if (isset($cus_id)) {echo $cus_id;} ?>'>
+											<span class="text-danger" style='display:none' id='cusidCheck'>Please Enter Customer ID</span>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="cus_name">Customer Name</label><span class="required">&nbsp;*</span>
+											<input type="text" class="form-control" id="cus_name" name="cus_name" tabindex='10' placeholder="Enter Customer Name" onkeydown="return /[a-z ]/i.test(event.key)" value='<?php if (isset($cus_name)) {echo $cus_name;} ?>'>
+											<span class="text-danger" style='display:none' id='cusnameCheck'>Please Enter Customer Name</span>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="gender">Gender&nbsp;<span class="required">&nbsp;*</span></label>
+											<select tabindex="14" type="text" class="form-control" id="gender" name="gender">
+												<option value="">Select Gender</option>
+												<option value="1" <?php if (isset($gender) and $gender == '1') echo 'selected'; ?>>Male</option>
+												<option value="2" <?php if (isset($gender) and $gender == '2') echo 'selected'; ?>>Female</option>
+												<option value="3" <?php if (isset($gender) and $gender == '3') echo 'selected'; ?>>Other</option>
+											</select>
+											<span class="text-danger" style='display:none' id='genderCheck'>Please Select Gender</span>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="dob">Date of Birth</label><span class="required">&nbsp;*</span>
+											<input type="date" class="form-control" id="dob" name="dob" tabindex='12' value='<?php if (isset($dob)) {
+																																	echo $dob;
+																																} ?>'>
+											<span class="text-danger" style='display:none' id='dobCheck'>Please Select DOB</span>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="age">Age</label>
+											<input type="text" class="form-control" id="age" name="age" readonly tabindex='13' placeholder="Select Date of Birth" value='<?php if (isset($age)) {
+																																												echo $age;
+																																											} ?>'>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="BloodGroup">Blood Group&nbsp;<span class="required">&nbsp;*</span></label>
+											<input type="text" class="form-control" id="bloodGroup" name="bloodGroup" tabindex='14' placeholder="Enter Blood Group">
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="mobile1">Mobile No 1</label><span class="required">&nbsp;*</span>
+											<input type="number" class="form-control" id="mobile1" name="mobile1" tabindex='15' placeholder="Enter Mobile Number" maxlength="10" onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile1)) {
+																																																													echo $mobile1;
+																																																												} ?>'>
+											<span class="text-danger" style='display:none' id='mobile1Check'>Please Enter Mobile Number</span>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="mobile2">Mobile No 2</label>
+											<input type="number" class="form-control" id="mobile2" name="mobile2" tabindex='16' placeholder="Enter Mobile Number" maxlength="10" onKeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile2)) {
+																																																													echo $mobile2;
+																																																												} ?>'>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="whatsapp">Whatsapp No </label>
+											<input type="number" class="form-control" id="whatsapp_no" name="whatsapp_no" tabindex='17' placeholder="Enter WhatsApp Number" maxlength="10" onkeypress="if(this.value.length==10) return false;">
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+									<div class="form-group" style="margin-left: 30px;">
+										<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
+										<input type="hidden" name="cus_image" id="cus_image" value="<?php if (isset($pic)) {
+																										echo $pic;
+																									} ?>">
+										<img id='imgshow' class="img_show" src='img/avatar.png' />
+										<input type="file" class="form-control" id="pic" name="pic" tabindex='18' value='<?php if (isset($pic)) {
+																																echo $pic;
+																															} ?>'>
+										<span class="text-danger" style='display:none' id='picCheck'>Please Choose Image</span>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Personal info END -->
+
+				<!-- Family info START -->
+				<div class="card">
+					<div class="card-header">Family Info
+						<button type="button" class="btn btn-primary" id="add_group" name="add_group" data-toggle="modal" data-target=".addGroup" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='family_infoCheck'>Please Fill Family Info </span>
+					<div class="card-body">
+
+						<div class="row">
+
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="famList">
+									<table class="table custom-table">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Name</th>
+												<th>Relationship</th>
+												<th>Age</th>
+												<th>Aadhar No</th>
+												<th>Mobile No</th>
+												<th>Occupation</th>
+												<th>Income</th>
+												<th>Blood Group</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Family info END -->
+
+				<!-- Guarentor info START -->
+				<div class="card">
+					<div class="card-header">Guarentor Info</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-8">
+								<div class="row">
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="GuarentorName"> Guarentor Name </label><span class="required">&nbsp;*</span>
+											<select type="text" class="form-control" id="guarentor_name" name="guarentor_name">
+												<option> Select Guarantor </option>
+											</select>
+											<span class="text-danger" style='display:none' id='guarentor_nameCheck'>Please Choose Guarentor Name</span>
+										</div>
+									</div>
+
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="GuarentorRelationship"> Guarentor Relationship </label>
+											<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" readonly>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="col-md-4">
+								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+									<div class="form-group" style="margin-left: 30px;">
+										<label for="pic" style="margin-left: -20px;"> Guarentor Photo </label><span class="required">&nbsp;*</span><br>
+										<img id='imgshows' class="img_show" src='img/avatar.png' />
+										<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" value=''>
+										<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Guarentor END -->
+
+				<!-- Group Info START -->
+				<div class="card">
+					<div class="card-header"> Group Info
+						<button type="button" class="btn btn-primary" id="group_details_add" name="group_details_add" data-toggle="modal" data-target=".addGroupDetails" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='group_infoCheck'>Please Fill Group Info </span>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="GroupList">
+									<table class="table custom-table modalTable">
+										<thead>
+											<tr>
+												<th>S.No</th>
+												<th>Name</th>
+												<th>Age</th>
+												<th>Aadhar No</th>
+												<th>Mobile No</th>
+												<th>Gender</th>
+												<th>Designation</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Group Info END -->
+
+				<!-- Data Checking START -->
+				<div class="card">
+					<div class="card-header"> Data Checking </div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_name"> Category </label>
+									<select type="text" class="form-control" id="category" name="category">
+										<option> Select Category </option>
+										<option value="0"> Name </option>
+										<option value="1"> Aadhar Number </option>
+										<option value="2"> Mobile Number </option>
+									</select>
+								</div>
+							</div>
+
+							<div id="nameCheck" style="display: none" class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="name"> Name </label>
+									<select type="text" class="form-control" name="check_name" id="check_name">
+										<option> Select Name </option>
+									</select>
+								</div>
+							</div>
+
+							<div id="aadharNo" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label for="aadharNo"> Aadhar Number </label>
+									<select type="text" class="form-control" name="check_aadhar" id="check_aadhar">
+										<option> Select Aadhar Number </option>
+									</select>
+								</div>
+							</div>
+
+							<div id="mobileNo" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label for="mobileNo"> Mobile Number </label>
+									<select type="text" class="form-control" name="check_mobileno" id="check_mobileno">
+										<option> Select Mobile Number </option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+						<div id="cus_check"></div></br>
+						<div id="fam_check"></div></br>
+						<div id="group_check"></div>
+					</div>
+				</div>
+				<!-- Data Checking END -->
+
+				<!-- Customer Data START -->
+				<div class="card">
+					<div class="card-header"> Customer Data </div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="name"> Customer Type </label>
+									<input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_data)) {
+																														echo $cus_data;
+																													} ?>" readonly>
+								</div>
+							</div>
+
+							<div id="exist_type" <?php if (isset($cus_data)) {
+														if ($cus_data != 'Existing') { ?> style="display: none" <?php }
+																										} ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label for="ExistType"> Exist Type </label>
+									<input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" readonly>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Customer Data END -->
+
+				<!-- Residential  Info START -->
+				<div class="card">
+					<div class="card-header"> Residential Info </div>
+					<span class="text-danger" style='display:none' id='res_infoCheck'>Please Fill Residential Info </span>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="resType"> Residential Type </label>
+									<select type="text" class="form-control" name="cus_res_type" id="cus_res_type">
+										<option> Select Residential Type </option>
+										<option value="0"> Own </option>
+										<option value="1"> Rental </option>
+										<option value="2"> Lease </option>
+										<option value="3"> Quarters </option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="ResidentDetails"> Resident Details </label>
+									<input type="text" class="form-control" name="cus_res_details" id="cus_res_details" placeholder="Enter Resident Details">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="resAddress"> Address </label>
+									<input type="text" class="form-control" name="cus_res_address" id="cus_res_address" placeholder="Enter Address">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="resnativeAddress"> Native Address </label>
+									<input type="text" class="form-control" name="cus_res_native" id="cus_res_native" placeholder="Enter Native Address">
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Residential  Info END -->
+
+				<!-- Occupation info START -->
+				<div class="card">
+					<div class="card-header"> Occupation info </div>
+					<span class="text-danger" style='display:none' id='occ_infoCheck'>Please Fill Occupation Info </span>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="occType"> Occupation Type </label>
+									<select type="text" class="form-control" name="cus_occ_type" id="cus_occ_type">
+										<option value="">Select Occupation Type</option>
+										<option value="1">Govt Job</option>
+										<option value="2">Pvt Job</option>
+										<option value="3">Business</option>
+										<option value="4">Self Employed</option>
+										<option value="5">Daily wages</option>
+										<option value="6">Agriculture</option>
+										<option value="7">Others</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="occDetails"> Occupation Detail </label>
+									<input type="text" class="form-control" name="cus_occ_detail" id="cus_occ_detail" placeholder="Enter Occupation Detail" onkeydown="return /[a-z ]/i.test(event.key)">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="occIncome"> Income </label>
+									<input type="number" class="form-control" name="cus_occ_income" id="cus_occ_income" placeholder="Enter Income">
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="occAddress"> Address </label>
+									<input type="text" class="form-control" name="cus_occ_address" id="cus_occ_address" placeholder="Enter Address">
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Occupation info END -->
+
+				<!-- Area Confirm START -->
+				<div class="card">
+					<div class="card-header"> Area Confirm </div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="areaCnfirm"> Area confirm </label><span class="required">&nbsp;*</span>
+									<select type="text" class="form-control" name="area_cnfrm" id="area_cnfrm">
+										<option value="">Select Area Type</option>
+										<option value="0"> Residential Area </option>
+										<option value="1"> Occupation Area </option>
+									</select>
+									<span class="text-danger" style='display:none' id='areacnfrmCheck'>Please Select Confirm Area</span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+								<div class="form-group">
+									<label for="disabledInput">State</label>&nbsp;<span class="text-danger">*</span>
+									<select type="text" class="form-control" id="state" name="state" tabindex="16">
+										<option value="SelectState">Select State</option>
+										<option value="TamilNadu">Tamil Nadu</option>
+										<option value="Puducherry">Puducherry</option>
+									</select>
+									<span class="text-danger" style='display:none' id='stateCheck'>Please Select State</span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="disabledInput">District</label>&nbsp;<span class="text-danger">*</span>
+									<input type="hidden" class="form-control" id="district1" name="district1">
+									<select type="text" class="form-control" id="district" name="district" tabindex='17'>
+										<option value="Select District">Select District</option>
+									</select>
+									<span class="text-danger" style='display:none' id='districtCheck'>Please Select District</span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="disabledInput">Taluk</label>&nbsp;<span class="text-danger">*</span>
+									<input type="hidden" class="form-control" id="taluk1" name="taluk1">
+									<select type="text" class="form-control" id="taluk" name="taluk" tabindex="18">
+										<option value="Select Taluk">Select Taluk</option>
+									</select>
+									<span class="text-danger" style='display:none' id='talukCheck'>Please Select Taluk</span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="disabledInput">Area</label>&nbsp;<span class="text-danger">*</span>
+									<select tabindex="19" type="text" class="form-control" id="area" name="area">
+										<option value="">Select Area</option>
+
+									</select>
+									<span class="text-danger" style='display:none' id='areaCheck'>Please Select Area</span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="disabledInput">Sub Area</label>&nbsp;<span class="text-danger">*</span>
+									<select tabindex="20" type="text" class="form-control" id="sub_area" name="sub_area">
+										<option value=''>Select Sub Area</option>
+									</select>
+									<span class="text-danger" style='display:none' id='subareaCheck'>Please Select Sub Area</span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="disabledInput">Group</label>
+									<input type="text" class="form-control" name="area_group" id="area_group" readonly>
+								</div>
+							</div>
+							
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="disabledInput">Line</label>
+									<input type="text" class="form-control" name="area_line" id="area_line" readonly>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Area Confirm END -->
+
+				<!-- Property info START -->
+				<div class="card">
+					<div class="card-header"> Property info
+						<button type="button" class="btn btn-primary" id="property_add" name="property_add" data-toggle="modal" data-target=".addproperty" style="padding: 5px 35px;  float: right; " onclick="propertyHolder()"><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='property_infoCheck'>Please Fill Property Info </span>
+					<div class="card-body">
+
+						<div class="row">
+
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="propertyList">
+									<table class="table custom-table modalTable">
+										<thead>
+											<tr>
+												<th width="15%"> S.No </th>
+												<th> Property Type </th>
+												<th> Property Measurement </th>
+												<th> Property Value </th>
+												<th> Property Holder </th>
+												<th> ACTION </th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- Property info END -->
+
+				<!-- Bank info START -->
+				<div class="card">
+					<div class="card-header"> Bank info
+						<button type="button" class="btn btn-primary" id="bank_add" name="bank_add" data-toggle="modal" data-target=".addbank" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='bank_infoCheck'>Please Fill Bank Info </span>
+					<div class="card-body">
+
+						<div class="row">
+
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="bankResetTable">
+									<table class="table custom-table modalTable">
+										<thead>
+											<tr>
+												<th width="15%"> S.No </th>
+												<th> Bank Name </th>
+												<th> Branch Name </th>
+												<th> Account Holder Name </th>
+												<th> Account Number </th>
+												<th> IFSC Code </th>
+												<th> ACTION </th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Bank info END -->
+
+				<!-- KYC info START -->
+				<div class="card">
+					<div class="card-header"> KYC info
+						<button type="button" class="btn btn-primary" id="kyc_add" name="kyc_add" data-toggle="modal" data-target=".addkyc" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='kyc_infoCheck'>Please Fill KYC Info </span>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="kycListTable">
+									<table class="table custom-table modalTable">
+										<thead>
+											<tr>
+												<th width="20%"> S.No </th>
+												<th> Proof of </th>
+												<th> Proof type </th>
+												<th> Proof Number </th>
+												<th> Upload </th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- KYC info END -->
+
+				<!-- ///////////////////////////////////////////////// Customer Summary START ///////////////////////////////////////////////////////////// -->
+				<div class="card">
+					<div class="card-header"> Customer Summary </div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="summarykmnw"> How to Know </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="cus_how_know" id="cus_how_know">
+										<option value=""> Select How to Know </option>
+										<option value="0"> Customer Reference </option>
+										<option value="1"> Advertisement </option>
+										<option value="2"> Promotion activity </option>
+										<option value="3"> Agent Reference </option>
+										<option value="4"> Staff Reference </option>
+										<option value="5"> Other Reference </option>
+									</select>
+									<span class="text-danger" style='display:none' id='howToKnowCheck'>Please Select How To Know </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="loancnt"> Loan Counts </label>
+									<input type="text" class="form-control" name="cus_loan_count" id="cus_loan_count" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="loandate"> First Loan Date </label>
+									<input type="text" class="form-control" name="cus_frst_loanDate" id="cus_frst_loanDate" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="travel"> Travel with Company </label>
+									<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" readonly>
+								</div>
+							</div>
+
+						</div>
+
+						<hr>
+
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="minvcome"> Monthly Income </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income" placeholder="Enter Monthly Income">
+									<span class="text-danger" style='display:none' id='monthlyIncomeCheck'>Please Enter Monthly Income </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="otherincome"> Other Income </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_other_income" id="cus_other_income" placeholder="Enter Other Income">
+									<span class="text-danger" style='display:none' id='otherIncomeCheck'>Please Enter Other Income </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="suppincome"> Support Income </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_support_income" id="cus_support_income" placeholder="Enter Support Income">
+									<span class="text-danger" style='display:none' id='supportIncomeCheck'>Please Enter Support Income </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group"> 
+									<label for="commit"> Commitment </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment" placeholder="Enter Commitment">
+									<span class="text-danger" style='display:none' id='commitmentCheck'>Please Enter Commitment </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="duecapacity"> Monthly Due Capacity </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity" placeholder="Enter Monthly Due Capacity">
+									<span class="text-danger" style='display:none' id='monthlyDueCapacityCheck'> Please Enter Monthly Due Capacity </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="loanlimit"> Loan Limit </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit">
+									<span class="text-danger" style='display:none' id='loanLimitCheck'>Please Enter Loan Limit </span>
+								</div>
+							</div>
+
+						</div>
+
+						<hr>
+
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Character"> Character </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Character" id="cus_Character" placeholder="Enter Character">
+									<span class="text-danger" style='display:none' id='CharacterCheck'>Please Enter Character </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Approach"> Approach </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Approach" id="cus_Approach" placeholder="Enter Approach">
+									<span class="text-danger" style='display:none' id='ApproachCheck'>Please Enter Approach </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Relationship"> Relationship </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Relationship" id="cus_Relationship" placeholder="Relationship">
+									<span class="text-danger" style='display:none' id='cusRelationshipCheck'>Please Enter Relationship </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group"> 
+									<label for="Attitude"> Attitude </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Attitude" id="cus_Attitude" placeholder="Enter Attitude">
+									<span class="text-danger" style='display:none' id='cusAttitudeCheck'>Please Enter Attitude </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Behavior"> Behavior </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Behavior" id="cus_Behavior" placeholder="Enter Behavior">
+									<span class="text-danger" style='display:none' id='cusBehaviorCheck'>Please Enter Behavior </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="IncidentsRemarks"> Incidents Remarks </label> <span class="required">*</span>
+									<input type="text" class="form-control" name="cus_Incidents_Remarks" id="cus_Incidents_Remarks" placeholder="Enter Incidents Remarks">
+									<span class="text-danger" style='display:none' id='cusIncidentsRemarksCheck'>Please Enter Incidents Remarks </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="abtCustomer"> About Customer </label> <span class="required">*</span>
+									<textarea class="form-control" name="about_cus" id="about_cus"></textarea>
+									<span class="text-danger" style='display:none' id='aboutcusCheck'> Please Enter About Customer </span>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- ///////////////////////////////////////////////  Customer Summary  END /////////////////////////////////////////////////////////// -->
+
+
+				<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
+				<div class="card">
+					<div class="card-header"> Verfication Info </div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Communitcation"> Communitcation </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus">
+										<option value=""> Select Communication </option>
+										<option value="0"> Phone </option>
+										<option value="1"> Direct </option>
+									</select>
+									<span class="text-danger" style='display:none' id='communicationCheck'>Please Select communication </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style='display:none' id="verifyaudio">
+								<div class="form-group">
+									<label for="Communitcation"> Audio </label> 
+									<input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*">
+								</div>
+							</div>
+
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Verificationperson"> Verification person </label> <span class="required">*</span>
+									<input type="hidden" id="verifyPerson" name="verifyPerson" value="">
+									<select type="text" class="form-control" name="verification_person" id="verification_person" multiple>
+										<option value=""> Select Verification Person </option>
+									</select>
+									<span class="text-danger" style='display:none' id='verificationPersonCheck'>Please Select Verification Person </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Verificationlocation"> Verification location </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="verification_location" id="verification_location">
+										<option value=""> Select Verification location </option>
+										<option value="0"> On Spot </option>
+										<option value="1"> Customer Spot </option>
+									</select>
+									<span class="text-danger" style='display:none' id='verificationLocCheck'>Please Select Verification Location </span>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- ///////////////////////////////////////////////  Verification Info  END /////////////////////////////////////////////////////////// -->
+
+
+
+
+				<div class="col-md-12 ">
+					<div class="text-right">
+						<button type="submit" name="submit_verification" id="submit_verification" class="btn btn-primary" value="Submit" tabindex="19"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</form>
+</div>
+	 <!-- Customer Form Form End -->
+
+
+	 <!--  ///////////////////////////////////////////////////////////////// Documentation form start ////////////////////////////////////////////////////////// -->
+<div  id="cus_document" style="display: none;">
+	<form id="cus_doc" name="cus_doc" action="" method="post" enctype="multipart/form-data">
 		<!-- Row start -->
 		<div class="row gutters">
 			<!-- Request Info -->
@@ -1056,6 +1982,15 @@ if (sizeof($getRequestData) > 0) {
 	</form>
 </div>
 
+	<!-- Customer Profile form start-->
+	<div  id="customer_loan_calc" style="display: none;">
+	<form id="cus_loancalc" name="cus_loancalc" action="" method="post" enctype="multipart/form-data">
+	</form>
+	</div>
+
+
+</div>
+
 
 <!-- Add Family Members Modal -->
 <div class="modal fade addGroup" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -1661,3 +2596,6 @@ if (sizeof($getRequestData) > 0) {
 	</div>
 </div>
 <!-- END  Add KYC Info Modal -->
+
+
+
