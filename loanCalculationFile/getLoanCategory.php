@@ -4,7 +4,7 @@ include('../ajaxconfig.php');
 // if(isset($_POST["loan_cat"])){
 // 	$loan_cat  = $_POST["loan_cat"];
 // }
-$loanCatSelect = "SELECT * FROM loan_category GROUP BY loan_category_name"; 
+$loanCatSelect = "SELECT * FROM loan_category where status = 0  GROUP BY loan_category_name"; 
 $res = $con->query($loanCatSelect) ;
 $detailrecords = array();
 if ($res->num_rows>0)
@@ -22,7 +22,7 @@ if ($res->num_rows>0)
         $row1 = $res1->fetch_object();
         $detailrecords[$i]['loan_category_name'] = $row1->loan_category_creation_name;
 
-            $checkLoan = $con->query("SELECT * from loan_category where loan_category_name = '".$detailrecords[$i]['loan_category_name_id']."'");
+            $checkLoan = $con->query("SELECT * from loan_category where loan_category_name = '".$detailrecords[$i]['loan_category_name_id']."' and status = 0");
             if($checkLoan->num_rows>0){
                 $rowsCount1 = $checkLoan->num_rows;
                 
