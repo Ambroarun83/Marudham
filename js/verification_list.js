@@ -26,7 +26,34 @@ $(document).ready(function () {
             //         $('#exist_type').val(response);
             //     }
             // })
-        })
+        });
+        $('.move_approval').click(function(){
+            var req_id = $(this).val();
+            if(confirm('Do You want to Send this for Approval?')){
+                $.ajax({
+                    url: 'verificationFile/sendToApproval.php',
+                    dataType: 'json',
+                    type: 'post',
+                    data:{'req_id':req_id},
+                    cache:false,
+                    success:function(response){
+                        if(response.includes('Moved')){
+                            Swal.fire({
+                                timerProgressBar: true,
+                                timer: 2000,
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                            setTimeout(function(){
+                                window.location= 'verification_list';
+                            },2000)
+                        }
+                    }
+                })
+            }
+        });
         
     }, 1000);
 

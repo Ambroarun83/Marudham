@@ -1,11 +1,14 @@
 <?php 
+session_start();
 include('../ajaxconfig.php');
 if (isset($_POST['req_id'])) {
     $req_id = $_POST['req_id'];
 }
+if (isset($_SESSION['userid'])) {
+    $userid = $_SESSION['userid'];
+}
 
-
-    $selectIC = $con->query("UPDATE request_creation set cus_status = 1 WHERE req_id = '".$req_id."' ") or die('Error on Request Table');
+    $selectIC = $con->query("UPDATE request_creation set cus_status = 1, update_login_id = $userid WHERE req_id = '".$req_id."' ") or die('Error on Request Table');
     $selectIC = $con->query("UPDATE customer_register set cus_status = 1 WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
     $selectIC = $con->query("INSERT INTO in_verification (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`,
         `req_code`, `dor`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`,
