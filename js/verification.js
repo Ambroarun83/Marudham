@@ -254,6 +254,27 @@ $(document).ready(function () {
         getGroupandLine(sub_area_id);
     })
 
+// Verification Tab Change
+    $('#cus_profile,#documentation,#loan_calc').click(function(){
+        var verify = $('input[name=verification_type]:checked').val();
+
+        if(verify == 'cus_profile')
+        {
+            $('#customer_profile').show(); $('#cus_document').hide(); $('#customer_loan_calc').hide();
+         
+        }
+        if(verify == 'documentation')
+        {
+            $('#customer_profile').hide(); $('#cus_document').show(); $('#customer_loan_calc').hide();
+           
+        }
+        if(verify == 'loan_calc')
+        {
+            $('#customer_profile').hide(); $('#cus_document').hide(); $('#customer_loan_calc').show();
+      
+        }
+    })
+
 });   ////////Document Ready End
 
 $(function () {
