@@ -147,9 +147,9 @@ if (sizeof($getRequestData) > 0) {
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="form-group" style="text-align:center">
 				<!-- <label for=''style="font-size:16px" >Verification:</label><br><br> -->
-				<input type="radio" name="verification_type" id="cus_profile" value="cus_profile" ></input><label for='cusProfile'>&nbsp;&nbsp; Customer Profile </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="verification_type" id="documentation" value="documentation" ></input><label for='doc' >&nbsp;&nbsp; Documentation </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<input type="radio" name="verification_type" id="loan_calc" value="loan_calc" ></input><label for='loan_cal' >&nbsp;&nbsp; Loan Calculation </label>
+				<input type="radio" name="verification_type" id="cus_profile" value="cus_profile" ></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="verification_type" id="documentation" value="documentation" ></input><label for='documentation' >&nbsp;&nbsp; Documentation </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<input type="radio" name="verification_type" id="loan_calc" value="loan_calc" ></input><label for='loan_calc' >&nbsp;&nbsp; Loan Calculation </label>
 			</div>
 		</div>
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>">
@@ -1982,11 +1982,90 @@ if (sizeof($getRequestData) > 0) {
 	</form>
 </div>
 
-	<!-- Customer Profile form start-->
+	 <!--  ///////////////////////////////////////////////////////////////// Documentation form End ////////////////////////////////////////////////////////// -->
+
+
+	 <!--  ///////////////////////////////////////////////////////////////// Loan Calculation starts ////////////////////////////////////////////////////////// -->
+
 	<div  id="customer_loan_calc" style="display: none;">
-	<form id="cus_loancalc" name="cus_loancalc" action="" method="post" enctype="multipart/form-data">
-	</form>
+		<form id="cus_loancalc" name="cus_loancalc" action="" method="post" enctype="multipart/form-data">
+			<!-- Row start -->
+			<div class="row gutters">
+				<!-- Request Info -->
+				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+					<div class="card">
+						<div class="card-header">Request Info</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<div class="form-group">
+										<label for="user_type">User type</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="user_type" name="user_type" readonly value='<?php if (isset($user_type)) echo $user_type; ?>' tabindex="1">
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="user">User Name</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="user" name="user" readonly value='<?php if (isset($user_name)) echo $user_name; ?>' tabindex='2'>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {
+																										if ($role != '1') { ?> style="display: none" <?php }
+																																				} ?>>
+									<div class="form-group">
+										<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
+										<input tabindex="4" type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {
+																																			echo 'Yes';
+																																		} else {
+																																			echo 'No';
+																																		} ?>" readonly>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {
+																									if ($role != '3') { ?>style="display: none" <?php }
+																																		} ?>>
+									<div class="form-group">
+										<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='5' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {
+																										if ($role == '3') { ?>style="display: none" <?php }
+																																			} ?>>
+									<div class="form-group">
+										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='4' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="req_code">Request ID</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="req_code" name="req_code" readonly value='<?php if (isset($req_code)) echo $req_code; ?>' tabindex='7'>
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="dor">Date Of request</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="dor" name="dor" readonly value='<?php if (isset($dor)) {
+																														echo $dor;
+																													} else {
+																														echo date('Y-m-d');
+																													} ?>' tabindex='8'>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
+	 <!--  ///////////////////////////////////////////////////////////////// Loan Calculation Ends ////////////////////////////////////////////////////////// -->
+
 
 
 </div>
