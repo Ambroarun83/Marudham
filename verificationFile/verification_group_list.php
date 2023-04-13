@@ -5,7 +5,7 @@ include '../ajaxconfig.php';
 <table class="table custom-table "  id="grpTable">
     <thead>
         <tr>
-            <th>S.No</th>
+            <th style="width: 5px;">S.No</th>
             <th>Name</th>
             <th>Age</th>
             <th>Aadhar No</th>
