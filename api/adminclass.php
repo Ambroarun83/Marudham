@@ -3207,8 +3207,19 @@ require 'PHPMailerAutoload.php';
 			return $detailrecords;
 		}
 
+
+	// Get Loan caltegory list for Documentation
+	public function getloanCategoryForDoc($mysqli,$loan_category){
+
+	
+				$Qry = "SELECT * FROM loan_category_creation WHERE loan_category_creation_id= '$loan_category'"; 
+				$res1 = $mysqli->query($Qry) or die("Error in Get All Records".$mysqli->error);
+				$row1 = $res1->fetch_object();
+				$detailrecords['loan_category_name'] = $row1->loan_category_creation_name;
+
+
+		return $detailrecords;
+	}
+
+
 }//Class End
-?>
-
-
-
