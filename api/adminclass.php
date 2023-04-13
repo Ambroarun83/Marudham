@@ -2954,7 +2954,7 @@ require 'PHPMailerAutoload.php';
 	}
 
 	public function getRequestForVerification($mysqli,$id){
-        $qry = $mysqli->query("SELECT * FROM in_verification where req_id = $id and cus_status = 1");
+        $qry = $mysqli->query("SELECT * FROM in_verification where req_id = $id and (cus_status = 1 or cus_status=10 or cus_status=11 or cus_status=12)");
         $reqToverify = array();
         if($mysqli->affected_rows>0){
             $row = $qry->fetch_assoc();
@@ -3003,7 +3003,7 @@ require 'PHPMailerAutoload.php';
     }
 
 	// Add Verification
-        public function addVerification($mysqli, $userid){
+        public function addCustomerProfile($mysqli, $userid){
             if(isset($_POST['req_id'])){
                 $req_id = $_POST['req_id'];
             }
@@ -3175,20 +3175,37 @@ require 'PHPMailerAutoload.php';
                 $verification_location = $_POST['verification_location'];
             }
 
-            $insertQry="INSERT INTO `verified`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
+            $insertQry="INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
             '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($Communitcation_to_cus)."','".strip_tags($verify_audio)."','".strip_tags($verifyPerson)."','".strip_tags($verification_location)."','2','".$userid."' )";
             $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
-			$insertQry = "UPDATE request_creation set cus_status = 2 where req_id ='".strip_tags($req_id)."' ";
+			$insertQry = "UPDATE request_creation set cus_status = 10 where req_id ='".strip_tags($req_id)."' ";
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			
-			$insertQry = "UPDATE in_verification set cus_status = 2 where req_id ='".strip_tags($req_id)."' ";
+			$insertQry = "UPDATE in_verification set cus_status = 10 where req_id ='".strip_tags($req_id)."' ";
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			
 			$updateCus = "UPDATE `customer_register` SET  `how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`cus_character`='".strip_tags($cus_Character)."',`approach`='".strip_tags($cus_Approach)."',`relationship`='".strip_tags($cus_Relationship)."',`attitude`='".strip_tags($cus_Attitude)."',`behavior`='".strip_tags($cus_Behavior)."',`incident_remark`='".strip_tags($cus_Incidents_Remarks)."',`about_customer`='".strip_tags($about_cus)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
 			$insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
 
         }
+
+		public function getCusInfoForLoanCal($mysqli,$id){
+			$qry = $mysqli->query("SELECT * FROM customer_profile where req_id = $id ");
+			$detailrecords = array();
+			$i=0;
+			if($mysqli->affected_rows>0){
+				while($row = $qry->fetch_assoc()){
+					$detailrecords['cus_id'] = $row['cus_id'];
+					$detailrecords['cus_name'] = $row['cus_name'];
+					$detailrecords['cus_pic'] = $row['cus_pic'];
+					$detailrecords['cus_type'] = $row['cus_type'];
+					$detailrecords['mobile'] = $row['mobile1'];
+					$i++;
+				}
+			}
+			return $detailrecords;
+		}
 
 }//Class End
 ?>
