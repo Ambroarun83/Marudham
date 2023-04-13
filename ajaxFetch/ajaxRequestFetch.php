@@ -167,7 +167,7 @@ foreach ($result as $row) {
     
     $cus_status = $row['cus_status'];
     if($cus_status == '0'){$sub_array[] = "<button class='btn btn-outline-secondary sub_verification' value='$id'><span class = 'icon-arrow_forward'></span></button>";}else
-    if($cus_status == '1'){$sub_array[] = 'In Verification';}else
+    if($cus_status == '1' or $cus_status == '10' or $cus_status == '11' or $cus_status == '12'){$sub_array[] = 'In Verification';}else
     if($cus_status == '2'){$sub_array[] = 'In Approval';}else
     if($cus_status == '3'){$sub_array[] = 'In Issue';}else
     if($cus_status == '4'){$sub_array[] = 'Cancel - Request';}else
