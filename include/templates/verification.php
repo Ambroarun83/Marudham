@@ -249,7 +249,7 @@ if (sizeof($getCusInfoForLoanCal) > 0) {
 	<div  id="customer_profile" style="display: none;">
 		<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
-		<input type="hidden" name="loan_limit_amt" id="loan_limit_amt" value="<?php if (isset($tot_value)) {echo $tot_value;} ?>" />
+		<input type="hidden" name="loan_sub_cat" id="loan_sub_cat" value="<?php if (isset($sub_category)) {echo $sub_category;} ?>" />
 
 		<!-- Row start -->
 		<div class="row gutters">
