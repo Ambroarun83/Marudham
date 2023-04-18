@@ -3044,7 +3044,9 @@ require 'PHPMailerAutoload.php';
                 $picfolder="uploads/verification/customer/".$pic ;
                 move_uploaded_file($pic_temp, $picfolderreq);
                 move_uploaded_file($pic_temp, $picfolder);
-            }
+            }else{
+				$pic = $_POST['cus_image'];
+			}
             if(isset($_POST['guarentor_name'])){
                 $guarentor_name = $_POST['guarentor_name'];
             }
