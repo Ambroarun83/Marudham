@@ -826,6 +826,8 @@ if(docHolder == '2'){
 
 $(function () {
      $('.icon-chevron-down1').parent().next('div').slideUp(); //To collapse all card on load
+     let test = $('#cus_profile').next('label').next();
+     console.log(test);
     getImage(); // To show customer image when window onload.
 
     resetFamInfo(); //Call Family Info Table Initially.
@@ -2361,7 +2363,7 @@ function getAreaBasedSubArea(area) {
 }
 
 $('#cus_loan_limit').change(function () { /// Loan Limit will Check the Loan Amount in Request Loan Category./////
-    let loanLimit = $(this).val();
+    let loanLimit = parseInt($(this).val());
     let loanamnt = $('#loan_amt').val();
 
     if (loanLimit > loanamnt) {
@@ -2423,12 +2425,12 @@ function validation() {
     } else {
         $('#mobile1Check').hide();
     }
-    if (pic == '') {
-        event.preventDefault();
-        $('#picCheck').show();
-    } else {
-        $('#picCheck').hide();
-    }
+    // if (pic == '') {
+    //     event.preventDefault();
+    //     $('#picCheck').show();
+    // } else {
+    //     $('#picCheck').hide();
+    // }
     if (guarentor_name == '') {
         event.preventDefault();
         $('#guarentor_nameCheck').show();

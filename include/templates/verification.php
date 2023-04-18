@@ -119,7 +119,7 @@ if (sizeof($getRequestData) > 0) {
 
 ////////  Document Customer Info ///// 
 $getcusInfoForDoc = $userObj->getcusInfoForDoc($mysqli, $idupd); 
-
+print_r($getcusInfoForDoc);
 if (sizeof($getcusInfoForDoc) > 0) {
 
 	$cus_profile_id = $getcusInfoForDoc['cus_profile_id'];
@@ -239,9 +239,9 @@ if (sizeof($getCusInfoForLoanCal) > 0) {
 	<div class="col-md-12">
 		<div class="form-group" style="text-align:center">
 			<!-- <label for=''style="font-size:16px" >Verification:</label><br><br> -->
-			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile" ></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile <span class="icon-done" <?php if(isset($cus_status)) {if($cus_status == 10) {echo "style='display:block';";}else{echo "style='display:none'";}}?>></span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="documentation" value="documentation" ></input><label for='documentation' >&nbsp;&nbsp; Documentation <span class="icon-done" <?php if(isset($cus_status)){if($cus_status == 11) {echo "style='display:block'";}else{echo "style='display:none'";}}?>></span></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="loan_calc" value="loan_calc" ></input><label for='loan_calc' >&nbsp;&nbsp; Loan Calculation <span class="icon-done" <?php if(isset($cus_status)){if($cus_status == 12) {echo "style='display:block'";}else{echo "style='display:none'";}}?>></span></label>
+			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile"></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile  <?php if(isset($customer_profile_sts)) {if($customer_profile_sts == 10) {?> <span class="icon-done" ></span> <?php } } ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="verification_type" id="documentation" value="documentation" ></input><label for='documentation' >&nbsp;&nbsp; Documentation  <?php if(isset($document_sts)){if($document_sts == 11) {?> <span class="icon-done" ></span> <?php } } ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="verification_type" id="loan_calc" value="loan_calc" ></input><label for='loan_calc' >&nbsp;&nbsp; Loan Calculation  <?php if(isset($cus_status)){if($cus_status == 12) {?> <span class="icon-done" ></span> <?php } } ?> </label>
 		</div>
 	</div>
 	
