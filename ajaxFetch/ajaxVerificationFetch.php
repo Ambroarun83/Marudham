@@ -205,7 +205,7 @@ foreach ($result as $row) {
     $action="<div class='dropdown' style='float:right;'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
-    if($cus_status == '1') {
+    if($cus_status == '1' or $cus_status == '10' or $cus_status == '11' or $cus_status == '12') {
         $action .= "<a href='verification&upd=$id' class='customer_profile' value='$id' >Edit Verification</a>
         <a href='verification&can=$id' class='cancelverification'>Cancel Verification</a><a href='verification&rev=$id'class='revokeverification'>Revoke Verification</a>";
     }else
