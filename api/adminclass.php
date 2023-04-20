@@ -3636,30 +3636,51 @@ require 'PHPMailerAutoload.php';
 		$due_method_calc = '';
 		if(isset($_POST['due_method_calc'])){
 			$due_method_calc = $_POST['due_method_calc'];
+			if($profit_type=='2'){
+				$due_method_calc='';
+			}
 		}
 		$due_type= '';
 		if(isset($_POST['due_type'])){
 			$due_type = $_POST['due_type'];
+			if($profit_type=='2'){
+				$due_type='';
+			}
 		}
 		$profit_method='';
 		if(isset($_POST['profit_method'])){
 			$profit_method = $_POST['profit_method'];
+			if($profit_type=='2'){
+				$profit_method='';
+			}
 		}
 		$calc_method ='';
 		if(isset($_POST['calc_method'])){
 			$calc_method = $_POST['calc_method'];
+			if($profit_type=='2'){
+				$calc_method='';
+			}
 		}
 		$due_method_scheme='';
 		if(isset($_POST['due_method_scheme'])){
 			$due_method_scheme = $_POST['due_method_scheme'];
+			if($profit_type=='1'){
+				$due_method_scheme='';
+			}
 		}
 		$day_scheme='';
 		if(isset($_POST['day_scheme'])){
 			$day_scheme = $_POST['day_scheme'];
+			if($profit_type=='1'){
+				$day_scheme='';
+			}
 		}
 		$scheme_name='';
 		if(isset($_POST['scheme_name'])){
 			$scheme_name = $_POST['scheme_name'];
+			if($profit_type=='1'){
+				$scheme_name='';
+			}
 		}
 		if(isset($_POST['int_rate'])){
 			$int_rate = $_POST['int_rate'];
@@ -3713,20 +3734,38 @@ require 'PHPMailerAutoload.php';
 		}
 
 		if($loan_cal_id > 0 or $loan_cal_id != ''){
+			$updateQry = $mysqli->query("UPDATE verification_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
+				cus_data_loan = '".strip_tags($cus_data_loan)."', mobile_loan = '".strip_tags($mobile_loan)."', pic_loan = '".strip_tags($pic_loan)."', 
+				loan_category = '".strip_tags($loan_category)."', sub_category = '".strip_tags($sub_category)."', tot_value = '".strip_tags($tot_value)."', ad_amt = '".strip_tags($ad_amt)."',
+				loan_amt = '".strip_tags($loan_amt)."', profit_type = '".strip_tags($profit_type)."', due_method_calc = '".strip_tags($due_method_calc)."', 
+				due_type = '".strip_tags($due_type)."', profit_method = '".strip_tags($profit_method)."', calc_method = '".strip_tags($calc_method)."', 
+				due_method_scheme = '".strip_tags($due_method_scheme)."', day_scheme = '".strip_tags($day_scheme)."', scheme_name = '".strip_tags($scheme_name)."', 
+				int_rate = '".strip_tags($int_rate)."', due_period = '".strip_tags($due_period)."', doc_charge = '".strip_tags($doc_charge)."', proc_fee = '".strip_tags($proc_fee)."', 
+				loan_amt_cal = '".strip_tags($loan_amt_cal)."', principal_amt_cal = '".strip_tags($principal_amt_cal)."', int_amt_cal = '".strip_tags($int_amt_cal)."', 
+				tot_amt_cal = '".strip_tags($tot_amt_cal)."', due_amt_cal = '".strip_tags($due_amt_cal)."', doc_charge_cal = '".strip_tags($doc_charge_cal)."', 
+				proc_fee_cal = '".strip_tags($proc_fee_cal)."', net_cash_cal = '".strip_tags($net_cash_cal)."', due_start_from = '".strip_tags($due_start_from)."', 
+				maturity_month = '".strip_tags($maturity_month)."', collection_method = '".strip_tags($collection_method)."', cus_status = 12, update_login_id = $userid, 
+				update_date = current_timestamp() WHERE req_id = $req_id ");
 
+			$deleteCat = $mysqli->query("DELETE FROM verif_loan_cal_category where req_id = '".strip_tags($req_id)."' and loan_cal_id='".strip_tags($loan_cal_id)."'");
+
+			for($i=0;$i<sizeof($category_info);$i++){
+				$insertCategory = $mysqli->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
+				'".strip_tags($category_info[$i])."' )");
+			}
 		}else{
 
 			$insertQry = $mysqli->query("INSERT INTO verification_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
-			`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
-			`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
-			`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('".strip_tags($req_id)."', '".strip_tags($cus_id_loan)."', 
-			'".strip_tags($cus_name_loan)."', '".strip_tags($cus_data_loan)."','".strip_tags($mobile_loan)."', '".strip_tags($pic_loan)."', '".strip_tags($loan_category)."', 
-			'".strip_tags($sub_category)."', '".strip_tags($tot_value)."', '".strip_tags($ad_amt)."', '".strip_tags($loan_amt)."', '".strip_tags($profit_type)."', 
-			'".strip_tags($due_method_calc)."', '".strip_tags($due_type)."', '".strip_tags($profit_method)."', '".strip_tags($calc_method)."', '".strip_tags($due_method_scheme)."', 
-			'".strip_tags($day_scheme)."', '".strip_tags($scheme_name)."', '".strip_tags($int_rate)."', '".strip_tags($due_period)."', '".strip_tags($doc_charge)."', 
-			'".strip_tags($proc_fee)."', '".strip_tags($loan_amt_cal)."', '".strip_tags($principal_amt_cal)."', '".strip_tags($int_amt_cal)."', '".strip_tags($tot_amt_cal)."', 
-			'".strip_tags($due_amt_cal)."', '".strip_tags($doc_charge_cal)."', '".strip_tags($proc_fee_cal)."', '".strip_tags($net_cash_cal)."', '".strip_tags($due_start_from)."', 
-			'".strip_tags($maturity_month)."', '".strip_tags($collection_method)."', 12, $userid, current_timestamp()) ");
+				`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
+				`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
+				`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('".strip_tags($req_id)."', '".strip_tags($cus_id_loan)."', 
+				'".strip_tags($cus_name_loan)."', '".strip_tags($cus_data_loan)."','".strip_tags($mobile_loan)."', '".strip_tags($pic_loan)."', '".strip_tags($loan_category)."', 
+				'".strip_tags($sub_category)."', '".strip_tags($tot_value)."', '".strip_tags($ad_amt)."', '".strip_tags($loan_amt)."', '".strip_tags($profit_type)."', 
+				'".strip_tags($due_method_calc)."', '".strip_tags($due_type)."', '".strip_tags($profit_method)."', '".strip_tags($calc_method)."', '".strip_tags($due_method_scheme)."', 
+				'".strip_tags($day_scheme)."', '".strip_tags($scheme_name)."', '".strip_tags($int_rate)."', '".strip_tags($due_period)."', '".strip_tags($doc_charge)."', 
+				'".strip_tags($proc_fee)."', '".strip_tags($loan_amt_cal)."', '".strip_tags($principal_amt_cal)."', '".strip_tags($int_amt_cal)."', '".strip_tags($tot_amt_cal)."', 
+				'".strip_tags($due_amt_cal)."', '".strip_tags($doc_charge_cal)."', '".strip_tags($proc_fee_cal)."', '".strip_tags($net_cash_cal)."', '".strip_tags($due_start_from)."', 
+				'".strip_tags($maturity_month)."', '".strip_tags($collection_method)."', 12, $userid, current_timestamp()) ");
 			$loan_cal_id = $mysqli->insert_id;
 			
 			for($i=0;$i<sizeof($category_info);$i++){
