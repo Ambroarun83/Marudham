@@ -3334,24 +3334,24 @@ require 'PHPMailerAutoload.php';
             if(isset($_POST['doc_property_value'])){
                 $doc_property_value = $_POST['doc_property_value'];
             }
-            if(isset($_POST['mortgage_name'])){
-                $mortgage_name = $_POST['mortgage_name'];
-            }
-            if(isset($_POST['mortgage_dsgn'])){
-                $mortgage_dsgn = $_POST['mortgage_dsgn'];
-            }
-            if(isset($_POST['mortgage_nuumber'])){
-                $mortgage_nuumber = $_POST['mortgage_nuumber'];
-            }
-            if(isset($_POST['reg_office'])){
-                $reg_office = $_POST['reg_office'];
-            }
-            if(isset($_POST['mortgage_value'])){
-                $mortgage_value = $_POST['mortgage_value'];
-            }
-            if(isset($_POST['mortgage_document'])){
-                $mortgage_document = $_POST['mortgage_document'];
-            }
+            // if(isset($_POST['mortgage_name'])){
+            //     $mortgage_name = $_POST['mortgage_name'];
+            // }
+            // if(isset($_POST['mortgage_dsgn'])){
+            //     $mortgage_dsgn = $_POST['mortgage_dsgn'];
+            // }
+            // if(isset($_POST['mortgage_nuumber'])){
+            //     $mortgage_nuumber = $_POST['mortgage_nuumber'];
+            // }
+            // if(isset($_POST['reg_office'])){
+            //     $reg_office = $_POST['reg_office'];
+            // }
+            // if(isset($_POST['mortgage_value'])){
+            //     $mortgage_value = $_POST['mortgage_value'];
+            // }
+            // if(isset($_POST['mortgage_document'])){
+            //     $mortgage_document = $_POST['mortgage_document'];
+            // }
             if(isset($_POST['endorsement_process'])){
                 $endorsement_process = $_POST['endorsement_process'];
             }
@@ -3382,18 +3382,18 @@ require 'PHPMailerAutoload.php';
             if(isset($_POST['en_Model'])){
                 $en_Model = $_POST['en_Model'];
             }
-            if(isset($_POST['vehicle_reg_no'])){
-                $vehicle_reg_no = $_POST['vehicle_reg_no'];
-            }
-            if(isset($_POST['endorsement_name'])){
-                $endorsement_name = $_POST['endorsement_name'];
-            }
-            if(isset($_POST['en_RC'])){
-                $en_RC = $_POST['en_RC'];
-            }
-            if(isset($_POST['en_Key'])){
-                $en_Key = $_POST['en_Key'];
-            }
+            // if(isset($_POST['vehicle_reg_no'])){
+            //     $vehicle_reg_no = $_POST['vehicle_reg_no'];
+            // }
+            // if(isset($_POST['endorsement_name'])){
+            //     $endorsement_name = $_POST['endorsement_name'];
+            // }
+            // if(isset($_POST['en_RC'])){
+            //     $en_RC = $_POST['en_RC'];
+            // }
+            // if(isset($_POST['en_Key'])){
+            //     $en_Key = $_POST['en_Key'];
+            // }
             if(isset($_POST['gold_info'])){
                 $gold_info = $_POST['gold_info'];
             }
@@ -3443,8 +3443,7 @@ require 'PHPMailerAutoload.php';
             }
 
 			if($doc_table_id == ''){
-						$insertQry = "INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `en_Key`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($mortgage_name)."',
-						'".strip_tags($mortgage_dsgn)."','".strip_tags($mortgage_nuumber)."','".strip_tags($reg_office)."','".strip_tags($mortgage_value)."', '".strip_tags($mortgage_document)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','".strip_tags($vehicle_reg_no)."','".strip_tags($endorsement_name)."','".strip_tags($en_RC)."','".strip_tags($en_Key)."','".strip_tags($gold_info)."','".strip_tags($gold_sts)."','".strip_tags($gold_type)."','".strip_tags($Purity)."','".strip_tags($gold_Count)."','".strip_tags($gold_Weight)."','".strip_tags($gold_Value)."','".strip_tags($document_name)."','".strip_tags($document_details)."','".strip_tags($document_type)."','".strip_tags($document_holder)."','".strip_tags($docholder_name)."','".strip_tags($docholder_relationship_name)."','".strip_tags($doc_relation)."','11','".$userid."' )";
+						$insertQry = "INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','".strip_tags($gold_info)."','".strip_tags($gold_sts)."','".strip_tags($gold_type)."','".strip_tags($Purity)."','".strip_tags($gold_Count)."','".strip_tags($gold_Weight)."','".strip_tags($gold_Value)."','".strip_tags($document_name)."','".strip_tags($document_details)."','".strip_tags($document_type)."','".strip_tags($document_holder)."','".strip_tags($docholder_name)."','".strip_tags($docholder_relationship_name)."','".strip_tags($doc_relation)."','11','".$userid."' )";
 
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
@@ -3454,7 +3453,7 @@ require 'PHPMailerAutoload.php';
 						$insertQry = "UPDATE in_verification set cus_status = 11 where req_id ='".strip_tags($req_id)."' ";
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			}else{
-			$update_doc = "UPDATE `verification_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',`mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',`mortgage_document`='".strip_tags($mortgage_document)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',`en_Key`='".strip_tags($en_Key)."',`gold_info`='".strip_tags($gold_info)."',`gold_sts`='".strip_tags($gold_sts)."',`gold_type`='".strip_tags($gold_type)."',`Purity`='".strip_tags($Purity)."',`gold_Count`='".strip_tags($gold_Count)."',`gold_Weight`='".strip_tags($gold_Weight)."',`gold_Value`='".strip_tags($gold_Value)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
+			$update_doc = "UPDATE `verification_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`gold_info`='".strip_tags($gold_info)."',`gold_sts`='".strip_tags($gold_sts)."',`gold_type`='".strip_tags($gold_type)."',`Purity`='".strip_tags($Purity)."',`gold_Count`='".strip_tags($gold_Count)."',`gold_Weight`='".strip_tags($gold_Weight)."',`gold_Value`='".strip_tags($gold_Value)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
 
 			$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
 			}
@@ -3480,12 +3479,12 @@ require 'PHPMailerAutoload.php';
 					$detailrecords['doc_property_measurement'] = $row['doc_property_measurement'];
 					$detailrecords['doc_property_location'] = $row['doc_property_location'];
 					$detailrecords['doc_property_value'] = $row['doc_property_value'];
-					$detailrecords['mortgage_name'] = $row['mortgage_name'];
-					$detailrecords['mortgage_dsgn'] = $row['mortgage_dsgn'];
-					$detailrecords['mortgage_nuumber'] = $row['mortgage_nuumber'];
-					$detailrecords['reg_office'] = $row['reg_office'];
-					$detailrecords['mortgage_value'] = $row['mortgage_value'];
-					$detailrecords['mortgage_document'] = $row['mortgage_document'];
+					// $detailrecords['mortgage_name'] = $row['mortgage_name'];
+					// $detailrecords['mortgage_dsgn'] = $row['mortgage_dsgn'];
+					// $detailrecords['mortgage_nuumber'] = $row['mortgage_nuumber'];
+					// $detailrecords['reg_office'] = $row['reg_office'];
+					// $detailrecords['mortgage_value'] = $row['mortgage_value'];
+					// $detailrecords['mortgage_document'] = $row['mortgage_document'];
 					$detailrecords['endorsement_process'] = $row['endorsement_process'];
 					$detailrecords['owner_type'] = $row['owner_type'];
 					$detailrecords['owner_name'] = $row['owner_name'];
@@ -3495,10 +3494,10 @@ require 'PHPMailerAutoload.php';
 					$detailrecords['vehicle_process'] = $row['vehicle_process'];
 					$detailrecords['en_Company'] = $row['en_Company'];
 					$detailrecords['en_Model'] = $row['en_Model'];
-					$detailrecords['vehicle_reg_no'] = $row['vehicle_reg_no'];
-					$detailrecords['endorsement_name'] = $row['endorsement_name'];
-					$detailrecords['en_RC'] = $row['en_RC'];
-					$detailrecords['en_Key'] = $row['en_Key'];
+					// $detailrecords['vehicle_reg_no'] = $row['vehicle_reg_no'];
+					// $detailrecords['endorsement_name'] = $row['endorsement_name'];
+					// $detailrecords['en_RC'] = $row['en_RC'];
+					// $detailrecords['en_Key'] = $row['en_Key'];
 					$detailrecords['gold_info'] = $row['gold_info'];
 					$detailrecords['gold_sts'] = $row['gold_sts'];
 					$detailrecords['gold_type'] = $row['gold_type'];
