@@ -476,6 +476,38 @@ $(document).ready(function() {
                 [10, 25, 50, "All"]
             ],
         });
+
+
+        // Approval datatable
+        var approval_table = $('#approval_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxApprovalFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "Loan Scheme List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+        });
         
         $('#search').change(function(){
             company_creation_table.draw();
@@ -490,6 +522,7 @@ $(document).ready(function() {
             doc_mapping_table.draw();
             request_table.draw();
             verification_table.draw();
+            approval_table.draw();
         });
         
 });//Document Ready End
@@ -571,6 +604,10 @@ if($current_page == 'verification') { ?>
     
 if($current_page == 'verification_list') { ?>
     <script src="js/verification_list.js"></script>
+    <?php }
+
+if($current_page == 'approval_list') { ?>
+    <script src="js/approval_list.js"></script>
     <?php }
 
 ?> 
@@ -738,6 +775,25 @@ if($current_page == 'verification_list') { ?>
     $(document).on("click", '.removeverification', function(){
         var dlt = confirm("Do you want to Remove this Verification?");
         if(dlt){
+                return true;
+            }else{
+                return false;
+            }
+    });
+
+    // Approval Actions
+    $(document).on("click", '.cancelapproval', function(){
+        var aprvedlt = confirm("Do you want to Cancel this Approval?");
+        if(aprvedlt){
+                return true;
+            }else{
+                return false;
+            }
+    });
+
+    $(document).on("click", '.removeapproval', function(){
+        var appdlt = confirm("Do you want to Remove this Approval?");
+        if(appdlt){
                 return true;
             }else{
                 return false;

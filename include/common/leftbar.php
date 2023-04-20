@@ -320,6 +320,23 @@ if (sizeof($getUser)>0) {
 						</div>
 					</li>
 				<?php  } ?>
+				<?php if($verificationmodule == 0){?>
+					<li class="sidebar-dropdown approve">
+						<a href="javascript:void(0)">
+							<i class="icon-folder"></i>
+							<span class="menu-text">Approval</span>
+						</a>
+						<div class="sidebar-submenu" <?php if($current_module=='approval') echo 'style="display:block" '; ?>>
+							<ul>
+								<?php  if($verification == 0){ ?>
+									<li>
+										<a href="approval_list"><i class="icon-list"></i>Approval</a>
+									</li>
+								<?php  } ?>
+							</ul>
+						</div>
+					</li>
+				<?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->

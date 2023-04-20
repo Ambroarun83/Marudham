@@ -236,6 +236,15 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'verification') { ?>
 			<?php include "include/templates/verification.php" ?>
 			<?php } ?>
+
+			<!-- Approval -->
+			<?php if($current_page == 'approval_list') { ?>
+			<?php include "include/templates/approval_list.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'approval') { ?>
+			<?php include "include/templates/approval.php" ?>
+			<?php } ?>
 			
 
 		</div>
