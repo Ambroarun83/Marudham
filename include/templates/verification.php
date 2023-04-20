@@ -179,12 +179,12 @@ if(sizeof($getCustomerProfile) > 0 ){
 	$commitment = $getCustomerProfile['commitment'] ;
 	$monthly_due_capacity = $getCustomerProfile['monthly_due_capacity'] ;
 	$loan_limit = $getCustomerProfile['loan_limit'] ;
-	$cus_character = $getCustomerProfile['cus_character'];
-	$approach = $getCustomerProfile['approach'];
-	$relationship = $getCustomerProfile['relationship'] ;
-	$attitude = $getCustomerProfile['attitude'] ;
-	$behavior = $getCustomerProfile['behavior'] ;
-	$incident_remark  = $getCustomerProfile['incident_remark'] ;
+	// $cus_character = $getCustomerProfile['cus_character'];
+	// $approach = $getCustomerProfile['approach'];
+	// $relationship = $getCustomerProfile['relationship'] ;
+	// $attitude = $getCustomerProfile['attitude'] ;
+	// $behavior = $getCustomerProfile['behavior'] ;
+	// $incident_remark  = $getCustomerProfile['incident_remark'] ;
 	$about_customer = $getCustomerProfile['about_customer']  ;
 
 }

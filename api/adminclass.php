@@ -3149,24 +3149,24 @@ require 'PHPMailerAutoload.php';
             if(isset($_POST['cus_loan_limit'])){
                 $cus_loan_limit = $_POST['cus_loan_limit'];
             }
-            if(isset($_POST['cus_Character'])){
-                $cus_Character = $_POST['cus_Character'];
-            }
-            if(isset($_POST['cus_Approach'])){
-                $cus_Approach = $_POST['cus_Approach'];
-            }
-            if(isset($_POST['cus_Relationship'])){
-                $cus_Relationship = $_POST['cus_Relationship'];
-            }
-            if(isset($_POST['cus_Attitude'])){
-                $cus_Attitude = $_POST['cus_Attitude'];
-            }
-            if(isset($_POST['cus_Behavior'])){
-                $cus_Behavior = $_POST['cus_Behavior'];
-            }
-            if(isset($_POST['cus_Incidents_Remarks'])){
-                $cus_Incidents_Remarks = $_POST['cus_Incidents_Remarks'];
-            }
+            // if(isset($_POST['cus_Character'])){
+            //     $cus_Character = $_POST['cus_Character'];
+            // }
+            // if(isset($_POST['cus_Approach'])){
+            //     $cus_Approach = $_POST['cus_Approach'];
+            // }
+            // if(isset($_POST['cus_Relationship'])){
+            //     $cus_Relationship = $_POST['cus_Relationship'];
+            // }
+            // if(isset($_POST['cus_Attitude'])){
+            //     $cus_Attitude = $_POST['cus_Attitude'];
+            // }
+            // if(isset($_POST['cus_Behavior'])){
+            //     $cus_Behavior = $_POST['cus_Behavior'];
+            // }
+            // if(isset($_POST['cus_Incidents_Remarks'])){
+            //     $cus_Incidents_Remarks = $_POST['cus_Incidents_Remarks'];
+            // }
             if(isset($_POST['about_cus'])){
                 $about_cus = $_POST['about_cus'];
             }
@@ -3213,7 +3213,7 @@ require 'PHPMailerAutoload.php';
 				$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			}
 
-			$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`cus_character`='".strip_tags($cus_Character)."',`approach`='".strip_tags($cus_Approach)."',`relationship`='".strip_tags($cus_Relationship)."',`attitude`='".strip_tags($cus_Attitude)."',`behavior`='".strip_tags($cus_Behavior)."',`incident_remark`='".strip_tags($cus_Incidents_Remarks)."',`about_customer`='".strip_tags($about_cus)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
+			$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
 			$insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
 
         }
@@ -3274,12 +3274,12 @@ require 'PHPMailerAutoload.php';
 						$detailrecords['commitment'] = $row['commitment'];
 						$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
 						$detailrecords['loan_limit'] = $row['loan_limit'];
-						$detailrecords['cus_character'] = $row['cus_character'];
-						$detailrecords['approach'] = $row['approach'];
-						$detailrecords['relationship'] = $row['relationship'];
-						$detailrecords['attitude'] = $row['attitude'];
-						$detailrecords['behavior'] = $row['behavior'];
-						$detailrecords['incident_remark'] = $row['incident_remark'];
+						// $detailrecords['cus_character'] = $row['cus_character'];
+						// $detailrecords['approach'] = $row['approach'];
+						// $detailrecords['relationship'] = $row['relationship'];
+						// $detailrecords['attitude'] = $row['attitude'];
+						// $detailrecords['behavior'] = $row['behavior'];
+						// $detailrecords['incident_remark'] = $row['incident_remark'];
 						$detailrecords['about_customer'] = $row['about_customer'];
 						$i++;
 					}
