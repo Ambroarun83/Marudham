@@ -218,12 +218,12 @@ if(sizeof($documentationInfo)>0){
 	$doc_property_measurement = $documentationInfo['doc_property_measurement'];
 	$doc_property_location = $documentationInfo['doc_property_location'];
 	$doc_property_value = $documentationInfo['doc_property_value'];
-	$mortgage_name = $documentationInfo['mortgage_name'];
-	$mortgage_dsgn = $documentationInfo['mortgage_dsgn'];
-	$mortgage_nuumber = $documentationInfo['mortgage_nuumber'];
-	$reg_office = $documentationInfo['reg_office'];
-	$mortgage_value = $documentationInfo['mortgage_value'];
-	$mortgage_document = $documentationInfo['mortgage_document'];
+	// $mortgage_name = $documentationInfo['mortgage_name'];
+	// $mortgage_dsgn = $documentationInfo['mortgage_dsgn'];
+	// $mortgage_nuumber = $documentationInfo['mortgage_nuumber'];
+	// $reg_office = $documentationInfo['reg_office'];
+	// $mortgage_value = $documentationInfo['mortgage_value'];
+	// $mortgage_document = $documentationInfo['mortgage_document'];
 	$endorsement_process = $documentationInfo['endorsement_process'];
 	$owner_type = $documentationInfo['owner_type'];
 	$owner_name = $documentationInfo['owner_name'];
@@ -233,10 +233,10 @@ if(sizeof($documentationInfo)>0){
 	$vehicle_process = $documentationInfo['vehicle_process'];
 	$en_Company = $documentationInfo['en_Company'];
 	$en_Model = $documentationInfo['en_Model'];
-	$vehicle_reg_no = $documentationInfo['vehicle_reg_no'];
-	$endorsement_name = $documentationInfo['endorsement_name'];
-	$en_RC = $documentationInfo['en_RC'];
-	$en_Key = $documentationInfo['en_Key'];
+	// $vehicle_reg_no = $documentationInfo['vehicle_reg_no'];
+	// $endorsement_name = $documentationInfo['endorsement_name'];
+	// $en_RC = $documentationInfo['en_RC'];
+	// $en_Key = $documentationInfo['en_Key'];
 	$gold_info = $documentationInfo['gold_info'];
 	$gold_sts = $documentationInfo['gold_sts'];
 	$gold_type = $documentationInfo['gold_type'];
@@ -1518,7 +1518,7 @@ if(sizeof($getLoanCalculation)>0){
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="row">
+                                <!-- <div class="row">
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="MortgageName"> Mortgage Name </label> <span class="required">&nbsp;*</span>
@@ -1570,7 +1570,7 @@ if(sizeof($getLoanCalculation)>0){
                                             <span class="text-danger" id="mortgagedocCheck"> Select Mortgage Document </span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>
@@ -1671,7 +1671,7 @@ if(sizeof($getLoanCalculation)>0){
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="VehicleRegNo"> Vehicle Reg No. </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="vehicle_reg_no" name="vehicle_reg_no" placeholder="Enter Vehicle No" value="<?php if(isset($vehicle_reg_no)) echo $vehicle_reg_no; ?>">
@@ -1709,7 +1709,7 @@ if(sizeof($getLoanCalculation)>0){
                                         </select>
                                         <span class="text-danger" id="enKeyCheck"> Select Key </span>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>
