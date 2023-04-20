@@ -4,11 +4,15 @@
 if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd'];
 }
+if (isset($_GET['pge'])) {
+    $pge = $_GET['pge']; // 2 = page from Approval List. // 1 = Page From Verification List.
+}
 if (isset($_POST['submit_verification']) && $_POST['submit_verification'] != '') {
 
 	$addCustomerProfile = $userObj->addCustomerProfile($mysqli, $userid);
 ?>
 	<script> alert('Customer Profile Submitted'); </script>
+	<!-- <script>location.href='<?php echo $HOSTPATH;  ?>verification';</script> -->
 <?php
 }
 $del=0;
@@ -19,10 +23,14 @@ $del=$_GET['del'];
 if($del>0)
 {
 	$deleteVerification = $userObj->deleteVerification($mysqli,$del, $userid); 
+	if(isset($pge) && $pge == '1'){
 	?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>verification_list&msc=3';</script>
-<?php	
+	<?php }else{?>
+		<script>location.href='<?php echo $HOSTPATH;  ?>approval_list&msc=2';</script>
+	<?php }
 }
+
 $can=0;
 if(isset($_GET['can']))
 {
@@ -48,13 +56,25 @@ if($rev>0)
 <?php	
 }
 //////////////////////////////////// Verification List Options End
+$cancel=0;
+if(isset($_GET['cancel']))
+{
+$cancel=$_GET['cancel'];
+}
+if($cancel>0)
+{
+    $cancelApproval = $userObj->cancelApproval($mysqli,$cancel, $userid);
+    ?>
+    <script>location.href='<?php echo $HOSTPATH;  ?>approval_list&msc=1';</script>
+<?php
+}
 
 if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''){
 
 	$addDocVerification = $userObj->addDocumentation($mysqli, $userid);
 ?>
-<script> alert('Documentation Details Submitted'); </script>
-
+	<script> alert('Documentation Details Submitted'); </script>
+	<!-- <script>location.href='<?php echo $HOSTPATH;  ?>verification';</script> -->
 <?php
 }
 
@@ -63,9 +83,8 @@ if(isset($_POST['submit_loan_calculation']) && $_POST['submit_loan_calculation']
 	$addVerificationLoanCalculation = $userObj->addVerificationLoanCalculation($mysqli, $userid);
 	
 ?>
-	<script>
-		alert('Loan Calculation Details Submitted');
-	</script>
+	<script>alert('Loan Calculation Details Submitted');</script>
+	<!-- <script>location.href='<?php echo $HOSTPATH;  ?>verification';</script> -->
 
 <?php
 }
@@ -335,7 +354,7 @@ if(sizeof($getLoanCalculation)>0){
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Verification
+		Marudham - <?php if(isset($pge) && $pge == '1'){?>Verification <?php }else{?> Approval <?php } ?>
 	</div>
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
@@ -344,9 +363,8 @@ if(sizeof($getLoanCalculation)>0){
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
-	<a href="verification_list">
+	<a <?php if(isset($pge) && $pge == '1'){?> href="verification_list" <?php }else{?> href="approval_list" <?php } ?>>
 		<button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-		<!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
 	</a>
 </div><br><br>
 <!-- Page header end -->
@@ -1247,15 +1265,16 @@ if(sizeof($getLoanCalculation)>0){
 									<span class="text-danger" style='display:none' id='communicationCheck'>Please Select communication </span>
 								</div>
 							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style='display:none' id="verifyaudio">
-								<div class="form-group">
-									<label for="Communitcation"> Audio </label> 
-									<input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*">
-								</div>
-							</div>
-
-
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" <?php if(isset($communication)){if($communication == '1'){?> style="display: none;" <?php }} else{ ?> style="display: none;" <?php }?>  id="verifyaudio">
+                                <div class="form-group">
+                                    <label for="Communitcation"> Audio </label>
+                                    <input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if(isset($com_audio)){ echo $com_audio; }?>">
+                                    <input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*">
+                                    <?php if(isset($communication)){if($communication == '0'){ ?>
+                                        <a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>
+                                    <?php }}?>
+                                </div>
+                            </div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="Verificationperson"> Verification person </label> <span class="required">*</span>
@@ -1896,8 +1915,15 @@ if(sizeof($getLoanCalculation)>0){
 			<input type="hidden" name="sub_category_load" id="sub_category_load" value="<?php if (isset($sub_category)) {echo $sub_category;} ?>" />
 			<input type="hidden" name="loan_category_upd" id="loan_category_upd" value="<?php if (isset($loan_category_lc)) {echo $loan_category_lc;} ?>" />
 			<input type="hidden" name="sub_category_upd" id="sub_category_upd" value="<?php if (isset($sub_category_lc)) {echo $sub_category_lc;} ?>" />
+			<input type="hidden" name="profit_type_upd" id="profit_type_upd" value="<?php if (isset($profit_type_lc)) {echo $profit_type_lc;} ?>" />
+			<input type="hidden" name="due_method_scheme_upd" id="due_method_scheme_upd" value="<?php if (isset($due_method_scheme_lc)) {echo $due_method_scheme_lc;} ?>" />
+			<input type="hidden" name="day_scheme_upd" id="day_scheme_upd" value="<?php if (isset($day_scheme_lc)) {echo $day_scheme_lc;} ?>" />
 			<input type="hidden" name="scheme_upd" id="scheme_upd" value="<?php if (isset($scheme_name_lc)) {echo $scheme_name_lc;} ?>" />
 			<input type="hidden" name="profit_method_upd" id="profit_method_upd" value="<?php if (isset($profit_method_lc)) {echo $profit_method_lc;} ?>" />
+			<input type="hidden" name="int_rate_upd" id="int_rate_upd" value="<?php if (isset($int_rate_lc)) {echo $int_rate_lc;} ?>" />
+			<input type="hidden" name="due_period_upd" id="due_period_upd" value="<?php if (isset($due_period_lc)) {echo $due_period_lc;} ?>" />
+			<input type="hidden" name="doc_charge_upd" id="doc_charge_upd" value="<?php if (isset($doc_charge_lc)) {echo $doc_charge_lc;} ?>" />
+			<input type="hidden" name="proc_fee_upd" id="proc_fee_upd" value="<?php if (isset($proc_fee_lc)) {echo $proc_fee_lc;} ?>" />
 			<!-- Row start -->
 			<div class="row gutters">
 				<!-- Request Info -->
@@ -1966,27 +1992,27 @@ if(sizeof($getLoanCalculation)>0){
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="">Customer ID</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_id_loan" name="cus_id_loan" readonly value='<?php if (isset($cus_id_lc)) {echo $cus_id_lc;} ?>'>
+												<input type="text" class="form-control" id="cus_id_loan" name="cus_id_loan" readonly value='<?php if(isset($cus_id_loan)){echo $cus_id_loan;}elseif (isset($cus_id_lc)) {echo $cus_id_lc;} ?>'>
 											</div>
 										</div>
 
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="">Customer Name</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_name_loan" name="cus_name_loan" readonly value='<?php if (isset($cus_name_lc)) {echo $cus_name_lc;} ?>'>
+												<input type="text" class="form-control" id="cus_name_loan" name="cus_name_loan" readonly value='<?php if (isset($cus_name_loan)) {echo $cus_name_loan;}elseif (isset($cus_name_lc)) {echo $cus_name_lc;} ?>'>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="">Customer Data</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_data_loan" name="cus_data_loan" readonly value='<?php if (isset($cus_data_lc)) {echo $cus_data_lc;} ?>'>
+												<input type="text" class="form-control" id="cus_data_loan" name="cus_data_loan" readonly value='<?php if (isset($cus_data_loan)) {echo $cus_data_loan;}elseif (isset($cus_data_lc)) {echo $cus_data_lc;} ?>'>
 											</div>
 										</div>
 
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="">Mobile No</label><span class="required">&nbsp;*</span>
-												<input type="number" class="form-control" id="mobile_loan" name="mobile_loan"  readonly value='<?php if (isset($mobile_lc)) {echo $mobile_lc;} ?>'>
+												<input type="number" class="form-control" id="mobile_loan" name="mobile_loan"  readonly value='<?php if (isset($mobile_loan)) {echo $mobile_loan;}elseif (isset($mobile_lc)) {echo $mobile_lc;} ?>'>
 											</div>
 										</div>
 									</div>
@@ -1996,9 +2022,9 @@ if(sizeof($getLoanCalculation)>0){
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 										<div class="form-group" style="margin-left: 30px;margin-top:-20px;">
 											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
-											<input type="hidden" name="pic_loan" id="pic_loan" value="<?php if (isset($cus_pic_lc)) {echo $cus_pic_lc;} ?>">
+											<input type="hidden" name="pic_loan" id="pic_loan" value="<?php if (isset($pic_loan)) {echo $pic_loan;}elseif (isset($cus_pic_lc)) {echo $cus_pic_lc;} ?>">
 											<!-- <img id='imgshow' class="img_show" src='img/avatar.png' /> -->
-											<img id='imgshow' class="img_show" src='<?php if (isset($cus_pic_lc)) {echo 'uploads/request/customer/'. $cus_pic_lc;}else{echo 'img/avatar.png';} ?>' />
+											<img id='imgshow' class="img_show" src='<?php if (isset($pic_loan)) {echo 'uploads/request/customer/'.$pic_loan;}elseif (isset($cus_pic_lc)) {echo 'uploads/request/customer/'. $cus_pic_lc;}else{echo 'img/avatar.png';} ?>' />
 										</div>
 									</div>
 								</div>
@@ -2045,21 +2071,21 @@ if(sizeof($getLoanCalculation)>0){
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Total Value</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="4" type="text" class="form-control" id="tot_value" name="tot_value" value='<?php if(isset($tot_value)) echo $tot_value;?>'>
+												<input tabindex="4" type="text" class="form-control" id="tot_value" name="tot_value" value='<?php if (isset($tot_value_lc)) {echo $tot_value_lc;}elseif(isset($tot_value)) {echo $tot_value;}?>'>
 												<span class="text-danger" style='display:none' id='total_valueCheck'>Please Enter Total Value</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Advance Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="5" type="text" class="form-control" id="ad_amt" name="ad_amt" value='<?php if(isset($ad_amt)) echo $ad_amt;?>'>
+												<input tabindex="5" type="text" class="form-control" id="ad_amt" name="ad_amt" value='<?php if (isset($ad_amt_lc)) {echo $ad_amt_lc;}elseif(isset($ad_amt)) {echo $ad_amt;}?>'>
 												<span class="text-danger" style='display:none' id='ad_amtCheck'>Please Enter Advance Amount</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Loan Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="6" type="text" class="form-control" id="loan_amt" name="loan_amt" value='<?php if(isset($loan_amt)) echo $loan_amt;?>'>
+												<input tabindex="6" type="text" class="form-control" id="loan_amt" name="loan_amt" value='<?php if (isset($loan_amt_lc)) {echo $loan_amt_lc;}elseif(isset($loan_amt)) {echo $loan_amt;}?>'>
 												<span class="text-danger" style='display:none' id='loan_amtCheck'>Please Enter Loan Amount</span>
 											</div>
 										</div>
@@ -2069,8 +2095,8 @@ if(sizeof($getLoanCalculation)>0){
 												<label for="disabledInput">Profit Type</label>&nbsp;<span class="text-danger">*</span>
 												<select tabindex="7" type="text" class="form-control" id="profit_type" name="profit_type" >
 													<option value="">Select Profit Type</option> 
-													<option value="1">Calculation</option> 
-													<option value="2">Scheme</option> 
+													<option value="1" <?php if(isset($profit_type_lc) and $profit_type_lc == '1') echo 'selected';?>>Calculation</option> 
+													<option value="2" <?php if(isset($profit_type_lc) and $profit_type_lc == '2') echo 'selected';?>>Scheme</option> 
 												</select> 
 												<span class="text-danger" style='display:none' id='profit_typeCheck'>Please Select Profit Type</span>
 											</div>
@@ -2107,9 +2133,9 @@ if(sizeof($getLoanCalculation)>0){
 												<label for="disabledInput">Due Method</label>&nbsp;<span class="text-danger">*</span>
 												<select tabindex="8" type="text" class="form-control" id="due_method_scheme" name="due_method_scheme" >
 													<option value="">Select Due Method</option> 
-													<option value="1">Monthly</option> 
-													<option value="2">Weekly</option> 
-													<option value="3">Daily</option> 
+													<option value="1" <?php if(isset($due_method_scheme_lc) and $due_method_scheme_lc == '1') echo 'selected';?>>Monthly</option> 
+													<option value="2" <?php if(isset($due_method_scheme_lc) and $due_method_scheme_lc == '2') echo 'selected';?>>Weekly</option> 
+													<option value="3" <?php if(isset($due_method_scheme_lc) and $due_method_scheme_lc == '3') echo 'selected';?>>Daily</option> 
 												</select>
 												<span class="text-danger" style='display:none' id='due_method_schemeCheck'>Please Select Due Method</span>
 											</div>
@@ -2119,13 +2145,13 @@ if(sizeof($getLoanCalculation)>0){
 												<label for="disabledInput">Day</label>&nbsp;<span class="text-danger">*</span>
 												<select tabindex="9" type="text" class="form-control" id="day_scheme" name="day_scheme" >
 													<option value="">Select a Day</option> 
-													<option value="1">Sunday</option> 
-													<option value="2">Monday</option> 
-													<option value="3">Tuesday</option> 
-													<option value="4">Wednesdat</option> 
-													<option value="5">Thursday</option> 
-													<option value="6">Friday</option> 
-													<option value="7">Saturday</option> 
+													<option value="1"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '1') echo 'selected';?>>Sunday</option> 
+													<option value="2"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '2') echo 'selected';?>>Monday</option> 
+													<option value="3"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '3') echo 'selected';?>>Tuesday</option> 
+													<option value="4"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '4') echo 'selected';?>>Wednesdat</option> 
+													<option value="5"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '5') echo 'selected';?>>Thursday</option> 
+													<option value="6"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '6') echo 'selected';?>>Friday</option> 
+													<option value="7"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '7') echo 'selected';?>>Saturday</option> 
 												</select>
 												<span class="text-danger" style='display:none' id='day_schemeCheck'>Please Select Day</span>
 											</div>
