@@ -190,8 +190,27 @@ foreach ($result as $row) {
     $id = $row['req_id'];
     
     $cus_status = $row['cus_status'];
-    if($cus_status == '1' or $cus_status == '10' or $cus_status == '11' ){$sub_array[] = "In Verification";}else
-    if($cus_status == '12'){$sub_array[] = "<button class='btn btn-outline-secondary move_approval' value='$id'><span class = 'icon-arrow_forward'></span></button>";}else
+    if($cus_status == '1' or $cus_status == '10' or $cus_status == '11' ){ 
+        $sub_array[] = "In Verification";
+    }
+    elseif($cus_status == '12'){
+        $cus_profile = $mysqli->query("SELECT * FROM `customer_profile` WHERE `req_id` ='$id'");
+        $cus_profile_row =  mysqli_num_rows($cus_profile);
+
+        $cus_doc = $mysqli->query("SELECT * FROM `verification_documentation` WHERE `req_id` ='$id'");
+        $cus_doc_row =  mysqli_num_rows($cus_doc);
+
+        $cus_loan_calc = $mysqli->query("SELECT * FROM `verification_loan_calculation` WHERE `req_id` ='$id'");
+        $cus_loan_calc_row =  mysqli_num_rows($cus_loan_calc);
+
+        if($cus_profile_row > 0 && $cus_doc_row > 0 && $cus_loan_calc_row > 0 ){
+
+            $sub_array[] = "<button class='btn btn-outline-secondary move_approval' value='$id'><span class = 'icon-arrow_forward'></span></button>";
+        }else{
+            $sub_array[] = "In Verification";
+        }
+
+    }else
     if($cus_status == '2'){$sub_array[] = 'In Approval';}else
     if($cus_status == '3'){$sub_array[] = 'In Issue';}else
     if($cus_status == '4'){$sub_array[] = 'Cancel - Request';}else
@@ -206,7 +225,7 @@ foreach ($result as $row) {
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
     if($cus_status == '1' or $cus_status == '10' or $cus_status == '11' or $cus_status == '12') {
-        $action .= "<a href='verification&upd=$id' class='customer_profile' value='$id' >Edit Verification</a>
+        $action .= "<a href='verification&upd=$id&pge=1' class='customer_profile' value='$id' >Edit Verification</a>
         <a href='verification&can=$id' class='cancelverification'>Cancel Verification</a><a href='verification&rev=$id'class='revokeverification'>Revoke Verification</a>";
     }else
     if($cus_status == '5' ){
