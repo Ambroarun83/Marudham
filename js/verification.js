@@ -917,13 +917,21 @@ $(function () {
 
 
     var state_upd = $('#state_upd').val();
-    getDistrictDropdown(state_upd);
+    if(state_upd != ''){
+        getDistrictDropdown(state_upd);
+    }
     var district_upd = $('#district_upd').val();
-    getTalukDropdown(district_upd);
+    if(district_upd != ''){
+        getTalukDropdown(district_upd);
+    }
     var taluk_upd = $('#taluk_upd').val();
-    getTalukBasedArea(taluk_upd);
+    if(taluk_upd != ''){
+        getTalukBasedArea(taluk_upd);
+    }
     var area_upd = $('#area_upd').val();
-    getAreaBasedSubArea(area_upd);
+    if(area_upd != ''){
+        getAreaBasedSubArea(area_upd);
+    }
 
 
     $('.modalTable').DataTable({
