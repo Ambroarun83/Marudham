@@ -2953,8 +2953,14 @@ require 'PHPMailerAutoload.php';
 		$qry = $mysqli->query("UPDATE in_verification set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Verification');
 	}
 
+	//Cancel Approval
+    function cancelApproval($mysqli,$id, $userid){
+        $qry = $mysqli->query("UPDATE request_creation set cus_status = 6, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+        $qry = $mysqli->query("UPDATE in_verification set cus_status = 6, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+    }
+
 	public function getRequestForVerification($mysqli,$id){
-        $qry = $mysqli->query("SELECT * FROM in_verification where req_id = $id and (cus_status = 1 or cus_status=10 or cus_status=11 or cus_status=12)");
+        $qry = $mysqli->query("SELECT * FROM in_verification where req_id = '$id' and (cus_status = 1 or cus_status=2 or cus_status=10 or cus_status=11 or cus_status=12) ");
         $reqToverify = array();
         if($mysqli->affected_rows>0){
             $row = $qry->fetch_assoc();
@@ -3180,6 +3186,8 @@ require 'PHPMailerAutoload.php';
                 $audio_temp = $_FILES['verification_audio']['tmp_name'];
                 $audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
                 move_uploaded_file($audio_temp, $audiofolder);
+            }else{
+                $verify_audio = $_POST['verification_audio_upd'];
             }
             if(isset($_POST['verifyPerson'])){
                 $verifyPerson = $_POST['verifyPerson'];
@@ -3725,6 +3733,11 @@ require 'PHPMailerAutoload.php';
 				$insertCategory = $mysqli->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
 				'".strip_tags($category_info[$i])."' )");
 			}
+
+			$updateQry = $mysqli->query("UPDATE request_creation set cus_status = 12 where req_id ='".strip_tags($req_id)."' "); //12 means loan calculation completed
+			
+			$updateQry = $mysqli->query("UPDATE in_verification set cus_status = 12 where req_id ='".strip_tags($req_id)."' ");
+
 		}
 	}
 

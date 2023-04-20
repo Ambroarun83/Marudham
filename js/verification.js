@@ -309,7 +309,7 @@ $(document).ready(function () {
         }
     });
 
-    // Verification Tab Change
+    // Verification Tab Change Radio buttons
     $('#cus_profile,#documentation,#loan_calc').click(function () {
         var verify = $('input[name=verification_type]:checked').val();
 
@@ -323,11 +323,14 @@ $(document).ready(function () {
         }
         if (verify == 'loan_calc') {
             $('#customer_profile').hide(); $('#cus_document').hide(); $('#customer_loan_calc').show();
-            getCategoryInfo();
+            onLoadEditFunction();
             getUserBasedLoanCategory();
-            var sub_cat_id = $('#sub_category_load').val();
-            getLoaninfo(sub_cat_id);
-            profitCalculationInfo();
+            setTimeout(()=>{
+                getCategoryInfo();
+                var sub_cat_id = $('#sub_category').val();
+                getLoaninfo(sub_cat_id);
+                profitCalculationInfo();
+            },1000)
         }
     })
 
@@ -2595,8 +2598,10 @@ function validation() {
     var district = $('#district1').val(); var taluk = $('#taluk1').val(); var area = $('#area').val(); var sub_area = $('#sub_area').val(); var pic = $('#pic').val(); var mobile1 = $('#mobile1').val();
     var guarentor_name = $('#guarentor_name').val();var guarentor_image = $('#guarentor_image').val(); var guarentorpic = $('#guarentorpic').val(); var area_cnfrm = $('#area_cnfrm').val(); var cus_res_type = $('#cus_res_type').val();
     var cus_res_details = $('#cus_res_details').val(); var cus_res_address = $('#cus_res_address').val(); var cus_res_native = $('#cus_res_native').val();
-    var cus_occ_type = $('#cus_occ_type').val(); var cus_occ_detail = $('#cus_occ_detail').val(); var cus_occ_income = $('#cus_occ_income').val(); var cus_occ_address = $('#cus_occ_address').val(); var cus_how_know = $('#cus_how_know').val(); var cus_monthly_income = $('#cus_monthly_income').val(); var cus_other_income = $('#cus_other_income').val(); var cus_support_income = $('#cus_support_income').val(); var cus_Commitment = $('#cus_Commitment').val(); var cus_monDue_capacity = $('#cus_monDue_capacity').val(); var cus_loan_limit = $('#cus_loan_limit').val(); var cus_Character = $('#cus_Character').val(); var cus_Approach = $('#cus_Approach').val(); var cus_Relationship = $('#cus_Relationship').val(); var cus_Attitude = $('#cus_Attitude').val(); var cus_Behavior = $('#cus_Behavior').val(); var cus_Incidents_Remarks = $('#cus_Incidents_Remarks').val(); var about_cus = $('#about_cus').val();
+    var cus_occ_type = $('#cus_occ_type').val(); var cus_occ_detail = $('#cus_occ_detail').val(); var cus_occ_income = $('#cus_occ_income').val(); var cus_occ_address = $('#cus_occ_address').val(); var cus_how_know = $('#cus_how_know').val(); var cus_monthly_income = $('#cus_monthly_income').val(); var cus_other_income = $('#cus_other_income').val(); var cus_support_income = $('#cus_support_income').val(); var cus_Commitment = $('#cus_Commitment').val(); var cus_monDue_capacity = $('#cus_monDue_capacity').val(); var cus_loan_limit = $('#cus_loan_limit').val();  var about_cus = $('#about_cus').val();
     var req_id = $('#req_id').val();
+
+    // var cus_Character = $('#cus_Character').val(); var cus_Approach = $('#cus_Approach').val(); var cus_Relationship = $('#cus_Relationship').val(); var cus_Attitude = $('#cus_Attitude').val(); var cus_Behavior = $('#cus_Behavior').val(); var cus_Incidents_Remarks = $('#cus_Incidents_Remarks').val();
 
     if (cus_id == '') {
         event.preventDefault();
@@ -2750,47 +2755,66 @@ function validation() {
     } else {
         $('#loanLimitCheck').hide();
     }
-    if (cus_Character == '') {
-        event.preventDefault();
-        $('#CharacterCheck').show();
-    } else {
-        $('#CharacterCheck').hide();
-    }
-    if (cus_Approach == '') {
-        event.preventDefault();
-        $('#ApproachCheck').show();
-    } else {
-        $('#ApproachCheck').hide();
-    }
-    if (cus_Relationship == '') {
-        event.preventDefault();
-        $('#cusRelationshipCheck').show();
-    } else {
-        $('#cusRelationshipCheck').hide();
-    }
-    if (cus_Attitude == '') {
-        event.preventDefault();
-        $('#cusAttitudeCheck').show();
-    } else {
-        $('#cusAttitudeCheck').hide();
-    }
-    if (cus_Behavior == '') {
-        event.preventDefault();
-        $('#cusBehaviorCheck').show();
-    } else {
-        $('#cusBehaviorCheck').hide();
-    }
-    if (cus_Incidents_Remarks == '') {
-        event.preventDefault();
-        $('#cusIncidentsRemarksCheck').show();
-    } else {
-        $('#cusIncidentsRemarksCheck').hide();
-    }
+    // if (cus_Character == '') {
+    //     event.preventDefault();
+    //     $('#CharacterCheck').show();
+    // } else {
+    //     $('#CharacterCheck').hide();
+    // }
+    // if (cus_Approach == '') {
+    //     event.preventDefault();
+    //     $('#ApproachCheck').show();
+    // } else {
+    //     $('#ApproachCheck').hide();
+    // }
+    // if (cus_Relationship == '') {
+    //     event.preventDefault();
+    //     $('#cusRelationshipCheck').show();
+    // } else {
+    //     $('#cusRelationshipCheck').hide();
+    // }
+    // if (cus_Attitude == '') {
+    //     event.preventDefault();
+    //     $('#cusAttitudeCheck').show();
+    // } else {
+    //     $('#cusAttitudeCheck').hide();
+    // }
+    // if (cus_Behavior == '') {
+    //     event.preventDefault();
+    //     $('#cusBehaviorCheck').show();
+    // } else {
+    //     $('#cusBehaviorCheck').hide();
+    // }
+    // if (cus_Incidents_Remarks == '') {
+    //     event.preventDefault();
+    //     $('#cusIncidentsRemarksCheck').show();
+    // } else {
+    //     $('#cusIncidentsRemarksCheck').hide();
+    // }
     if (about_cus == '') {
         event.preventDefault();
         $('#aboutcusCheck').show();
     } else {
         $('#aboutcusCheck').hide();
+    }
+
+    if (Communitcation_to_cus == '') {
+        event.preventDefault();
+        $('#communicationCheck').show();
+    } else {
+        $('#communicationCheck').hide();
+    }
+    if (verification_person.length == 0 ) {
+        event.preventDefault();
+        $('#verificationPersonCheck').show();
+    } else {
+        $('#verificationPersonCheck').hide();
+    }
+    if (verification_location == '') {
+        event.preventDefault();
+        $('#verificationLocCheck').show();
+    } else {
+        $('#verificationLocCheck').hide();
     }
 
     $.ajax({
@@ -3616,7 +3640,9 @@ function doc_submit_validation() {
 
 
 //////////////////////////////////////////////////////////////////// Loan Calculation Functions Start ///////////////////////////////////////////////////////////////////////////////
-
+function onLoadEditFunction(){//On load for Loan Calculation edit
+    
+}
 
 $('#loan_category').change(function(){
     var loan_cat = $(this).val();
@@ -3649,8 +3675,8 @@ $('#refresh_cal').click(function(){
 
 $('#submit_loan_calculation').click(function(){
     $('#refresh_cal').trigger('click'); //For calculate once again if user missed to refresh calculation
-    
-        loan_calc_validation(); 
+
+    loan_calc_validation(); 
 })
 
 
@@ -3706,7 +3732,7 @@ function getUserBasedLoanCategory(){
 //Fetch Sub Category Based on loan category
 function getSubCategory(loan_cat){
 	var sub_category = $('#sub_category_load').val();
-	var sub_categoryu_upd = $('#sub_categoryu_upd').val();
+	var sub_categoryu_upd = $('#sub_category_upd').val();
 	$.ajax({
 		url: 'requestFile/getSingleSubCategory.php',
 		type:'POST',
@@ -3719,8 +3745,14 @@ function getSubCategory(loan_cat){
             $('#sub_category').append("<option value='' >Select Sub Category</option>");
             for(var i=0;i<response.length;i++){
                 var selected='';
-                if(sub_category != undefined && sub_category != '' && sub_category == response[i]['sub_category_name']){
-                    selected ='selected';
+                if(sub_categoryu_upd == '' || sub_categoryu_upd == undefined){ //if update is not available, then only use on load value of loan category
+                    if(sub_category != undefined && sub_category != '' && sub_category == response[i]['sub_category_name']){
+                        selected ='selected';
+                    }
+                }else{
+                    if(sub_categoryu_upd != undefined && sub_categoryu_upd != '' && sub_categoryu_upd == response[i]['sub_category_name']){
+                        selected ='selected';
+                    }
                 }
                 $('#sub_category').append("<option value='"+response[i]['sub_category_name']+"' "+selected+">"+response[i]['sub_category_name']+" </option>");
             }
@@ -3730,8 +3762,8 @@ function getSubCategory(loan_cat){
 
 //Get Category info From Request
 function getCategoryInfo(){
-
-    var sub_cat = $('#sub_category_load').val();
+    var sub_category_upd = $('#sub_category_upd').val();
+    var sub_cat = $('#sub_category').val();
     $.ajax({
         url:'requestFile/getCategoryInfo.php',
         data:{'sub_cat':sub_cat},
@@ -3756,7 +3788,7 @@ function getCategoryInfo(){
                 var category_content = $('#moduleTable tbody tr').html(); //To get the appended category list
                 
                 var category_count = $('#moduleTable tbody tr').find('td').length - 2;//To find input fields count
-                getCategoryInputs(category_count,category_content);
+                getCategoryInputs(category_count,category_content,sub_category_upd);
 
                 $(document).on('click','.add_category_info', function(){
                     $('#moduleTable tbody').append('<tr>'+category_content+'</tr>');
@@ -3774,13 +3806,13 @@ function getCategoryInfo(){
         }
     });
     
-
-    function getCategoryInputs(category_count,category_content){
+    
+    function getCategoryInputs(category_count,category_content,sub_category_upd){
         
         var req_id = $('#req_id').val();
         $.ajax({
             url:'verificationFile/LoanCalculation/getCategoryInfo.php',
-            data:{'req_id':req_id},
+            data:{'req_id':req_id,'sub_category_upd':sub_category_upd},
             dataType: 'json',
             type: 'post',
             cachec: false,
@@ -3856,7 +3888,7 @@ $('#sub_category').change(function(){
 
 //Fetch loan Details based on category select
 function getLoaninfo(sub_cat_id){
-	// $('#loan_amt').removeAttr('readonly');
+	
     $.ajax({
         url:'requestFile/getLoanInfo.php',
         data: {'sub_cat_id':sub_cat_id},
@@ -3911,8 +3943,23 @@ function getLoaninfo(sub_cat_id){
 
 //to fetch Calculation based inputs
 function profitCalculationInfo(){
-    var sub_cat = $('#sub_category_load').val();
-    $('#profit_type').change(function(){
+    var sub_cat = $('#sub_category').val();
+    var profit_type = $('#profit_type').val();
+    var due_method = $('#due_method_scheme').val(); 
+    if(profit_type!=''){ //Call only if profit type autamatically set
+        profitCalAjax(profit_type,sub_cat); //Call for edit
+    }
+    if(due_method !=''){//Call only if due method autamatically set
+        schemeAjax(due_method,sub_cat); //Call for edit
+    }
+    setTimeout(function(){
+    var scheme_name = $('#scheme_name').val(); 
+        if(scheme_name !=''){//Call only if scheme name autamatically set
+            schemeCalAjax(scheme_name); //Call for edit
+        }
+    },1000)
+
+    $('#profit_type').change(function(){//On change evemt
             
             $('.calculation').hide(); // to hide calculation inputs
             $('.scheme').hide();// to hide Scheme inputs
@@ -3932,106 +3979,25 @@ function profitCalculationInfo(){
             $('.min-max-due').text('*');
             $('.min-max-doc').text('*');
             $('.min-max-proc').text('*');
-
+            
         var profit_type = $(this).val();
-        if(profit_type == '1'){//if Calculation selected
-            $('.calculation').show();
-            $('.scheme').hide();
-            $.ajax({ // To show profit calculation infos based on sub category
-                url: 'verificationFile/LoanCalculation/getProfitCalculationInfo.php',
-                data: {'sub_cat':sub_cat},
-                dataType: 'json',
-                type: 'post',
-                cache: false,
-                success: function(response){
-                    if(response['due_type'] == 'emi'){
-                        $('.emi-calculation').show();
-                        $('.interest-calculation').hide();
-                        $('#due_type').val('EMI');
-                        
-                        var profit_method = response['profit_method'].split(','); //Splitting into array by exploding comma (',')
-                        $('#profit_method').empty();
-                        $('#profit_method').append(`<option value=''>Select Profit Method</option>`);
-                        for(var i =0 ; i<profit_method.length;i++){
-                            if(profit_method[i] == 'pre_intrest'){valuee = 'Pre Interest';}else if(profit_method[i] == 'after_intrest'){valuee = 'After Interest';}
-                            $('#profit_method').append(`<option value='`+profit_method[i]+`'>`+valuee+`</option>`);
-                        }
-                        $('#calc_method').val('');
-
-                        //To set min and maximum 
-                        $('.min-max-int').text('* ('+response['intrest_rate_min']+'% - '+response['intrest_rate_max']+'%) ');
-                        $('#int_rate').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseFloat($(this).val()) < '`+response['intrest_rate_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-                        
-                        $('.min-max-due').text('* ('+response['due_period_min']+' - '+response['due_period_max']+') ');
-                        $('#due_period').attr('onBlur',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseInt($(this).val()) < '`+response['due_period_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-                        
-                        $('.min-max-doc').text('* ('+response['document_charge_min']+'% - '+response['document_charge_max']+'%) ');
-                        $('#doc_charge').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseFloat($(this).val()) < '`+response['document_charge_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-
-                        $('.min-max-proc').text('* ('+response['processing_fee_min']+'% - '+response['processing_fee_max']+'%) ');
-                        $('#proc_fee').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseFloat($(this).val()) < '`+response['processing_fee_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-
-                    }else if(response['due_type'] == 'intrest'){
-                        
-                        $('.emi-calculation').hide();
-                        $('.interest-calculation').show();
-                        $('#due_type').val('Interest');
-                        $('#profit_method').empty();
-                        $('#calc_method').val(response['calculate_method']);
-
-                        //To set min and maximum 
-                        $('.min-max-int').text('* ('+response['intrest_rate_min']+'% - '+response['intrest_rate_max']+'%) ');
-                        $('#int_rate').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseFloat($(this).val()) < '`+response['intrest_rate_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-                        
-                        $('.min-max-due').text('* ('+response['due_period_min']+' - '+response['due_period_max']+') ');
-                        $('#due_period').attr('onBlur',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseInt($(this).val()) < '`+response['due_period_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-                        
-                        $('.min-max-doc').text('* ('+response['document_charge_min']+'% - '+response['document_charge_max']+'%) ');
-                        $('#doc_charge').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseFloat($(this).val()) < '`+response['document_charge_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-
-                        $('.min-max-proc').text('* ('+response['processing_fee_min']+'% - '+response['processing_fee_max']+'%) ');
-                        $('#proc_fee').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseFloat($(this).val()) < '`+response['processing_fee_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-                    }
-                }
-            })
-        }else if(profit_type == '2'){ //if Scheme selected
-            $('.calculation').hide(); // to hide calculation inputs
-            $('.scheme').show(); // to show scheme inputs
-        }else{
-            $('.calculation').hide(); // to hide calculation inputs
-            $('.scheme').hide(); // to hide scheme inputs
-        }
+        var sub_cat = $('#sub_category').val();
+        profitCalAjax(profit_type,sub_cat)
+        
     });//Profit Type change event end
 
     $('#due_method_scheme').change(function(){
         var due_method = $(this).val(); 
+        
         if(due_method == '2'){ // show weekdays only if weekly due method selected
             $('.day_scheme').show();
         }else{
             $('.day_scheme').hide();
         }
-        $.ajax({ //To show scheme names based on sub category
-            url: 'verificationFile/LoanCalculation/getSchemeNames.php',
-            data: {'sub_cat':sub_cat,'due_method':due_method},
-            dataType: 'json',
-            type: 'post',
-            cache: false,
-            success: function(response){
-                $('#scheme_name').empty();
-                $('#scheme_name').append(`<option value=''>Select Scheme Name</option>`);
-                for(var i =0 ; i<response.length;i++){
-                    $('#scheme_name').append(`<option value='`+response[i]['scheme_id']+`'>`+response[i]['scheme_name']+`</option>`);
-                }
-            }
-        });
+
+        var sub_cat = $('#sub_category').val();
+        schemeAjax(due_method,sub_cat);
+
         $('#int_rate').val('');$('#int_rate').attr('readonly',false);
         $('#due_period').val('');$('#due_period').attr('readonly',false);
         $('.min-max-int').text('*');
@@ -4042,40 +4008,170 @@ function profitCalculationInfo(){
 
     $('#scheme_name').change(function(){ //Scheme Name change event
         var scheme_id = $(this).val();
-        if(scheme_id != ''){
-            $.ajax({ //show scheme based loan info using scheme id
-                url: 'verificationFile/LoanCalculation/getSchemeDetails.php',
-                dataType: 'json',
-                type: 'post',
-                data: {'scheme_id':scheme_id},
-                cache: false,
-                success: function(response){
-                    //To set min and maximum 
-                    
-                    $('#int_rate').val(response['intrest_rate']);$('#int_rate').attr('readonly',true); // setting readonly due to fixed interest
-                    
-                    $('#due_period').val(response['due_period']);$('#due_period').attr('readonly',true); // setting readonly due to fixed due period
-                    
-                    if(response['doc_charge_type'] == 'amt') {type = '₹'}else if(response['doc_charge_type'] == 'percentage'){type='%';} //Setting symbols
-                    $('.min-max-doc').text('* ('+response['doc_charge_min'] +' '+type+' - '+response['doc_charge_max']+' '+type+') '); //setting min max values in span
-                    $('#doc_charge').attr('onBlur',`if( parseInt($(this).val()) > '`+response['doc_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseInt($(this).val()) < '`+response['doc_charge_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-                    
-                    if(response['proc_fee_type'] == 'amt') {type = '₹'}else if(response['proc_fee_type'] == 'percentage'){type='%';}//Setting symbols
-                    $('.min-max-proc').text('* ('+response['proc_fee_min']+' '+type+' - '+response['proc_fee_max']+' '+type+') ');//setting min max values in span
-                    $('#proc_fee').attr('onBlur',`if( parseInt($(this).val()) > '`+response['proc_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
-                                            if( parseInt($(this).val()) < '`+response['proc_fee_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
-                }
-            })
-        }else{
-            $('#int_rate').val('');$('#int_rate').attr('readonly',false);
-            $('#due_period').val('');$('#due_period').attr('readonly',false);
-            $('.min-max-int').text('*');
-            $('.min-max-due').text('*');
-            $('.min-max-doc').text('*');
-            $('.min-max-proc').text('*');
-        }
+        schemeCalAjax(scheme_id);
     })
+}
+
+//
+function profitCalAjax(profit_type,sub_cat){
+    var profit_method_upd = $('#profit_method_upd').val()
+    if($('#int_rate_upd').val()){var int_rate_upd = $('#int_rate_upd').val();}else{var int_rate_upd = '';}
+    if($('#due_period_upd').val()){var due_period_upd = $('#due_period_upd').val();}else{var due_period_upd = '';}
+    if($('#doc_charge_upd').val()){var doc_charge_upd = $('#doc_charge_upd').val();}else{var doc_charge_upd = '';}
+    if($('#proc_fee_upd').val()){var proc_fee_upd = $('#proc_fee_upd').val();}else{var proc_fee_upd = '';}
+    if(profit_type == '1'){//if Calculation selected
+        $('.calculation').show();
+        $('.scheme').hide();
+        $.ajax({ // To show profit calculation infos based on sub category
+            url: 'verificationFile/LoanCalculation/getProfitCalculationInfo.php',
+            data: {'sub_cat':sub_cat},
+            dataType: 'json',
+            type: 'post',
+            cache: false,
+            success: function(response){
+                if(response['due_type'] == 'emi'){
+                    $('.emi-calculation').show();
+                    $('.interest-calculation').hide();
+                    $('#due_type').val('EMI');
+                    
+                    var profit_method = response['profit_method'].split(','); //Splitting into array by exploding comma (',')
+                    $('#profit_method').empty();
+                    $('#profit_method').append(`<option value=''>Select Profit Method</option>`);
+                    for(var i =0 ; i<profit_method.length;i++){
+                        if(profit_method[i] == 'pre_intrest'){valuee = 'Pre Interest';}else if(profit_method[i] == 'after_intrest'){valuee = 'After Interest';}
+                        var selected= '';
+                        if(profit_method_upd != '' && profit_method_upd != undefined && profit_method_upd == profit_method[i]){
+                            selected = 'selected';
+                        }
+                        $('#profit_method').append(`<option value='`+profit_method[i]+`' `+selected+`>`+valuee+`</option>`);
+                    }
+                    $('#calc_method').val('');
+
+                    //To set min and maximum 
+                    $('.min-max-int').text('* ('+response['intrest_rate_min']+'% - '+response['intrest_rate_max']+'%) ');
+                    $('#int_rate').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseFloat($(this).val()) < '`+response['intrest_rate_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#int_rate').val(int_rate_upd);
+                    $('.min-max-due').text('* ('+response['due_period_min']+' - '+response['due_period_max']+') ');
+                    $('#due_period').attr('onBlur',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseInt($(this).val()) < '`+response['due_period_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#due_period').val(due_period_upd);
+                    
+                    $('.min-max-doc').text('* ('+response['document_charge_min']+'% - '+response['document_charge_max']+'%) ');
+                    $('#doc_charge').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseFloat($(this).val()) < '`+response['document_charge_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#doc_charge').val(doc_charge_upd);
+
+                    $('.min-max-proc').text('* ('+response['processing_fee_min']+'% - '+response['processing_fee_max']+'%) ');
+                    $('#proc_fee').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseFloat($(this).val()) < '`+response['processing_fee_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#proc_fee').val(proc_fee_upd);
+
+                }else if(response['due_type'] == 'intrest'){
+                    
+                    $('.emi-calculation').hide();
+                    $('.interest-calculation').show();
+                    $('#due_type').val('Interest');
+                    $('#profit_method').empty();
+                    $('#calc_method').val(response['calculate_method']);
+
+                    //To set min and maximum 
+                    $('.min-max-int').text('* ('+response['intrest_rate_min']+'% - '+response['intrest_rate_max']+'%) ');
+                    $('#int_rate').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseFloat($(this).val()) < '`+response['intrest_rate_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#int_rate').val(int_rate_upd);
+                    
+                    $('.min-max-due').text('* ('+response['due_period_min']+' - '+response['due_period_max']+') ');
+                    $('#due_period').attr('onBlur',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseInt($(this).val()) < '`+response['due_period_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#due_period').val(due_period_upd);
+                    
+                    $('.min-max-doc').text('* ('+response['document_charge_min']+'% - '+response['document_charge_max']+'%) ');
+                    $('#doc_charge').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseFloat($(this).val()) < '`+response['document_charge_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#doc_charge').val(doc_charge_upd);
+
+                    $('.min-max-proc').text('* ('+response['processing_fee_min']+'% - '+response['processing_fee_max']+'%) ');
+                    $('#proc_fee').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseFloat($(this).val()) < '`+response['processing_fee_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                    $('#proc_fee').val(proc_fee_upd);
+                }
+            }
+        })
+    }else if(profit_type == '2'){ //if Scheme selected
+        $('.calculation').hide(); // to hide calculation inputs
+        $('.scheme').show(); // to show scheme inputs
+    }else{
+        $('.calculation').hide(); // to hide calculation inputs
+        $('.scheme').hide(); // to hide scheme inputs
+    }
+}
+
+//
+function schemeAjax(due_method,sub_cat){
+    var scheme_upd = $('#scheme_upd').val();
+    $.ajax({ //To show scheme names based on sub category
+        url: 'verificationFile/LoanCalculation/getSchemeNames.php',
+        data: {'sub_cat':sub_cat,'due_method':due_method},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#scheme_name').empty();
+            $('#scheme_name').append(`<option value=''>Select Scheme Name</option>`);
+            for(var i =0 ; i<response.length;i++){
+                var selected='';
+                if(scheme_upd != '' && scheme_upd != undefined && scheme_upd == response[i]['scheme_id']){
+                    selected = 'selected';
+                }
+                $('#scheme_name').append(`<option value='`+response[i]['scheme_id']+`' `+selected+`>`+response[i]['scheme_name']+`</option>`);
+            }
+        }
+    });
+}
+
+//
+function schemeCalAjax(scheme_id){
+    if(scheme_id != ''){
+        if($('#int_rate_upd').val()){var int_rate_upd = $('#int_rate_upd').val();}else{var int_rate_upd = '';}
+        if($('#due_period_upd').val()){var due_period_upd = $('#due_period_upd').val();}else{var due_period_upd = '';}
+        if($('#doc_charge_upd').val()){var doc_charge_upd = $('#doc_charge_upd').val();}else{var doc_charge_upd = '';}
+        if($('#proc_fee_upd').val()){var proc_fee_upd = $('#proc_fee_upd').val();}else{var proc_fee_upd = '';}
+
+        $.ajax({ //show scheme based loan info using scheme id
+            url: 'verificationFile/LoanCalculation/getSchemeDetails.php',
+            dataType: 'json',
+            type: 'post',
+            data: {'scheme_id':scheme_id},
+            cache: false,
+            success: function(response){
+                //To set min and maximum 
+                
+                $('#int_rate').val(response['intrest_rate']);$('#int_rate').attr('readonly',true); // setting readonly due to fixed interest
+                
+                $('#due_period').val(response['due_period']);$('#due_period').attr('readonly',true); // setting readonly due to fixed due period
+                
+                if(response['doc_charge_type'] == 'amt') {type = '₹'}else if(response['doc_charge_type'] == 'percentage'){type='%';} //Setting symbols
+                $('.min-max-doc').text('* ('+response['doc_charge_min'] +' '+type+' - '+response['doc_charge_max']+' '+type+') '); //setting min max values in span
+                $('#doc_charge').attr('onBlur',`if( parseInt($(this).val()) > '`+response['doc_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                        if( parseInt($(this).val()) < '`+response['doc_charge_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                $('#doc_charge').val(doc_charge_upd);
+                
+                if(response['proc_fee_type'] == 'amt') {type = '₹'}else if(response['proc_fee_type'] == 'percentage'){type='%';}//Setting symbols
+                $('.min-max-proc').text('* ('+response['proc_fee_min']+' '+type+' - '+response['proc_fee_max']+' '+type+') ');//setting min max values in span
+                $('#proc_fee').attr('onBlur',`if( parseInt($(this).val()) > '`+response['proc_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                                    if( parseInt($(this).val()) < '`+response['proc_fee_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
+                $('#proc_fee').val(doc_charge_upd);
+            }
+        })
+    }else{
+        $('#int_rate').val('');$('#int_rate').attr('readonly',false);
+        $('#due_period').val('');$('#due_period').attr('readonly',false);
+        $('.min-max-int').text('*');
+        $('.min-max-due').text('*');
+        $('.min-max-doc').text('*');
+        $('.min-max-proc').text('*');
+    }
 }
 
 //To Get Loan Calculation for After Interest
