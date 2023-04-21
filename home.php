@@ -246,6 +246,14 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/approval.php" ?>
 			<?php } ?>
 			
+			<!-- Acknowledgement -->
+			<?php if($current_page == 'edit_acknowledgement_list') { ?>
+			<?php include "include/templates/edit_acknowledgement_list.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'acknowledgement_creation') { ?>
+			<?php include "include/templates/acknowledgement_creation.php" ?>
+			<?php } ?>
 
 		</div>
 		<!-- Page content end -->
