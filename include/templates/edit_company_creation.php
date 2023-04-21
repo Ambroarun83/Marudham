@@ -74,4 +74,83 @@
 <!-- Main container end -->
 
 	
+<script>
+	var sortOrder = 1; // 1 for ascending, -1 for descending
 
+	document.querySelectorAll('th').forEach(function(th) {
+	th.addEventListener('click', function() {
+		var columnIndex = this.cellIndex;
+		document.querySelector('tbody').innerHTML = '';
+		dT();
+		setTimeout(function() {
+		var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+
+		tableRows.sort(function(a, b) {
+			var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+			var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+
+			if (textA < textB) {
+			return -1 * sortOrder;
+			}
+			if (textA > textB) {
+			return 1 * sortOrder;
+			}
+			return 0;
+		});
+
+		tableRows.forEach(function(row) {
+			document.querySelector('tbody').appendChild(row);
+		});
+
+		sortOrder = -1 * sortOrder;
+
+		// update the serial numbers
+		document.querySelectorAll('tbody tr').forEach(function(row, index) {
+			row.querySelectorAll('td')[0].textContent = index + 1;
+		});
+		}, 500);
+	});
+	});
+
+	function dT() {
+		// Company datatable
+		var company_creation_table = $('#company_creation_table').DataTable();
+		company_creation_table.destroy();
+		var company_creation_table = $('#company_creation_table').DataTable({
+			"order": [[ 0, "desc" ]],
+			"ordering": false,
+			'paging':false,
+			'processing': true,
+			'serverSide': true,
+			'serverMethod': 'post',
+			'ajax': {
+			'url': 'ajaxFetch/ajaxCompanyCreationFetch.php',
+			'data': function(data) {
+				var search = document.querySelector('#search').value;
+				data.search = search;
+			}
+			},
+			dom: 'lBfrtip',
+			buttons: [
+			{
+				extend: 'excel',
+				title: "Loan Scheme List"
+			},
+			{
+				extend: 'colvis',
+				collectionLayout: 'fixed four-column',
+			}
+			],
+			"lengthMenu": [
+			[10, 25, 50, -1],
+			[10, 25, 50, "All"]
+			],
+			// "columnDefs": [ {
+			//     "targets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+			//     "orderable": false
+			// } ]
+
+		});
+	}
+
+</script>

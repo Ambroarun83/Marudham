@@ -212,7 +212,7 @@ foreach ($result as $row) {
 
     }else
     if($cus_status == '2'){$sub_array[] = 'In Approval';}else
-    if($cus_status == '3'){$sub_array[] = 'In Issue';}else
+    if($cus_status == '3'){$sub_array[] = 'Approved';}else
     if($cus_status == '4'){$sub_array[] = 'Cancel - Request';}else
     if($cus_status == '5'){$sub_array[] = 'Cancel - Verification';}else
     if($cus_status == '6'){$sub_array[] = 'Cancel - Approval';}

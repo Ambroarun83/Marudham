@@ -159,6 +159,18 @@ $(document).ready(function () {
         checkbox(checkboxesToEnable,verificationmodule);
     });
 
+    $("#approvalmodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.approval-checkbox");
+        var approvalmodule = document.querySelector('#approvalmodule');
+        checkbox(checkboxesToEnable,approvalmodule);
+    });
+
+    $("#acknowledgementmodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.acknowledgement-checkbox");
+        var acknowledgementmodule = document.querySelector('#acknowledgementmodule');
+        checkbox(checkboxesToEnable,acknowledgementmodule);
+    });
+
     $('#submit_manage_user').click(function(){
         
         
@@ -258,10 +270,14 @@ $(function(){
         var adminmodule = document.getElementById('adminmodule');
         var requestmodule = document.getElementById('requestmodule');
         var verificationmodule = document.getElementById('verificationmodule');
+        var approvalmodule = document.getElementById('approvalmodule');
+        var acknowledgementmodule = document.getElementById('acknowledgementmodule');
         if(mastermodule.checked){const checkboxesToEnable = document.querySelectorAll("input.master-checkbox");var mastermodule = document.querySelector('#mastermodule');checkbox(checkboxesToEnable,mastermodule);}
         if(adminmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.admin-checkbox");var adminmodule = document.querySelector('#adminmodule');checkbox(checkboxesToEnable,adminmodule);}
         if(requestmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.request-checkbox");var requestmodule = document.querySelector('#requestmodule');checkbox(checkboxesToEnable,requestmodule);}
         if(verificationmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.verification-checkbox");var verificationmodule = document.querySelector('#verificationmodule');checkbox(checkboxesToEnable,verificationmodule);}
+        if(approvalmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.approval-checkbox");var approvalmodule = document.querySelector('#approvalmodule');checkbox(checkboxesToEnable,approvalmodule);}
+        if(acknowledgementmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.acknowledgement-checkbox");var acknowledgementmodule = document.querySelector('#acknowledgementmodule');checkbox(checkboxesToEnable,acknowledgementmodule);}
     }else{
 
     }

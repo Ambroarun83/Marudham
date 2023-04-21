@@ -14,6 +14,10 @@ $current_page == 'edit_loan_scheme' || $current_page == 'edit_area_creation' || 
 	$current_module = 'request';
 }else if($current_page == 'verification_list' ){
 	$current_module = 'verification';
+}else if($current_page == 'approval_list' ){
+	$current_module = 'approval';
+}else if($current_page == 'edit_acknowledgement_list' ){
+	$current_module = 'acknowledgement';
 }
 $current_module = '';
 
@@ -50,6 +54,10 @@ $requestmodule = '';
 $request = '';
 $verificationmodule = '';
 $verification = '';
+$approvalmodule = '';
+$approval = '';
+$acknowledgementmodule = '';
+$acknowledgement = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -86,6 +94,10 @@ if (sizeof($getUser)>0) {
 		$request          		     = $getUser['request'];
 		$verificationmodule          		     = $getUser['verificationmodule'];
 		$verification          		     = $getUser['verification'];
+		$approvalmodule          		     = $getUser['approvalmodule'];
+		$approval          		     = $getUser['approval'];
+		$acknowledgementmodule          		     = $getUser['acknowledgementmodule'];
+		$acknowledgement          		     = $getUser['acknowledgement'];
 	}
 }
 ?>
@@ -320,7 +332,7 @@ if (sizeof($getUser)>0) {
 						</div>
 					</li>
 				<?php  } ?>
-				<?php if($verificationmodule == 0){?>
+				<?php if($approvalmodule == 0){?>
 					<li class="sidebar-dropdown approve">
 						<a href="javascript:void(0)">
 							<i class="icon-folder"></i>
@@ -328,7 +340,7 @@ if (sizeof($getUser)>0) {
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='approval') echo 'style="display:block" '; ?>>
 							<ul>
-								<?php  if($verification == 0){ ?>
+								<?php  if($approval == 0){ ?>
 									<li>
 										<a href="approval_list"><i class="icon-list"></i>Approval</a>
 									</li>
@@ -337,6 +349,23 @@ if (sizeof($getUser)>0) {
 						</div>
 					</li>
 				<?php  } ?>
+				<?php if($acknowledgementmodule == 0){?>
+                    <li class="sidebar-dropdown acknowledge">
+                        <a href="javascript:void(0)">
+                            <i class="icon-folder"></i>
+                            <span class="menu-text">Acknowledgement</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='acknowledgement') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($acknowledgement == 0){ ?>
+                                    <li>
+                                        <a href="edit_acknowledgement_list"><i class="icon-list"></i>Acknowledgement</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->
