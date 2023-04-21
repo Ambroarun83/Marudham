@@ -43,7 +43,11 @@ require 'PHPMailerAutoload.php';
 				$detailrecords['requestmodule']              = strip_tags($row->requestmodule);		  	
 				$detailrecords['request']              = strip_tags($row->request);		  	
 				$detailrecords['verificationmodule']              = strip_tags($row->verificationmodule);		  	
-				$detailrecords['verification']              = strip_tags($row->verification);		  	
+				$detailrecords['verification']              = strip_tags($row->verification);
+				$detailrecords['approvalmodule']              = strip_tags($row->approvalmodule);
+                $detailrecords['approval']              = strip_tags($row->approval);
+                $detailrecords['acknowledgementmodule']              = strip_tags($row->acknowledgementmodule);
+                $detailrecords['acknowledgement']              = strip_tags($row->acknowledgement);		  	
 				$detailrecords['status']                     = strip_tags($row->status);		
 		
 			}
@@ -2236,17 +2240,43 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$verification=1;
 		}
-		$insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, 
-		`ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, 
-		`loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
-		`request`,`verificationmodule`,`verification`,`insert_login_id`,`created_date`) 
-		VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
-		'".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
-		'".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
-		'".strip_tags($branch_creation)."','".strip_tags($loan_category)."','".strip_tags($loan_calculation)."','".strip_tags($loan_scheme)."','".strip_tags($area_creation)."',
-		'".strip_tags($area_mapping)."','".strip_tags($area_approval)."','".strip_tags($adminmodule)."','".strip_tags($director_creation)."',
-		'".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
-		'".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($userid)."',current_timestamp )";
+		if(isset($_POST['approvalmodule']) &&    $_POST['approvalmodule'] == 'Yes')
+        {
+            $approvalmodule=0;
+        }else{
+            $approvalmodule=1;
+        }
+        if(isset($_POST['approval']) &&    $_POST['approval'] == 'Yes')
+        {
+            $approval=0;
+        }else{
+            $approval=1;
+        }
+        if(isset($_POST['acknowledgementmodule']) &&    $_POST['acknowledgementmodule'] == 'Yes')
+        {
+            $acknowledgementmodule=0;
+        }else{
+            $acknowledgementmodule=1;
+        }
+        if(isset($_POST['acknowledgement']) &&    $_POST['acknowledgement'] == 'Yes')
+        {
+            $acknowledgement=0;
+        }else{
+            $acknowledgement=1;
+        }
+
+		$insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
+        `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
+        `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
+        `request`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`insert_login_id`,`created_date`)
+        VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
+        '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
+        '".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
+        '".strip_tags($branch_creation)."','".strip_tags($loan_category)."','".strip_tags($loan_calculation)."','".strip_tags($loan_scheme)."','".strip_tags($area_creation)."',
+        '".strip_tags($area_mapping)."','".strip_tags($area_approval)."','".strip_tags($adminmodule)."','".strip_tags($director_creation)."',
+        '".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
+        '".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($approvalmodule)."','".strip_tags($approval)."',
+        '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($userid)."',current_timestamp )";
 		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 	}
 
@@ -2414,18 +2444,44 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$verification=1;
 		}
+		if(isset($_POST['approvalmodule']) &&    $_POST['approvalmodule'] == 'Yes')
+        {
+            $approvalmodule=0;
+        }else{
+            $approvalmodule=1;
+        }
+        if(isset($_POST['approval']) &&    $_POST['approval'] == 'Yes')
+        {
+            $approval=0;
+        }else{
+            $approval=1;
+        }
+        if(isset($_POST['acknowledgementmodule']) &&    $_POST['acknowledgementmodule'] == 'Yes')
+        {
+            $acknowledgementmodule=0;
+        }else{
+            $acknowledgementmodule=1;
+        }
+        if(isset($_POST['acknowledgement']) &&    $_POST['acknowledgement'] == 'Yes')
+        {
+            $acknowledgement=0;
+        }else{
+            $acknowledgement=1;
+        }
+
 		$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
-		`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
-		`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
-		agentforstaff='".strip_tags($agentforstaff)."',`line_id` = '".strip_tags($line)."',`group_id` = '".strip_tags($group)."',`mastermodule` = '".strip_tags($mastermodule)."',
-		`company_creation` = '".strip_tags($company_creation)."',`branch_creation` = '".strip_tags($branch_creation)."',`loan_category` = '".strip_tags($loan_category)."',
-		`loan_calculation` = '".strip_tags($loan_calculation)."',`loan_scheme` = '".strip_tags($loan_scheme)."',`area_creation` = '".strip_tags($area_creation)."',
-		`area_mapping` = '".strip_tags($area_mapping)."',`area_approval` = '".strip_tags($area_approval)."',`adminmodule` = '".strip_tags($adminmodule)."',
-		`director_creation` = '".strip_tags($director_creation)."',`agent_creation` = '".strip_tags($agent_creation)."',`staff_creation` = '".strip_tags($staff_creation)."',
-		`manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`requestmodule`='".strip_tags($requestmodule)."',
-		`request`='".strip_tags($request)."',`verificationmodule`='".strip_tags($verificationmodule)."',`verification`='".strip_tags($verification)."',`status` = 0,
-		`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()' 
-		WHERE user_id = '".strip_tags($id)."' ";
+        `user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
+        `ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
+        agentforstaff='".strip_tags($agentforstaff)."',`line_id` = '".strip_tags($line)."',`group_id` = '".strip_tags($group)."',`mastermodule` = '".strip_tags($mastermodule)."',
+        `company_creation` = '".strip_tags($company_creation)."',`branch_creation` = '".strip_tags($branch_creation)."',`loan_category` = '".strip_tags($loan_category)."',
+        `loan_calculation` = '".strip_tags($loan_calculation)."',`loan_scheme` = '".strip_tags($loan_scheme)."',`area_creation` = '".strip_tags($area_creation)."',
+        `area_mapping` = '".strip_tags($area_mapping)."',`area_approval` = '".strip_tags($area_approval)."',`adminmodule` = '".strip_tags($adminmodule)."',
+        `director_creation` = '".strip_tags($director_creation)."',`agent_creation` = '".strip_tags($agent_creation)."',`staff_creation` = '".strip_tags($staff_creation)."',
+        `manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`requestmodule`='".strip_tags($requestmodule)."',
+        `request`='".strip_tags($request)."',`verificationmodule`='".strip_tags($verificationmodule)."',`verification`='".strip_tags($verification)."',
+        `approvalmodule`='".strip_tags($approvalmodule)."',`approval`='".strip_tags($approval)."',`acknowledgementmodule`='".strip_tags($acknowledgementmodule)."',
+        `acknowledgement`='".strip_tags($acknowledgement)."',`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()'
+        WHERE user_id = '".strip_tags($id)."' ";
 		$result = $mysqli->query($updateQry) or die;
 	}
 
@@ -2960,7 +3016,7 @@ require 'PHPMailerAutoload.php';
     }
 
 	public function getRequestForVerification($mysqli,$id){
-        $qry = $mysqli->query("SELECT * FROM in_verification where req_id = '$id' and (cus_status = 1 or cus_status=2 or cus_status=10 or cus_status=11 or cus_status=12) ");
+        $qry = $mysqli->query("SELECT * FROM in_verification where req_id = '$id' ");
         $reqToverify = array();
         if($mysqli->affected_rows>0){
             $row = $qry->fetch_assoc();
@@ -3467,6 +3523,47 @@ require 'PHPMailerAutoload.php';
 			}
         }
 
+		public function addDocumentationUploads($mysqli,$userid){
+			if(isset($_POST['doc_table_id'])){
+                $doc_table_id = $_POST['doc_table_id'];
+            }
+
+			if(isset($_POST['mortgage_name'])){
+                $mortgage_name = $_POST['mortgage_name'];
+            }
+            if(isset($_POST['mortgage_dsgn'])){
+                $mortgage_dsgn = $_POST['mortgage_dsgn'];
+            }
+            if(isset($_POST['mortgage_nuumber'])){
+                $mortgage_nuumber = $_POST['mortgage_nuumber'];
+            }
+            if(isset($_POST['reg_office'])){
+                $reg_office = $_POST['reg_office'];
+            }
+            if(isset($_POST['mortgage_value'])){
+                $mortgage_value = $_POST['mortgage_value'];
+            }
+            if(isset($_POST['mortgage_document'])){
+                $mortgage_document = $_POST['mortgage_document'];
+            }
+
+			if(isset($_POST['vehicle_reg_no'])){
+                $vehicle_reg_no = $_POST['vehicle_reg_no'];
+            }
+            if(isset($_POST['endorsement_name'])){
+                $endorsement_name = $_POST['endorsement_name'];
+            }
+            if(isset($_POST['en_RC'])){
+                $en_RC = $_POST['en_RC'];
+            }
+            if(isset($_POST['en_Key'])){
+                $en_Key = $_POST['en_Key'];
+            }
+
+			$update_doc = "UPDATE `verification_documentation` SET `mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',`mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',`mortgage_document`='".strip_tags($mortgage_document)."',`vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',`en_Key`='".strip_tags($en_Key)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
+			$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
+
+		}
 
 			// Get Documentation Info.
 		public function getDocument($mysqli,$req_id){
@@ -3487,12 +3584,12 @@ require 'PHPMailerAutoload.php';
 					$detailrecords['doc_property_measurement'] = $row['doc_property_measurement'];
 					$detailrecords['doc_property_location'] = $row['doc_property_location'];
 					$detailrecords['doc_property_value'] = $row['doc_property_value'];
-					// $detailrecords['mortgage_name'] = $row['mortgage_name'];
-					// $detailrecords['mortgage_dsgn'] = $row['mortgage_dsgn'];
-					// $detailrecords['mortgage_nuumber'] = $row['mortgage_nuumber'];
-					// $detailrecords['reg_office'] = $row['reg_office'];
-					// $detailrecords['mortgage_value'] = $row['mortgage_value'];
-					// $detailrecords['mortgage_document'] = $row['mortgage_document'];
+					$detailrecords['mortgage_name'] = $row['mortgage_name'];
+					$detailrecords['mortgage_dsgn'] = $row['mortgage_dsgn'];
+					$detailrecords['mortgage_nuumber'] = $row['mortgage_nuumber'];
+					$detailrecords['reg_office'] = $row['reg_office'];
+					$detailrecords['mortgage_value'] = $row['mortgage_value'];
+					$detailrecords['mortgage_document'] = $row['mortgage_document'];
 					$detailrecords['endorsement_process'] = $row['endorsement_process'];
 					$detailrecords['owner_type'] = $row['owner_type'];
 					$detailrecords['owner_name'] = $row['owner_name'];
@@ -3502,10 +3599,10 @@ require 'PHPMailerAutoload.php';
 					$detailrecords['vehicle_process'] = $row['vehicle_process'];
 					$detailrecords['en_Company'] = $row['en_Company'];
 					$detailrecords['en_Model'] = $row['en_Model'];
-					// $detailrecords['vehicle_reg_no'] = $row['vehicle_reg_no'];
-					// $detailrecords['endorsement_name'] = $row['endorsement_name'];
-					// $detailrecords['en_RC'] = $row['en_RC'];
-					// $detailrecords['en_Key'] = $row['en_Key'];
+					$detailrecords['vehicle_reg_no'] = $row['vehicle_reg_no'];
+					$detailrecords['endorsement_name'] = $row['endorsement_name'];
+					$detailrecords['en_RC'] = $row['en_RC'];
+					$detailrecords['en_Key'] = $row['en_Key'];
 					$detailrecords['gold_info'] = $row['gold_info'];
 					$detailrecords['gold_sts'] = $row['gold_sts'];
 					$detailrecords['gold_type'] = $row['gold_type'];
