@@ -44,6 +44,7 @@ function dT1(){
     table.destroy();
     $('#area_status_table').DataTable({
         "order": [[ 0, "desc" ]],
+        'ordering': false,
         'processing': true,
         'serverSide': true,
         'serverMethod': 'post',
@@ -79,6 +80,7 @@ function dT2(){
    
     $('#sub_area_status_table').DataTable({
         "order": [[ 0, "desc" ]],
+        'ordering': false,
         'processing': true,
         'serverSide': true,
         'serverMethod': 'post',

@@ -37,6 +37,10 @@ $requestmodule = '';
 $request = '';
 $verificationmodule = '';
 $verification = '';
+$approvalmodule = '';
+$approval = '';
+$acknowledgementmodule = '';
+$acknowledgement = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -114,6 +118,10 @@ if($idupd>0)
 			$request          		     = $getUser['request'];
 			$verificationmodule          		     = $getUser['verificationmodule'];
 			$verification          		     = $getUser['verification'];
+			$approvalmodule          		     = $getUser['approvalmodule'];
+			$approval          		     = $getUser['approval'];
+			$acknowledgementmodule          		     = $getUser['acknowledgementmodule'];
+			$acknowledgement          		     = $getUser['acknowledgement'];
 		}
 	}
 }
@@ -509,6 +517,43 @@ if($idupd>0)
                             </div>
                         </div>
 					</div>
+
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($approvalmodule==0){ echo'checked'; }} ?> tabindex="20" class="" id="approvalmodule" name="approvalmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="approvalmodule">
+							<h5>Approval</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($approval==0){ echo'checked'; }} ?> tabindex="21" class="approval-checkbox" id="approval" name="approval" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="approval">Approval</label>
+                            </div>
+                        </div>
+					</div>
+
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($acknowledgementmodule==0){ echo'checked'; }} ?> tabindex="20" class="" id="acknowledgementmodule" name="acknowledgementmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="acknowledgementmodule">
+							<h5>Acknowledgement</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($acknowledgement==0){ echo'checked'; }} ?> tabindex="21" class="acknowledgement-checkbox" id="acknowledgement" name="acknowledgement" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="acknowledgement">Acknowledgement</label>
+                            </div>
+                        </div>
+					</div>
+
 					<br>
 					<br>
                     <!-- Modules end -->

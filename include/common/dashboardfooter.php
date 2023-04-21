@@ -38,6 +38,7 @@
 $(document).ready(function() {
 		var company_creation_table = $('#company_creation_table').DataTable({
 			"order": [[ 0, "desc" ]],
+            "ordering": false,
 			'processing': true,
 			'serverSide': true,
 			'serverMethod': 'post',
@@ -76,6 +77,7 @@ $(document).ready(function() {
 
 		var loan_creation_table = $('#loan_creation_table').DataTable({
 			"order": [[ 0, "desc" ]],
+            "ordering": false,
 			'processing': true,
 			'serverSide': true,
 			'serverMethod': 'post',
@@ -114,6 +116,7 @@ $(document).ready(function() {
 
 		var branch_creation_info = $('#branch_creation_info').DataTable({
 			"order": [[ 0, "desc" ]],
+            "ordering": false,
 			'processing': true,
 			'serverSide': true,
 			'serverMethod': 'post',
@@ -152,6 +155,7 @@ $(document).ready(function() {
 
 		var area_creation_info = $('#area_creation_info').DataTable({
 			"order": [[ 0, "desc" ]],
+            "ordering": false,
 			'processing': true,
 			'serverSide': true,
 			'serverMethod': 'post',
@@ -191,6 +195,7 @@ $(document).ready(function() {
         // Loan Calculation datatable
         var loan_calculation_info = $('#loan_calculation_info').DataTable({
             "order": [[ 0, "desc" ]],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -238,6 +243,7 @@ $(document).ready(function() {
         // Director Creation datatable
         var director_creation_table = $('#director_creation_table').DataTable({
             "order": [[ 0, "desc" ]],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -273,6 +279,7 @@ $(document).ready(function() {
         // Agent Creation datatable
         var agent_creation_table = $('#agent_creation_table').DataTable({
             "order": [[ 0, "desc" ]],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -309,6 +316,7 @@ $(document).ready(function() {
         // Staff Creation datatable
         var staff_creation_table = $('#staff_creation_table').DataTable({
             "order": [[ 0, "desc" ]],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -346,6 +354,7 @@ $(document).ready(function() {
         // Manage user datatable
         var manage_user_table = $('#manage_user_table').DataTable({
             "order": [[ 0, "desc" ]],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -382,6 +391,7 @@ $(document).ready(function() {
         // Documentation Mapping datatable
         var doc_mapping_table = $('#doc_mapping_table').DataTable({
             "order": [[ 0, "desc" ]],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -451,6 +461,7 @@ $(document).ready(function() {
             "order": [
                 [0, "desc"]
             ],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -483,11 +494,43 @@ $(document).ready(function() {
             "order": [
                 [0, "desc"]
             ],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
             'ajax': {
                 'url': 'ajaxFetch/ajaxApprovalFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "Loan Scheme List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+        });
+
+        // Acknowledgement List
+        var acknowledge_table = $('#acknowledge_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxAcknowledgementFetch.php',
                 'data': function(data) {
                     var search = $('#search').val();
                     data.search = search;
@@ -523,6 +566,7 @@ $(document).ready(function() {
             request_table.draw();
             verification_table.draw();
             approval_table.draw();
+            acknowledge_table.draw();
         });
         
 });//Document Ready End
@@ -610,6 +654,13 @@ if($current_page == 'approval_list') { ?>
     <script src="js/approval_list.js"></script>
     <?php }
 
+//Acknowledgement screen
+if($current_page == 'edit_acknowledgement_list') { ?>
+    <script src="js/edit_acknowledgement_list.js"></script>
+    <?php }
+if($current_page == 'acknowledgement_creation') { ?>
+    <script src="js/acknowledgement_creation.js"></script>
+    <?php }
 ?> 
 
 <script src="js/logincreation.js"></script>

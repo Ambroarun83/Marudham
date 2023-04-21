@@ -1172,10 +1172,10 @@ if(sizeof($getLoanCalculation)>0){
 						<hr>
 
 						<div class="row">
-						    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="abtCustomer"> About Customer </label> <span class="required">*</span>
-									<textarea class="form-control" name="about_cus" id="about_cus" > <?php if (isset($about_customer)) { echo $about_customer; } ?> </textarea>
+									<textarea class="form-control" name="about_cus" id="about_cus" ><?php if (isset($about_customer)) { echo $about_customer; } ?></textarea>
 									<span class="text-danger" style='display:none' id='aboutcusCheck'> Please Enter About Customer </span>
 								</div>
 							</div>
