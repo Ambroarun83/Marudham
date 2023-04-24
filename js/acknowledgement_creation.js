@@ -46,11 +46,58 @@ $(document).ready(function () {
 
 ///Documentation 
 
+    //Signed Doc Validation Hide
+    $('#docNameCheck').hide(); $('#signTypeCheck').hide(); $('#docCountCheck').hide(); $('#docupdCheck').hide();
+
+    $('#sign_type').change(function () { // Signed Type 
+        let type = $(this).val();
+
+        if (type == '3') {
+            $('#relation_doc').show();
+            signTypeRelation();
+
+        } else {
+            $('#relation_doc').hide();
+        }
+    })
+
+    $("body").on("click", "#signed_doc_edit", function () {
+        let id = $(this).attr('value');
+        signTypeRelation();
+
+        $.ajax({
+            url: 'verificationFile/documentation/signed_doc_edit.php',
+            type: 'POST',
+            data: { "id": id },
+            dataType: 'json',
+            cache: false,
+            success: function (result) {
+
+                $("#signedID").val(result['id']);
+                $("#doc_name").val(result['doc_name']);
+                $("#sign_type").val(result['sign_type']);
+
+                if (result['sign_type'] == '3') {
+                    $('#relation_doc').show();
+                    $("#signType_relationship").val(result['signType_relationship']);
+
+                } else {
+                    $('#relation_doc').hide();
+                }
+
+                $("#doc_Count").val(result['doc_Count']);
+
+            }
+        });
+
+    });
+
+
     ////Mortgage Info     
-    $('#mortgagenameCheck').hide(); $('#mortgagedsgnCheck').hide(); $('#mortgagenumCheck').hide(); $('#regofficeCheck').hide(); $('#mortgagevalueCheck').hide(); $('#mortgagedocCheck').hide();
+    $('#mortgagenameCheck').hide(); $('#mortgagedsgnCheck').hide(); $('#mortgagenumCheck').hide(); $('#regofficeCheck').hide(); $('#mortgagevalueCheck').hide(); $('#mortgagedocCheck').hide(); $('#mortgagedocUpdCheck').hide(); 
 
     //Endorsement Info
-    $('#vehicle_reg_noCheck').hide(); $('#endorsementnameCheck').hide(); $('#enRCCheck').hide(); $('#enKeyCheck').hide();
+    $('#vehicle_reg_noCheck').hide(); $('#endorsementnameCheck').hide(); $('#enRCCheck').hide(); $('#enKeyCheck').hide(); $('#rcdocUpdCheck').hide();
 
 
 //To Show Relationship value on edit page.////
@@ -99,6 +146,96 @@ $('#pendingchk').click(function(){
     }
 })
 
+//Mortgage Document upload.
+$('#mortgage_document').change(function(){
+    var docupd = $(this).val();
+
+    if(docupd == '0'){
+        $('#docUpd').show();
+        
+    }else{
+        $('#docUpd').hide();
+    }
+})
+
+//RC upload.
+$('#en_RC').change(function(){
+    var rcupd = $(this).val();
+
+    if(rcupd == '0'){
+        $('#RCdocUpd').show();
+        
+    }else{
+        $('#RCdocUpd').hide();
+    }
+})
+
+$("#signDocUploads").on('submit', function(e){
+    e.preventDefault();
+
+    let doc_name = $("#doc_name").val();
+    let sign_type = $("#sign_type").val();
+    let doc_Count = $("#doc_Count").val();
+    let req_id = $('#doc_req_id').val();
+    let signeddoc_upd = $('#signdoc_upd').val();
+
+    if (doc_name != "" && sign_type != "" && doc_Count != "" && req_id != "" && signeddoc_upd != "") {
+    $.ajax({
+        type: 'POST',
+        url: 'verificationFile/documentation/sign_info_doc_upload.php',
+        data: new FormData(this),
+        contentType: false,
+        processData: false,
+        success: function (response) {
+
+            var insresult = response.includes("Uploaded");
+            if (insresult) {
+                $('#signInsertOk').show();
+                setTimeout(function () {
+                    $('#signInsertOk').fadeOut('fast');
+                }, 2000);
+            }
+            else {
+                $('#signNotOk').show();
+                setTimeout(function () {
+                    $('#signNotOk').fadeOut('fast');
+                }, 2000);
+            }
+
+            resetsignInfo();
+        }
+    });
+    $('#docNameCheck').hide(); $('#signTypeCheck').hide(); $('#docCountCheck').hide(); $('#docupdCheck').hide();
+    }else {
+
+            if (doc_name == "") {
+                $('#docNameCheck').show();
+            } else {
+                $('#docNameCheck').hide();
+            }
+    
+            if (sign_type == "") {
+                $('#signTypeCheck').show();
+            } else {
+                $('#signTypeCheck').hide();
+            }
+    
+            if (doc_Count == "") {
+                $('#docCountCheck').show();
+            } else {
+                $('#docCountCheck').hide();
+            }
+    
+            if (signeddoc_upd == "") {
+                $('#docupdCheck').show();
+            } else {
+                $('#docupdCheck').hide();
+            }
+    
+        }
+});
+
+
 
 });   ////////Document Ready End
 
@@ -134,6 +271,7 @@ $(function () {
 
     //Documentation
     getstaffCode(); // Atuo Generate Doc ID.
+    resetsignInfo(); // Signed Doc info Reset.
     resetsigninfoList(); // Signed Doc List Reset.
 
     chequeinfoList(); // Cheque Info List.
@@ -752,11 +890,62 @@ function docHolderName(){
     });
 }
 
-// Signed Doc 
+function resetsignInfo() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/sign_info_upd_reset.php',
+        type: 'POST',
+        data: { "reqId": req_id },
+        cache: false,
+        success: function (html) {
+            $("#signTable").empty();
+            $("#signTable").html(html);
+
+            $("#doc_name").val('');
+            $("#sign_type").val('');
+            $("#signType_relationship").val('');
+            $("#doc_Count").val('');
+            $("#signdoc_upd").val('');
+            $("#signedID").val('');
+
+        }
+    });
+}
+
+function signTypeRelation() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/verificationFam.php',
+        type: 'post',
+        data: { "reqId": req_id },
+        dataType: 'json',
+        success: function (response) {
+
+            var len = response.length;
+            $("#signType_relationship").empty();
+            $("#signType_relationship").append("<option value=''>" + 'Select Relationship' + "</option>");
+            for (var i = 0; i < len; i++) {
+                var fam_name = response[i]['fam_name'];
+                var fam_id = response[i]['fam_id'];
+                var relationship = response[i]['relationship'];
+                $("#signType_relationship").append("<option value='" + fam_id + "'>" + fam_name + ' - ' + relationship + "</option>");
+            }
+            {//To Order ag_group Alphabetically
+                var firstOption = $("#signType_relationship option:first-child");
+                $("#signType_relationship").html($("#signType_relationship option:not(:first-child)").sort(function (a, b) {
+                    return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+                }));
+                $("#signType_relationship").prepend(firstOption);
+            }
+
+        }
+    });
+}
+
 function resetsigninfoList() {
     let req_id = $('#req_id').val();
     $.ajax({
-        url: 'verificationFile/documentation/signed_doc_list.php',
+        url: 'verificationFile/documentation/acknowledge_sign_doc_list.php',
         type: 'POST',
         data: { "reqId": req_id },
         cache: false,
@@ -765,6 +954,19 @@ function resetsigninfoList() {
             $("#signDocResetTable").html(html);
         }
     });
+}
+
+function filesCount(){
+    var cnt = $('#doc_Count').val();
+    var signFile = document.querySelector('#signdoc_upd');
+
+    if(signFile.files.length == cnt){
+        return true;
+    }else{
+        alert('Please select '+ cnt + ' files.')
+        $("#signdoc_upd").val('');
+        return false;
+    }
 }
 
 //Cheque Info List
@@ -791,9 +993,9 @@ function doc_submit_validation() {
 
     var mortgage_process = $('#mortgage_process').val(); var endorsement_process = $('#endorsement_process').val(); 
     var req_id = $('#req_id').val();
-    var mortgage_name = $('#mortgage_name').val(); var mortgage_dsgn = $('#mortgage_dsgn').val(); var mortgage_nuumber = $('#mortgage_nuumber').val(); var reg_office = $('#reg_office').val(); var mortgage_value = $('#mortgage_value').val(); var mortgage_document = $('#mortgage_document').val();
+    var mortgage_name = $('#mortgage_name').val(); var mortgage_dsgn = $('#mortgage_dsgn').val(); var mortgage_nuumber = $('#mortgage_nuumber').val(); var reg_office = $('#reg_office').val(); var mortgage_value = $('#mortgage_value').val(); var mortgage_document = $('#mortgage_document').val(); var doc_upd = $('#mortgage_document_upd').val();
     var vehicle_reg_no = $('#vehicle_reg_no').val();
-    var endorsement_name = $('#endorsement_name').val(); var en_RC = $('#en_RC').val(); var en_Key = $('#en_Key').val();
+    var endorsement_name = $('#endorsement_name').val(); var en_RC = $('#en_RC').val(); var rc_upd = $('#RC_document_upd').val(); var en_Key = $('#en_Key').val();
 
 
     if (mortgage_process == '0') {
@@ -834,6 +1036,16 @@ function doc_submit_validation() {
         } else {
             $('#mortgagedocCheck').hide();
         }
+
+        if (mortgage_document == '0') {
+        if (doc_upd == '') {
+            event.preventDefault();
+            $('#mortgagedocUpdCheck').show();
+        } else {
+            $('#mortgagedocUpdCheck').hide();
+        }
+        }
+
     }
 
     if (endorsement_process == '0') {
@@ -856,6 +1068,16 @@ function doc_submit_validation() {
         } else {
             $('#enRCCheck').hide();
         }
+
+        if (en_RC == '0') {
+            if (rc_upd == '') {
+                event.preventDefault();
+                $('#rcdocUpdCheck').show();
+            } else {
+                $('#rcdocUpdCheck').hide();
+            }
+            }
+
         if (en_Key == '') {
             event.preventDefault();
             $('#enKeyCheck').show();

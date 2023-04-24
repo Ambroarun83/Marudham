@@ -1262,6 +1262,7 @@ input:checked + .slider:before {
                     <!-- Signed Doc Info START -->
                     <div class="card">
                         <div class="card-header"> Signed Doc Info
+						<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
                         </div>
                         <div class="card-body">
 
@@ -1459,6 +1460,14 @@ input:checked + .slider:before {
                                         </div>
                                     </div>
 
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="docUpd" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="MortgageDocumentUpd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
+                                            <input type="file" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd">
+                                            <span class="text-danger" id="mortgagedocUpdCheck"> Upload Mortgage Document </span>
+                                        </div>
+                                    </div>
+
 
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
@@ -1592,6 +1601,14 @@ input:checked + .slider:before {
                                         </select>
                                         <span class="text-danger" id="enRCCheck"> Select RC </span>
                                     </div>
+                                </div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="RCdocUpd" style="display: none;">
+                                        <div class="form-group">
+                                            <label for="RCDocumentUpd"> RC Uploads </label> <span class="required">&nbsp;*</span>
+                                            <input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd">
+                                            <span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
+                                        </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -2184,3 +2201,128 @@ input:checked + .slider:before {
 	 <!--  ///////////////////////////////////////////////////////////////// Loan Calculation Ends ////////////////////////////////////////////////////////// -->
 
 </div>
+
+
+<!-- Add Signed Doc info Modal  START -->
+<div class="modal fade addSignDoc" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+ <form method="POST" enctype="multipart/form-data"  id="signDocUploads">
+	<input type="hidden" name="doc_req_id" id="doc_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Add Signed Doc Info</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetsigninfoList()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- alert messages -->
+				<div id="signInsertOk" class="successalert"> Signed Doc Info Uploaded Successfully
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="signUpdateok" class="successalert"> Signed Doc Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="signNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="signDeleteOk" class="unsuccessalert"> Signed Doc Info Deleted
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="signDeleteNotOk" class="unsuccessalert"> Signed Doc Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<br />
+
+				<div class="row">
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="doc_name" name="doc_name">
+								<option value=""> Select Doc Name </option>
+								<option value="0"> Promissory Note </option>
+								<option value="1"> Stamp Paper </option>
+								<option value="2"> P Additional </option>
+								<option value="3"> S Additional </option>
+							</select>
+							<span class="text-danger" id="docNameCheck"> Select Doc Name </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="SignType"> Sign Type </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="sign_type" name="sign_type">
+								<option value=""> Select Sign Type </option>
+								<option value="0"> Customer </option>
+								<option value="1"> Guarantor </option>
+								<option value="2"> Combined </option>
+								<option value="3"> Family Members </option>
+							</select>
+							<span class="text-danger" id="signTypeCheck"> Select Sign Type </span>
+						</div>
+					</div>
+
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
+						<div class="form-group">
+							<label for="signRelationship"> Relationship </label>
+							<select type="text" class="form-control" id="signType_relationship" name="signType_relationship">
+								<option value=""> Select Relationship </option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count">
+							<span class="text-danger" id="docCountCheck"> Enter Count </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="upd"> Uploads </label> <span class="required">&nbsp;*</span>
+							<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()">
+							<span class="text-danger" id="docupdCheck"> Enter Count </span>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+						<input type="hidden" name="signedID" id="signedID">
+						<button type="submit" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+					</div>
+				
+				</div>
+				</br>
+
+				<div id="signTable">
+					<table class="table custom-table modalTable">
+						<thead>
+							<tr>
+								<th width="15%"> S.No </th>
+								<th> Doc Name </th>
+								<th> Sign Type </th>
+								<th> Relationship </th>
+								<th> Count </th>
+								<th> ACTION </th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetsigninfoList()">Close</button>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+<!-- END  Add Signed Doc Info Modal -->
