@@ -23,7 +23,21 @@ include '../../ajaxconfig.php';
         while ($signedDoc = $signInfo->fetch()) {
             $fam_id = $signedDoc["signType_relationship"];
             $result = $connect->query("SELECT famname,relationship FROM `verification_family_info` where id='$fam_id'");
-            $row = $result->fetch()
+            $row = $result->fetch();
+
+            $doc_upd_name = '';
+            $id = $signedDoc["id"];
+            $updresult = $connect->query("SELECT upload_doc_name FROM `signed_doc` where signed_doc_id = '$id'");
+            $a = 1;
+            while($upd = $updresult->fetch()){
+            $docName = $upd['upload_doc_name'];
+                $doc_upd_name .= "<a href=uploads/verification/signed_doc/";
+                $doc_upd_name .= $docName ;
+                $doc_upd_name .= " target='_blank'>";
+                $doc_upd_name .=  $a. ' ' ;
+                $doc_upd_name .= "</a>" ;
+                 $a++;
+            }
         ?>
             <tr>
                 <td> <?php echo $i++; ?></td>
@@ -35,7 +49,7 @@ include '../../ajaxconfig.php';
                 <td> <?php if($signedDoc["sign_type"] == '3'){ echo $row["famname"].' - '.$row["relationship"];} ?></td>
                 
                 <td> <?php echo $signedDoc['doc_Count']; ?></td>
-                <td> </td>
+                <td><?php echo $doc_upd_name; ?></td>
             </tr>
 
         <?php  } ?>
