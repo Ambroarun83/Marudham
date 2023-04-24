@@ -3,23 +3,44 @@ if(isset($_SESSION["userid"])){
 	$userid = $_SESSION["userid"];
 }
 $current_page = isset($_GET['page']) ? $_GET['page'] : null; 
+$verif_check = isset($_GET['pge']) ? $_GET['pge'] : null; 
 
-if($current_page == 'edit_company_creation' || $current_page == 'edit_branch_creation' || $current_page == 'edit_loan_category' || $current_page == 'edit_loan_calculation' || 
-$current_page == 'edit_loan_scheme' || $current_page == 'edit_area_creation' || $current_page == 'edit_area_mapping' || $current_page == 'edit_area_approval'){
+if($current_page == 'edit_company_creation' ||$current_page == 'company_creation' || $current_page == 'edit_branch_creation' ||$current_page == 'branch_creation' || 
+$current_page == 'edit_loan_category' || $current_page == 'loan_category' || $current_page == 'edit_loan_calculation' || $current_page == 'loan_calculation' || 
+$current_page == 'edit_loan_scheme' || $current_page == 'loan_scheme' || $current_page == 'edit_area_creation' || $current_page == 'area_creation' || 
+$current_page == 'edit_area_mapping' || $current_page == 'area_mapping' || $current_page == 'area_status' ){
+
 	$current_module = 'master';
-}else if($current_page == 'edit_director_creation' || $current_page == 'edit_agent_creation' || $current_page == 'edit_staff_creation' || $current_page == 'edit_manage_user'
-|| $current_page == 'edit_doc_mapping'){
+
+}else if($current_page == 'edit_director_creation' ||$current_page == 'director_creation' || $current_page == 'edit_agent_creation' || $current_page == 'agent_creation' || 
+$current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $current_page == 'edit_manage_user'|| $current_page == 'manage_user' || $current_page == 'edit_doc_mapping'
+|| $current_page == 'doc_mapping'){
+
 	$current_module = 'admin';
-}else if($current_page == 'edit_request' ){
+
+}else if($current_page == 'edit_request' || $current_page == 'request' ){
+
 	$current_module = 'request';
-}else if($current_page == 'verification_list' ){
-	$current_module = 'verification';
-}else if($current_page == 'approval_list' ){
+
+}else if($current_page == 'verification_list' || $current_page == 'verification' ){
+	
+	if($verif_check != '' && $verif_check == '2'){ //Due to same page for two screens, first check pge number to verify it is for approval or verification
+		$current_module = 'approval';
+	}else{
+		$current_module = 'verification';
+	}
+
+}else if($current_page == 'approval_list' || $current_page == 'approval'){
+
 	$current_module = 'approval';
-}else if($current_page == 'edit_acknowledgement_list' ){
+
+}else if($current_page == 'edit_acknowledgement_list' || $current_page == 'acknowledgement' ){
+
 	$current_module = 'acknowledgement';
+
+}else{
+	$current_module = '';
 }
-$current_module = '';
 
 
 $user_id        = '';
@@ -265,30 +286,30 @@ if (sizeof($getUser)>0) {
 				<?php if($adminmodule == 0){?>
 					<li class="sidebar-dropdown administration">
 						<a href="javascript:void(0)">
-							<i class="icon-folder"></i>
+							<i class="icon-layers2"></i>
 							<span class="menu-text">Administration</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='admin') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($director_creation == 0){ ?>
 									<li>
-										<a href="edit_director_creation"><i class="icon-list"></i>Director Creation</a>
+										<a href="edit_director_creation"><i class="icon-event_note"></i>Director Creation</a>
 									</li>
 								<?php  }if($agent_creation == 0){ ?>
 									<li>
-										<a href="edit_agent_creation"><i class="icon-list"></i>Agent Creation</a>
+										<a href="edit_agent_creation"><i class="icon-users"></i>Agent Creation</a>
 									</li>
 								<?php  }if($staff_creation == 0){ ?>
 									<li>
-										<a href="edit_staff_creation"><i class="icon-list"></i>Staff Creation</a>
+										<a href="edit_staff_creation"><i class="icon-user-plus"></i>Staff Creation</a>
 									</li>
 								<?php  }if($manage_user == 0){ ?>
 									<li>
-										<a href="edit_manage_user"><i class="icon-list"></i>Manage User</a>
+										<a href="edit_manage_user"><i class="icon-cog"></i>Manage User</a>
 									</li>
 								<?php  }if($doc_mapping == 0){ ?>
 									<li>
-										<a href="edit_doc_mapping"><i class="icon-list"></i>Documentation Mapping</a>
+										<a href="edit_doc_mapping"><i class="icon-briefcase"></i>Documentation Mapping</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -298,14 +319,14 @@ if (sizeof($getUser)>0) {
 				<?php if($requestmodule == 0){ ?>
 					<li class="sidebar-dropdown request">
 						<a href="javascript:void(0)">
-							<i class="icon-folder"></i>
+							<i class="icon-playlist_add"></i>
 							<span class="menu-text">Request</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='request') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($request == 0){ ?>
 									<li>
-										<a href="edit_request"><i class="icon-list"></i>Request</a>
+										<a href="edit_request"><i class="icon-playlist_add"></i>Request</a>
 									</li>
 								<?php  } ?>
 
@@ -318,14 +339,14 @@ if (sizeof($getUser)>0) {
 				<?php if($verificationmodule == 0){?>
 					<li class="sidebar-dropdown request">
 						<a href="javascript:void(0)">
-							<i class="icon-folder"></i>
+							<i class="icon-recent_actors"></i>
 							<span class="menu-text">Verification</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='verification') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($verification == 0){ ?>
 									<li>
-										<a href="verification_list"><i class="icon-list"></i>Verification</a>
+										<a href="verification_list"><i class="icon-recent_actors"></i>Verification</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -335,14 +356,14 @@ if (sizeof($getUser)>0) {
 				<?php if($approvalmodule == 0){?>
 					<li class="sidebar-dropdown approve">
 						<a href="javascript:void(0)">
-							<i class="icon-folder"></i>
+							<i class="icon-offline_pin"></i>
 							<span class="menu-text">Approval</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='approval') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($approval == 0){ ?>
 									<li>
-										<a href="approval_list"><i class="icon-list"></i>Approval</a>
+										<a href="approval_list"><i class="icon-offline_pin"></i>Approval</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -352,14 +373,14 @@ if (sizeof($getUser)>0) {
 				<?php if($acknowledgementmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-folder"></i>
+                            <i class="icon-rate_review"></i>
                             <span class="menu-text">Acknowledgement</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='acknowledgement') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($acknowledgement == 0){ ?>
                                     <li>
-                                        <a href="edit_acknowledgement_list"><i class="icon-list"></i>Acknowledgement</a>
+                                        <a href="edit_acknowledgement_list"><i class="icon-rate_review"></i>Acknowledgement</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
