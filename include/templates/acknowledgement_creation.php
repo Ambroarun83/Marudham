@@ -8,7 +8,7 @@ if (isset($_GET['pge'])) {
 
 if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''){
 
-	$addDocVerification = $userObj->addDocumentationUploads($mysqli, $userid);
+	$addDocVerification = $userObj->addDocumentation($mysqli, $userid);
 ?>
 	<script> alert('Documentation Details Submitted'); </script>
 <?php
@@ -1264,6 +1264,7 @@ input:checked + .slider:before {
                         <div class="card-header"> Signed Doc Info
 						<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
                         </div>
+                        <span class="text-danger" style='display:none' id='signed_infoCheck'>Please Fill Signed Doc Info </span>
                         <div class="card-body">
 
                             <div class="row">
@@ -1295,7 +1296,9 @@ input:checked + .slider:before {
                     <!-- Cheque Info START -->
                     <div class="card">
                         <div class="card-header"> Cheque Info
+						<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
                         </div>
+                        <span class="text-danger" style='display:none' id='Cheque_infoCheck'>Please Fill Cheque Info </span>
                         <div class="card-body">
 
                             <div class="row">
@@ -1341,6 +1344,7 @@ input:checked + .slider:before {
                                             <option value="0" <?php if(isset($mortgage_process) and $mortgage_process == '0') echo 'selected'; ?>> YES </option>
                                             <option value="1" <?php if(isset($mortgage_process) and $mortgage_process == '1') echo 'selected'; ?>> NO </option>
                                         </select>
+                                        <span class="text-danger" id="mortgageprocessCheck"> Select Mortgage Process </span>
                                     </div>
                                 </div>
                             </div>
@@ -1356,6 +1360,7 @@ input:checked + .slider:before {
                                                 <option value="1" <?php if(isset($Propertyholder_type) and $Propertyholder_type == '1') echo 'selected'; ?> > Guarantor </option>
                                                 <option value="2" <?php if(isset($Propertyholder_type) and $Propertyholder_type == '2') echo 'selected'; ?> > Family Members </option>
                                             </select>
+                                            <span class="text-danger" id="propertyholdertypeCheck"> Select Property Holder type </span>
                                         </div>
                                     </div>
 
@@ -1382,6 +1387,7 @@ input:checked + .slider:before {
                                         <div class="form-group">
                                             <label for="DocPropertyType"> Property Type </label> <span class="required">&nbsp;*</span>
                                             <input type="text" class="form-control" id="doc_property_pype" name="doc_property_pype" placeholder="Enter Property Type" value="<?php if(isset($doc_property_type)) echo $doc_property_type; ?>" >
+                                            <span class="text-danger" id="docpropertytypeCheck"> Enter Property Type </span>
                                         </div>
                                     </div>
 
@@ -1389,6 +1395,7 @@ input:checked + .slider:before {
                                         <div class="form-group">
                                             <label for="DocPropertyMeasurement"> Property Measurement </label> <span class="required">&nbsp;*</span>
                                             <input type="text" class="form-control" id="doc_property_measurement" name="doc_property_measurement" placeholder="Enter Property Measurement" value="<?php if(isset($doc_property_measurement)) echo $doc_property_measurement; ?>" >
+                                            <span class="text-danger" id="docpropertymeasureCheck"> Enter Property Measurement </span>
                                         </div>
                                     </div>
 
@@ -1396,6 +1403,7 @@ input:checked + .slider:before {
                                         <div class="form-group">
                                             <label for="DocPropertyLocation"> Property Location </label> <span class="required">&nbsp;*</span>
                                             <input type="text" class="form-control" id="doc_property_location" name="doc_property_location" placeholder="Enter Property Location" value="<?php if(isset($doc_property_location)) echo $doc_property_location; ?>" >
+                                            <span class="text-danger" id="docpropertylocCheck"> Enter Property Location </span>
                                         </div>
                                     </div>
 
@@ -1473,7 +1481,7 @@ input:checked + .slider:before {
                                         <div class="form-group">
                                            <label for="pendingDocument"> Pending </label> <span class="required">&nbsp;*</span>
                                            <label class="switch">
-                                            <input type="checkbox" value="YES" id="pendingchk" checked>
+                                            <input type="checkbox" value="YES" id="pendingchk" name="pendingchk" checked>
                                             <span class="slider round"></span>
                                            </label>
                                         </div>
@@ -1502,6 +1510,7 @@ input:checked + .slider:before {
                                             <option value="0" <?php if(isset($endorsement_process) and $endorsement_process == '0') echo 'selected'; ?>> YES </option>
                                             <option value="1" <?php if(isset($endorsement_process) and $endorsement_process == '1') echo 'selected'; ?>> NO </option>
                                         </select>
+                                        <span class="text-danger" id="endorsementprocessCheck"> Select Endorsement Process </span>
                                     </div>
                                 </div>
                             </div>
@@ -1517,6 +1526,7 @@ input:checked + .slider:before {
                                             <option value="1" <?php if(isset($owner_type) and $owner_type == '1') echo 'selected'; ?>> Guarantor </option>
                                             <option value="2" <?php if(isset($owner_type) and $owner_type == '2') echo 'selected'; ?>> Family Members </option>
                                         </select>
+                                        <span class="text-danger" id="ownertypeCheck"> Select Owner type </span>
                                     </div>
                                 </div>
 
@@ -1547,6 +1557,7 @@ input:checked + .slider:before {
                                             <option value="0" <?php if(isset($vehicle_type) and $vehicle_type == '0') echo 'selected'; ?>> 2 Wheeler </option>
                                             <option value="1" <?php if(isset($vehicle_type) and $vehicle_type == '1') echo 'selected'; ?>> 4 Wheeler </option>
                                         </select>
+                                        <span class="text-danger" id="vehicletypeCheck"> Enter Vehicle Type </span>
                                     </div>
                                 </div>
 
@@ -1558,6 +1569,7 @@ input:checked + .slider:before {
                                             <option value="0" <?php if(isset($vehicle_process) and $vehicle_process == '0') echo 'selected'; ?>> New </option>
                                             <option value="1" <?php if(isset($vehicle_process) and $vehicle_process == '1') echo 'selected'; ?>> Old </option>
                                         </select>
+                                        <span class="text-danger" id="vehicleprocessCheck"> Enter Vehicle Process </span>
                                     </div>
                                 </div>
 
@@ -1565,6 +1577,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="endro_Company"> Company </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="en_Company" name="en_Company" placeholder="Enter Company" value="<?php if(isset($en_Company)) echo $en_Company; ?>" >
+                                        <span class="text-danger" id="enCompanyCheck"> Enter Company </span>
                                     </div>
                                 </div>
 
@@ -1572,6 +1585,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="enModel"> Model </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="en_Model" name="en_Model" placeholder="Enter Model" value="<?php if(isset($en_Model)) echo $en_Model; ?>">
+                                        <span class="text-danger" id="enModelCheck"> Enter Model </span>
                                     </div>
                                 </div>
 
@@ -1623,6 +1637,16 @@ input:checked + .slider:before {
                                     </div>
                                 </div>
 
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                        <div class="form-group">
+                                           <label for="pendingendorse"> Pending </label> <span class="required">&nbsp;*</span>
+                                           <label class="switch">
+                                            <input type="checkbox" value="YES" id="endorsependingchk" name="endorsependingchk" checked>
+                                            <span class="slider round"></span>
+                                           </label>
+                                        </div>
+                                    </div>
+
                             </div>
                         </div>
                     </div>
@@ -1644,6 +1668,7 @@ input:checked + .slider:before {
                                             <option value="0" <?php if(isset($gold_info) and $gold_info == '0') echo 'selected'; ?> > YES </option>
                                             <option value="1" <?php if(isset($gold_info) and $gold_info == '1') echo 'selected'; ?> > NO </option>
                                         </select>
+                                        <span class="text-danger" id="goldCheck"> Select Gold Info </span>
                                     </div>
                                 </div>
                             </div>
@@ -1659,6 +1684,7 @@ input:checked + .slider:before {
                                             <option value="0" <?php if(isset($gold_sts) and $gold_sts == '0') echo 'selected'; ?>> Old </option>
                                             <option value="1" <?php if(isset($gold_sts) and $gold_sts == '1') echo 'selected'; ?>> New </option>
                                         </select>
+                                        <span class="text-danger" id="GoldstatusCheck"> Select Gold Status </span>
                                     </div>
                                 </div>
 
@@ -1666,6 +1692,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="Goldtype "> Gold Type </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type" value="<?php if(isset($gold_type)) echo $gold_type; ?>">
+                                        <span class="text-danger" id="GoldtypeCheck"> Enter Gold Type </span>
                                     </div>
                                 </div>
 
@@ -1674,6 +1701,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="Purity "> Purity </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity" value="<?php if(isset($Purity)) echo $Purity; ?>">
+                                        <span class="text-danger" id="purityCheck"> Enter Purity </span>
                                     </div>
                                 </div>
 
@@ -1681,6 +1709,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="Count"> Count </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="gold_Count" name="gold_Count" placeholder="Enter Count" value="<?php if(isset($gold_Count)) echo $gold_Count; ?>">
+                                        <span class="text-danger" id="goldCountCheck"> Enter Count </span>
                                     </div>
                                 </div>
 
@@ -1688,6 +1717,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="Weight"> Weight </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight" value="<?php if(isset($gold_Weight)) echo $gold_Weight; ?>"> 
+                                        <span class="text-danger" id="goldWeightCheck"> Enter Weight </span>
                                     </div>
                                 </div>
 
@@ -1695,6 +1725,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="Value"> Value </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value" value="<?php if(isset($gold_Value)) echo $gold_Value; ?>">
+                                        <span class="text-danger" id="goldValueCheck"> Enter Value </span>
                                     </div>
                                 </div>
                             </div>
@@ -1714,6 +1745,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="<?php if(isset($document_name)) echo $document_name; ?>">
+                                        <span class="text-danger" id="documentnameCheck"> Enter Document name </span>
                                     </div>
                                 </div>
 
@@ -1721,6 +1753,7 @@ input:checked + .slider:before {
                                     <div class="form-group">
                                         <label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="<?php if(isset($document_details)) echo $document_details; ?>">
+                                        <span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
                                     </div>
                                 </div>
 
@@ -1732,6 +1765,7 @@ input:checked + .slider:before {
                                         <option value='0' <?php if(isset($document_type) and $document_type == '0') echo 'selected'; ?> > Original </option>    
                                         <option value='1' <?php if(isset($document_type) and $document_type == '1') echo 'selected'; ?> > Xerox </option>   
                                     </select>
+                                        <span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
                                     </div>
                                 </div>
 
@@ -1744,6 +1778,7 @@ input:checked + .slider:before {
                                             <option value="1" <?php if(isset($document_holder) and $document_holder == '1') echo 'selected'; ?> > Guarantor </option>
                                             <option value="2" <?php if(isset($document_holder) and $document_holder == '2') echo 'selected'; ?> > Family Members </option>
                                         </select>
+                                        <span class="text-danger" id="docholderCheck"> Select Document Holder </span>
                                     </div>
                                 </div>
 
@@ -2326,3 +2361,132 @@ input:checked + .slider:before {
 	</form>
 </div>
 <!-- END  Add Signed Doc Info Modal -->
+
+
+<!-- Add Cheque info Modal  START -->
+<div class="modal fade addCheque" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="chequeUploads">
+	<input type="hidden" name="cheque_req_id" id="cheque_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Add Cheque Info</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="chequeinfoList()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- alert messages -->
+				<div id="chequeInsertOk" class="successalert"> Cheque Info Uploaded Successfully
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="chequeUpdateok" class="successalert"> Cheque Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="chequeNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="chequeDeleteOk" class="unsuccessalert"> Cheque Info Deleted
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="chequeDeleteNotOk" class="unsuccessalert"> Cheque Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<br />
+
+				<div class="row">
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="Holdertype "> Holder type </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="holder_type" name="holder_type">
+								<option value=""> Select Holder type </option>
+								<option value="0"> Customer </option>
+								<option value="1"> Guarantor </option>
+								<option value="2"> Family Members </option>
+							</select>
+							<span class="text-danger" id="holdertypeCheck"> Select Holder type </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="HolderName "> Holder Name </label>
+							<input type="text" class="form-control" id="holder_name" name="holder_name" readonly>
+
+							<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;">
+								<option value=""> Select Holder Name </option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="chequeRelationship"> Relationship </label>
+							<input type="text" class="form-control" id="cheque_relation" name="cheque_relation" readonly>
+
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="BankName"> Bank Name </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)">
+							<span class="text-danger" id="chequebankCheck"> Enter Bank Name </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="chequeNo"> Cheque Count </label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count">
+							<span class="text-danger" id="chequeCountCheck"> Enter Cheque Count </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="upd"> Uploads </label> <span class="required">&nbsp;*</span>
+							<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple  onchange="chequefilesCount()">
+							<span class="text-danger" id="chequeupdCheck"> Enter Count </span>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+						<input type="hidden" name="chequeID" id="chequeID">
+						<button type="submit" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+					</div>
+				</div>
+				</br>
+
+
+				<div id="chequeTable">
+					<table class="table custom-table">
+						<thead>
+							<tr>
+								<th width="15%"> S.No </th>
+								<th> Holder type </th>
+								<th> Holder Name </th>
+								<th> Relationship </th>
+								<th> Bank Name </th>
+								<th> Cheque No </th>
+								<th> ACTION </th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="chequeinfoList();">Close</button>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+<!-- END  Add Cheque Info Modal -->
