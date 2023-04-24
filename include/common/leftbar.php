@@ -34,7 +34,7 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'approval';
 
-}else if($current_page == 'edit_acknowledgement_list' || $current_page == 'acknowledgement' ){
+}else if($current_page == 'edit_acknowledgement_list' || $current_page == 'acknowledgement_creation' ){
 
 	$current_module = 'acknowledgement';
 
