@@ -168,6 +168,8 @@ if(sizeof($documentationInfo)>0){
 	$reg_office = $documentationInfo['reg_office'];
 	$mortgage_value = $documentationInfo['mortgage_value'];
 	$mortgage_document = $documentationInfo['mortgage_document'];
+	$mortgage_document_upd = $documentationInfo['mortgage_document_upd'];
+	$mortgage_document_pending = $documentationInfo['mortgage_document_pending'];
 	$endorsement_process = $documentationInfo['endorsement_process'];
 	$owner_type = $documentationInfo['owner_type'];
 	$owner_name = $documentationInfo['owner_name'];
@@ -180,6 +182,8 @@ if(sizeof($documentationInfo)>0){
 	$vehicle_reg_no = $documentationInfo['vehicle_reg_no'];
 	$endorsement_name = $documentationInfo['endorsement_name'];
 	$en_RC = $documentationInfo['en_RC'];
+	$Rc_document_upd = $documentationInfo['Rc_document_upd'];
+	$Rc_document_pending = $documentationInfo['Rc_document_pending'];
 	$en_Key = $documentationInfo['en_Key'];
 	$gold_info = $documentationInfo['gold_info'];
 	$gold_sts = $documentationInfo['gold_sts'];
@@ -191,6 +195,7 @@ if(sizeof($documentationInfo)>0){
 	$document_name = $documentationInfo['document_name'];
 	$document_details = $documentationInfo['document_details'];
 	$document_type = $documentationInfo['document_type'];
+	$doc_info_upload = $documentationInfo['doc_info_upload'];
 	$document_holder = $documentationInfo['document_holder'];
 	$docholder_name = $documentationInfo['docholder_name'];
 	$docholder_relationship_name = $documentationInfo['docholder_relationship_name'];
@@ -1472,6 +1477,8 @@ input:checked + .slider:before {
                                         <div class="form-group">
                                             <label for="MortgageDocumentUpd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
                                             <input type="file" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd">
+											<input type="hidden" id="mortgage_doc_upd" name="mortgage_doc_upd"  value="<?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?>">
+											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/".$mortgage_document_upd; ?>" target="_blank" >  <?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?> </a> -->
                                             <span class="text-danger" id="mortgagedocUpdCheck"> Upload Mortgage Document </span>
                                         </div>
                                     </div>
@@ -1621,6 +1628,8 @@ input:checked + .slider:before {
                                         <div class="form-group">
                                             <label for="RCDocumentUpd"> RC Uploads </label> <span class="required">&nbsp;*</span>
                                             <input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd">
+											<input type="hidden" id="rc_doc_upd" name="rc_doc_upd"  value="<?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>">
+											<!-- <a href="<?php echo "uploads/verification/endorsement_doc/".$Rc_document_upd; ?>" target="_blank" > <?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>  </a> -->
                                             <span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
                                         </div>
                                 </div>
@@ -1768,6 +1777,16 @@ input:checked + .slider:before {
                                         <span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
                                     </div>
                                 </div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                        <div class="form-group">
+                                            <label for="DocumentUpd"> Document Uploads </label> <span class="required">&nbsp;*</span>
+                                            <input type="file" class="form-control" id="document_info_upd" name="document_info_upd" multiple>
+											<input type="hidden" id="doc_info_upd" name="doc_info_upd"  value="<?php if (isset($doc_info_upload)) echo $doc_info_upload; ?>">
+											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/".$doc_info_upload; ?>" target="_blank" >  <?php if (isset($doc_info_upload)) echo $doc_info_upload; ?> </a> -->
+                                            <span class="text-danger" id="docInfoUpdCheck"> Upload Document </span>
+                                        </div>
+                                    </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
