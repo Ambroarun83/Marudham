@@ -195,38 +195,38 @@
 	var sortOrder = 1; // 1 for ascending, -1 for descending
 
 	document.querySelectorAll('th').forEach(function(th) {
-	th.addEventListener('click', function() {
-		var columnIndex = this.cellIndex;
-		document.querySelector('tbody').innerHTML = '';
-		dT();
-		setTimeout(function() {
-		var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+		th.addEventListener('click', function() {
+			var columnIndex = this.cellIndex;
+			document.querySelector('tbody').innerHTML = '';
+			dT();
+			setTimeout(function() {
+				var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
 
-		tableRows.sort(function(a, b) {
-			var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
-			var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+				tableRows.sort(function(a, b) {
+					var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+					var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
 
-			if (textA < textB) {
-			return -1 * sortOrder;
-			}
-			if (textA > textB) {
-			return 1 * sortOrder;
-			}
-			return 0;
+					if (textA < textB) {
+					return -1 * sortOrder;
+					}
+					if (textA > textB) {
+					return 1 * sortOrder;
+					}
+					return 0;
+				});
+
+				tableRows.forEach(function(row) {
+					document.querySelector('tbody').appendChild(row);
+				});
+
+				sortOrder = -1 * sortOrder;
+
+				// update the serial numbers
+				document.querySelectorAll('tbody tr').forEach(function(row, index) {
+					row.querySelectorAll('td')[0].textContent = index + 1;
+				});
+			}, 1000);
 		});
-
-		tableRows.forEach(function(row) {
-			document.querySelector('tbody').appendChild(row);
-		});
-
-		sortOrder = -1 * sortOrder;
-
-		// update the serial numbers
-		document.querySelectorAll('tbody tr').forEach(function(row, index) {
-			row.querySelectorAll('td')[0].textContent = index + 1;
-		});
-		}, 500);
-	});
 	});
 
 	function dT() {

@@ -41,8 +41,25 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 }else{
 	$current_module = '';
 }
+?>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script>
+	setTimeout(() => {
+		var currentPage = "<?php echo $current_page; ?>"; // set the current page value to local variable
+		var verif_check = "<?php echo $verif_check; ?>"; // set the verification page pge value to local variable
 
+		var sidebarLinks = document.querySelectorAll('.page-wrapper .sidebar-wrapper .sidebar-menu .sidebar-dropdown .sidebar-submenu ul li a');
 
+		sidebarLinks.forEach(function(link) {
+			var href = link.getAttribute('href');
+			if (href === currentPage || href.includes(currentPage)) {console.log(currentPage)
+				link.style.backgroundColor = '#646969d9';
+			}
+		});
+	}, 1000);
+</script>
+
+<?php
 $user_id        = '';
 $full_name      = '';
 $user_name      = '';

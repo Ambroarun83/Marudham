@@ -109,7 +109,7 @@
 		document.querySelectorAll('tbody tr').forEach(function(row, index) {
 			row.querySelectorAll('td')[0].textContent = index + 1;
 		});
-		}, 500);
+		}, 1000);
 	});
 	});
 
