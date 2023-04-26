@@ -64,6 +64,7 @@ $(document).ready(function () {
 
     function famNameList() {  // To show family name for Data Check.
         let req_id = $('#req_id').val();
+        var cus_name = $('#cus_name').val();
 
         $.ajax({
             url: 'verificationFile/verification_datacheck_name.php',
@@ -74,6 +75,7 @@ $(document).ready(function () {
             success: function (response) {
                 $("#check_name").empty();
                 $('#check_name').append("<option value=''> Select Name </option>")
+                $('#check_name').append("<option value='" + cus_name + "'> " + cus_name + " </option>");//Current Customer Name
                 let len = response.length;
                 for (let i = 0; i < len; i++) {
                     let name = response[i]['fam_name'];
@@ -86,6 +88,7 @@ $(document).ready(function () {
 
     function mobileList() { // To show Mobile No for Data Checking.
         let req_id = $('#req_id').val();
+        var mobile1 = $('#mobile1').val();
 
         $.ajax({
             url: 'verificationFile/verification_datacheck_name.php',
@@ -96,6 +99,7 @@ $(document).ready(function () {
             success: function (response) {
                 $("#check_mobileno").empty();
                 $('#check_mobileno').append("<option value=''> Select Mobile Number </option>")
+                $('#check_mobileno').append("<option value='" + mobile1 + "'> " + mobile1 + " </option>");//Current Customer Number
                 let len = response.length;
                 for (let i = 0; i < len; i++) {
                     let no = response[i]['mobile'];
@@ -109,6 +113,8 @@ $(document).ready(function () {
 
     function aadharList() {   // To show Aadhar No for Data Checking.
         let req_id = $('#req_id').val();
+        var cus_name = $('#cus_name').val();//Customer name for display
+        var cus_id = $('#cus_id').val();//customer adhar for validate
 
         $.ajax({
             url: 'verificationFile/verification_datacheck_name.php',
@@ -119,6 +125,7 @@ $(document).ready(function () {
             success: function (response) {
                 $("#check_aadhar").empty();
                 $('#check_aadhar').append("<option value=''> Select Aadhar Number    </option>")
+                $('#check_aadhar').append("<option value='" + cus_id + "'> " + cus_name + " </option>");//Current Customer Adhaar
                 let len = response.length;
                 for (let i = 0; i < len; i++) {
                     let aadhar = response[i]['aadhar'];
@@ -2627,12 +2634,12 @@ function validation() {
     } else {
         $('#genderCheck').hide();
     }
-    if (bloodGroup == '') {
-        event.preventDefault();
-        $('#bloodGroupCheck').show();
-    } else {
-        $('#bloodGroupCheck').hide();
-    }
+    // if (bloodGroup == '') {
+    //     event.preventDefault();
+    //     $('#bloodGroupCheck').show();
+    // } else {
+    //     $('#bloodGroupCheck').hide();
+    // }
     if (mobile1 == '') {
         event.preventDefault();
         $('#mobile1Check').show();
@@ -2831,48 +2838,48 @@ function validation() {
             }
         }
     })
-    $.ajax({
-        url: 'verificationFile/validateModals.php',
-        data: { 'req_id': req_id, 'table': 'verification_group_info' },
-        type: 'post',
-        cache: false,
-        success: function (response) {
-            if (response == "0") {
-                event.preventDefault();
-                $('#group_infoCheck').show();
-            } else if (response == "1") {
-                $('#group_infoCheck').hide();
-            }
-        }
-    })
-    $.ajax({
-        url: 'verificationFile/validateModals.php',
-        data: { 'req_id': req_id, 'table': 'verification_property_info' },
-        type: 'post',
-        cache: false,
-        success: function (response) {
-            if (response == "0") {
-                event.preventDefault();
-                $('#property_infoCheck').show();
-            } else if (response == "1") {
-                $('#property_infoCheck').hide();
-            }
-        }
-    })
-    $.ajax({
-        url: 'verificationFile/validateModals.php',
-        data: { 'req_id': req_id, 'table': 'verification_bank_info' },
-        type: 'post',
-        cache: false,
-        success: function (response) {
-            if (response == "0") {
-                event.preventDefault();
-                $('#bank_infoCheck').show();
-            } else if (response == "1") {
-                $('#bank_infoCheck').hide();
-            }
-        }
-    })
+    // $.ajax({
+    //     url: 'verificationFile/validateModals.php',
+    //     data: { 'req_id': req_id, 'table': 'verification_group_info' },
+    //     type: 'post',
+    //     cache: false,
+    //     success: function (response) {
+    //         if (response == "0") {
+    //             event.preventDefault();
+    //             $('#group_infoCheck').show();
+    //         } else if (response == "1") {
+    //             $('#group_infoCheck').hide();
+    //         }
+    //     }
+    // })
+    // $.ajax({
+    //     url: 'verificationFile/validateModals.php',
+    //     data: { 'req_id': req_id, 'table': 'verification_property_info' },
+    //     type: 'post',
+    //     cache: false,
+    //     success: function (response) {
+    //         if (response == "0") {
+    //             event.preventDefault();
+    //             $('#property_infoCheck').show();
+    //         } else if (response == "1") {
+    //             $('#property_infoCheck').hide();
+    //         }
+    //     }
+    // })
+    // $.ajax({
+    //     url: 'verificationFile/validateModals.php',
+    //     data: { 'req_id': req_id, 'table': 'verification_bank_info' },
+    //     type: 'post',
+    //     cache: false,
+    //     success: function (response) {
+    //         if (response == "0") {
+    //             event.preventDefault();
+    //             $('#bank_infoCheck').show();
+    //         } else if (response == "1") {
+    //             $('#bank_infoCheck').hide();
+    //         }
+    //     }
+    // })
     $.ajax({
         url: 'verificationFile/validateModals.php',
         data: { 'req_id': req_id, 'table': 'verification_kyc_info' },

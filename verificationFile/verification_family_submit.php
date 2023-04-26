@@ -16,7 +16,7 @@ else{
 
 
 $relation_age            = $_POST['relation_age'];
-$relation_aadhar         = $_POST['relation_aadhar'];
+$relation_aadhar         = preg_replace('/\s+/', '', $_POST['relation_aadhar']);
 $relation_Mobile         = $_POST['relation_Mobile'];
 $relation_Occupation     = $_POST['relation_Occupation'];
 $relation_Income         = $_POST['relation_Income'];

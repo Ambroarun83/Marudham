@@ -16,7 +16,7 @@ if(isset($_POST['submit_agent_creation']) && $_POST['submit_agent_creation'] != 
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_agent_creation&msc=2';</script>
     <?php	}
-    else{   
+    else{  
 		$addAgentCreation = $userObj->addAgentCreation($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_agent_creation&msc=1';</script>
@@ -161,7 +161,7 @@ if($idupd>0)
                                     </div>
 									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                         <div class="form-group">
-                                            <label for="disabledInput">Agent Group</label>
+                                            <label for="disabledInput">Agent Group</label>&nbsp;<span class="text-danger">*</span>
                                             <select type="text" class="form-control" id="ag_group" name="ag_group" tabindex="3">
 												<option value=""> Select Agent Group</option>
 											</select>

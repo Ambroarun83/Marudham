@@ -1,5 +1,4 @@
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     .dropbtn {
 		color: white;
@@ -36,20 +35,21 @@
 	.dropdown:hover .dropbtn {
 		background-color: #3E8E41;
 	}
+	
 </style>
 
 <!-- Page header start -->
 <br><br>
 <div class="page-header">
     <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham -  Acknowledgement List 
+		Marudham -  Request List 
 	</div>
 </div><br>
-<!-- <div class="text-right" style="margin-right: 25px;">
-    <a href="verification">
-        <button type="button" class="btn btn-primary"><span class="icon-add"></span>&nbsp; Add verification</button>
+<div class="text-right" style="margin-right: 25px;">
+    <a href="request">
+        <button type="button" class="btn btn-primary"><span class="icon-add"></span>&nbsp; Add Request</button>
     </a>
-</div><br><br> -->
+</div><br><br>
 <!-- Page header end -->
 
 <!-- Main container start -->
@@ -68,21 +68,41 @@
 					if($mscid==1)
 					{?>
 					<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Acknowledgement Cancelled Successfully! </div>
+						<div class="alert-text">Request Added Successfully!</div>
 					</div> 
 					<?php
 					}
 					if($mscid==2)
 					{?>
 						<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Acknowledgement Removed Successfully! </div>
+						<div class="alert-text">Request Updated Successfully!</div>
 					</div>
 					<?php
 					}
-					
+					if($mscid==3)
+					{?>
+					<div class="alert alert-danger" role="alert">
+						<div class="alert-text">Request Removed Successfully!</div>
+					</div>
+					<?php
+					}
+					if($mscid==4)
+					{?>
+					<div class="alert alert-danger" role="alert">
+						<div class="alert-text">Request Cancelled Successfully!</div>
+					</div>
+					<?php
+					}
+					if($mscid==8)
+					{?>
+					<div class="alert alert-danger" role="alert">
+						<div class="alert-text">Request Revoked Successfully!</div>
+					</div>
+					<?php
+					}
 					}
 					?>
-					<table id="acknowledge_table" class="table custom-table" >
+					<table id="request_table" class="table custom-table">
 						<thead>
 							<tr>
 								<th width="50">S.No.</th>
@@ -117,6 +137,7 @@
 </div>
 <!-- Main container end -->
 
+	
 
 <!-- Add Course Category Modal -->
 <div class="modal fade customerstatus" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -136,8 +157,8 @@
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<input type="hidden" name="req_id" id="req_id">
-							<!-- <label class="label">Existing Type</label>
-							<input type="text" name="exist_type" id="exist_type" class="form-control" readonly > -->
+							<label class="label">Existing Type</label>
+							<input type="text" name="exist_type" id="exist_type" class="form-control" readonly >
 						</div>
 					</div>
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12"></div>
@@ -173,45 +194,45 @@
 	var sortOrder = 1; // 1 for ascending, -1 for descending
 
 	document.querySelectorAll('th').forEach(function(th) {
-	th.addEventListener('click', function() {
-		var columnIndex = this.cellIndex;
-		document.querySelector('tbody').innerHTML = '';
-		dT();
-		setTimeout(function() {
-		var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+		th.addEventListener('click', function() {
+			var columnIndex = this.cellIndex;
+			document.querySelector('tbody').innerHTML = '';
+			dT();
+			setTimeout(function() {
+				var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
 
-		tableRows.sort(function(a, b) {
-			var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
-			var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+				tableRows.sort(function(a, b) {
+					var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+					var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
 
-			if (textA < textB) {
-			return -1 * sortOrder;
-			}
-			if (textA > textB) {
-			return 1 * sortOrder;
-			}
-			return 0;
+					if (textA < textB) {
+					return -1 * sortOrder;
+					}
+					if (textA > textB) {
+					return 1 * sortOrder;
+					}
+					return 0;
+				});
+
+				tableRows.forEach(function(row) {
+					document.querySelector('tbody').appendChild(row);
+				});
+
+				sortOrder = -1 * sortOrder;
+
+				// update the serial numbers
+				document.querySelectorAll('tbody tr').forEach(function(row, index) {
+					row.querySelectorAll('td')[0].textContent = index + 1;
+				});
+			}, 1000);
 		});
-
-		tableRows.forEach(function(row) {
-			document.querySelector('tbody').appendChild(row);
-		});
-
-		sortOrder = -1 * sortOrder;
-
-		// update the serial numbers
-		document.querySelectorAll('tbody tr').forEach(function(row, index) {
-			row.querySelectorAll('td')[0].textContent = index + 1;
-		});
-		}, 1000);
-	});
 	});
 
 	function dT() {
 		// Request datatable
-		var acknowledge_table = $('#acknowledge_table').DataTable();
-		acknowledge_table.destroy();
-		var acknowledge_table = $('#acknowledge_table').DataTable({
+		var requestTable = $('#request_table').DataTable();
+		requestTable.destroy();
+		var requestTable = $('#request_table').DataTable({
 			"order": [[ 0, "desc" ]],
 			"ordering": false,
 			'paging':false,
@@ -219,7 +240,7 @@
 			'serverSide': true,
 			'serverMethod': 'post',
 			'ajax': {
-			'url': 'ajaxFetch/ajaxAcknowledgementFetch.php',
+			'url': 'ajaxFetch/ajaxRequestFetch.php',
 			'data': function(data) {
 				var search = document.querySelector('#search').value;
 				data.search = search;
@@ -240,11 +261,7 @@
 			[10, 25, 50, -1],
 			[10, 25, 50, "All"]
 			],
-			// "columnDefs": [ {
-			//     "targets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-			//     "orderable": false
-			// } ]
-
+			
 		});
 	}
 
