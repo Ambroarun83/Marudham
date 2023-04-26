@@ -68,14 +68,14 @@
 					if($mscid==1)
 					{?>
 					<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Approval Cancelled Successfully! </div>
+						<div class="alert-text"> Acknowledgement Cancelled Successfully! </div>
 					</div> 
 					<?php
 					}
 					if($mscid==2)
 					{?>
 						<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Approval Removed Successfully! </div>
+						<div class="alert-text"> Acknowledgement Removed Successfully! </div>
 					</div>
 					<?php
 					}

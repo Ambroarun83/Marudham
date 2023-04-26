@@ -16,15 +16,15 @@ include '../ajaxconfig.php';
         <?php
         if(isset($_POST['category'])){
         $category = $_POST['category'];
-        if($category == '0'){ $category = "customer_name";}
-        if($category == '1'){ $category = "cus_id";}
-        if($category == '2'){ $category = "mobile1";}
+        if($category == '0'){ $category = "customer_name"; $category1 ="customer_name";}
+        if($category == '1'){ $category = "cus_id"; $category1 = 'cus_id';}
+        if($category == '2'){ $category = "mobile1"; $category1 = 'mobile2';}
         }
         if(isset($_POST['name'])){
         $name = $_POST['name'];
         }
 
-        $cusInfo = $connect->query("SELECT cus_id,customer_name,mobile1 FROM `customer_register` where $category = '$name' order by cus_reg_id desc");
+        $cusInfo = $connect->query("SELECT cus_id,customer_name,mobile1 FROM `customer_register` where ($category = '".strip_tags($name)."' or $category1 = '".strip_tags($name)."') order by cus_reg_id desc");
 
         $i = 1;
         while ($cus = $cusInfo->fetch()) {

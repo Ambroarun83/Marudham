@@ -4,7 +4,7 @@ require '../ajaxconfig.php';
 $req_id           = $_POST['req_id'];
 $group_name           = $_POST['group_name'];
 $group_age            = $_POST['group_age'];
-$group_aadhar         = $_POST['group_aadhar'];
+$group_aadhar         =  preg_replace('/\s+/', '', $_POST['group_aadhar']);
 $group_mobile         = $_POST['group_mobile'];
 $group_gender         = $_POST['group_gender'];
 $group_designation    = $_POST['group_designation'];
