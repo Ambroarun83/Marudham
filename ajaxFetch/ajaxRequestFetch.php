@@ -28,9 +28,9 @@ $column = array(
     'status'
 );
 
-$query = "SELECT * FROM request_creation where status= 0 and (cus_status != 7 and cus_status != 8 and cus_status != 9) and insert_login_id = $userid ";//hide if issued or revoked(after issued cus_status = 7 , revoked = 8)
+$query = "SELECT * FROM request_creation where status= 0 and cus_status != 8 and insert_login_id = $userid ";//hide if issued or revoked(after issued cus_status = 7 , revoked = 8)
 if($userid == 1){
-    $query = 'SELECT * FROM request_creation where status =0 and (cus_status != 7 and cus_status != 8 and cus_status != 9)';
+    $query = 'SELECT * FROM request_creation where status =0 and (cus_status != 8 )';
 }
 if($_POST['search'] != "")
 {
@@ -169,10 +169,12 @@ foreach ($result as $row) {
     if($cus_status == '0'){$sub_array[] = "<button class='btn btn-outline-secondary sub_verification' value='$id'><span class = 'icon-arrow_forward'></span></button>";}else
     if($cus_status == '1' or $cus_status == '10' or $cus_status == '11' or $cus_status == '12'){$sub_array[] = 'In Verification';}else
     if($cus_status == '2'){$sub_array[] = 'In Approval';}else
-    if($cus_status == '3'){$sub_array[] = 'Approved';}else
+    if($cus_status == '3'){$sub_array[] = 'In Acknowledgement';}else
     if($cus_status == '4'){$sub_array[] = 'Cancel - Request';}else
     if($cus_status == '5'){$sub_array[] = 'Cancel - Verification';}else
-    if($cus_status == '6'){$sub_array[] = 'Cancel - Approval';}
+    if($cus_status == '6'){$sub_array[] = 'Cancel - Approval';}else
+    if($cus_status == '7'){$sub_array[] = 'Cancel - Acknowledgement';}else
+    if($cus_status == '13'){$sub_array[] = 'In Issue';}
 
 
     $id          = $row['req_id'];

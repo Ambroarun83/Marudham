@@ -10,12 +10,13 @@ include '../ajaxconfig.php';
             <th> Customer ID </th>
             <th> Name</th>
             <th> Relationship </th>
+            <th> Customer Name </th>
         </tr>
     </thead>
     <tbody>
         <?php
         if(isset($_POST['name'])){
-        $name = $_POST['name'];
+        $name =  preg_replace('/\s+/', '', $_POST['name']);
         }
         if(isset($_POST['req_id'])){
         $req_id = $_POST['req_id'];
@@ -27,7 +28,7 @@ include '../ajaxconfig.php';
             if($category == '2'){ $category = "relation_Mobile";}
             }
 
-        $cusInfo = $connect->query("SELECT `famname`,`relationship`,`relation_aadhar` FROM `verification_family_info` WHERE `req_id` != '$req_id' && $category = '$name' order by id desc");
+        $cusInfo = $connect->query("SELECT a.`famname`,a.`relationship`,a.`relation_aadhar`,b.`customer_name` FROM `verification_family_info` a left join `customer_register` b on a.req_id = b.req_ref_id   WHERE a.`req_id` != '$req_id' && a.$category = '$name' order by a.id desc");
 
         $i = 1;
         while ($cus = $cusInfo->fetch()) {
@@ -37,6 +38,7 @@ include '../ajaxconfig.php';
                 <td> <?php echo $cus['relation_aadhar']; ?></td>
                 <td> <?php echo $cus['famname']; ?></td>
                 <td> <?php echo $cus['relationship']; ?></td>
+                <td> <?php echo $cus['customer_name']; ?></td>
             </tr>
         <?php
         }

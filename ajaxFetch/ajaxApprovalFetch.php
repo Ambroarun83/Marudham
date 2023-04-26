@@ -49,9 +49,9 @@ $column = array(
 );
 
 if($userid == 1){
-    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6)';
+    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13)'; //2-in approval, 3-in ack,6-cancel approval, 7-cancel_ack,13-in issue
 }else{
-    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6) and sub_area IN ($sub_area_list) ";//show only moved to Approval list and Approve the verification.
+    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13) and sub_area IN ($sub_area_list) ";//show only moved to Approval list and Approve the verification.
 }
 
 if($_POST['search'] != "")
@@ -189,7 +189,9 @@ foreach ($result as $row) {
         $sub_array[] = "<button class='btn btn-outline-secondary approved' value='$id'><span class = 'icon-arrow_forward'></span></button>";
 
     }elseif($cus_status == '3'){$sub_array[] = 'In Acknowledgement';}else
+    if($cus_status == '13'){$sub_array[] = 'In Issue';}else
     if($cus_status == '6'){$sub_array[] = 'Cancel - Approval';}
+    if($cus_status == '7'){$sub_array[] = 'Cancel - Acknowledgement';}
 
     $id          = $row['req_id'];
     $user_type = $row['user_type'];

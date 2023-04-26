@@ -26,7 +26,7 @@ if($result->num_rows>0){
             if($cus_status == '0'){$records[$i]['status'] = 'Request'; $records[$i]['sub_status'] = 'Requested';}else
             if($cus_status == '1'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'In Verification';}else
             if($cus_status == '2'){$records[$i]['status'] = 'Approval';$records[$i]['sub_status'] = 'In Approval';}else
-            if($cus_status == '3'){$records[$i]['status'] = 'Issue';$records[$i]['sub_status'] = 'Approved';}else
+            if($cus_status == '3'){$records[$i]['status'] = 'Acknowledgement';$records[$i]['sub_status'] = 'In Acknowledgement';}else
             if($cus_status == '4'){$records[$i]['status'] = 'Request';$records[$i]['sub_status'] = 'Cancelled';}else
             if($cus_status == '5'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'Cancelled';}else
             if($cus_status == '6'){$records[$i]['status'] = 'Approval';$records[$i]['sub_status'] = 'Cancelled';}else

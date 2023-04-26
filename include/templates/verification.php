@@ -509,7 +509,7 @@ if(sizeof($getLoanCalculation)>0){
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
-											<label for="BloodGroup">Blood Group&nbsp;<span class="required">&nbsp;*</span></label>
+											<label for="BloodGroup">Blood Group</label>
 											<input type="text" class="form-control" id="bloodGroup" name="bloodGroup" tabindex='14' placeholder="Enter Blood Group" value='<?php if(isset($cp_blood_group)) {echo $cp_blood_group;} ?>'>
 										</div>
 									</div>
@@ -1959,6 +1959,20 @@ if(sizeof($getLoanCalculation)>0){
 										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
 									</div>
 								</div>
+								
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="DocArea"> Area </label> <span class="required"> * </span>
+                                        <input tabindex="4" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="DocSubArea"> Sub Area </label> <span class="required"> * </span>
+                                        <input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly>
+                                    </div>
+                                </div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }} ?>>
 									<div class="form-group">
