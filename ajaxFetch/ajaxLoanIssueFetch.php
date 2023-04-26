@@ -206,10 +206,10 @@ foreach ($result as $row) {
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
     if($cus_status == '13') {
-        $action .= "<a href='acknowledgement_creation&upd=$id&pge=1' class='customer_profile' value='$id' > Edit Acknowledgement </a>";
-        $action .= "<a href='acknowledgement_creation&can=$id&pge=1' class='ack-cancel' value='$id' > Cancel </a>";
+        $action .= "<a href='loan_issue&upd=$id' class='customer_profile' value='$id' > Edit Loan Issue </a>";
+        $action .= "<a href='loan_issue&can=$id' class='ack-cancel' value='$id' > Cancel </a>";
     }else if($cus_status == '7') {
-        $action .= "<a href='acknowledgement_creation&rem=$id&pge=1' class='ack-remove' value='$id' > Remove </a>";
+        $action .= "<a href='loan_issue&rem=$id&pge=1' class='ack-remove' value='$id' > Remove </a>";
     }
 
     if($user_type != 'Agent'){

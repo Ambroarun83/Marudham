@@ -1614,10 +1614,11 @@ require 'PHPMailerAutoload.php';
 		}
 		if(isset($_POST['ag_group']) and $_POST['ag_group'] != ''){
 			$ag_group = $_POST['ag_group'];
-		}else{
-			$mysqli->query("INSERT into agent_group_creation (agent_group_name) values ('".$ag_name."') ");
-			$ag_group = $mysqli->insert_id;
 		}
+		// else{
+		// 	$mysqli->query("INSERT into agent_group_creation (agent_group_name) values ('".$ag_name."') ");
+		// 	$ag_group = $mysqli->insert_id;
+		// }
 		if(isset($_POST['mail'])){
 			$mail = $_POST['mail'];
 		}
@@ -1783,10 +1784,11 @@ require 'PHPMailerAutoload.php';
 		}
 		if(isset($_POST['ag_group']) and $_POST['ag_group'] != ''){
 			$ag_group = $_POST['ag_group'];
-		}else{
-			$mysqli->query("INSERT into agent_group_creation (agent_group_name) values ('".$ag_name."') ");
-			$ag_group = $mysqli->insert_id;
 		}
+		// else{
+		// 	$mysqli->query("INSERT into agent_group_creation (agent_group_name) values ('".$ag_name."') ");
+		// 	$ag_group = $mysqli->insert_id;
+		// }
 		if(isset($_POST['company_id'])){
 			$company_id = $_POST['company_id'];
 		}
@@ -3939,4 +3941,666 @@ require 'PHPMailerAutoload.php';
 		return $detailrecords;
 	}
 
+///  Acknowlegement Start
+            
+	// Get Acknowlegement Customer Profile Info.
+	public function getAcknowlegeCustomerProfile($mysqli,$req_id){
+
+				$qry = $mysqli->query("SELECT cp.*,cr.how_to_know,cr.loan_count,cr.first_loan_date,cr.travel_with_company,cr.monthly_income,cr.other_income,cr.support_income,cr.commitment,cr.monthly_due_capacity,cr.loan_limit,cr.cus_character,cr.approach,cr.relationship,cr.attitude,cr.behavior,cr.incident_remark,cr.about_customer FROM `acknowlegement_customer_profile` cp  LEFT JOIN `customer_register` cr on cp.req_id = cr.req_ref_id WHERE cp.req_id='$req_id' ");
+				$detailrecords = array();
+				$i=0;
+				if($mysqli->affected_rows>0){
+					while($row = $qry->fetch_assoc()){
+						$detailrecords['cus_Tableid'] = $row['id'];
+						$detailrecords['req_id'] = $row['req_id'];
+						$detailrecords['cus_id'] = $row['cus_id'];
+						$detailrecords['cus_name'] = $row['cus_name'];
+						$detailrecords['gender'] = $row['gender'];
+						$detailrecords['dob'] = $row['dob'];
+						$detailrecords['age'] = $row['age'];
+						$detailrecords['blood_group'] = $row['blood_group'];
+						$detailrecords['mobile1'] = $row['mobile1'];
+						$detailrecords['mobile2'] = $row['mobile2'];
+						$detailrecords['whatsapp'] = $row['whatsapp'];
+						$detailrecords['cus_pic'] = $row['cus_pic'];
+						$detailrecords['guarentor_name'] = $row['guarentor_name'];
+						$detailrecords['guarentor_relation'] = $row['guarentor_relation'];
+						$detailrecords['guarentor_photo'] = $row['guarentor_photo'];
+						$detailrecords['cus_type'] = $row['cus_type'];
+						$detailrecords['cus_exist_type'] = $row['cus_exist_type'];
+						$detailrecords['residential_type'] = $row['residential_type'];
+						$detailrecords['residential_details'] = $row['residential_details'];
+						$detailrecords['residential_address'] = $row['residential_address'];
+						$detailrecords['residential_native_address'] = $row['residential_native_address'];
+						$detailrecords['occupation_type'] = $row['occupation_type'];
+						$detailrecords['occupation_details'] = $row['occupation_details'];
+						$detailrecords['occupation_income'] = $row['occupation_income'];
+						$detailrecords['occupation_address'] = $row['occupation_address'];
+						$detailrecords['area_confirm_type'] = $row['area_confirm_type'];
+						$detailrecords['area_confirm_state'] = $row['area_confirm_state'];
+						$detailrecords['area_confirm_district'] = $row['area_confirm_district'];
+						$detailrecords['area_confirm_taluk'] = $row['area_confirm_taluk'];
+						$detailrecords['area_confirm_area'] = $row['area_confirm_area'];
+						$detailrecords['area_confirm_subarea'] = $row['area_confirm_subarea'];
+						$detailrecords['area_group'] = $row['area_group'];
+						$detailrecords['area_line'] = $row['area_line'];
+						$detailrecords['communication'] = $row['communication'];
+						$detailrecords['com_audio'] = $row['com_audio'];
+						$detailrecords['verification_person'] = $row['verification_person'];
+						$detailrecords['verification_location'] = $row['verification_location'];
+						$detailrecords['cus_status'] = $row['cus_status'];
+						$detailrecords['how_to_know'] = $row['how_to_know'];
+						$detailrecords['loan_count'] = $row['loan_count'];
+						$detailrecords['first_loan_date'] = $row['first_loan_date'];
+						$detailrecords['travel_with_company'] = $row['travel_with_company'];
+						$detailrecords['monthly_income'] = $row['monthly_income'];
+						$detailrecords['other_income'] = $row['other_income'];
+						$detailrecords['support_income'] = $row['support_income'];
+						$detailrecords['commitment'] = $row['commitment'];
+						$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
+						$detailrecords['loan_limit'] = $row['loan_limit'];
+						// $detailrecords['cus_character'] = $row['cus_character'];
+						// $detailrecords['approach'] = $row['approach'];
+						// $detailrecords['relationship'] = $row['relationship'];
+						// $detailrecords['attitude'] = $row['attitude'];
+						// $detailrecords['behavior'] = $row['behavior'];
+						// $detailrecords['incident_remark'] = $row['incident_remark'];
+						$detailrecords['about_customer'] = $row['about_customer'];
+						$i++;
+					}
+				}
+	
+				return $detailrecords;
+	}
+
+		// Add Acknowlegement Documentation
+    public function addAcknowlegeDocumentation($mysqli, $userid){
+            if(isset($_POST['req_id'])){
+                $req_id = $_POST['req_id'];
+            }
+            if(isset($_POST['cus_id_doc'])){
+                $cus_id_doc = $_POST['cus_id_doc'];
+            }
+            if(isset($_POST['Customer_name'])){
+                $Customer_name = $_POST['Customer_name'];
+            }
+            if(isset($_POST['cus_profile_id'])){
+                $cus_profile_id = $_POST['cus_profile_id'];
+            }
+            if(isset($_POST['doc_id'])){
+                $doc_id =  $_POST['doc_id'];
+            }
+            if(isset($_POST['mortgage_process'])){
+                $mortgage_process = $_POST['mortgage_process'];
+            }
+            if(isset($_POST['Propertyholder_type'])){
+                $Propertyholder_type = $_POST['Propertyholder_type'];
+            }
+			$Propertyholder_name='';
+            if(isset($_POST['Propertyholder_name'])){
+                $Propertyholder_name = $_POST['Propertyholder_name'];
+            }
+            $Propertyholder_relationship_name='';
+            if(isset($_POST['Propertyholder_relationship_name'])){
+                $Propertyholder_relationship_name = $_POST['Propertyholder_relationship_name'];
+            }
+            if(isset($_POST['doc_property_relation'])){
+                $doc_property_relation = $_POST['doc_property_relation'];
+            }
+            if(isset($_POST['doc_property_pype'])){
+                $doc_property_pype = $_POST['doc_property_pype'];
+            }
+            if(isset($_POST['doc_property_measurement'])){
+                $doc_property_measurement = $_POST['doc_property_measurement'];
+            }
+            if(isset($_POST['doc_property_location'])){
+                $doc_property_location = $_POST['doc_property_location'];
+            }
+            if(isset($_POST['doc_property_value'])){
+                $doc_property_value = $_POST['doc_property_value'];
+            }
+            if(isset($_POST['mortgage_name'])){
+                $mortgage_name = $_POST['mortgage_name'];
+            }
+            if(isset($_POST['mortgage_dsgn'])){
+                $mortgage_dsgn = $_POST['mortgage_dsgn'];
+            }
+            if(isset($_POST['mortgage_nuumber'])){
+                $mortgage_nuumber = $_POST['mortgage_nuumber'];
+            }
+            if(isset($_POST['reg_office'])){
+                $reg_office = $_POST['reg_office'];
+            }
+            if(isset($_POST['mortgage_value'])){
+                $mortgage_value = $_POST['mortgage_value'];
+            }
+            if(isset($_POST['mortgage_document'])){
+                $mortgage_document = $_POST['mortgage_document'];    
+            }
+			$pendingchk = '';
+			if(!empty($_FILES['mortgage_document_upd']['name']))
+            {
+                $mortgage_document_upd = $_FILES['mortgage_document_upd']['name'];
+                $upd_temp = $_FILES['mortgage_document_upd']['tmp_name'];
+                $folder="uploads/verification/mortgage_doc/".$mortgage_document_upd ;
+                move_uploaded_file($upd_temp, $folder);
+            }else{
+				$mortgage_document_upd = $_POST['mortgage_doc_upd']; 
+			}
+			if(isset($_POST['pendingchk'])){
+				$pendingchk = $_POST['pendingchk'];
+				$mortgage_document_upd = '';
+			} 
+            if(isset($_POST['endorsement_process'])){
+                $endorsement_process = $_POST['endorsement_process'];
+            }
+            if(isset($_POST['owner_type'])){
+                $owner_type = $_POST['owner_type'];
+            }
+			$owner_name ='';
+            if(isset($_POST['owner_name'])){
+                $owner_name = $_POST['owner_name'];
+            }
+			$ownername_relationship_name='';
+            if(isset($_POST['ownername_relationship_name'])){
+                $ownername_relationship_name = $_POST['ownername_relationship_name'];
+            }
+            if(isset($_POST['en_relation'])){
+                $en_relation = $_POST['en_relation'];
+            }
+            if(isset($_POST['vehicle_type'])){
+                $vehicle_type = $_POST['vehicle_type'];
+            }
+            if(isset($_POST['vehicle_process'])){
+                $vehicle_process = $_POST['vehicle_process'];
+            }
+            if(isset($_POST['en_Company'])){
+                $en_Company = $_POST['en_Company'];
+            }
+
+            if(isset($_POST['en_Model'])){
+                $en_Model = $_POST['en_Model'];
+            }
+            if(isset($_POST['vehicle_reg_no'])){
+                $vehicle_reg_no = $_POST['vehicle_reg_no'];
+            }
+            if(isset($_POST['endorsement_name'])){
+                $endorsement_name = $_POST['endorsement_name'];
+            }
+            if(isset($_POST['en_RC'])){
+                $en_RC = $_POST['en_RC'];
+            }
+			$endorsependingchk ='';
+			if(!empty($_FILES['Rc_document_upd']['name']))
+            {
+                $Rc_document_upd = $_FILES['Rc_document_upd']['name'];
+                $upd_temp = $_FILES['Rc_document_upd']['tmp_name'];
+                $folder="uploads/verification/endorsement_doc/".$Rc_document_upd ;
+                move_uploaded_file($upd_temp, $folder);
+            }else{
+				$Rc_document_upd = $_POST['rc_doc_upd']; 
+			}
+			if(isset($_POST['endorsependingchk'])){
+                $endorsependingchk = $_POST['endorsependingchk']; 
+				$Rc_document_upd = '';
+            }
+            if(isset($_POST['en_Key'])){
+                $en_Key = $_POST['en_Key'];
+            }
+            if(isset($_POST['gold_info'])){
+                $gold_info = $_POST['gold_info'];
+            }
+            if(isset($_POST['gold_sts'])){
+                $gold_sts = $_POST['gold_sts'];
+            }
+            if(isset($_POST['gold_type'])){
+                $gold_type = $_POST['gold_type'];
+            }
+            if(isset($_POST['Purity'])){
+                $Purity = $_POST['Purity'];
+            }
+            if(isset($_POST['gold_Count'])){
+                $gold_Count = $_POST['gold_Count'];
+            }
+            if(isset($_POST['gold_Weight'])){
+                $gold_Weight = $_POST['gold_Weight'];
+            }
+            if(isset($_POST['gold_Value'])){
+                $gold_Value = $_POST['gold_Value'];
+            }
+            if(isset($_POST['document_name'])){
+                $document_name = $_POST['document_name'];
+            }
+            if(isset($_POST['document_details'])){
+                $document_details = $_POST['document_details'];
+            }
+            if(isset($_POST['document_type'])){
+                $document_type = $_POST['document_type'];
+            }   
+			if(isset($_FILES['document_info_upd']))
+            {
+                $document = $_FILES['document_info_upd'];
+				$cnt = count($document['name']);
+               $document_info_upd ='';
+				for($i=0; $i<$cnt; $i++){
+
+					$document_upd = $document['name'][$i];
+
+					$upd_temp = $_FILES['document_info_upd']['tmp_name'][$i];
+					$folder="uploads/verification/doc_info/".$document_upd;
+					move_uploaded_file($upd_temp, $folder);
+
+					$document_info_upd .= $document_upd.',';
+				}
+            }else{
+				$document_info_upd = $_POST['doc_info_upd']; 
+			}
+            if(isset($_POST['document_holder'])){
+                $document_holder = $_POST['document_holder'];
+            }
+			$docholder_name='';
+            if(isset($_POST['docholder_name'])){
+                $docholder_name = $_POST['docholder_name'];
+            }
+			$docholder_relationship_name='';
+            if(isset($_POST['docholder_relationship_name'])){
+                $docholder_relationship_name = $_POST['docholder_relationship_name'];
+            }
+            if(isset($_POST['doc_relation'])){
+                $doc_relation = $_POST['doc_relation'];
+            }
+            if(isset($_POST['doc_table_id'])){
+                $doc_table_id = $_POST['doc_table_id'];
+            }
+
+			if($doc_table_id == ''){
+						$insertQry = "INSERT INTO `acknowlegement_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','".strip_tags($gold_info)."','".strip_tags($gold_sts)."','".strip_tags($gold_type)."','".strip_tags($Purity)."','".strip_tags($gold_Count)."','".strip_tags($gold_Weight)."','".strip_tags($gold_Value)."','".strip_tags($document_name)."','".strip_tags($document_details)."','".strip_tags($document_type)."','".strip_tags($document_holder)."','".strip_tags($docholder_name)."','".strip_tags($docholder_relationship_name)."','".strip_tags($doc_relation)."','11','".$userid."' )";
+
+						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+
+			}else{
+			$update_doc = " UPDATE `acknowlegement_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',`mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',`mortgage_document`='".strip_tags($mortgage_document)."',`mortgage_document_upd`='".strip_tags($mortgage_document_upd)."',`mortgage_document_pending`='".strip_tags($pendingchk)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',`Rc_document_upd`='".strip_tags($Rc_document_upd)."',`Rc_document_pending`='".strip_tags($endorsependingchk)."',`en_Key`='".strip_tags($en_Key)."',`gold_info`='".strip_tags($gold_info)."',`gold_sts`='".strip_tags($gold_sts)."',`gold_type`='".strip_tags($gold_type)."',`Purity`='".strip_tags($Purity)."',`gold_Count`='".strip_tags($gold_Count)."',`gold_Weight`='".strip_tags($gold_Weight)."',`gold_Value`='".strip_tags($gold_Value)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`doc_info_upload`='".strip_tags($document_info_upd)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`submitted`='1',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
+
+			$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
+			}
+    }
+
+	// Get Customer Info for Documentation from Customer_profile table.
+	public function getAckcusInfoForDoc($mysqli,$req_id){
+
+					$qry = $mysqli->query("SELECT * FROM acknowlegement_customer_profile where req_id = $req_id ");
+					$detailrecords = array();
+					$i=0;
+					if($mysqli->affected_rows>0){
+						while($row = $qry->fetch_assoc()){
+							$detailrecords['cus_profile_id'] = $row['id'];
+							$detailrecords['cus_id'] = $row['cus_id'];
+							$detailrecords['cus_name'] = $row['cus_name'];
+							$detailrecords['area_confirm_area'] = $row['area_confirm_area'];
+							$detailrecords['area_confirm_subarea'] = $row['area_confirm_subarea'];
+							$detailrecords['cus_status'] = $row['cus_status'];
+		
+		
+							$result = $mysqli->query("SELECT area_name FROM area_list_creation where area_id = '".$detailrecords['area_confirm_area']."' and status=0 and area_enable = 0");
+							$area = $result ->fetch_assoc();
+							$detailrecords['area_name'] = $area['area_name'];
+		
+							$subarearesult = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$detailrecords['area_confirm_subarea']."' and status=0 and sub_area_enable = 0");
+							$subarea = $subarearesult ->fetch_assoc();
+							$detailrecords['sub_area_name'] = $subarea['sub_area_name'];
+		
+		
+							$i++;
+						}
+					}
+					return $detailrecords;
+	}
+
+	// Get Documentation Info.
+	public function getAcknowlegementDocument($mysqli,$req_id){
+
+			$qry = $mysqli->query("SELECT * FROM acknowlegement_documentation where req_id = $req_id ");
+			$detailrecords = array();
+			$i=0;
+			if($mysqli->affected_rows>0){
+				while($row = $qry->fetch_assoc()){
+					$detailrecords['doc_Tableid'] = $row['id'];
+					$detailrecords['req_id'] = $row['req_id'];
+					$detailrecords['mortgage_process'] = $row['mortgage_process'];
+					$detailrecords['Propertyholder_type'] = $row['Propertyholder_type'];
+					$detailrecords['Propertyholder_name'] = $row['Propertyholder_name'];
+					$detailrecords['Propertyholder_relationship_name'] = $row['Propertyholder_relationship_name'];
+					$detailrecords['doc_property_relation'] = $row['doc_property_relation'];
+					$detailrecords['doc_property_type'] = $row['doc_property_type'];
+					$detailrecords['doc_property_measurement'] = $row['doc_property_measurement'];
+					$detailrecords['doc_property_location'] = $row['doc_property_location'];
+					$detailrecords['doc_property_value'] = $row['doc_property_value'];
+					$detailrecords['mortgage_name'] = $row['mortgage_name'];
+					$detailrecords['mortgage_dsgn'] = $row['mortgage_dsgn'];
+					$detailrecords['mortgage_nuumber'] = $row['mortgage_nuumber'];
+					$detailrecords['reg_office'] = $row['reg_office'];
+					$detailrecords['mortgage_value'] = $row['mortgage_value'];
+					$detailrecords['mortgage_document'] = $row['mortgage_document'];
+					$detailrecords['mortgage_document_upd'] = $row['mortgage_document_upd'];
+					$detailrecords['mortgage_document_pending'] = $row['mortgage_document_pending'];
+					$detailrecords['endorsement_process'] = $row['endorsement_process'];
+					$detailrecords['owner_type'] = $row['owner_type'];
+					$detailrecords['owner_name'] = $row['owner_name'];
+					$detailrecords['ownername_relationship_name'] = $row['ownername_relationship_name'];
+					$detailrecords['en_relation'] = $row['en_relation'];
+					$detailrecords['vehicle_type'] = $row['vehicle_type'];
+					$detailrecords['vehicle_process'] = $row['vehicle_process'];
+					$detailrecords['en_Company'] = $row['en_Company'];
+					$detailrecords['en_Model'] = $row['en_Model'];
+					$detailrecords['vehicle_reg_no'] = $row['vehicle_reg_no'];
+					$detailrecords['endorsement_name'] = $row['endorsement_name'];
+					$detailrecords['en_RC'] = $row['en_RC'];
+					$detailrecords['Rc_document_upd'] = $row['Rc_document_upd'];
+					$detailrecords['Rc_document_pending'] = $row['Rc_document_pending'];
+					$detailrecords['en_Key'] = $row['en_Key'];
+					$detailrecords['gold_info'] = $row['gold_info'];
+					$detailrecords['gold_sts'] = $row['gold_sts'];
+					$detailrecords['gold_type'] = $row['gold_type'];
+					$detailrecords['Purity'] = $row['Purity'];
+					$detailrecords['gold_Count'] = $row['gold_Count'];
+					$detailrecords['gold_Weight'] = $row['gold_Weight'];
+					$detailrecords['gold_Value'] = $row['gold_Value'];
+					$detailrecords['document_name'] = $row['document_name'];
+					$detailrecords['document_details'] = $row['document_details'];
+					$detailrecords['document_type'] = $row['document_type'];
+					$detailrecords['doc_info_upload'] = $row['doc_info_upload'];
+					$detailrecords['document_holder'] = $row['document_holder'];
+					$detailrecords['docholder_name'] = $row['docholder_name'];
+					$detailrecords['docholder_relationship_name'] = $row['docholder_relationship_name'];
+					$detailrecords['doc_relation'] = $row['doc_relation'];
+					$detailrecords['cus_status'] = $row['cus_status'];
+
+					$i++;
+				}
+			}
+
+			return $detailrecords;
+	}
+	
+	public function getAcknowlegeCusInfoForLoanCal($mysqli,$id){
+		$qry = $mysqli->query("SELECT * FROM acknowlegement_customer_profile where req_id = $id ");
+		$detailrecords = array();
+		$i=0;
+		if($mysqli->affected_rows>0){
+			while($row = $qry->fetch_assoc()){
+				$detailrecords['cus_id'] = $row['cus_id'];
+				$detailrecords['cus_name'] = $row['cus_name'];
+				$detailrecords['cus_pic'] = $row['cus_pic'];
+				$detailrecords['cus_type'] = $row['cus_type'];
+				$detailrecords['mobile'] = $row['mobile1'];
+				$i++;
+			}
+		}
+		return $detailrecords;
+	}
+
+	//Add Loan Calculation
+	function addAckVerificationLoanCalculation($mysqli, $userid){
+			if(isset($_POST['cus_id_loan'])){
+				$cus_id_loan = $_POST['cus_id_loan'];
+			}
+			if(isset($_POST['req_id'])){
+				$req_id = $_POST['req_id'];
+			}
+			if(isset($_POST['cus_name_loan'])){
+				$cus_name_loan = $_POST['cus_name_loan'];
+			}
+			if(isset($_POST['cus_data_loan'])){
+				$cus_data_loan = $_POST['cus_data_loan'];
+			}
+			if(isset($_POST['mobile_loan'])){
+				$mobile_loan = $_POST['mobile_loan'];
+			}
+			if(isset($_POST['pic_loan'])){
+				$pic_loan = $_POST['pic_loan'];
+			}
+			if(isset($_POST['loan_category'])){
+				$loan_category = $_POST['loan_category'];
+			}
+			if(isset($_POST['sub_category'])){
+				$sub_category = $_POST['sub_category'];
+			}
+			if(isset($_POST['category_info'])){
+				$category_info = $_POST['category_info'];
+			}
+			$tot_value='';
+			if(isset($_POST['tot_value'])){
+				$tot_value = $_POST['tot_value'];
+			}
+			$ad_amt='';
+			if(isset($_POST['ad_amt'])){
+				$ad_amt = $_POST['ad_amt'];
+			}
+			if(isset($_POST['loan_amt'])){
+				$loan_amt = $_POST['loan_amt'];
+			}
+			if(isset($_POST['profit_type'])){
+				$profit_type = $_POST['profit_type'];
+			}
+			$due_method_calc = '';
+			if(isset($_POST['due_method_calc'])){
+				$due_method_calc = $_POST['due_method_calc'];
+				if($profit_type=='2'){
+					$due_method_calc='';
+				}
+			}
+			$due_type= '';
+			if(isset($_POST['due_type'])){
+				$due_type = $_POST['due_type'];
+				if($profit_type=='2'){
+					$due_type='';
+				}
+			}
+			$profit_method='';
+			if(isset($_POST['profit_method'])){
+				$profit_method = $_POST['profit_method'];
+				if($profit_type=='2'){
+					$profit_method='';
+				}
+			}
+			$calc_method ='';
+			if(isset($_POST['calc_method'])){
+				$calc_method = $_POST['calc_method'];
+				if($profit_type=='2'){
+					$calc_method='';
+				}
+			}
+			$due_method_scheme='';
+			if(isset($_POST['due_method_scheme'])){
+				$due_method_scheme = $_POST['due_method_scheme'];
+				if($profit_type=='1'){
+					$due_method_scheme='';
+				}
+			}
+			$day_scheme='';
+			if(isset($_POST['day_scheme'])){
+				$day_scheme = $_POST['day_scheme'];
+				if($profit_type=='1'){
+					$day_scheme='';
+				}
+			}
+			$scheme_name='';
+			if(isset($_POST['scheme_name'])){
+				$scheme_name = $_POST['scheme_name'];
+				if($profit_type=='1'){
+					$scheme_name='';
+				}
+			}
+			if(isset($_POST['int_rate'])){
+				$int_rate = $_POST['int_rate'];
+			}
+			if(isset($_POST['due_period'])){
+				$due_period = $_POST['due_period'];
+			}
+			if(isset($_POST['doc_charge'])){
+				$doc_charge = $_POST['doc_charge'];
+			}
+			if(isset($_POST['proc_fee'])){
+				$proc_fee = $_POST['proc_fee'];
+			}
+			if(isset($_POST['loan_amt_cal'])){
+				$loan_amt_cal = $_POST['loan_amt_cal'];
+			}
+			if(isset($_POST['principal_amt_cal'])){
+				$principal_amt_cal = $_POST['principal_amt_cal'];
+			}
+			if(isset($_POST['int_amt_cal'])){
+				$int_amt_cal = $_POST['int_amt_cal'];
+			}
+			$tot_amt_cal = '';
+			if(isset($_POST['tot_amt_cal'])){
+				$tot_amt_cal = $_POST['tot_amt_cal'];
+			}
+			$due_amt_cal ='';
+			if(isset($_POST['due_amt_cal'])){
+				$due_amt_cal = $_POST['due_amt_cal'];
+			}
+			if(isset($_POST['doc_charge_cal'])){
+				$doc_charge_cal = $_POST['doc_charge_cal'];
+			}
+			if(isset($_POST['proc_fee_cal'])){
+				$proc_fee_cal = $_POST['proc_fee_cal'];
+			}
+			if(isset($_POST['net_cash_cal'])){
+				$net_cash_cal = $_POST['net_cash_cal'];
+			}
+			if(isset($_POST['due_start_from'])){
+				$due_start_from = $_POST['due_start_from'];
+			}
+			if(isset($_POST['maturity_month'])){
+				$maturity_month = $_POST['maturity_month'];
+			}
+			if(isset($_POST['collection_method'])){
+				$collection_method = $_POST['collection_method'];
+			}
+			if(isset($_POST['loan_cal_id'])){//To check Whether it is for update 
+				$loan_cal_id = $_POST['loan_cal_id'];
+			}
+	
+			if($loan_cal_id > 0 or $loan_cal_id != ''){
+				$updateQry = $mysqli->query("UPDATE acknowlegement_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
+					cus_data_loan = '".strip_tags($cus_data_loan)."', mobile_loan = '".strip_tags($mobile_loan)."', pic_loan = '".strip_tags($pic_loan)."', 
+					loan_category = '".strip_tags($loan_category)."', sub_category = '".strip_tags($sub_category)."', tot_value = '".strip_tags($tot_value)."', ad_amt = '".strip_tags($ad_amt)."',
+					loan_amt = '".strip_tags($loan_amt)."', profit_type = '".strip_tags($profit_type)."', due_method_calc = '".strip_tags($due_method_calc)."', 
+					due_type = '".strip_tags($due_type)."', profit_method = '".strip_tags($profit_method)."', calc_method = '".strip_tags($calc_method)."', 
+					due_method_scheme = '".strip_tags($due_method_scheme)."', day_scheme = '".strip_tags($day_scheme)."', scheme_name = '".strip_tags($scheme_name)."', 
+					int_rate = '".strip_tags($int_rate)."', due_period = '".strip_tags($due_period)."', doc_charge = '".strip_tags($doc_charge)."', proc_fee = '".strip_tags($proc_fee)."', 
+					loan_amt_cal = '".strip_tags($loan_amt_cal)."', principal_amt_cal = '".strip_tags($principal_amt_cal)."', int_amt_cal = '".strip_tags($int_amt_cal)."', 
+					tot_amt_cal = '".strip_tags($tot_amt_cal)."', due_amt_cal = '".strip_tags($due_amt_cal)."', doc_charge_cal = '".strip_tags($doc_charge_cal)."', 
+					proc_fee_cal = '".strip_tags($proc_fee_cal)."', net_cash_cal = '".strip_tags($net_cash_cal)."', due_start_from = '".strip_tags($due_start_from)."', 
+					maturity_month = '".strip_tags($maturity_month)."', collection_method = '".strip_tags($collection_method)."', cus_status = 12, update_login_id = $userid, 
+					update_date = current_timestamp() WHERE req_id = $req_id ");
+	
+				$deleteCat = $mysqli->query("DELETE FROM verif_loan_cal_category where req_id = '".strip_tags($req_id)."' and loan_cal_id='".strip_tags($loan_cal_id)."'");
+	
+				for($i=0;$i<sizeof($category_info);$i++){
+					$insertCategory = $mysqli->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
+					'".strip_tags($category_info[$i])."' )");
+				}
+			}else{
+	
+				$insertQry = $mysqli->query("INSERT INTO acknowlegement_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
+					`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
+					`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
+					`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('".strip_tags($req_id)."', '".strip_tags($cus_id_loan)."', 
+					'".strip_tags($cus_name_loan)."', '".strip_tags($cus_data_loan)."','".strip_tags($mobile_loan)."', '".strip_tags($pic_loan)."', '".strip_tags($loan_category)."', 
+					'".strip_tags($sub_category)."', '".strip_tags($tot_value)."', '".strip_tags($ad_amt)."', '".strip_tags($loan_amt)."', '".strip_tags($profit_type)."', 
+					'".strip_tags($due_method_calc)."', '".strip_tags($due_type)."', '".strip_tags($profit_method)."', '".strip_tags($calc_method)."', '".strip_tags($due_method_scheme)."', 
+					'".strip_tags($day_scheme)."', '".strip_tags($scheme_name)."', '".strip_tags($int_rate)."', '".strip_tags($due_period)."', '".strip_tags($doc_charge)."', 
+					'".strip_tags($proc_fee)."', '".strip_tags($loan_amt_cal)."', '".strip_tags($principal_amt_cal)."', '".strip_tags($int_amt_cal)."', '".strip_tags($tot_amt_cal)."', 
+					'".strip_tags($due_amt_cal)."', '".strip_tags($doc_charge_cal)."', '".strip_tags($proc_fee_cal)."', '".strip_tags($net_cash_cal)."', '".strip_tags($due_start_from)."', 
+					'".strip_tags($maturity_month)."', '".strip_tags($collection_method)."', 12, $userid, current_timestamp()) ");
+				$loan_cal_id = $mysqli->insert_id;
+				
+				for($i=0;$i<sizeof($category_info);$i++){
+					$insertCategory = $mysqli->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
+					'".strip_tags($category_info[$i])."' )");
+				}
+	
+			}
+	}
+
+	function getAckLoanCalculationForVerification($mysqli,$req_id){
+		$detailrecords = array();
+		$Qry = $mysqli->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id = '".strip_tags($req_id)."' ");
+		if($mysqli->affected_rows>0){
+			while($row = $Qry->fetch_assoc()){
+				$detailrecords['loan_cal_id'] = $row['loan_cal_id'];
+				// $detailrecords['req_id'] = $row['req_id'];
+				$detailrecords['cus_id_loan'] = $row['cus_id_loan'];
+				$detailrecords['cus_name_loan'] = $row['cus_name_loan'];
+				$detailrecords['cus_data_loan'] = $row['cus_data_loan'];
+				$detailrecords['mobile_loan'] = $row['mobile_loan'];
+				$detailrecords['pic_loan'] = $row['pic_loan'];
+				$detailrecords['loan_category'] = $row['loan_category'];
+				$detailrecords['sub_category'] = $row['sub_category'];
+				$detailrecords['tot_value'] = $row['tot_value'];
+				$detailrecords['ad_amt'] = $row['ad_amt'];
+				$detailrecords['loan_amt'] = $row['loan_amt'];
+				$detailrecords['profit_type'] = $row['profit_type'];
+				$detailrecords['due_method_calc'] = $row['due_method_calc'];
+				$detailrecords['due_type'] = $row['due_type'];
+				$detailrecords['profit_method'] = $row['profit_method'];
+				$detailrecords['calc_method'] = $row['calc_method'];
+				$detailrecords['due_method_scheme'] = $row['due_method_scheme'];
+				$detailrecords['day_scheme'] = $row['day_scheme'];
+				$detailrecords['scheme_name'] = $row['scheme_name'];
+				$detailrecords['int_rate'] = $row['int_rate'];
+				$detailrecords['due_period'] = $row['due_period'];
+				$detailrecords['doc_charge'] = $row['doc_charge'];
+				$detailrecords['proc_fee'] = $row['proc_fee'];
+				$detailrecords['loan_amt_cal'] = $row['loan_amt_cal'];
+				$detailrecords['principal_amt_cal'] = $row['principal_amt_cal'];
+				$detailrecords['int_amt_cal'] = $row['int_amt_cal'];
+				$detailrecords['tot_amt_cal'] = $row['tot_amt_cal'];
+				$detailrecords['due_amt_cal'] = $row['due_amt_cal'];
+				$detailrecords['doc_charge_cal'] = $row['doc_charge_cal'];
+				$detailrecords['proc_fee_cal'] = $row['proc_fee_cal'];
+				$detailrecords['net_cash_cal'] = $row['net_cash_cal'];
+				$detailrecords['due_start_from'] = $row['due_start_from'];
+				$detailrecords['maturity_month'] = $row['maturity_month'];
+				$detailrecords['collection_method'] = $row['collection_method'];
+				$detailrecords['cus_status'] = $row['cus_status'];
+			}
+		}
+		return $detailrecords;
+	}
+
+	//Get Loan calculation Category info for edit
+	function getAckVerificationLoanCalCategory($mysqli, $loan_cal_id){
+			$detailrecords = array();
+			$Qry = $mysqli->query("SELECT * FROM `acknowledge_verif_loan_cal_category` WHERE loan_cal_id = '".strip_tags($loan_cal_id)."' ");
+			if($mysqli->affected_rows>0){
+				$i=0;
+				while($row = $Qry->fetch_assoc()){
+					$detailrecords[$i]['req_id'] = $row['req_id'];
+					$detailrecords[$i]['loan_cal_id'] = $row['loan_cal_id'];
+					$detailrecords[$i]['category'] = $row['category'];
+					$i++;
+				}
+			}
+			return $detailrecords;
+	}
+	
+	//Cancel Acknowledgement
+    function cancelAcknowledgement($mysqli,$id, $userid){
+        $qry = $mysqli->query("UPDATE request_creation set cus_status = 7, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+        $qry = $mysqli->query("UPDATE in_verification set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+        $qry = $mysqli->query("UPDATE in_approval set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+        $qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+    }
+    //Delete Acknowledgement
+    function removeAcknowledgement($mysqli,$id, $userid){
+        $qry = $mysqli->query("UPDATE request_creation set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+        $qry = $mysqli->query("UPDATE in_verification set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+        $qry = $mysqli->query("UPDATE in_approval set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+        $qry = $mysqli->query("UPDATE in_acknowledgement set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+    }
+
+///  Acknowlegement END
 }//Class End

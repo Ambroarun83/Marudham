@@ -404,6 +404,23 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
+				<?php if($acknowledgementmodule == 0){?>
+                    <li class="sidebar-dropdown acknowledge">
+                        <a href="javascript:void(0)">
+                            <i class="icon-attach_money"></i>
+                            <span class="menu-text">Loan Issue</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='acknowledgement') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($acknowledgement == 0){ ?>
+                                    <li>
+                                        <a href="edit_loan_issue"><i class="icon-attach_money"></i>Loan Issue</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->

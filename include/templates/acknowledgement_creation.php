@@ -5,10 +5,34 @@ if (isset($_GET['upd'])) {
 if (isset($_GET['pge'])) {
     $pge = $_GET['pge']; // 1 = page edit Documentation. // 2 = View Page.
 }
+$can=0;
+if(isset($_GET['can']))//Cancel for Acknowledgement
+{
+$can=$_GET['can'];
+}
+if($can>0)
+{
+    $cancelAcknowledgement = $userObj->cancelAcknowledgement($mysqli,$can, $userid);
+    ?>
+    <script>location.href='<?php echo $HOSTPATH;  ?>edit_acknowledgement_list&msc=1';</script>
+<?php
+}
+$rem=0;
+if(isset($_GET['rem']))//remove for Acknowledgement
+{
+$rem=$_GET['rem'];
+}
+if($rem>0)
+{
+    $removeAcknowledgement = $userObj->removeAcknowledgement($mysqli,$rem, $userid);
+    ?>
+    <script>location.href='<?php echo $HOSTPATH;  ?>edit_acknowledgement_list&msc=2';</script>
+<?php
+}
 
 if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''){
 
-	$addDocVerification = $userObj->addDocumentation($mysqli, $userid);
+	$addDocVerification = $userObj->addAcknowlegeDocumentation($mysqli, $userid);
 ?>
 	<script> alert('Documentation Details Submitted'); </script>
 <?php
@@ -72,7 +96,7 @@ if (sizeof($getRequestData) > 0) {
 
 //////////////////////// Customer Profile Info ///////////////////////////////
 
-$getCustomerProfile = $userObj -> getCustomerProfile($mysqli, $idupd);
+$getCustomerProfile = $userObj -> getAcknowlegeCustomerProfile($mysqli, $idupd);
 
 if(sizeof($getCustomerProfile) > 0 ){
 	$cus_Tableid = $getCustomerProfile['cus_Tableid'];
@@ -136,7 +160,7 @@ if(sizeof($getCustomerProfile) > 0 ){
 //////////////////////// Customer Profile Info END ///////////////////////////////
 
 ////////  Document Customer Info ///// 
-$getcusInfoForDoc = $userObj->getcusInfoForDoc($mysqli, $idupd); 
+$getcusInfoForDoc = $userObj->getAckcusInfoForDoc($mysqli, $idupd); 
 if (sizeof($getcusInfoForDoc) > 0) {
 
 	$cus_profile_id = $getcusInfoForDoc['cus_profile_id'];
@@ -148,7 +172,7 @@ if (sizeof($getcusInfoForDoc) > 0) {
 }
 
 ////   Documentation ////////////
-$documentationInfo = $userObj->getDocument($mysqli,$req_id);
+$documentationInfo = $userObj->getAcknowlegementDocument($mysqli,$req_id);
 
 if(sizeof($documentationInfo)>0){
 	$document_table_id = $documentationInfo['doc_Tableid'];
@@ -205,7 +229,16 @@ if(sizeof($documentationInfo)>0){
 ////////   Documentation End ////////////
 
 ///////// Loan Calculation ///////////////
-$getCusInfoForLoanCal = $userObj->getCusInfoForLoanCal($mysqli, $idupd);
+if(isset($_POST['submit_loan_calculation']) && $_POST['submit_loan_calculation'] != ''){
+	$addAckVerificationLoanCalculation = $userObj->addAckVerificationLoanCalculation($mysqli, $userid);
+	
+?>
+	<script>alert('Loan Calculation Details Submitted');</script>
+
+<?php
+}
+
+$getCusInfoForLoanCal = $userObj->getAcknowlegeCusInfoForLoanCal($mysqli, $idupd);
 if (sizeof($getCusInfoForLoanCal) > 0) {
 	for ($i = 0; $i < sizeof($getCusInfoForLoanCal); $i++) {
 	$cus_id_lc = $getCusInfoForLoanCal['cus_id'];
@@ -216,7 +249,7 @@ if (sizeof($getCusInfoForLoanCal) > 0) {
 	}
 }
 //Get Loan Calculation info for edit
-$getLoanCalculation = $userObj->getLoanCalculationForVerification($mysqli,$req_id);
+$getLoanCalculation = $userObj->getAckLoanCalculationForVerification($mysqli,$req_id);
 if(sizeof($getLoanCalculation)>0){
 	for($i=0;$i<sizeof($getLoanCalculation);$i++){
 		$loan_cal_id = $getLoanCalculation['loan_cal_id'];
@@ -254,11 +287,11 @@ if(sizeof($getLoanCalculation)>0){
 		$maturity_month = $getLoanCalculation['maturity_month'];
 		$collection_method = $getLoanCalculation['collection_method'];
 		$cus_status_lc = $getLoanCalculation['cus_status'];
-	}
+}
 
 	//Get Loan calculation Category info for edit
 	if($loan_cal_id >0){
-		$getLoanCalCategory = $userObj->getVerificationLoanCalCategory($mysqli,$loan_cal_id);
+		$getLoanCalCategory = $userObj->getAckVerificationLoanCalCategory($mysqli,$loan_cal_id);
 
 	}
 }
@@ -1781,7 +1814,7 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="DocumentUpd"> Document Uploads </label> <span class="required">&nbsp;*</span>
-                                            <input type="file" class="form-control" id="document_info_upd" name="document_info_upd" multiple>
+                                            <input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple>
 											<input type="hidden" id="doc_info_upd" name="doc_info_upd"  value="<?php if (isset($doc_info_upload)) echo $doc_info_upload; ?>">
 											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/".$doc_info_upload; ?>" target="_blank" >  <?php if (isset($doc_info_upload)) echo $doc_info_upload; ?> </a> -->
                                             <span class="text-danger" id="docInfoUpdCheck"> Upload Document </span>
