@@ -255,6 +255,15 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/acknowledgement_creation.php" ?>
 			<?php } ?>
 
+			<!-- Loan Issue -->
+			<?php if($current_page == 'edit_loan_issue') { ?>
+			<?php include "include/templates/edit_loan_issue.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'loan_issue') { ?>
+			<?php include "include/templates/loan_issue.php" ?>
+			<?php } ?>
+
 		</div>
 		<!-- Page content end -->
 

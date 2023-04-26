@@ -552,6 +552,37 @@ $(document).ready(function() {
             ],
         });
         
+        // Loan Issue List
+         var loanIssue_table = $('#loanIssue_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxLoanIssueFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "Loan Scheme List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+        });
+
         $('#search').change(function(){
             company_creation_table.draw();
             loan_creation_table.draw();
@@ -567,6 +598,7 @@ $(document).ready(function() {
             verification_table.draw();
             approval_table.draw();
             acknowledge_table.draw();
+            loanIssue_table.draw();
         });
         
 });//Document Ready End
@@ -658,8 +690,18 @@ if($current_page == 'approval_list') { ?>
 if($current_page == 'edit_acknowledgement_list') { ?>
     <script src="js/edit_acknowledgement_list.js"></script>
     <?php }
+
 if($current_page == 'acknowledgement_creation') { ?>
     <script src="js/acknowledgement_creation.js"></script>
+    <?php }
+
+//Loan Issue screen
+if($current_page == 'edit_loan_issue') { ?>
+    <script src="js/edit_loan_issue.js"></script>
+    <?php }
+
+if($current_page == 'loan_issue') { ?>
+    <script src="js/loan_issue.js"></script>
     <?php }
 ?> 
 
@@ -844,6 +886,23 @@ if($current_page == 'acknowledgement_creation') { ?>
 
     $(document).on("click", '.removeapproval', function(){
         var appdlt = confirm("Do you want to Remove this Approval?");
+        if(appdlt){
+                return true;
+            }else{
+                return false;
+            }
+    });
+
+    $(document).on("click", '.ack-cancel', function(){
+        var appdlt = confirm("Do you want to Cancel this Acknowledgement?");
+        if(appdlt){
+                return true;
+            }else{
+                return false;
+            }
+    });
+    $(document).on("click", '.ack-remove', function(){
+        var appdlt = confirm("Do you want to remove this Acknowledgement?");
         if(appdlt){
                 return true;
             }else{
