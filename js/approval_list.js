@@ -19,11 +19,11 @@ $(document).ready(function () {
             })
         });
         
-        $('.approved').click(function(){
+        $('.move_acknowledgement').click(function(){
             var req_id = $(this).val();
             if(confirm('Do You want to Approve?')){
                 $.ajax({
-                    url: 'approveFile/approvedVerification.php',
+                    url: 'approveFile/sendToAcknowledgement.php',
                     dataType: 'json',
                     type: 'post',
                     data:{'req_id':req_id},
