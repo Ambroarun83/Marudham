@@ -186,7 +186,7 @@ foreach ($result as $row) {
     $cus_status = $row['cus_status'];
     if($cus_status == '2'){
        
-        $sub_array[] = "<button class='btn btn-outline-secondary approved' value='$id'><span class = 'icon-arrow_forward'></span></button>";
+        $sub_array[] = "<button class='btn btn-outline-secondary move_acknowledgement' value='$id'><span class = 'icon-arrow_forward'></span></button>";
 
     }elseif($cus_status == '3'){$sub_array[] = 'In Acknowledgement';}else
     if($cus_status == '13'){$sub_array[] = 'In Issue';}else
