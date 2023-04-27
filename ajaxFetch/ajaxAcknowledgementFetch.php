@@ -205,7 +205,7 @@ foreach ($result as $row) {
     $action="<div class='dropdown' style='float:right;'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
-    if($cus_status == '3') {
+    if($cus_status == '13') {
         $action .= "<a href='acknowledgement_creation&upd=$id&pge=1' class='customer_profile' value='$id' > Edit Acknowledgement </a>";
         $action .= "<a href='acknowledgement_creation&can=$id&pge=1' class='ack-cancel' value='$id' > Cancel </a>";
     }else if($cus_status == '7') {

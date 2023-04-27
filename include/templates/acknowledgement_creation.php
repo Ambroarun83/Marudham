@@ -230,7 +230,7 @@ if(sizeof($documentationInfo)>0){
 
 ///////// Loan Calculation ///////////////
 if(isset($_POST['submit_loan_calculation']) && $_POST['submit_loan_calculation'] != ''){
-	$addAckVerificationLoanCalculation = $userObj->addAckVerificationLoanCalculation($mysqli, $userid);
+	$addAcknowledgementLoanCalculation = $userObj->addAcknowledgementLoanCalculation($mysqli, $userid);
 	
 ?>
 	<script>alert('Loan Calculation Details Submitted');</script>

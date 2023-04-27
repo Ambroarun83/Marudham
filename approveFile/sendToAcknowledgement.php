@@ -25,7 +25,7 @@ SELECT * FROM `verification_documentation` WHERE `req_id` ='$req_id'");
 $insertLoanCalc = $con->query("INSERT INTO `acknowlegement_loan_calculation`(`loan_cal_id`, `req_id`, `cus_id_loan`, `cus_name_loan`, `cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`, `update_login_id`, `create_date`, `update_date`)
 SELECT * FROM `verification_loan_calculation` WHERE `req_id`='$req_id' ");
 
-$insertLoanCat = $con->query("INSERT INTO `acknowledge_verif_loan_cal_category`(`cat_id`, `req_id`, `loan_cal_id`, `category`) SELECT * FROM `verif_loan_cal_category` WHERE `req_id`='$req_id'");
+$insertLoanCat = $con->query("INSERT INTO `acknowledgement_loan_cal_category`(`cat_id`, `req_id`, `loan_cal_id`, `category`) SELECT * FROM `verif_loan_cal_category` WHERE `req_id`='$req_id'");
 
 
     $response = 'Verification Approved';
