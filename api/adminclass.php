@@ -3400,38 +3400,24 @@ require 'PHPMailerAutoload.php';
             if(isset($_POST['doc_property_value'])){
                 $doc_property_value = $_POST['doc_property_value'];
             }
-            if(isset($_POST['mortgage_name'])){
-                $mortgage_name = $_POST['mortgage_name'];
-            }
-            if(isset($_POST['mortgage_dsgn'])){
-                $mortgage_dsgn = $_POST['mortgage_dsgn'];
-            }
-            if(isset($_POST['mortgage_nuumber'])){
-                $mortgage_nuumber = $_POST['mortgage_nuumber'];
-            }
-            if(isset($_POST['reg_office'])){
-                $reg_office = $_POST['reg_office'];
-            }
-            if(isset($_POST['mortgage_value'])){
-                $mortgage_value = $_POST['mortgage_value'];
-            }
-            if(isset($_POST['mortgage_document'])){
-                $mortgage_document = $_POST['mortgage_document'];    
-            }
-			$pendingchk = '';
-			if(!empty($_FILES['mortgage_document_upd']['name']))
-            {
-                $mortgage_document_upd = $_FILES['mortgage_document_upd']['name'];
-                $upd_temp = $_FILES['mortgage_document_upd']['tmp_name'];
-                $folder="uploads/verification/mortgage_doc/".$mortgage_document_upd ;
-                move_uploaded_file($upd_temp, $folder);
-            }else{
-				$mortgage_document_upd = $_POST['mortgage_doc_upd']; 
-			}
-			if(isset($_POST['pendingchk'])){
-				$pendingchk = $_POST['pendingchk'];
-				$mortgage_document_upd = '';
-			} 
+            // if(isset($_POST['mortgage_name'])){
+            //     $mortgage_name = $_POST['mortgage_name'];
+            // }
+            // if(isset($_POST['mortgage_dsgn'])){
+            //     $mortgage_dsgn = $_POST['mortgage_dsgn'];
+            // }
+            // if(isset($_POST['mortgage_nuumber'])){
+            //     $mortgage_nuumber = $_POST['mortgage_nuumber'];
+            // }
+            // if(isset($_POST['reg_office'])){
+            //     $reg_office = $_POST['reg_office'];
+            // }
+            // if(isset($_POST['mortgage_value'])){
+            //     $mortgage_value = $_POST['mortgage_value'];
+            // }
+            // if(isset($_POST['mortgage_document'])){
+            //     $mortgage_document = $_POST['mortgage_document'];    
+            // }
             if(isset($_POST['endorsement_process'])){
                 $endorsement_process = $_POST['endorsement_process'];
             }
@@ -3462,32 +3448,18 @@ require 'PHPMailerAutoload.php';
             if(isset($_POST['en_Model'])){
                 $en_Model = $_POST['en_Model'];
             }
-            if(isset($_POST['vehicle_reg_no'])){
-                $vehicle_reg_no = $_POST['vehicle_reg_no'];
-            }
-            if(isset($_POST['endorsement_name'])){
-                $endorsement_name = $_POST['endorsement_name'];
-            }
-            if(isset($_POST['en_RC'])){
-                $en_RC = $_POST['en_RC'];
-            }
-			$endorsependingchk ='';
-			if(!empty($_FILES['Rc_document_upd']['name']))
-            {
-                $Rc_document_upd = $_FILES['Rc_document_upd']['name'];
-                $upd_temp = $_FILES['Rc_document_upd']['tmp_name'];
-                $folder="uploads/verification/endorsement_doc/".$Rc_document_upd ;
-                move_uploaded_file($upd_temp, $folder);
-            }else{
-				$Rc_document_upd = $_POST['rc_doc_upd']; 
-			}
-			if(isset($_POST['endorsependingchk'])){
-                $endorsependingchk = $_POST['endorsependingchk']; 
-				$Rc_document_upd = '';
-            }
-            if(isset($_POST['en_Key'])){
-                $en_Key = $_POST['en_Key'];
-            }
+            // if(isset($_POST['vehicle_reg_no'])){
+            //     $vehicle_reg_no = $_POST['vehicle_reg_no'];
+            // }
+            // if(isset($_POST['endorsement_name'])){
+            //     $endorsement_name = $_POST['endorsement_name'];
+            // }
+            // if(isset($_POST['en_RC'])){
+            //     $en_RC = $_POST['en_RC'];
+            // }
+            // if(isset($_POST['en_Key'])){
+            //     $en_Key = $_POST['en_Key'];
+            // }
             if(isset($_POST['gold_info'])){
                 $gold_info = $_POST['gold_info'];
             }
@@ -3518,15 +3490,6 @@ require 'PHPMailerAutoload.php';
             if(isset($_POST['document_type'])){
                 $document_type = $_POST['document_type'];
             }   
-			if(!empty($_FILES['document_info_upd']['name']))
-            {
-                $document_info_upd = $_FILES['document_info_upd']['name'];
-                $upd_temp = $_FILES['document_info_upd']['tmp_name'];
-                $folder="uploads/verification/doc_info/".$document_info_upd ;
-                move_uploaded_file($upd_temp, $folder);
-            }else{
-				$document_info_upd = $_POST['doc_info_upd']; 
-			}
             if(isset($_POST['document_holder'])){
                 $document_holder = $_POST['document_holder'];
             }
@@ -3556,7 +3519,7 @@ require 'PHPMailerAutoload.php';
 						$insertQry = "UPDATE in_verification set cus_status = 11 where req_id ='".strip_tags($req_id)."' ";
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			}else{
-			$update_doc = " UPDATE `verification_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',`mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',`mortgage_document`='".strip_tags($mortgage_document)."',`mortgage_document_upd`='".strip_tags($mortgage_document_upd)."',`mortgage_document_pending`='".strip_tags($pendingchk)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',`Rc_document_upd`='".strip_tags($Rc_document_upd)."',`Rc_document_pending`='".strip_tags($endorsependingchk)."',`en_Key`='".strip_tags($en_Key)."',`gold_info`='".strip_tags($gold_info)."',`gold_sts`='".strip_tags($gold_sts)."',`gold_type`='".strip_tags($gold_type)."',`Purity`='".strip_tags($Purity)."',`gold_Count`='".strip_tags($gold_Count)."',`gold_Weight`='".strip_tags($gold_Weight)."',`gold_Value`='".strip_tags($gold_Value)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`doc_info_upload`='".strip_tags($document_info_upd)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
+			$update_doc = " UPDATE `verification_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`gold_info`='".strip_tags($gold_info)."',`gold_sts`='".strip_tags($gold_sts)."',`gold_type`='".strip_tags($gold_type)."',`Purity`='".strip_tags($Purity)."',`gold_Count`='".strip_tags($gold_Count)."',`gold_Weight`='".strip_tags($gold_Weight)."',`gold_Value`='".strip_tags($gold_Value)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
 
 			$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
 			}
@@ -4340,7 +4303,7 @@ require 'PHPMailerAutoload.php';
 	}
 
 	//Add Loan Calculation
-	function addAckVerificationLoanCalculation($mysqli, $userid){
+	function addAcknowledgementLoanCalculation($mysqli, $userid){
 			if(isset($_POST['cus_id_loan'])){
 				$cus_id_loan = $_POST['cus_id_loan'];
 			}
@@ -4496,10 +4459,10 @@ require 'PHPMailerAutoload.php';
 					maturity_month = '".strip_tags($maturity_month)."', collection_method = '".strip_tags($collection_method)."', cus_status = 12, update_login_id = $userid, 
 					update_date = current_timestamp() WHERE req_id = $req_id ");
 	
-				$deleteCat = $mysqli->query("DELETE FROM verif_loan_cal_category where req_id = '".strip_tags($req_id)."' and loan_cal_id='".strip_tags($loan_cal_id)."'");
+				$deleteCat = $mysqli->query("DELETE FROM acknowledgement_loan_cal_category where req_id = '".strip_tags($req_id)."' and loan_cal_id='".strip_tags($loan_cal_id)."'");
 	
 				for($i=0;$i<sizeof($category_info);$i++){
-					$insertCategory = $mysqli->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
+					$insertCategory = $mysqli->query("INSERT INTO `acknowledgement_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
 					'".strip_tags($category_info[$i])."' )");
 				}
 			}else{
@@ -4518,7 +4481,7 @@ require 'PHPMailerAutoload.php';
 				$loan_cal_id = $mysqli->insert_id;
 				
 				for($i=0;$i<sizeof($category_info);$i++){
-					$insertCategory = $mysqli->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
+					$insertCategory = $mysqli->query("INSERT INTO `acknowledgement_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
 					'".strip_tags($category_info[$i])."' )");
 				}
 	
@@ -4574,7 +4537,7 @@ require 'PHPMailerAutoload.php';
 	//Get Loan calculation Category info for edit
 	function getAckVerificationLoanCalCategory($mysqli, $loan_cal_id){
 			$detailrecords = array();
-			$Qry = $mysqli->query("SELECT * FROM `acknowledge_verif_loan_cal_category` WHERE loan_cal_id = '".strip_tags($loan_cal_id)."' ");
+			$Qry = $mysqli->query("SELECT * FROM `acknowledgement_loan_cal_category` WHERE loan_cal_id = '".strip_tags($loan_cal_id)."' ");
 			if($mysqli->affected_rows>0){
 				$i=0;
 				while($row = $Qry->fetch_assoc()){

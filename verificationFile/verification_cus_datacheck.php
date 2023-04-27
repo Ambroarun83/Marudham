@@ -23,8 +23,11 @@ include '../ajaxconfig.php';
         if(isset($_POST['name'])){
         $name = $_POST['name'];
         }
+        if(isset($_POST['req_id'])){
+        $req_id = $_POST['req_id'];
+        }
 
-        $cusInfo = $connect->query("SELECT cus_id,customer_name,mobile1 FROM `customer_register` where ($category = '".strip_tags($name)."' or $category1 = '".strip_tags($name)."') order by cus_reg_id desc");
+        $cusInfo = $connect->query("SELECT cus_id,customer_name,mobile1 FROM `customer_register` where ($category = '".strip_tags($name)."' or $category1 = '".strip_tags($name)."') && req_ref_id != '".strip_tags($req_id)."' order by cus_reg_id desc");
 
         $i = 1;
         while ($cus = $cusInfo->fetch()) {
