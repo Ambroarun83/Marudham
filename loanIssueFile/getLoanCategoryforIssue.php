@@ -1,5 +1,5 @@
 <?php 
-include('../../ajaxconfig.php');
+include('../ajaxconfig.php');
 
 if(isset($_POST['lc_id'])){
     $lc_id = $_POST['lc_id'];
