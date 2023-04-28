@@ -8,6 +8,7 @@ include '../ajaxconfig.php';
 		<th width="20%"> S.No </th>
 		<th> Feedback Label </th>
 		<th> Feedback </th>
+		<th> Remarks </th>
 	</tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@ include '../ajaxconfig.php';
                 <td><?php echo $i; ?></td>
                 <td><?php echo $feedback["feedback_label"]; ?></td>
                 <td><?php if($feedback["cus_feedback"] == '1'){ echo 'Bad';}else if($feedback["cus_feedback"] == '2'){ echo 'Poor';}else if($feedback["cus_feedback"] == '3'){ echo 'Average';}else if($feedback["cus_feedback"] == '4'){ echo 'Good';}else if($feedback["cus_feedback"] == '5'){ echo 'Excellent';} ?></td>
+                <td><?php echo $feedback["feedback_remark"]; ?></td>
             </tr>
 
         <?php  } ?>

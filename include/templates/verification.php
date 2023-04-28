@@ -2159,13 +2159,13 @@ if(sizeof($getLoanCalculation)>0){
 												<label for="disabledInput">Day</label>&nbsp;<span class="text-danger">*</span>
 												<select tabindex="9" type="text" class="form-control" id="day_scheme" name="day_scheme" >
 													<option value="">Select a Day</option> 
-													<option value="1"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '1') echo 'selected';?>>Sunday</option> 
-													<option value="2"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '2') echo 'selected';?>>Monday</option> 
-													<option value="3"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '3') echo 'selected';?>>Tuesday</option> 
-													<option value="4"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '4') echo 'selected';?>>Wednesdat</option> 
-													<option value="5"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '5') echo 'selected';?>>Thursday</option> 
+													<option value="1"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '1') echo 'selected';?>>Monday</option> 
+													<option value="2"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '2') echo 'selected';?>>Tuesday</option> 
+													<option value="3"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '3') echo 'selected';?>>Wednesdat</option> 
+													<option value="4"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '4') echo 'selected';?>>Thursday</option> 
 													<option value="6"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '6') echo 'selected';?>>Friday</option> 
-													<option value="7"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '7') echo 'selected';?>>Saturday</option> 
+													<option value="6"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '6') echo 'selected';?>>Saturday</option> 
+													<option value="7"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '7') echo 'selected';?>>Sunday</option> 
 												</select>
 												<span class="text-danger" style='display:none' id='day_schemeCheck'>Please Select Day</span>
 											</div>
@@ -2234,7 +2234,7 @@ if(sizeof($getLoanCalculation)>0){
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger">*</span>
+												<label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger int-diff">*</span>
 												<input type="text" class="form-control" readonly id="int_amt_cal" name="int_amt_cal" value='<?php if(isset($int_amt_cal)) echo $int_amt_cal;?>'>
 											</div>
 										</div>
@@ -2290,14 +2290,14 @@ if(sizeof($getLoanCalculation)>0){
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Due Start From</label>&nbsp;<span class="text-danger">*</span>
-												<input type="month" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>'>
+												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>'>
 												<span class="text-danger" style='display:none' id='due_start_fromCheck'>Please Select Due Start Month</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="disabledInput">Maturity Month</label>&nbsp;<span class="text-danger">*</span>
-												<input type="month" class="form-control" id="maturity_month" name="maturity_month" value='<?php if(isset($maturity_month)) echo $maturity_month;?>'>
+												<label for="disabledInput">Maturity Date</label>&nbsp;<span class="text-danger">*</span>
+												<input type="date" class="form-control" id="maturity_month" name="maturity_month" value='<?php if(isset($maturity_month)) echo $maturity_month;?>' readonly>
 												<span class="text-danger" style='display:none' id='maturity_monthCheck'>Please Select Maturity Month</span>
 											</div>
 										</div>
@@ -3241,14 +3241,14 @@ if(sizeof($getLoanCalculation)>0){
 
 				<div class="row">
 
-				   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="feedbackLabel"> Feedback Label </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="feedback_label" name="feedback_label" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Feedback Label">
 							<span class="text-danger" id="feedbacklabelCheck"> Enter Feedback Label </span>
 						</div>
 					</div>
-
+					
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="feedback "> Feedback </label> <span class="required">&nbsp;*</span>
@@ -3263,8 +3263,16 @@ if(sizeof($getLoanCalculation)>0){
 							<span class="text-danger" id="feedbackCheck"> Select Feedback </span>
 						</div>
 					</div>
+					
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
+					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
+						<div class="form-group">
+							<label for="feedback_remark"> Remarks </label>
+							<textarea class="form-control" name="feedback_remark" id="feedback_remark"></textarea>
+						</div>
+					</div>
 
-
+					<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12"></div>
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="feedbackID" id="feedbackID">
 						<button type="button" name="feedbackBtn" id="feedbackBtn" class="btn btn-primary" style="margin-top: 19px;"> Submit </button>

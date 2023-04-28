@@ -917,4 +917,7 @@ if($current_page == 'loan_issue') { ?>
 	setTimeout(function() {
 		$('.alert').fadeOut('slow');
 	}, 2000);
+    
+    // $('input').attr('autocomplete','off');
+
 </script>
