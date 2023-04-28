@@ -68,7 +68,7 @@
 					if($mscid==1)
 					{?>
 					<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Approval Cancelled Successfully! </div>
+						<div class="alert-text"> Loan Issued Details Submitted Successfully! </div>
 					</div> 
 					<?php
 					}

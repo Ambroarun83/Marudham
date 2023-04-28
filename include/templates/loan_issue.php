@@ -3,11 +3,12 @@ if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd'];
 }
 
-if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''){
+if(isset($_POST['submit_loanIssue']) && $_POST['submit_loanIssue'] != ''){
 
-	$addDocVerification = $userObj->addAcknowlegeDocumentation($mysqli, $userid);
+	$addDocVerification = $userObj->addloanIssue($mysqli, $userid);
 ?>
-	<script> alert('Documentation Details Submitted'); </script>
+	<!-- <script> alert('Loan Issued Details Submitted'); </script> -->
+	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_issue&msc=1';</script>
 <?php
 }
 
@@ -202,15 +203,6 @@ if(sizeof($documentationInfo)>0){
 ////////   Documentation End ////////////
 
 ///////// Loan Calculation ///////////////
-if(isset($_POST['submit_loan_calculation']) && $_POST['submit_loan_calculation'] != ''){
-	$addAckVerificationLoanCalculation = $userObj->addAckVerificationLoanCalculation($mysqli, $userid);
-	
-?>
-	<script>alert('Loan Calculation Details Submitted');</script>
-
-<?php
-}
-
 $getCusInfoForLoanCal = $userObj->getAcknowlegeCusInfoForLoanCal($mysqli, $idupd);
 if (sizeof($getCusInfoForLoanCal) > 0) {
 	for ($i = 0; $i < sizeof($getCusInfoForLoanCal); $i++) {
@@ -692,6 +684,7 @@ input:checked + .slider:before {
 											<div class="form-group">
 												<label for="disabledInput">Issued to </label>&nbsp;<span class="text-danger">*</span>
 												<input type="text" class="form-control" id="issue_to" name="issue_to" readonly>
+												<input type="hidden" class="form-control" id="agent_id" name="agent_id">
 											</div>
 										</div>
 
@@ -722,7 +715,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 cash_issue" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Cash</label>
-												<input type="number" class="form-control" id="cash" name="cash" >
+												<input type="text" class="form-control" id="cash" name="cash" >
 											</div>
 										</div>
 
@@ -733,6 +726,12 @@ input:checked + .slider:before {
 											</div>
 										</div>
 
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
+											<div class="form-group">
+												<label for="disabledInput">cheque Value</label>
+												<input type="number" class="form-control" id="chequeValue" name="chequeValue" >
+											</div>
+										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">cheque Remark</label>
@@ -749,10 +748,24 @@ input:checked + .slider:before {
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none"> 
 											<div class="form-group">
+												<label for="disabledInput">Transaction Value </label>
+												<input type="number" class="form-control" id="transaction_value" name="transaction_value" >
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none"> 
+											<div class="form-group">
 												<label for="disabledInput">Transaction Remark </label>
 												<input type="text" class="form-control" id="transaction_remark" name="transaction_remark" >
 											</div>
 										</div>
+
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 balance" style="display:none"> 
+											<div class="form-group">
+												<label for="disabledInput">Balance</label>
+												<input type="text" class="form-control" id="balance" name="balance" readonly>
+											</div>
+										</div>
+
 
 									</div>
 								</div>
@@ -782,6 +795,15 @@ input:checked + .slider:before {
 						</div>
 					</div>
 					<!-- Issued Info End -->
+
+					<!-- Submit Button Start -->
+					<div class="col-md-12 ">
+                        <div class="text-right">
+                            <button type="submit" name="submit_loanIssue" id="submit_loanIssue" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
+                            <!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
+                        </div>
+                    </div>
+					<!-- Submit Button End -->
 
 			</div>
 		</div>
