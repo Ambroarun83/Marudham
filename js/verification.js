@@ -4252,15 +4252,15 @@ function getLoanAfterInterest(){
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
     $('#principal_amt_cal').val(parseInt(loan_amt).toFixed(0)); // principal amt as same as loan amt for after interest
 
-    var interest_rate = parseInt(loan_amt) * (parseFloat(int_rate)/100) * parseInt(due_period); //Calculate interest rate 
+    var interest_rate = (parseInt(loan_amt) * (parseFloat(int_rate)/100) * parseInt(due_period)).toFixed(0); //Calculate interest rate 
     
     var roundedInterest = Math.ceil(interest_rate / 5) * 5; //to increase interest rate to nearest multiple of 5
     if (roundedInterest < interest_rate) {
         roundedInterest += 5;
     }
     
-    $('.int-diff').text('* (Difference - ' + parseInt(roundedInterest - interest_rate) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest).toFixed(0));
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - interest_rate) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var tot_amt = parseInt(loan_amt) + parseFloat(interest_rate); //Calculate total amount from principal/loan amt and interest rate
     $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
@@ -4288,13 +4288,13 @@ function getLoanPreInterest(){
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
     
     
-    var int_amt = parseInt(loan_amt) * (parseFloat(int_rate)/100) * parseInt(due_period); //Calculate interest rate 
+    var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100) * parseInt(due_period)).toFixed(0); //Calculate interest rate 
     var roundedInterest = Math.ceil(int_amt / 5) * 5;
     if (roundedInterest < int_amt) {
         roundedInterest += 5;
     }
-    $('.int-diff').text('* (Difference - ' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest).toFixed(0));
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
     
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
     $('#principal_amt_cal').val(parseInt(princ_amt).toFixed(0)); 
@@ -4329,13 +4329,14 @@ function getLoanInterest(){
     $('#tot_amt_cal').val('');
     $('#due_amt_cal').val('');//Due period will be monthly by default so no need of due amt
     
-    var int_amt = parseInt(loan_amt) * (parseFloat(int_rate)/100) ; //Calculate interest rate 
+    var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100)).toFixed(0) ; //Calculate interest rate 
+
     var roundedInterest = Math.ceil(int_amt / 5) * 5;
     if (roundedInterest < int_amt) {
         roundedInterest += 5;
     }
-    $('.int-diff').text('* (Difference - ' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest).toFixed(0));
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var doc_charge = parseInt(loan_amt) * (parseFloat(doc_charge)/100) ; //Get document charge from loan info and multiply with loan amt to get actual doc charge
     $('#doc_charge_cal').val(parseInt(doc_charge).toFixed(0));
@@ -4357,13 +4358,13 @@ function getLoanMonthly(){
 
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
     
-    var int_amt = parseInt(loan_amt) * (parseFloat(int_rate)/100) ; //Calculate interest rate 
+    var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100)).toFixed(0) ; //Calculate interest rate 
     var roundedInterest = Math.ceil(int_amt / 5) * 5;
     if (roundedInterest < int_amt) {
         roundedInterest += 5;
     }
-    $('.int-diff').text('* (Difference - ' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest).toFixed(0));
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
     $('#principal_amt_cal').val(princ_amt); 
@@ -4404,13 +4405,13 @@ function getLoanWeekly(){
 
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
     
-    var int_amt = parseInt(loan_amt) * (parseFloat(int_rate)/100) ; //Calculate interest rate 
+    var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100)).toFixed(0) ; //Calculate interest rate 
     var roundedInterest = Math.ceil(int_amt / 5) * 5;
     if (roundedInterest < int_amt) {
         roundedInterest += 5;
     }
-    $('.int-diff').text('* (Difference - ' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest).toFixed(0));
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
     $('#principal_amt_cal').val(parseInt(princ_amt).toFixed(0)); 
@@ -4451,13 +4452,13 @@ function getLoanDaily(){
 
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
     
-    var int_amt = parseInt(loan_amt) * (parseFloat(int_rate)/100) ; //Calculate interest rate 
+    var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100)).toFixed(0) ; //Calculate interest rate 
     var roundedInterest = Math.ceil(int_amt / 5) * 5;
     if (roundedInterest < int_amt) {
         roundedInterest += 5;
     }
-    $('.int-diff').text('* (Difference - ' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest).toFixed(0));
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
     $('#principal_amt_cal').val(parseInt(princ_amt).toFixed(0)); 

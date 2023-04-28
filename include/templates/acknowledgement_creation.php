@@ -1091,6 +1091,7 @@ input:checked + .slider:before {
 												<th width="20%"> S.No </th>
 												<th> Feedback Label </th>
 												<th> Feedback </th>
+												<th> Remarks </th>
 											</tr>
 										</thead>
 										<tbody>
@@ -1813,11 +1814,10 @@ input:checked + .slider:before {
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
-                                            <label for="DocumentUpd"> Document Uploads </label> <span class="required">&nbsp;*</span>
+                                            <label for="DocumentUpd"> Document Uploads </label>
                                             <input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple>
 											<input type="hidden" id="doc_info_upd" name="doc_info_upd"  value="<?php if (isset($doc_info_upload)) echo $doc_info_upload; ?>">
 											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/".$doc_info_upload; ?>" target="_blank" >  <?php if (isset($doc_info_upload)) echo $doc_info_upload; ?> </a> -->
-                                            <span class="text-danger" id="docInfoUpdCheck"> Upload Document </span>
                                         </div>
                                     </div>
 
@@ -1928,6 +1928,20 @@ input:checked + .slider:before {
 										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
 									</div>
 								</div>
+								
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="DocArea"> Area </label> <span class="required"> * </span>
+                                        <input tabindex="4" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="DocSubArea"> Sub Area </label> <span class="required"> * </span>
+                                        <input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly>
+                                    </div>
+                                </div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }} ?>>
 									<div class="form-group">
@@ -2114,13 +2128,13 @@ input:checked + .slider:before {
 												<label for="disabledInput">Day</label>&nbsp;<span class="text-danger">*</span>
 												<select tabindex="9" type="text" class="form-control" id="day_scheme" name="day_scheme" >
 													<option value="">Select a Day</option> 
-													<option value="1"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '1') echo 'selected';?>>Sunday</option> 
-													<option value="2"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '2') echo 'selected';?>>Monday</option> 
-													<option value="3"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '3') echo 'selected';?>>Tuesday</option> 
-													<option value="4"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '4') echo 'selected';?>>Wednesdat</option> 
-													<option value="5"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '5') echo 'selected';?>>Thursday</option> 
-													<option value="6"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '6') echo 'selected';?>>Friday</option> 
-													<option value="7"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '7') echo 'selected';?>>Saturday</option> 
+													<option value="1"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '1') echo 'selected';?>>Monday</option> 
+													<option value="2"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '2') echo 'selected';?>>Tuesday</option> 
+													<option value="3"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '3') echo 'selected';?>>Wednesdat</option> 
+													<option value="4"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '4') echo 'selected';?>>Thursday</option> 
+													<option value="5"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '5') echo 'selected';?>>Friday</option> 
+													<option value="6"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '6') echo 'selected';?>>Saturday</option> 
+													<option value="7"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '7') echo 'selected';?>>Sunday</option> 
 												</select>
 												<span class="text-danger" style='display:none' id='day_schemeCheck'>Please Select Day</span>
 											</div>
@@ -2189,7 +2203,7 @@ input:checked + .slider:before {
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger">*</span>
+												<label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger int-diff">*</span>
 												<input type="text" class="form-control" readonly id="int_amt_cal" name="int_amt_cal" value='<?php if(isset($int_amt_cal)) echo $int_amt_cal;?>'>
 											</div>
 										</div>
@@ -2245,14 +2259,14 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Due Start From</label>&nbsp;<span class="text-danger">*</span>
-												<input type="month" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>'>
+												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>'>
 												<span class="text-danger" style='display:none' id='due_start_fromCheck'>Please Select Due Start Month</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="disabledInput">Maturity Month</label>&nbsp;<span class="text-danger">*</span>
-												<input type="month" class="form-control" id="maturity_month" name="maturity_month" value='<?php if(isset($maturity_month)) echo $maturity_month;?>'>
+												<label for="disabledInput">Maturity Date</label>&nbsp;<span class="text-danger">*</span>
+												<input type="date" class="form-control" id="maturity_month" name="maturity_month" value='<?php if(isset($maturity_month)) echo $maturity_month;?>' readonly>
 												<span class="text-danger" style='display:none' id='maturity_monthCheck'>Please Select Maturity Month</span>
 											</div>
 										</div>

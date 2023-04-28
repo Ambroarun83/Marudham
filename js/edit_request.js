@@ -4,12 +4,13 @@ $(document).ready(function () {
     setTimeout(() => {
         $('.sub_verification').click(function(){
             var req_id = $(this).val();
+            var cus_id = $(this).attr('data-value');
             if(confirm('Do You want to Send this Request for Verification?')){
                 $.ajax({
                     url: 'requestFile/sendToVerificaiton.php',
                     dataType: 'json',
                     type: 'post',
-                    data:{'req_id':req_id},
+                    data:{'req_id':req_id,"cus_id":cus_id},
                     cache:false,
                     success:function(response){
                         if(response.includes('Moved')){
