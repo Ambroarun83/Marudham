@@ -35,12 +35,15 @@ $manage_user = '';
 $doc_mapping = '';
 $requestmodule = '';
 $request = '';
+$request_list_access = '';
 $verificationmodule = '';
 $verification = '';
 $approvalmodule = '';
 $approval = '';
 $acknowledgementmodule = '';
 $acknowledgement = '';
+$loanissuemodule = '';
+$loan_issue = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -116,12 +119,15 @@ if($idupd>0)
 			$doc_mapping          		     = $getUser['doc_mapping'];
 			$requestmodule          		     = $getUser['requestmodule'];
 			$request          		     = $getUser['request'];
+			$request_list_access          		     = $getUser['request_list_access'];
 			$verificationmodule          		     = $getUser['verificationmodule'];
 			$verification          		     = $getUser['verification'];
 			$approvalmodule          		     = $getUser['approvalmodule'];
 			$approval          		     = $getUser['approval'];
 			$acknowledgementmodule          		     = $getUser['acknowledgementmodule'];
 			$acknowledgement          		     = $getUser['acknowledgement'];
+			$loanissuemodule          		     = $getUser['loanissuemodule'];
+			$loan_issue          		     = $getUser['loan_issue'];
 		}
 	}
 }
@@ -498,6 +504,12 @@ if($idupd>0)
                                 <label class="custom-control-label" for="request">Request</label>
                             </div>
                         </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="custom-control custom-checkbox">
+								<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($request_list_access==0){ echo'checked'; }} ?> tabindex="21" class=" request-checkbox" id="request_list_access" name="request_list_access" disabled>&nbsp;&nbsp;
+								<label class="custom-control-label" for="request_list_access">All Request List Access</label>
+							</div>
+						</div>
 					</div>
 					
 					<hr>
@@ -550,6 +562,24 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($acknowledgement==0){ echo'checked'; }} ?> tabindex="21" class="acknowledgement-checkbox" id="acknowledgement" name="acknowledgement" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="acknowledgement">Acknowledgement</label>
+                            </div>
+                        </div>
+					</div>
+
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($loanissuemodule==0){ echo'checked'; }} ?> tabindex="20" class="" id="loanissuemodule" name="loanissuemodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="loanissuemodule">
+							<h5>Loan Issue</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($loan_issue==0){ echo'checked'; }} ?> tabindex="21" class="loan_issue-checkbox" id="loan_issue" name="loan_issue" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="loan_issue">Loan Issue</label>
                             </div>
                         </div>
 					</div>

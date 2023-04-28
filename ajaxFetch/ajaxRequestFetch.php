@@ -5,6 +5,9 @@ include('..\ajaxconfig.php');
 if(isset($_SESSION["userid"])){
     $userid = $_SESSION["userid"];
 }
+if(isset($_SESSION["request_list_access"])){
+    $request_list_access = $_SESSION["request_list_access"];//if request_list_access is granted to the current user, they can access Whole request list
+}
 
 $column = array(
     'req_id',
@@ -29,7 +32,7 @@ $column = array(
 );
 
 $query = "SELECT * FROM request_creation where status= 0 and cus_status != 8 and insert_login_id = $userid ";//hide if issued or revoked(after issued cus_status = 7 , revoked = 8)
-if($userid == 1){
+if($userid == 1 or $request_list_access == 0){ //if request_list_access is granted to the current user
     $query = 'SELECT * FROM request_creation where status =0 and (cus_status != 8 )';
 }
 if($_POST['search'] != "")
@@ -164,9 +167,10 @@ foreach ($result as $row) {
 
     $sub_array[] = $row['cus_data'];
     $id = $row['req_id'];
+    $cus_id = $row['cus_id'];
     
     $cus_status = $row['cus_status'];
-    if($cus_status == '0'){$sub_array[] = "<button class='btn btn-outline-secondary sub_verification' value='$id'><span class = 'icon-arrow_forward'></span></button>";}else
+    if($cus_status == '0'){$sub_array[] = "<button class='btn btn-outline-secondary sub_verification' value='$id' data-value='$cus_id'><span class = 'icon-arrow_forward'></span></button>";}else
     if($cus_status == '1' or $cus_status == '10' or $cus_status == '11' or $cus_status == '12'){$sub_array[] = 'In Verification';}else
     if($cus_status == '2'){$sub_array[] = 'In Approval';}else
     if($cus_status == '3'){$sub_array[] = 'In Acknowledgement';}else

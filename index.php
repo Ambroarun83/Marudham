@@ -15,13 +15,14 @@ if(isset($_POST['lusername'])) {
 
 	$qry     = "SELECT * FROM user WHERE user_name = '".$username."' AND user_password = '".$password."' and status=0"; 
 	
-	$res = mysqli_query($mysqli, $qry)or die("Error in Get All Records".mysqli_error()); 
+	$res = mysqli_query($mysqli, $qry)or die("Error in Get All Records"); 
 	$result = mysqli_fetch_array($res);
 	if ($mysqli->affected_rows>0)
 	{  
 		$_SESSION['username']    = $result['user_name']; 
 		$_SESSION['userid']      = $result['user_id']; 
 		$_SESSION['fullname']    = $result['fullname']; 
+		$_SESSION['request_list_access']    = $result['request_list_access']; 
 		?>
 		<script>location.href='<?php echo $HOSTPATH; ?>edit_company_creation';</script>  
 		<?php

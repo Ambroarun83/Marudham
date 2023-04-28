@@ -465,7 +465,7 @@ if(sizeof($getLoanCalculation)>0){
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="cus_id" name="cus_id" tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" value='<?php if (isset($cus_id)) {echo $cus_id;} ?>'>
+											<input type="text" class="form-control" id="cus_id" name="cus_id" tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" value='<?php if (isset($cus_id)) {echo $cus_id;} ?>' readonly>
 											<span class="text-danger" style='display:none' id='cusidCheck'>Please Enter Customer ID</span>
 										</div>
 									</div>
@@ -1159,6 +1159,7 @@ if(sizeof($getLoanCalculation)>0){
 												<th width="20%"> S.No </th>
 												<th> Feedback Label </th>
 												<th> Feedback </th>
+												<th> Remarks </th>
 											</tr>
 										</thead>
 										<tbody>
@@ -2163,7 +2164,7 @@ if(sizeof($getLoanCalculation)>0){
 													<option value="2"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '2') echo 'selected';?>>Tuesday</option> 
 													<option value="3"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '3') echo 'selected';?>>Wednesdat</option> 
 													<option value="4"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '4') echo 'selected';?>>Thursday</option> 
-													<option value="6"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '6') echo 'selected';?>>Friday</option> 
+													<option value="5"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '5') echo 'selected';?>>Friday</option> 
 													<option value="6"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '6') echo 'selected';?>>Saturday</option> 
 													<option value="7"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '7') echo 'selected';?>>Sunday</option> 
 												</select>
