@@ -5,53 +5,55 @@ require 'PHPMailerAutoload.php';
 
 		public function getuser($mysqli,$idupd) 
 		{
-			$qry = "SELECT * FROM user WHERE user_id='".mysqli_real_escape_string($mysqli,$idupd)."'"; 
-			$res =$mysqli->query($qry)or die("Error in Get All Records".$mysqli->error);
-			$detailrecords = array();
-			if ($mysqli->affected_rows>0)
-			{
-				$row = $res->fetch_object();	
-				$detailrecords['user_id']                    = $row->user_id; 
-				$detailrecords['fullname']       	           = strip_tags($row->fullname);
-				$detailrecords['user_name']       	        = strip_tags($row->user_name);
-				$detailrecords['user_password']              = strip_tags($row->user_password);		  	
-				$detailrecords['role']              = strip_tags($row->role);		  	
-				$detailrecords['role_type']              = strip_tags($row->role_type);		  	
-				$detailrecords['dir_id']              = strip_tags($row->dir_id);		  	
-				$detailrecords['ag_id']              = strip_tags($row->ag_id);		  	
-				$detailrecords['staff_id']              = strip_tags($row->staff_id);		  	
-				$detailrecords['company_id']              = strip_tags($row->company_id);		  	
-				$detailrecords['branch_id']              = strip_tags($row->branch_id);		  	
-				$detailrecords['agentforstaff']              = strip_tags($row->agentforstaff);		  	
-				$detailrecords['line_id']              = strip_tags($row->line_id);		  	
-				$detailrecords['group_id']              = strip_tags($row->group_id);		  	
-				$detailrecords['mastermodule']              = strip_tags($row->mastermodule);		  	
-				$detailrecords['company_creation']              = strip_tags($row->company_creation);		  	
-				$detailrecords['branch_creation']              = strip_tags($row->branch_creation);		  	
-				$detailrecords['loan_category']              = strip_tags($row->loan_category);		  	
-				$detailrecords['loan_calculation']              = strip_tags($row->loan_calculation);		  	
-				$detailrecords['loan_scheme']              = strip_tags($row->loan_scheme);		  	
-				$detailrecords['area_creation']              = strip_tags($row->area_creation);		  	
-				$detailrecords['area_mapping']              = strip_tags($row->area_mapping);		  	
-				$detailrecords['area_approval']              = strip_tags($row->area_approval);		  	
-				$detailrecords['adminmodule']              = strip_tags($row->adminmodule);		  	
-				$detailrecords['director_creation']              = strip_tags($row->director_creation);		  	
-				$detailrecords['agent_creation']              = strip_tags($row->agent_creation);		  	
-				$detailrecords['staff_creation']              = strip_tags($row->staff_creation);		  	
-				$detailrecords['manage_user']              = strip_tags($row->manage_user);		  	
-				$detailrecords['doc_mapping']              = strip_tags($row->doc_mapping);		  	
-				$detailrecords['requestmodule']              = strip_tags($row->requestmodule);		  	
-				$detailrecords['request']              = strip_tags($row->request);		  	
-				$detailrecords['verificationmodule']              = strip_tags($row->verificationmodule);		  	
-				$detailrecords['verification']              = strip_tags($row->verification);
-				$detailrecords['approvalmodule']              = strip_tags($row->approvalmodule);
+			$qry = "SELECT * FROM user WHERE user_id='".mysqli_real_escape_string($mysqli,$idupd)."'";
+            $res =$mysqli->query($qry)or die("Error in Get All Records".$mysqli->error);
+            $detailrecords = array();
+            if ($mysqli->affected_rows>0)
+            {
+                $row = $res->fetch_object();
+                $detailrecords['user_id']                    = $row->user_id;
+                $detailrecords['fullname']                     = strip_tags($row->fullname);
+                $detailrecords['user_name']                 = strip_tags($row->user_name);
+                $detailrecords['user_password']              = strip_tags($row->user_password);
+                $detailrecords['role']              = strip_tags($row->role);
+                $detailrecords['role_type']              = strip_tags($row->role_type);
+                $detailrecords['dir_id']              = strip_tags($row->dir_id);
+                $detailrecords['ag_id']              = strip_tags($row->ag_id);
+                $detailrecords['staff_id']              = strip_tags($row->staff_id);
+                $detailrecords['company_id']              = strip_tags($row->company_id);
+                $detailrecords['branch_id']              = strip_tags($row->branch_id);
+                $detailrecords['agentforstaff']              = strip_tags($row->agentforstaff);
+                $detailrecords['line_id']              = strip_tags($row->line_id);
+                $detailrecords['group_id']              = strip_tags($row->group_id);
+                $detailrecords['mastermodule']              = strip_tags($row->mastermodule);
+                $detailrecords['company_creation']              = strip_tags($row->company_creation);
+                $detailrecords['branch_creation']              = strip_tags($row->branch_creation);
+                $detailrecords['loan_category']              = strip_tags($row->loan_category);
+                $detailrecords['loan_calculation']              = strip_tags($row->loan_calculation);
+                $detailrecords['loan_scheme']              = strip_tags($row->loan_scheme);
+                $detailrecords['area_creation']              = strip_tags($row->area_creation);
+                $detailrecords['area_mapping']              = strip_tags($row->area_mapping);
+                $detailrecords['area_approval']              = strip_tags($row->area_approval);
+                $detailrecords['adminmodule']              = strip_tags($row->adminmodule);
+                $detailrecords['director_creation']              = strip_tags($row->director_creation);
+                $detailrecords['agent_creation']              = strip_tags($row->agent_creation);
+                $detailrecords['staff_creation']              = strip_tags($row->staff_creation);
+                $detailrecords['manage_user']              = strip_tags($row->manage_user);
+                $detailrecords['doc_mapping']              = strip_tags($row->doc_mapping);
+                $detailrecords['requestmodule']              = strip_tags($row->requestmodule);
+                $detailrecords['request']              = strip_tags($row->request);
+                $detailrecords['request_list_access']              = strip_tags($row->request_list_access);
+                $detailrecords['verificationmodule']              = strip_tags($row->verificationmodule);
+                $detailrecords['verification']              = strip_tags($row->verification);
+                $detailrecords['approvalmodule']              = strip_tags($row->approvalmodule);
                 $detailrecords['approval']              = strip_tags($row->approval);
                 $detailrecords['acknowledgementmodule']              = strip_tags($row->acknowledgementmodule);
-                $detailrecords['acknowledgement']              = strip_tags($row->acknowledgement);		  	
-				$detailrecords['status']                     = strip_tags($row->status);		
-		
-			}
-			return $detailrecords;
+                $detailrecords['acknowledgement']              = strip_tags($row->acknowledgement);
+                $detailrecords['loanissuemodule']              = strip_tags($row->loanissuemodule);
+                $detailrecords['loan_issue']              = strip_tags($row->loan_issue);
+                $detailrecords['status']                     = strip_tags($row->status);
+            }
+            return $detailrecords;
 		}
 
 
@@ -2078,171 +2080,176 @@ require 'PHPMailerAutoload.php';
 	}
 
 	// Add User
-	public function addUser($mysqli, $userid){
-		
-		if(isset($_POST['role'])){
-			$role = $_POST['role'];
-		}
-		if(isset($_POST['role_type'])){
-			$role_type = $_POST['role_type'];
-		}
-		$ag_name='';
-		if(isset($_POST['ag_name'])){
-			$ag_name = $_POST['ag_name'];
-		}
-		$dir_name='';
-		if(isset($_POST['dir_name'])){
-			$dir_name = $_POST['dir_name'];
-		}
-		$staff_name='';
-		if(isset($_POST['staff_name'])){
-			$staff_name = $_POST['staff_name'];
-		}
-		if(isset($_POST['full_name'])){
-			$full_name = $_POST['full_name'];
-		}
-		if(isset($_POST['email'])){
-			$email = $_POST['email'];
-		}
-		if(isset($_POST['user_id'])){
-			$user_name = $_POST['user_id'];
-		}
-		if(isset($_POST['password'])){
-			$user_password = $_POST['password'];
-		}
-		if(isset($_POST['company_id'])){
-			$company_id = $_POST['company_id'];
-		}
-		if(isset($_POST['branch_id'])){
-			$branch_id = $_POST['branch_id'];
-		}
-		$agentforstaff ='';
-		if(isset($_POST['agentforstaff'])){
-			$agentforstaff = $_POST['agentforstaff'];
-		}
-		$line ='';
-		if(isset($_POST['line'])){
-			$line = $_POST['line'];
-		} 
-		$group ='';
-		if(isset($_POST['group'])){
-			$group = $_POST['group'];
-		} 
-		if(isset($_POST['mastermodule']) &&    $_POST['mastermodule'] == 'Yes')		
-		{
-			$mastermodule=0;
-		}else{
-			$mastermodule=1;
-		}
-		if(isset($_POST['company_creation']) &&    $_POST['company_creation'] == 'Yes')		
-		{
-			$company_creation=0;
-		}else{
-			$company_creation=1;
-		}
-		if(isset($_POST['branch_creation']) &&    $_POST['branch_creation'] == 'Yes')		
-		{
-			$branch_creation=0;
-		}else{
-			$branch_creation=1;
-		}
-		if(isset($_POST['loan_category']) &&    $_POST['loan_category'] == 'Yes')		
-		{
-			$loan_category=0;
-		}else{
-			$loan_category=1;
-		}
-		if(isset($_POST['loan_calculation']) &&    $_POST['loan_calculation'] == 'Yes')		
-		{
-			$loan_calculation=0;
-		}else{
-			$loan_calculation=1;
-		}
-		if(isset($_POST['loan_scheme']) &&    $_POST['loan_scheme'] == 'Yes')		
-		{
-			$loan_scheme=0;
-		}else{
-			$loan_scheme=1;
-		}
-		if(isset($_POST['area_creation']) &&    $_POST['area_creation'] == 'Yes')		
-		{
-			$area_creation=0;
-		}else{
-			$area_creation=1;
-		}
-		if(isset($_POST['area_mapping']) &&    $_POST['area_mapping'] == 'Yes')		
-		{
-			$area_mapping=0;
-		}else{
-			$area_mapping=1;
-		}
-		if(isset($_POST['area_status']) &&    $_POST['area_status'] == 'Yes')		
-		{
-			$area_approval=0;
-		}else{
-			$area_approval=1;
-		}
-		if(isset($_POST['adminmodule']) &&    $_POST['adminmodule'] == 'Yes')		
-		{
-			$adminmodule=0;
-		}else{
-			$adminmodule=1;
-		}
-		if(isset($_POST['director_creation']) &&    $_POST['director_creation'] == 'Yes')		
-		{
-			$director_creation=0;
-		}else{
-			$director_creation=1;
-		}
-		if(isset($_POST['agent_creation']) &&    $_POST['agent_creation'] == 'Yes')		
-		{
-			$agent_creation=0;
-		}else{
-			$agent_creation=1;
-		}
-		if(isset($_POST['staff_creation']) &&    $_POST['staff_creation'] == 'Yes')		
-		{
-			$staff_creation=0;
-		}else{
-			$staff_creation=1;
-		}
-		if(isset($_POST['manage_user']) &&    $_POST['manage_user'] == 'Yes')		
-		{
-			$manage_user=0;
-		}else{
-			$manage_user=1;
-		}
-		if(isset($_POST['doc_mapping']) &&    $_POST['doc_mapping'] == 'Yes')		
-		{
-			$doc_mapping=0;
-		}else{
-			$doc_mapping=1;
-		}
-		if(isset($_POST['requestmodule']) &&    $_POST['requestmodule'] == 'Yes')		
-		{
-			$requestmodule=0;
-		}else{
-			$requestmodule=1;
-		}
-		if(isset($_POST['request']) &&    $_POST['request'] == 'Yes')		
-		{
-			$request=0;
-		}else{
-			$request=1;
-		}
-		if(isset($_POST['verificationmodule']) &&    $_POST['verificationmodule'] == 'Yes')		
-		{
-			$verificationmodule=0;
-		}else{
-			$verificationmodule=1;
-		}
-		if(isset($_POST['verification']) &&    $_POST['verification'] == 'Yes')		
-		{
-			$verification=0;
-		}else{
-			$verification=1;
-		}
-		if(isset($_POST['approvalmodule']) &&    $_POST['approvalmodule'] == 'Yes')
+    public function addUser($mysqli, $userid){
+        if(isset($_POST['role'])){
+            $role = $_POST['role'];
+        }
+        if(isset($_POST['role_type'])){
+            $role_type = $_POST['role_type'];
+        }
+        $ag_name='';
+        if(isset($_POST['ag_name'])){
+            $ag_name = $_POST['ag_name'];
+        }
+        $dir_name='';
+        if(isset($_POST['dir_name'])){
+            $dir_name = $_POST['dir_name'];
+        }
+        $staff_name='';
+        if(isset($_POST['staff_name'])){
+            $staff_name = $_POST['staff_name'];
+        }
+        if(isset($_POST['full_name'])){
+            $full_name = $_POST['full_name'];
+        }
+        if(isset($_POST['email'])){
+            $email = $_POST['email'];
+        }
+        if(isset($_POST['user_id'])){
+            $user_name = $_POST['user_id'];
+        }
+        if(isset($_POST['password'])){
+            $user_password = $_POST['password'];
+        }
+        if(isset($_POST['company_id'])){
+            $company_id = $_POST['company_id'];
+        }
+        if(isset($_POST['branch_id'])){
+            $branch_id = $_POST['branch_id'];
+        }
+        $agentforstaff ='';
+        if(isset($_POST['agentforstaff'])){
+            $agentforstaff = $_POST['agentforstaff'];
+        }
+        $line ='';
+        if(isset($_POST['line'])){
+            $line = $_POST['line'];
+        }
+        $group ='';
+        if(isset($_POST['group'])){
+            $group = $_POST['group'];
+        }
+        if(isset($_POST['mastermodule']) &&    $_POST['mastermodule'] == 'Yes')
+        {
+            $mastermodule=0;
+        }else{
+            $mastermodule=1;
+        }
+        if(isset($_POST['company_creation']) &&    $_POST['company_creation'] == 'Yes')
+        {
+            $company_creation=0;
+        }else{
+            $company_creation=1;
+        }
+        if(isset($_POST['branch_creation']) &&    $_POST['branch_creation'] == 'Yes')
+        {
+            $branch_creation=0;
+        }else{
+            $branch_creation=1;
+        }
+        if(isset($_POST['loan_category']) &&    $_POST['loan_category'] == 'Yes')
+        {
+            $loan_category=0;
+        }else{
+            $loan_category=1;
+        }
+        if(isset($_POST['loan_calculation']) &&    $_POST['loan_calculation'] == 'Yes')
+        {
+            $loan_calculation=0;
+        }else{
+            $loan_calculation=1;
+        }
+        if(isset($_POST['loan_scheme']) &&    $_POST['loan_scheme'] == 'Yes')
+        {
+            $loan_scheme=0;
+        }else{
+            $loan_scheme=1;
+        }
+        if(isset($_POST['area_creation']) &&    $_POST['area_creation'] == 'Yes')
+        {
+            $area_creation=0;
+        }else{
+            $area_creation=1;
+        }
+        if(isset($_POST['area_mapping']) &&    $_POST['area_mapping'] == 'Yes')
+        {
+            $area_mapping=0;
+        }else{
+            $area_mapping=1;
+        }
+        if(isset($_POST['area_status']) &&    $_POST['area_status'] == 'Yes')
+        {
+            $area_approval=0;
+        }else{
+            $area_approval=1;
+        }
+        if(isset($_POST['adminmodule']) &&    $_POST['adminmodule'] == 'Yes')
+        {
+            $adminmodule=0;
+        }else{
+            $adminmodule=1;
+        }
+        if(isset($_POST['director_creation']) &&    $_POST['director_creation'] == 'Yes')
+        {
+            $director_creation=0;
+        }else{
+            $director_creation=1;
+        }
+        if(isset($_POST['agent_creation']) &&    $_POST['agent_creation'] == 'Yes')
+        {
+            $agent_creation=0;
+        }else{
+            $agent_creation=1;
+        }
+        if(isset($_POST['staff_creation']) &&    $_POST['staff_creation'] == 'Yes')
+        {
+            $staff_creation=0;
+        }else{
+            $staff_creation=1;
+        }
+        if(isset($_POST['manage_user']) &&    $_POST['manage_user'] == 'Yes')
+        {
+            $manage_user=0;
+        }else{
+            $manage_user=1;
+        }
+        if(isset($_POST['doc_mapping']) &&    $_POST['doc_mapping'] == 'Yes')
+        {
+            $doc_mapping=0;
+        }else{
+            $doc_mapping=1;
+        }
+        if(isset($_POST['requestmodule']) &&    $_POST['requestmodule'] == 'Yes')
+        {
+            $requestmodule=0;
+        }else{
+            $requestmodule=1;
+        }
+        if(isset($_POST['request']) &&    $_POST['request'] == 'Yes')
+        {
+            $request=0;
+        }else{
+            $request=1;
+        }
+        if(isset($_POST['request_list_access']) &&    $_POST['request_list_access'] == 'Yes')
+        {
+            $request_list_access=0;
+        }else{
+            $request_list_access=1;
+        }
+        if(isset($_POST['verificationmodule']) &&    $_POST['verificationmodule'] == 'Yes')
+        {
+            $verificationmodule=0;
+        }else{
+            $verificationmodule=1;
+        }
+        if(isset($_POST['verification']) &&    $_POST['verification'] == 'Yes')
+        {
+            $verification=0;
+        }else{
+            $verification=1;
+        }
+        if(isset($_POST['approvalmodule']) &&    $_POST['approvalmodule'] == 'Yes')
         {
             $approvalmodule=0;
         }else{
@@ -2266,226 +2273,254 @@ require 'PHPMailerAutoload.php';
         }else{
             $acknowledgement=1;
         }
-
-		$insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
+        if(isset($_POST['loanissuemodule']) &&    $_POST['loanissuemodule'] == 'Yes')
+        {
+            $loanissuemodule=0;
+        }else{
+            $loanissuemodule=1;
+        }
+        if(isset($_POST['loan_issue']) &&    $_POST['loan_issue'] == 'Yes')
+        {
+            $loan_issue=0;
+        }else{
+            $loan_issue=1;
+        }
+        $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
-        `request`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`insert_login_id`,`created_date`)
+        `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
         '".strip_tags($branch_creation)."','".strip_tags($loan_category)."','".strip_tags($loan_calculation)."','".strip_tags($loan_scheme)."','".strip_tags($area_creation)."',
         '".strip_tags($area_mapping)."','".strip_tags($area_approval)."','".strip_tags($adminmodule)."','".strip_tags($director_creation)."',
         '".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
-        '".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($approvalmodule)."','".strip_tags($approval)."',
-        '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($userid)."',current_timestamp )";
-		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
-	}
+        '".strip_tags($request_list_access)."','".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($approvalmodule)."','".strip_tags($approval)."',
+        '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($loanissuemodule)."','".strip_tags($loan_issue)."','".strip_tags($userid)."',current_timestamp )";
+        $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+    }
 
-	//Update Manage User
-	function updateUser($mysqli,$id,$user_id){
-		if(isset($_POST['role'])){
-			$role = $_POST['role'];
-		}
-		if(isset($_POST['role_type'])){
-			$role_type = $_POST['role_type'];
-		}
-		$ag_name='';
-		if(isset($_POST['ag_name'])){
-			$ag_name = $_POST['ag_name'];
-		}
-		$dir_name='';
-		if(isset($_POST['dir_name'])){
-			$dir_name = $_POST['dir_name'];
-		}
-		$staff_name='';
-		if(isset($_POST['staff_name'])){
-			$staff_name = $_POST['staff_name'];
-		}
-		if(isset($_POST['full_name'])){
-			$full_name = $_POST['full_name'];
-		}
-		if(isset($_POST['email'])){
-			$email = $_POST['email'];
-		}
-		if(isset($_POST['user_id'])){
-			$user_name = $_POST['user_id'];
-		}
-		if(isset($_POST['password'])){
-			$user_password = $_POST['password'];
-		}
-		if(isset($_POST['company_id'])){
-			$company_id = $_POST['company_id'];
-		}
-		if(isset($_POST['branch_id'])){
-			$branch_id = $_POST['branch_id'];
-		}
-		$agentforstaff ='';
-		if(isset($_POST['agentforstaff'])){
-			$agentforstaff = $_POST['agentforstaff'];
-		}
-		$line ='';
-		if(isset($_POST['line'])){
-			$line = $_POST['line'];
-		} 
-		$group ='';
-		if(isset($_POST['group'])){
-			$group = $_POST['group'];
-		} 
-		if(isset($_POST['mastermodule']) &&    $_POST['mastermodule'] == 'Yes')		
-		{
-			$mastermodule=0;
-		}else{
-			$mastermodule=1;
-		}
-		if(isset($_POST['company_creation']) &&    $_POST['company_creation'] == 'Yes')		
-		{
-			$company_creation=0;
-		}else{
-			$company_creation=1;
-		}
-		if(isset($_POST['branch_creation']) &&    $_POST['branch_creation'] == 'Yes')		
-		{
-			$branch_creation=0;
-		}else{
-			$branch_creation=1;
-		}
-		if(isset($_POST['loan_category']) &&    $_POST['loan_category'] == 'Yes')		
-		{
-			$loan_category=0;
-		}else{
-			$loan_category=1;
-		}
-		if(isset($_POST['loan_calculation']) &&    $_POST['loan_calculation'] == 'Yes')		
-		{
-			$loan_calculation=0;
-		}else{
-			$loan_calculation=1;
-		}
-		if(isset($_POST['loan_scheme']) &&    $_POST['loan_scheme'] == 'Yes')		
-		{
-			$loan_scheme=0;
-		}else{
-			$loan_scheme=1;
-		}
-		if(isset($_POST['area_creation']) &&    $_POST['area_creation'] == 'Yes')		
-		{
-			$area_creation=0;
-		}else{
-			$area_creation=1;
-		}
-		if(isset($_POST['area_mapping']) &&    $_POST['area_mapping'] == 'Yes')		
-		{
-			$area_mapping=0;
-		}else{
-			$area_mapping=1;
-		}
-		if(isset($_POST['area_status']) &&    $_POST['area_status'] == 'Yes')		
-		{
-			$area_approval=0;
-		}else{
-			$area_approval=1;
-		}
-		if(isset($_POST['adminmodule']) &&    $_POST['adminmodule'] == 'Yes')		
-		{
-			$adminmodule=0;
-		}else{
-			$adminmodule=1;
-		}
-		if(isset($_POST['director_creation']) &&    $_POST['director_creation'] == 'Yes')		
-		{
-			$director_creation=0;
-		}else{
-			$director_creation=1;
-		}
-		if(isset($_POST['agent_creation']) &&    $_POST['agent_creation'] == 'Yes')		
-		{
-			$agent_creation=0;
-		}else{
-			$agent_creation=1;
-		}
-		if(isset($_POST['staff_creation']) &&    $_POST['staff_creation'] == 'Yes')		
-		{
-			$staff_creation=0;
-		}else{
-			$staff_creation=1;
-		}
-		if(isset($_POST['manage_user']) &&    $_POST['manage_user'] == 'Yes')		
-		{
-			$manage_user=0;
-		}else{
-			$manage_user=1;
-		}
-		if(isset($_POST['doc_mapping']) &&    $_POST['doc_mapping'] == 'Yes')		
-		{
-			$doc_mapping=0;
-		}else{
-			$doc_mapping=1;
-		}
-		if(isset($_POST['requestmodule']) &&    $_POST['requestmodule'] == 'Yes')		
-		{
-			$requestmodule=0;
-		}else{
-			$requestmodule=1;
-		}
-		if(isset($_POST['request']) &&    $_POST['request'] == 'Yes')		
-		{
-			$request=0;
-		}else{
-			$request=1;
-		}
-		if(isset($_POST['verificationmodule']) &&    $_POST['verificationmodule'] == 'Yes')		
-		{
-			$verificationmodule=0;
-		}else{
-			$verificationmodule=1;
-		}
-		if(isset($_POST['verification']) &&    $_POST['verification'] == 'Yes')		
-		{
-			$verification=0;
-		}else{
-			$verification=1;
-		}
-		if(isset($_POST['approvalmodule']) &&    $_POST['approvalmodule'] == 'Yes')
-        {
-            $approvalmodule=0;
-        }else{
-            $approvalmodule=1;
-        }
-        if(isset($_POST['approval']) &&    $_POST['approval'] == 'Yes')
-        {
-            $approval=0;
-        }else{
-            $approval=1;
-        }
-        if(isset($_POST['acknowledgementmodule']) &&    $_POST['acknowledgementmodule'] == 'Yes')
-        {
-            $acknowledgementmodule=0;
-        }else{
-            $acknowledgementmodule=1;
-        }
-        if(isset($_POST['acknowledgement']) &&    $_POST['acknowledgement'] == 'Yes')
-        {
-            $acknowledgement=0;
-        }else{
-            $acknowledgement=1;
-        }
-
-		$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
-        `user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
-        `ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
-        agentforstaff='".strip_tags($agentforstaff)."',`line_id` = '".strip_tags($line)."',`group_id` = '".strip_tags($group)."',`mastermodule` = '".strip_tags($mastermodule)."',
-        `company_creation` = '".strip_tags($company_creation)."',`branch_creation` = '".strip_tags($branch_creation)."',`loan_category` = '".strip_tags($loan_category)."',
-        `loan_calculation` = '".strip_tags($loan_calculation)."',`loan_scheme` = '".strip_tags($loan_scheme)."',`area_creation` = '".strip_tags($area_creation)."',
-        `area_mapping` = '".strip_tags($area_mapping)."',`area_approval` = '".strip_tags($area_approval)."',`adminmodule` = '".strip_tags($adminmodule)."',
-        `director_creation` = '".strip_tags($director_creation)."',`agent_creation` = '".strip_tags($agent_creation)."',`staff_creation` = '".strip_tags($staff_creation)."',
-        `manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`requestmodule`='".strip_tags($requestmodule)."',
-        `request`='".strip_tags($request)."',`verificationmodule`='".strip_tags($verificationmodule)."',`verification`='".strip_tags($verification)."',
-        `approvalmodule`='".strip_tags($approvalmodule)."',`approval`='".strip_tags($approval)."',`acknowledgementmodule`='".strip_tags($acknowledgementmodule)."',
-        `acknowledgement`='".strip_tags($acknowledgement)."',`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()'
-        WHERE user_id = '".strip_tags($id)."' ";
-		$result = $mysqli->query($updateQry) or die;
+//Update Manage User
+function updateUser($mysqli,$id,$user_id){
+	if(isset($_POST['role'])){
+		$role = $_POST['role'];
 	}
+	if(isset($_POST['role_type'])){
+		$role_type = $_POST['role_type'];
+	}
+	$ag_name='';
+	if(isset($_POST['ag_name'])){
+		$ag_name = $_POST['ag_name'];
+	}
+	$dir_name='';
+	if(isset($_POST['dir_name'])){
+		$dir_name = $_POST['dir_name'];
+	}
+	$staff_name='';
+	if(isset($_POST['staff_name'])){
+		$staff_name = $_POST['staff_name'];
+	}
+	if(isset($_POST['full_name'])){
+		$full_name = $_POST['full_name'];
+	}
+	if(isset($_POST['email'])){
+		$email = $_POST['email'];
+	}
+	if(isset($_POST['user_id'])){
+		$user_name = $_POST['user_id'];
+	}
+	if(isset($_POST['password'])){
+		$user_password = $_POST['password'];
+	}
+	if(isset($_POST['company_id'])){
+		$company_id = $_POST['company_id'];
+	}
+	if(isset($_POST['branch_id'])){
+		$branch_id = $_POST['branch_id'];
+	}
+	$agentforstaff ='';
+	if(isset($_POST['agentforstaff'])){
+		$agentforstaff = $_POST['agentforstaff'];
+	}
+	$line ='';
+	if(isset($_POST['line'])){
+		$line = $_POST['line'];
+	}
+	$group ='';
+	if(isset($_POST['group'])){
+		$group = $_POST['group'];
+	}
+	if(isset($_POST['mastermodule']) &&    $_POST['mastermodule'] == 'Yes')
+	{
+		$mastermodule=0;
+	}else{
+		$mastermodule=1;
+	}
+	if(isset($_POST['company_creation']) &&    $_POST['company_creation'] == 'Yes')
+	{
+		$company_creation=0;
+	}else{
+		$company_creation=1;
+	}
+	if(isset($_POST['branch_creation']) &&    $_POST['branch_creation'] == 'Yes')
+	{
+		$branch_creation=0;
+	}else{
+		$branch_creation=1;
+	}
+	if(isset($_POST['loan_category']) &&    $_POST['loan_category'] == 'Yes')
+	{
+		$loan_category=0;
+	}else{
+		$loan_category=1;
+	}
+	if(isset($_POST['loan_calculation']) &&    $_POST['loan_calculation'] == 'Yes')
+	{
+		$loan_calculation=0;
+	}else{
+		$loan_calculation=1;
+	}
+	if(isset($_POST['loan_scheme']) &&    $_POST['loan_scheme'] == 'Yes')
+	{
+		$loan_scheme=0;
+	}else{
+		$loan_scheme=1;
+	}
+	if(isset($_POST['area_creation']) &&    $_POST['area_creation'] == 'Yes')
+	{
+		$area_creation=0;
+	}else{
+		$area_creation=1;
+	}
+	if(isset($_POST['area_mapping']) &&    $_POST['area_mapping'] == 'Yes')
+	{
+		$area_mapping=0;
+	}else{
+		$area_mapping=1;
+	}
+	if(isset($_POST['area_status']) &&    $_POST['area_status'] == 'Yes')
+	{
+		$area_approval=0;
+	}else{
+		$area_approval=1;
+	}
+	if(isset($_POST['adminmodule']) &&    $_POST['adminmodule'] == 'Yes')
+	{
+		$adminmodule=0;
+	}else{
+		$adminmodule=1;
+	}
+	if(isset($_POST['director_creation']) &&    $_POST['director_creation'] == 'Yes')
+	{
+		$director_creation=0;
+	}else{
+		$director_creation=1;
+	}
+	if(isset($_POST['agent_creation']) &&    $_POST['agent_creation'] == 'Yes')
+	{
+		$agent_creation=0;
+	}else{
+		$agent_creation=1;
+	}
+	if(isset($_POST['staff_creation']) &&    $_POST['staff_creation'] == 'Yes')
+	{
+		$staff_creation=0;
+	}else{
+		$staff_creation=1;
+	}
+	if(isset($_POST['manage_user']) &&    $_POST['manage_user'] == 'Yes')
+	{
+		$manage_user=0;
+	}else{
+		$manage_user=1;
+	}
+	if(isset($_POST['doc_mapping']) &&    $_POST['doc_mapping'] == 'Yes')
+	{
+		$doc_mapping=0;
+	}else{
+		$doc_mapping=1;
+	}
+	if(isset($_POST['requestmodule']) &&    $_POST['requestmodule'] == 'Yes')
+	{
+		$requestmodule=0;
+	}else{
+		$requestmodule=1;
+	}
+	if(isset($_POST['request']) &&    $_POST['request'] == 'Yes')
+	{
+		$request=0;
+	}else{
+		$request=1;
+	}
+	if(isset($_POST['request_list_access']) &&    $_POST['request_list_access'] == 'Yes')
+	{
+		$request_list_access=0;
+	}else{
+		$request_list_access=1;
+	}
+	if(isset($_POST['verificationmodule']) &&    $_POST['verificationmodule'] == 'Yes')
+	{
+		$verificationmodule=0;
+	}else{
+		$verificationmodule=1;
+	}
+	if(isset($_POST['verification']) &&    $_POST['verification'] == 'Yes')
+	{
+		$verification=0;
+	}else{
+		$verification=1;
+	}
+	if(isset($_POST['approvalmodule']) &&    $_POST['approvalmodule'] == 'Yes')
+	{
+		$approvalmodule=0;
+	}else{
+		$approvalmodule=1;
+	}
+	if(isset($_POST['approval']) &&    $_POST['approval'] == 'Yes')
+	{
+		$approval=0;
+	}else{
+		$approval=1;
+	}
+	if(isset($_POST['acknowledgementmodule']) &&    $_POST['acknowledgementmodule'] == 'Yes')
+	{
+		$acknowledgementmodule=0;
+	}else{
+		$acknowledgementmodule=1;
+	}
+	if(isset($_POST['acknowledgement']) &&    $_POST['acknowledgement'] == 'Yes')
+	{
+		$acknowledgement=0;
+	}else{
+		$acknowledgement=1;
+	}
+	if(isset($_POST['loanissuemodule']) &&    $_POST['loanissuemodule'] == 'Yes')
+	{
+		$loanissuemodule=0;
+	}else{
+		$loanissuemodule=1;
+	}
+	if(isset($_POST['loan_issue']) &&    $_POST['loan_issue'] == 'Yes')
+	{
+		$loan_issue=0;
+	}else{
+		$loan_issue=1;
+	}
+	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
+	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
+	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
+	agentforstaff='".strip_tags($agentforstaff)."',`line_id` = '".strip_tags($line)."',`group_id` = '".strip_tags($group)."',`mastermodule` = '".strip_tags($mastermodule)."',
+	`company_creation` = '".strip_tags($company_creation)."',`branch_creation` = '".strip_tags($branch_creation)."',`loan_category` = '".strip_tags($loan_category)."',
+	`loan_calculation` = '".strip_tags($loan_calculation)."',`loan_scheme` = '".strip_tags($loan_scheme)."',`area_creation` = '".strip_tags($area_creation)."',
+	`area_mapping` = '".strip_tags($area_mapping)."',`area_approval` = '".strip_tags($area_approval)."',`adminmodule` = '".strip_tags($adminmodule)."',
+	`director_creation` = '".strip_tags($director_creation)."',`agent_creation` = '".strip_tags($agent_creation)."',`staff_creation` = '".strip_tags($staff_creation)."',
+	`manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`requestmodule`='".strip_tags($requestmodule)."',
+	`request`='".strip_tags($request)."',`request_list_access`='".strip_tags($request_list_access)."',`verificationmodule`='".strip_tags($verificationmodule)."',`verification`='".strip_tags($verification)."',
+	`approvalmodule`='".strip_tags($approvalmodule)."',`approval`='".strip_tags($approval)."',`acknowledgementmodule`='".strip_tags($acknowledgementmodule)."',
+	`acknowledgement`='".strip_tags($acknowledgement)."',`loanissuemodule`='".strip_tags($loanissuemodule)."',`loan_issue`='".strip_tags($loan_issue)."',`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()'
+	WHERE user_id = '".strip_tags($id)."' ";
+	$result = $mysqli->query($updateQry) or die;
+}
 
 	//Delete Manage user 
 	function deleteUser($mysqli, $id,$user_id){
@@ -4566,4 +4601,60 @@ require 'PHPMailerAutoload.php';
     }
 
 ///  Acknowlegement END
+
+		// Add Loan Issue
+		public function addloanIssue($mysqli, $userid){
+            if(isset($_POST['req_id'])){
+                $req_id = $_POST['req_id'];
+            }
+            if(isset($_POST['cus_id'])){
+                $cus_id = $_POST['cus_id'];
+            }
+            if(isset($_POST['net_cash_cal'])){
+                $net_cash_cal = $_POST['net_cash_cal'];
+            }
+            if(isset($_POST['issue_to'])){
+                $issue_to =  $_POST['issue_to'];
+            }
+            if(isset($_POST['agent_id'])){
+                $agent_id = $_POST['agent_id'];
+            }
+            if(isset($_POST['issued_mode'])){
+                $issued_mode = $_POST['issued_mode'];
+            }
+            if(isset($_POST['payment_type'])){
+                $payment_type = $_POST['payment_type'];
+            }
+            if(isset($_POST['cash'])){
+                $cash = $_POST['cash'];
+            }
+            if(isset($_POST['chequeno'])){
+                $chequeno = $_POST['chequeno'];
+            }
+            if(isset($_POST['chequeValue'])){
+                $chequeValue = $_POST['chequeValue'];
+            }
+            if(isset($_POST['chequeRemark'])){
+                $chequeRemark = $_POST['chequeRemark'];
+            }
+            if(isset($_POST['transaction_id'])){
+                $transaction_id = $_POST['transaction_id'];
+            }
+            if(isset($_POST['transaction_value'])){
+                $transaction_value = $_POST['transaction_value'];
+            }
+            if(isset($_POST['transaction_remark'])){
+                $transaction_remark = $_POST['transaction_remark'];
+            }
+            if(isset($_POST['balance'])){
+                $balance = $_POST['balance'];
+            }
+
+			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','0','".$userid."' )";
+
+			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+
+			
+    }
+
 }//Class End
