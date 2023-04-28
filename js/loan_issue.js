@@ -62,6 +62,7 @@ $(function () {
    getLc(); // To get loan Category.
 
    getCategoryInfo(); //To show Category Info.
+   getAgentDetails(); //To Get Agent Details.
 
 });
 
@@ -112,7 +113,7 @@ function getLc(){
     var lc_id = $('#loan_category_lc').val();
 
     $.ajax({
-        url:'verificationFile/LoanCalculation/getLoanCategoryforIssue.php',
+        url:'loanIssueFile/getLoanCategoryforIssue.php',
         type: 'POST',
         data: {"lc_id":lc_id},
         dataType: 'json',
@@ -138,7 +139,7 @@ function getCategoryInfo(){
             $('#moduleTable').append('<tbody><tr>');
             if(response.length != 0){
                 var tb = 35;
-                for(var i=0;i<response.length;i++){console.log(i)
+                for(var i=0;i<response.length;i++){
                     $('#moduleTable tbody tr').append( `<td><label for="disabledInput">`+response[i]['loan_category_ref_name']+`</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
                     value='`+category_info+`' tabindex='`+tb+`'readonly required placeholder='Enter `+response[i]['loan_category_ref_name']+`'></td>`);
                     tb++;
@@ -159,7 +160,7 @@ function getCategoryInfo(){
         
         var req_id = $('#req_id').val();
         $.ajax({
-            url:'verificationFile/LoanCalculation/getCategoryInfoForIssue.php',
+            url:'loanIssueFile/getCategoryInfoForIssue.php',
             data:{'req_id':req_id,'sub_category_upd':sub_category_upd},
             dataType: 'json',
             type: 'post',
@@ -180,5 +181,29 @@ function getCategoryInfo(){
 
 //Get Agent Name 
 function getAgentDetails(){
-    
+    var req_id = $('#req_id').val();
+
+    $.ajax({
+        url:'loanIssueFile/getAgentDetails.php',
+        type: 'POST',
+        data: {"req_id":req_id},
+        dataType: 'json',
+        success: function(result){
+            var ag_name = result['ag_name'];
+            var lp = result['loan_payment'];
+            var agent_id = result['agent_id'];
+            console.log(`agName: ${ag_name}  ,lp: ${lp} ,agId:  ${agent_id}`);
+
+            if(agent_id != '' && lp == '0'){
+                $('#agent').val(ag_name);
+                $('#issue_to').val(ag_name);
+
+            }else{
+                var cus_name = $('#cus_name').val();
+                // $('#agent').val(cus_name);
+                $('#issue_to').val(cus_name);
+            }
+
+        }
+    })
 }
