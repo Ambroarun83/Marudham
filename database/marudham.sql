@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2023 at 02:56 PM
+-- Generation Time: Apr 27, 2023 at 03:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -61,6 +61,198 @@ INSERT INTO `accountsgroup` (`Id`, `AccountsName`, `ParentId`, `status`, `order_
 (19, 'Loans and Advances', 3, 0, 20),
 (40, 'Sundry Debtors', 3, 0, 35),
 (42, 'Fixed Assets', 0, 0, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `acknowledgement_loan_cal_category`
+--
+
+CREATE TABLE `acknowledgement_loan_cal_category` (
+  `cat_id` int(11) NOT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `loan_cal_id` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `acknowlegement_customer_profile`
+--
+
+CREATE TABLE `acknowlegement_customer_profile` (
+  `id` int(11) NOT NULL,
+  `req_id` varchar(50) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
+  `cus_name` varchar(255) DEFAULT NULL,
+  `gender` varchar(50) DEFAULT NULL,
+  `dob` varchar(50) DEFAULT NULL,
+  `age` varchar(50) DEFAULT NULL,
+  `blood_group` varchar(50) DEFAULT NULL,
+  `mobile1` varchar(50) DEFAULT NULL,
+  `mobile2` varchar(50) DEFAULT NULL,
+  `whatsapp` varchar(50) DEFAULT NULL,
+  `cus_pic` varchar(255) DEFAULT NULL,
+  `guarentor_name` varchar(255) DEFAULT NULL,
+  `guarentor_relation` varchar(100) DEFAULT NULL,
+  `guarentor_photo` varchar(255) DEFAULT NULL,
+  `cus_type` varchar(50) DEFAULT NULL,
+  `cus_exist_type` varchar(50) DEFAULT NULL,
+  `residential_type` varchar(50) DEFAULT NULL,
+  `residential_details` varchar(255) DEFAULT NULL,
+  `residential_address` varchar(255) DEFAULT NULL,
+  `residential_native_address` varchar(255) DEFAULT NULL,
+  `occupation_type` varchar(50) DEFAULT NULL,
+  `occupation_details` varchar(255) DEFAULT NULL,
+  `occupation_income` varchar(255) DEFAULT NULL,
+  `occupation_address` varchar(255) DEFAULT NULL,
+  `area_confirm_type` varchar(50) DEFAULT NULL,
+  `area_confirm_state` varchar(100) DEFAULT NULL,
+  `area_confirm_district` varchar(100) DEFAULT NULL,
+  `area_confirm_taluk` varchar(100) DEFAULT NULL,
+  `area_confirm_area` varchar(255) DEFAULT NULL,
+  `area_confirm_subarea` varchar(255) DEFAULT NULL,
+  `area_group` varchar(255) DEFAULT NULL,
+  `area_line` varchar(255) DEFAULT NULL,
+  `communication` varchar(50) DEFAULT NULL,
+  `com_audio` varchar(255) DEFAULT NULL,
+  `verification_person` varchar(255) DEFAULT NULL,
+  `verification_location` varchar(255) DEFAULT NULL,
+  `cus_status` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `insert_login_id` varchar(100) DEFAULT NULL,
+  `update_login_id` varchar(100) DEFAULT NULL,
+  `delete_login_id` varchar(100) DEFAULT NULL,
+  `created_date` datetime DEFAULT current_timestamp(),
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `acknowlegement_customer_profile`
+--
+
+INSERT INTO `acknowlegement_customer_profile` (`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(4, '18', '945454646565', 'Praveen', '1', '2009-04-17', '14', 'O+', '9844654654', '9846546546', '', 'wallpaperflare.com_wallpaper.jpg', '29', 'Brother', 'Order_ID_4479904631.jpg', 'New', '', '1', 'Vandavasi', 'Vandavasi', 'Vandavasi', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '11', 'G4', 'L4', '1', '', '28,29', '0', '10', NULL, '28', '28', NULL, '2023-04-20 10:58:38', '2023-04-21 10:16:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `acknowlegement_documentation`
+--
+
+CREATE TABLE `acknowlegement_documentation` (
+  `id` int(11) NOT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id_doc` varchar(255) DEFAULT NULL,
+  `customer_name` varchar(255) DEFAULT NULL,
+  `cus_profile_id` varchar(255) DEFAULT NULL,
+  `doc_id` varchar(255) DEFAULT NULL,
+  `mortgage_process` varchar(100) DEFAULT NULL,
+  `Propertyholder_type` varchar(100) DEFAULT NULL,
+  `Propertyholder_name` varchar(255) DEFAULT NULL,
+  `Propertyholder_relationship_name` varchar(100) DEFAULT NULL,
+  `doc_property_relation` varchar(100) DEFAULT NULL,
+  `doc_property_type` varchar(255) DEFAULT NULL,
+  `doc_property_measurement` varchar(255) DEFAULT NULL,
+  `doc_property_location` varchar(255) DEFAULT NULL,
+  `doc_property_value` varchar(255) DEFAULT NULL,
+  `mortgage_name` varchar(255) DEFAULT NULL,
+  `mortgage_dsgn` varchar(255) DEFAULT NULL,
+  `mortgage_nuumber` varchar(255) DEFAULT NULL,
+  `reg_office` varchar(255) DEFAULT NULL,
+  `mortgage_value` varchar(255) DEFAULT NULL,
+  `mortgage_document` varchar(255) DEFAULT NULL,
+  `mortgage_document_upd` varchar(255) DEFAULT NULL,
+  `mortgage_document_pending` varchar(150) DEFAULT NULL,
+  `endorsement_process` varchar(50) DEFAULT NULL,
+  `owner_type` varchar(100) DEFAULT NULL,
+  `owner_name` varchar(200) DEFAULT NULL,
+  `ownername_relationship_name` varchar(100) DEFAULT NULL,
+  `en_relation` varchar(100) DEFAULT NULL,
+  `vehicle_type` varchar(50) DEFAULT NULL,
+  `vehicle_process` varchar(50) DEFAULT NULL,
+  `en_Company` varchar(200) DEFAULT NULL,
+  `en_Model` varchar(200) DEFAULT NULL,
+  `vehicle_reg_no` varchar(150) DEFAULT NULL,
+  `endorsement_name` varchar(255) DEFAULT NULL,
+  `en_RC` varchar(50) DEFAULT NULL,
+  `Rc_document_upd` varchar(255) DEFAULT NULL,
+  `Rc_document_pending` varchar(150) DEFAULT NULL,
+  `en_Key` varchar(50) DEFAULT NULL,
+  `gold_info` varchar(50) DEFAULT NULL,
+  `gold_sts` varchar(50) DEFAULT NULL,
+  `gold_type` varchar(255) DEFAULT NULL,
+  `Purity` varchar(255) DEFAULT NULL,
+  `gold_Count` varchar(255) DEFAULT NULL,
+  `gold_Weight` varchar(255) DEFAULT NULL,
+  `gold_Value` varchar(255) DEFAULT NULL,
+  `document_name` varchar(255) DEFAULT NULL,
+  `document_details` varchar(255) DEFAULT NULL,
+  `document_type` varchar(50) DEFAULT NULL,
+  `doc_info_upload` varchar(255) DEFAULT NULL,
+  `document_holder` varchar(50) DEFAULT NULL,
+  `docholder_name` varchar(255) DEFAULT NULL,
+  `docholder_relationship_name` varchar(50) DEFAULT NULL,
+  `doc_relation` varchar(50) DEFAULT NULL,
+  `cus_status` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `submitted` varchar(10) DEFAULT '0',
+  `insert_login_id` varchar(50) DEFAULT NULL,
+  `update_login_id` varchar(50) DEFAULT NULL,
+  `delete_login_id` varchar(50) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `acknowlegement_loan_calculation`
+--
+
+CREATE TABLE `acknowlegement_loan_calculation` (
+  `loan_cal_id` int(11) NOT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id_loan` varchar(255) DEFAULT NULL,
+  `cus_name_loan` varchar(255) DEFAULT NULL,
+  `cus_data_loan` varchar(255) DEFAULT NULL,
+  `mobile_loan` varchar(255) DEFAULT NULL,
+  `pic_loan` varchar(255) DEFAULT NULL,
+  `loan_category` varchar(255) DEFAULT NULL,
+  `sub_category` varchar(255) DEFAULT NULL,
+  `tot_value` varchar(255) DEFAULT NULL,
+  `ad_amt` varchar(255) DEFAULT NULL,
+  `loan_amt` varchar(255) DEFAULT NULL,
+  `profit_type` varchar(255) DEFAULT NULL,
+  `due_method_calc` varchar(255) DEFAULT NULL,
+  `due_type` varchar(255) DEFAULT NULL,
+  `profit_method` varchar(255) DEFAULT NULL,
+  `calc_method` varchar(255) DEFAULT NULL,
+  `due_method_scheme` varchar(255) DEFAULT NULL,
+  `day_scheme` varchar(255) DEFAULT NULL,
+  `scheme_name` varchar(255) DEFAULT NULL,
+  `int_rate` varchar(255) DEFAULT NULL,
+  `due_period` varchar(255) DEFAULT NULL,
+  `doc_charge` varchar(255) DEFAULT NULL,
+  `proc_fee` varchar(255) DEFAULT NULL,
+  `loan_amt_cal` varchar(255) DEFAULT NULL,
+  `principal_amt_cal` varchar(255) DEFAULT NULL,
+  `int_amt_cal` varchar(255) DEFAULT NULL,
+  `tot_amt_cal` varchar(255) DEFAULT NULL,
+  `due_amt_cal` varchar(255) DEFAULT NULL,
+  `doc_charge_cal` varchar(255) DEFAULT NULL,
+  `proc_fee_cal` varchar(255) DEFAULT NULL,
+  `net_cash_cal` varchar(255) DEFAULT NULL,
+  `due_start_from` varchar(255) DEFAULT NULL,
+  `maturity_month` varchar(255) DEFAULT NULL,
+  `collection_method` varchar(255) DEFAULT NULL,
+  `cus_status` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `create_date` datetime DEFAULT current_timestamp(),
+  `update_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -583,7 +775,7 @@ INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer
 (14, '16', '963852741236', 'Ambi', '2023-03-31', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'bussy street', '9654811325', '9456465465', 'Parthasarathy Iyengar', 'Susheela', '2', '', '7', 'Anniyan', 'images.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', '2023-04-10 15:01:23'),
 (16, '4', '213132132132', 'Logeshwaran', '2021-10-13', '1', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-04-13 14:14:07'),
 (17, '17', '646546546546', 'Rajesh', '1999-02-10', '24', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'pexels-cesar-perez-733745.jpg', '3', '', '', '', '654', '645', '654', '654', '654', '6465', NULL, NULL, NULL, NULL, NULL, NULL, '  sadf', '3', '2023-04-13 16:52:26'),
-(18, '18', '945454646565', 'Praveen', '2009-04-17', '14', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '2', '', '', '', '3121', '321', '321', '231', '31', '21', '', '', '', '', '', '', '     Ok   ', '2', '2023-04-13 17:01:11'),
+(18, '18', '945454646565', 'Praveen', '2009-04-17', '14', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '2', '', '', '', '3121', '321', '321', '231', '31', '21', '', '', '', '', '', '', '     Ok   ', '3', '2023-04-13 17:01:11'),
 (20, '19', '132132132132', 'Rajesh', '2023-04-04', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '12', 'Birdur', '9846546546', '94654654', 'Appa', 'Amma', '2', '', '1', 'ABC', 'pexels-cesar-perez-733745.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-26 10:40:41');
 
 -- --------------------------------------------------------
@@ -677,7 +869,11 @@ CREATE TABLE `in_acknowledgement` (
 
 INSERT INTO `in_acknowledgement` (`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_on`) VALUES
 ('2', '885558978787', '3', '0', '28', NULL, NULL, '2023-04-21 12:24:07'),
-('17', '646546546546', '7', '0', '1', '1', NULL, '2023-04-24 16:30:48');
+('17', '646546546546', '7', '0', '1', '1', NULL, '2023-04-24 16:30:48'),
+('18', '945454646565', '3', '0', '1', NULL, NULL, '2023-04-27 10:10:00'),
+('17', '646546546546', '3', '0', '1', NULL, NULL, '2023-04-27 10:11:43'),
+('18', '945454646565', '3', '0', '1', NULL, NULL, '2023-04-27 11:11:24'),
+('18', '945454646565', '3', '0', '1', NULL, NULL, '2023-04-27 11:11:49');
 
 -- --------------------------------------------------------
 
@@ -700,8 +896,25 @@ CREATE TABLE `in_approval` (
 --
 
 INSERT INTO `in_approval` (`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`) VALUES
-('17', '646546546546', '7', '0', '28', '1', NULL),
-('18', '945454646565', '2', '0', '1', NULL, NULL);
+('17', '646546546546', '3', '0', '28', '1', NULL),
+('18', '945454646565', '3', '0', '1', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `in_issue`
+--
+
+CREATE TABLE `in_issue` (
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
+  `cus_status` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `insert_login_id` varchar(50) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `delete_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -770,7 +983,7 @@ INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `
 (10, 'Director', 'Big show', '', '1', '', 'Declaration', 'REQ-107', '2023-04-03', '123456789101', 'Existing', 'Triple H', '1999-07-15', '24', '1', NULL, 'Puducherry', 'Puducherry', 'Puducherry', '8', '8', 'MG road', '9565654654', '', 'Roman reigns', 'Nikki', '1', 'Manju warrior', '4', 'Uzhavan', 'pexels-hansen-tang-13435926.jpg', '5', 'Furniture', '', '', '', '40000', '1', '5333', '', '1', '0', '25', '1', NULL, '2023-04-03 16:31:07', '2023-04-03 16:31:07'),
 (14, 'Agent', 'Darling & Co', '28', '1', '', 'Test Declaration', 'REQ-111', '2023-04-05', '546546546465', 'Existing', 'Kuppusamy', '2023-03-29', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '234345', '234', '0.1', '234111', '1', '43', '', '1', '0', '24', '1', NULL, '2023-04-05 16:53:21', '2023-04-05 16:53:21'),
 (15, 'Staff', 'Kumar', '28', '', 'Remarks', '', 'REQ-112', '2023-04-06', '546546546465', 'Existing', 'Kuppusamy', '1999-03-29', '24', '1', 'AB+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '80000', '15000', '18.8', '65000', '1', '1000', '', '10', '0', '21', '21', NULL, '2023-04-06 12:55:46', '2023-04-06 12:55:46'),
-(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'pexels-cesar-perez-733745.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '3', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
+(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'pexels-cesar-perez-733745.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '2', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
 (18, 'Director', 'Chithambaram', '', '1', '', 'Declaration', 'REQ-115', '2023-04-13', '945454646565', 'New', 'Praveen', '2009-04-17', '14', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '5', 'Multi Things', '20000', '10000', '50.0', '10000', '2', '', '15', '2', '0', '28', '1', NULL, '2023-04-13 17:01:11', '2023-04-13 17:01:11');
 
 -- --------------------------------------------------------
@@ -1172,7 +1385,7 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (14, 'Agent', 'Darling & Co', '28', '1', '', 'Test Declaration', 'REQ-111', '2023-04-05', '546546546465', 'Existing', 'Kuppusamy', '2023-03-29', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '234345', '234', '0.1', '234111', '1', '43', '', '1', '0', '24', '1', NULL, '2023-04-05 16:53:21', '2023-04-05 16:53:21'),
 (15, 'Staff', 'Kumar', '28', '', 'Remarks', '', 'REQ-112', '2023-04-06', '546546546465', 'Existing', 'Kuppusamy', '2023-03-29', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '80000', '15000', '18.8', '65000', '1', '1000', '', '10', '0', '21', '21', NULL, '2023-04-06 12:55:46', '2023-04-06 12:55:46'),
 (16, 'Agent', 'Darling & Co', '28', '1', '', 'Test', 'REQ-113', '2023-04-10', '963852741236', 'New', 'Ambi', '2023-03-31', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'bussy street', '9654811325', '9456465465', 'Parthasarathy Iyengar', 'Susheela', '2', '', '7', 'Anniyan', 'images.jpg', '2', 'Business', '15000', '100', '0.7', '14900', '1', '1500', '', '4', '0', '24', '1', NULL, '2023-04-10 15:01:23', '2023-04-10 15:01:23'),
-(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'wallpaperflare.com_wallpaper.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '3', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
+(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'wallpaperflare.com_wallpaper.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '2', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
 (18, 'Director', 'Chithambaram', '', '1', '', 'Declaration', 'REQ-115', '2023-04-13', '945454646565', 'New', 'Praveen', '2009-04-17', '14', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '5', 'Multi Things', '20000', '10000', '50.0', '10000', '2', '', '15', '2', '0', '28', '1', NULL, '2023-04-13 17:01:11', '2023-04-13 17:01:11'),
 (19, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-116', '2023-04-26', '132132132132', 'New', 'Rajesh', '2023-04-04', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '12', 'Birdur', '9846546546', '94654654', 'Appa', 'Amma', '2', '', '1', 'ABC', 'pexels-cesar-perez-733745.jpg', '6', 'Education', '50000', '5000', '10.0', '45000', '1', '4125.00', '', '0', '0', '28', '28', NULL, '2023-04-26 10:40:27', '0000-00-00 00:00:00');
 
@@ -1418,20 +1631,22 @@ CREATE TABLE `verification_cus_feedback` (
   `id` int(11) NOT NULL,
   `req_id` varchar(255) DEFAULT NULL,
   `feedback_label` varchar(255) DEFAULT NULL,
-  `cus_feedback` varchar(255) DEFAULT NULL
+  `cus_feedback` varchar(255) DEFAULT NULL,
+  `feedback_remark` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `verification_cus_feedback`
 --
 
-INSERT INTO `verification_cus_feedback` (`id`, `req_id`, `feedback_label`, `cus_feedback`) VALUES
-(3, '2', 'Relationship', '5'),
-(4, '2', 'Approach', '4'),
-(6, '2', 'Character', '3'),
-(7, '18', 'Character', '3'),
-(8, '17', 'Character', '5'),
-(9, '15', 'Approach', '4');
+INSERT INTO `verification_cus_feedback` (`id`, `req_id`, `feedback_label`, `cus_feedback`, `feedback_remark`) VALUES
+(3, '2', 'Relationship', '5', NULL),
+(4, '2', 'Approach', '4', NULL),
+(6, '2', 'Character', '3', NULL),
+(7, '18', 'Character', '3', NULL),
+(8, '17', 'Character', '5', NULL),
+(9, '15', 'Approach', '4', NULL),
+(10, '15', 'Character', '4', 'Remark Check');
 
 -- --------------------------------------------------------
 
@@ -1727,6 +1942,30 @@ ALTER TABLE `accountsgroup`
   ADD PRIMARY KEY (`Id`);
 
 --
+-- Indexes for table `acknowledgement_loan_cal_category`
+--
+ALTER TABLE `acknowledgement_loan_cal_category`
+  ADD PRIMARY KEY (`cat_id`);
+
+--
+-- Indexes for table `acknowlegement_customer_profile`
+--
+ALTER TABLE `acknowlegement_customer_profile`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `acknowlegement_documentation`
+--
+ALTER TABLE `acknowlegement_documentation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `acknowlegement_loan_calculation`
+--
+ALTER TABLE `acknowlegement_loan_calculation`
+  ADD PRIMARY KEY (`loan_cal_id`);
+
+--
 -- Indexes for table `agent_communication_details`
 --
 ALTER TABLE `agent_communication_details`
@@ -1984,6 +2223,30 @@ ALTER TABLE `accountsgroup`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
+-- AUTO_INCREMENT for table `acknowledgement_loan_cal_category`
+--
+ALTER TABLE `acknowledgement_loan_cal_category`
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `acknowlegement_customer_profile`
+--
+ALTER TABLE `acknowlegement_customer_profile`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `acknowlegement_documentation`
+--
+ALTER TABLE `acknowlegement_documentation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `acknowlegement_loan_calculation`
+--
+ALTER TABLE `acknowlegement_loan_calculation`
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `agent_communication_details`
 --
 ALTER TABLE `agent_communication_details`
@@ -2179,7 +2442,7 @@ ALTER TABLE `verification_bank_info`
 -- AUTO_INCREMENT for table `verification_cus_feedback`
 --
 ALTER TABLE `verification_cus_feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `verification_documentation`
