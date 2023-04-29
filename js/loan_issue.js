@@ -60,6 +60,7 @@ $(document).ready(function () {
             $('.cash_issue').show();
             $('#cash').val(netcash);
             $('#cash').attr('readonly', true);
+            $('#balance').val('0');
             $('.checque').hide();
             $('.transaction').hide();
 
@@ -68,6 +69,7 @@ $(document).ready(function () {
             $('.checque').show();
             $('#chequeValue').val(netcash);
             $('#chequeValue').attr('readonly', true);
+            $('#balance').val('0');
             $('.transaction').hide();
 
         } else if (type == '2') {
@@ -76,11 +78,13 @@ $(document).ready(function () {
             $('.transaction').show();
             $('#transaction_value').val(netcash);
             $('#transaction_value').attr('readonly', true);
+            $('#balance').val('0');
 
         } else {
             $('.cash_issue').hide();
             $('.checque').hide();
             $('.transaction').hide();
+            $('#balance').val('');
         }
 
         hideCheckSpan();
