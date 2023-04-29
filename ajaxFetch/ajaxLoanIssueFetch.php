@@ -209,7 +209,7 @@ foreach ($result as $row) {
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
 
-    if(isset($loan_issued_db['balance_amount']) && $loan_issued_db['balance_amount'] !='0') {
+    if($cus_status == '13') {
         $action .= "<a href='loan_issue&upd=$id' class='customer_profile' value='$id' > Edit Loan Issue </a>";
         // $action .= "<a href='loan_issue&can=$id' class='ack-cancel' value='$id' > Cancel </a>";
     }else if($cus_status == '7') {

@@ -17,6 +17,6 @@ if (isset($_SESSION['userid'])) {
     $selectIC = $con->query("UPDATE `in_acknowledgement` SET `cus_status`= 14,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
     $insertIssue = $con->query("UPDATE `in_issue` SET `cus_status`= 14,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
 
-    $response = 'Moved to Collection';
+    $response = 'Loan Issue Completed';
     echo json_encode($response);
 ?>

@@ -49,9 +49,9 @@ $column = array(
 );
 
 if($userid == 1){
-    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 3 or cus_status = 7 or cus_status = 13) ';
+    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 3 or cus_status = 7 or cus_status = 13 or cus_status = 14) ';
 }else{
-    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 3 or cus_status = 7 or cus_status = 13) and sub_area IN ($sub_area_list) ";//show only Approved Verification in Acknowledgement. // 13 Move to Issue. 
+    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 3 or cus_status = 7 or cus_status = 13 or cus_status = 14) and sub_area IN ($sub_area_list) ";//show only Approved Verification in Acknowledgement. // 13 Move to Issue. 
 }
 
 if($_POST['search'] != "")
@@ -197,6 +197,7 @@ foreach ($result as $row) {
     }
     if($cus_status == '7'){$sub_array[] = 'Cancel - Acknowledgement';}
     if($cus_status == '13'){$sub_array[] = 'In Issue';}
+    if($cus_status == '14'){$sub_array[] = 'Issued';}
 
     $id          = $row['req_id'];
     $user_type = $row['user_type'];

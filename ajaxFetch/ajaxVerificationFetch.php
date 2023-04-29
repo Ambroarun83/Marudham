@@ -217,7 +217,8 @@ foreach ($result as $row) {
     if($cus_status == '4'){$sub_array[] = 'Cancel - Request';}else
     if($cus_status == '5'){$sub_array[] = 'Cancel - Verification';}else
     if($cus_status == '6'){$sub_array[] = 'Cancel - Approval';}else
-    if($cus_status == '7'){$sub_array[] = 'Cancel - Acknowledgement';}
+    if($cus_status == '7'){$sub_array[] = 'Cancel - Acknowledgement';}else
+    if($cus_status == '14'){$sub_array[] = 'Issued';}
 
     $id          = $row['req_id'];
     $user_type = $row['user_type'];

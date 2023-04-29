@@ -39,7 +39,7 @@ $(document).ready(function () {
                     data:{'req_id':req_id},
                     cache:false,
                     success:function(response){
-                        if(response.includes('Moved')){
+                        if(response.includes('Completed')){
                             Swal.fire({
                                 timerProgressBar: true,
                                 timer: 2000,
