@@ -3612,7 +3612,7 @@ function updateUser($mysqli,$id,$user_id){
 					$detailrecords['document_name'] = $row['document_name'];
 					$detailrecords['document_details'] = $row['document_details'];
 					$detailrecords['document_type'] = $row['document_type'];
-					$detailrecords['doc_info_upload'] = $row['doc_info_upload'];
+					// $detailrecords['doc_info_upload'] = $row['doc_info_upload'];
 					$detailrecords['document_holder'] = $row['document_holder'];
 					$detailrecords['docholder_name'] = $row['docholder_name'];
 					$detailrecords['docholder_relationship_name'] = $row['docholder_relationship_name'];
@@ -4649,8 +4649,14 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['balance'])){
                 $balance = $_POST['balance'];
             }
+            if(isset($_POST['cash_guarentor_name'])){
+                $cash_guarentor_name = $_POST['cash_guarentor_name'];
+            }
+            if(isset($_POST['relationship'])){
+                $relationship = $_POST['relationship'];
+            }
 
-			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','0','".$userid."' )";
+			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
 
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
