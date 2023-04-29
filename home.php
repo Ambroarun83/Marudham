@@ -263,6 +263,15 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'loan_issue') { ?>
 			<?php include "include/templates/loan_issue.php" ?>
 			<?php } ?>
+			
+			<!-- Collection -->
+			<?php if($current_page == 'edit_collection') { ?>
+			<?php include "include/templates/edit_collection.php" ?>
+			<?php } ?>
+			
+			<?php if($current_page == 'collection') { ?>
+			<?php include "include/templates/collection.php" ?>
+			<?php } ?>
 
 		</div>
 		<!-- Page content end -->

@@ -429,6 +429,23 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
+				<?php if($loanissuemodule == 0){?>
+                    <li class="sidebar-dropdown acknowledge">
+                        <a href="javascript:void(0)">
+                            <i class="icon-attach_money"></i>
+                            <span class="menu-text">Collection</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='loanissue') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($loan_issue == 0){ ?>
+                                    <li>
+                                        <a href="edit_collection"><i class="icon-attach_money"></i>Collection</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->

@@ -1213,7 +1213,7 @@ function onLoadDocEditFunction() {//On load for Loan Calculation edit
 
     $('select#mortgage_process').removeAttr('disabled');
     $('select#Propertyholder_type').removeAttr('disabled');
-    $('input#Propertyholder_name').removeAttr('readonly');
+    // $('input#Propertyholder_name').removeAttr('readonly');
     $('select#Propertyholder_relationship_name').removeAttr('disabled');
     $('input#doc_property_pype').removeAttr('readonly');
     $('input#doc_property_measurement').removeAttr('readonly');
@@ -1234,7 +1234,7 @@ function onLoadDocEditFunction() {//On load for Loan Calculation edit
 
     $('select#endorsement_process').removeAttr('disabled');
     $('select#owner_type').removeAttr('disabled');
-    $('input#owner_name').removeAttr('readonly');
+    // $('input#owner_name').removeAttr('readonly');
     $('select#ownername_relationship_name').removeAttr('disabled');
     $('select#vehicle_type').removeAttr('disabled');
     $('select#vehicle_process').removeAttr('disabled');
@@ -1253,7 +1253,7 @@ function onLoadDocEditFunction() {//On load for Loan Calculation edit
     $('input#document_details').removeAttr('readonly');
     $('select#document_type').removeAttr('disabled');
     $('select#document_holder').removeAttr('disabled');
-    $('input#docholder_name').removeAttr('readonly');
+    // $('input#docholder_name').removeAttr('readonly');
     $('select#docholder_relationship_name').removeAttr('disabled');
 
 }

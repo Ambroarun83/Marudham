@@ -526,6 +526,7 @@ $(document).ready(function() {
             "order": [
                 [0, "desc"]
             ],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
@@ -553,15 +554,47 @@ $(document).ready(function() {
         });
         
         // Loan Issue List
-         var loanIssue_table = $('#loanIssue_table').DataTable({
+        var loanIssue_table = $('#loanIssue_table').DataTable({
             "order": [
                 [0, "desc"]
             ],
+            "ordering": false,
             'processing': true,
             'serverSide': true,
             'serverMethod': 'post',
             'ajax': {
                 'url': 'ajaxFetch/ajaxLoanIssueFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "Loan Scheme List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+        });
+        // Collection List
+        var collection_table = $('#collection_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxCollectionFetch.php',
                 'data': function(data) {
                     var search = $('#search').val();
                     data.search = search;
