@@ -42,6 +42,10 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'loanissue';
 
+}else if($current_page == 'edit_collection' || $current_page == 'collection' ){
+
+	$current_module = 'collection';
+
 }else{
 	$current_module = '';
 }
@@ -102,6 +106,8 @@ $acknowledgementmodule = '';
 $acknowledgement = '';
 $loanissuemodule = '';
 $loan_issue = '';
+$collectionmodule = '';
+$collection = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -144,6 +150,8 @@ if (sizeof($getUser)>0) {
 		$acknowledgement          		     = $getUser['acknowledgement'];
 		$loanissuemodule          		     = $getUser['loanissuemodule'];
 		$loan_issue          		     = $getUser['loan_issue'];
+		$collectionmodule          		     = $getUser['collectionmodule'];
+		$collection          		     = $getUser['collection'];
 	}
 }
 ?>
@@ -429,15 +437,15 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
-				<?php if($loanissuemodule == 0){?>
+				<?php if($collectionmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
                             <i class="icon-attach_money"></i>
                             <span class="menu-text">Collection</span>
                         </a>
-                        <div class="sidebar-submenu" <?php if($current_module=='loanissue') echo 'style="display:block" '; ?>>
+                        <div class="sidebar-submenu" <?php if($current_module=='collection') echo 'style="display:block" '; ?>>
                             <ul>
-                                <?php  if($loan_issue == 0){ ?>
+                                <?php  if($collection == 0){ ?>
                                     <li>
                                         <a href="edit_collection"><i class="icon-attach_money"></i>Collection</a>
                                     </li>

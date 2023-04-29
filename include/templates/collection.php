@@ -12,257 +12,6 @@ if(isset($_POST['submit_loanIssue']) && $_POST['submit_loanIssue'] != ''){
 <?php
 }
 
-$getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
-if (sizeof($getRequestData) > 0) {
-	for ($i = 0; $i < sizeof($getRequestData); $i++) {
-		$req_id						= $getRequestData['req_id'];
-		$user_type					= $getRequestData['user_type'];
-		if ($user_type == 'Director') {
-			$role = '1';
-		} else
-			if ($user_type == 'Agent') {
-			$role = '2';
-		} else
-			if ($user_type == 'Staff') {
-			$role = '3';
-		}
-		$user_name					= $getRequestData['user_name'];
-		$agent_id					= $getRequestData['agent_id'];
-		$responsible					= $getRequestData['responsible'];
-		$remarks					= $getRequestData['remarks'];
-		$declaration					= $getRequestData['declaration'];
-		$req_code					= $getRequestData['req_code'];
-		$dor					= date('d-m-Y',strtotime($getRequestData['dor']));
-		$cus_id					= $getRequestData['cus_id'];
-		$cus_data					= $getRequestData['cus_data'];
-		$cus_name					= $getRequestData['cus_name'];
-		$dob					= $getRequestData['dob'];
-		$age					= $getRequestData['age'];
-		$gender					= $getRequestData['gender'];
-		$blood_group					= $getRequestData['blood_group'];
-		$state					= $getRequestData['state'];
-		$district					= $getRequestData['district'];
-		$taluk					= $getRequestData['taluk'];
-		$area					= $getRequestData['area'];
-		$sub_area					= $getRequestData['sub_area'];
-		$address					= $getRequestData['address'];
-		$mobile1					= $getRequestData['mobile1'];
-		$mobile2					= $getRequestData['mobile2'];
-		$father_name					= $getRequestData['father_name'];
-		$mother_name					= $getRequestData['mother_name'];
-		$marital					= $getRequestData['marital'];
-		$spouse_name					= $getRequestData['spouse_name'];
-		$occupation_type					= $getRequestData['occupation_type'];
-		$occupation					= $getRequestData['occupation'];
-		$pic					= $getRequestData['pic'];
-		$loan_category					= $getRequestData['loan_category'];
-		$sub_category					= $getRequestData['sub_category'];
-		$tot_value					= $getRequestData['tot_value'];
-		$ad_amt					= $getRequestData['ad_amt'];
-		$ad_perc					= $getRequestData['ad_perc'];
-		$loan_amt					= $getRequestData['loan_amt'];
-		$poss_type					= $getRequestData['poss_type'];
-		$due_amt					= $getRequestData['due_amt'];
-		$due_period					= $getRequestData['due_period'];
-		$cus_status					= $getRequestData['cus_status'];
-	}
-}
-
-//////////////////////// Customer Profile Info ///////////////////////////////
-
-$getCustomerProfile = $userObj -> getAcknowlegeCustomerProfile($mysqli, $idupd);
-
-if(sizeof($getCustomerProfile) > 0 ){
-	$cus_Tableid = $getCustomerProfile['cus_Tableid'];
-	$cus_req_id = $getCustomerProfile['req_id'];
-	$cp_cus_id = $getCustomerProfile['cus_id'];
-	$cp_cus_name = $getCustomerProfile['cus_name'];
-	$cp_gender = $getCustomerProfile['gender'];
-	$cp_dob = $getCustomerProfile['dob'];
-	$cp_age = $getCustomerProfile['age'];
-	$cp_blood_group = $getCustomerProfile['blood_group'];
-	$cp_mobile1  = $getCustomerProfile['mobile1'];
-	$cp_mobile2 = $getCustomerProfile['mobile2'];
-	$cp_whatsapp = $getCustomerProfile['whatsapp'];
-	$cp_cus_pic = $getCustomerProfile['cus_pic'];
-	$guarentor_name = $getCustomerProfile['guarentor_name'];
-	$guarentor_relation = $getCustomerProfile['guarentor_relation'];
-	$guarentor_photo = $getCustomerProfile['guarentor_photo'];
-	$cus_type = $getCustomerProfile['cus_type'];
-	$cus_exist_type = $getCustomerProfile['cus_exist_type'];
-	$residential_type = $getCustomerProfile['residential_type'];
-	$residential_details = $getCustomerProfile['residential_details'];
-	$residential_address = $getCustomerProfile['residential_address'];
-	$residential_native_address = $getCustomerProfile['residential_native_address'];
-	$cp_occupation_type = $getCustomerProfile['occupation_type'];
-	$occupation_details = $getCustomerProfile['occupation_details'];
-	$occupation_income = $getCustomerProfile['occupation_income'] ;
-	$occupation_address = $getCustomerProfile['occupation_address'];
-	$area_confirm_type = $getCustomerProfile['area_confirm_type'];
-	$area_confirm_state = $getCustomerProfile['area_confirm_state'];
-	$area_confirm_district = $getCustomerProfile['area_confirm_district'];
-	$area_confirm_taluk = $getCustomerProfile['area_confirm_taluk'];
-	$area_confirm_area = $getCustomerProfile['area_confirm_area'];
-	$area_confirm_subarea = $getCustomerProfile['area_confirm_subarea'];
-	$area_group = $getCustomerProfile['area_group'];
-	$area_line = $getCustomerProfile['area_line'];
-	$communication = $getCustomerProfile['communication'];
-	$com_audio = $getCustomerProfile['com_audio'];
-	$verification_person = $getCustomerProfile['verification_person'];
-	$verification_location = $getCustomerProfile['verification_location'];
-	$cp_cus_status = $getCustomerProfile['cus_status'];
-	$how_to_know = $getCustomerProfile['how_to_know'];
-	$loan_count = $getCustomerProfile['loan_count'];
-	$first_loan_date = $getCustomerProfile['first_loan_date'];
-	$travel_with_company = $getCustomerProfile['travel_with_company'];
-	$monthly_income = $getCustomerProfile['monthly_income'] ;
-	$other_income = $getCustomerProfile['other_income'] ;
-	$support_income = $getCustomerProfile['support_income'] ;
-	$commitment = $getCustomerProfile['commitment'] ;
-	$monthly_due_capacity = $getCustomerProfile['monthly_due_capacity'] ;
-	$loan_limit = $getCustomerProfile['loan_limit'] ;
-	// $cus_character = $getCustomerProfile['cus_character'];
-	// $approach = $getCustomerProfile['approach'];
-	// $relationship = $getCustomerProfile['relationship'] ;
-	// $attitude = $getCustomerProfile['attitude'] ;
-	// $behavior = $getCustomerProfile['behavior'] ;
-	// $incident_remark  = $getCustomerProfile['incident_remark'] ;
-	$about_customer = $getCustomerProfile['about_customer']  ;
-
-}
-
-//////////////////////// Customer Profile Info END ///////////////////////////////
-
-////////  Document Customer Info ///// 
-$getcusInfoForDoc = $userObj->getAckcusInfoForDoc($mysqli, $idupd); 
-if (sizeof($getcusInfoForDoc) > 0) {
-
-	$cus_profile_id = $getcusInfoForDoc['cus_profile_id'];
-	$doc_cus_id = $getcusInfoForDoc['cus_id'];
-	$doc_cus_name = $getcusInfoForDoc['cus_name'];
-	$doc_area_name = $getcusInfoForDoc['area_name'];
-	$doc_sub_area_name = $getcusInfoForDoc['sub_area_name'];
-	$customer_profile_sts = $getcusInfoForDoc['cus_status'];
-}
-
-////   Documentation ////////////
-$documentationInfo = $userObj->getAcknowlegementDocument($mysqli,$req_id);
-
-if(sizeof($documentationInfo)>0){
-	$document_table_id = $documentationInfo['doc_Tableid'];
-	$document_sts = $documentationInfo['cus_status'];
-	$mortgage_process = $documentationInfo['mortgage_process'];
-	$Propertyholder_type = $documentationInfo['Propertyholder_type'];
-	$Propertyholder_name = $documentationInfo['Propertyholder_name'];
-	$Propertyholder_relationship_name = $documentationInfo['Propertyholder_relationship_name'];
-	$doc_property_relation = $documentationInfo['doc_property_relation'];
-	$doc_property_type = $documentationInfo['doc_property_type'];
-	$doc_property_measurement = $documentationInfo['doc_property_measurement'];
-	$doc_property_location = $documentationInfo['doc_property_location'];
-	$doc_property_value = $documentationInfo['doc_property_value'];
-	$mortgage_name = $documentationInfo['mortgage_name'];
-	$mortgage_dsgn = $documentationInfo['mortgage_dsgn'];
-	$mortgage_nuumber = $documentationInfo['mortgage_nuumber'];
-	$reg_office = $documentationInfo['reg_office'];
-	$mortgage_value = $documentationInfo['mortgage_value'];
-	$mortgage_document = $documentationInfo['mortgage_document'];
-	$mortgage_document_upd = $documentationInfo['mortgage_document_upd'];
-	$mortgage_document_pending = $documentationInfo['mortgage_document_pending'];
-	$endorsement_process = $documentationInfo['endorsement_process'];
-	$owner_type = $documentationInfo['owner_type'];
-	$owner_name = $documentationInfo['owner_name'];
-	$ownername_relationship_name = $documentationInfo['ownername_relationship_name'];
-	$en_relation = $documentationInfo['en_relation'];
-	$vehicle_type = $documentationInfo['vehicle_type'];
-	$vehicle_process = $documentationInfo['vehicle_process'];
-	$en_Company = $documentationInfo['en_Company'];
-	$en_Model = $documentationInfo['en_Model'];
-	$vehicle_reg_no = $documentationInfo['vehicle_reg_no'];
-	$endorsement_name = $documentationInfo['endorsement_name'];
-	$en_RC = $documentationInfo['en_RC'];
-	$Rc_document_upd = $documentationInfo['Rc_document_upd'];
-	$Rc_document_pending = $documentationInfo['Rc_document_pending'];
-	$en_Key = $documentationInfo['en_Key'];
-	$gold_info = $documentationInfo['gold_info'];
-	$gold_sts = $documentationInfo['gold_sts'];
-	$gold_type = $documentationInfo['gold_type'];
-	$Purity = $documentationInfo['Purity'];
-	$gold_Count = $documentationInfo['gold_Count'];
-	$gold_Weight = $documentationInfo['gold_Weight'];
-	$gold_Value = $documentationInfo['gold_Value'];
-	$document_name = $documentationInfo['document_name'];
-	$document_details = $documentationInfo['document_details'];
-	$document_type = $documentationInfo['document_type'];
-	$doc_info_upload = $documentationInfo['doc_info_upload'];
-	$document_holder = $documentationInfo['document_holder'];
-	$docholder_name = $documentationInfo['docholder_name'];
-	$docholder_relationship_name = $documentationInfo['docholder_relationship_name'];
-	$doc_relation = $documentationInfo['doc_relation'];
-
-}
-////////   Documentation End ////////////
-
-///////// Loan Calculation ///////////////
-$getCusInfoForLoanCal = $userObj->getAcknowlegeCusInfoForLoanCal($mysqli, $idupd);
-if (sizeof($getCusInfoForLoanCal) > 0) {
-	for ($i = 0; $i < sizeof($getCusInfoForLoanCal); $i++) {
-	$cus_id_lc = $getCusInfoForLoanCal['cus_id'];
-	$cus_name_lc = $getCusInfoForLoanCal['cus_name'];
-	$cus_pic_lc = $getCusInfoForLoanCal['cus_pic'];
-	$cus_data_lc = $getCusInfoForLoanCal['cus_type'];
-	$mobile_lc = $getCusInfoForLoanCal['mobile'];
-	}
-}
-//Get Loan Calculation info for edit
-$getLoanCalculation = $userObj->getAckLoanCalculationForVerification($mysqli,$req_id);
-if(sizeof($getLoanCalculation)>0){
-	for($i=0;$i<sizeof($getLoanCalculation);$i++){
-		$loan_cal_id = $getLoanCalculation['loan_cal_id'];
-		$cus_id_loan = $getLoanCalculation['cus_id_loan'];
-		$cus_name_loan = $getLoanCalculation['cus_name_loan'];
-		$cus_data_loan = $getLoanCalculation['cus_data_loan'];
-		$mobile_loan = $getLoanCalculation['mobile_loan'];
-		$pic_loan = $getLoanCalculation['pic_loan'];
-		$loan_category_lc = $getLoanCalculation['loan_category'];
-		$sub_category_lc = $getLoanCalculation['sub_category'];
-		$tot_value_lc = $getLoanCalculation['tot_value'];
-		$ad_amt_lc = $getLoanCalculation['ad_amt'];
-		$loan_amt_lc = $getLoanCalculation['loan_amt'];
-		$profit_type_lc = $getLoanCalculation['profit_type'];
-		$due_method_calc_lc = $getLoanCalculation['due_method_calc'];
-		$due_type_lc = $getLoanCalculation['due_type'];
-		$profit_method_lc = $getLoanCalculation['profit_method'];
-		$calc_method_lc = $getLoanCalculation['calc_method'];
-		$due_method_scheme_lc = $getLoanCalculation['due_method_scheme'];
-		$day_scheme_lc = $getLoanCalculation['day_scheme'];
-		$scheme_name_lc = $getLoanCalculation['scheme_name'];
-		$int_rate_lc = $getLoanCalculation['int_rate'];
-		$due_period_lc = $getLoanCalculation['due_period'];
-		$doc_charge_lc = $getLoanCalculation['doc_charge'];
-		$proc_fee_lc = $getLoanCalculation['proc_fee'];
-		$loan_amt_cal = $getLoanCalculation['loan_amt_cal'];
-		$principal_amt_cal = $getLoanCalculation['principal_amt_cal'];
-		$int_amt_cal = $getLoanCalculation['int_amt_cal'];
-		$tot_amt_cal = $getLoanCalculation['tot_amt_cal'];
-		$due_amt_cal = $getLoanCalculation['due_amt_cal'];
-		$doc_charge_cal = $getLoanCalculation['doc_charge_cal'];
-		$proc_fee_cal = $getLoanCalculation['proc_fee_cal'];
-		$net_cash_cal = $getLoanCalculation['net_cash_cal'];
-		$due_start_from = $getLoanCalculation['due_start_from'];
-		$maturity_month = $getLoanCalculation['maturity_month'];
-		$collection_method = $getLoanCalculation['collection_method'];
-		$cus_status_lc = $getLoanCalculation['cus_status'];
-}
-
-	//Get Loan calculation Category info for edit
-	if($loan_cal_id >0){
-		$getLoanCalCategory = $userObj->getAckVerificationLoanCalCategory($mysqli,$loan_cal_id);
-
-	}
-}
-
-///////// Loan Calculation End ///////////////
-
 ?>
 
 
@@ -275,82 +24,17 @@ if(sizeof($getLoanCalculation)>0){
 		background-color: white;
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  left: 10px;
-}
-
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #009688;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
 </style>
 
 <!-- Page header start -->
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Loan Issue
+		Marudham - Collection
 	</div>
-</div><br>
-<div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
-	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
-		Customer Name - <?php if (isset($cus_name)) {  echo $cus_name; } ?>
-	</div>
-</div><br>
+
 <div class="text-right" style="margin-right: 25px;">
-	<a href="edit_loan_issue">
+	<a href="edit_collection">
 		<button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
 	</a>
 </div><br><br>
@@ -365,17 +49,6 @@ input:checked + .slider:before {
 	<div>
 		<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
-		<input type="hidden" name="loan_sub_cat" id="loan_sub_cat" value="<?php if (isset($sub_category)) {echo $sub_category;} ?>" />
-		<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) {echo $guarentor_name;} ?>" />
-		<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($area_confirm_state)) {echo $area_confirm_state;} ?>" />
-		<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($area_confirm_district)) {echo $area_confirm_district;} ?>" />
-		<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($area_confirm_taluk)) {echo $area_confirm_taluk;} ?>" />
-		<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area_confirm_area)) {echo $area_confirm_area;} ?>" />
-		<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($area_confirm_subarea)) {echo $area_confirm_subarea;} ?>" />
-		<input type="hidden" name="verification_person_upd" id="verification_person_upd" value="<?php if (isset($verification_person)) {echo $verification_person;} ?>" />
-		<input type="hidden" name="cus_Tableid" id="cus_Tableid" value="<?php if (isset($cus_Tableid)) {echo $cus_Tableid;} ?>" />
-		<input type="hidden" name="loan_category_lc" id="loan_category_lc" value="<?php if (isset($loan_category_lc)) {echo $loan_category_lc;} ?>" />
-		<input type="hidden" name="sub_category_upd" id="sub_category_upd" value="<?php if (isset($sub_category_lc)) {echo $sub_category_lc;} ?>" />
 
 		<!-- Row start -->
 		<div class="row gutters">
@@ -403,19 +76,33 @@ input:checked + .slider:before {
 										</div>
 									</div>
 
-                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
-								      <div class="form-group">
-									   <label for="name"> Customer Type </label>
-									   <input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_type)) { echo $cus_type; } ?>" readonly>
-								      </div>
-							       </div>
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="DocArea"> Area </label> <span class="required"> * </span>
+											<input  type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
+										</div>
+									</div>
 
-							       <div id="exist_type" <?php if (isset($cus_type)) {	if ($cus_type != 'Existing') { ?> style="display: none" <?php } } ?> class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
-								      <div class="form-group">
-									    <label for="ExistType"> Exist Type </label>
-									    <input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" value="<?php if (isset($cus_exist_type)) { echo $cus_exist_type; } ?>" readonly>
-								      </div>
-							       </div>
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="DocSubArea"> Sub Area </label> <span class="required"> * </span>
+											<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly>
+										</div>
+									</div>
+									
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="name"> Customer Type </label>
+											<input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_type)) { echo $cus_type; } ?>" readonly>
+										</div>
+									</div>
+
+									<div id="exist_type" <?php if (isset($cus_type)) {	if ($cus_type != 'Existing') { ?> style="display: none" <?php } } ?> class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<label for="ExistType"> Exist Type </label>
+											<input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" value="<?php if (isset($cus_exist_type)) { echo $cus_exist_type; } ?>" readonly>
+										</div>
+									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
@@ -438,19 +125,7 @@ input:checked + .slider:before {
 										</div>
 									</div>
 
-									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                       <div class="form-group">
-                                          <label for="DocArea"> Area </label> <span class="required"> * </span>
-                                          <input  type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
-                                       </div>
-                                   </div>
-
-                                   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-                                       <div class="form-group">
-                                          <label for="DocSubArea"> Sub Area </label> <span class="required"> * </span>
-                                          <input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly>
-                                       </div>
-                                   </div>
+									
 
 								</div>
 							</div>

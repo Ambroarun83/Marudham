@@ -176,6 +176,12 @@ $(document).ready(function () {
         var loanissuemodule = document.querySelector('#loanissuemodule');
         checkbox(checkboxesToEnable,loanissuemodule);
     });
+    
+    $("#collectionmodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.collection-checkbox");
+        var collectionmodule = document.querySelector('#collectionmodule');
+        checkbox(checkboxesToEnable,collectionmodule);
+    });
 
     $('#submit_manage_user').click(function(){
         
@@ -279,6 +285,7 @@ $(function(){
         var approvalmodule = document.getElementById('approvalmodule');
         var acknowledgementmodule = document.getElementById('acknowledgementmodule');
         var loanissuemodule = document.getElementById('loanissuemodule');
+        var collectionmodule = document.getElementById('collectionmodule');
         if(mastermodule.checked){const checkboxesToEnable = document.querySelectorAll("input.master-checkbox");var mastermodule = document.querySelector('#mastermodule');checkbox(checkboxesToEnable,mastermodule);}
         if(adminmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.admin-checkbox");var adminmodule = document.querySelector('#adminmodule');checkbox(checkboxesToEnable,adminmodule);}
         if(requestmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.request-checkbox");var requestmodule = document.querySelector('#requestmodule');checkbox(checkboxesToEnable,requestmodule);}
@@ -286,6 +293,7 @@ $(function(){
         if(approvalmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.approval-checkbox");var approvalmodule = document.querySelector('#approvalmodule');checkbox(checkboxesToEnable,approvalmodule);}
         if(acknowledgementmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.acknowledgement-checkbox");var acknowledgementmodule = document.querySelector('#acknowledgementmodule');checkbox(checkboxesToEnable,acknowledgementmodule);}
         if(loanissuemodule.checked){const checkboxesToEnable = document.querySelectorAll("input.loan_issue-checkbox");var loanissuemodule = document.querySelector('#loanissuemodule');checkbox(checkboxesToEnable,loanissuemodule);}
+        if(collectionmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.collection-checkbox");var collectionmodule = document.querySelector('#collectionmodule');checkbox(checkboxesToEnable,collectionmodule);}
     }else{
 
     }
