@@ -44,6 +44,9 @@ $acknowledgementmodule = '';
 $acknowledgement = '';
 $loanissuemodule = '';
 $loan_issue = '';
+$collectionmodule = '';
+$collection = '';
+$collection_access = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -128,6 +131,9 @@ if($idupd>0)
 			$acknowledgement          		     = $getUser['acknowledgement'];
 			$loanissuemodule          		     = $getUser['loanissuemodule'];
 			$loan_issue          		     = $getUser['loan_issue'];
+			$collectionmodule          		     = $getUser['collectionmodule'];
+			$collection          		     = $getUser['collection'];
+			$collection_access          		     = $getUser['collection_access'];
 		}
 	}
 }
@@ -580,6 +586,30 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($loan_issue==0){ echo'checked'; }} ?> tabindex="21" class="loan_issue-checkbox" id="loan_issue" name="loan_issue" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="loan_issue">Loan Issue</label>
+                            </div>
+                        </div>
+					</div>
+
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($collectionmodule==0){ echo'checked'; }} ?> tabindex="20" class="" id="collectionmodule" name="collectionmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="collectionmodule">
+							<h5>Collection</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($collection==0){ echo'checked'; }} ?> tabindex="21" class="collection-checkbox" id="collection" name="collection" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="collection">Collection</label>
+                            </div>
+                        </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($collection_access==0){ echo'checked'; }} ?> tabindex="21" class="collection-checkbox" id="collection_access" name="collection_access" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="collection_access">Collection Access</label>
                             </div>
                         </div>
 					</div>

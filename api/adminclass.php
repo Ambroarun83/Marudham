@@ -51,6 +51,9 @@ require 'PHPMailerAutoload.php';
                 $detailrecords['acknowledgement']              = strip_tags($row->acknowledgement);
                 $detailrecords['loanissuemodule']              = strip_tags($row->loanissuemodule);
                 $detailrecords['loan_issue']              = strip_tags($row->loan_issue);
+                $detailrecords['collectionmodule']              = strip_tags($row->collectionmodule);
+                $detailrecords['collection']              = strip_tags($row->collection);
+                $detailrecords['collection_access']              = strip_tags($row->collection_access);
                 $detailrecords['status']                     = strip_tags($row->status);
             }
             return $detailrecords;
@@ -2285,6 +2288,24 @@ require 'PHPMailerAutoload.php';
         }else{
             $loan_issue=1;
         }
+        if(isset($_POST['collectionmodule']) &&    $_POST['collectionmodule'] == 'Yes')
+        {
+            $collectionmodule=0;
+        }else{
+            $collectionmodule=1;
+        }
+        if(isset($_POST['collection']) &&    $_POST['collection'] == 'Yes')
+        {
+            $collection=0;
+        }else{
+            $collection=1;
+        }
+        if(isset($_POST['collection_access']) &&    $_POST['collection_access'] == 'Yes')
+        {
+            $collection_access=0;
+        }else{
+            $collection_access=1;
+        }
         $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
@@ -2296,7 +2317,8 @@ require 'PHPMailerAutoload.php';
         '".strip_tags($area_mapping)."','".strip_tags($area_approval)."','".strip_tags($adminmodule)."','".strip_tags($director_creation)."',
         '".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
         '".strip_tags($request_list_access)."','".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($approvalmodule)."','".strip_tags($approval)."',
-        '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($loanissuemodule)."','".strip_tags($loan_issue)."','".strip_tags($userid)."',current_timestamp )";
+        '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($loanissuemodule)."','".strip_tags($loan_issue)."',
+		'".strip_tags($collectionmodule)."','".strip_tags($collection)."','".strip_tags($collection_access)."','".strip_tags($userid)."',current_timestamp )";
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
 
@@ -2506,6 +2528,24 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$loan_issue=1;
 	}
+	if(isset($_POST['collectionmodule']) &&    $_POST['collectionmodule'] == 'Yes')
+	{
+		$collectionmodule=0;
+	}else{
+		$collectionmodule=1;
+	}
+	if(isset($_POST['collection']) &&    $_POST['collection'] == 'Yes')
+	{
+		$collection=0;
+	}else{
+		$collection=1;
+	}
+	if(isset($_POST['collection_access']) &&    $_POST['collection_access'] == 'Yes')
+	{
+		$collection_access=0;
+	}else{
+		$collection_access=1;
+	}
 	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
 	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
 	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
@@ -2517,8 +2557,9 @@ function updateUser($mysqli,$id,$user_id){
 	`manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`requestmodule`='".strip_tags($requestmodule)."',
 	`request`='".strip_tags($request)."',`request_list_access`='".strip_tags($request_list_access)."',`verificationmodule`='".strip_tags($verificationmodule)."',`verification`='".strip_tags($verification)."',
 	`approvalmodule`='".strip_tags($approvalmodule)."',`approval`='".strip_tags($approval)."',`acknowledgementmodule`='".strip_tags($acknowledgementmodule)."',
-	`acknowledgement`='".strip_tags($acknowledgement)."',`loanissuemodule`='".strip_tags($loanissuemodule)."',`loan_issue`='".strip_tags($loan_issue)."',`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()'
-	WHERE user_id = '".strip_tags($id)."' ";
+	`acknowledgement`='".strip_tags($acknowledgement)."',`loanissuemodule`='".strip_tags($loanissuemodule)."',`loan_issue`='".strip_tags($loan_issue)."',
+	`collectionmodule` = '".strip_tags($collectionmodule)."', `collection` = '".strip_tags($collection)."', `collection_access` = '".strip_tags($collection_access)."',
+	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()' WHERE user_id = '".strip_tags($id)."' ";
 	$result = $mysqli->query($updateQry) or die;
 }
 

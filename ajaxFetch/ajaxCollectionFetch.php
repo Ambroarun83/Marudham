@@ -12,13 +12,7 @@ if($userid != 1){
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
     }
-    // $group_id = explode(',',$group_id);
-    // $sub_area_list = array();
-    // foreach($group_id as $group){
-    //     $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-    //     $row_sub = $groupQry->fetch_assoc();
-    //     $sub_area_list[] = $row_sub['sub_area_id'];
-    // }
+
     $line_id = explode(',',$line_id);
     $sub_area_list = array();
     foreach($line_id as $line){
@@ -41,6 +35,7 @@ $column = array(
     'cp.area_confirm_area',
     'cp.area_confirm_subarea',
     'cp.area_line',
+    'cp.area_line',
     'cp.mobile1',
     'cp.status'
 );
@@ -48,11 +43,11 @@ $column = array(
 if($userid == 1){
     $query = 'SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and ii.cus_status = 13 GROUP BY ii.cus_id '; // Only Issued and all lines not relying on sub area
+    where ii.status = 0 and ii.cus_status = 14 GROUP BY ii.cus_id '; // Only Issued and all lines not relying on sub area
 }else{
     $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and ii.cus_status = 13 and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. 
+    where ii.status = 0 and ii.cus_status = 14 and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. 
 }
 // echo $query;
 
@@ -133,12 +128,18 @@ foreach ($result as $row) {
     
     $sub_array[] = $sub_area_name;
     
+    $line_name = $row['area_line'];
+    $qry = $mysqli->query("SELECT b.branch_name FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id where l.line_name = '".$line_name."' ");
+    $row1 = $qry->fetch_assoc();
+    $sub_array[] = $row1['branch_name'];
+
     $sub_array[] = $row['area_line'];
     $sub_array[] = $row['mobile1'];
     
 
     $id          = $row['req_id'];
-    $action="<a href='collection&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>";
+    $action="<a href='collection&upd=$id' title='Edit details' ><button class='btn btn-success'>Collect 
+    <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
 
     $sub_array[] = $action;
     $data[]      = $sub_array;
@@ -149,7 +150,7 @@ function count_all_data($connect)
 {
     $query     = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and ii.cus_status = 13 GROUP BY ii.cus_id ";
+    where ii.status = 0 and ii.cus_status = 14 GROUP BY ii.cus_id ";
     $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();

@@ -1,5 +1,4 @@
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
     .dropbtn {
 		color: white;
@@ -90,7 +89,7 @@
 								<th>Customer Name</th>
 								<th>Area</th>
 								<th>Sub Area</th>
-								<!-- <th>Branch</th> -->
+								<th>Branch</th>
 								<th>Line</th>
 								<th>Mobile</th>
 								<th>Action</th>
