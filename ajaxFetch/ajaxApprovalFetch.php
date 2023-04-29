@@ -49,9 +49,9 @@ $column = array(
 );
 
 if($userid == 1){
-    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13 or cus_status = 14)'; //2-in approval, 3-in ack,6-cancel approval, 7-cancel_ack,13-in issue, 14 - issue completed.
+    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13 )'; //2-in approval, 3-in ack,6-cancel approval, 7-cancel_ack,13-in issue.
 }else{
-    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13 or cus_status = 14) and sub_area IN ($sub_area_list) ";//show only moved to Approval list and Approve the verification.
+    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13) and sub_area IN ($sub_area_list) ";//show only moved to Approval list and Approve the verification.
 }
 
 if($_POST['search'] != "")
