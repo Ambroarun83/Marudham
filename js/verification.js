@@ -4113,21 +4113,21 @@ function profitCalAjax(profit_type,sub_cat){
 
                     //To set min and maximum 
                     $('.min-max-int').text('* ('+response['intrest_rate_min']+'% - '+response['intrest_rate_max']+'%) ');
-                    $('#int_rate').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#int_rate').attr('onChange',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseFloat($(this).val()) < '`+response['intrest_rate_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#int_rate').val(int_rate_upd);
                     $('.min-max-due').text('* ('+response['due_period_min']+' - '+response['due_period_max']+') ');
-                    $('#due_period').attr('onBlur',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#due_period').attr('onChange',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseInt($(this).val()) < '`+response['due_period_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#due_period').val(due_period_upd);
                     
                     $('.min-max-doc').text('* ('+response['document_charge_min']+'% - '+response['document_charge_max']+'%) ');
-                    $('#doc_charge').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#doc_charge').attr('onChange',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseFloat($(this).val()) < '`+response['document_charge_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#doc_charge').val(doc_charge_upd);
 
                     $('.min-max-proc').text('* ('+response['processing_fee_min']+'% - '+response['processing_fee_max']+'%) ');
-                    $('#proc_fee').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#proc_fee').attr('onChange',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseFloat($(this).val()) < '`+response['processing_fee_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#proc_fee').val(proc_fee_upd);
 
@@ -4141,22 +4141,22 @@ function profitCalAjax(profit_type,sub_cat){
 
                     //To set min and maximum 
                     $('.min-max-int').text('* ('+response['intrest_rate_min']+'% - '+response['intrest_rate_max']+'%) ');
-                    $('#int_rate').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#int_rate').attr('onChange',`if( parseFloat($(this).val()) > '`+response['intrest_rate_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseFloat($(this).val()) < '`+response['intrest_rate_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#int_rate').val(int_rate_upd);
                     
                     $('.min-max-due').text('* ('+response['due_period_min']+' - '+response['due_period_max']+') ');
-                    $('#due_period').attr('onBlur',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#due_period').attr('onChange',`if( parseInt($(this).val()) > '`+response['due_period_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseInt($(this).val()) < '`+response['due_period_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#due_period').val(due_period_upd);
                     
                     $('.min-max-doc').text('* ('+response['document_charge_min']+'% - '+response['document_charge_max']+'%) ');
-                    $('#doc_charge').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#doc_charge').attr('onChange',`if( parseFloat($(this).val()) > '`+response['document_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseFloat($(this).val()) < '`+response['document_charge_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#doc_charge').val(doc_charge_upd);
 
                     $('.min-max-proc').text('* ('+response['processing_fee_min']+'% - '+response['processing_fee_max']+'%) ');
-                    $('#proc_fee').attr('onBlur',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                    $('#proc_fee').attr('onChange',`if( parseFloat($(this).val()) > '`+response['processing_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseFloat($(this).val()) < '`+response['processing_fee_min']+`' && parseFloat($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                     $('#proc_fee').val(proc_fee_upd);
                 }
@@ -4217,13 +4217,13 @@ function schemeCalAjax(scheme_id){
                 
                 if(response['doc_charge_type'] == 'amt') {type = '₹'}else if(response['doc_charge_type'] == 'percentage'){type='%';} //Setting symbols
                 $('.min-max-doc').text('* ('+response['doc_charge_min'] +' '+type+' - '+response['doc_charge_max']+' '+type+') '); //setting min max values in span
-                $('#doc_charge').attr('onBlur',`if( parseInt($(this).val()) > '`+response['doc_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                $('#doc_charge').attr('onChange',`if( parseInt($(this).val()) > '`+response['doc_charge_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                         if( parseInt($(this).val()) < '`+response['doc_charge_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                 $('#doc_charge').val(doc_charge_upd);
                 
                 if(response['proc_fee_type'] == 'amt') {type = '₹'}else if(response['proc_fee_type'] == 'percentage'){type='%';}//Setting symbols
                 $('.min-max-proc').text('* ('+response['proc_fee_min']+' '+type+' - '+response['proc_fee_max']+' '+type+') ');//setting min max values in span
-                $('#proc_fee').attr('onBlur',`if( parseInt($(this).val()) > '`+response['proc_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
+                $('#proc_fee').attr('onChange',`if( parseInt($(this).val()) > '`+response['proc_fee_max']+`' ){ alert("Enter Lesser Value"); $(this).val(""); }else
                                     if( parseInt($(this).val()) < '`+response['proc_fee_min']+`' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                 $('#proc_fee').val(doc_charge_upd);
             }
