@@ -31,9 +31,9 @@ $column = array(
     'status'
 );
 
-$query = "SELECT * FROM request_creation where status= 0 and cus_status != 8 and insert_login_id = $userid ";//hide if issued or revoked(after issued cus_status = 7 , revoked = 8)
+$query = "SELECT * FROM request_creation where status= 0 and (cus_status != 8 and cus_status != 14) and insert_login_id = $userid ";//hide if issued or revoked(after issued cus_status = 7 , revoked = 8)
 if($userid == 1 or $request_list_access == 0){ //if request_list_access is granted to the current user
-    $query = 'SELECT * FROM request_creation where status =0 and (cus_status != 8 )';
+    $query = 'SELECT * FROM request_creation where status =0 and (cus_status != 8 and cus_status != 14)';
 }
 if($_POST['search'] != "")
 {
