@@ -624,6 +624,7 @@ input:checked + .slider:before {
 											<div class="form-group">
 												<label for="disabledInput">Net Cash</label>&nbsp;<span class="text-danger">*</span>
 												<input type="text" class="form-control" readonly id="net_cash_cal" name="net_cash_cal" value='<?php if(isset($net_cash_cal)) echo $net_cash_cal;?>'>
+												<!-- <input type="hidden" class="form-control"  id="net_cash" name="net_cash" > -->
 											</div>
 										</div>
 
@@ -675,10 +676,18 @@ input:checked + .slider:before {
                     <!-- Issued Info Start -->
 					<div class="card">
 						<div class="card-header">Issued Info <span style="font-weight:bold" class="" ></span></div>
+						<span class="text-danger" style="display: none;" id="val_check"> Please Enter Any One of the Value </span>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12">
 									<div class="row">
+
+									   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput"> Balance To Issue </label>&nbsp;<span class="text-danger">*</span>
+												<input type="text" class="form-control"  id="net_cash" name="net_cash" readonly>
+											</div>
+										</div>
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
@@ -696,6 +705,7 @@ input:checked + .slider:before {
                                                 <option value="0"> Split Payment </option>
                                                 <option value="1"> Single Payment </option>
                                                 </select>
+												<span class="text-danger" style="display: none;" id="issue"> Please Select Issued Mode </span>
 											</div>
 										</div>
 
@@ -708,21 +718,29 @@ input:checked + .slider:before {
                                                 <option value="1"> Cheque </option>
                                                 <option value="2"> Account Transfer </option>
                                                 </select>
+												<span class="text-danger" style="display: none;" id="pay_type"> Please Select Payment Type </span>
 											</div>
 										</div>
-
+									</div>
+									
+									<div class="row">
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 cash_issue" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Cash</label>
-												<input type="text" class="form-control" id="cash" name="cash" >
+												<input type="number" class="form-control" id="cash" name="cash" >
+												<span class="text-danger" style="display: none;" id="cash_amnt"> Please Enter Cash </span>
 											</div>
 										</div>
+									</div>
+									
+									<div class="row">
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Cheque number</label>
 												<input type="number" class="form-control" id="chequeno" name="chequeno" >
+												<span class="text-danger" style="display: none;" id="cheque_num"> Please Enter Cheque Number </span>
 											</div>
 										</div>
 
@@ -730,19 +748,26 @@ input:checked + .slider:before {
 											<div class="form-group">
 												<label for="disabledInput">cheque Value</label>
 												<input type="number" class="form-control" id="chequeValue" name="chequeValue" >
+												<span class="text-danger" style="display: none;" id="cheque_val"> Please Enter Cheque Value </span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">cheque Remark</label>
 												<input type="text" class="form-control" id="chequeRemark" name="chequeRemark" >
+												<span class="text-danger" style="display: none;" id="cheque_remark"> Please Enter Cheque Remark </span>
 											</div>
 										</div>
+										
+									</div>
+									
+									<div class="row">
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none">  
 											<div class="form-group">
 												<label for="disabledInput">Transaction ID</label>
 												<input type="number" class="form-control" id="transaction_id" name="transaction_id" >
+												<span class="text-danger" style="display: none;" id="transact_id"> Please Enter Transaction ID </span>
 											</div>
 										</div>
 
@@ -750,18 +775,20 @@ input:checked + .slider:before {
 											<div class="form-group">
 												<label for="disabledInput">Transaction Value </label>
 												<input type="number" class="form-control" id="transaction_value" name="transaction_value" >
+												<span class="text-danger" style="display: none;" id="transact_val"> Please Enter Transaction Value </span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Transaction Remark </label>
 												<input type="text" class="form-control" id="transaction_remark" name="transaction_remark" >
+												<span class="text-danger" style="display: none;" id="transact_remark"> Please Enter Transaction Remark </span>
 											</div>
 										</div>
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 balance" style="display:none"> 
 											<div class="form-group">
-												<label for="disabledInput">Balance</label>
+												<label for="disabledInput">Balance Amount </label>
 												<input type="text" class="form-control" id="balance" name="balance" readonly>
 											</div>
 										</div>
@@ -783,18 +810,29 @@ input:checked + .slider:before {
 									<div class="row">
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="disabledInput"> Finger Print </label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" id="" name="" readonly>
-											</div>
+										<div class="form-group">
+											<label for="GuarentorName"> Name </label><span class="required">&nbsp;*</span>
+											<select type="text" class="form-control" id="cash_guarentor_name" name="cash_guarentor_name">
+												<option> Select Guarantor </option>
+											</select>
+											<span class="text-danger" style="display: none;" id="cash_guarentor"> Please Select the Name </span>
 										</div>
+									</div>
+
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="GuarentorRelationship">  Relationship </label>
+											<input type="text" class="form-control" id="relationship" name="relationship" readonly>
+										</div>
+									</div>
 
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- Issued Info End -->
+					<!-- cash Acknowledgement Info End -->
+
 
 					<!-- Submit Button Start -->
 					<div class="col-md-12 ">

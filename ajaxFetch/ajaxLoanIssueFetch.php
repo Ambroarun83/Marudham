@@ -49,9 +49,9 @@ $column = array(
 );
 
 if($userid == 1){
-    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 13) '; // Move To Issue
+    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 13 or cus_status = 14) '; // Move To Issue
 }else{
-    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 13) and sub_area IN ($sub_area_list) ";//show only Approved Verification in Acknowledgement. // 13 Move to Issue. 
+    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 13 or cus_status = 14) and sub_area IN ($sub_area_list) ";//show only Approved Verification in Acknowledgement. // 13 Move to Issue. // 14 Move To Collection.
 }
 
 if($_POST['search'] != "")
@@ -184,19 +184,22 @@ foreach ($result as $row) {
     $id = $row['req_id'];
     
     $cus_status = $row['cus_status'];
-    if($cus_status == '3'){
-        $cus_doc = $mysqli->query("SELECT submitted FROM `acknowlegement_documentation` WHERE `req_id` ='$id'");
-        $cus_doc_row =  $cus_doc->fetch_assoc();
+    $loan_issued = $mysqli->query("SELECT balance_amount FROM `loan_issue` WHERE req_id='$id' order by id desc LIMIT 1 ");
+    $loan_issued_db =  $loan_issued->fetch_assoc();
+    if($cus_status == '13'){
 
-        if(isset($cus_doc_row['submitted']) && $cus_doc_row['submitted'] =='1'){
-            $sub_array[] = "<button class='btn btn-outline-secondary move_issue' value='$id'><span class = 'icon-arrow_forward'></span></button>";
+        if(isset($loan_issued_db['balance_amount']) && $loan_issued_db['balance_amount'] =='0'){
+            $sub_array[] = "<button class='btn btn-outline-secondary complete_issue' value='$id'><span class = 'icon-arrow_forward'></span></button>";
         }else{
 
-            $sub_array[] = 'In Acknowledgement';
+            $sub_array[] = 'In Issue';
         }
-    }
-    if($cus_status == '7'){$sub_array[] = 'Cancel - Acknowledgement';}
-    if($cus_status == '13'){$sub_array[] = 'In Issue';}
+     }
+     if($cus_status == '14'){
+
+        $sub_array[] = 'Issued';
+
+     }
 
     $id          = $row['req_id'];
     $user_type = $row['user_type'];
@@ -205,9 +208,10 @@ foreach ($result as $row) {
     $action="<div class='dropdown' style='float:right;'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
-    if($cus_status == '13') {
+
+    if(isset($loan_issued_db['balance_amount']) && $loan_issued_db['balance_amount'] !='0') {
         $action .= "<a href='loan_issue&upd=$id' class='customer_profile' value='$id' > Edit Loan Issue </a>";
-        $action .= "<a href='loan_issue&can=$id' class='ack-cancel' value='$id' > Cancel </a>";
+        // $action .= "<a href='loan_issue&can=$id' class='ack-cancel' value='$id' > Cancel </a>";
     }else if($cus_status == '7') {
         $action .= "<a href='loan_issue&rem=$id&pge=1' class='ack-remove' value='$id' > Remove </a>";
     }
