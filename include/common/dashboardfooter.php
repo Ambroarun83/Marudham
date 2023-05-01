@@ -736,6 +736,10 @@ if($current_page == 'edit_loan_issue') { ?>
 if($current_page == 'loan_issue') { ?>
     <script src="js/loan_issue.js"></script>
     <?php }
+
+if($current_page == 'collection') { ?>
+    <script src="js/collection.js"></script>
+    <?php }
 ?> 
 
 <script src="js/logincreation.js"></script>

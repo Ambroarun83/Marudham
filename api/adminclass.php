@@ -4643,65 +4643,90 @@ function updateUser($mysqli,$id,$user_id){
 
 ///  Acknowlegement END
 
-		// Add Loan Issue
-		public function addloanIssue($mysqli, $userid){
-            if(isset($_POST['req_id'])){
-                $req_id = $_POST['req_id'];
-            }
-            if(isset($_POST['cus_id'])){
-                $cus_id = $_POST['cus_id'];
-            }
-            if(isset($_POST['net_cash_cal'])){
-                $net_cash_cal = $_POST['net_cash_cal'];
-            }
-            if(isset($_POST['issue_to'])){
-                $issue_to =  $_POST['issue_to'];
-            }
-            if(isset($_POST['agent_id'])){
-                $agent_id = $_POST['agent_id'];
-            }
-            if(isset($_POST['issued_mode'])){
-                $issued_mode = $_POST['issued_mode'];
-            }
-            if(isset($_POST['payment_type'])){
-                $payment_type = $_POST['payment_type'];
-            }
-            if(isset($_POST['cash'])){
-                $cash = $_POST['cash'];
-            }
-            if(isset($_POST['chequeno'])){
-                $chequeno = $_POST['chequeno'];
-            }
-            if(isset($_POST['chequeValue'])){
-                $chequeValue = $_POST['chequeValue'];
-            }
-            if(isset($_POST['chequeRemark'])){
-                $chequeRemark = $_POST['chequeRemark'];
-            }
-            if(isset($_POST['transaction_id'])){
-                $transaction_id = $_POST['transaction_id'];
-            }
-            if(isset($_POST['transaction_value'])){
-                $transaction_value = $_POST['transaction_value'];
-            }
-            if(isset($_POST['transaction_remark'])){
-                $transaction_remark = $_POST['transaction_remark'];
-            }
-            if(isset($_POST['balance'])){
-                $balance = $_POST['balance'];
-            }
-            if(isset($_POST['cash_guarentor_name'])){
-                $cash_guarentor_name = $_POST['cash_guarentor_name'];
-            }
-            if(isset($_POST['relationship'])){
-                $relationship = $_POST['relationship'];
-            }
+	// Add Loan Issue
+	public function addloanIssue($mysqli, $userid){
+		if(isset($_POST['req_id'])){
+			$req_id = $_POST['req_id'];
+		}
+		if(isset($_POST['cus_id'])){
+			$cus_id = $_POST['cus_id'];
+		}
+		if(isset($_POST['net_cash_cal'])){
+			$net_cash_cal = $_POST['net_cash_cal'];
+		}
+		if(isset($_POST['issue_to'])){
+			$issue_to =  $_POST['issue_to'];
+		}
+		if(isset($_POST['agent_id'])){
+			$agent_id = $_POST['agent_id'];
+		}
+		if(isset($_POST['issued_mode'])){
+			$issued_mode = $_POST['issued_mode'];
+		}
+		if(isset($_POST['payment_type'])){
+			$payment_type = $_POST['payment_type'];
+		}
+		if(isset($_POST['cash'])){
+			$cash = $_POST['cash'];
+		}
+		if(isset($_POST['chequeno'])){
+			$chequeno = $_POST['chequeno'];
+		}
+		if(isset($_POST['chequeValue'])){
+			$chequeValue = $_POST['chequeValue'];
+		}
+		if(isset($_POST['chequeRemark'])){
+			$chequeRemark = $_POST['chequeRemark'];
+		}
+		if(isset($_POST['transaction_id'])){
+			$transaction_id = $_POST['transaction_id'];
+		}
+		if(isset($_POST['transaction_value'])){
+			$transaction_value = $_POST['transaction_value'];
+		}
+		if(isset($_POST['transaction_remark'])){
+			$transaction_remark = $_POST['transaction_remark'];
+		}
+		if(isset($_POST['balance'])){
+			$balance = $_POST['balance'];
+		}
+		if(isset($_POST['cash_guarentor_name'])){
+			$cash_guarentor_name = $_POST['cash_guarentor_name'];
+		}
+		if(isset($_POST['relationship'])){
+			$relationship = $_POST['relationship'];
+		}
 
-			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
+		$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
 
-			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
-			
     }
+
+	function getLoanList($mysqli,$id){
+		$detailrecords = array();
+		$Qry = $mysqli->query("SELECT `cus_id`,`cus_name`,`mobile1`,`cus_pic`,`area_confirm_area`,`area_confirm_subarea`,`area_line` FROM `acknowlegement_customer_profile` WHERE req_id = '".strip_tags($id)."' ");
+		if($Qry->num_rows>0){
+			$row = $Qry->fetch_assoc();
+			$detailrecords = $row;
+		}
+		
+		//Getting area Name
+		$qry = $mysqli->query("SELECT area_name FROM area_list_creation WHERE area_id = " . $detailrecords['area_confirm_area']);
+		$detailrecords['area_name'] = $qry->fetch_assoc()['area_name'];
+
+		//Getting sub area Name
+		$qry = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation WHERE sub_area_id = " . $detailrecords['area_confirm_subarea']);
+		$detailrecords['sub_area_name'] = $qry->fetch_assoc()['sub_area_name'];
+
+		// Getting Line Id, Branch ID, Branch Name
+		$qry = $mysqli->query("SELECT b.branch_id, b.branch_name, l.map_id FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id WHERE l.line_name = '" . $detailrecords['area_line'] . "'");
+		$row = $qry->fetch_assoc();
+		$detailrecords['line_id'] = $row['map_id'];
+		$detailrecords['branch_id'] = $row['branch_id'];
+		$detailrecords['branch_name'] = $row['branch_name'];
+
+		return $detailrecords;
+	}
 
 }//Class End

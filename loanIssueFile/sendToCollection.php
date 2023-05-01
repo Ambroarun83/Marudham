@@ -15,7 +15,7 @@ if (isset($_SESSION['userid'])) {
     $selectIC = $con->query("UPDATE in_verification set cus_status = 14, update_login_id = $userid WHERE req_id = '".$req_id."' ")or die('Error on inVerification Table');
     $selectIC = $con->query("UPDATE `in_approval` SET `cus_status`= 14,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_approval Table');
     $selectIC = $con->query("UPDATE `in_acknowledgement` SET `cus_status`= 14,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
-    $insertIssue = $con->query("UPDATE `in_issue` SET `cus_status`= 14,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
+    $insertIssue = $con->query("UPDATE `in_issue` SET `cus_status`= 14,`updated_date`=current_timestamp,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
 
     $response = 'Loan Issue Completed';
     echo json_encode($response);
