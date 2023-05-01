@@ -662,7 +662,7 @@ input:checked + .slider:before {
 													<option value="1" <?php if(isset($collection_method) and $collection_method == '1') echo 'selected';?>>BySelf</option> 
 													<option value="2" <?php if(isset($collection_method) and $collection_method == '2') echo 'selected';?>>Spot Collection</option> 
 													<option value="3" <?php if(isset($collection_method) and $collection_method == '3') echo 'selected';?>>Cheque Collection</option> 
-													<option value="4" <?php if(isset($collection_method) and $collection_method == '4') echo 'selected';?>>ESC</option> 
+													<option value="4" <?php if(isset($collection_method) and $collection_method == '4') echo 'selected';?>>ECS</option> 
 												</select>
 											</div>
 										</div>

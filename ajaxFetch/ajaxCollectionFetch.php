@@ -110,7 +110,7 @@ foreach ($result as $row) {
     $sub_array[] = $row['cp_cus_id'];
     $sub_array[] = $row['cus_name'];
     
-
+    
     
     //Area Name fetch
     $area_id = $row['area_confirm_area'];
@@ -136,9 +136,10 @@ foreach ($result as $row) {
     $sub_array[] = $row['area_line'];
     $sub_array[] = $row['mobile1'];
     
-
+    $cus_id = $row['cp_cus_id'];
     $id          = $row['req_id'];
-    $action="<a href='collection&upd=$id' title='Edit details' ><button class='btn btn-success'>Collect 
+
+    $action="<a href='collection&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success'>Collect 
     <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
 
     $sub_array[] = $action;
