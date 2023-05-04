@@ -378,7 +378,7 @@ if(isset($_GET['type'])){
 									</div> -->
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Overdue Penalty %</label><!--<span class='text-danger' style="font-size:11px">  ( If Exceeded Due Date)</span>-->
+											<label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
 											<input type="number" tabindex="20" id="overdue" name="overdue" class="form-control" placeholder="Enter Overdue"   value="<?php if(isset($overdue)) echo $overdue; ?>"  title="Penalty if Exceeded Due Date">
 										</div>
 									</div>
@@ -567,8 +567,8 @@ if(isset($_GET['type'])){
 									</div> -->
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Overdue Penalty %</label><!--<span class='text-danger' style="font-size:11px">  ( If Exceeded Due Day)</span>-->
-											<input type="number" tabindex="18" id="overdue1" name="overdue1" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue1)) echo $overdue1; ?>">
+											<label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
+											<input type="number" tabindex="18" id="overdue1" name="overdue1" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue1)) echo $overdue1; ?>" required>
 										</div>
 									</div>
 
@@ -727,8 +727,8 @@ if(isset($_GET['type'])){
 									<br><br><br><br><br><br><br><br>
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Overdue Penalty %</label><!--<span class='text-danger' style="font-size:11px">  ( If Exceeded Due Day)</span>-->
-											<input type="number" tabindex="17" id="overdue2" name="overdue2" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue2)) echo $overdue2; ?>">
+											<label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
+											<input type="number" tabindex="17" id="overdue2" name="overdue2" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue2)) echo $overdue2; ?>" required>
 										</div>
 									</div>
 

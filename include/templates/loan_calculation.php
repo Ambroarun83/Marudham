@@ -285,8 +285,8 @@ if($idupd>0)
                         <br><br><br><br><br><br>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="disabledInput">Overdue Penalty %</label><!--<span class='text-danger' style="font-size:11px">  ( If Exceeded Due Date)</span> -->
-                                <input type="number" step="0.01 " tabindex="16" id="overdue" name="overdue" class="form-control" placeholder="Enter Overdue"   value="<?php if(isset($overdue)) echo $overdue; ?>">
+                                <label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
+                                <input type="number" step="0.01 " tabindex="16" id="overdue" name="overdue" class="form-control" placeholder="Enter Overdue"   value="<?php if(isset($overdue)) echo $overdue; ?>" required>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">

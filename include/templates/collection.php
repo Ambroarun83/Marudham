@@ -1,10 +1,40 @@
 <?php
-if(isset($_POST['submit_loanIssue']) && $_POST['submit_loanIssue'] != ''){
 
-	$addDocVerification = $userObj->addloanIssue($mysqli, $userid);
+if(isset($_SESSION['userid'])){
+    $userid = $_SESSION['userid'];
+}
+
+
+if(isset($_POST['submit_collection']) && $_POST['submit_collection'] != ''){
+	if(isset($_POST['req_id'])){$req_id = $_POST['req_id'];}
+
+	// $addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
 ?>
-	<!-- <script> alert('Loan Issued Details Submitted'); </script> -->
-	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_issue&msc=1';</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+	<script> 
+	// printfunction(); 
+		function printfunction1() {
+			var coll_id = $('#collection_id').val();
+			alert(coll_id)
+			// $.ajax({
+			// 	url: 'collectionFile/print_collection.php',
+			// 	data: { 'coll_id': coll_id },
+			// 	type: 'post',
+			// 	cache: false,
+			// 	success: function(response) {
+			// 	var printWindow = window.open('', '', 'height=600,width=800');
+			// 	printWindow.document.write(response);
+			// 	printWindow.document.close();
+			// 	printWindow.print();
+			// 	setTimeout(function() {
+			// 		location.href = '<?php echo $HOSTPATH; ?>edit_collection&msc=1';
+			// 	}, 4000);
+			// 	}
+			// });
+		}
+
+	</script>
+	<!-- <script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1';</script> -->
 <?php
 }
 
@@ -32,10 +62,12 @@ if($idupd>0)
 			$mobile1					= $getLoanList['mobile1'];
 			$cus_pic					= $getLoanList['cus_pic'];
 	}
+
+	$getuser = $userObj->getuser($mysqli,$userid);
+	$collection_access = $getuser['collection_access'];
 }
 
 ?>
-
 
 <style>
 .img_show {
@@ -45,7 +77,12 @@ if($idupd>0)
 		object-fit: cover;
 		background-color: white;
 }
-
+.modal {
+    width: 100% !important;
+}
+.modal-lg {
+    max-width: 70% !important;
+}
 </style>
 
 <!-- Page header start -->
@@ -71,7 +108,9 @@ if($idupd>0)
 	<!--form start-->
 	<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="idupd" id="idupd" value="<?php if (isset($idupd)) {echo $idupd;} ?>" />
+		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
 		<input type="hidden" name="cusidupd" id="cusidupd" value="<?php if (isset($cusidupd)) {echo $cusidupd;} ?>" />
+		<input type="hidden" name="colluserid" id="colluserid" value="<?php if (isset($userid)) {echo $userid;} ?>" />
 
 		<!-- Row start -->
 		<div class="row gutters">
@@ -202,7 +241,7 @@ if($idupd>0)
 				<!-- Collection window Start -->
 				<div class="card collection_card">
 					<div class="card-header">
-						<div class="card-title">Collection Info</div>
+						<div class="card-title">Personal Info</div>
 					</div>
 					<div class="card-body">
 						<div class="row ">
@@ -296,19 +335,19 @@ if($idupd>0)
 								<div class="row">
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Total Amount</label>&nbsp;<span class="text-danger">*</span>
+											<label for="disabledInput">Total Amount</label>&nbsp;<span class="text-danger totspan">*</span>
 											<input type="text" class="form-control" readonly id="tot_amt" name="tot_amt" value=''>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Paid Amount</label>&nbsp;<span class="text-danger">*</span>
+											<label for="disabledInput">Paid Amount</label>&nbsp;<span class="text-danger paidspan">*</span>
 											<input type="text" class="form-control" readonly id="paid_amt" name="paid_amt" value=''>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Balance Amount</label>&nbsp;<span class="text-danger int-diff">*</span>
+											<label for="disabledInput">Balance Amount</label>&nbsp;<span class="text-danger balspan">*</span>
 											<input type="text" class="form-control" readonly id="bal_amt" name="bal_amt" value=''>
 										</div>
 									</div>
@@ -320,25 +359,25 @@ if($idupd>0)
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Pending Amount</label>&nbsp;<span class="text-danger">*</span>
+											<label for="disabledInput">Pending Amount</label>&nbsp;<span class="text-danger pendingspan">*</span>
 											<input type="text" class="form-control" readonly id="pending_amt" name="pending_amt" value=''>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Payable Amount</label>&nbsp;<span class="text-danger">*</span>
+											<label for="disabledInput">Payable Amount</label>&nbsp;<span class="text-danger payablespan">*</span>
 											<input type="text" class="form-control" readonly id="payable_amt" name="payable_amt" value=''>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger">*</span>
+											<label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger ">*</span>
 											<input type="text" class="form-control" readonly id="penalty" name="penalty" value=''>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Collection Charges</label>&nbsp;<span class="text-danger">*</span>
+											<label for="disabledInput">Collection Charges</label>&nbsp;<span class="text-danger ">*</span>
 											<input type="text" class="form-control" readonly id="coll_charge" name="coll_charge" value=''>
 										</div>
 									</div>
@@ -355,6 +394,7 @@ if($idupd>0)
 												<option value='4'>IMPS/NEFT/RTGS</option>
 												<option value='5'>UPI Transaction</option>
 											</select>
+											<span class="text-danger" id='collectionmodeCheck' style="display: none;">Please Select Collection Mode<span>
 										</div>
 									</div>
 									<div class="col-8 cash"></div>
@@ -363,19 +403,23 @@ if($idupd>0)
 											<label for="disabledInput">Cheque No</label>&nbsp;<span class="text-danger">*</span>
 											<select class='form-control' id='cheque_no' name='cheque_no'>
 												<option value=''>Select Cheque No</option>
+												<option value='1321321'>Father</option>
 											</select>
+											<span class="text-danger" id='chequeCheck' style="display: none;">Please Select Cheque No<span>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none">
 										<div class="form-group">
 											<label for="disabledInput">Transaction ID</label>&nbsp;<span class="text-danger">*</span>
 											<input type="text" class="form-control" id="trans_id" name="trans_id" value='' placeholder="Enter Transaction ID">
+											<span class="text-danger" id='transidCheck' style="display: none;">Please Enter Transaction ID<span>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none">
 										<div class="form-group">
 											<label for="disabledInput">Transaction Date</label>&nbsp;<span class="text-danger">*</span>
 											<input type="date" class="form-control" id="trans_date" name="trans_date" value=''>
+											<span class="text-danger" id='transdateCheck' style="display: none;">Please Choose Transaction Date<span>
 										</div>
 									</div>
 									<div class="col-4 other" style="display:none"></div>
@@ -388,12 +432,13 @@ if($idupd>0)
 												<option value='2'>On Spot</option>
 												<option value='3'>Bank Transaction</option>
 											</select>
+											<span class="text-danger" id='collectionlocCheck' style="display: none;">Please Select Collection Location<span>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Collection Date</label>&nbsp;<span class="text-danger">*</span>
-											<input type="date" class="form-control" id="collection_date" name="collection_date" value='<?php echo date('d-m-Y'); ?>'>
+											<input type="text" readonly class="form-control" id="collection_date" name="collection_date" value='<?php echo date('d-m-Y'); ?>'>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -421,18 +466,21 @@ if($idupd>0)
 										<div class="form-group">
 											<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger">*</span>
 											<input type="text" class="form-control" id="due_amt_track" name="due_amt_track" value='' placeholder='Enter Due Amount'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger">*</span>
 											<input type="text" class="form-control" id="penalty_track" name="penalty_track" value='' placeholder='Enter Penalty Amount'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Collection Charges</label>&nbsp;<span class="text-danger">*</span>
 											<input type="text" class="form-control" id="coll_charge_track" name="coll_charge_track" value='' placeholder='Enter Collection Charges'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -442,33 +490,35 @@ if($idupd>0)
 										</div>
 									</div>
 
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
+									<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12"></div>
 
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Pre Closure</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" class="form-control" id="pre_close_waiver" name="pre_close_waiver" value='' placeholder='Enter Pre Closure Amount'>
+									<!-- Only if user has collection access can have the waiver details -->
+									<?php if(isset($collection_access) && $collection_access =='0'){?>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Pre Closure</label>
+												<input type="text" class="form-control" id="pre_close_waiver" name="pre_close_waiver" value='' placeholder='Enter Pre Closure Amount'>
+											</div>
 										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Penalty Waiver</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" class="form-control" id="penalty_waiver" name="penalty_waiver" value='' placeholder='Enter Penalty Waiver'>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Penalty Waiver</label>
+												<input type="text" class="form-control" id="penalty_waiver" name="penalty_waiver" value='' placeholder='Enter Penalty Waiver'>
+											</div>
 										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Collection Charges</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" class="form-control" id="coll_charge_waiver" name="coll_charge_waiver" value='' placeholder='Enter Collection Charges'>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Collection Charges</label>
+												<input type="text" class="form-control" id="coll_charge_waiver" name="coll_charge_waiver" value='' placeholder='Enter Collection Charges'>
+											</div>
 										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Total Waiver</label>
-											<input type="text" readonly class="form-control" id="total_waiver" name="total_waiver" value=''>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Total Waiver</label>
+												<input type="text" readonly class="form-control" id="total_waiver" name="total_waiver" value=''>
+											</div>
 										</div>
-									</div>
+									<?php }?>
 								</div>
 							</div>
 						</div>
@@ -479,14 +529,209 @@ if($idupd>0)
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_collection" id="submit_collection" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="button" name="submit_collection" id="submit_collection" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
 						<!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
 					</div>
 				</div>
 				<!-- Submit Button End -->
-
+				<div id="printcollection" style="display: none"></div>
 			</div>
 		</div>
 	</form>
 	<!-- Form End -->
 </div>
+
+<!-- /////////////////////////////////////////////////////////////////// Due Chart Modal START ////////////////////////////////////////////////////////////////////// -->
+<div class="modal fade DueChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <input type="hidden" name="req_id" id="req_id" value="<?php if(isset($idupd)){echo $idupd;} ?>" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Due Chart Icon</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="dueChartTableDiv">
+                    <table class="table custom-table">
+                        <thead>
+                            <tr>
+                                <th> S.No </th>
+                                <th> Due Month </th>
+                                <th> Month </th>
+                                <th> Due Amount </th>
+                                <th> Pending </th>
+                                <th> Payable </th>
+                                <th> Collection  Date </th>
+                                <th> Collection Amount </th>
+                                <th> Balance Amount </th>
+                                <th> Collection Track </th>
+                                <th> Role </th>
+                                <th> User ID </th>
+                                <th> Collection Location </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Due Chart Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Penalty Char Modal START ////////////////////////////////////////////////////////////////////// -->
+<div class="modal fade PenaltyChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <input type="hidden" name="req_id" id="req_id" value="<?php if(isset($idupd)){echo $idupd;} ?>" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Penalty Chart</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="penaltyChartTableDiv">
+                    <table class="table custom-table">
+                        <thead>
+                            <tr>
+                                <th> S.No </th>
+                                <th> Penalty Date </th>
+                                <th> Penalty  </th>
+                                <th> Paid Date </th>
+                                <th> Paid Amount </th>
+                                <th> Balance Amount </th>
+                                <th> Waiver Amount </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Penalty Chart Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Collection Charges Chart Modal START ////////////////////////////////////////////////////////////// -->
+<div class="modal fade collectionChargeChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <input type="hidden" name="req_id" id="req_id" value="<?php if(isset($idupd)){echo $idupd;} ?>" >
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Collection Charge Chart </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="collectionChargeDiv">
+                    <table class="table custom-table">
+                        <thead>
+                            <tr>
+                                <th> S.No </th>
+                                <th> Date </th>
+                                <th> Collection Charges  </th>
+                                <th> Purpose </th>
+                                <th> Paid Date </th>
+                                <th> Paid  </th>
+                                <th> Balance </th>
+                                <th> Waiver </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Collection Charges Chart Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Collection Charges Add Modal START ////////////////////////////////////////////////////////////// -->
+<div class="modal fade collectionCharges" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Collection charges</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetcollCharges()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- alert messages -->
+                <div id="collChargeInsertOk" class="successalert"> Collection Charges Added Successfully
+                    <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+                <!-- <div id="bankUpdateok" class="successalert"> Bank Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div> -->
+                <div id="collChargeNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+                <!-- <div id="bankDeleteOk" class="unsuccessalert"> Bank Info Deleted
+                    <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+                <div id="bankDeleteNotOk" class="unsuccessalert"> Bank Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div> -->
+                <br />
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                        <div class="form-group">
+                            <label for="coll_date "> Date  </label> <span class="required">&nbsp;*</span>
+                            <input type="date" class="form-control" id="collectionCharge_date" name="collectionCharge_date" >
+                            <span class="text-danger" id="collectionChargeDateCheck"> Select Date </span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                        <div class="form-group">
+                            <label for="coll_purpose"> Purpose  </label> <span class="required">&nbsp;*</span>
+                            <input type="text" class="form-control" id="collectionCharge_purpose" name="collectionCharge_purpose" placeholder="Enter Purpose" onkeydown="return /[a-z ]/i.test(event.key)">
+                            <span class="text-danger" id="purposeCheck"> Enter Purpose </span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                        <div class="form-group">
+                            <label for="coll_amnt"> Amount </label> <span class="required">&nbsp;*</span>
+                            <input type="number" class="form-control" id="collectionCharge_Amnt" name="collectionCharge_Amnt" placeholder="Enter Amount" >
+                            <span class="text-danger" id="amntCheck"> Enter Amount </span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+                        <!-- <input type="hidden" name="bankID" id="bankID"> -->
+                        <button type="button" tabindex="2" name="collChargeBtn" id="collChargeBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+                    </div>
+                </div>
+                </br>
+                <div id="collChargeTableDiv">
+                    <table class="table custom-table modalTable">
+                        <thead>
+                            <tr>
+                                <th width="15%"> S.No </th>
+                                <th> Date </th>
+                                <th> Purpose </th>
+                                <th> Amount </th>
+                                <!-- <th> ACTION </th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetcollCharges()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Collection Charges Add Modal END ////////////////////////////////////////////////////////////////////// -->

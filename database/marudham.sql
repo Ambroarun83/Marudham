@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2023 at 03:01 PM
+-- Generation Time: May 04, 2023 at 03:21 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -80,6 +80,8 @@ CREATE TABLE `acknowledgement_loan_cal_category` (
 --
 
 INSERT INTO `acknowledgement_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_id`, `category`) VALUES
+(39, '17', '11', 'Fridge'),
+(40, '17', '11', 'Fridge'),
 (49, '18', '10', 'Vankozhi'),
 (50, '18', '10', 'Nerupu kozhi'),
 (51, '18', '10', 'Naatu Kozhi'),
@@ -149,6 +151,7 @@ CREATE TABLE `acknowlegement_customer_profile` (
 
 INSERT INTO `acknowlegement_customer_profile` (`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (4, '18', '945454646565', 'Praveen', '1', '2009-04-17', '14', 'O+', '9844654654', '9846546546', '', 'wallpaperflare.com_wallpaper.jpg', '29', 'Brother', 'Order_ID_4479904631.jpg', 'New', '', '1', 'Vandavasi', 'Vandavasi', 'Vandavasi', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '11', 'G4', 'L4', '1', '', '28,29', '0', '10', NULL, '28', '28', NULL, '2023-04-20 10:58:38', '2023-04-21 10:16:27'),
+(7, '17', '646546546546', 'Rajesh', '1', '1999-02-10', '24', 'O+', '9565565465', '9651321321', '', 'pexels-cesar-perez-733745.jpg', '31', 'Mother', 'programming-funny-jokes-e1600486875722.jpg', 'New', '', 'Select Residential Type', '', '', '', '2', 'Pondy', '15000', 'Pondy', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '12', 'G4', 'L4', '1', '', '30', '1', '10', NULL, '28', NULL, NULL, '2023-04-20 17:27:28', '2023-04-20 17:27:28'),
 (8, '15', '546546546465', 'Kuppusamy', '1', '1999-03-29', '24', 'AB+', '9646465546', '94654654', '', 'pexels-jakub-novacek-924824.jpg', '32', 'Father', 'WhatsApp Image 2023-01-20 at 11.43.56 AM.jpeg', 'Existing', '', '0', 'MG road', 'MG road', 'MG road', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'G1', 'L2', '1', '', '32', '1', '10', NULL, '28', '28', NULL, '2023-04-21 09:56:49', '2023-04-21 10:15:22'),
 (11, '10', '123456789101', 'Triple H', '1', '1999-07-15', '24', '', '9565654654', '', '', 'pexels-hansen-tang-13435926.jpg', '34', 'Father', 'creative-mars-collage.jpg', 'Existing', '', '0', 'Vandavasi', 'MG road', 'MG road', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'G1', 'L2', '1', '', '34', '0', '10', NULL, '28', NULL, NULL, '2023-04-28 16:40:54', '2023-04-28 16:40:54'),
 (12, '11', '123456789101', 'Triple H', '1', '1999-07-15', '24', '', '9565654654', '', '', 'pexels-aleksandar-pasaric-325185.jpg', '35', 'Brother', 'ecpXIUeY_400x400.jpg', 'Existing', '', '3', 'MG road', 'MG road', 'MG road', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'G1', 'L2', '1', '', '35', '1', '10', NULL, '25', NULL, NULL, '2023-04-29 15:42:46', '2023-04-29 15:42:46');
@@ -229,6 +232,7 @@ CREATE TABLE `acknowlegement_documentation` (
 
 INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `doc_info_upload`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `submitted`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (3, '18', '945454646565', 'Praveen', '4', 'DOC-102', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '1', '', '', '', '', '', '', 'Adhar', '123', '0', 'Invoice_4479904631.pdf,', '0', 'Praveen', '', 'NIL', '11', '0', '1', '28', '1', NULL, '2023-04-20 13:20:51', '2023-04-20 13:20:51'),
+(4, '17', '646546546546', 'Rajesh', '7', 'DOC-103', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', 'Adhar', '123', '0', NULL, '2', '', '30', 'Father', '11', '0', NULL, '28', '1', NULL, '2023-04-20 17:30:15', '2023-04-20 17:30:15'),
 (5, '15', '546546546465', 'Kuppusamy', '8', 'DOC-104', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '1', '', '', '', '', '', '', 'House Document', 'House Document', '0', ',', '0', 'Kuppusamy', '', 'NIL', '11', '0', '1', '1', '1', NULL, '2023-04-28 16:36:15', '2023-04-28 16:36:15'),
 (6, '10', '123456789101', 'Triple H', '11', 'DOC-105', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '0', '0', 'TT', '24k', '2', '233', '54000', 'Adhar', '123', '0', 'loan_issue.sql,', '2', '', '34', 'Father', '11', '0', '1', '28', '1', NULL, '2023-04-28 16:42:03', '2023-04-28 16:42:03'),
 (7, '11', '123456789101', 'Triple H', '12', 'DOC-106', '0', '0', 'Triple H', '', 'NIL', 'Building', '1651', 'Chennai', '12345', 'gfgfddgh', 'gghd', '4654654', 'hfgh', '646545', '1', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '1', '', '', '', '', '', '', 'Adhar', '123', '1', ',', '1', 'Under taker', '', 'Brother', '11', '0', '1', '25', '1', NULL, '2023-04-29 15:43:43', '2023-04-29 15:43:43');
@@ -287,10 +291,11 @@ CREATE TABLE `acknowlegement_loan_calculation` (
 --
 
 INSERT INTO `acknowlegement_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_loan`, `cus_name_loan`, `cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`, `update_login_id`, `create_date`, `update_date`) VALUES
-(10, '18', '945454646565', 'Praveen', 'New', '9844654654', 'wallpaperflare.com_wallpaper.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '15', '10', '45000', '40500', '4500', '45000', '450', '15', '10', '40475', '2023-04', '2023-06', '1', '12', '1', '1', '2023-04-20 17:19:26', '2023-04-21 09:48:19'),
+(10, '18', '945454646565', 'Praveen', 'New', '9844654654', 'wallpaperflare.com_wallpaper.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '15', '10', '45000', '40500', '4500', '45000', '450', '15', '10', '40475', '2023-04-05', '2023-06-05', '1', '12', '1', '1', '2023-04-20 17:19:26', '2023-04-21 09:48:19'),
+(11, '17', '646546546546', 'Rajesh', 'New', '9565565465', 'pexels-cesar-perez-733745.jpg', '5', 'Multi Things', '25000', '5000', '20000', '2', 'Monthly', '', '', '', '3', '', '8', '10', '22', '1500', '1500', '20000', '18000', '2000', '20000', '909.0909090909091', '1500', '1500', '15000', '2023-05-05', '2023-08-13', '2', '12', '28', NULL, '2023-04-20 17:53:38', '2023-04-20 17:53:38'),
 (13, '15', '546546546465', 'Kuppusamy', 'Existing', '9646465546', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '94654', '7504', '87150', '1', 'Monthly', 'Interest', '', 'Monthly', '', '', '', '2', '2', '2', '2', '87150', '87150', '1745', '', '', '1743', '1743', '83664', '2023-04-07', '2023-06-07', '1', '12', '1', NULL, '2023-04-28 16:36:56', '2023-04-28 16:36:56'),
-(14, '10', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '5', 'Multi Things', '24864', '943', '23921', '2', '', '', '', '', '1', '', '4', '5', '9', '1000', '1242', '23921', '22725', '1200', '23921', '2657', '1000', '1242', '20483', '2023-05-05', '2024-02-05', '2', '12', '28', NULL, '2023-04-28 16:43:27', '2023-04-28 16:43:27'),
-(15, '11', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '20', '10', '45000', '40500', '4500', '45000', '450', '20', '10', '40470', '2023-05-05', '2023-08-13', '1', '12', '25', NULL, '2023-04-29 15:44:10', '2023-04-29 15:44:10');
+(14, '10', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '5', 'Multi Things', '24864', '943', '23921', '2', '', '', '', '', '1', '', '4', '5', '9', '1000', '1242', '23921', '22725', '1200', '23921', '2657', '1000', '1242', '20483', '2023-04-04', '2024-02-05', '2', '12', '28', NULL, '2023-04-28 16:43:27', '2023-04-28 16:43:27'),
+(15, '11', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '20', '10', '45000', '40500', '4500', '45000', '450', '20', '10', '40470', '2023-04-05', '2023-08-13', '1', '12', '25', NULL, '2023-04-29 15:44:10', '2023-04-29 15:44:10');
 
 -- --------------------------------------------------------
 
@@ -628,6 +633,92 @@ INSERT INTO `cheque_upd` (`id`, `req_id`, `cheque_table_id`, `upload_cheque_name
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `collection`
+--
+
+CREATE TABLE `collection` (
+  `coll_id` int(11) NOT NULL COMMENT 'Primary Key',
+  `coll_code` varchar(255) DEFAULT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
+  `cus_name` varchar(255) DEFAULT NULL,
+  `branch` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `sub_area` varchar(255) DEFAULT NULL,
+  `line` varchar(255) DEFAULT NULL,
+  `loan_category` varchar(255) DEFAULT NULL,
+  `sub_category` varchar(255) DEFAULT NULL,
+  `coll_status` varchar(255) DEFAULT NULL,
+  `coll_sub_status` varchar(255) DEFAULT NULL,
+  `tot_amt` varchar(255) DEFAULT NULL,
+  `paid_amt` varchar(255) DEFAULT NULL,
+  `bal_amt` varchar(255) DEFAULT NULL,
+  `due_amt` varchar(255) DEFAULT NULL,
+  `pending_amt` varchar(255) DEFAULT NULL,
+  `payable_amt` varchar(255) DEFAULT NULL,
+  `penalty` varchar(255) DEFAULT NULL,
+  `coll_charge` varchar(255) DEFAULT NULL,
+  `coll_mode` varchar(255) DEFAULT NULL,
+  `cheque_no` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `trans_date` datetime DEFAULT NULL,
+  `coll_location` varchar(255) DEFAULT NULL,
+  `coll_date` datetime DEFAULT NULL,
+  `due_amt_track` varchar(255) NOT NULL DEFAULT '0',
+  `penalty_track` varchar(255) NOT NULL DEFAULT '0',
+  `coll_charge_track` varchar(255) NOT NULL DEFAULT '0',
+  `total_paid_track` varchar(255) NOT NULL DEFAULT '0',
+  `pre_close_waiver` varchar(255) NOT NULL DEFAULT '0',
+  `penalty_waiver` varchar(255) NOT NULL DEFAULT '0',
+  `coll_charge_waiver` varchar(255) NOT NULL DEFAULT '0',
+  `total_waiver` varchar(255) NOT NULL DEFAULT '0',
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `delete_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL COMMENT 'Create Time',
+  `updated_date` datetime DEFAULT current_timestamp() COMMENT 'Update Time'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `collection`
+--
+
+INSERT INTO `collection` (`coll_id`, `coll_code`, `req_id`, `cus_id`, `cus_name`, `branch`, `area`, `sub_area`, `line`, `loan_category`, `sub_category`, `coll_status`, `coll_sub_status`, `tot_amt`, `paid_amt`, `bal_amt`, `due_amt`, `pending_amt`, `payable_amt`, `penalty`, `coll_charge`, `coll_mode`, `cheque_no`, `trans_id`, `trans_date`, `coll_location`, `coll_date`, `due_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, `total_waiver`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(13, 'COL-101', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Current', '23921', '0', '23921', '2657', '2657', '5314', '53', '100', '1', '', '', '0000-00-00 00:00:00', '1', '0000-00-00 00:00:00', '', '53', '', '53', '', '', '', '', '1', NULL, NULL, '2023-05-04 16:21:49', '2023-05-04 16:21:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `collection_charges`
+--
+
+CREATE TABLE `collection_charges` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
+  `coll_date` varchar(255) DEFAULT NULL,
+  `coll_purpose` varchar(255) DEFAULT NULL,
+  `coll_charge` varchar(255) DEFAULT NULL,
+  `paid_date` varchar(255) DEFAULT NULL,
+  `paid_amnt` varchar(255) DEFAULT '0',
+  `waiver_amnt` varchar(255) DEFAULT '0',
+  `status` int(11) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL COMMENT 'Create Time',
+  `updated_date` datetime DEFAULT current_timestamp() COMMENT 'Update Time'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `collection_charges`
+--
+
+INSERT INTO `collection_charges` (`id`, `req_id`, `cus_id`, `coll_date`, `coll_purpose`, `coll_charge`, `paid_date`, `paid_amnt`, `waiver_amnt`, `status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '10', '123456789101', NULL, NULL, '100', NULL, NULL, NULL, NULL, '1', NULL, NULL, '2023-05-03 11:12:44');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `company_creation`
 --
 
@@ -919,7 +1010,8 @@ INSERT INTO `in_acknowledgement` (`id`, `req_id`, `cus_id`, `cus_status`, `statu
 (2, '10', '123456789101', '14', '0', '1', '1', NULL, '2023-04-28 17:17:43'),
 (3, '11', '123456789101', '14', '0', '1', '1', NULL, '2023-04-29 15:57:07'),
 (5, '11', '123456789101', '14', '0', '1', '1', NULL, '2023-04-29 15:58:29'),
-(6, '15', '546546546465', '13', '0', '1', NULL, NULL, '2023-04-29 15:58:39');
+(6, '15', '546546546465', '13', '0', '1', NULL, NULL, '2023-04-29 15:58:39'),
+(7, '17', '646546546546', '3', '0', '1', NULL, NULL, '2023-05-03 12:10:30');
 
 -- --------------------------------------------------------
 
@@ -965,7 +1057,7 @@ CREATE TABLE `in_issue` (
   `update_login_id` varchar(255) DEFAULT NULL,
   `delete_login_id` varchar(255) DEFAULT NULL,
   `created_date` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_date` datetime DEFAULT NULL
+  `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -1047,7 +1139,7 @@ INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `
 (11, 'Staff', 'Kumar', '28', '', 'test remarks', '', 'REQ-108', '2023-04-03', '7', '123456789101', 'Existing', 'Triple H', '1999-07-15', '24', '1', '', 'Puducherry', 'Puducherry', 'Puducherry', '8', '8', 'MG road', '9565654654', '', 'Roman reigns', 'Nikki', '1', 'Manju warrior', '4', 'Uzhavan', 'pexels-hansen-tang-13435926.jpg', '2', 'Business', '50000', '5000', '10.0', '45000', '2', '', '24', '14', '0', '21', '1', NULL, '2023-04-03 16:34:56', '2023-04-03 16:34:56'),
 (14, 'Agent', 'Darling & Co', '28', '1', '', 'Test Declaration', 'REQ-111', '2023-04-05', NULL, '546546546465', 'Existing', 'Kuppusamy', '2023-03-29', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '234345', '234', '0.1', '234111', '1', '43', '', '1', '0', '24', '1', NULL, '2023-04-05 16:53:21', '2023-04-05 16:53:21'),
 (15, 'Staff', 'Kumar', '28', '', 'Remarks', '', 'REQ-112', '2023-04-06', NULL, '546546546465', 'Existing', 'Kuppusamy', '1999-03-29', '24', '1', 'AB+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '80000', '15000', '18.8', '65000', '1', '1000', '', '13', '0', '21', '1', NULL, '2023-04-06 12:55:46', '2023-04-06 12:55:46'),
-(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', NULL, '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'pexels-cesar-perez-733745.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '2', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
+(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', NULL, '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'pexels-cesar-perez-733745.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '3', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
 (18, 'Director', 'Chithambaram', '', '1', '', 'Declaration', 'REQ-115', '2023-04-13', NULL, '945454646565', 'New', 'Praveen', '2009-04-17', '14', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '5', 'Multi Things', '20000', '10000', '50.0', '10000', '2', '', '15', '14', '0', '28', '1', NULL, '2023-04-13 17:01:11', '2023-04-13 17:01:11');
 
 -- --------------------------------------------------------
@@ -1133,11 +1225,11 @@ CREATE TABLE `loan_calculation` (
 --
 
 INSERT INTO `loan_calculation` (`loan_cal_id`, `loan_category`, `sub_category`, `due_method`, `due_type`, `profit_method`, `calculate_method`, `intrest_rate_min`, `intrest_rate_max`, `due_period_min`, `due_period_max`, `document_charge_min`, `document_charge_max`, `processing_fee_min`, `processing_fee_max`, `loan_limit`, `due_date`, `grace_period`, `penalty`, `overdue`, `collection_info`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, '2', 'Business', 'Monthly', 'intrest', '', 'Monthly', '1.5', '2.5', '0', '5', '1.5', '2.5', '1.5', '2.5', '156654', '', '', '', '', 'Yes', 0, 1, 28, NULL, '2023-03-14 16:00:43', '2023-03-14 16:00:43'),
-(2, '5', 'Mobile', 'Monthly', 'emi', 'pre_intrest,after_intrest', '', '1.6', '1.6', '1.6', '1.6', '1.6', '1.6', '1.6', '1.6', '30000', '', '', '', '1.6', 'Yes', 0, 1, 1, NULL, '2023-03-14 16:02:51', '2023-03-14 16:02:51'),
-(3, '5', 'Furniture', 'Monthly', 'intrest', '', 'Monthly', '10', '20', '15', '18', '10', '12', '5', '10', '156654', '', '', '', '', 'No', 0, 1, 25, NULL, '2023-03-23 12:17:56', '2023-03-23 12:17:56'),
-(5, '5', 'Multi Things', 'Monthly', 'emi', 'pre_intrest,after_intrest', '', '0', '10', '5', '15', '2', '10', '0', '5', '2334333', '', '', '', '', 'Yes', 0, 1, NULL, NULL, '2023-03-23 13:28:40', '2023-03-23 13:28:40'),
-(6, '6', 'Education', 'Monthly', 'emi', 'pre_intrest', '', '5', '5', '5', '5', '5', '5', '5', '5', '50000', '', '', '', '', 'Yes', 0, 1, 1, NULL, '2023-03-23 13:38:13', '2023-03-23 13:38:13');
+(1, '2', 'Business', 'Monthly', 'intrest', '', 'Monthly', '1.5', '2.5', '0', '5', '1.5', '2.5', '1.5', '2.5', '156654', '', '', '2', '2', 'Yes', 0, 1, 28, NULL, '2023-03-14 16:00:43', '2023-03-14 16:00:43'),
+(2, '5', 'Mobile', 'Monthly', 'emi', 'pre_intrest,after_intrest', '', '1.6', '1.6', '1.6', '1.6', '1.6', '1.6', '1.6', '1.6', '30000', '', '', '1.5', '1.6', 'Yes', 0, 1, 1, NULL, '2023-03-14 16:02:51', '2023-03-14 16:02:51'),
+(3, '5', 'Furniture', 'Monthly', 'intrest', '', 'Monthly', '10', '20', '15', '18', '10', '12', '5', '10', '156654', '', '', '3', '3', 'No', 0, 1, 25, NULL, '2023-03-23 12:17:56', '2023-03-23 12:17:56'),
+(5, '5', 'Multi Things', 'Monthly', 'emi', 'pre_intrest,after_intrest', '', '0', '10', '5', '15', '2', '10', '0', '5', '2334333', '', '', '0.3', '0.3', 'Yes', 0, 1, NULL, NULL, '2023-03-23 13:28:40', '2023-03-23 13:28:40'),
+(6, '6', 'Education', 'Monthly', 'emi', 'pre_intrest', '', '5', '5', '5', '5', '5', '5', '5', '5', '50000', '', '', '2.4', '2.4', 'Yes', 0, 1, 1, NULL, '2023-03-23 13:38:13', '2023-03-23 13:38:13');
 
 -- --------------------------------------------------------
 
@@ -1333,16 +1425,69 @@ CREATE TABLE `loan_scheme` (
 --
 
 INSERT INTO `loan_scheme` (`scheme_id`, `scheme_name`, `short_name`, `loan_category`, `sub_category`, `due_method`, `profit_method`, `intrest_rate`, `total_due`, `advance_due`, `due_period`, `doc_charge_type`, `doc_charge_min`, `doc_charge_max`, `proc_fee_type`, `proc_fee_min`, `proc_fee_max`, `due_date`, `overdue`, `grace_period`, `penalty`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, 'Monthly scheme', '', '1', 'Property', 'monthly', 'pre_intrest', '15', '5', '0', '5', 'percentage', '10', '20', 'percentage', '0', '0', '', '', '', '', 0, 1, 1, NULL, '2023-03-14 16:04:05', '2023-04-11 12:34:32'),
+(1, 'Monthly scheme', '', '1', 'Property', 'monthly', 'pre_intrest', '15', '5', '0', '5', 'percentage', '10', '20', 'percentage', '0', '0', '', '1.1', '', '', 0, 1, 1, NULL, '2023-03-14 16:04:05', '2023-04-11 12:34:32'),
 (2, 'Weekly scheme', 'Weekly 10', '1', 'Property', 'weekly', 'pre_intrest', '10', NULL, NULL, '10', 'amt', '10', '20', 'amt', '0', '10', '', '2', NULL, NULL, 0, 1, 1, NULL, '2023-03-14 16:08:05', '2023-03-27 11:52:01'),
-(3, 'Daily scheme', 'Daily 100', '2', 'Business', 'daily', 'pre_intrest', '10', NULL, NULL, '100', 'amt', '10', '20', 'amt', '0', '10', NULL, '3', NULL, NULL, 0, 1, 1, NULL, '2023-03-14 16:08:49', '2023-03-27 11:52:12'),
-(4, 'AB3', 'AB3', '5', 'Multi Things', 'monthly', 'pre_intrest', '5', '10', '1', '9', 'amt', '1000', '1500', 'amt', '1000', '1500', '', '', '', '', 0, 1, NULL, NULL, '2023-03-24 15:42:47', '2023-03-24 15:42:47'),
-(5, '2W', '2W', '3', '2 Wheeler', 'monthly', 'pre_intrest', '2', '15', '1', '14', 'amt', '2000', '2500', 'amt', '2000', '2500', '', '', '', '', 0, 1, NULL, NULL, '2023-03-24 15:43:19', '2023-03-24 15:43:19'),
-(6, 'E2', 'E2', '5', 'Electronics', 'weekly', 'pre_intrest', '1', NULL, NULL, '15', 'amt', '1000', '1500', 'amt', '1500', '1500', '', '', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:43:47', '2023-03-24 15:43:47'),
-(7, '2WW', '2WW', '3', '2 Wheeler', 'weekly', 'pre_intrest', '5', NULL, NULL, '10', 'amt', '1000', '1000', 'amt', '1500', '1500', '', '', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:44:20', '2023-03-24 15:44:20'),
-(8, 'D02', 'd', '5', 'Multi Things', 'daily', 'pre_intrest', '10', NULL, NULL, '22', 'amt', '1500', '1500', 'amt', '1500', '1500', NULL, '', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:44:55', '2023-03-24 15:44:55'),
-(9, 'D03', 'dd', '3', '2 Wheeler', 'daily', 'pre_intrest', '7', NULL, NULL, '15', 'amt', '1500', '1500', 'amt', '100', '1500', NULL, '', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:45:19', '2023-03-24 15:45:19'),
-(10, 'AM4211', '4211', '5', 'Multi Things', 'weekly', 'pre_intrest', '10', NULL, NULL, '24', 'percentage', '5', '10', 'percentage', '10', '15', '', '', NULL, NULL, 0, 1, NULL, NULL, '2023-04-18 10:24:38', '2023-04-18 10:24:38');
+(3, 'Daily scheme', 'Daily 100', '2', 'Business', 'daily', 'pre_intrest', '10', NULL, NULL, '100', 'amt', '10', '20', 'amt', '0', '10', NULL, '2.3', NULL, NULL, 0, 1, 1, NULL, '2023-03-14 16:08:49', '2023-03-27 11:52:12'),
+(4, 'AB3', 'AB3', '5', 'Multi Things', 'monthly', 'pre_intrest', '5', '10', '1', '9', 'amt', '1000', '1500', 'amt', '1000', '1500', '', '2', '', '', 0, 1, NULL, NULL, '2023-03-24 15:42:47', '2023-03-24 15:42:47'),
+(5, '2W', '2W', '3', '2 Wheeler', 'monthly', 'pre_intrest', '2', '15', '1', '14', 'amt', '2000', '2500', 'amt', '2000', '2500', '', '0.3', '', '', 0, 1, NULL, NULL, '2023-03-24 15:43:19', '2023-03-24 15:43:19'),
+(6, 'E2', 'E2', '5', 'Electronics', 'weekly', 'pre_intrest', '1', NULL, NULL, '15', 'amt', '1000', '1500', 'amt', '1500', '1500', '', '0.5', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:43:47', '2023-03-24 15:43:47'),
+(7, '2WW', '2WW', '3', '2 Wheeler', 'weekly', 'pre_intrest', '5', NULL, NULL, '10', 'amt', '1000', '1000', 'amt', '1500', '1500', '', '1.3', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:44:20', '2023-03-24 15:44:20'),
+(8, 'D02', 'd', '5', 'Multi Things', 'daily', 'pre_intrest', '10', NULL, NULL, '22', 'amt', '1500', '1500', 'amt', '1500', '1500', NULL, '2.1', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:44:55', '2023-03-24 15:44:55'),
+(9, 'D03', 'dd', '3', '2 Wheeler', 'daily', 'pre_intrest', '7', NULL, NULL, '15', 'amt', '1500', '1500', 'amt', '100', '1500', NULL, '3.5', NULL, NULL, 0, 1, NULL, NULL, '2023-03-24 15:45:19', '2023-03-24 15:45:19'),
+(10, 'AM4211', '4211', '5', 'Multi Things', 'weekly', 'pre_intrest', '10', NULL, NULL, '24', 'percentage', '5', '10', 'percentage', '10', '15', '', '0.9', NULL, NULL, 0, 1, NULL, NULL, '2023-04-18 10:24:38', '2023-04-18 10:24:38');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `penalty_charges`
+--
+
+CREATE TABLE `penalty_charges` (
+  `req_id` varchar(255) DEFAULT NULL,
+  `penalty_date` varchar(255) DEFAULT NULL,
+  `penalty` varchar(255) DEFAULT NULL,
+  `paid_date` varchar(255) DEFAULT NULL,
+  `paid_amnt` varchar(255) DEFAULT '0',
+  `waiver_amnt` varchar(255) DEFAULT '0',
+  `created_date` datetime DEFAULT current_timestamp(),
+  `updated_time` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `penalty_charges`
+--
+
+INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`, `paid_amnt`, `waiver_amnt`, `created_date`, `updated_time`) VALUES
+('10', '2023-04', '53', NULL, '0', '0', '2023-05-04 17:33:11', '2023-05-04 17:33:11'),
+('11', '2023-04-05', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-06', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-07', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-08', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-09', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-10', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-11', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-12', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-13', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-14', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-15', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-16', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-17', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-18', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-19', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-20', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-21', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-22', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-23', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-24', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-25', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-26', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-27', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-28', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-29', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-04-30', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-05-01', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-05-02', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22'),
+('11', '2023-05-03', '10.35', NULL, '0', '0', '2023-05-04 17:51:22', '2023-05-04 17:51:22');
 
 -- --------------------------------------------------------
 
@@ -1492,7 +1637,7 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (14, 'Agent', 'Darling & Co', '28', '1', '', 'Test Declaration', 'REQ-111', '2023-04-05', NULL, '546546546465', 'Existing', 'Kuppusamy', '2023-03-29', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '234345', '234', '0.1', '234111', '1', '43', '', '1', '0', '24', '1', NULL, '2023-04-05 16:53:21', '2023-04-05 16:53:21'),
 (15, 'Staff', 'Kumar', '28', '', 'Remarks', '', 'REQ-112', '2023-04-06', NULL, '546546546465', 'Existing', 'Kuppusamy', '2023-03-29', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '80000', '15000', '18.8', '65000', '1', '1000', '', '13', '0', '21', '1', NULL, '2023-04-06 12:55:46', '2023-04-06 12:55:46'),
 (16, 'Agent', 'Darling & Co', '28', '1', '', 'Test', 'REQ-113', '2023-04-10', NULL, '963852741236', 'New', 'Ambi', '2023-03-31', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'bussy street', '9654811325', '9456465465', 'Parthasarathy Iyengar', 'Susheela', '2', '', '7', 'Anniyan', 'images.jpg', '2', 'Business', '15000', '100', '0.7', '14900', '1', '1500', '', '4', '0', '24', '1', NULL, '2023-04-10 15:01:23', '2023-04-10 15:01:23'),
-(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', NULL, '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'wallpaperflare.com_wallpaper.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '2', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
+(17, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-114', '2023-04-13', NULL, '646546546546', 'New', 'Rajesh', '1999-02-10', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'wallpaperflare.com_wallpaper.jpg', '6', 'Education', '15000', '1000', '6.7', '14000', '1', '1500', '', '3', '0', '28', '1', '1', '2023-04-13 16:52:26', '2023-04-13 16:52:26'),
 (18, 'Director', 'Chithambaram', '', '1', '', 'Declaration', 'REQ-115', '2023-04-13', NULL, '945454646565', 'New', 'Praveen', '2009-04-17', '14', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '5', 'Multi Things', '20000', '10000', '50.0', '10000', '2', '', '15', '14', '0', '28', '1', NULL, '2023-04-13 17:01:11', '2023-04-13 17:01:11'),
 (19, 'Director', 'Chithambaram', '', '0', '', 'Declare', 'REQ-116', '2023-04-26', NULL, '132132132132', 'New', 'Rajesh', '2023-04-04', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '12', 'Birdur', '9846546546', '94654654', 'Appa', 'Amma', '2', '', '1', 'ABC', 'pexels-cesar-perez-733745.jpg', '6', 'Education', '50000', '5000', '10.0', '45000', '1', '4125.00', '', '0', '0', '28', '28', NULL, '2023-04-26 10:40:27', '0000-00-00 00:00:00');
 
@@ -1714,7 +1859,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
-(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '0', '1', '21', NULL, '2023-03-21 12:23:50', '0000-00-00 00:00:00'),
+(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '0', '1', '21', NULL, '2023-03-21 12:23:50', '0000-00-00 00:00:00'),
 (24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '0', '1', '1', '1', '2023-03-21 15:12:31', '0000-00-00 00:00:00'),
 (25, NULL, NULL, 'Big show', NULL, '', 'bigshow@gmail.com', '123', '1', '12', '3', '', '', '1', '1,2', '', '1,2,3', '1,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '0', '1', '25', NULL, '2023-03-31 12:03:21', '0000-00-00 00:00:00'),
 (27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
@@ -2177,6 +2322,18 @@ ALTER TABLE `cheque_upd`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `collection`
+--
+ALTER TABLE `collection`
+  ADD PRIMARY KEY (`coll_id`);
+
+--
+-- Indexes for table `collection_charges`
+--
+ALTER TABLE `collection_charges`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `company_creation`
 --
 ALTER TABLE `company_creation`
@@ -2476,6 +2633,18 @@ ALTER TABLE `cheque_upd`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `collection`
+--
+ALTER TABLE `collection`
+  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `collection_charges`
+--
+ALTER TABLE `collection_charges`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `company_creation`
 --
 ALTER TABLE `company_creation`
@@ -2515,7 +2684,7 @@ ALTER TABLE `doc_mapping`
 -- AUTO_INCREMENT for table `in_acknowledgement`
 --
 ALTER TABLE `in_acknowledgement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `in_issue`

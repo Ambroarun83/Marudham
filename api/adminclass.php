@@ -4264,39 +4264,39 @@ function updateUser($mysqli,$id,$user_id){
 			}
     }
 
-	// Get Customer Info for Documentation from Customer_profile table.
-	public function getAckcusInfoForDoc($mysqli,$req_id){
+		// Get Customer Info for Documentation from Customer_profile table.
+		public function getAckcusInfoForDoc($mysqli,$req_id){
 
-					$qry = $mysqli->query("SELECT * FROM acknowlegement_customer_profile where req_id = $req_id ");
-					$detailrecords = array();
-					$i=0;
-					if($mysqli->affected_rows>0){
-						while($row = $qry->fetch_assoc()){
-							$detailrecords['cus_profile_id'] = $row['id'];
-							$detailrecords['cus_id'] = $row['cus_id'];
-							$detailrecords['cus_name'] = $row['cus_name'];
-							$detailrecords['area_confirm_area'] = $row['area_confirm_area'];
-							$detailrecords['area_confirm_subarea'] = $row['area_confirm_subarea'];
-							$detailrecords['cus_status'] = $row['cus_status'];
-		
-		
-							$result = $mysqli->query("SELECT area_name FROM area_list_creation where area_id = '".$detailrecords['area_confirm_area']."' and status=0 and area_enable = 0");
-							$area = $result ->fetch_assoc();
-							$detailrecords['area_name'] = $area['area_name'];
-		
-							$subarearesult = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$detailrecords['area_confirm_subarea']."' and status=0 and sub_area_enable = 0");
-							$subarea = $subarearesult ->fetch_assoc();
-							$detailrecords['sub_area_name'] = $subarea['sub_area_name'];
-		
-		
-							$i++;
-						}
-					}
-					return $detailrecords;
-	}
+			$qry = $mysqli->query("SELECT * FROM acknowlegement_customer_profile where req_id = $req_id ");
+			$detailrecords = array();
+			$i=0;
+			if($mysqli->affected_rows>0){
+				while($row = $qry->fetch_assoc()){
+					$detailrecords['cus_profile_id'] = $row['id'];
+					$detailrecords['cus_id'] = $row['cus_id'];
+					$detailrecords['cus_name'] = $row['cus_name'];
+					$detailrecords['area_confirm_area'] = $row['area_confirm_area'];
+					$detailrecords['area_confirm_subarea'] = $row['area_confirm_subarea'];
+					$detailrecords['cus_status'] = $row['cus_status'];
 
-	// Get Documentation Info.
-	public function getAcknowlegementDocument($mysqli,$req_id){
+
+					$result = $mysqli->query("SELECT area_name FROM area_list_creation where area_id = '".$detailrecords['area_confirm_area']."' and status=0 and area_enable = 0");
+					$area = $result ->fetch_assoc();
+					$detailrecords['area_name'] = $area['area_name'];
+
+					$subarearesult = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$detailrecords['area_confirm_subarea']."' and status=0 and sub_area_enable = 0");
+					$subarea = $subarearesult ->fetch_assoc();
+					$detailrecords['sub_area_name'] = $subarea['sub_area_name'];
+
+
+					$i++;
+				}
+			}
+			return $detailrecords;
+		}
+
+		// Get Documentation Info.
+		public function getAcknowlegementDocument($mysqli,$req_id){
 
 			$qry = $mysqli->query("SELECT * FROM acknowlegement_documentation where req_id = $req_id ");
 			$detailrecords = array();
@@ -4359,374 +4359,510 @@ function updateUser($mysqli,$id,$user_id){
 			}
 
 			return $detailrecords;
-	}
-	
-	public function getAcknowlegeCusInfoForLoanCal($mysqli,$id){
-		$qry = $mysqli->query("SELECT * FROM acknowlegement_customer_profile where req_id = $id ");
-		$detailrecords = array();
-		$i=0;
-		if($mysqli->affected_rows>0){
-			while($row = $qry->fetch_assoc()){
-				$detailrecords['cus_id'] = $row['cus_id'];
-				$detailrecords['cus_name'] = $row['cus_name'];
-				$detailrecords['cus_pic'] = $row['cus_pic'];
-				$detailrecords['cus_type'] = $row['cus_type'];
-				$detailrecords['mobile'] = $row['mobile1'];
-				$i++;
-			}
 		}
-		return $detailrecords;
-	}
-
-	//Add Loan Calculation
-	function addAcknowledgementLoanCalculation($mysqli, $userid){
-			if(isset($_POST['cus_id_loan'])){
-				$cus_id_loan = $_POST['cus_id_loan'];
-			}
-			if(isset($_POST['req_id'])){
-				$req_id = $_POST['req_id'];
-			}
-			if(isset($_POST['cus_name_loan'])){
-				$cus_name_loan = $_POST['cus_name_loan'];
-			}
-			if(isset($_POST['cus_data_loan'])){
-				$cus_data_loan = $_POST['cus_data_loan'];
-			}
-			if(isset($_POST['mobile_loan'])){
-				$mobile_loan = $_POST['mobile_loan'];
-			}
-			if(isset($_POST['pic_loan'])){
-				$pic_loan = $_POST['pic_loan'];
-			}
-			if(isset($_POST['loan_category'])){
-				$loan_category = $_POST['loan_category'];
-			}
-			if(isset($_POST['sub_category'])){
-				$sub_category = $_POST['sub_category'];
-			}
-			if(isset($_POST['category_info'])){
-				$category_info = $_POST['category_info'];
-			}
-			$tot_value='';
-			if(isset($_POST['tot_value'])){
-				$tot_value = $_POST['tot_value'];
-			}
-			$ad_amt='';
-			if(isset($_POST['ad_amt'])){
-				$ad_amt = $_POST['ad_amt'];
-			}
-			if(isset($_POST['loan_amt'])){
-				$loan_amt = $_POST['loan_amt'];
-			}
-			if(isset($_POST['profit_type'])){
-				$profit_type = $_POST['profit_type'];
-			}
-			$due_method_calc = '';
-			if(isset($_POST['due_method_calc'])){
-				$due_method_calc = $_POST['due_method_calc'];
-				if($profit_type=='2'){
-					$due_method_calc='';
-				}
-			}
-			$due_type= '';
-			if(isset($_POST['due_type'])){
-				$due_type = $_POST['due_type'];
-				if($profit_type=='2'){
-					$due_type='';
-				}
-			}
-			$profit_method='';
-			if(isset($_POST['profit_method'])){
-				$profit_method = $_POST['profit_method'];
-				if($profit_type=='2'){
-					$profit_method='';
-				}
-			}
-			$calc_method ='';
-			if(isset($_POST['calc_method'])){
-				$calc_method = $_POST['calc_method'];
-				if($profit_type=='2'){
-					$calc_method='';
-				}
-			}
-			$due_method_scheme='';
-			if(isset($_POST['due_method_scheme'])){
-				$due_method_scheme = $_POST['due_method_scheme'];
-				if($profit_type=='1'){
-					$due_method_scheme='';
-				}
-			}
-			$day_scheme='';
-			if(isset($_POST['day_scheme'])){
-				$day_scheme = $_POST['day_scheme'];
-				if($profit_type=='1'){
-					$day_scheme='';
-				}
-			}
-			$scheme_name='';
-			if(isset($_POST['scheme_name'])){
-				$scheme_name = $_POST['scheme_name'];
-				if($profit_type=='1'){
-					$scheme_name='';
-				}
-			}
-			if(isset($_POST['int_rate'])){
-				$int_rate = $_POST['int_rate'];
-			}
-			if(isset($_POST['due_period'])){
-				$due_period = $_POST['due_period'];
-			}
-			if(isset($_POST['doc_charge'])){
-				$doc_charge = $_POST['doc_charge'];
-			}
-			if(isset($_POST['proc_fee'])){
-				$proc_fee = $_POST['proc_fee'];
-			}
-			if(isset($_POST['loan_amt_cal'])){
-				$loan_amt_cal = $_POST['loan_amt_cal'];
-			}
-			if(isset($_POST['principal_amt_cal'])){
-				$principal_amt_cal = $_POST['principal_amt_cal'];
-			}
-			if(isset($_POST['int_amt_cal'])){
-				$int_amt_cal = $_POST['int_amt_cal'];
-			}
-			$tot_amt_cal = '';
-			if(isset($_POST['tot_amt_cal'])){
-				$tot_amt_cal = $_POST['tot_amt_cal'];
-			}
-			$due_amt_cal ='';
-			if(isset($_POST['due_amt_cal'])){
-				$due_amt_cal = $_POST['due_amt_cal'];
-			}
-			if(isset($_POST['doc_charge_cal'])){
-				$doc_charge_cal = $_POST['doc_charge_cal'];
-			}
-			if(isset($_POST['proc_fee_cal'])){
-				$proc_fee_cal = $_POST['proc_fee_cal'];
-			}
-			if(isset($_POST['net_cash_cal'])){
-				$net_cash_cal = $_POST['net_cash_cal'];
-			}
-			if(isset($_POST['due_start_from'])){
-				$due_start_from = $_POST['due_start_from'];
-			}
-			if(isset($_POST['maturity_month'])){
-				$maturity_month = $_POST['maturity_month'];
-			}
-			if(isset($_POST['collection_method'])){
-				$collection_method = $_POST['collection_method'];
-			}
-			if(isset($_POST['loan_cal_id'])){//To check Whether it is for update 
-				$loan_cal_id = $_POST['loan_cal_id'];
-			}
 	
-			if($loan_cal_id > 0 or $loan_cal_id != ''){
-				$updateQry = $mysqli->query("UPDATE acknowlegement_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
-					cus_data_loan = '".strip_tags($cus_data_loan)."', mobile_loan = '".strip_tags($mobile_loan)."', pic_loan = '".strip_tags($pic_loan)."', 
-					loan_category = '".strip_tags($loan_category)."', sub_category = '".strip_tags($sub_category)."', tot_value = '".strip_tags($tot_value)."', ad_amt = '".strip_tags($ad_amt)."',
-					loan_amt = '".strip_tags($loan_amt)."', profit_type = '".strip_tags($profit_type)."', due_method_calc = '".strip_tags($due_method_calc)."', 
-					due_type = '".strip_tags($due_type)."', profit_method = '".strip_tags($profit_method)."', calc_method = '".strip_tags($calc_method)."', 
-					due_method_scheme = '".strip_tags($due_method_scheme)."', day_scheme = '".strip_tags($day_scheme)."', scheme_name = '".strip_tags($scheme_name)."', 
-					int_rate = '".strip_tags($int_rate)."', due_period = '".strip_tags($due_period)."', doc_charge = '".strip_tags($doc_charge)."', proc_fee = '".strip_tags($proc_fee)."', 
-					loan_amt_cal = '".strip_tags($loan_amt_cal)."', principal_amt_cal = '".strip_tags($principal_amt_cal)."', int_amt_cal = '".strip_tags($int_amt_cal)."', 
-					tot_amt_cal = '".strip_tags($tot_amt_cal)."', due_amt_cal = '".strip_tags($due_amt_cal)."', doc_charge_cal = '".strip_tags($doc_charge_cal)."', 
-					proc_fee_cal = '".strip_tags($proc_fee_cal)."', net_cash_cal = '".strip_tags($net_cash_cal)."', due_start_from = '".strip_tags($due_start_from)."', 
-					maturity_month = '".strip_tags($maturity_month)."', collection_method = '".strip_tags($collection_method)."', cus_status = 12, update_login_id = $userid, 
-					update_date = current_timestamp() WHERE req_id = $req_id ");
-	
-				$deleteCat = $mysqli->query("DELETE FROM acknowledgement_loan_cal_category where req_id = '".strip_tags($req_id)."' and loan_cal_id='".strip_tags($loan_cal_id)."'");
-	
-				for($i=0;$i<sizeof($category_info);$i++){
-					$insertCategory = $mysqli->query("INSERT INTO `acknowledgement_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
-					'".strip_tags($category_info[$i])."' )");
-				}
-			}else{
-	
-				$insertQry = $mysqli->query("INSERT INTO acknowlegement_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
-					`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
-					`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
-					`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('".strip_tags($req_id)."', '".strip_tags($cus_id_loan)."', 
-					'".strip_tags($cus_name_loan)."', '".strip_tags($cus_data_loan)."','".strip_tags($mobile_loan)."', '".strip_tags($pic_loan)."', '".strip_tags($loan_category)."', 
-					'".strip_tags($sub_category)."', '".strip_tags($tot_value)."', '".strip_tags($ad_amt)."', '".strip_tags($loan_amt)."', '".strip_tags($profit_type)."', 
-					'".strip_tags($due_method_calc)."', '".strip_tags($due_type)."', '".strip_tags($profit_method)."', '".strip_tags($calc_method)."', '".strip_tags($due_method_scheme)."', 
-					'".strip_tags($day_scheme)."', '".strip_tags($scheme_name)."', '".strip_tags($int_rate)."', '".strip_tags($due_period)."', '".strip_tags($doc_charge)."', 
-					'".strip_tags($proc_fee)."', '".strip_tags($loan_amt_cal)."', '".strip_tags($principal_amt_cal)."', '".strip_tags($int_amt_cal)."', '".strip_tags($tot_amt_cal)."', 
-					'".strip_tags($due_amt_cal)."', '".strip_tags($doc_charge_cal)."', '".strip_tags($proc_fee_cal)."', '".strip_tags($net_cash_cal)."', '".strip_tags($due_start_from)."', 
-					'".strip_tags($maturity_month)."', '".strip_tags($collection_method)."', 12, $userid, current_timestamp()) ");
-				$loan_cal_id = $mysqli->insert_id;
-				
-				for($i=0;$i<sizeof($category_info);$i++){
-					$insertCategory = $mysqli->query("INSERT INTO `acknowledgement_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
-					'".strip_tags($category_info[$i])."' )");
-				}
-	
-			}
-	}
-
-	function getAckLoanCalculationForVerification($mysqli,$req_id){
-		$detailrecords = array();
-		$Qry = $mysqli->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id = '".strip_tags($req_id)."' ");
-		if($mysqli->affected_rows>0){
-			while($row = $Qry->fetch_assoc()){
-				$detailrecords['loan_cal_id'] = $row['loan_cal_id'];
-				// $detailrecords['req_id'] = $row['req_id'];
-				$detailrecords['cus_id_loan'] = $row['cus_id_loan'];
-				$detailrecords['cus_name_loan'] = $row['cus_name_loan'];
-				$detailrecords['cus_data_loan'] = $row['cus_data_loan'];
-				$detailrecords['mobile_loan'] = $row['mobile_loan'];
-				$detailrecords['pic_loan'] = $row['pic_loan'];
-				$detailrecords['loan_category'] = $row['loan_category'];
-				$detailrecords['sub_category'] = $row['sub_category'];
-				$detailrecords['tot_value'] = $row['tot_value'];
-				$detailrecords['ad_amt'] = $row['ad_amt'];
-				$detailrecords['loan_amt'] = $row['loan_amt'];
-				$detailrecords['profit_type'] = $row['profit_type'];
-				$detailrecords['due_method_calc'] = $row['due_method_calc'];
-				$detailrecords['due_type'] = $row['due_type'];
-				$detailrecords['profit_method'] = $row['profit_method'];
-				$detailrecords['calc_method'] = $row['calc_method'];
-				$detailrecords['due_method_scheme'] = $row['due_method_scheme'];
-				$detailrecords['day_scheme'] = $row['day_scheme'];
-				$detailrecords['scheme_name'] = $row['scheme_name'];
-				$detailrecords['int_rate'] = $row['int_rate'];
-				$detailrecords['due_period'] = $row['due_period'];
-				$detailrecords['doc_charge'] = $row['doc_charge'];
-				$detailrecords['proc_fee'] = $row['proc_fee'];
-				$detailrecords['loan_amt_cal'] = $row['loan_amt_cal'];
-				$detailrecords['principal_amt_cal'] = $row['principal_amt_cal'];
-				$detailrecords['int_amt_cal'] = $row['int_amt_cal'];
-				$detailrecords['tot_amt_cal'] = $row['tot_amt_cal'];
-				$detailrecords['due_amt_cal'] = $row['due_amt_cal'];
-				$detailrecords['doc_charge_cal'] = $row['doc_charge_cal'];
-				$detailrecords['proc_fee_cal'] = $row['proc_fee_cal'];
-				$detailrecords['net_cash_cal'] = $row['net_cash_cal'];
-				$detailrecords['due_start_from'] = $row['due_start_from'];
-				$detailrecords['maturity_month'] = $row['maturity_month'];
-				$detailrecords['collection_method'] = $row['collection_method'];
-				$detailrecords['cus_status'] = $row['cus_status'];
-			}
-		}
-		return $detailrecords;
-	}
-
-	//Get Loan calculation Category info for edit
-	function getAckVerificationLoanCalCategory($mysqli, $loan_cal_id){
+		public function getAcknowlegeCusInfoForLoanCal($mysqli,$id){
+			$qry = $mysqli->query("SELECT * FROM acknowlegement_customer_profile where req_id = $id ");
 			$detailrecords = array();
-			$Qry = $mysqli->query("SELECT * FROM `acknowledgement_loan_cal_category` WHERE loan_cal_id = '".strip_tags($loan_cal_id)."' ");
+			$i=0;
 			if($mysqli->affected_rows>0){
-				$i=0;
-				while($row = $Qry->fetch_assoc()){
-					$detailrecords[$i]['req_id'] = $row['req_id'];
-					$detailrecords[$i]['loan_cal_id'] = $row['loan_cal_id'];
-					$detailrecords[$i]['category'] = $row['category'];
+				while($row = $qry->fetch_assoc()){
+					$detailrecords['cus_id'] = $row['cus_id'];
+					$detailrecords['cus_name'] = $row['cus_name'];
+					$detailrecords['cus_pic'] = $row['cus_pic'];
+					$detailrecords['cus_type'] = $row['cus_type'];
+					$detailrecords['mobile'] = $row['mobile1'];
 					$i++;
 				}
 			}
 			return $detailrecords;
-	}
-	
-	//Cancel Acknowledgement
-    function cancelAcknowledgement($mysqli,$id, $userid){
-        $qry = $mysqli->query("UPDATE request_creation set cus_status = 7, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-        $qry = $mysqli->query("UPDATE in_verification set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-        $qry = $mysqli->query("UPDATE in_approval set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-        $qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-    }
-    //Delete Acknowledgement
-    function removeAcknowledgement($mysqli,$id, $userid){
-        $qry = $mysqli->query("UPDATE request_creation set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-        $qry = $mysqli->query("UPDATE in_verification set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-        $qry = $mysqli->query("UPDATE in_approval set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-        $qry = $mysqli->query("UPDATE in_acknowledgement set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-    }
+		}
+
+		//Add Loan Calculation
+		function addAcknowledgementLoanCalculation($mysqli, $userid){
+				if(isset($_POST['cus_id_loan'])){
+					$cus_id_loan = $_POST['cus_id_loan'];
+				}
+				if(isset($_POST['req_id'])){
+					$req_id = $_POST['req_id'];
+				}
+				if(isset($_POST['cus_name_loan'])){
+					$cus_name_loan = $_POST['cus_name_loan'];
+				}
+				if(isset($_POST['cus_data_loan'])){
+					$cus_data_loan = $_POST['cus_data_loan'];
+				}
+				if(isset($_POST['mobile_loan'])){
+					$mobile_loan = $_POST['mobile_loan'];
+				}
+				if(isset($_POST['pic_loan'])){
+					$pic_loan = $_POST['pic_loan'];
+				}
+				if(isset($_POST['loan_category'])){
+					$loan_category = $_POST['loan_category'];
+				}
+				if(isset($_POST['sub_category'])){
+					$sub_category = $_POST['sub_category'];
+				}
+				if(isset($_POST['category_info'])){
+					$category_info = $_POST['category_info'];
+				}
+				$tot_value='';
+				if(isset($_POST['tot_value'])){
+					$tot_value = $_POST['tot_value'];
+				}
+				$ad_amt='';
+				if(isset($_POST['ad_amt'])){
+					$ad_amt = $_POST['ad_amt'];
+				}
+				if(isset($_POST['loan_amt'])){
+					$loan_amt = $_POST['loan_amt'];
+				}
+				if(isset($_POST['profit_type'])){
+					$profit_type = $_POST['profit_type'];
+				}
+				$due_method_calc = '';
+				if(isset($_POST['due_method_calc'])){
+					$due_method_calc = $_POST['due_method_calc'];
+					if($profit_type=='2'){
+						$due_method_calc='';
+					}
+				}
+				$due_type= '';
+				if(isset($_POST['due_type'])){
+					$due_type = $_POST['due_type'];
+					if($profit_type=='2'){
+						$due_type='';
+					}
+				}
+				$profit_method='';
+				if(isset($_POST['profit_method'])){
+					$profit_method = $_POST['profit_method'];
+					if($profit_type=='2'){
+						$profit_method='';
+					}
+				}
+				$calc_method ='';
+				if(isset($_POST['calc_method'])){
+					$calc_method = $_POST['calc_method'];
+					if($profit_type=='2'){
+						$calc_method='';
+					}
+				}
+				$due_method_scheme='';
+				if(isset($_POST['due_method_scheme'])){
+					$due_method_scheme = $_POST['due_method_scheme'];
+					if($profit_type=='1'){
+						$due_method_scheme='';
+					}
+				}
+				$day_scheme='';
+				if(isset($_POST['day_scheme'])){
+					$day_scheme = $_POST['day_scheme'];
+					if($profit_type=='1'){
+						$day_scheme='';
+					}
+				}
+				$scheme_name='';
+				if(isset($_POST['scheme_name'])){
+					$scheme_name = $_POST['scheme_name'];
+					if($profit_type=='1'){
+						$scheme_name='';
+					}
+				}
+				if(isset($_POST['int_rate'])){
+					$int_rate = $_POST['int_rate'];
+				}
+				if(isset($_POST['due_period'])){
+					$due_period = $_POST['due_period'];
+				}
+				if(isset($_POST['doc_charge'])){
+					$doc_charge = $_POST['doc_charge'];
+				}
+				if(isset($_POST['proc_fee'])){
+					$proc_fee = $_POST['proc_fee'];
+				}
+				if(isset($_POST['loan_amt_cal'])){
+					$loan_amt_cal = $_POST['loan_amt_cal'];
+				}
+				if(isset($_POST['principal_amt_cal'])){
+					$principal_amt_cal = $_POST['principal_amt_cal'];
+				}
+				if(isset($_POST['int_amt_cal'])){
+					$int_amt_cal = $_POST['int_amt_cal'];
+				}
+				$tot_amt_cal = '';
+				if(isset($_POST['tot_amt_cal'])){
+					$tot_amt_cal = $_POST['tot_amt_cal'];
+				}
+				$due_amt_cal ='';
+				if(isset($_POST['due_amt_cal'])){
+					$due_amt_cal = $_POST['due_amt_cal'];
+				}
+				if(isset($_POST['doc_charge_cal'])){
+					$doc_charge_cal = $_POST['doc_charge_cal'];
+				}
+				if(isset($_POST['proc_fee_cal'])){
+					$proc_fee_cal = $_POST['proc_fee_cal'];
+				}
+				if(isset($_POST['net_cash_cal'])){
+					$net_cash_cal = $_POST['net_cash_cal'];
+				}
+				if(isset($_POST['due_start_from'])){
+					$due_start_from = $_POST['due_start_from'];
+				}
+				if(isset($_POST['maturity_month'])){
+					$maturity_month = $_POST['maturity_month'];
+				}
+				if(isset($_POST['collection_method'])){
+					$collection_method = $_POST['collection_method'];
+				}
+				if(isset($_POST['loan_cal_id'])){//To check Whether it is for update 
+					$loan_cal_id = $_POST['loan_cal_id'];
+				}
+		
+				if($loan_cal_id > 0 or $loan_cal_id != ''){
+					$updateQry = $mysqli->query("UPDATE acknowlegement_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
+						cus_data_loan = '".strip_tags($cus_data_loan)."', mobile_loan = '".strip_tags($mobile_loan)."', pic_loan = '".strip_tags($pic_loan)."', 
+						loan_category = '".strip_tags($loan_category)."', sub_category = '".strip_tags($sub_category)."', tot_value = '".strip_tags($tot_value)."', ad_amt = '".strip_tags($ad_amt)."',
+						loan_amt = '".strip_tags($loan_amt)."', profit_type = '".strip_tags($profit_type)."', due_method_calc = '".strip_tags($due_method_calc)."', 
+						due_type = '".strip_tags($due_type)."', profit_method = '".strip_tags($profit_method)."', calc_method = '".strip_tags($calc_method)."', 
+						due_method_scheme = '".strip_tags($due_method_scheme)."', day_scheme = '".strip_tags($day_scheme)."', scheme_name = '".strip_tags($scheme_name)."', 
+						int_rate = '".strip_tags($int_rate)."', due_period = '".strip_tags($due_period)."', doc_charge = '".strip_tags($doc_charge)."', proc_fee = '".strip_tags($proc_fee)."', 
+						loan_amt_cal = '".strip_tags($loan_amt_cal)."', principal_amt_cal = '".strip_tags($principal_amt_cal)."', int_amt_cal = '".strip_tags($int_amt_cal)."', 
+						tot_amt_cal = '".strip_tags($tot_amt_cal)."', due_amt_cal = '".strip_tags($due_amt_cal)."', doc_charge_cal = '".strip_tags($doc_charge_cal)."', 
+						proc_fee_cal = '".strip_tags($proc_fee_cal)."', net_cash_cal = '".strip_tags($net_cash_cal)."', due_start_from = '".strip_tags($due_start_from)."', 
+						maturity_month = '".strip_tags($maturity_month)."', collection_method = '".strip_tags($collection_method)."', cus_status = 12, update_login_id = $userid, 
+						update_date = current_timestamp() WHERE req_id = $req_id ");
+		
+					$deleteCat = $mysqli->query("DELETE FROM acknowledgement_loan_cal_category where req_id = '".strip_tags($req_id)."' and loan_cal_id='".strip_tags($loan_cal_id)."'");
+		
+					for($i=0;$i<sizeof($category_info);$i++){
+						$insertCategory = $mysqli->query("INSERT INTO `acknowledgement_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
+						'".strip_tags($category_info[$i])."' )");
+					}
+				}else{
+		
+					$insertQry = $mysqli->query("INSERT INTO acknowlegement_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
+						`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
+						`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
+						`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('".strip_tags($req_id)."', '".strip_tags($cus_id_loan)."', 
+						'".strip_tags($cus_name_loan)."', '".strip_tags($cus_data_loan)."','".strip_tags($mobile_loan)."', '".strip_tags($pic_loan)."', '".strip_tags($loan_category)."', 
+						'".strip_tags($sub_category)."', '".strip_tags($tot_value)."', '".strip_tags($ad_amt)."', '".strip_tags($loan_amt)."', '".strip_tags($profit_type)."', 
+						'".strip_tags($due_method_calc)."', '".strip_tags($due_type)."', '".strip_tags($profit_method)."', '".strip_tags($calc_method)."', '".strip_tags($due_method_scheme)."', 
+						'".strip_tags($day_scheme)."', '".strip_tags($scheme_name)."', '".strip_tags($int_rate)."', '".strip_tags($due_period)."', '".strip_tags($doc_charge)."', 
+						'".strip_tags($proc_fee)."', '".strip_tags($loan_amt_cal)."', '".strip_tags($principal_amt_cal)."', '".strip_tags($int_amt_cal)."', '".strip_tags($tot_amt_cal)."', 
+						'".strip_tags($due_amt_cal)."', '".strip_tags($doc_charge_cal)."', '".strip_tags($proc_fee_cal)."', '".strip_tags($net_cash_cal)."', '".strip_tags($due_start_from)."', 
+						'".strip_tags($maturity_month)."', '".strip_tags($collection_method)."', 12, $userid, current_timestamp()) ");
+					$loan_cal_id = $mysqli->insert_id;
+					
+					for($i=0;$i<sizeof($category_info);$i++){
+						$insertCategory = $mysqli->query("INSERT INTO `acknowledgement_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('".strip_tags($req_id)."','".strip_tags($loan_cal_id)."',
+						'".strip_tags($category_info[$i])."' )");
+					}
+		
+				}
+		}
+
+		function getAckLoanCalculationForVerification($mysqli,$req_id){
+			$detailrecords = array();
+			$Qry = $mysqli->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id = '".strip_tags($req_id)."' ");
+			if($mysqli->affected_rows>0){
+				while($row = $Qry->fetch_assoc()){
+					$detailrecords['loan_cal_id'] = $row['loan_cal_id'];
+					// $detailrecords['req_id'] = $row['req_id'];
+					$detailrecords['cus_id_loan'] = $row['cus_id_loan'];
+					$detailrecords['cus_name_loan'] = $row['cus_name_loan'];
+					$detailrecords['cus_data_loan'] = $row['cus_data_loan'];
+					$detailrecords['mobile_loan'] = $row['mobile_loan'];
+					$detailrecords['pic_loan'] = $row['pic_loan'];
+					$detailrecords['loan_category'] = $row['loan_category'];
+					$detailrecords['sub_category'] = $row['sub_category'];
+					$detailrecords['tot_value'] = $row['tot_value'];
+					$detailrecords['ad_amt'] = $row['ad_amt'];
+					$detailrecords['loan_amt'] = $row['loan_amt'];
+					$detailrecords['profit_type'] = $row['profit_type'];
+					$detailrecords['due_method_calc'] = $row['due_method_calc'];
+					$detailrecords['due_type'] = $row['due_type'];
+					$detailrecords['profit_method'] = $row['profit_method'];
+					$detailrecords['calc_method'] = $row['calc_method'];
+					$detailrecords['due_method_scheme'] = $row['due_method_scheme'];
+					$detailrecords['day_scheme'] = $row['day_scheme'];
+					$detailrecords['scheme_name'] = $row['scheme_name'];
+					$detailrecords['int_rate'] = $row['int_rate'];
+					$detailrecords['due_period'] = $row['due_period'];
+					$detailrecords['doc_charge'] = $row['doc_charge'];
+					$detailrecords['proc_fee'] = $row['proc_fee'];
+					$detailrecords['loan_amt_cal'] = $row['loan_amt_cal'];
+					$detailrecords['principal_amt_cal'] = $row['principal_amt_cal'];
+					$detailrecords['int_amt_cal'] = $row['int_amt_cal'];
+					$detailrecords['tot_amt_cal'] = $row['tot_amt_cal'];
+					$detailrecords['due_amt_cal'] = $row['due_amt_cal'];
+					$detailrecords['doc_charge_cal'] = $row['doc_charge_cal'];
+					$detailrecords['proc_fee_cal'] = $row['proc_fee_cal'];
+					$detailrecords['net_cash_cal'] = $row['net_cash_cal'];
+					$detailrecords['due_start_from'] = $row['due_start_from'];
+					$detailrecords['maturity_month'] = $row['maturity_month'];
+					$detailrecords['collection_method'] = $row['collection_method'];
+					$detailrecords['cus_status'] = $row['cus_status'];
+				}
+			}
+			return $detailrecords;
+		}
+
+		//Get Loan calculation Category info for edit
+		function getAckVerificationLoanCalCategory($mysqli, $loan_cal_id){
+				$detailrecords = array();
+				$Qry = $mysqli->query("SELECT * FROM `acknowledgement_loan_cal_category` WHERE loan_cal_id = '".strip_tags($loan_cal_id)."' ");
+				if($mysqli->affected_rows>0){
+					$i=0;
+					while($row = $Qry->fetch_assoc()){
+						$detailrecords[$i]['req_id'] = $row['req_id'];
+						$detailrecords[$i]['loan_cal_id'] = $row['loan_cal_id'];
+						$detailrecords[$i]['category'] = $row['category'];
+						$i++;
+					}
+				}
+				return $detailrecords;
+		}
+		
+		//Cancel Acknowledgement
+		function cancelAcknowledgement($mysqli,$id, $userid){
+			$qry = $mysqli->query("UPDATE request_creation set cus_status = 7, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_verification set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_approval set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+		}
+		//Delete Acknowledgement
+		function removeAcknowledgement($mysqli,$id, $userid){
+			$qry = $mysqli->query("UPDATE request_creation set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_verification set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_approval set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_acknowledgement set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+		}
 
 ///  Acknowlegement END
 
-	// Add Loan Issue
-	public function addloanIssue($mysqli, $userid){
-		if(isset($_POST['req_id'])){
-			$req_id = $_POST['req_id'];
-		}
-		if(isset($_POST['cus_id'])){
-			$cus_id = $_POST['cus_id'];
-		}
-		if(isset($_POST['net_cash_cal'])){
-			$net_cash_cal = $_POST['net_cash_cal'];
-		}
-		if(isset($_POST['issue_to'])){
-			$issue_to =  $_POST['issue_to'];
-		}
-		if(isset($_POST['agent_id'])){
-			$agent_id = $_POST['agent_id'];
-		}
-		if(isset($_POST['issued_mode'])){
-			$issued_mode = $_POST['issued_mode'];
-		}
-		if(isset($_POST['payment_type'])){
-			$payment_type = $_POST['payment_type'];
-		}
-		if(isset($_POST['cash'])){
-			$cash = $_POST['cash'];
-		}
-		if(isset($_POST['chequeno'])){
-			$chequeno = $_POST['chequeno'];
-		}
-		if(isset($_POST['chequeValue'])){
-			$chequeValue = $_POST['chequeValue'];
-		}
-		if(isset($_POST['chequeRemark'])){
-			$chequeRemark = $_POST['chequeRemark'];
-		}
-		if(isset($_POST['transaction_id'])){
-			$transaction_id = $_POST['transaction_id'];
-		}
-		if(isset($_POST['transaction_value'])){
-			$transaction_value = $_POST['transaction_value'];
-		}
-		if(isset($_POST['transaction_remark'])){
-			$transaction_remark = $_POST['transaction_remark'];
-		}
-		if(isset($_POST['balance'])){
-			$balance = $_POST['balance'];
-		}
-		if(isset($_POST['cash_guarentor_name'])){
-			$cash_guarentor_name = $_POST['cash_guarentor_name'];
-		}
-		if(isset($_POST['relationship'])){
-			$relationship = $_POST['relationship'];
+		// Add Loan Issue
+		public function addloanIssue($mysqli, $userid){
+			if(isset($_POST['req_id'])){
+				$req_id = $_POST['req_id'];
+			}
+			if(isset($_POST['cus_id'])){
+				$cus_id = $_POST['cus_id'];
+			}
+			if(isset($_POST['net_cash_cal'])){
+				$net_cash_cal = $_POST['net_cash_cal'];
+			}
+			if(isset($_POST['issue_to'])){
+				$issue_to =  $_POST['issue_to'];
+			}
+			if(isset($_POST['agent_id'])){
+				$agent_id = $_POST['agent_id'];
+			}
+			if(isset($_POST['issued_mode'])){
+				$issued_mode = $_POST['issued_mode'];
+			}
+			if(isset($_POST['payment_type'])){
+				$payment_type = $_POST['payment_type'];
+			}
+			if(isset($_POST['cash'])){
+				$cash = $_POST['cash'];
+			}
+			if(isset($_POST['chequeno'])){
+				$chequeno = $_POST['chequeno'];
+			}
+			if(isset($_POST['chequeValue'])){
+				$chequeValue = $_POST['chequeValue'];
+			}
+			if(isset($_POST['chequeRemark'])){
+				$chequeRemark = $_POST['chequeRemark'];
+			}
+			if(isset($_POST['transaction_id'])){
+				$transaction_id = $_POST['transaction_id'];
+			}
+			if(isset($_POST['transaction_value'])){
+				$transaction_value = $_POST['transaction_value'];
+			}
+			if(isset($_POST['transaction_remark'])){
+				$transaction_remark = $_POST['transaction_remark'];
+			}
+			if(isset($_POST['balance'])){
+				$balance = $_POST['balance'];
+			}
+			if(isset($_POST['cash_guarentor_name'])){
+				$cash_guarentor_name = $_POST['cash_guarentor_name'];
+			}
+			if(isset($_POST['relationship'])){
+				$relationship = $_POST['relationship'];
+			}
+
+			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
+
+			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+
 		}
 
-		$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
+		function getLoanList($mysqli,$id){
+			$detailrecords = array();
+			$Qry = $mysqli->query("SELECT `cus_id`,`cus_name`,`mobile1`,`cus_pic`,`area_confirm_area`,`area_confirm_subarea`,`area_line` FROM `acknowlegement_customer_profile` WHERE req_id = '".strip_tags($id)."' ");
+			if($Qry->num_rows>0){
+				$row = $Qry->fetch_assoc();
+				$detailrecords = $row;
+			}
+			
+			//Getting area Name
+			$qry = $mysqli->query("SELECT area_name FROM area_list_creation WHERE area_id = " . $detailrecords['area_confirm_area']);
+			$detailrecords['area_name'] = $qry->fetch_assoc()['area_name'];
 
-		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+			//Getting sub area Name
+			$qry = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation WHERE sub_area_id = " . $detailrecords['area_confirm_subarea']);
+			$detailrecords['sub_area_name'] = $qry->fetch_assoc()['sub_area_name'];
 
-    }
+			// Getting Line Id, Branch ID, Branch Name
+			$qry = $mysqli->query("SELECT b.branch_id, b.branch_name, l.map_id FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id WHERE l.line_name = '" . $detailrecords['area_line'] . "'");
+			$row = $qry->fetch_assoc();
+			$detailrecords['line_id'] = $row['map_id'];
+			$detailrecords['branch_id'] = $row['branch_id'];
+			$detailrecords['branch_name'] = $row['branch_name'];
 
-	function getLoanList($mysqli,$id){
-		$detailrecords = array();
-		$Qry = $mysqli->query("SELECT `cus_id`,`cus_name`,`mobile1`,`cus_pic`,`area_confirm_area`,`area_confirm_subarea`,`area_line` FROM `acknowlegement_customer_profile` WHERE req_id = '".strip_tags($id)."' ");
-		if($Qry->num_rows>0){
-			$row = $Qry->fetch_assoc();
-			$detailrecords = $row;
+			return $detailrecords;
 		}
-		
-		//Getting area Name
-		$qry = $mysqli->query("SELECT area_name FROM area_list_creation WHERE area_id = " . $detailrecords['area_confirm_area']);
-		$detailrecords['area_name'] = $qry->fetch_assoc()['area_name'];
 
-		//Getting sub area Name
-		$qry = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation WHERE sub_area_id = " . $detailrecords['area_confirm_subarea']);
-		$detailrecords['sub_area_name'] = $qry->fetch_assoc()['sub_area_name'];
+		// Add Collection
+		function addCollection($mysqli,$req_id, $userid){
+			
+			if(isset($_POST['cus_id'])){
+				$cus_id = $_POST['cus_id'];
+			}
+			if(isset($_POST['cus_name'])){
+				$cus_name = $_POST['cus_name'];
+			}
+			if(isset($_POST['area_id'])){
+				$area_id =  $_POST['area_id'];
+			}
+			if(isset($_POST['sub_area_id'])){
+				$sub_area_id = $_POST['sub_area_id'];
+			}
+			if(isset($_POST['branch_id'])){
+				$branch_id = $_POST['branch_id'];
+			}
+			if(isset($_POST['line_id'])){
+				$line_id = $_POST['line_id'];
+			}
+			if(isset($_POST['mobile1'])){
+				$mobile1 = $_POST['mobile1'];
+			}
+			if(isset($_POST['cus_image'])){
+				$cus_image = $_POST['cus_image'];
+			}
+			if(isset($_POST['loan_category_id'])){
+				$loan_category_id = $_POST['loan_category_id'];
+			}
+			if(isset($_POST['sub_category_id'])){
+				$sub_category_id = $_POST['sub_category_id'];
+			}
+			if(isset($_POST['status'])){
+				$status = $_POST['status'];
+			}
+			if(isset($_POST['sub_status'])){
+				$sub_status = $_POST['sub_status'];
+			}
+			if(isset($_POST['tot_amt'])){
+				$tot_amt = $_POST['tot_amt'];
+			}
+			if(isset($_POST['paid_amt'])){
+				$paid_amt = $_POST['paid_amt'];
+			}
+			if(isset($_POST['bal_amt'])){
+				$bal_amt = $_POST['bal_amt'];
+			}
+			if(isset($_POST['due_amt'])){
+				$due_amt = $_POST['due_amt'];
+			}
+			if(isset($_POST['pending_amt'])){
+				$pending_amt = $_POST['pending_amt'];
+			}
+			if(isset($_POST['payable_amt'])){
+				$payable_amt = $_POST['payable_amt'];
+			}
+			if(isset($_POST['penalty'])){
+				$penalty = $_POST['penalty'];
+			}
+			if(isset($_POST['coll_charge'])){
+				$coll_charge = $_POST['coll_charge'];
+			}
+			if(isset($_POST['collection_mode'])){
+				$collection_mode = $_POST['collection_mode'];
+			}
+			if(isset($_POST['cheque_no'])){
+				$cheque_no = $_POST['cheque_no'];
+			}
+			if(isset($_POST['trans_id'])){
+				$trans_id = $_POST['trans_id'];
+			}
+			if(isset($_POST['trans_date'])){
+				$trans_date = $_POST['trans_date'];
+			}
+			if(isset($_POST['collection_loc'])){
+				$collection_loc = $_POST['collection_loc'];
+			}
+			if(isset($_POST['collection_date'])){
+				$collection_date = $_POST['collection_date'];
+			}
+			if(isset($_POST['collection_id'])){
+				$collection_id = $_POST['collection_id'];
+			}
+			if(isset($_POST['due_amt_track'])){
+				$due_amt_track = $_POST['due_amt_track'];
+			}
+			$penalty_track='';
+			if(isset($_POST['penalty_track'])){
+				$penalty_track = $_POST['penalty_track'];
+			}
+			$coll_charge_track ='';
+			if(isset($_POST['coll_charge_track'])){
+				$coll_charge_track = $_POST['coll_charge_track'];
+			}
+			if(isset($_POST['total_paid_track'])){
+				$total_paid_track = $_POST['total_paid_track'];
+			}
+			if(isset($_POST['pre_close_waiver'])){
+				$pre_close_waiver = $_POST['pre_close_waiver'];
+			}
+			$penalty_waiver='';
+			if(isset($_POST['penalty_waiver'])){
+				$penalty_waiver = $_POST['penalty_waiver'];
+			}
+			$coll_charge_waiver='';
+			if(isset($_POST['coll_charge_waiver'])){
+				$coll_charge_waiver = $_POST['coll_charge_waiver'];
+			}
+			if(isset($_POST['total_waiver'])){
+				$total_waiver = $_POST['total_waiver'];
+			}
 
-		// Getting Line Id, Branch ID, Branch Name
-		$qry = $mysqli->query("SELECT b.branch_id, b.branch_name, l.map_id FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id WHERE l.line_name = '" . $detailrecords['area_line'] . "'");
-		$row = $qry->fetch_assoc();
-		$detailrecords['line_id'] = $row['map_id'];
-		$detailrecords['branch_id'] = $row['branch_id'];
-		$detailrecords['branch_name'] = $row['branch_name'];
+			$insertQry = "INSERT INTO `collection`(  `coll_code`, `req_id`, `cus_id`, `cus_name`, `branch`, `area`, `sub_area`, `line`, `loan_category`, `sub_category`, `coll_status`, 
+			`coll_sub_status`, `tot_amt`, `paid_amt`, `bal_amt`, `due_amt`, `pending_amt`, `payable_amt`, `penalty`, `coll_charge`, `coll_mode`, `cheque_no`, `trans_id`, `trans_date`, 
+			`coll_location`, `coll_date`, `due_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, 
+			`total_waiver`, `insert_login_id`,`created_date`)  VALUES('".strip_tags($collection_id)."','".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."',
+			'".strip_tags($branch_id)."', '".strip_tags($area_id)."', '".strip_tags($sub_area_id)."', '".strip_tags($line_id)."','".strip_tags($loan_category_id)."',
+			'".strip_tags($sub_category_id)."','".strip_tags($status)."','".strip_tags($sub_status)."', '".strip_tags($tot_amt)."', '".strip_tags($paid_amt)."', 
+			'".strip_tags($bal_amt)."','".strip_tags($due_amt)."','".strip_tags($pending_amt)."','".strip_tags($payable_amt)."','".strip_tags($penalty)."','".strip_tags($coll_charge)."',
+			'".strip_tags($collection_mode)."','".strip_tags($cheque_no)."','".strip_tags($trans_id)."','".strip_tags($trans_date)."','".strip_tags($collection_loc)."',
+			'".strip_tags($collection_date)."','".strip_tags($due_amt_track)."','".strip_tags($penalty_track)."','".strip_tags($coll_charge_track)."','".strip_tags($total_paid_track)."',
+			'".strip_tags($pre_close_waiver)."','".strip_tags($penalty_waiver)."','".strip_tags($coll_charge_waiver)."','".strip_tags($total_waiver)."',$userid,current_timestamp )";
 
-		return $detailrecords;
-	}
+			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
+			if($penalty_track != '' or $penalty_waiver != ''){
+				$qry = $mysqli->query("INSERT INTO penalty_charges (`req_id`,`paid_date`,`paid_amnt`,`waiver_amnt`)VALUES('".strip_tags($req_id)."','".strip_tags($collection_date)."',
+				'".strip_tags($penalty_track)."','".strip_tags($penalty_waiver)."')");
+			}
+			if($coll_charge_track != '' or $coll_charge_waiver != ''){
+				$qry = $mysqli->query("INSERT INTO collection_charges (`req_id`,`paid_date`,`paid_amnt`,`waiver_amnt`)VALUES('".strip_tags($req_id)."','".strip_tags($collection_date)."',
+				'".strip_tags($coll_charge_track)."','".strip_tags($coll_charge_waiver)."')");
+			}
+
+		}
 }//Class End
