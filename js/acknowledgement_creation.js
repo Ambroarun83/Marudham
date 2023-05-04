@@ -166,31 +166,58 @@ $(document).ready(function () {
 
         let req_id = $('#cheque_req_id').val();
         let holder_type = $("#holder_type").val();
+        var holder_name = $("#holder_name").val();
+        var holder_relationship_name = $("#holder_relationship_name").val();
         let chequebank_name = $("#chequebank_name").val();
         let cheque_count = $("#cheque_count").val();
-        let chequeID = $("#chequeID").val();
-        let cheque_upd = $("#cheque_upd").val();
+        // let cheque_upd = $("#cheque_upd")[0];
+        let formdata = new FormData();
+        let files = $("#cheque_upd")[0].files;
+        for(var i=0; i<files.length; i++){
+            formdata.append('cheque_upd[]', files[i])
+        }
+        var chequeno = $("#cheque_upd_no").val();
+        var chequeArr = [];
+        var i =0;
+        $('.chequeno').each(function(){
+           chequeArr[i] = $(this).val();
+           i++;        
+        })
 
+        console.log(chequeArr);
+        let chequeID = $("#chequeID").val();
+
+    
+    
+        
+        formdata.append('holder_type', holder_type)
+        formdata.append('holder_name', holder_name)
+        formdata.append('holder_relationship_name', holder_relationship_name)
+        
+        formdata.append('chequeID', chequeID)
+        formdata.append('cheque_upd_no', chequeArr)
+        formdata.append('cheque_req_id', req_id)
+        
         if (holder_type != "" && chequebank_name != "" && cheque_count != "" && req_id != "" && cheque_upd != "") {
             $.ajax({
                 type: 'POST',
                 url: 'verificationFile/documentation/cheque_upload.php',
-                data: new FormData(this),
+                data: formdata,
                 contentType: false,
                 processData: false,
                 success: function (response) {
 
                     var insresult = response.includes("Uploaded");
                     if (insresult) {
-                        $('#signInsertOk').show();
+                        $('#chequeInsertOk').show();
                         setTimeout(function () {
-                            $('#signInsertOk').fadeOut('fast');
+                            $('#chequeInsertOk').fadeOut('fast');
                         }, 2000);
                     }
                     else {
-                        $('#signNotOk').show();
+                        $('#chequeNotOk').show();
                         setTimeout(function () {
-                            $('#signNotOk').fadeOut('fast');
+                            $('#chequeNotOk').fadeOut('fast');
                         }, 2000);
                     }
 
@@ -258,7 +285,8 @@ $(document).ready(function () {
                 $("#cheque_relation").val(result['cheque_relation']);
                 $("#chequebank_name").val(result['chequebank_name']);
                 $("#cheque_count").val(result['cheque_count']);
-
+                
+                getChequeColumn(result['cheque_count']); // show input to insert Cheque No.
             }
         });
 
@@ -1454,6 +1482,17 @@ function chequeinfoList() {
         success: function (html) {
             $("#ChequeResetTable").empty();
             $("#ChequeResetTable").html(html);
+
+            $('#chequeColumnDiv').empty();
+            
+            $("#holder_type").val('');
+            $("#holder_name").val('');
+            $("#holder_relationship_name").val('');
+            $("#cheque_relation").val('');
+            $("#chequebank_name").val('');
+            $("#cheque_count").val('');
+            $("#cheque_upd").val('');
+            $("#chequeID").val('');
         }
     });
 }
@@ -1466,6 +1505,7 @@ function resetchequeInfo() {
         data: { "reqId": req_id },
         cache: false,
         success: function (html) {
+            $('#chequeColumnDiv').empty();
             $("#chequeTable").empty();
             $("#chequeTable").html(html);
 
@@ -1522,6 +1562,22 @@ function chequefilesCount() {
         $("#cheque_upd").val('');
         return false;
     }
+}
+
+//Cheque No 
+function getChequeColumn(cnt){
+
+    $.ajax({
+        type: 'post',
+        data: {"count": cnt},
+        url: 'verificationFile/documentation/cheque_info_upd_column.php',
+        success:function(result){
+            $('#chequeColumnDiv').empty();
+            $('#chequeColumnDiv').html(result);
+
+        }
+    })
+
 }
 
 //Documentation Submit Validation

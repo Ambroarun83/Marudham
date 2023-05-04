@@ -4,6 +4,14 @@ require '../../ajaxconfig.php';
 $req_id                = $_POST['cheque_req_id'];
 $chequeID              = $_POST['chequeID'];
 $filesArr3             = $_FILES['cheque_upd'];
+$cheque_upd_no         = explode(',',$_POST['cheque_upd_no']);
+$holder_type           = $_POST['holder_type'];
+
+if($holder_type == '0' || $holder_type == '1'){
+   $holderName = $_POST['holder_name'];
+}else{
+   $holderName = $_POST['holder_relationship_name'];
+}
 
  foreach($filesArr3['name'] as $key=>$val)
  {
@@ -17,7 +25,13 @@ $filesArr3             = $_FILES['cheque_upd'];
 	 }
  }
 
-if($update){
+
+ foreach($cheque_upd_no as $chequeNo){
+	$insert  = $connect->query("INSERT INTO `cheque_no_list`( `req_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`) VALUES ('$req_id',' $holder_type','$holderName','$chequeNo')");
+ }
+
+
+if($update && $insert){
     $result = "Cheque Uploaded Successfully.";
 }
 
