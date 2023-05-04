@@ -1020,13 +1020,15 @@ INSERT INTO `in_acknowledgement` (`id`, `req_id`, `cus_id`, `cus_status`, `statu
 --
 
 CREATE TABLE `in_approval` (
+  `id` int(11) NOT NULL,
   `req_id` varchar(255) DEFAULT NULL,
   `cus_id` varchar(255) DEFAULT NULL,
   `cus_status` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT '0',
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
-  `delete_login_id` varchar(255) DEFAULT NULL
+  `delete_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -2368,6 +2370,12 @@ ALTER TABLE `director_creation`
 --
 ALTER TABLE `doc_mapping`
   ADD PRIMARY KEY (`doc_map_id`);
+
+--
+-- Indexes for table `in_approval`
+--
+ALTER TABLE `in_approval`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `in_acknowledgement`

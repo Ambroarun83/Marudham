@@ -2517,10 +2517,14 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="upd"> Uploads </label> <span class="required">&nbsp;*</span>
 							<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple  onchange="chequefilesCount()">
-							<span class="text-danger" id="chequeupdCheck"> Enter Count </span>
+							<span class="text-danger" id="chequeupdCheck"> Upload Cheque </span>
 						</div>
 					</div>
+				</div>
 
+				<div class="row" id="chequeColumnDiv">  </div>
+
+				<div class="row">
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="chequeID" id="chequeID">
 						<button type="submit" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>

@@ -126,9 +126,9 @@ function moneyFormatIndia($num) {
                 <td>
                     <?php 
                         $action="<div class='dropdown' style='float:right;'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
-                        $action .= "<a><span data-toggle='modal' data-target='.addSignDoc' class='due-chart' value='".$row['req_id']."' > Due Chart</span></a>
-                        <a><span data-toggle='modal' data-target='.addSignDoc' class='penalty-chart' value='".$row['req_id']."' > Penalty Chart</span></a>
-                        <a><span data-toggle='modal' data-target='.addSignDoc' class='coll-charge-chart' value='".$row['req_id']."' > Collection Charge Chart</span></a>";
+                        $action .= "<a><span data-toggle='modal' data-target='.DueChart' class='due-chart' value='".$row['req_id']."' > Due Chart</span></a>
+                        <a><span data-toggle='modal' data-target='.PenaltyChart' class='penalty-chart' value='".$row['req_id']."' > Penalty Chart</span></a>
+                        <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='".$row['req_id']."' > Collection Charge Chart</span></a>";
                         $action .= "</div></div>";
                         echo $action;
                     ?>
@@ -140,7 +140,7 @@ function moneyFormatIndia($num) {
                             $action .= "<a href='' class='move-error' value='".$row['req_id']."' > Move To Error</a>
                             <a href='' class='move-legal' value='".$row['req_id']."' > Move To Legal</a>
                             <a href='' class='return-sub' value='".$row['req_id']."' > Return Sub Status</a>
-                            <a href='' class='coll-charge' value='".$row['req_id']."' >Collection Charges</a>";
+                            <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='".$row['req_id']."' > Collection Charges </span></a>";
                         }
                         $action .= "</div></div>";
                         echo $action;
