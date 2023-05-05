@@ -5,7 +5,7 @@ include '../ajaxconfig.php';
 <table class="table custom-table" id="coll_purpose_data">
     <thead>
         <tr>
-            <th width="15%"> S.No </th>
+            <th width="50"> S.No </th>
             <th> Date </th>
             <th> Purpose </th>
             <th> Amount </th>

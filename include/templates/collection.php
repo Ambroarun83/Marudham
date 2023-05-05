@@ -7,34 +7,12 @@ if(isset($_SESSION['userid'])){
 
 if(isset($_POST['submit_collection']) && $_POST['submit_collection'] != ''){
 	if(isset($_POST['req_id'])){$req_id = $_POST['req_id'];}
+	if(isset($_POST['collection_id'])){$coll_id = $_POST['collection_id'];}
 
-	// $addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
+	$addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
+	
 ?>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-	<script> 
-	// printfunction(); 
-		function printfunction1() {
-			var coll_id = $('#collection_id').val();
-			alert(coll_id)
-			// $.ajax({
-			// 	url: 'collectionFile/print_collection.php',
-			// 	data: { 'coll_id': coll_id },
-			// 	type: 'post',
-			// 	cache: false,
-			// 	success: function(response) {
-			// 	var printWindow = window.open('', '', 'height=600,width=800');
-			// 	printWindow.document.write(response);
-			// 	printWindow.document.close();
-			// 	printWindow.print();
-			// 	setTimeout(function() {
-			// 		location.href = '<?php echo $HOSTPATH; ?>edit_collection&msc=1';
-			// 	}, 4000);
-			// 	}
-			// });
-		}
-
-	</script>
-	<!-- <script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1';</script> -->
+	<script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1&id=<?php echo $coll_id ?>';</script>
 <?php
 }
 
@@ -110,6 +88,10 @@ if($idupd>0)
 		<input type="hidden" name="idupd" id="idupd" value="<?php if (isset($idupd)) {echo $idupd;} ?>" />
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
 		<input type="hidden" name="cusidupd" id="cusidupd" value="<?php if (isset($cusidupd)) {echo $cusidupd;} ?>" />
+		<input type="hidden" name="collection_access" id="collection_access" value="<?php if (isset($collection_access)) {echo $collection_access;} ?>" />
+		<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+		<input type="hidden" name="od_sts" id="od_sts" value="" />
+		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
 		<input type="hidden" name="colluserid" id="colluserid" value="<?php if (isset($userid)) {echo $userid;} ?>" />
 
 		<!-- Row start -->
@@ -529,12 +511,12 @@ if($idupd>0)
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="button" name="submit_collection" id="submit_collection" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="submit" name="submit_collection" id="submit_collection" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
 						<!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
 					</div>
 				</div>
 				<!-- Submit Button End -->
-				<div id="printcollection" style="display: none"></div>
+				
 			</div>
 		</div>
 	</form>
@@ -688,6 +670,7 @@ if($idupd>0)
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                         <div class="form-group">
                             <label for="coll_date "> Date  </label> <span class="required">&nbsp;*</span>
+                            <input type="hidden" class="form-control" id="cc_req_id" name="cc_req_id" >
                             <input type="date" class="form-control" id="collectionCharge_date" name="collectionCharge_date" >
                             <span class="text-danger" id="collectionChargeDateCheck"> Select Date </span>
                         </div>
