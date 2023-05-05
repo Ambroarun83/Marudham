@@ -80,10 +80,11 @@ $(document).ready(function(){
         $('#total_waiver').val(total_waiver)
     })
 
+
     //Collection Charge
 $('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
 $('#collChargeBtn').click(function () {
-    let req_id = $('#idupd').val();
+    let req_id = $('#cc_req_id').val();
     let customer_id = $('#cusidupd').val();
     let colluserid = $('#colluserid').val();
     let collectionCharge_date = $("#collectionCharge_date").val();
@@ -116,7 +117,7 @@ $('#collChargeBtn').click(function () {
                         $('#collChargeNotOk').fadeOut('fast');
                     }, 2000);
                 }
-                resetcollCharges();
+                resetcollCharges(req_id);
             }
         });
         $('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
@@ -140,6 +141,7 @@ $('#collChargeBtn').click(function () {
     }
 });
     //Current Date
+    //To Set the date input not to choose future date
     var mintoday = new Date();
     var mindd = mintoday.getDate();
     var minmm = mintoday.getMonth()+1; //January is 0 so need to add 1 to make it 1!
@@ -160,15 +162,8 @@ $('#collChargeBtn').click(function () {
 
 
 
-    $('#submit_collection').click(function(){ alert('sdfasf')
-        var response = validations();
-        if(response == true){ alert('121212')
-        printfunction1()
-            // return true;
-        }else{ alert('121212fdgdf')
-            // return true;
-            printfunction1()
-        }
+    $('#submit_collection').click(function(){ 
+        validations();
     })
     
 
@@ -185,131 +180,264 @@ $(function(){
     var req_id = $('#idupd').val()
     const cus_id = $('#cusidupd').val()
     OnLoadFunctions(req_id,cus_id);
-    dueChartList(req_id,cus_id); // To show Due Chart List.
-    penaltyChartList(req_id,cus_id); //To show Penalty List.
-    collectionChargeChartList(req_id) //To Show Collection Charges Chart List
-    resetcollCharges();  //Collection Charges
 })
 
 function OnLoadFunctions(req_id,cus_id){
+    //To get loan sub Status
+    var pending_arr = [];
+    var od_arr = [];
+    var due_nil_arr = [];
     $.ajax({
-        //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
-        url: 'collectionFile/getLoanList.php',
-        data: {'req_id':req_id,'cus_id':cus_id},
+        url: 'collectionFile/resetCustomerStatus.php',
+        data: {'cus_id':cus_id},
+        dataType:'json',
         type:'post',
         cache: false,
         success: function(response){
-            $('#loanListTableDiv').empty()
-            $('#loanListTableDiv').html(response)
-
-            $('.collection-window').click(function(){
-                $('.personalinfo_card').hide();
-                $('.loanlist_card').hide();
-                $('.back-button').hide();
-                $('.collection_card').show();
-                $('#close_collection_card').show();
-                $('#submit_collection').show();
-
-                var req_id = $(this).attr('data-value');
+            
+            for(var i=0;i< response['pending_customer'].length;i++){
+                pending_arr[i] = response['pending_customer'][i]
+                od_arr[i] = response['od_customer'][i]
+                due_nil_arr[i] = response['due_nil_customer'][i]
+            }
+            var pending_sts = pending_arr.join(',');
+            $('#pending_sts').val(pending_sts);
+            var od_sts = od_arr.join(',');
+            $('#od_sts').val(od_sts);
+            var due_nil_sts = due_nil_arr.join(',');
+            $('#due_nil_sts').val(due_nil_sts);
+        }
+    }); 
+    setTimeout(()=>{
+        var pending_sts = $('#pending_sts').val()
+        var od_sts = $('#od_sts').val()
+        var due_nil_sts = $('#due_nil_sts').val()
+        $.ajax({
+            //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
+            url: 'collectionFile/getLoanList.php',
+            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts},
+            type:'post',
+            cache: false,
+            success: function(response){
+                $('#loanListTableDiv').empty()
+                $('#loanListTableDiv').html(response);
                 
-                //To get the loan category ID to store when collection form submitted
-                $.ajax({
-                    url:'collectionFile/getDetailForCollection.php',
-                    data: {"req_id":req_id},
-                    dataType:'json',
-                    type:'post',
-                    cache: false,
-                    success:function(response){
-                        var loan_category_id = response['loan_category'];
-                        var sub_category_id = response['sub_category'];
-                        $('#loan_category_id').val(loan_category_id)
-                        $('#sub_category_id').val(sub_category_id)
-                    }
-                })
-                var loan_category = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text()
-                var sub_category = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text()
-                var status = $(this).parent().prev().prev().text()
-                var sub_status = $(this).parent().prev().text()
-                
-                $('#req_id').val(req_id)
-                $('#loan_category').val(loan_category)
-                $('#sub_category').val(sub_category)
-                $('#status').val(status)
-                $('#sub_status').val(sub_status)
 
-                //To get Collection Code
-                $.ajax({
-                    url:'collectionFile/getCollectionCode.php',
-                    data:{},
-                    dataType: 'json',
-                    type: 'post',
-                    cache: false,
-                    success: function(response){
-                        $('#collection_id').val(response)
-                    }
+                $('.collection-window').click(function(){
+                    $('.personalinfo_card').hide();
+                    $('.loanlist_card').hide();
+                    $('.back-button').hide();
+                    $('.collection_card').show();
+                    $('#close_collection_card').show();
+                    $('#submit_collection').show();
+
+                    var req_id = $(this).attr('data-value');
+                    
+                    //To get the loan category ID to store when collection form submitted
+                    $.ajax({
+                        url:'collectionFile/getDetailForCollection.php',
+                        data: {"req_id":req_id},
+                        dataType:'json',
+                        type:'post',
+                        cache: false,
+                        success:function(response){
+                            var loan_category_id = response['loan_category'];
+                            var sub_category_id = response['sub_category'];
+                            $('#loan_category_id').val(loan_category_id)
+                            $('#sub_category_id').val(sub_category_id)
+                        }
+                    })
+                    var loan_category = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().prev().text()
+                    var sub_category = $(this).parent().prev().prev().prev().prev().prev().prev().prev().prev().text()
+                    var status = $(this).parent().prev().prev().text()
+                    var sub_status = $(this).parent().prev().text()
+                    
+                    $('#req_id').val(req_id)
+                    $('#loan_category').val(loan_category)
+                    $('#sub_category').val(sub_category)
+                    $('#status').val(status)
+                    $('#sub_status').val(sub_status)
+                    
+                    //To get Collection Code
+                    $.ajax({
+                        url:'collectionFile/getCollectionCode.php',
+                        data:{},
+                        dataType: 'json',
+                        type: 'post',
+                        cache: false,
+                        success: function(response){
+                            $('#collection_id').val(response)
+                        }
+                    });
+                    
+                    //in this file, details gonna fetch by request ID, Not by customer ID (Because we need loan details from particular request ID)
+                    $.ajax({
+                        url: 'collectionFile/getLoanDetails.php',
+                        data: {'req_id':req_id,'cus_id':cus_id},
+                        dataType:'json',
+                        type:'post',
+                        cache: false,
+                        success: function(response){
+                            //Display all value to readonly fields
+                            $('#tot_amt').val(response['total_amt'])
+                            $('#paid_amt').val(response['total_paid'])
+                            $('#bal_amt').val(response['balance'])
+                            $('#due_amt').val(response['due_amt'])
+                            $('#pending_amt').val(response['pending'])
+                            $('#payable_amt').val(response['payable'])
+                            $('#penalty').val(response['penalty'])
+                            $('#coll_charge').val(response['coll_charge'])
+                            
+                            //to get how many due are pending till now
+                            var totspan = (response['total_amt'] / response['due_amt']).toFixed(1);
+                            var paidspan =(response['total_paid'] / response['due_amt']).toFixed(1);
+                            var balspan =(response['balance'] / response['due_amt']).toFixed(1);
+                            var pendingspan =(response['pending'] / response['due_amt']).toFixed(1);
+                            var payablespan =(response['payable'] / response['due_amt']).toFixed(1);
+                            
+                            //Show all in span class
+                            $('.totspan').text('* (No of Due : '+totspan+')')
+                            $('.paidspan').text('* (No of Due : '+paidspan+')')
+                            $('.balspan').text('* (No of Due : '+balspan+')')
+                            $('.pendingspan').text('* (No of Due : '+pendingspan+')')
+                            $('.payablespan').text('* (No of Due : '+payablespan+')')
+                            
+                            //To set limitations for input fields
+                            $('#due_amt_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['balance'] + ` ){ alert("Enter Lesser Value"); $(this).val(""); }`)
+                            $('#penalty_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['penalty'] + ` ){ alert("Enter Lesser Value"); $(this).val(""); }`)
+                            $('#coll_charge_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['coll_charge'] + ` ){ alert("Enter Lesser Value"); $(this).val(""); }`)
+                            
+                            //To set Limitation that should not cross its limit with considering track values and previous readonly values
+                            $('#pre_close_waiver').attr('onblur',`var due_track = $('#due_amt_track').val(); if( parseFloat($(this).val()) > '` + response['balance'] + `' -due_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
+                            $('#penalty_waiver').attr('onblur',`var penalty_track = $('#penalty_track').val(); if( parseFloat($(this).val()) > '` + response['penalty'] + `' -penalty_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
+                            $('#coll_charge_waiver').attr('onblur',`var coll_charge_track = $('#coll_charge_track').val(); if( parseFloat($(this).val()) > '` + response['coll_charge'] + `' -coll_charge_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
+                        }
+                    })
+
                 });
-
-                $.ajax({
-                //in this file, details gonna fetch by request ID, Not by customer ID (Because we need loan details from particular request ID)
-                    url: 'collectionFile/getLoanDetails.php',
-                    data: {'req_id':req_id,'cus_id':cus_id},
-                    dataType:'json',
-                    type:'post',
-                    cache: false,
-                    success: function(response){
-                        //Display all value to readonly fields
-                        $('#tot_amt').val(response['total_amt'])
-                        $('#paid_amt').val(response['total_paid'])
-                        $('#bal_amt').val(response['balance'])
-                        $('#due_amt').val(response['due_amt'])
-                        $('#pending_amt').val(response['pending'])
-                        $('#payable_amt').val(response['payable'])
-                        $('#penalty').val(response['penalty'])
-                        $('#coll_charge').val(response['coll_charge'])
-
-                        //to get how many due are pending till now
-                        var totspan = (response['total_amt'] / response['due_amt']).toFixed(1);
-                        var paidspan =(response['total_paid'] / response['due_amt']).toFixed(1);
-                        var balspan =(response['balance'] / response['due_amt']).toFixed(1);
-                        var pendingspan =(response['pending'] / response['due_amt']).toFixed(1);
-                        var payablespan =(response['payable'] / response['due_amt']).toFixed(1);
-
-                        //Show all in span class
-                        $('.totspan').text('* (No of Due : '+totspan+')')
-                        $('.paidspan').text('* (No of Due : '+paidspan+')')
-                        $('.balspan').text('* (No of Due : '+balspan+')')
-                        $('.pendingspan').text('* (No of Due : '+pendingspan+')')
-                        $('.payablespan').text('* (No of Due : '+payablespan+')')
-
-                        //To set limitations for input fields
-                        $('#due_amt_track').attr('onblur',`if( parseFloat($(this).val()) > '` + response['balance'] + `' ){ alert("Enter Lesser Value"); $(this).val(""); }`)
-                        $('#penalty_track').attr('onblur',`if( parseFloat($(this).val()) > '` + response['penalty'] + `' ){ alert("Enter Lesser Value"); $(this).val(""); }`)
-                        $('#coll_charge_track').attr('onblur',`if( parseFloat($(this).val()) > '` + response['coll_charge'] + `' ){ alert("Enter Lesser Value"); $(this).val(""); }`)
+                $('#close_collection_card').click(function(){
+                    $('.personalinfo_card').show();
+                    $('.loanlist_card').show();
+                    $('.back-button').show();
+                    $('.collection_card').hide();
+                    $('#close_collection_card').hide();
+                    $('#submit_collection').hide();
+                })
+                $('.due-chart').click(function(){
+                    var req_id = $(this).attr('value');
+                    dueChartList(req_id,cus_id); // To show Due Chart List.
+                })
+                $('.penalty-chart').click(function(){
+                    var req_id = $(this).attr('value');
+                    $.ajax({
+                        //to insert penalty by on click
+                        url: 'collectionFile/getLoanDetails.php',
+                            data: {'req_id':req_id,'cus_id':cus_id},
+                            dataType:'json',
+                            type:'post',
+                            cache: false,
+                            success: function(response){
+                                penaltyChartList(req_id,cus_id); //To show Penalty List.
+                            }
+                    })
+                })
+                $('.coll-charge-chart').click(function(){
+                    var req_id = $(this).attr('value');
+                    collectionChargeChartList(req_id) //To Show Collection Charges Chart List
+                })
+                $('.coll-charge').click(function(){
+                    var req_id = $(this).attr('value');console.log(req_id)
+                    resetcollCharges(req_id);  //Collection Charges
+                })
+                $('.move-error').click(function(){
+                    if(confirm("Are you Sure To move this Loan to Error?")){
                         
-                        //To set Limitation that should not cross its limit with considering track values and previous readonly values
-                        $('#pre_close_waiver').attr('onblur',`var due_track = $('#due_amt_track').val(); if( parseFloat($(this).val()) > '` + response['balance'] + `' -due_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
-                        $('#penalty_waiver').attr('onblur',`var penalty_track = $('#penalty_track').val(); if( parseFloat($(this).val()) > '` + response['penalty'] + `' -penalty_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
-                        $('#coll_charge_waiver').attr('onblur',`var coll_charge_track = $('#coll_charge_track').val(); if( parseFloat($(this).val()) > '` + response['coll_charge'] + `' -coll_charge_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
+                        var req_id = $(this).attr('value');
+                        var cus_status = '15';
+                        $.ajax({
+                            url: 'collectionFile/moveStatus.php',
+                            data: {'req_id':req_id,'cus_status':cus_status},
+                            dataType: 'json',
+                            type: 'post',
+                            cache: false,
+                            success:function(response){
+                                Swal.fire({
+                                    timerProgressBar: true,
+                                    timer: 3000,
+                                    title: 'Moved To Error!',
+                                    icon: 'succes',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                                setTimeout(function(){
+                                    window.location= 'edit_collection';
+                                },2000)
+                            }
+                        })
                     }
                 })
-
-
-            });
-            $('#close_collection_card').click(function(){
-                $('.personalinfo_card').show();
-                $('.loanlist_card').show();
-                $('.back-button').show();
-                $('.collection_card').hide();
-                $('#close_collection_card').hide();
-                $('#submit_collection').hide();
-            })
+                $('.move-legal').click(function(){
+                    if(confirm("Are you Sure To move this Loan to Legal?")){
+                        
+                        var req_id = $(this).attr('value');
+                        var cus_status = '16';
+                        $.ajax({
+                            url: 'collectionFile/moveStatus.php',
+                            data: {'req_id':req_id,'cus_status':cus_status},
+                            dataType: 'json',
+                            type: 'post',
+                            cache: false,
+                            success:function(response){
+                                Swal.fire({
+                                    timerProgressBar: true,
+                                    timer: 3000,
+                                    title: 'Moved To Legal!',
+                                    icon: 'succes',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                                setTimeout(function(){
+                                    window.location= 'edit_collection';
+                                },2000)
+                            }
+                        })
+                    }
+                })
+                $('.return-sub').click(function(){
+                    if(confirm("Are you Sure To move this Loan to Sub Status?")){
+                        
+                        var req_id = $(this).attr('value');
+                        var cus_status = '14';
+                        $.ajax({
+                            url: 'collectionFile/moveStatus.php',
+                            data: {'req_id':req_id,'cus_status':cus_status},
+                            dataType: 'json',
+                            type: 'post',
+                            cache: false,
+                            success:function(response){
+                                Swal.fire({
+                                    timerProgressBar: true,
+                                    timer: 3000,
+                                    title: 'Moved To Sub Status!',
+                                    icon: 'succes',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                                setTimeout(function(){
+                                    window.location= 'edit_collection';
+                                },2000)
+                            }
+                        })
+                    }
+                })
         }
     })
+},2000)
 
 
     
-
-
+    
+    
 }//Auto Load function END
 
 //to get Cheque Numbers list based on the request id
@@ -318,16 +446,16 @@ function getChequeNoList(){
 }
 
 function validations(){
+    var collection_access = $('#collection_access').val();
     var collection_mode = $('#collection_mode').val();var cheque_no = $('#cheque_no').val();var trans_id = $('#trans_id').val();var trans_date = $('#trans_date').val();
     var collection_loc = $('#collection_loc').val();var due_amt_track = $('#due_amt_track').val();var penalty_track = $('#penalty_track').val();var coll_charge_track = $('#coll_charge_track').val();
-    // var pre_close_waiver = $('#pre_close_waiver').val();var penalty_waiver = $('#penalty_waiver').val();var coll_charge_waiver = $('#coll_charge_waiver').val()
+    var pre_close_waiver = $('#pre_close_waiver').val();var penalty_waiver = $('#penalty_waiver').val();var coll_charge_waiver = $('#coll_charge_waiver').val()
+    var total_paid_track = $('#total_paid_track').val();var total_waiver = $('#total_waiver').val();
     
-    var response = true;
 
     if(collection_mode == ''){
         $('#collectionmodeCheck').show();
         event.preventDefault();
-        response =false;
     }else{
         $('#collectionmodeCheck').hide();
 
@@ -336,7 +464,6 @@ function validations(){
             if(cheque_no == ''){
                 $('#chequeCheck').show();
                 event.preventDefault();
-                response =false;
             }else{
                 $('#chequeCheck').hide();
             }
@@ -344,14 +471,12 @@ function validations(){
             if(trans_id == ''){
                 $('#transidCheck').show();
                 event.preventDefault();
-                response =false;
             }else{
                 $('#transidCheck').hide();
             }
             if(trans_date == ''){
                 $('#transdateCheck').show();
                 event.preventDefault();
-                response =false;
             }else{
                 $('#transdateCheck').hide();
             }
@@ -360,14 +485,12 @@ function validations(){
             if(trans_id == ''){
                 $('#transidCheck').show();
                 event.preventDefault();
-                response =false;
             }else{
                 $('#transidCheck').hide();
             }
             if(trans_date == ''){
                 $('#transdateCheck').show();
                 event.preventDefault();
-                response =false;
             }else{
                 $('#transdateCheck').hide();
             }
@@ -377,51 +500,23 @@ function validations(){
     if(collection_loc == ''){
         $('#collectionlocCheck').show();
         event.preventDefault();
-        response =false;
     }else{
         $('#collectionlocCheck').hide();
     }
 
-    if(due_amt_track == ''){
+    // if(collection_access == 0){
         
-        if(penalty_track == ''){
-            
-            if(coll_charge_track == ''){
-                $('.totalpaidCheck').show();
-                event.preventDefault();
-                response =false;
-            }else{
-                $('.totalpaidCheck').hide();
-            }
-
+    // }
+    if(total_paid_track == '' || total_paid_track == 0){
+        if(total_waiver == '' || total_waiver == 0){
+            $('.totalpaidCheck').show();
+            event.preventDefault();
         }else{
             $('.totalpaidCheck').hide();
         }
-        
     }else{
         $('.totalpaidCheck').hide();
     }
-return response;
-}
-
-function printfunction(){
-    var coll_id = $('#collection_id').val();alert('asdf')
-    $.ajax({
-        url:'collectionFile/print_collection.php',
-        data:{'coll_id':coll_id},
-        type: 'post',
-        cache: false,
-        success:function(response){
-            $("#printcollection").html(response);
-            document.window.print();
-
-            setTimeout(() => {
-                // location.href='<?php echo $HOSTPATH;  ?>edit_collection&msc=1';
-                console.log('asdfasdf')
-            }, 1500);
-        }
-    })
-    
 }
 
 //Due Chart List
@@ -466,8 +561,7 @@ function collectionChargeChartList(req_id){
     });//Ajax End.
 }
 //Collection Charges
-function resetcollCharges() {
-    let req_id = $('#idupd').val();
+function resetcollCharges(req_id) {
     $.ajax({
         url: 'collectionFile/collection_charges_reset.php',
         type: 'POST',
@@ -476,6 +570,7 @@ function resetcollCharges() {
         success: function (html) {
             $("#collChargeTableDiv").empty();
             $("#collChargeTableDiv").html(html);
+            $("#cc_req_id").val(req_id);
             $("#collectionCharge_date").val('');
             $("#collectionCharge_purpose").val('');
             $("#collectionCharge_Amnt").val('');

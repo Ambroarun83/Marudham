@@ -80,10 +80,10 @@ function moneyFormatIndia($num)
         // if ($count > 0) {
         // }
 
-        $issueDate = $connect->query("SELECT net_cash,created_date FROM loan_issue  WHERE req_id = '$req_id' order by id desc limit 1 ");
+        $issueDate = $connect->query("SELECT loan_amt,created_date FROM loan_issue  WHERE req_id = '$req_id' order by id desc limit 1 ");
         $loanIssue = $issueDate->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
-        $netcash = $loanIssue['net_cash'];
+        $loan_amt = $loanIssue['loan_amt'];
         $issue_date = $loanIssue['created_date'];
         ?>
         <tr>
@@ -95,7 +95,7 @@ function moneyFormatIndia($num)
             <td></td>
             <td></td>
             <td></td>
-            <td><?php echo $netcash; ?></td>
+            <td><?php echo $loan_amt; ?></td>
             <td></td>
             <td></td>
             <td></td>
@@ -105,7 +105,8 @@ function moneyFormatIndia($num)
         <?php
         foreach ($dueMonth as $cusDueMonth) {
 
-            $run = $connect->query("SELECT c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.coll_charge,c.bal_amt,c.coll_charge_track,c.coll_location,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= '1') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+            $run = $connect->query("SELECT c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.coll_charge,c.bal_amt,c.coll_charge_track,c.coll_location,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+
             if ($run->rowCount() > 0) {
                 while ($row = $run->fetch()) {
                     $role = $row['role'];

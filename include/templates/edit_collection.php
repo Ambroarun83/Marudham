@@ -61,13 +61,17 @@
 				<div class="table-responsive">
 					<?php
 					$mscid=0;
+					$id=0;
 					if(isset($_GET['msc']))
 					{
 					$mscid=$_GET['msc'];
-					if($mscid==1)
+					$id=$_GET['id'];
+					if($mscid==1 and $id !=0)
 					{?>
 					<div class="alert alert-success" role="alert">
 						<div class="alert-text"> Collection Submitted Successfully! </div>
+						<!-- To show print page and assign id value as collection id from collection.php -->
+						<input type="hidden" id='id' name='id' value=<?php echo $id;?>>
 					</div> 
 					<?php
 					}
@@ -79,6 +83,10 @@
 					<?php
 					}
 					
+					}else{ //for print page not to show define id as 0
+						?>
+						<input type="hidden" id='id' name='id' value=<?php echo $id;?>>
+						<?php
 					}
 					?>
 					<table id="collection_table" class="table custom-table" >
@@ -105,6 +113,7 @@
 	<!-- Row end -->
 </div>
 <!-- Main container end -->
+<div id="printcollection" style="display: none"></div>
 
 
 <script>
@@ -185,5 +194,51 @@
 
 		});
 	}
+	var id = $('#id').val();
+	if(id != 0){
+		setTimeout(()=>{
+			Swal.fire({
+				title: 'Print',
+				text: 'Do you want to print this collection?',
+				// icon: 'question',
+				// showConfirmButton: true,
+				// confirmButtonColor: '#009688',
+				imageUrl: 'img/printer.png',
+				imageWidth: 300,
+				imageHeight: 210,
+				imageAlt: 'Custom image',
+				showCancelButton: true,
+				confirmButtonColor: '#009688',
+				cancelButtonColor: '#d33',
+				cancelButtonText: 'No',
+				confirmButtonText: 'Yes'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url:'collectionFile/print_collection.php',
+						data:{'coll_id':id},
+						type:'post',
+						cache:false,
+						success:function(html){
+							$('#printcollection').html(html)
+							// Get the content of the div element
+							var content = $("#printcollection").html();
 
+							// Create a new window
+							var w = window.open();
+
+							// Write the content to the new window
+							$(w.document.body).html(content);
+
+							// Print the new window
+							w.print();
+
+							// Close the new window
+							w.close();
+						}
+					})
+				}
+			})
+		},2000)
+	}
 </script>
