@@ -92,6 +92,7 @@ if($idupd>0)
 		<input type="hidden" name="pending_sts" id="pending_sts" value="" />
 		<input type="hidden" name="od_sts" id="od_sts" value="" />
 		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+		<input type="hidden" name="closed_sts" id="closed_sts" value="" />
 		<input type="hidden" name="colluserid" id="colluserid" value="<?php if (isset($userid)) {echo $userid;} ?>" />
 
 		<!-- Row start -->
@@ -382,10 +383,9 @@ if($idupd>0)
 									<div class="col-8 cash"></div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 cheque" style="display:none">
 										<div class="form-group">
-											<label for="disabledInput">Cheque No</label>&nbsp;<span class="text-danger">*</span>
+											<label for="disabledInput">Cheque No</label>&nbsp;<span class="text-danger chequeSpan">*</span>
 											<select class='form-control' id='cheque_no' name='cheque_no'>
 												<option value=''>Select Cheque No</option>
-												<option value='1321321'>Father</option>
 											</select>
 											<span class="text-danger" id='chequeCheck' style="display: none;">Please Select Cheque No<span>
 										</div>
@@ -522,6 +522,7 @@ if($idupd>0)
 	</form>
 	<!-- Form End -->
 </div>
+<div id="printcollection" style="display: none"></div>
 
 <!-- /////////////////////////////////////////////////////////////////// Due Chart Modal START ////////////////////////////////////////////////////////////////////// -->
 <div class="modal fade DueChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

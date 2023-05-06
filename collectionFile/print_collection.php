@@ -5,7 +5,7 @@ include '../ajaxconfig.php';
 if(isset($_POST["coll_id"])){
 	$coll_id=$_POST["coll_id"];
 }
-// $coll_id='COL-102';
+// $coll_id='COL-106';
 
 $qry=$con->query("SELECT * FROM `collection` WHERE coll_code='".strip_tags($coll_id)."' ");
 $row=$qry->fetch_assoc();
@@ -110,10 +110,10 @@ function moneyFormatIndia($num)
 			<th style="background-color: white;color: black" width="100">Charges Waiver</th>
 		</tr>
 		<tr>
-			<td style="padding:5px;">
+			<td style="padding:5px;text-align:center;">
 				<?php echo date('d-m-Y',strtotime($coll_date)); ?>
 			</td>
-			<td style="padding:5px;">
+			<td style="padding:5px;text-align:center;">
 				<?php echo $coll_code;?>
 			</td>
 			<td style="padding:5px;text-align:center;">

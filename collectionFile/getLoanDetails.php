@@ -51,16 +51,17 @@ if($result->num_rows>0){
         $coll_arr[] = $row;
     }
     $total_paid=0;
-    $pre_colsure=0;
+    $pre_closure=0;
     foreach ($coll_arr as $tot) {
         $total_paid += intVal($tot['due_amt_track']); //only calculate due amount not total paid value, because it will have penalty and coll charge also
-        $pre_colsure += intVal($tot['pre_close_waiver']); //get pre closure value to subract to get balance amount
+        $pre_closure += intVal($tot['pre_close_waiver']); //get pre closure value to subract to get balance amount
     }
     //total paid amount will be all records again request id should be summed
     $response['total_paid'] = $total_paid; 
+    $response['pre_closure'] = $pre_closure; 
 
     //total amount subracted by total paid amount and subracted with pre closure amount will be balance to be paid
-    $response['balance'] = $response['total_amt'] - $response['total_paid'] - $pre_colsure;
+    $response['balance'] = $response['total_amt'] - $response['total_paid'] - $pre_closure;
 
     $response = calculateOthers($loan_arr,$response,$con);
 
@@ -146,8 +147,8 @@ function calculateOthers($loan_arr,$response,$con){
             // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_raised_date','$penalty',current_timestamp)");
         if($count>0){
             // echo $count;
-            //if Due month exceeded due amount will be as pending with how many months are exceeded
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] ; 
+            //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
+            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
             // If due month exceeded
             if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
@@ -168,11 +169,11 @@ function calculateOthers($loan_arr,$response,$con){
             $response['payable'] = $response['due_amt'] + $response['pending'];
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] ;
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
         }
 
     }else
@@ -212,8 +213,8 @@ function calculateOthers($loan_arr,$response,$con){
         }
         if($count>0){
             
-            //if Due month exceeded due amount will be as pending with how many months are exceeded
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'];
+            //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
+            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
             // If due month exceeded
             if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
@@ -235,11 +236,11 @@ function calculateOthers($loan_arr,$response,$con){
 
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] ;
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
         }
 
     }elseif($loan_arr['due_method_scheme'] == '3'){
@@ -277,8 +278,8 @@ function calculateOthers($loan_arr,$response,$con){
         }
         if($count>0){
             
-            //if Due month exceeded due amount will be as pending with how many months are exceeded
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'];
+            //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
+            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
             // If due month exceeded
             if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
@@ -300,11 +301,11 @@ function calculateOthers($loan_arr,$response,$con){
 
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] ;
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
         }
     }
     if($response['pending'] < 0){

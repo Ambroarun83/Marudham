@@ -14,6 +14,9 @@ if(isset($_POST["od_sts"])){
 if(isset($_POST["due_nil_sts"])){
     $due_nil_sts = explode(',',$_POST["due_nil_sts"]);
 }
+if(isset($_POST["closed_sts"])){
+    $closed_sts = explode(',',$_POST["closed_sts"]);
+}
 
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -109,7 +112,7 @@ function moneyFormatIndia($num) {
         rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
         from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
-        WHERE lc.cus_id_loan = $cus_id and ii.cus_status >= 14"); //Customer status greater than or equal to 14 because, after issued data only we need
+        WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status < 20)"); //Customer status greater than or equal to 14 because, after issued data only we need
 
         $i = 1;
         while ($row = $run->fetch()) {
@@ -161,11 +164,15 @@ function moneyFormatIndia($num) {
                             }elseif($row['cus_status']== '16'){
                                 echo 'Legal';
                             }else{
-                                echo 'Current';
+                                if($closed_sts[$i-1] == 'true'){
+                                    echo "Move To Close";
+                                }else{
+                                    echo 'Current';
+                                }
                             }
                         } ?></td>
                 <td><?php echo "<span class='btn btn-success collection-window' style='font-size: 17px;position: relative;top: 0px; ";
-                            if($row['cus_status']== '16' || $row['cus_status']== '15'){echo 'display:none';}
+                            if($row['cus_status']== '16' || $row['cus_status']== '15' || $closed_sts[$i-1] == 'true'){echo 'display:none';}
                 echo " ' data-value='".$row['req_id']."''>$</span>"; ?></td>
                 <td>
                     <?php 
@@ -187,6 +194,10 @@ function moneyFormatIndia($num) {
                             <a href='' class='move-legal' value='".$row['req_id']."' > Move To Legal</a>
                             <a href='' class='return-sub' value='".$row['req_id']."' > Return Sub Status</a>
                             <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='".$row['req_id']."' > Collection Charges </span></a>";
+                            //if balance is eqauls to zero, then that loan must be able to moved as closed
+                            if($closed_sts[$i-1] == 'true'){
+                                $action .= "<a href='' class='move-closed' value='".$row['req_id']."' > Move To Closed</a>";
+                            }
                         }
                         $action .= "</div></div>";
                         echo $action;
