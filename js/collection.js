@@ -187,6 +187,7 @@ function OnLoadFunctions(req_id,cus_id){
     var pending_arr = [];
     var od_arr = [];
     var due_nil_arr = [];
+    var closed_arr = [];
     $.ajax({
         url: 'collectionFile/resetCustomerStatus.php',
         data: {'cus_id':cus_id},
@@ -199,6 +200,7 @@ function OnLoadFunctions(req_id,cus_id){
                 pending_arr[i] = response['pending_customer'][i]
                 od_arr[i] = response['od_customer'][i]
                 due_nil_arr[i] = response['due_nil_customer'][i]
+                closed_arr[i] = response['closed_customer'][i]
             }
             var pending_sts = pending_arr.join(',');
             $('#pending_sts').val(pending_sts);
@@ -206,16 +208,19 @@ function OnLoadFunctions(req_id,cus_id){
             $('#od_sts').val(od_sts);
             var due_nil_sts = due_nil_arr.join(',');
             $('#due_nil_sts').val(due_nil_sts);
+            var closed_sts = closed_arr.join(',');
+            $('#closed_sts').val(closed_sts);
         }
     }); 
     setTimeout(()=>{
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
         var due_nil_sts = $('#due_nil_sts').val()
+        var closed_sts = $('#closed_sts').val()
         $.ajax({
             //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
             url: 'collectionFile/getLoanList.php',
-            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts},
+            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts},
             type:'post',
             cache: false,
             success: function(response){
@@ -267,6 +272,35 @@ function OnLoadFunctions(req_id,cus_id){
                         cache: false,
                         success: function(response){
                             $('#collection_id').val(response)
+                        }
+                    });
+
+                    //To get Cheque List
+                    $.ajax({
+                        url:'collectionFile/getChequeList.php',
+                        data:{'req_id':req_id},
+                        dataType: 'json',
+                        type: 'post',
+                        cache: false,
+                        success: function(response){
+                            $('#cheque_no').empty()
+                            $('#cheque_no').append('<option value="">Select Cheque No</option>');
+                            for(var i=0;i<response.length;i++){
+                                $('#cheque_no').append('<option value="'+response[i]['cheque_no_id']+'">'+response[i]['cheque_no']+'</option>');
+                            }
+                            $('#cheque_no').change(function(){
+                                var cheque_no = $(this).val();
+                                if(cheque_no != ''){
+                                    for(var i=0;i<response.length;i++){
+                                        if(cheque_no == response[i]['cheque_no_id']){
+                                            var holder_name = response[i]['cheque_holder_name'];
+                                        }
+                                    }
+                                    $('.chequeSpan').text('* ' + holder_name);
+                                }else{
+                                    $('.chequeSpan').text("*");
+                                }
+                            })
                         }
                     });
                     
@@ -326,6 +360,53 @@ function OnLoadFunctions(req_id,cus_id){
                 $('.due-chart').click(function(){
                     var req_id = $(this).attr('value');
                     dueChartList(req_id,cus_id); // To show Due Chart List.
+                    setTimeout(()=>{
+                        $('.print_due_coll').click(function(){
+                            var id = $(this).attr('value');
+                            Swal.fire({
+                                title: 'Print',
+                                text: 'Do you want to print this collection?',
+                                // icon: 'question',
+                                // showConfirmButton: true,
+                                // confirmButtonColor: '#009688',
+                                imageUrl: 'img/printer.png',
+                                imageWidth: 300,
+                                imageHeight: 210,
+                                imageAlt: 'Custom image',
+                                showCancelButton: true,
+                                confirmButtonColor: '#009688',
+                                cancelButtonColor: '#d33',
+                                cancelButtonText: 'No',
+                                confirmButtonText: 'Yes'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    $.ajax({
+                                        url:'collectionFile/print_collection.php',
+                                        data:{'coll_id':id},
+                                        type:'post',
+                                        cache:false,
+                                        success:function(html){
+                                            $('#printcollection').html(html)
+                                            // Get the content of the div element
+                                            var content = $("#printcollection").html();
+                
+                                            // Create a new window
+                                            var w = window.open();
+                
+                                            // Write the content to the new window
+                                            $(w.document.body).html(content);
+                
+                                            // Print the new window
+                                            w.print();
+                
+                                            // Close the new window
+                                            w.close();
+                                        }
+                                    })
+                                }
+                            })
+                        })
+                    },1000)
                 })
                 $('.penalty-chart').click(function(){
                     var req_id = $(this).attr('value');
@@ -419,6 +500,33 @@ function OnLoadFunctions(req_id,cus_id){
                                     timerProgressBar: true,
                                     timer: 3000,
                                     title: 'Moved To Sub Status!',
+                                    icon: 'succes',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                                setTimeout(function(){
+                                    window.location= 'edit_collection';
+                                },2000)
+                            }
+                        })
+                    }
+                })
+                $('.move-closed').click(function(){
+                    if(confirm("Are you Sure To move this Loan to Closed?")){
+                        
+                        var req_id = $(this).attr('value');
+                        var cus_status = '20';
+                        $.ajax({
+                            url: 'collectionFile/moveStatus.php',
+                            data: {'req_id':req_id,'cus_status':cus_status},
+                            dataType: 'json',
+                            type: 'post',
+                            cache: false,
+                            success:function(response){
+                                Swal.fire({
+                                    timerProgressBar: true,
+                                    timer: 3000,
+                                    title: 'Moved To Closed!',
                                     icon: 'succes',
                                     showConfirmButton: true,
                                     confirmButtonColor: '#009688'

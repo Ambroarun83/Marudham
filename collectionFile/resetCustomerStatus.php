@@ -13,8 +13,9 @@ if(isset($_SESSION['userid'])){
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
 }
+// $cus_id=105806052023;
 $req_arr = array();
-$qry=$con->query("SELECT req_id FROM in_issue where cus_id = $cus_id and cus_status >= 14 ");
+$qry=$con->query("SELECT req_id FROM in_issue where cus_id = $cus_id and (cus_status >= 14 and cus_status < 20) ");
 while($row=$qry->fetch_assoc()){
     $req_arr[] = $row['req_id'];
 }
@@ -42,16 +43,16 @@ foreach($req_arr as $req_id){
 
         if($loan_arr['tot_amt_cal'] == '' || $loan_arr['tot_amt_cal'] == null){
             //(For monthly interest total amount will not be there, so take principals)
-            $response['total_amt'] = $loan_arr['principal_amt_cal'];
+            $response['total_amt'] = intVal($loan_arr['principal_amt_cal']);
         }else{
-            $response['total_amt'] = $loan_arr['tot_amt_cal'];
+            $response['total_amt'] = intVal($loan_arr['tot_amt_cal']);
         }
 
         if($loan_arr['due_amt_cal'] == '' || $loan_arr['due_amt_cal'] == null){
             //(For monthly interest Due amount will not be there, so take interest)
-            $response['due_amt'] = $loan_arr['int_amt_cal'];
+            $response['due_amt'] = intVal($loan_arr['int_amt_cal']);
         }else{
-            $response['due_amt'] = $loan_arr['due_amt_cal']; //Due amount will remain same
+            $response['due_amt'] = intVal($loan_arr['due_amt_cal']); //Due amount will remain same
         }
     }
 
@@ -68,6 +69,7 @@ foreach($req_arr as $req_id){
         }
         //total paid amount will be all records again request id should be summed
         $response['total_paid'] = $total_paid; 
+        $response['pre_colsure'] = $pre_colsure; 
 
         //total amount subracted by total paid amount and subracted with pre closure amount will be balance to be paid
         $response['balance'] = $response['total_amt'] - $response['total_paid'] - $pre_colsure;
@@ -125,6 +127,13 @@ foreach($req_arr as $req_id){
     }else{
         $response['due_nil_customer'][$i] = false;
     }
+
+    //If balance equals to zero, then it should be moved to closed
+    if($response['balance'] == 0 or $response['balance'] == '0'){
+        $response['closed_customer'][$i] = true;
+    }else{
+        $response['closed_customer'][$i] = false;
+    }
     
     $i++;
 }
@@ -135,14 +144,15 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
     // $req_id = '11';//***************************************************************************************************************************************************
     $due_start_from = $loan_arr['due_start_from'];
     $maturity_month = $loan_arr['maturity_month'];
-
+    
     if($loan_arr['due_method_calc'] == 'Monthly' || $loan_arr['due_method_scheme'] == '1'){
         //Convert Date to Year and month, because with date, it will use exact date to loop months, instead of taking end of month
         $due_start_from = date('Y-m',strtotime($due_start_from));
         $maturity_month = date('Y-m',strtotime($maturity_month));
-
+        
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
         $current_date = date('Y-m');
+        
         
         $start_date_obj = DateTime::createFromFormat('Y-m', $due_start_from);
         $end_date_obj = DateTime::createFromFormat('Y-m', $maturity_month);
@@ -182,15 +192,13 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         }
 
         //To check whether due has been nil with other charges
-        $qry = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track,SUM(ac.principal_amt_cal) as principal_amt_cal,SUM(ac.tot_amt_cal) as tot_amt_cal,SUM(pc.penalty) as penalty,
-        SUM(pc.paid_amnt) as paid_amntpc,SUM(pc.waiver_amnt) as waiver_amntpc,SUM(cc.coll_charge) as coll_charge,SUM(cc.paid_amnt) as paid_amntcc,SUM(cc.waiver_amnt) as waiver_amntcc 
-        FROM collection c JOIN acknowlegement_loan_calculation ac ON c.req_id = ac.req_id JOIN penalty_charges pc ON c.req_id = pc.req_id 
-        JOIN collection_charges cc ON c.req_id=cc.req_id where c.req_id = $req_id");
+            
+        $qry = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(pc.penalty) as penalty, SUM(pc.paid_amnt) as paid_amntpc,SUM(pc.waiver_amnt) as waiver_amntpc,
+        SUM(cc.coll_charge) as coll_charge,SUM(cc.paid_amnt) as paid_amntcc,SUM(cc.waiver_amnt) as waiver_amntcc FROM collection c JOIN penalty_charges pc ON c.req_id = pc.req_id 
+        JOIN collection_charges cc ON c.req_id=cc.req_id where c.req_id =  $req_id");
         $row = $qry->fetch_assoc();
         
-        if($row['tot_amt_cal'] != ''){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
-        $due_nil_check = $total_for_nil - $row['due_amt_track']; 
-
+        $due_amt_track = $row['due_amt_track'];
         //if sum value is null or empty then assign 0 to it
         if($row['penalty'] == '' or $row['penalty'] == null){$row['penalty'] = 0;}
         if($row['paid_amntpc'] == '' or $row['paid_amntpc'] == null){$row['paid_amntpc'] = 0;}
@@ -198,9 +206,15 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         if($row['coll_charge'] == '' or $row['coll_charge'] == null){$row['coll_charge'] = 0;}
         if($row['paid_amntcc'] == '' or $row['paid_amntcc'] == null){$row['paid_amntcc'] = 0;}
         if($row['waiver_amntcc'] == '' or $row['waiver_amntcc'] == null){$row['waiver_amntcc'] = 0;}
-
+        
         $curr_penalty = $row['penalty'] - $row['paid_amntpc'] - $row['waiver_amntpc'];
         $curr_charges = $row['coll_charge'] - $row['paid_amntcc'] - $row['waiver_amntcc'];
+        
+        $qry = $con->query("SELECT SUM(principal_amt_cal) as principal_amt_cal,SUM(tot_amt_cal) as tot_amt_cal from acknowlegement_loan_calculation WHERE req_id =$req_id");
+        $row = $qry->fetch_assoc();
+        
+        if($row['tot_amt_cal'] != ''){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
+        $due_nil_check = $total_for_nil - $due_amt_track;  
 
         if($due_nil_check == '0'){
             if($curr_penalty > 0 || $curr_charges > 0){
@@ -214,9 +228,9 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         // //Insert Penalty once again because its showing extra one penalty in collection for current month
         // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_raised_date','$penalty',current_timestamp)");
         if($count>0){
-            // echo $count;
+           
             //if Due month exceeded due amount will be as pending with how many months are exceeded
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] ; 
+            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
             // If due month exceeded
             if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
@@ -237,7 +251,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             $response['payable'] = $response['due_amt'] + $response['pending'];
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] ;
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_colsure'];
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
@@ -287,15 +301,13 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         }
 
         //To check whether due has been nil with other charges
-        $qry = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track,SUM(ac.principal_amt_cal) as principal_amt_cal,SUM(ac.tot_amt_cal) as tot_amt_cal,SUM(pc.penalty) as penalty,
-        SUM(pc.paid_amnt) as paid_amntpc,SUM(pc.waiver_amnt) as waiver_amntpc,SUM(cc.coll_charge) as coll_charge,SUM(cc.paid_amnt) as paid_amntcc,SUM(cc.waiver_amnt) as waiver_amntcc 
-        FROM collection c JOIN acknowlegement_loan_calculation ac ON c.req_id = ac.req_id JOIN penalty_charges pc ON c.req_id = pc.req_id 
-        JOIN collection_charges cc ON c.req_id=cc.req_id where c.req_id = $req_id");
+        
+        $qry = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(pc.penalty) as penalty, SUM(pc.paid_amnt) as paid_amntpc,SUM(pc.waiver_amnt) as waiver_amntpc,
+        SUM(cc.coll_charge) as coll_charge,SUM(cc.paid_amnt) as paid_amntcc,SUM(cc.waiver_amnt) as waiver_amntcc FROM collection c JOIN penalty_charges pc ON c.req_id = pc.req_id 
+        JOIN collection_charges cc ON c.req_id=cc.req_id where c.req_id =  $req_id");
         $row = $qry->fetch_assoc();
         
-        if($row['tot_amt_cal'] != ''){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
-        $due_nil_check = $total_for_nil - $row['due_amt_track']; 
-
+        $due_amt_track = $row['due_amt_track'];
         //if sum value is null or empty then assign 0 to it
         if($row['penalty'] == '' or $row['penalty'] == null){$row['penalty'] = 0;}
         if($row['paid_amntpc'] == '' or $row['paid_amntpc'] == null){$row['paid_amntpc'] = 0;}
@@ -303,9 +315,15 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         if($row['coll_charge'] == '' or $row['coll_charge'] == null){$row['coll_charge'] = 0;}
         if($row['paid_amntcc'] == '' or $row['paid_amntcc'] == null){$row['paid_amntcc'] = 0;}
         if($row['waiver_amntcc'] == '' or $row['waiver_amntcc'] == null){$row['waiver_amntcc'] = 0;}
-
+        
         $curr_penalty = $row['penalty'] - $row['paid_amntpc'] - $row['waiver_amntpc'];
         $curr_charges = $row['coll_charge'] - $row['paid_amntcc'] - $row['waiver_amntcc'];
+        
+        $qry = $con->query("SELECT SUM(principal_amt_cal) as principal_amt_cal,SUM(tot_amt_cal) as tot_amt_cal from acknowlegement_loan_calculation WHERE req_id =$req_id");
+        $row = $qry->fetch_assoc();
+        
+        if($row['tot_amt_cal'] != ''){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
+        $due_nil_check = $total_for_nil - $due_amt_track;  
 
         if($due_nil_check == '0'){
             if($curr_penalty > 0 || $curr_charges > 0){
@@ -318,7 +336,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         if($count>0){
             
             //if Due month exceeded due amount will be as pending with how many months are exceeded
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'];
+            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
             // If due month exceeded
             if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
@@ -340,7 +358,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
 
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] ;
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_colsure'];
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
@@ -388,15 +406,13 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         }
 
         //To check whether due has been nil with other charges
-        $qry = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track,SUM(ac.principal_amt_cal) as principal_amt_cal,SUM(ac.tot_amt_cal) as tot_amt_cal,SUM(pc.penalty) as penalty,
-        SUM(pc.paid_amnt) as paid_amntpc,SUM(pc.waiver_amnt) as waiver_amntpc,SUM(cc.coll_charge) as coll_charge,SUM(cc.paid_amnt) as paid_amntcc,SUM(cc.waiver_amnt) as waiver_amntcc 
-        FROM collection c JOIN acknowlegement_loan_calculation ac ON c.req_id = ac.req_id JOIN penalty_charges pc ON c.req_id = pc.req_id 
-        JOIN collection_charges cc ON c.req_id=cc.req_id where c.req_id = $req_id");
+        
+        $qry = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(pc.penalty) as penalty, SUM(pc.paid_amnt) as paid_amntpc,SUM(pc.waiver_amnt) as waiver_amntpc,
+        SUM(cc.coll_charge) as coll_charge,SUM(cc.paid_amnt) as paid_amntcc,SUM(cc.waiver_amnt) as waiver_amntcc FROM collection c JOIN penalty_charges pc ON c.req_id = pc.req_id 
+        JOIN collection_charges cc ON c.req_id=cc.req_id where c.req_id =  $req_id");
         $row = $qry->fetch_assoc();
         
-        if($row['tot_amt_cal'] != ''){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
-        $due_nil_check = $total_for_nil - $row['due_amt_track']; 
-
+        $due_amt_track = $row['due_amt_track'];
         //if sum value is null or empty then assign 0 to it
         if($row['penalty'] == '' or $row['penalty'] == null){$row['penalty'] = 0;}
         if($row['paid_amntpc'] == '' or $row['paid_amntpc'] == null){$row['paid_amntpc'] = 0;}
@@ -404,9 +420,15 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         if($row['coll_charge'] == '' or $row['coll_charge'] == null){$row['coll_charge'] = 0;}
         if($row['paid_amntcc'] == '' or $row['paid_amntcc'] == null){$row['paid_amntcc'] = 0;}
         if($row['waiver_amntcc'] == '' or $row['waiver_amntcc'] == null){$row['waiver_amntcc'] = 0;}
-
+        
         $curr_penalty = $row['penalty'] - $row['paid_amntpc'] - $row['waiver_amntpc'];
         $curr_charges = $row['coll_charge'] - $row['paid_amntcc'] - $row['waiver_amntcc'];
+        
+        $qry = $con->query("SELECT SUM(principal_amt_cal) as principal_amt_cal,SUM(tot_amt_cal) as tot_amt_cal from acknowlegement_loan_calculation WHERE req_id =$req_id");
+        $row = $qry->fetch_assoc();
+        
+        if($row['tot_amt_cal'] != ''){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
+        $due_nil_check = $total_for_nil - $due_amt_track; 
 
         if($due_nil_check == '0'){
             if($curr_penalty > 0 || $curr_charges > 0){
@@ -418,8 +440,8 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
 
         if($count>0){
             
-            //if Due month exceeded due amount will be as pending with how many months are exceeded
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'];
+            //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
+            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
             // If due month exceeded
             if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
@@ -441,7 +463,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
 
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] ;
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_colsure'];
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
