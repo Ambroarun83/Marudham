@@ -53,20 +53,23 @@ function moneyFormatIndia($num)
         $paid = 0;
         $waiver = 0;
         while ($row = $run->fetch()) {
-            $charge = $charge + $row['coll_charge'] ; 
-            $paid = $paid + $row['paid_amnt'] ;
-            $waiver = $waiver + $row['waiver_amnt'] ;
+            $collCharges = ($row['coll_charge']) ? $row['coll_charge'] : '0';
+            $charge = $charge + $collCharges; 
+            $paidAmount = ($row['paid_amnt']) ? $row['paid_amnt'] : '0';
+            $paid = $paid + $paidAmount;
+            $waiverAmount = ($row['waiver_amnt']) ? $row['waiver_amnt'] : '0';
+            $waiver = $waiver + $waiverAmount;
             $bal_amnt = $charge - $paid - $waiver;
         ?>
             <tr>
                 <td width='15'><?php echo $i; ?></td>
                 <td><?php echo $row['coll_date']; ?></td>
-                <td><?php echo $row['coll_charge']; ?></td>
+                <td><?php echo $collCharges; ?></td>
                 <td><?php echo $row['coll_purpose']; ?></td>
                 <td><?php echo $row['paid_date']; ?></td>
-                <td><?php echo $row['paid_amnt']; ?></td>
+                <td><?php echo $paidAmount; ?></td>
                 <td><?php echo $bal_amnt; ?></td>
-                <td><?php echo $row['waiver_amnt']; ?></td>
+                <td><?php echo $waiverAmount; ?></td>
             </tr>
 
         <?php $i++;

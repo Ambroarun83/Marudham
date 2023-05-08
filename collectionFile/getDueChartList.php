@@ -32,7 +32,7 @@ function moneyFormatIndia($num)
     <thead>
         <tr>
             <th width="15"> S.No </th>
-            <th> Due Month </th>
+            <th width="50"> Due Month </th>
             <th> Month </th>
             <th> Due Amount </th>
             <th> Pending </th>
@@ -60,33 +60,28 @@ function moneyFormatIndia($num)
 
 
 
-        if($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1'){
+        if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
             //If Due method is Monthly, Calculate penalty by checking the month has ended or not
-            $due_start_from = date('Y-m',strtotime($due_start_from));
-            $maturity_month = date('Y-m',strtotime($maturity_month));
-            $current_date = date('Y-m');
+            $due_start_from = date('Y-m-d', strtotime($due_start_from));
+            $maturity_month = date('Y-m-d', strtotime($maturity_month));
+            $current_date = date('Y-m-d');
 
-            $start_date_obj = DateTime::createFromFormat('Y-m', $due_start_from);
-            $end_date_obj = DateTime::createFromFormat('Y-m', $maturity_month);
-            $current_date_obj = DateTime::createFromFormat('Y-m', $current_date);
+            $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
+            $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_month);
+            $current_date_obj = DateTime::createFromFormat('Y-m-d', $current_date);
             $interval = new DateInterval('P1M'); // Create a one month interval
             //$count = 0;
             $i = 1;
             $dueMonth[] = $due_start_from;
             while ($start_date_obj < $end_date_obj) {
                 $start_date_obj->add($interval);
-                $dueMonth[] = $start_date_obj->format('Y-m');
+                $dueMonth[] = $start_date_obj->format('Y-m-d');
             }
-            //  $count++; //Count represents how many months are exceeded
-            // }
-            // echo $count;
-            // if ($count > 0) {
-            // }
-        }else
-        if($loanFrom['due_method_scheme'] == '2'){
+        } else
+        if ($loanFrom['due_method_scheme'] == '2') {
             //If Due method is Weekly, Calculate penalty by checking the month has ended or not
             $current_date = date('Y-m-d');
-            
+
             $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
             $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_month);
             $current_date_obj = DateTime::createFromFormat('Y-m-d', $current_date);
@@ -100,11 +95,11 @@ function moneyFormatIndia($num)
                 $start_date_obj->add($interval);
                 $dueMonth[] = $start_date_obj->format('Y-m-d');
             }
-        }else
-        if($loanFrom['due_method_scheme'] == '3'){
-             //If Due method is Weekly, Calculate penalty by checking the month has ended or not
+        } else
+        if ($loanFrom['due_method_scheme'] == '3') {
+            //If Due method is Weekly, Calculate penalty by checking the month has ended or not
             $current_date = date('Y-m-d');
-            
+
             $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
             $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_month);
             $current_date_obj = DateTime::createFromFormat('Y-m-d', $current_date);
@@ -127,8 +122,15 @@ function moneyFormatIndia($num)
         ?>
         <tr>
             <td> </td>
-            <td><?php echo date('m-Y',strtotime($issue_date)); ?></td>
-            <td><?php echo date('M',strtotime($issue_date)); ?></td>
+            <td><?php
+                if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                    //For Monthly.
+                    echo date('m-Y', strtotime($issue_date));
+                } else {
+                    //For Weekly && Day.
+                    echo date('d-m-Y', strtotime($issue_date));
+                } ?></td>
+            <td><?php echo date('M', strtotime($issue_date)); ?></td>
             <td> </td>
             <td></td>
             <td></td>
@@ -143,31 +145,57 @@ function moneyFormatIndia($num)
         </tr>
         <?php
         foreach ($dueMonth as $cusDueMonth) {
-
-            $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+            if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                //Query for Monthly.
+                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+            } else
+        if ($loanFrom['due_method_scheme'] == '2') {
+                //Query For Weekly.
+                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((WEEK(coll_date)= WEEK('$cusDueMonth') || WEEK(trans_date)= WEEK('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+            } else
+        if ($loanFrom['due_method_scheme'] == '3') {
+                //Query For Day.
+                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((DAY(coll_date)= DAY('$cusDueMonth') || DAY(trans_date)= DAY('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+            }
 
             if ($run->rowCount() > 0) {
                 $due_amt_track = 0;
                 $waiver = 0;
-                $bal_amt =0;
+                $bal_amt = 0;
                 while ($row = $run->fetch()) {
                     $role = $row['role'];
-                    $due_amt_track = $due_amt_track + intVal($row['due_amt_track']) ; 
-                    $waiver = $waiver + intVal($row['pre_close_waiver']) ;
+                    $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
+                    $waiver = $waiver + intVal($row['pre_close_waiver']);
                     $bal_amt = $loan_amt - $due_amt_track - $waiver;
 
         ?>
                     <tr>
                         <td><?php echo $i; ?></td>
-                        <td><?php echo date('m-Y', strtotime($cusDueMonth)); ?></td>
+                        <td><?php
+                            if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                                //For Monthly.
+                                echo date('m-Y', strtotime($cusDueMonth));
+                            } else {
+                                //For Weekly && Day.
+                                echo date('d-m-Y', strtotime($cusDueMonth));
+                            }
+                            ?></td>
                         <td><?php echo date('M', strtotime($cusDueMonth)); ?></td>
                         <td><?php echo $row['due_amt']; ?></td>
                         <td><?php echo $row['pending_amt']; ?></td>
                         <td><?php echo $row['payable_amt']; ?></td>
                         <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
-                        <td><?php if($row['due_amt_track'] > 0){echo $row['due_amt_track'];}elseif($row['pre_close_waiver'] > 0){echo $row['pre_close_waiver'];} ?></td>
+                        <td><?php if ($row['due_amt_track'] > 0) {
+                                echo $row['due_amt_track'];
+                            } elseif ($row['pre_close_waiver'] > 0) {
+                                echo $row['pre_close_waiver'];
+                            } ?></td>
                         <td><?php echo $bal_amt; ?></td>
-                        <td><?php if($row['pre_close_waiver'] > 0){echo $row['pre_close_waiver']; }else{echo '0';}?></td>
+                        <td><?php if ($row['pre_close_waiver'] > 0) {
+                                echo $row['pre_close_waiver'];
+                            } else {
+                                echo '0';
+                            } ?></td>
                         <td><?php if (isset($role) && $role == '1') {
                                 echo 'Director';
                             } else if (isset($role) && $role == '2') {
@@ -177,7 +205,13 @@ function moneyFormatIndia($num)
                             } ?>
                         </td>
                         <td><?php echo $row['fullname']; ?></td>
-                        <td><?php if($row['coll_location'] == '1'){echo 'Office';}elseif($row['coll_location'] == '2'){echo 'On Spot';}elseif($row['coll_location'] == '3'){echo 'Bank Transfer';} ?></td>
+                        <td><?php if ($row['coll_location'] == '1') {
+                                echo 'Office';
+                            } elseif ($row['coll_location'] == '2') {
+                                echo 'On Spot';
+                            } elseif ($row['coll_location'] == '3') {
+                                echo 'Bank Transfer';
+                            } ?></td>
                         <td> <a class='print_due_coll' id="" value="<?php echo $row['coll_code']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a> </td>
                     </tr>
 
@@ -187,7 +221,14 @@ function moneyFormatIndia($num)
                 ?>
                 <tr>
                     <td><?php echo $i; ?></td>
-                    <td><?php echo date('m-Y', strtotime($cusDueMonth)); ?></td>
+                    <td><?php
+                        if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                            //For Monthly.
+                            echo date('m-Y', strtotime($cusDueMonth));
+                        } else {
+                            //For Weekly && Day.
+                            echo date('d-m-Y', strtotime($cusDueMonth));
+                        } ?></td>
                     <td><?php echo date('M', strtotime($cusDueMonth)); ?></td>
                     <td> </td>
                     <td></td>
@@ -203,7 +244,7 @@ function moneyFormatIndia($num)
                 </tr>
 
         <?php
-        $i++;
+                $i++;
             }
         } ?>
     </tbody>

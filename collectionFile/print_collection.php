@@ -166,7 +166,7 @@ function moneyFormatIndia($num)
 
 function poprint(){
 	var Bill = document.getElementById("dettable").innerHTML;
-	var printWindow = window.open('', '', 'height=400,width=800');
+	var printWindow = window.open('', '', 'height=1000,width=1000');
 	printWindow.document.write(Bill);
 	printWindow.document.close();
 	printWindow.print();

@@ -52,19 +52,22 @@ function moneyFormatIndia($num)
         $paid = 0;
         $waiver = 0;
         while ($row = $run->fetch()) {
-            $penalt = $penalt + $row['penalty'] ; 
-            $paid = $paid + $row['paid_amnt'] ;
-            $waiver = $waiver + $row['waiver_amnt'] ;
+            $penaltys = ($row['penalty']) ? $row['penalty'] : '0';
+            $penalt = $penalt + $penaltys; 
+            $paid_amount = ($row['paid_amnt']) ? $row['paid_amnt'] : '0';
+            $paid = $paid + $paid_amount;
+            $waivers = ($row['waiver_amnt']) ? $row['waiver_amnt'] : '0';
+            $waiver = $waiver + $waivers ;
             $bal_amnt = $penalt - $paid - $waiver;
         ?>
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $row['penalty_date']; ?></td>
-                <td><?php echo $row['penalty']; ?></td>
+                <td><?php echo $penaltys; ?></td>
                 <td><?php echo $row['paid_date']; ?></td>
-                <td><?php echo $row['paid_amnt']; ?></td>
+                <td><?php echo $paid_amount; ?></td>
                 <td><?php echo $bal_amnt; ?></td>
-                <td><?php echo $row['waiver_amnt']; ?></td>
+                <td><?php echo $waivers; ?></td>
             </tr>
 
         <?php $i++;
