@@ -62,17 +62,17 @@ foreach($req_arr as $req_id){
             $coll_arr[] = $row;
         }
         $total_paid=0;
-        $pre_colsure=0;
+        $pre_closure=0;
         foreach ($coll_arr as $tot) {
             $total_paid += intVal($tot['due_amt_track']); //only calculate due amount not total paid value, because it will have penalty and coll charge also
-            $pre_colsure += intVal($tot['pre_close_waiver']); //get pre closure value to subract to get balance amount
+            $pre_closure += intVal($tot['pre_close_waiver']); //get pre closure value to subract to get balance amount
         }
         //total paid amount will be all records again request id should be summed
         $response['total_paid'] = $total_paid; 
-        $response['pre_colsure'] = $pre_colsure; 
+        $response['pre_closure'] = $pre_closure; 
 
         //total amount subracted by total paid amount and subracted with pre closure amount will be balance to be paid
-        $response['balance'] = $response['total_amt'] - $response['total_paid'] - $pre_colsure;
+        $response['balance'] = $response['total_amt'] - $response['total_paid'] - $pre_closure;
 
         $response = calculateOthers($loan_arr,$response,$con,$req_id);
 
@@ -80,6 +80,7 @@ foreach($req_arr as $req_id){
     }else{
         //If collection table dont have rows means there is no payment against that request, so total paid will be 0
         $response['total_paid'] = 0;
+        $response['pre_closure'] = 0;
         
         //If in collection table, there is no payment means balance amount still remains total amount
         $response['balance'] = $response['total_amt'];
@@ -251,7 +252,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             $response['payable'] = $response['due_amt'] + $response['pending'];
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_colsure'];
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
@@ -358,7 +359,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
 
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_colsure'];
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
@@ -463,7 +464,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
 
         }else{
             //If still current month is not ended, then pending will be same due amt
-            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_colsure'];
+            $response['pending'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt

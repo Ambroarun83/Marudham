@@ -69,7 +69,7 @@ if($result->num_rows>0){
 }else{
     //If collection table dont have rows means there is no payment against that request, so total paid will be 0
     $response['total_paid'] = 0;
-    
+    $response['pre_closure'] = 0;
     //If in collection table, there is no payment means balance amount still remains total amount
     $response['balance'] = $response['total_amt'];
     

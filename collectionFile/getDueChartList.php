@@ -52,7 +52,7 @@ function moneyFormatIndia($num)
         <?php
         $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
-        $loanStart = $connect->query("SELECT alc.due_start_from,alc.maturity_month,alc.due_method_calc FROM acknowlegement_loan_calculation alc WHERE alc.`req_id`= '$req_id' ");
+        $loanStart = $connect->query("SELECT alc.due_start_from,alc.maturity_month,alc.due_method_calc,alc.due_method_scheme FROM acknowlegement_loan_calculation alc WHERE alc.`req_id`= '$req_id' ");
         $loanFrom = $loanStart->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
         $due_start_from = $loanFrom['due_start_from'];
@@ -60,26 +60,65 @@ function moneyFormatIndia($num)
 
 
 
+        if($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1'){
+            //If Due method is Monthly, Calculate penalty by checking the month has ended or not
+            $due_start_from = date('Y-m',strtotime($due_start_from));
+            $maturity_month = date('Y-m',strtotime($maturity_month));
+            $current_date = date('Y-m');
 
-        //If Due method is Monthly, Calculate penalty by checking the month has ended or not
-        $current_date = date('Y-m-d');
-        $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
-        $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_month);
-        $current_date_obj = DateTime::createFromFormat('Y-m-d', $current_date);
-        $interval = new DateInterval('P1M'); // Create a one month interval
-        //$count = 0;
-        $i = 1;
-        $dueMonth[] = $due_start_from;
-        while ($start_date_obj < $end_date_obj) {
-            $start_date_obj->add($interval);
-            $dueMonth[] = $start_date_obj->format('Y-m-d');
+            $start_date_obj = DateTime::createFromFormat('Y-m', $due_start_from);
+            $end_date_obj = DateTime::createFromFormat('Y-m', $maturity_month);
+            $current_date_obj = DateTime::createFromFormat('Y-m', $current_date);
+            $interval = new DateInterval('P1M'); // Create a one month interval
+            //$count = 0;
+            $i = 1;
+            $dueMonth[] = $due_start_from;
+            while ($start_date_obj < $end_date_obj) {
+                $start_date_obj->add($interval);
+                $dueMonth[] = $start_date_obj->format('Y-m');
+            }
+            //  $count++; //Count represents how many months are exceeded
+            // }
+            // echo $count;
+            // if ($count > 0) {
+            // }
+        }else
+        if($loanFrom['due_method_scheme'] == '2'){
+            //If Due method is Weekly, Calculate penalty by checking the month has ended or not
+            $current_date = date('Y-m-d');
+            
+            $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
+            $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_month);
+            $current_date_obj = DateTime::createFromFormat('Y-m-d', $current_date);
+
+            $interval = new DateInterval('P1W'); // Create a one Week interval
+
+            //$count = 0;
+            $i = 1;
+            $dueMonth[] = $due_start_from;
+            while ($start_date_obj < $end_date_obj) {
+                $start_date_obj->add($interval);
+                $dueMonth[] = $start_date_obj->format('Y-m-d');
+            }
+        }else
+        if($loanFrom['due_method_scheme'] == '3'){
+             //If Due method is Weekly, Calculate penalty by checking the month has ended or not
+            $current_date = date('Y-m-d');
+            
+            $start_date_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
+            $end_date_obj = DateTime::createFromFormat('Y-m-d', $maturity_month);
+            $current_date_obj = DateTime::createFromFormat('Y-m-d', $current_date);
+
+            $interval = new DateInterval('P1D'); // Create a one Week interval
+
+            //$count = 0;
+            $i = 1;
+            $dueMonth[] = $due_start_from;
+            while ($start_date_obj < $end_date_obj) {
+                $start_date_obj->add($interval);
+                $dueMonth[] = $start_date_obj->format('Y-m-d');
+            }
         }
-        //  $count++; //Count represents how many months are exceeded
-        // }
-        // echo $count;
-        // if ($count > 0) {
-        // }
-
         $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
         $loanIssue = $issueDate->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
