@@ -720,6 +720,8 @@ $(function () {
 
     verificationPerson() //Verification Person
 
+    getCustomerLoanCounts(); // to get customer loan details
+
 
     var state_upd = $('#state_upd').val();
     if (state_upd != '') {
@@ -780,6 +782,23 @@ function getImage() { // Cus img show onload.
 
     var guarentorimg = $('#guarentor_image').val();
     $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
+}
+
+function getCustomerLoanCounts(){
+    var cus_id = $('#cus_id').val();
+    $.ajax({
+        url: 'verificationFile/getCustomerLoanCounts.php',
+        data: {'cus_id':cus_id},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#cus_loan_count').val(response['loan_count'])
+            $('#cus_frst_loanDate').val(response['first_loan'])
+            $('#cus_travel_cmpy').val(response['travel'])
+            $('#cus_exist_type').val(response['existing_type'])
+        }
+    })
 }
 
 function resetFamDetails() {
