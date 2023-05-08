@@ -66,7 +66,7 @@
 					{
 					$mscid=$_GET['msc'];
 					$id=$_GET['id'];
-					if($mscid==1 and $id !=0)
+					if($mscid==1 and $id !='')
 					{?>
 					<div class="alert alert-success" role="alert">
 						<div class="alert-text"> Collection Submitted Successfully! </div>
