@@ -45,15 +45,17 @@ function moneyFormatIndia($num)
         <?php
         $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
-        $run = $connect->query("SELECT * FROM `penalty_charges` WHERE `req_id`= '$req_id' ");
+        $run = $connect->query("SELECT * FROM `penalty_charges` WHERE `req_id`= '$req_id' order BY created_date desc");
 
         $i = 1;
         $penalt = 0;
         $paid = 0;
+        $waiver = 0;
         while ($row = $run->fetch()) {
             $penalt = $penalt + $row['penalty'] ; 
             $paid = $paid + $row['paid_amnt'] ;
-            $bal_amnt = $penalt - $paid;
+            $waiver = $waiver + $row['waiver_amnt'] ;
+            $bal_amnt = $penalt - $paid - $waiver;
         ?>
             <tr>
                 <td><?php echo $i; ?></td>

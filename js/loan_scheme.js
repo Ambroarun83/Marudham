@@ -108,7 +108,8 @@ $(document).ready(function(){
         var proc_fee_max = $('#proc_fee_max').val();
         var due_date = $('#due_date').val();
         var grace_period = $('#grace_period').val();
-        if(loan_category !='' && sub_category != '' && scheme_name != '' && intrest_rate != '' && total_due != '' && doc_charge_type!='' && doc_charge_min!='' && doc_charge_max!='' && proc_fee_type !='' && proc_fee_min!='' && proc_fee_max!='' && due_date!='' && grace_period!=''){
+        var overdue = $('#overdue').val();
+        if(loan_category !='' && sub_category != '' && scheme_name != '' && intrest_rate != '' && total_due != '' && doc_charge_type!='' && doc_charge_min!='' && doc_charge_max!='' && proc_fee_type !='' && proc_fee_min!='' && proc_fee_max!='' && due_date!='' && grace_period!='' && overdue != ''){
             return true;
         }else{
             Swal.fire({
@@ -170,7 +171,8 @@ $(document).ready(function(){
         var proc_fee_min = $('#proc_fee_min1').val();
         var proc_fee_max = $('#proc_fee_max1').val();
         var due_day = $('#due_day').val();
-        if(loan_category !='' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type!='' && doc_charge_min!='' && doc_charge_max!='' && proc_fee_type !='' && proc_fee_min!='' && proc_fee_max!='' && due_day!=''){
+        var overdue = $('#overdue1').val();
+        if(loan_category !='' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type!='' && doc_charge_min!='' && doc_charge_max!='' && proc_fee_type !='' && proc_fee_min!='' && proc_fee_max!='' && due_day!='' && overdue != ''){
             return true;
         }else{
             Swal.fire({
@@ -231,7 +233,8 @@ $(document).ready(function(){
         var proc_fee_type = $('#proc_fee_type2').val();
         var proc_fee_min = $('#proc_fee_min2').val();
         var proc_fee_max = $('#proc_fee_max2').val();
-        if(loan_category !='' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type!='' && doc_charge_min!='' && doc_charge_max!='' && proc_fee_type !='' && proc_fee_min!='' && proc_fee_max!=''){
+        var overdue = $('#overdue2').val();
+        if(loan_category !='' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type!='' && doc_charge_min!='' && doc_charge_max!='' && proc_fee_type !='' && proc_fee_min!='' && proc_fee_max!='' && overdue!= ''){
             return true;
         }else{
             Swal.fire({

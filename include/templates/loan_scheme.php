@@ -568,7 +568,7 @@ if(isset($_GET['type'])){
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
-											<input type="number" tabindex="18" id="overdue1" name="overdue1" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue1)) echo $overdue1; ?>" required>
+											<input type="number" tabindex="18" id="overdue1" name="overdue1" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue1)) echo $overdue1; ?>">
 										</div>
 									</div>
 
@@ -728,7 +728,7 @@ if(isset($_GET['type'])){
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
-											<input type="number" tabindex="17" id="overdue2" name="overdue2" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue2)) echo $overdue2; ?>" required>
+											<input type="number" tabindex="17" id="overdue2" name="overdue2" class="form-control" placeholder="Enter Overdue" title="Penalty if Exceeded Due Day"  value="<?php if(isset($overdue2)) echo $overdue2; ?>">
 										</div>
 									</div>
 

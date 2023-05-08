@@ -80,11 +80,11 @@ function moneyFormatIndia($num)
         // if ($count > 0) {
         // }
 
-        $issueDate = $connect->query("SELECT net_cash,created_date FROM loan_issue  WHERE req_id = '$req_id' order by id desc limit 1 ");
+        $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
         $loanIssue = $issueDate->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
-        $netcash = $loanIssue['net_cash'];
-        $issue_date = $loanIssue['created_date'];
+        $loan_amt = $loanIssue['loan_amt'];
+        $issue_date = $loanIssue['updated_date'];
         ?>
         <tr>
             <td> </td>
@@ -95,7 +95,7 @@ function moneyFormatIndia($num)
             <td></td>
             <td></td>
             <td></td>
-            <td><?php echo $netcash; ?></td>
+            <td><?php echo $loan_amt; ?></td>
             <td></td>
             <td></td>
             <td></td>
@@ -105,10 +105,17 @@ function moneyFormatIndia($num)
         <?php
         foreach ($dueMonth as $cusDueMonth) {
 
-            $run = $connect->query("SELECT c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.coll_charge,c.bal_amt,c.coll_charge_track,c.coll_location,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= '1') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+            $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+
             if ($run->rowCount() > 0) {
+                $due_amt_track = 0;
+                $waiver = 0;
+                $bal_amt =0;
                 while ($row = $run->fetch()) {
                     $role = $row['role'];
+                    $due_amt_track = $due_amt_track + intVal($row['due_amt_track']) ; 
+                    $waiver = $waiver + intVal($row['pre_close_waiver']) ;
+                    $bal_amt = $loan_amt - $due_amt_track - $waiver;
 
         ?>
                     <tr>
@@ -119,9 +126,9 @@ function moneyFormatIndia($num)
                         <td><?php echo $row['pending_amt']; ?></td>
                         <td><?php echo $row['payable_amt']; ?></td>
                         <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
-                        <td><?php echo $row['coll_charge']; ?></td>
-                        <td><?php echo $row['bal_amt']; ?></td>
-                        <td><?php echo $row['coll_charge_track']; ?></td>
+                        <td><?php if($row['due_amt_track'] > 0){echo $row['due_amt_track'];}elseif($row['pre_close_waiver'] > 0){echo $row['pre_close_waiver'];} ?></td>
+                        <td><?php echo $bal_amt; ?></td>
+                        <td><?php if($row['pre_close_waiver'] > 0){echo $row['pre_close_waiver']; }else{echo '0';}?></td>
                         <td><?php if (isset($role) && $role == '1') {
                                 echo 'Director';
                             } else if (isset($role) && $role == '2') {
@@ -131,8 +138,8 @@ function moneyFormatIndia($num)
                             } ?>
                         </td>
                         <td><?php echo $row['fullname']; ?></td>
-                        <td><?php echo $row['coll_location']; ?></td>
-                        <td> <a id="" value="<?php echo $cheque['id']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a> </td>
+                        <td><?php if($row['coll_location'] == '1'){echo 'Office';}elseif($row['coll_location'] == '2'){echo 'On Spot';}elseif($row['coll_location'] == '3'){echo 'Bank Transfer';} ?></td>
+                        <td> <a class='print_due_coll' id="" value="<?php echo $row['coll_code']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a> </td>
                     </tr>
 
                 <?php $i++;

@@ -141,6 +141,7 @@ foreach ($result as $row) {
 
     $action="<a href='collection&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success'>Collect 
     <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
+    
 
     $sub_array[] = $action;
     $data[]      = $sub_array;

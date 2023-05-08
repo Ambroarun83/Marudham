@@ -4651,6 +4651,9 @@ function updateUser($mysqli,$id,$user_id){
 			if(isset($_POST['cus_id'])){
 				$cus_id = $_POST['cus_id'];
 			}
+			if(isset($_POST['loan_amt_cal'])){
+				$loan_amt_cal = $_POST['loan_amt_cal'];
+			}
 			if(isset($_POST['net_cash_cal'])){
 				$net_cash_cal = $_POST['net_cash_cal'];
 			}
@@ -4697,7 +4700,7 @@ function updateUser($mysqli,$id,$user_id){
 				$relationship = $_POST['relationship'];
 			}
 
-			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
+			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($loan_amt_cal)."','".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
 
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
@@ -4808,7 +4811,7 @@ function updateUser($mysqli,$id,$user_id){
 				$collection_loc = $_POST['collection_loc'];
 			}
 			if(isset($_POST['collection_date'])){
-				$collection_date = $_POST['collection_date'];
+				$collection_date = date('Y-m-d',strtotime($_POST['collection_date']));
 			}
 			if(isset($_POST['collection_id'])){
 				$collection_id = $_POST['collection_id'];
