@@ -370,6 +370,36 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+.overlay {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Add semi-transparent black background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.no-click {
+  pointer-events: none;
+}
 </style>
 
 <!-- Page header start -->
@@ -1866,19 +1896,7 @@ input:checked + .slider:before {
                             <div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                     <div class="form-group fingerprintTable">
-										<table class="table custom-table fingerprintTable">
-											<thead>
-												<tr>
-													<th > S.No </th>
-													<th> Name </th>
-													<th> Relationship </th>
-													<th> Fingerprint </th>
-												</tr>
-											</thead>
-											<tbody>
-
-											</tbody>
-										</table>
+										
                                     </div>
                                 </div>
 							</div>
@@ -2588,3 +2606,5 @@ input:checked + .slider:before {
 </div>
 <!-- END  Add Cheque Info Modal -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="vendor/mfs100/Library/js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="vendor/mfs100/Library/js/mfs100.js"></script>
