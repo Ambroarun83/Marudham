@@ -455,6 +455,8 @@ function OnLoadFunctions(req_id,cus_id){
                                 },2000)
                             }
                         })
+                    }else{
+                        event.preventDefault();
                     }
                 })
                 $('.move-legal').click(function(){
@@ -482,6 +484,8 @@ function OnLoadFunctions(req_id,cus_id){
                                 },2000)
                             }
                         })
+                    }else{
+                        event.preventDefault();
                     }
                 })
                 $('.return-sub').click(function(){
@@ -509,6 +513,8 @@ function OnLoadFunctions(req_id,cus_id){
                                 },2000)
                             }
                         })
+                    }else{
+                        event.preventDefault();
                     }
                 })
                 $('.move-closed').click(function(){
@@ -536,6 +542,8 @@ function OnLoadFunctions(req_id,cus_id){
                                 },2000)
                             }
                         })
+                    }else{
+                        event.preventDefault();
                     }
                 })
         }

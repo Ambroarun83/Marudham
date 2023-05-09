@@ -990,6 +990,9 @@ function getCustomerLoanCounts(){
             $('#cus_frst_loanDate').val(response['first_loan'])
             $('#cus_travel_cmpy').val(response['travel'])
             $('#cus_exist_type').val(response['existing_type'])
+        },
+        error:function(){
+            $('#cus_exist_type').val('Renewal');
         }
     })
 }

@@ -7,7 +7,7 @@ if (isset($_POST['req_id'])) {
 
 $records = array();
 
-$selectIC = $con->query("SELECT id,cheque_holder_name,cheque_no,cheque_holder_type FROM cheque_no_list WHERE req_id = '".$req_id."' ");
+$selectIC = $con->query("SELECT id,cheque_holder_name,cheque_no,cheque_holder_type FROM cheque_no_list WHERE req_id = '".$req_id."' and used_status = '0' "); //dont show if cheque is already used
 if($selectIC->num_rows>0)
 {
     $i=0;

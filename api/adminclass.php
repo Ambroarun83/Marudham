@@ -4866,6 +4866,10 @@ function updateUser($mysqli,$id,$user_id){
 				$qry = $mysqli->query("INSERT INTO collection_charges (`req_id`,`paid_date`,`paid_amnt`,`waiver_amnt`)VALUES('".strip_tags($req_id)."','".strip_tags($collection_date)."',
 				'".strip_tags($coll_charge_track)."','".strip_tags($coll_charge_waiver)."')");
 			}
+			
+			if($cheque_no != ''){
+				$qry = $mysqli->query("UPDATE `cheque_no_list` SET `used_status`='1' WHERE `id`=$cheque_no "); //If cheque has been used change status to 1
+			}
 
 		}
 }//Class End

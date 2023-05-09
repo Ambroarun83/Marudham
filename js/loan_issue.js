@@ -128,24 +128,6 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function() {
-    $("#scanBtn").click(function() {event.preventDefault();
-        		var quality = 60; //(1 to 100) (recommended minimum 55)
-                var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
-                var res = CaptureFinger(quality, timeout);
-                if (res.httpStaus) {
-                    document.getElementById('txtStatus').value = "ErrorCode: " + res.data.ErrorCode + "ErrorDescription: " + res.data.ErrorDescription;
-                    if (res.data.ErrorCode == "0") {
-                        console.log(res.data);
-                        document.getElementById('txtStatus').value = res.data.AnsiTemplate;
-                        document.getElementById('imgShow').src = "data:image/bmp;base64," + res.data.BitmapData;
-                    }
-                }
-                else {
-                    alert(res.err);
-                }
-    });
-});
 
 $(function () {
     getImage(); // To show customer image when window onload.

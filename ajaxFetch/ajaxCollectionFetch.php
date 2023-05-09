@@ -139,7 +139,7 @@ foreach ($result as $row) {
     $cus_id = $row['cp_cus_id'];
     $id          = $row['req_id'];
 
-    $action="<a href='collection&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success'>Collect 
+    $action="<a href='collection&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>Collect 
     <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
     
 
