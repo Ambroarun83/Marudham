@@ -188,6 +188,7 @@ function OnLoadFunctions(req_id,cus_id){
     var od_arr = [];
     var due_nil_arr = [];
     var closed_arr = [];
+    var balAmnt = 0;
     $.ajax({
         url: 'collectionFile/resetCustomerStatus.php',
         data: {'cus_id':cus_id},
@@ -210,6 +211,7 @@ function OnLoadFunctions(req_id,cus_id){
             $('#due_nil_sts').val(due_nil_sts);
             var closed_sts = closed_arr.join(',');
             $('#closed_sts').val(closed_sts);
+            balAmnt = response['balance'];
         }
     }); 
     setTimeout(()=>{
@@ -217,10 +219,11 @@ function OnLoadFunctions(req_id,cus_id){
         var od_sts = $('#od_sts').val()
         var due_nil_sts = $('#due_nil_sts').val()
         var closed_sts = $('#closed_sts').val()
+        var bal_amt = balAmnt;
         $.ajax({
             //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
             url: 'collectionFile/getLoanList.php',
-            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts},
+            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
             type:'post',
             cache: false,
             success: function(response){

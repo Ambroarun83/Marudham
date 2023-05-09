@@ -120,6 +120,50 @@ $(document).ready(function () {
     
     });
 
+    $('#due_start_from').change(function(){
+        var due_start_from = $('#due_start_from').val(); // get start date to calculate maturity date
+        var due_period = parseInt($('#due_period').val()); //get due period to calculate maturity date
+        var profit_type = $('#profit_type').val()
+        if(profit_type == '1'){ //Based on the profit method choose due method from input box
+            var due_method = $('#due_method_calc').val()
+        }else if(profit_type == '2'){
+            var due_method = $('#due_method_scheme').val()
+        }
+    
+        if(due_method == 'Monthly' || due_method == '1'){ // if due method is monthly or 1(for scheme) then calculate maturity by month
+            
+            var maturityDate = moment(due_start_from, 'YYYY-MM-DD').add(due_period, 'months').format('YYYY-MM-DD');
+            $('#maturity_month').val(maturityDate);
+        
+        }else if(due_method == '2'){//if Due method is weekly then calculate maturity by week
+            
+            var due_day = parseInt($('#day_scheme').val());
+            
+            var momentStartDate = moment(due_start_from, 'YYYY-MM-DD').startOf('day').isoWeekday(due_day);//Create a moment.js object from the start date and set the day of the week to the due day value
+            
+            var weeksToAdd = Math.floor(due_period-1);//Set the weeks to be added by giving due period. subract 1 because by default it taking extra 1 week
+            
+            momentStartDate.add(weeksToAdd, 'weeks'); //Add the calculated number of weeks to the start date.
+            
+            if (momentStartDate.isBefore(due_start_from)) {
+                momentStartDate.add(1, 'week'); //If the resulting maturity date is before the start date, add another week.
+            }
+            
+            var maturityDate = momentStartDate.add(1, 'week').format('YYYY-MM-DD'); //Get the final maturity date as a formatted string.
+            
+            $('#maturity_month').val(maturityDate);
+        
+        }else if(due_method == '3'){
+            var momentStartDate = moment(due_start_from, 'YYYY-MM-DD').startOf('day');
+            var daysToAdd = Math.floor(due_period);
+            momentStartDate.add(daysToAdd, 'days');
+            var maturityDate = momentStartDate.format('YYYY-MM-DD');
+            $('#maturity_month').val(maturityDate);
+        }
+    
+    })
+    
+
     $('#submit_loanIssue').click(function(){ // loan Issue Submit Validation.
         hideCheckSpan();
 

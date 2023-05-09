@@ -4699,10 +4699,19 @@ function updateUser($mysqli,$id,$user_id){
 			if(isset($_POST['relationship'])){
 				$relationship = $_POST['relationship'];
 			}
+			if(isset($_POST['due_start_from'])){
+				$due_start_from = $_POST['due_start_from'];
+			}
+			if(isset($_POST['maturity_month'])){
+				$maturity_month = $_POST['maturity_month'];
+			}
 
 			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($loan_amt_cal)."','".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
 
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+
+
+			$updateQry = $mysqli->query("UPDATE acknowlegement_loan_calculation SET due_start_from = '".strip_tags($due_start_from)."', maturity_month = '".strip_tags($maturity_month)."', update_login_id = $userid,update_date = current_timestamp() WHERE req_id = $req_id ");
 
 		}
 
@@ -4869,6 +4878,19 @@ function updateUser($mysqli,$id,$user_id){
 			
 			if($cheque_no != ''){
 				$qry = $mysqli->query("UPDATE `cheque_no_list` SET `used_status`='1' WHERE `id`=$cheque_no "); //If cheque has been used change status to 1
+			}
+
+			$check = intval($due_amt_track) + intval($pre_close_waiver) - intval($bal_amt);
+
+			if($check == 0){
+				$cus_status = 20;
+				$selectIC = $mysqli->query("UPDATE request_creation set cus_status = $cus_status, update_login_id = $userid WHERE  req_id = '".$req_id."' ") or die('Error on Request Table');
+                // $selectIC = $mysqli->query("UPDATE customer_register set cus_status = 14 WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
+                $selectIC = $mysqli->query("UPDATE in_verification set cus_status = $cus_status, update_login_id = $userid WHERE req_id = '".$req_id."' ")or die('Error on inVerification Table');
+                $selectIC = $mysqli->query("UPDATE `in_approval` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_approval Table');
+                $selectIC = $mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
+                $insertIssue = $mysqli->query("UPDATE `in_issue` SET `cus_status`= $cus_status,`updated_date`=current_timestamp,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
+
 			}
 
 		}

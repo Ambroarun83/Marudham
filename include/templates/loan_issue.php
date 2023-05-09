@@ -645,7 +645,13 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Due Start From</label>&nbsp;<span class="text-danger">*</span>
-												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>' readonly>
+												<input type="hidden" class="form-control" id="due_period" name="due_period" value='<?php if(isset($due_period_lc)) echo $due_period_lc;?>'>
+												<input type="hidden" class="form-control" id="profit_type" name="profit_type" value='<?php if(isset($profit_type_lc)) echo $profit_type_lc;?>'>
+												<input  type="hidden" class="form-control" id="due_method_calc" name="due_method_calc" value='Monthly'>
+												<input  type="hidden" class="form-control" id="due_method_scheme" name="due_method_scheme" value='<?php if(isset($due_method_scheme_lc)) echo $due_method_scheme_lc;?>' >
+												<input  type="hidden" class="form-control" id="day_scheme" name="day_scheme" value='<?php if(isset($day_scheme_lc)) echo $day_scheme_lc;?>' >
+												
+												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>' >
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
