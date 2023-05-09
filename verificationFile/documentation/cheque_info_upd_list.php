@@ -11,6 +11,7 @@ include '../../ajaxconfig.php';
             <th> Relationship </th>
             <th> Bank Name </th>
             <th> Cheque Count </th>
+            <th> Cheque No </th>
             <th> Uploads </th>
         </tr>
     </thead>
@@ -39,6 +40,14 @@ include '../../ajaxconfig.php';
                 $doc_upd_name .= "</a>" ;
                 $a++;
             }
+            
+            $cheque_no ='';
+            $updnoresult = $connect->query("SELECT cheque_no FROM `cheque_no_list` where cheque_table_id = '$id'");
+            while($updno = $updnoresult->fetch()){
+            $no = $updno['cheque_no'];
+            $cheque_no .= $no.', ';
+
+            }
         ?>
             <tr>
                 <td><?php echo $i; ?></td>
@@ -59,6 +68,7 @@ include '../../ajaxconfig.php';
                 <td><?php echo $cheque["cheque_relation"]; ?></td>
                 <td><?php echo $cheque["chequebank_name"]; ?></td>
                 <td><?php echo $cheque["cheque_count"]; ?></td>
+                <td><?php echo $cheque_no; ?></td>
                 <td><?php echo $doc_upd_name; ?></td>
 
             </tr>

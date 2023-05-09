@@ -40,7 +40,7 @@ function moneyFormatIndia($num)
             <th> Collection Date </th>
             <th> Collection Amount </th>
             <th> Balance Amount </th>
-            <th> Collection Track </th>
+            <th> Pre Closure </th>
             <th> Role </th>
             <th> User ID </th>
             <th> Collection Location </th>
@@ -254,9 +254,9 @@ function moneyFormatIndia($num)
     $(function() {
         $('#dueChartListTable').DataTable({
             'processing': true,
-            'iDisplayLength': 10,
+            'iDisplayLength': 11,
             "lengthMenu": [
-                [10, 25, 50, -1],
+                [11, 26, 51, -1],
                 [10, 25, 50, "All"]
             ],
             // "createdRow": function(row, data, dataIndex) {
