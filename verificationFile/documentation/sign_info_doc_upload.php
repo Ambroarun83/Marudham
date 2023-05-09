@@ -5,6 +5,8 @@ $req_id                = $_POST['doc_req_id'];
 $signedID              = $_POST['signedID'];
 $filesArr3             = $_FILES['signdoc_upd'];
 
+$connect->query("DELETE FROM `signed_doc` WHERE `signed_doc_id` ='$signedID'");
+
  foreach($filesArr3['name'] as $key=>$val)
  {
 	 $fileName = basename($filesArr3['name'][$key]);  

@@ -13,6 +13,9 @@ if($holder_type == '0' || $holder_type == '1'){
    $holderName = $_POST['holder_relationship_name'];
 }
 
+$connect->query("DELETE FROM `cheque_upd` WHERE `cheque_table_id`='$chequeID'");
+$connect->query("DELETE FROM `cheque_no_list` WHERE `cheque_table_id`='$chequeID'");
+
  foreach($filesArr3['name'] as $key=>$val)
  {
 	 $fileName = basename($filesArr3['name'][$key]);  
@@ -27,7 +30,7 @@ if($holder_type == '0' || $holder_type == '1'){
 
 
  foreach($cheque_upd_no as $chequeNo){
-	$insert  = $connect->query("INSERT INTO `cheque_no_list`( `req_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`) VALUES ('$req_id',' $holder_type','$holderName','$chequeNo')");
+	$insert  = $connect->query("INSERT INTO `cheque_no_list`( `req_id`, `cheque_table_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`) VALUES ('$req_id','$chequeID',' $holder_type','$holderName','$chequeNo')");
  }
 
 
