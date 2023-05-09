@@ -1857,7 +1857,34 @@ input:checked + .slider:before {
                             </div>
                         </div>
                     </div>
+					<!-- Document Info End -->
 
+					<!-- Fingerprint Info start-->
+					<!-- <div class="card">
+                        <div class="card-header"> Fingerprint Info </div>
+                        <div class="card-body">
+                            <div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="form-group fingerprintTable">
+										<table class="table custom-table fingerprintTable">
+											<thead>
+												<tr>
+													<th > S.No </th>
+													<th> Name </th>
+													<th> Relationship </th>
+													<th> Fingerprint </th>
+												</tr>
+											</thead>
+											<tbody>
+
+											</tbody>
+										</table>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div> -->
+					<!-- Fingerprint Info End-->
 
                     <div class="col-md-12 ">
                         <div class="text-right">
@@ -2560,3 +2587,4 @@ input:checked + .slider:before {
 </form>
 </div>
 <!-- END  Add Cheque Info Modal -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">

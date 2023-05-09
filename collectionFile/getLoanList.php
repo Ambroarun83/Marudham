@@ -171,7 +171,7 @@ function moneyFormatIndia($num) {
                                 }
                             }
                         } ?></td>
-                <td><?php echo "<span class='btn btn-success collection-window' style='font-size: 17px;position: relative;top: 0px; ";
+                <td><?php echo "<span class='btn btn-success collection-window' style='font-size: 17px;position: relative;top: 0px; background-color:#009688;";
                             if($row['cus_status']== '16' || $row['cus_status']== '15' || $closed_sts[$i-1] == 'true'){echo 'display:none';}
                 echo " ' data-value='".$row['req_id']."''>$</span>"; ?></td>
                 <td>

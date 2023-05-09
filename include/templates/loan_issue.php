@@ -823,8 +823,6 @@ input:checked + .slider:before {
 										<div class="form-group">
 											<label for="GuarentorRelationship">  Relationship </label>
 											<input type="text" class="form-control" id="relationship" name="relationship" readonly>
-											<button id="scanBtn">Scan Fingerprint</button>
-											<textarea type="text" class="form-control" id="txtStatus" name="txtStatus" readonly></textarea>
 										</div>
 									</div>
 
