@@ -722,7 +722,7 @@ $(function () {
 
     getCustomerLoanCounts(); // to get customer loan details
 
-    // fingerprintTable();//To Get family member's name are required for scanning fingerprint
+    fingerprintTable();//To Get family member's name are required for scanning fingerprint
 
     var state_upd = $('#state_upd').val();
     if (state_upd != '') {
@@ -808,42 +808,48 @@ function getCustomerLoanCounts(){
 function fingerprintTable(){//To Get family member's name are required for scanning fingerprint
     var req_id = $('#req_id').val();
     var cus_name = $('#cus_name').val();
+    var cus_id = $('#cus_id_doc').val();
     $.ajax({
         url:'verificationFile/getNamesForFingerprint.php',
-        data:{'req_id':req_id,'cus_name':cus_name},
+        data:{'req_id':req_id,'cus_name':cus_name,'cus_id':cus_id},
         type: 'post',
         cache: false,
         success:function(html){
             $('.fingerprintTable').empty()
             $('.fingerprintTable').html(html)
+            $('.scanBtn').click(function(){
+                
+                $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div>');
+
+                $(this).attr('disabled',true);
+
+                setTimeout(()=>{
+                    var quality = 60; //(1 to 100) (recommended minimum 55)
+                    var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
+                    var res = CaptureFinger(quality, timeout);
+                    if (res.httpStaus) {
+                        if (res.data.ErrorCode == "0") {
+                            console.log(res.data.BitmapData)
+                            $(this).prev().val(res.data.AnsiTemplate);
+
+                            // Hide the loading animation and remove blur effect from the body
+                            $('.overlay').remove();
+                        }
+                        // Hide the loading animation and remove blur effect from the body
+                        $('.overlay').remove();
+                    }
+                    else {
+                        alert(res.err);
+                        // Hide the loading animation and remove blur effect from the body
+                        $('.overlay').remove();
+                    }
+
+                },700)
+            })
         }
     })
 
-    // $('.scanBtn').click(function(){
-    //     var quality = 60; //(1 to 100) (recommended minimum 55)
-    //     var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
-    //     var res = CaptureFinger(quality, timeout);
-    //     if (res.httpStaus) {
-    //     document.getElementById('txtStatus').value = "ErrorCode: " + res.data.ErrorCode + "
-    //     ErrorDescription: " + res.data.ErrorDescription;
-    //     if (res.data.ErrorCode == "0") {
-    //     document.getElementById('imgFinger').src = "data:image/bmp;base64," + res.data.BitmapData;
-    //     var imageinfo = "Quality: " + res.data.Quality + " Nfiq: " + res.data.Nfiq + " W(in):
-    //     " + res.data.InWidth + " H(in): " + res.data.InHeight + " area(in): " +
-    //     res.data.InArea + " Resolution: " + res.data.Resolution + " GrayScale: " +res.data.GrayScale + " Bpp: " + res.data.Bpp + " WSQCompressRatio: " +
-    //     res.data.WSQCompressRatio;
-    //     document.getElementById('txtImageInfo').value = imageinfo;
-    //     document.getElementById('txtIsoTemplate').value = res.data.IsoTemplate;
-    //     document.getElementById('txtAnsiTemplate').value = res.data.AnsiTemplate;
-    //     document.getElementById('txtIsoImage').value = res.data.IsoImage;
-    //     document.getElementById('txtRawData').value = res.data.RawData;
-    //     document.getElementById('txtWsqData').value = res.data.WsqImage;
-    //     }
-    //     }
-    //     else {
-    //      alert(res.err);
-    //     }
-    // })
+    
 }
 
 function resetFamDetails() {
