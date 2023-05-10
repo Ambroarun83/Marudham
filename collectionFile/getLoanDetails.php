@@ -44,7 +44,7 @@ if($result->num_rows>0){
         $response['due_amt'] = $loan_arr['due_amt_cal']; //Due amount will remain same
     }
 }
-
+$coll_arr = array();
 $result=$con->query("SELECT * FROM `collection` WHERE req_id = $req_id ");
 if($result->num_rows>0){
     while($row = $result->fetch_assoc()){

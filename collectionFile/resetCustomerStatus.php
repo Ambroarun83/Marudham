@@ -13,7 +13,7 @@ if(isset($_SESSION['userid'])){
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
 }
-// $cus_id=105806052023;
+// $cus_id=123456789101;
 $req_arr = array();
 $qry=$con->query("SELECT req_id FROM in_issue where cus_id = $cus_id and (cus_status >= 14 and cus_status < 20) ");
 while($row=$qry->fetch_assoc()){
@@ -47,6 +47,7 @@ foreach($req_arr as $req_id){
         }else{
             $response['total_amt'] = intVal($loan_arr['tot_amt_cal']);
         }
+        
 
         if($loan_arr['due_amt_cal'] == '' || $loan_arr['due_amt_cal'] == null){
             //(For monthly interest Due amount will not be there, so take interest)
@@ -55,8 +56,8 @@ foreach($req_arr as $req_id){
             $response['due_amt'] = intVal($loan_arr['due_amt_cal']); //Due amount will remain same
         }
     }
-
-    $result=$con->query("SELECT * FROM `collection` WHERE req_id = $req_id ");
+    $coll_arr= array();
+    $result=$con->query("SELECT * FROM `collection` WHERE req_id ='".$req_id."' ");
     if($result->num_rows>0){
         while($row = $result->fetch_assoc()){
             $coll_arr[] = $row;
@@ -135,6 +136,8 @@ foreach($req_arr as $req_id){
     }else{
         $response['closed_customer'][$i] = false;
     }
+
+    $response['balAmnt'][$i] =  $response['balance'];
     
     $i++;
 }
