@@ -188,7 +188,7 @@ function OnLoadFunctions(req_id,cus_id){
     var od_arr = [];
     var due_nil_arr = [];
     var closed_arr = [];
-    var balAmnt = 0;
+    var balAmnt = [];
     $.ajax({
         url: 'collectionFile/resetCustomerStatus.php',
         data: {'cus_id':cus_id},
@@ -202,6 +202,7 @@ function OnLoadFunctions(req_id,cus_id){
                 od_arr[i] = response['od_customer'][i]
                 due_nil_arr[i] = response['due_nil_customer'][i]
                 closed_arr[i] = response['closed_customer'][i]
+                balAmnt[i] = response['balAmnt'][i]
             }
             var pending_sts = pending_arr.join(',');
             $('#pending_sts').val(pending_sts);
@@ -211,7 +212,9 @@ function OnLoadFunctions(req_id,cus_id){
             $('#due_nil_sts').val(due_nil_sts);
             var closed_sts = closed_arr.join(',');
             $('#closed_sts').val(closed_sts);
-            balAmnt = response['balance'];
+            balAmnt = balAmnt.join(',');
+            // $('#balAmnt').val(balAmnt);
+            
         }
     }); 
     setTimeout(()=>{

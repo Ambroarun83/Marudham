@@ -18,7 +18,7 @@ if(isset($_POST["closed_sts"])){
     $closed_sts = explode(',',$_POST["closed_sts"]);
 }
 if(isset($_POST["bal_amt"])){
-    $bal_amt = $_POST["bal_amt"];
+    $bal_amt = explode(',',$_POST["bal_amt"]);
 }
 
 ?>
@@ -134,7 +134,7 @@ function moneyFormatIndia($num) {
                 </td>
                 <td><?php echo date('d-m-Y',strtotime($row["updated_date"])); ?></td>
                 <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td>
-                <td><?php echo moneyFormatIndia($bal_amt); ?></td>
+                <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td>
                 <td><?php if($row["collection_method"] == '1'){ echo 'By Self';}else if($row["collection_method"] == '2'){ echo 'Spot Collection';}else if($row["collection_method"] == '3'){ echo 'Cheque Collection';}else if($row["collection_method"] == '4'){ echo 'ECS';} ?></td>
                 <td><?php echo 'Present'; ?></td>
                 <td><?php if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
