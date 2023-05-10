@@ -54,9 +54,9 @@ $column = array(
 
 
 if($userid == 1){
-    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status != 9 and cus_status != 14) '; // 9 means revoked in verification
+    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status != 9 and cus_status < 14) '; // 9 means revoked in verification
 }else{
-    $query = "SELECT * FROM in_verification where status = 0 and (cus_status != 9 and cus_status != 14) 
+    $query = "SELECT * FROM in_verification where status = 0 and (cus_status != 9 and cus_status < 14) 
     and sub_area IN ($sub_area_list) ";//show only moved to verification list and cancelled at verification
 }
 // print_r($query);
