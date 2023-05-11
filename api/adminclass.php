@@ -3536,27 +3536,27 @@ function updateUser($mysqli,$id,$user_id){
             // if(isset($_POST['en_Key'])){
             //     $en_Key = $_POST['en_Key'];
             // }
-            if(isset($_POST['gold_info'])){
-                $gold_info = $_POST['gold_info'];
-            }
-            if(isset($_POST['gold_sts'])){
-                $gold_sts = $_POST['gold_sts'];
-            }
-            if(isset($_POST['gold_type'])){
-                $gold_type = $_POST['gold_type'];
-            }
-            if(isset($_POST['Purity'])){
-                $Purity = $_POST['Purity'];
-            }
-            if(isset($_POST['gold_Count'])){
-                $gold_Count = $_POST['gold_Count'];
-            }
-            if(isset($_POST['gold_Weight'])){
-                $gold_Weight = $_POST['gold_Weight'];
-            }
-            if(isset($_POST['gold_Value'])){
-                $gold_Value = $_POST['gold_Value'];
-            }
+            // if(isset($_POST['gold_info'])){
+            //     $gold_info = $_POST['gold_info'];
+            // }
+            // if(isset($_POST['gold_sts'])){
+            //     $gold_sts = $_POST['gold_sts'];
+            // }
+            // if(isset($_POST['gold_type'])){
+            //     $gold_type = $_POST['gold_type'];
+            // }
+            // if(isset($_POST['Purity'])){
+            //     $Purity = $_POST['Purity'];
+            // }
+            // if(isset($_POST['gold_Count'])){
+            //     $gold_Count = $_POST['gold_Count'];
+            // }
+            // if(isset($_POST['gold_Weight'])){
+            //     $gold_Weight = $_POST['gold_Weight'];
+            // }
+            // if(isset($_POST['gold_Value'])){
+            //     $gold_Value = $_POST['gold_Value'];
+            // }
             if(isset($_POST['document_name'])){
                 $document_name = $_POST['document_name'];
             }
@@ -3585,7 +3585,7 @@ function updateUser($mysqli,$id,$user_id){
             }
 
 			if($doc_table_id == ''){
-						$insertQry = "INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','".strip_tags($gold_info)."','".strip_tags($gold_sts)."','".strip_tags($gold_type)."','".strip_tags($Purity)."','".strip_tags($gold_Count)."','".strip_tags($gold_Weight)."','".strip_tags($gold_Value)."','".strip_tags($document_name)."','".strip_tags($document_details)."','".strip_tags($document_type)."','".strip_tags($document_holder)."','".strip_tags($docholder_name)."','".strip_tags($docholder_relationship_name)."','".strip_tags($doc_relation)."','11','".$userid."' )";
+				$insertQry = "INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','".strip_tags($document_name)."','".strip_tags($document_details)."','".strip_tags($document_type)."','".strip_tags($document_holder)."','".strip_tags($docholder_name)."','".strip_tags($docholder_relationship_name)."','".strip_tags($doc_relation)."','11','".$userid."' )";
 
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
@@ -3595,7 +3595,7 @@ function updateUser($mysqli,$id,$user_id){
 						$insertQry = "UPDATE in_verification set cus_status = 11 where req_id ='".strip_tags($req_id)."' ";
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			}else{
-			$update_doc = " UPDATE `verification_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`gold_info`='".strip_tags($gold_info)."',`gold_sts`='".strip_tags($gold_sts)."',`gold_type`='".strip_tags($gold_type)."',`Purity`='".strip_tags($Purity)."',`gold_Count`='".strip_tags($gold_Count)."',`gold_Weight`='".strip_tags($gold_Weight)."',`gold_Value`='".strip_tags($gold_Value)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
+				$update_doc = " UPDATE `verification_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
 
 			$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
 			}
@@ -4186,27 +4186,27 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['en_Key'])){
                 $en_Key = $_POST['en_Key'];
             }
-            if(isset($_POST['gold_info'])){
-                $gold_info = $_POST['gold_info'];
-            }
-            if(isset($_POST['gold_sts'])){
-                $gold_sts = $_POST['gold_sts'];
-            }
-            if(isset($_POST['gold_type'])){
-                $gold_type = $_POST['gold_type'];
-            }
-            if(isset($_POST['Purity'])){
-                $Purity = $_POST['Purity'];
-            }
-            if(isset($_POST['gold_Count'])){
-                $gold_Count = $_POST['gold_Count'];
-            }
-            if(isset($_POST['gold_Weight'])){
-                $gold_Weight = $_POST['gold_Weight'];
-            }
-            if(isset($_POST['gold_Value'])){
-                $gold_Value = $_POST['gold_Value'];
-            }
+            // if(isset($_POST['gold_info'])){
+            //     $gold_info = $_POST['gold_info'];
+            // }
+            // if(isset($_POST['gold_sts'])){
+            //     $gold_sts = $_POST['gold_sts'];
+            // }
+            // if(isset($_POST['gold_type'])){
+            //     $gold_type = $_POST['gold_type'];
+            // }
+            // if(isset($_POST['Purity'])){
+            //     $Purity = $_POST['Purity'];
+            // }
+            // if(isset($_POST['gold_Count'])){
+            //     $gold_Count = $_POST['gold_Count'];
+            // }
+            // if(isset($_POST['gold_Weight'])){
+            //     $gold_Weight = $_POST['gold_Weight'];
+            // }
+            // if(isset($_POST['gold_Value'])){
+            //     $gold_Value = $_POST['gold_Value'];
+            // }
             if(isset($_POST['document_name'])){
                 $document_name = $_POST['document_name'];
             }
@@ -4220,7 +4220,7 @@ function updateUser($mysqli,$id,$user_id){
             {
                 $document = $_FILES['document_info_upd'];
 				$cnt = count($document['name']);
-               $document_info_upd ='';
+				$document_info_upd ='';
 				for($i=0; $i<$cnt; $i++){
 
 					$document_upd = $document['name'][$i];
@@ -4231,6 +4231,7 @@ function updateUser($mysqli,$id,$user_id){
 
 					$document_info_upd .= $document_upd.',';
 				}
+				$document_info_upd = rtrim($document_info_upd,',');
             }else{
 				$document_info_upd = $_POST['doc_info_upd']; 
 			}
@@ -4248,19 +4249,50 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['doc_relation'])){
                 $doc_relation = $_POST['doc_relation'];
             }
+            if(isset($_POST['adhar_print'])){
+				$adhar_print = $_POST['adhar_print'];
+            }
+            if(isset($_POST['name_print'])){
+				$name_print = $_POST['name_print'];
+            }
+			if(isset($_POST['fingerprint'])){
+				$fingerprint = $_POST['fingerprint'];
+			}
+			if(isset($_POST['hand_selection'])){
+				$hand = $_POST['hand_selection'];
+			}
+			
             if(isset($_POST['doc_table_id'])){
                 $doc_table_id = $_POST['doc_table_id'];
             }
 
 			if($doc_table_id == ''){
-						$insertQry = "INSERT INTO `acknowlegement_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','".strip_tags($gold_info)."','".strip_tags($gold_sts)."','".strip_tags($gold_type)."','".strip_tags($Purity)."','".strip_tags($gold_Count)."','".strip_tags($gold_Weight)."','".strip_tags($gold_Value)."','".strip_tags($document_name)."','".strip_tags($document_details)."','".strip_tags($document_type)."','".strip_tags($document_holder)."','".strip_tags($docholder_name)."','".strip_tags($docholder_relationship_name)."','".strip_tags($doc_relation)."','11','".$userid."' )";
+				$insertQry = "INSERT INTO `acknowlegement_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','".strip_tags($document_name)."','".strip_tags($document_details)."','".strip_tags($document_type)."','".strip_tags($document_holder)."','".strip_tags($docholder_name)."','".strip_tags($docholder_relationship_name)."','".strip_tags($doc_relation)."','11','".$userid."' )";
 
-						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+				$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
 			}else{
-			$update_doc = " UPDATE `acknowlegement_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',`mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',`mortgage_document`='".strip_tags($mortgage_document)."',`mortgage_document_upd`='".strip_tags($mortgage_document_upd)."',`mortgage_document_pending`='".strip_tags($pendingchk)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',`Rc_document_upd`='".strip_tags($Rc_document_upd)."',`Rc_document_pending`='".strip_tags($endorsependingchk)."',`en_Key`='".strip_tags($en_Key)."',`gold_info`='".strip_tags($gold_info)."',`gold_sts`='".strip_tags($gold_sts)."',`gold_type`='".strip_tags($gold_type)."',`Purity`='".strip_tags($Purity)."',`gold_Count`='".strip_tags($gold_Count)."',`gold_Weight`='".strip_tags($gold_Weight)."',`gold_Value`='".strip_tags($gold_Value)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`doc_info_upload`='".strip_tags($document_info_upd)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`submitted`='1',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
+				$update_doc = " UPDATE `acknowlegement_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',`mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',`mortgage_document`='".strip_tags($mortgage_document)."',`mortgage_document_upd`='".strip_tags($mortgage_document_upd)."',`mortgage_document_pending`='".strip_tags($pendingchk)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',`Rc_document_upd`='".strip_tags($Rc_document_upd)."',`Rc_document_pending`='".strip_tags($endorsependingchk)."',`en_Key`='".strip_tags($en_Key)."',`document_name`='".strip_tags($document_name)."',`document_details`='".strip_tags($document_details)."',`document_type`='".strip_tags($document_type)."',`doc_info_upload`='".strip_tags($document_info_upd)."',`document_holder`='".strip_tags($document_holder)."',`docholder_name`='".strip_tags($docholder_name)."',`docholder_relationship_name`='".strip_tags($docholder_relationship_name)."',`doc_relation`='".strip_tags($doc_relation)."',`status`='0',`submitted`='1',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
 
-			$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
+				$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
+			}
+
+			//iterate thru fingerprint array
+			for($i=0;$i<sizeof($fingerprint);$i++){ 
+				// allow only if fingerprint has been entered
+				if($fingerprint[$i] != ''){
+					//check whether this adhar number already have fingerprint
+					$qry = $mysqli->query("SELECT adhar_num from `fingerprints` where adhar_num='".strip_tags($adhar_print[$i])."' "); 
+					if($qry->num_rows == 0){
+						//insert finger prints as new values if not already exist
+						$qry = "INSERT INTO `fingerprints`(`adhar_num`, `name`,`hand`,`ansi_template`, `insert_user_id`, `created_date`) VALUES ('".$adhar_print[$i]."','".$name_print[$i]."','".$hand[$i]."','".$fingerprint[$i]."',$userid,now() ) ";
+						$result = $mysqli->query($qry) or die("Error ".$mysqli->error);
+					}else{
+						//update fingerprint at that adhar number if already exist
+						$qry = "UPDATE `fingerprints` SET `hand`='".$hand[$i]."',`ansi_template`='".$fingerprint[$i]."',`update_user_id`='$userid',`updated_date`= now() WHERE `adhar_num`='".strip_tags($adhar_print[$i])."' ";
+						$result = $mysqli->query($qry) or die("Error ".$mysqli->error);
+					}
+				}
 			}
     }
 
@@ -4353,6 +4385,7 @@ function updateUser($mysqli,$id,$user_id){
 					$detailrecords['docholder_relationship_name'] = $row['docholder_relationship_name'];
 					$detailrecords['doc_relation'] = $row['doc_relation'];
 					$detailrecords['cus_status'] = $row['cus_status'];
+					$detailrecords['submitted'] = $row['submitted'];
 
 					$i++;
 				}
@@ -4894,4 +4927,5 @@ function updateUser($mysqli,$id,$user_id){
 			}
 
 		}
+
 }//Class End

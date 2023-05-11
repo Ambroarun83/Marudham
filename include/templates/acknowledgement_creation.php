@@ -209,13 +209,13 @@ if(sizeof($documentationInfo)>0){
 	$Rc_document_upd = $documentationInfo['Rc_document_upd'];
 	$Rc_document_pending = $documentationInfo['Rc_document_pending'];
 	$en_Key = $documentationInfo['en_Key'];
-	$gold_info = $documentationInfo['gold_info'];
-	$gold_sts = $documentationInfo['gold_sts'];
-	$gold_type = $documentationInfo['gold_type'];
-	$Purity = $documentationInfo['Purity'];
-	$gold_Count = $documentationInfo['gold_Count'];
-	$gold_Weight = $documentationInfo['gold_Weight'];
-	$gold_Value = $documentationInfo['gold_Value'];
+	// $gold_info = $documentationInfo['gold_info'];
+	// $gold_sts = $documentationInfo['gold_sts'];
+	// $gold_type = $documentationInfo['gold_type'];
+	// $Purity = $documentationInfo['Purity'];
+	// $gold_Count = $documentationInfo['gold_Count'];
+	// $gold_Weight = $documentationInfo['gold_Weight'];
+	// $gold_Value = $documentationInfo['gold_Value'];
 	$document_name = $documentationInfo['document_name'];
 	$document_details = $documentationInfo['document_details'];
 	$document_type = $documentationInfo['document_type'];
@@ -224,6 +224,7 @@ if(sizeof($documentationInfo)>0){
 	$docholder_name = $documentationInfo['docholder_name'];
 	$docholder_relationship_name = $documentationInfo['docholder_relationship_name'];
 	$doc_relation = $documentationInfo['doc_relation'];
+	$submitted = $documentationInfo['submitted'];
 
 }
 ////////   Documentation End ////////////
@@ -302,103 +303,112 @@ if(sizeof($getLoanCalculation)>0){
 
 
 <style>
-	.img_show {
-		height: 150px;
-		width: 150px;
-		border-radius: 50%;
-		object-fit: cover;
-		background-color: white;
-	}
+.img_show {
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+	background-color: white;
+}
 
-    .switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  left: 10px;
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	left: 10px;
 }
 
 .switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
 
 .slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
 }
 
 input:checked + .slider {
-  background-color: #009688;
+	background-color: #009688;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+	box-shadow: 0 0 1px #2196F3;
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
 }
 
 /* Rounded sliders */
 .slider.round {
-  border-radius: 34px;
+	border-radius: 34px;
 }
 
 .slider.round:before {
-  border-radius: 50%;
+	border-radius: 50%;
 }
 .overlay {
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Add semi-transparent black background */
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* Add semi-transparent black background */
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .loader {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  animation: spin 2s linear infinite;
+	border: 4px solid #f3f3f3;
+	border-top: 4px solid #3498db;
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
 }
-
-.no-click {
-  pointer-events: none;
+.overlay-text {
+	color: white;
+	font-size: 1.5rem;
+	margin-left: 10px;
+}
+#icon-flipped {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
 }
 </style>
 
@@ -1278,6 +1288,7 @@ input:checked + .slider:before {
             <input type="hidden" name="en_relation_name" id="en_relation_name" value="<?php if (isset($ownername_relationship_name)) { echo $ownername_relationship_name;   } ?>">
             <input type="hidden" name="mortgage_relation_name" id="mortgage_relation_name" value="<?php if (isset($Propertyholder_relationship_name)) { echo $Propertyholder_relationship_name; } ?>">
             <input type="hidden" name="docrelation_name" id="docrelation_name" value="<?php if (isset($docholder_relationship_name)) { echo $docholder_relationship_name;   } ?>">
+            <input type="hidden" name="submitted" id="submitted" value="<?php if (isset($submitted)) { echo $submitted;   } ?>">
 
             <!-- Row start -->
             <div class="row gutters">
@@ -1711,101 +1722,49 @@ input:checked + .slider:before {
                                 </div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                        <div class="form-group">
-                                           <label for="pendingendorse"> Pending </label> <span class="required">&nbsp;*</span>
-                                           <label class="switch">
-                                            <input type="checkbox" value="YES" id="endorsependingchk" name="endorsependingchk" checked>
-                                            <span class="slider round"></span>
-                                           </label>
-                                        </div>
-                                    </div>
+									<div class="form-group">
+										<label for="pendingendorse"> Pending </label> <span class="required">&nbsp;*</span>
+										<label class="switch">
+										<input type="checkbox" value="YES" id="endorsependingchk" name="endorsependingchk" checked>
+										<span class="slider round"></span>
+										</label>
+									</div>
+								</div>
 
                             </div>
                         </div>
                     </div>
                     <!-- Endorsement Info  End-->
-
-                    <!-- Gold Info START-->
-
-                    <div class="card">
-                        <div class="card-header"> Gold Info </div>
+					<!-- Gold Info Start -->
+					<div class="card">
+                        <div class="card-header"> Gold Info
+                            <!-- <button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button> -->
+                        </div>
+                        <span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
                         <div class="card-body">
-
                             <div class="row">
-
-                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="Gold_Info"> Gold Info</label> <span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="gold_info" name="gold_info">
-                                            <option value=""> Select Gold Info </option>
-                                            <option value="0" <?php if(isset($gold_info) and $gold_info == '0') echo 'selected'; ?> > YES </option>
-                                            <option value="1" <?php if(isset($gold_info) and $gold_info == '1') echo 'selected'; ?> > NO </option>
-                                        </select>
-                                        <span class="text-danger" id="goldCheck"> Select Gold Info </span>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="row" id="GoldInfo" <?php if(isset($gold_info)){if($gold_info != '0'){?> style="display: none;" <?php }} else{ ?> style="display: none;" <?php }?> >
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="GoldStatus "> Gold Status </label> <span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="gold_sts" name="gold_sts">
-                                            <option value=""> Select Gold Status </option>
-                                            <option value="0" <?php if(isset($gold_sts) and $gold_sts == '0') echo 'selected'; ?>> Old </option>
-                                            <option value="1" <?php if(isset($gold_sts) and $gold_sts == '1') echo 'selected'; ?>> New </option>
-                                        </select>
-                                        <span class="text-danger" id="GoldstatusCheck"> Select Gold Status </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="Goldtype "> Gold Type </label> <span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type" value="<?php if(isset($gold_type)) echo $gold_type; ?>">
-                                        <span class="text-danger" id="GoldtypeCheck"> Enter Gold Type </span>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="Purity "> Purity </label> <span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity" value="<?php if(isset($Purity)) echo $Purity; ?>">
-                                        <span class="text-danger" id="purityCheck"> Enter Purity </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="Count"> Count </label> <span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="gold_Count" name="gold_Count" placeholder="Enter Count" value="<?php if(isset($gold_Count)) echo $gold_Count; ?>">
-                                        <span class="text-danger" id="goldCountCheck"> Enter Count </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="Weight"> Weight </label> <span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight" value="<?php if(isset($gold_Weight)) echo $gold_Weight; ?>"> 
-                                        <span class="text-danger" id="goldWeightCheck"> Enter Weight </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="Value"> Value </label> <span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value" value="<?php if(isset($gold_Value)) echo $gold_Value; ?>">
-                                        <span class="text-danger" id="goldValueCheck"> Enter Value </span>
+                                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="form-group" id="GoldResetTableDiv">
+                                        <table class="table custom-table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="15%"> S.No </th>
+                                                    <th> Gold type </th>
+                                                    <th> Purity </th>
+                                                    <th> Count </th>
+                                                    <th> Weight </th>
+                                                    <th> Value </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Gold Info  End-->
-
+					<!-- Gold Info End -->
                     <!-- Documents Info START-->
 
                     <div class="card">
@@ -1891,7 +1850,7 @@ input:checked + .slider:before {
 
 					<!-- Fingerprint Info start-->
 					<div class="card">
-                        <div class="card-header"> Fingerprint Info </div>
+                        <div class="card-header"> Fingerprint Info </div><span class="text-danger fingerSpan" style="margin-left:25px;display: none;">Please Scan Customer Fingerprint</span>
                         <div class="card-body">
                             <div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

@@ -13,20 +13,23 @@ $cus_id = $_POST['cus_id'];
             <th> S.No </th>
             <th> Name </th>
             <th> Relationship </th>
-            <th> Fingerprint </th>
+            <th width='700px'> Fingerprint </th>
         </tr>
     </thead>
     <tbody>
 
-    <tr>
+    <tr height='70px'>
         <td><?php echo '1'; ?></td>
         <td><input type='hidden' id='adhar_print' name='adhar_print[]' value='<?php echo $cus_id;?>'><?php echo $cus_name;?></td>
-        <td><?php echo 'Customer';?></td>
+        <td><input type='hidden' id='name_print' name='name_print[]' value='<?php echo $cus_name;?>'><?php echo 'Customer';?></td>
         <td>
-            <input type='hidden' id='left_thumb' name='left_thumb[]'>
-            <button type="button" class='btn btn-success scanBtn' style='background-color:#009688' onclick="event.preventDefault()" title='Left Thumb'><i class="material-icons">&#xe90d;</i>&nbsp;Left</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type='hidden' id='right_thumb' name='right_thumb[]'>
-            <button type="button" class='btn btn-success scanBtn' style='background-color:#009688' onclick="event.preventDefault()" title='Right Thumb'>Right&nbsp;<i class="material-icons">&#xe90d;</i></button>
+            <select type='text' id='hand_selection' name='hand_selection[]' class='btn hand_selection' style="border: #009688 1px solid;height: 38px;" >
+                <option value=''>Select Hand</option>
+                <option value='1'>Left Hand</option>
+                <option value='2'>Right Hand</option>
+            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button type="button" class='btn btn-success scanBtn' style='background-color:#009688;' onclick="event.preventDefault()" title='Put Your Thumb'><i class="material-icons" id="icon-flipped">&#xe90d;</i>&nbsp;Scan</button>
+            <input type='hidden' id='fingerprint' name='fingerprint[]'>
         </td>
     </tr>
 
@@ -37,15 +40,18 @@ $cus_id = $_POST['cus_id'];
         $i = 2;
         while ($row = $qry->fetch()) {
             ?>
-            <tr>
+            <tr height='70px'>
                 <td><?php echo $i; ?></td>
                 <td><input type='hidden' id='adhar_print' name='adhar_print[]' value='<?php echo $row['relation_aadhar'];?>'><?php echo $row["famname"]; ?></td>
-                <td><?php echo $row["relationship"]; ?></td>
+                <td><input type='hidden' id='name_print' name='name_print[]' value='<?php echo $row['famname'];?>'><?php echo $row["relationship"]; ?></td>
                 <td>
-                    <input type='hidden' id='left_thumb' name='left_thumb[]'>
-                    <button type="button" class='btn btn-success scanBtn' style='background-color:#009688' onclick="event.preventDefault()" title='Left Thumb'><i class="material-icons">&#xe90d;</i>&nbsp;Left</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type='hidden' id='right_thumb' name='right_thumb[]'>
-                    <button type="button" class='btn btn-success scanBtn' style='background-color:#009688' onclick="event.preventDefault()" title='Right Thumb'>Right&nbsp;<i class="material-icons">&#xe90d;</i></button>
+                    <select type='text' id='hand_selection' name='hand_selection[]' class='btn hand_selection'style="border: #009688 1px solid;height: 38px;" >
+                        <option value=''>Select Hand</option>
+                        <option value='1'>Left Hand</option>
+                        <option value='2'>Right Hand</option>
+                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <button type="button" class='btn btn-success scanBtn' style='background-color:#009688;' onclick="event.preventDefault()" title='Put Your Thumb'><i class="material-icons" id="icon-flipped">&#xe90d;</i>&nbsp;Scan</button>
+                    <input type='hidden' id='fingerprint' name='fingerprint[]'>
                 </td>
 
             </tr>
