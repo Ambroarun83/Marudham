@@ -117,6 +117,9 @@ function moneyFormatIndia($num) {
 
         $i = 1;
         while ($row = $run->fetch()) {
+            $qry = $con->query("SELECT closed_sts,consider_level,created_date FROM `closed_status` WHERE req_id = '".$row['req_id']."' ");
+            
+            $runqry = $qry->fetch_assoc();
         ?>
             <tr>
                 <td></td>
@@ -132,10 +135,10 @@ function moneyFormatIndia($num) {
                 </td>
                 <td><?php echo date('d-m-Y',strtotime($row["updated_date"])); ?></td>
                 <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td>
-                <td><?php echo ''; ?></td> <!--Need to changed as closed date-->
+                <td><?php echo date('d-m-Y',strtotime($runqry['created_date'])); ?></td> <!-- closed date-->
                 <td><?php echo 'Closed'; ?></td>
-                <td><?php if($row['closed_status'] == '1'){echo 'Consider';}elseif($row['closed_status'] == '2'){echo 'Waitlist';}elseif($row['closed_status'] == '3'){echo 'Blocklist';} ?></td>
-                <td><?php if($row['consider_level'] == '1'){echo 'Bronze';}elseif($row['consider_level'] == '2'){echo 'Silver';}elseif($row['consider_level'] == '3'){echo 'Gold';}elseif($row['consider_level'] == '4'){echo 'Platinum';}elseif($row['consider_level'] == '5'){echo 'Diamond';}else{echo '';} ?></td>
+                <td><?php if($runqry['closed_sts'] == '1'){echo 'Consider';}elseif($runqry['closed_sts'] == '2'){echo 'Waitlist';}elseif($runqry['closed_sts'] == '3'){echo 'Blocklist';}else{echo'';} ?></td>
+                <td><?php if($runqry['consider_level'] == '1'){echo 'Bronze';}elseif($runqry['consider_level'] == '2'){echo 'Silver';}elseif($runqry['consider_level'] == '3'){echo 'Gold';}elseif($runqry['consider_level'] == '4'){echo 'Platinum';}elseif($runqry['consider_level'] == '5'){echo 'Diamond';}else{echo '';} ?></td>
                 <td><?php echo "<span class='btn btn-success noc-window' style='font-size: 17px;position: relative;top: 0px; background-color:#009688;' data-value='".$row['req_id']."''>NOC</span>";?></td>
                 
             </tr>
