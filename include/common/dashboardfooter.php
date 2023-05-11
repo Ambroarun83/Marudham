@@ -264,7 +264,7 @@ $(document).ready(function() {
                 // },
                 {
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Director List"
                 },
                 {
                     extend:'colvis',
@@ -300,7 +300,7 @@ $(document).ready(function() {
                 // },
                 {
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Agent List"
                 },
                 {
                     extend:'colvis',
@@ -337,7 +337,7 @@ $(document).ready(function() {
                 // },
                 {
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Staff List"
                 },
                 {
                     extend:'colvis',
@@ -375,7 +375,7 @@ $(document).ready(function() {
                 // },
                 {
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "User List"
                 },
                 {
                     extend:'colvis',
@@ -406,7 +406,7 @@ $(document).ready(function() {
             buttons: [
                 {
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Documentation Mapping List"
                 },
                 {
                     extend:'colvis',
@@ -437,7 +437,7 @@ $(document).ready(function() {
             buttons: [
                 {
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Request List"
                 },
                 {
                     extend:'colvis',
@@ -475,7 +475,7 @@ $(document).ready(function() {
             dom: 'lBfrtip',
             buttons: [{
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Verification List"
                 },
                 {
                     extend: 'colvis',
@@ -508,7 +508,7 @@ $(document).ready(function() {
             dom: 'lBfrtip',
             buttons: [{
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Approval List"
                 },
                 {
                     extend: 'colvis',
@@ -540,7 +540,7 @@ $(document).ready(function() {
             dom: 'lBfrtip',
             buttons: [{
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Acknowledgement List"
                 },
                 {
                     extend: 'colvis',
@@ -572,7 +572,7 @@ $(document).ready(function() {
             dom: 'lBfrtip',
             buttons: [{
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Loan Issue List"
                 },
                 {
                     extend: 'colvis',
@@ -603,7 +603,7 @@ $(document).ready(function() {
             dom: 'lBfrtip',
             buttons: [{
                     extend: 'excel',
-                    title: "Loan Scheme List"
+                    title: "Collection List"
                 },
                 {
                     extend: 'colvis',
@@ -614,6 +614,70 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+        });
+
+        // Closed
+        var closed_table = $('#closed_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxClosedFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "Closed List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+        });
+
+        //NOC Table
+        var noc_table = $('#noc_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxNocFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "NOC List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ]
         });
 
         $('#search').change(function(){
@@ -740,6 +804,16 @@ if($current_page == 'loan_issue') { ?>
 if($current_page == 'collection') { ?>
     <script src="js/collection.js"></script>
     <?php }
+
+if($current_page == 'noc') { ?>
+    <script src="js/noc.js"></script>
+    <?php }
+
+//Closed
+if($current_page == 'closed') { ?>
+    <script src="js/closed.js"></script>
+    <?php }
+?>
 ?> 
 
 <script src="js/logincreation.js"></script>

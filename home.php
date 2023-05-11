@@ -272,6 +272,23 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'collection') { ?>
 			<?php include "include/templates/collection.php" ?>
 			<?php } ?>
+			
+			<!-- Closed -->
+            <?php if($current_page == 'edit_closed') { ?>
+            <?php include "include/templates/edit_closed.php" ?>
+            <?php } ?>
+            <?php if($current_page == 'closed') { ?>
+            <?php include "include/templates/closed.php" ?>
+            <?php } ?>
+			
+			<!-- NOC -->
+			<?php if($current_page == 'edit_noc') { ?>
+			<?php include "include/templates/edit_noc.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'noc') { ?>
+			<?php include "include/templates/noc.php" ?>
+			<?php } ?>
 
 		</div>
 		<!-- Page content end -->

@@ -454,6 +454,40 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
+				<?php if($collectionmodule == 0){?>
+                    <li class="sidebar-dropdown closed">
+                        <a href="javascript:void(0)">
+                            <i class="icon-attach_money"></i>
+                            <span class="menu-text">Closed</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='collection') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($collection == 0){ ?>
+                                    <li>
+                                        <a href="edit_closed"><i class="icon-attach_money"></i>Closed</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
+				<?php if($collectionmodule == 0){?>
+                    <li class="sidebar-dropdown acknowledge">
+                        <a href="javascript:void(0)">
+                            <i class="icon-attach_money"></i>
+                            <span class="menu-text">NOC</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='collection') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($collection == 0){ ?>
+                                    <li>
+                                        <a href="edit_noc"><i class="icon-attach_money"></i>NOC</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->

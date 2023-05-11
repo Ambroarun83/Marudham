@@ -716,6 +716,8 @@ $(function () {
     chequeinfoList(); // Cheque Info List.
     resetchequeInfo();
 
+    goldinfoList(); // Gold Info List. 
+
     feedbackList(); // Feedback List.
 
     verificationPerson() //Verification Person
@@ -817,34 +819,52 @@ function fingerprintTable(){//To Get family member's name are required for scann
         success:function(html){
             $('.fingerprintTable').empty()
             $('.fingerprintTable').html(html)
+
             $('.scanBtn').click(function(){
+                var hand = $(this).prev().val();
+                if(hand == ''){ //prevent if hand is not selected
+                    $(this).prev().css('border-color','red');
+                }else{
+                    $(this).prev().css('border-color','#009688')
                 
-                $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div>');
+                    $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
 
-                $(this).attr('disabled',true);
+                    $(this).attr('disabled',true);
 
-                setTimeout(()=>{
-                    var quality = 60; //(1 to 100) (recommended minimum 55)
-                    var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
-                    var res = CaptureFinger(quality, timeout);
-                    if (res.httpStaus) {
-                        if (res.data.ErrorCode == "0") {
-                            console.log(res.data.BitmapData)
-                            $(this).prev().val(res.data.AnsiTemplate);
-
-                            // Hide the loading animation and remove blur effect from the body
-                            $('.overlay').remove();
+                    setTimeout(()=>{
+                        var quality = 60; //(1 to 100) (recommended minimum 55)
+                        var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
+                        var res = CaptureFinger(quality, timeout);
+                        if (res.httpStaus) {
+                            if (res.data.ErrorCode == "0") {
+                                $(this).next().val(res.data.AnsiTemplate); // Take ansi template that is the unique id which is passed by sensor
+                                
+                            }//Error codes and alerts below
+                            else if(res.data.ErrorCode == -1307){
+                                alert('Connect Your Device');
+                                $(this).removeAttr('disabled');
+                            }else if(res.data.ErrorCode == -1140 || res.data.ErrorCode == 700){
+                                alert('Timeout');
+                                $(this).removeAttr('disabled');
+                            }else if(res.data.ErrorCode == 720){
+                                alert('Reconnect Device');
+                                $(this).removeAttr('disabled');
+                            }else if(res.data.ErrorCode == 730){
+                                alert('Capture Finger Again');
+                                $(this).removeAttr('disabled');
+                            }else {
+                                alert('Error Code:' + res.data.ErrorCode);
+                                $(this).removeAttr('disabled');
+                            }
+                        }
+                        else {
+                            alert(res.err);
                         }
                         // Hide the loading animation and remove blur effect from the body
                         $('.overlay').remove();
-                    }
-                    else {
-                        alert(res.err);
-                        // Hide the loading animation and remove blur effect from the body
-                        $('.overlay').remove();
-                    }
 
-                },700)
+                    },700)
+                }
             })
         }
     })
@@ -1650,6 +1670,28 @@ function getChequeColumn(cnt){
 
 }
 
+//Gold Info List
+function goldinfoList() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/ack_gold_info_list.php',
+        type: 'POST',
+        data: { "reqId": req_id },
+        cache: false,
+        success: function (html) {
+            $("#GoldResetTableDiv").empty();
+            $("#GoldResetTableDiv").html(html);
+            $("#gold_sts").val('');
+            $("#gold_type").val('');
+            $("#Purity").val('');
+            $("#gold_Count").val('');
+            $("#gold_Weight").val('');
+            $("#gold_Value").val('');
+            $("#goldID").val('');
+        }
+    });
+}
+
 //Documentation Submit Validation
 $('#submit_documentation').click(function () {
     doc_submit_validation();
@@ -1667,6 +1709,8 @@ function doc_submit_validation() {
     var vehicle_reg_no = $('#vehicle_reg_no').val();
     var endorsement_name = $('#endorsement_name').val(); var en_RC = $('#en_RC').val(); var en_Key = $('#en_Key').val();
 
+    var fingerprint = $('#fingerprint').val();var submitted = $('#submitted').val();
+    
     if (cus_id_doc == '') {
         Swal.fire({
             timerProgressBar: true,
@@ -1895,7 +1939,14 @@ function doc_submit_validation() {
         $('#docholderCheck').hide();
     }
 
-
+    if(submitted == undefined || submitted == '' || submitted == null){
+        if(fingerprint == ''){
+            event.preventDefault();
+            $('.fingerSpan').show();
+        }else{
+            $('.fingerSpan').hide();
+        }
+    }
     // $.ajax({
     //     url: 'verificationFile/documentation/docValidationModal.php',
     //     data: { 'req_id': req_id, 'table': 'signed_doc_info' },

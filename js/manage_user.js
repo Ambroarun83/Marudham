@@ -738,6 +738,7 @@ function getRoleBasedDetails(role){
         $('.agent').hide();
         $('.staff').hide();
         $('.director').hide();
+        $('.line_div').show();
         $('.agent_div').hide();
         $("#role_type").empty();
         $('#role_type').append(`<option value="">Select Role Type</option><option value='11'>Director</option>
@@ -753,6 +754,7 @@ function getRoleBasedDetails(role){
     }else 
     if(role == '3'){
         $(".role_type").show();
+        $('.line_div').show();
         $('.agent_div').show();
         $('.agent').hide();
         $('.staff').hide();
