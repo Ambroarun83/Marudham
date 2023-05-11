@@ -579,6 +579,66 @@ $(document).ready(function () {
         }
     });
 
+    $("body").on("click", "#gold_info_edit", function () {
+        let id = $(this).attr('value');
+        chequeHolderName(); // Holder Name From Family Table.
+
+        $.ajax({
+            url: 'verificationFile/documentation/gold_info_edit.php',
+            type: 'POST',
+            data: { "id": id },
+            dataType: 'json',
+            cache: false,
+            success: function (result) {
+
+                $("#goldID").val(result['id']);
+                $("#gold_sts").val(result['gold_sts']);
+                $("#gold_type").val(result['gold_type']);
+                $("#Purity").val(result['Purity']);
+                $("#gold_Count").val(result['gold_Count']);
+                $("#gold_Weight").val(result['gold_Weight']);
+                $("#gold_Value").val(result['gold_Value']);
+
+            }
+        });
+
+    });
+
+
+    $("body").on("click", "#gold_info_delete", function () {
+        var isok = confirm("Do you want delete this Gold Info?");
+        if (isok == false) {
+            return false;
+        } else {
+            var chequeid = $(this).attr('value');
+
+            $.ajax({
+                url: 'verificationFile/documentation/gold_info_delete.php',
+                type: 'POST',
+                data: { "chequeid": chequeid },
+                cache: false,
+                success: function (response) {
+                    var delresult = response.includes("Deleted");
+                    if (delresult) {
+                        $('#goldDeleteOk').show();
+                        setTimeout(function () {
+                            $('#goldDeleteOk').fadeOut('fast');
+                        }, 2000);
+                    }
+                    else {
+
+                        $('#goldDeleteNotOk').show();
+                        setTimeout(function () {
+                            $('#goldDeleteNotOk').fadeOut('fast');
+                        }, 2000);
+                    }
+
+                    resetgoldInfo();
+                }
+            });
+        }
+    });
+
     // Mortgage Info
     $('#mortgage_process').change(function () {
 
@@ -925,6 +985,9 @@ $(function () {
 
     resetchequeInfo(); // Cheque Info Reset.
     chequeinfoList(); // Cheque Info List.
+
+    resetgoldInfo(); // Gold Info Reset.
+    goldinfoList(); // Gold Info List.
 
     resetfeedback(); //Reset Feedback Modal Table.
     feedbackList(); // Feedback List.
@@ -3350,6 +3413,137 @@ function chequeinfoList() {
     });
 }
 
+//Gold Info 
+$(document).on("click", "#goldInfoBtn", function () {
+
+    let req_id = $('#req_id').val();
+    let gold_sts = $("#gold_sts").val();
+    let gold_type = $("#gold_type").val();
+    let Purity = $("#Purity").val();
+    let gold_Count = $("#gold_Count").val();
+    let gold_Weight = $("#gold_Weight").val();
+    let gold_Value = $("#gold_Value").val();
+    let goldID = $("#goldID").val();
+
+    if ( gold_sts != "" && gold_type != "" && Purity != "" && gold_Count != "" && gold_Weight != "" && gold_Value != "" && req_id != "") {
+        $.ajax({
+            url: 'verificationFile/documentation/gold_info_submit.php',
+            type: 'POST',
+            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id },
+            cache: false,
+            success: function (response) {
+
+                var insresult = response.includes("Inserted");
+                var updresult = response.includes("Updated");
+                if (insresult) {
+                    $('#goldInsertOk').show();
+                    setTimeout(function () {
+                        $('#goldInsertOk').fadeOut('fast');
+                    }, 2000);
+                }
+                else if (updresult) {
+                    $('#goldUpdateok').show();
+                    setTimeout(function () {
+                        $('#goldUpdateok').fadeOut('fast');
+                    }, 2000);
+                }
+                else {
+                    $('#goldNotOk').show();
+                    setTimeout(function () {
+                        $('#goldNotOk').fadeOut('fast');
+                    }, 2000);
+                }
+
+                resetgoldInfo();
+            }
+        });
+
+        
+    $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
+    }
+    else {
+
+        if (gold_sts == '') {
+            $('#GoldstatusCheck').show();
+        } else {
+            $('#GoldstatusCheck').hide();
+        }
+        if (gold_type == '') {
+            $('#GoldtypeCheck').show();
+        } else {
+            $('#GoldtypeCheck').hide();
+        }
+        if (Purity == '') {
+            $('#purityCheck').show();
+        } else {
+            $('#purityCheck').hide();
+        }
+        if (gold_Count == '') {
+            $('#goldCountCheck').show();
+        } else {
+            $('#goldCountCheck').hide();
+        }
+        if (gold_Weight == '') {
+            $('#goldWeightCheck').show();
+        } else {
+            $('#goldWeightCheck').hide();
+        }
+        if (gold_Value == '') {
+            $('#goldValueCheck').show();
+        } else {
+            $('#goldValueCheck').hide();
+        }
+
+    }
+
+});
+
+function resetgoldInfo() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/gold_info_reset.php',
+        type: 'POST',
+        data: { "reqId": req_id },
+        cache: false,
+        success: function (html) {
+            $("#goldTable").empty();
+            $("#goldTable").html(html);
+
+            $("#gold_sts").val('');
+            $("#gold_type").val('');
+            $("#Purity").val('');
+            $("#gold_Count").val('');
+            $("#gold_Weight").val('');
+            $("#gold_Value").val('');
+            $("#goldID").val('');
+
+        }
+    });
+}
+
+//Gold Info List
+function goldinfoList() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/gold_info_list.php',
+        type: 'POST',
+        data: { "reqId": req_id },
+        cache: false,
+        success: function (html) {
+            $("#GoldResetTableDiv").empty();
+            $("#GoldResetTableDiv").html(html);
+
+            $("#gold_sts").val('');
+            $("#gold_type").val('');
+            $("#Purity").val('');
+            $("#gold_Count").val('');
+            $("#gold_Weight").val('');
+            $("#gold_Value").val('');
+            $("#goldID").val('');
+        }
+    });
+}
+
 // $('#loanCategoryTableCheck').hide();	
 let loanCategoryTableError = true;
 function validateLoanCategoryTable() {
@@ -3398,13 +3592,15 @@ function doc_submit_validation() {
 
     var cus_id_doc = $('#cus_id_doc').val(); var mortgage_process = $('#mortgage_process').val(); var Propertyholder_type = $('#Propertyholder_type').val(); var doc_property_pype = $('#doc_property_pype').val(); var doc_property_measurement = $('#doc_property_measurement').val(); var doc_property_location = $('#doc_property_location').val(); var doc_property_value = $('#doc_property_value').val();
     var endorsement_process = $('#endorsement_process').val(); var owner_type = $('#owner_type').val(); var vehicle_type = $('#vehicle_type').val(); var vehicle_process = $('#vehicle_process').val();
-    var en_Company = $('#en_Company').val(); var en_Model = $('#en_Model').val();  var gold_info = $('#gold_info').val(); var gold_sts = $('#gold_sts').val(); var gold_type = $('#gold_type').val(); var Purity = $('#Purity').val(); var gold_Count = $('#gold_Count').val(); var gold_Weight = $('#gold_Weight').val(); var gold_Value = $('#gold_Value').val(); var document_name = $('#document_name').val(); var document_details = $('#document_details').val(); var document_type = $('#document_type').val(); var document_holder = $('#document_holder').val();
+    var en_Company = $('#en_Company').val(); var en_Model = $('#en_Model').val();  var document_name = $('#document_name').val(); var document_details = $('#document_details').val(); var document_type = $('#document_type').val(); var document_holder = $('#document_holder').val();
     var req_id = $('#req_id').val();
 
     // var mortgage_name = $('#mortgage_name').val(); var mortgage_dsgn = $('#mortgage_dsgn').val(); var mortgage_nuumber = $('#mortgage_nuumber').val(); var reg_office = $('#reg_office').val(); var mortgage_value = $('#mortgage_value').val(); var mortgage_document = $('#mortgage_document').val();
 
     // var vehicle_reg_no = $('#vehicle_reg_no').val();
     // var endorsement_name = $('#endorsement_name').val(); var en_RC = $('#en_RC').val(); var en_Key = $('#en_Key').val();
+
+    // var gold_info = $('#gold_info').val(); var gold_sts = $('#gold_sts').val(); var gold_type = $('#gold_type').val(); var Purity = $('#Purity').val(); var gold_Count = $('#gold_Count').val(); var gold_Weight = $('#gold_Weight').val(); var gold_Value = $('#gold_Value').val();
 
     if(cus_id_doc == ''){
         Swal.fire({
@@ -3560,53 +3756,14 @@ function doc_submit_validation() {
     }
 
 
-    if (gold_info == '') {
-        event.preventDefault();
-        $('#goldCheck').show();
-    } else {
-        $('#goldCheck').hide();
-    }
+    // if (gold_info == '') {
+    //     event.preventDefault();
+    //     $('#goldCheck').show();
+    // } else {
+    //     $('#goldCheck').hide();
+    // }
 
-    if (gold_info == '0') {
 
-        if (gold_sts == '') {
-            event.preventDefault();
-            $('#GoldstatusCheck').show();
-        } else {
-            $('#GoldstatusCheck').hide();
-        }
-        if (gold_type == '') {
-            event.preventDefault();
-            $('#GoldtypeCheck').show();
-        } else {
-            $('#GoldtypeCheck').hide();
-        }
-        if (Purity == '') {
-            event.preventDefault();
-            $('#purityCheck').show();
-        } else {
-            $('#purityCheck').hide();
-        }
-        if (gold_Count == '') {
-            event.preventDefault();
-            $('#goldCountCheck').show();
-        } else {
-            $('#goldCountCheck').hide();
-        }
-        if (gold_Weight == '') {
-            event.preventDefault();
-            $('#goldWeightCheck').show();
-        } else {
-            $('#goldWeightCheck').hide();
-        }
-        if (gold_Value == '') {
-            event.preventDefault();
-            $('#goldValueCheck').show();
-        } else {
-            $('#goldValueCheck').hide();
-        }
-
-    }
 
 
     if (document_name == '') {
