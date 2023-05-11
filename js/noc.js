@@ -67,6 +67,11 @@ $(document).ready(function(){
                     $('#compare_finger').val(response['fingerprint'])
                 }
             })
+        }else {
+            $('.mem_name').hide();
+            $('#mem_name').val('');
+            $('.mem_relation_name').hide();
+            $('#mem_relation_name').empty();
         }
     })
 
@@ -126,83 +131,105 @@ function OnLoadFunctions(req_id,cus_id){
 
                 var req_id = $(this).attr('data-value');
                 $('#req_id').val(req_id) //assigning to req_id input box for getching noc members
-
+                
+                //To get the Signed Document List on Checklist
+                const cus_name = $('#cus_name').val();
                 $.ajax({
-                    url:'nocFile/getAllList.php',
-                    data: {'req_id':req_id},
+                    url:'nocFile/getSignedDocList.php',
+                    data: {'req_id':req_id,'cus_name':cus_name},
                     type: 'post',
                     cache:false,
                     success: function(response){
-                        
+                        $('#signDocDiv').empty()
+                        $('#signDocDiv').html(response);
                     }
                 })
 
+                //To get the Signed Document List on Checklist
+                // $.ajax({
+                //     url:'nocFile/getChequeDocList.php',
+                //     data: {'req_id':req_id,'cus_name':cus_name},
+                //     type: 'post',
+                //     cache:false,
+                //     success: function(response){
+                //         $('#chequeDiv').empty()
+                //         $('#chequeDiv').html(response);
+                //     }
+                // })
+
+
                 $('.scanBtn').click(function(){
-                    $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
-                    $(this).attr('disabled',true);
+                    var mem_name = $('#mem_relation_name').val() != '' ? $('#mem_relation_name').val() : $('#mem_name').val();
 
-                    setTimeout(()=>{ //Set Timeout, because loadin animation will be intrupped by this capture event
-                        var quality = 60; //(1 to 100) (recommended minimum 55)
-                        var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
-                        var res = CaptureFinger(quality, timeout);
-                        if (res.httpStaus) {
-                            if (res.data.ErrorCode == "0") {
-                                $('#ack_fingerprint').val(res.data.AnsiTemplate); // Take ansi template that is the unique id which is passed by sensor
-                            }//Error codes and alerts below
-                            else if(res.data.ErrorCode == -1307){
-                                alert('Connect Your Device');
-                                $(this).removeAttr('disabled');
-                            }else if(res.data.ErrorCode == -1140 || res.data.ErrorCode == 700){
-                                alert('Timeout');
-                                $(this).removeAttr('disabled');
-                            }else if(res.data.ErrorCode == 720){
-                                alert('Reconnect Device');
-                                $(this).removeAttr('disabled');
-                            }else if(res.data.ErrorCode == 730){
-                                alert('Capture Finger Again');
-                                $(this).removeAttr('disabled');
-                            }else {
-                                alert('Error Code:' + res.data.ErrorCode);
-                                $(this).removeAttr('disabled');
-                            }
-                        }
-                        else {
-                            alert(res.err);
-                        }
-                        // Hide the loading animation and remove blur effect from the body
-                        $('.overlay').remove();
+                    if(mem_name != ''){
 
-                        //Verify the finger is matched with member name
-                        var compare_finger = $('#compare_finger').val()
-                        var ack_fingerprint = $('#ack_fingerprint').val()
-                        var res = VerifyFinger(compare_finger,ack_fingerprint)
-                        if(res.httpStaus){
-                            if(res.data.Status){
-                                Swal.fire({
-                                    title: 'Fingerprint Matching',
-                                    icon: 'success',
-                                    showConfirmButton: true,
-                                    confirmButtonColor: '#009688'
-                                });
-                            }else{
-                                if (res.data.ErrorCode != "0") {
-                                    alert(res.data.ErrorDescription);
-                                }
-                                else {
-                                    Swal.fire({
-                                        title: 'Fingerprint Not Matching',
-                                        icon: 'error',
-                                        showConfirmButton: true,
-                                        confirmButtonColor: '#009688'
-                                    });
+                        $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
+                        $(this).attr('disabled',true);
+    
+                        setTimeout(()=>{ //Set Timeout, because loadin animation will be intrupped by this capture event
+                            var quality = 60; //(1 to 100) (recommended minimum 55)
+                            var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
+                            var res = CaptureFinger(quality, timeout);
+                            if (res.httpStaus) {
+                                if (res.data.ErrorCode == "0") {
+                                    $('#ack_fingerprint').val(res.data.AnsiTemplate); // Take ansi template that is the unique id which is passed by sensor
+                                }//Error codes and alerts below
+                                else if(res.data.ErrorCode == -1307){
+                                    alert('Connect Your Device');
+                                    $(this).removeAttr('disabled');
+                                }else if(res.data.ErrorCode == -1140 || res.data.ErrorCode == 700){
+                                    alert('Timeout');
+                                    $(this).removeAttr('disabled');
+                                }else if(res.data.ErrorCode == 720){
+                                    alert('Reconnect Device');
+                                    $(this).removeAttr('disabled');
+                                }else if(res.data.ErrorCode == 730){
+                                    alert('Capture Finger Again');
+                                    $(this).removeAttr('disabled');
+                                }else {
+                                    alert('Error Code:' + res.data.ErrorCode);
                                     $(this).removeAttr('disabled');
                                 }
                             }
-                        }else{
-                            alert(res.err)
-                        }
+                            else {
+                                alert(res.err);
+                            }
+                            // Hide the loading animation and remove blur effect from the body
+                            $('.overlay').remove();
+    
+                            //Verify the finger is matched with member name
+                            var compare_finger = $('#compare_finger').val()
+                            var ack_fingerprint = $('#ack_fingerprint').val()
+                            var res = VerifyFinger(compare_finger,ack_fingerprint)
+                            if(res.httpStaus){
+                                if(res.data.Status){
+                                    Swal.fire({
+                                        title: 'Fingerprint Matching',
+                                        icon: 'success',
+                                        showConfirmButton: true,
+                                        confirmButtonColor: '#009688'
+                                    });
+                                }else{
+                                    if (res.data.ErrorCode != "0") {
+                                        alert(res.data.ErrorDescription);
+                                    }
+                                    else {
+                                        Swal.fire({
+                                            title: 'Fingerprint Not Matching',
+                                            icon: 'error',
+                                            showConfirmButton: true,
+                                            confirmButtonColor: '#009688'
+                                        });
+                                        $(this).removeAttr('disabled');
+                                    }
+                                }
+                            }else{
+                                alert(res.err)
+                            }
+    
+                        },700) //Timeout End
 
-                    },700) //Timeout End
+                    }//If End
 
                 })//Scan button Onclick end
 

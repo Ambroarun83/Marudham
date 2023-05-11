@@ -1,5 +1,0 @@
-<?php
-include('../ajaxconfig.php');
-
-
-?>

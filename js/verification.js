@@ -373,6 +373,7 @@ $(document).ready(function () {
 
         } else {
             $('#relation_doc').hide();
+            $("#signType_relationship").empty();
         }
     })
 

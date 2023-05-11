@@ -233,7 +233,7 @@ if (sizeof($getLoanList) > 0) {
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="row">
-									<h5 style='margin-left:18px;'>Signed Document List</h5>
+									<h5 style='margin-left:18px;margin-bottom:30px;'>Signed Document List</h5>
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='signDocDiv'>
 											<table class="table custom-table" id='signDocTable'>
@@ -259,7 +259,7 @@ if (sizeof($getLoanList) > 0) {
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="row">
-									<h5 style='margin-left:18px;'>Cheque List</h5>
+									<h5 style='margin-left:18px;margin-bottom:30px;'>Cheque List</h5>
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='chequeDiv'>
 											<table class="table custom-table" id='chequeTable'>
@@ -287,7 +287,7 @@ if (sizeof($getLoanList) > 0) {
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="row">
-									<h5 style='margin-left:18px;'>Mortgage List</h5>
+									<h5 style='margin-left:18px;margin-bottom:30px;'>Mortgage List</h5>
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='mortgageDiv'>
 											<table class="table custom-table" id='mortgageTable'>
@@ -311,7 +311,7 @@ if (sizeof($getLoanList) > 0) {
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="row">
-									<h5 style='margin-left:18px;'>Endorsement List</h5>
+									<h5 style='margin-left:18px;margin-bottom:30px;'>Endorsement List</h5>
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='endorsementDiv'>
 											<table class="table custom-table" id='endorsementTable'>
@@ -335,7 +335,7 @@ if (sizeof($getLoanList) > 0) {
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="row">
-									<h5 style='margin-left:18px;'>Gold List</h5>
+									<h5 style='margin-left:18px;margin-bottom:30px;'>Gold List</h5>
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='goldDiv'>
 											<table class="table custom-table" id='goldTable'>
@@ -363,7 +363,7 @@ if (sizeof($getLoanList) > 0) {
 						<div class="row">
 							<div class="col-md-12 ">
 								<div class="row">
-									<h5 style='margin-left:18px;'>Document List</h5>
+									<h5 style='margin-left:18px;margin-bottom:30px;'>Document List</h5>
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='documentDiv'>
 											<table class="table custom-table" id='documentTable'>

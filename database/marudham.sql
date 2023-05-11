@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 10, 2023 at 02:22 PM
+-- Generation Time: May 11, 2023 at 03:07 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -673,6 +673,31 @@ INSERT INTO `cheque_upd` (`id`, `req_id`, `cheque_table_id`, `upload_cheque_name
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `closed_status`
+--
+
+CREATE TABLE `closed_status` (
+  `id` int(11) NOT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
+  `closed_sts` varchar(50) DEFAULT NULL,
+  `consider_level` varchar(50) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `cus_sts` varchar(50) DEFAULT NULL,
+  `insert_login_id` varchar(100) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `closed_status`
+--
+
+INSERT INTO `closed_status` (`id`, `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`, `cus_sts`, `insert_login_id`, `created_date`) VALUES
+(1, '18', '945454646565', '1', '5', 'Ok', NULL, NULL, '2023-05-11 18:33:37');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `collection`
 --
 
@@ -703,7 +728,7 @@ CREATE TABLE `collection` (
   `trans_id` varchar(255) DEFAULT NULL,
   `trans_date` date DEFAULT NULL,
   `coll_location` varchar(255) DEFAULT NULL,
-  `coll_date` date DEFAULT current_timestamp(),
+  `coll_date` datetime DEFAULT current_timestamp(),
   `due_amt_track` varchar(255) NOT NULL DEFAULT '0',
   `penalty_track` varchar(255) NOT NULL DEFAULT '0',
   `coll_charge_track` varchar(255) NOT NULL DEFAULT '0',
@@ -724,13 +749,13 @@ CREATE TABLE `collection` (
 --
 
 INSERT INTO `collection` (`coll_id`, `coll_code`, `req_id`, `cus_id`, `cus_name`, `branch`, `area`, `sub_area`, `line`, `loan_category`, `sub_category`, `coll_status`, `coll_sub_status`, `tot_amt`, `paid_amt`, `bal_amt`, `due_amt`, `pending_amt`, `payable_amt`, `penalty`, `coll_charge`, `coll_mode`, `cheque_no`, `trans_id`, `trans_date`, `coll_location`, `coll_date`, `due_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, `total_waiver`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(13, 'COL-101', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Current', '23921', '0', '23921', '2657', '2657', '5314', '53', '100', '1', '', '', '0000-00-00', '1', '2023-05-04', '', '53', '', '53', '', '', '', '', '1', NULL, NULL, '2023-05-04 16:21:49', '2023-05-04 16:21:49'),
-(22, 'COL-102', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '0', '45000', '450', '13500', '13950', '311', '200', '1', '', '', '0000-00-00', '1', '2023-05-05', '', '0', '', '0', '', '311', '', '311', '1', NULL, NULL, '2023-05-05 11:41:57', '2023-05-05 11:41:57'),
-(23, 'COL-103', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '0', '45000', '450', '13500', '13950', '0', '200', '1', '', '', '0000-00-00', '1', '2023-05-06', '450', '', '', '450', '', '', '', '', '1', NULL, NULL, '2023-05-05 11:52:01', '2023-05-05 11:52:01'),
-(24, 'COL-104', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '450', '44550', '450', '13050', '13500', '0', '200', '1', '', '', '0000-00-00', '1', '2023-05-05', '', '', '', '0', '', '', '200', '200', '1', NULL, NULL, '2023-05-05 15:15:02', '2023-05-05 15:15:02'),
-(25, 'COL-105', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Pending', '23921', '0', '23921', '2657', '2657', '2657', '0', '0', '2', '4', '94654546', '2023-05-06', '3', '2023-05-07', '2657', '', '', '2657', '', '', '', '', '1', NULL, NULL, '2023-05-06 10:09:53', '2023-05-06 10:09:53'),
-(26, 'COL-106', '20', '105806052023', 'Rakesh', '2', '1', '3', '2', '5', 'Mobile', 'Present', 'Pending', '20000', '0', '20000', '2000', '2000', '2000', '0', '0', '1', '', '', '0000-00-00', '1', '2023-05-06', '', '', '', '0', '2000', '', '', '2000', '1', NULL, NULL, '2023-05-06 12:47:43', '2023-05-06 12:47:43'),
-(28, 'COL-107', '18', '945454646565', 'Praveen', '1', '6', '11', '3', '2', 'Business', 'Present', 'Pending', '45000', '0', '45000', '450', '2250', '2700', '54', '0', '1', '', '', '0000-00-00', '2', '2023-05-10', '45000', '', '', '45000', '', '54', '', '54', '1', NULL, NULL, '2023-05-10 12:34:39', '2023-05-10 12:34:39');
+(13, 'COL-101', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Current', '23921', '0', '23921', '2657', '2657', '5314', '53', '100', '1', '', '', '0000-00-00', '1', '2023-05-04 00:00:00', '', '53', '', '53', '', '', '', '', '1', NULL, NULL, '2023-05-04 16:21:49', '2023-05-04 16:21:49'),
+(22, 'COL-102', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '0', '45000', '450', '13500', '13950', '311', '200', '1', '', '', '0000-00-00', '1', '2023-05-05 00:00:00', '', '0', '', '0', '', '311', '', '311', '1', NULL, NULL, '2023-05-05 11:41:57', '2023-05-05 11:41:57'),
+(23, 'COL-103', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '0', '45000', '450', '13500', '13950', '0', '200', '1', '', '', '0000-00-00', '1', '2023-05-06 00:00:00', '450', '', '', '450', '', '', '', '', '1', NULL, NULL, '2023-05-05 11:52:01', '2023-05-05 11:52:01'),
+(24, 'COL-104', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '450', '44550', '450', '13050', '13500', '0', '200', '1', '', '', '0000-00-00', '1', '2023-05-05 00:00:00', '', '', '', '0', '', '', '200', '200', '1', NULL, NULL, '2023-05-05 15:15:02', '2023-05-05 15:15:02'),
+(25, 'COL-105', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Pending', '23921', '0', '23921', '2657', '2657', '2657', '0', '0', '2', '4', '94654546', '2023-05-06', '3', '2023-05-07 00:00:00', '2657', '', '', '2657', '', '', '', '', '1', NULL, NULL, '2023-05-06 10:09:53', '2023-05-06 10:09:53'),
+(26, 'COL-106', '20', '105806052023', 'Rakesh', '2', '1', '3', '2', '5', 'Mobile', 'Present', 'Pending', '20000', '0', '20000', '2000', '2000', '2000', '0', '0', '1', '', '', '0000-00-00', '1', '2023-05-06 00:00:00', '', '', '', '0', '2000', '', '', '2000', '1', NULL, NULL, '2023-05-06 12:47:43', '2023-05-06 12:47:43'),
+(28, 'COL-107', '18', '945454646565', 'Praveen', '1', '6', '11', '3', '2', 'Business', 'Present', 'Pending', '45000', '0', '45000', '450', '2250', '2700', '54', '0', '1', '', '', '0000-00-00', '2', '2023-05-10 00:00:00', '45000', '', '', '45000', '', '54', '', '54', '1', NULL, NULL, '2023-05-10 12:34:39', '2023-05-10 12:34:39');
 
 -- --------------------------------------------------------
 
@@ -1059,8 +1084,26 @@ CREATE TABLE `fingerprints` (
 --
 
 INSERT INTO `fingerprints` (`id`, `adhar_num`, `name`, `hand`, `ansi_template`, `bitmap_data`, `insert_user_id`, `update_user_id`, `created_date`, `updated_date`) VALUES
-(1, '646546546546', 'Rajesh', '2', 'Rk1SACAyMAAA7AA1AA0AAAE8AWIAxQDFAQAAACgiQHoA82IAQHUBCwoAQIoBHAQAQFMBE2wAQD0A3WsAQI4AmU8AgGIBQncAQC4AsW4AQK8BVmQAgBoAxhQAgBYAtBQAQO4BSVIAQIsA+mUAQGMA+wgAQLcA41QAQL4BDKwAQHMAn6sAQNMAzlIAQKIBS7IAgLIBTlsAQPIBFLAAgCwAng0AgMYAgU4AQIoA1FcAQKUBCV4AgIEAtlIAQI8Ap1IAgDUA1A0AgDIBFGcAQLwBPloAQD8AmWYAQNMBQqwAQPABH1QAQE8AbFcAAAA=', NULL, '1', '1', '2023-05-10 17:29:36', '2023-05-10 17:34:52'),
-(2, '65465654654', 'Kumar', '1', 'Rk1SACAyMAABlAA1AA0AAAE8AWIAxQDFAQAAACg+QIYAvmoAQLkAxAsAQHoAoWkAQIUBA3AAQFUAxGwAQIkBDgwAQK4BEZQAgKsAgGgAgOEAlq8AQEMAlWgAQN0BE48AQPQA/JQAQC4AoQ4AQIsBQxwAgEIAdg8AQBgA22MAQHABTY8AQNoBSoIAQQYAb64AQJEALhQAQHIAGHEAQHEA1m4AgKkA864AgMIAumcAQJ8BBWUAQNMA2qIAgFEAumwAQMMBBpYAgEEAyxMAQFEBE3YAQKIBM3gAQL4AcQsAgHMBMhwAgGYBOIYAQFsAZWkAQC8Ah2cAQE0BOn8AgNkAXAoAgKwBW3MAgOABTYcAQGIAKhYAQIIADxcAQHUA3xAAgI4A+ggAgLQAogkAQIcAkQ0AgJ0BDqQAgNgAtqwAgIcBGXMAgJsBJncAQF0BHRkAQEgBDXMAQO8AolsAgHkAYw8AgKwBQ3UAQC0BCBgAgMwBPH8AQO4AcWMAQLwARQgAQMkAR2EAQP4BPI0AQPAAPA8AAAA=', NULL, '1', NULL, '2023-05-10 17:34:52', '2023-05-10 17:34:52');
+(1, '894454545465', 'Anto', '2', 'Rk1SACAyMAAA7AA1AA0AAAE8AWIAxQDFAQAAACgiQHoA82IAQHUBCwoAQIoBHAQAQFMBE2wAQD0A3WsAQI4AmU8AgGIBQncAQC4AsW4AQK8BVmQAgBoAxhQAgBYAtBQAQO4BSVIAQIsA+mUAQGMA+wgAQLcA41QAQL4BDKwAQHMAn6sAQNMAzlIAQKIBS7IAgLIBTlsAQPIBFLAAgCwAng0AgMYAgU4AQIoA1FcAQKUBCV4AgIEAtlIAQI8Ap1IAgDUA1A0AgDIBFGcAQLwBPloAQD8AmWYAQNMBQqwAQPABH1QAQE8AbFcAAAA=', NULL, '1', '1', '2023-05-10 17:29:36', '2023-05-10 17:34:52'),
+(2, '945454646565', 'Praveen', '1', 'Rk1SACAyMAABlAA1AA0AAAE8AWIAxQDFAQAAACg+QIYAvmoAQLkAxAsAQHoAoWkAQIUBA3AAQFUAxGwAQIkBDgwAQK4BEZQAgKsAgGgAgOEAlq8AQEMAlWgAQN0BE48AQPQA/JQAQC4AoQ4AQIsBQxwAgEIAdg8AQBgA22MAQHABTY8AQNoBSoIAQQYAb64AQJEALhQAQHIAGHEAQHEA1m4AgKkA864AgMIAumcAQJ8BBWUAQNMA2qIAgFEAumwAQMMBBpYAgEEAyxMAQFEBE3YAQKIBM3gAQL4AcQsAgHMBMhwAgGYBOIYAQFsAZWkAQC8Ah2cAQE0BOn8AgNkAXAoAgKwBW3MAgOABTYcAQGIAKhYAQIIADxcAQHUA3xAAgI4A+ggAgLQAogkAQIcAkQ0AgJ0BDqQAgNgAtqwAgIcBGXMAgJsBJncAQF0BHRkAQEgBDXMAQO8AolsAgHkAYw8AgKwBQ3UAQC0BCBgAgMwBPH8AQO4AcWMAQLwARQgAQMkAR2EAQP4BPI0AQPAAPA8AAAA=', NULL, '1', NULL, '2023-05-10 17:34:52', '2023-05-10 17:34:52'),
+(3, '874554548745', 'Arun', '1', 'Rk1SACAyMAABLgA1AA0AAAE8AWIAxQDFAQAAACgtQGQA2KoAQEcAzAsAgIABC5cAgGEAlgMAQFIBGpoAQD0BJXkAQC0BIBQAgKkBK5QAQFABP4AAgLoAfKoAQNYAo00AgF8BUH8AQDQBUSUAQD8ASmUAQGgAORAAQGIAtrMAgJEA75sAQHMAmmAAQLMAz54AQD4BEW4AgMsAwaQAQGoAbmcAQDwAdQ8AgCoBLX8AQJUBQY0AQFcAXw4AgLkBO5kAgCEBSyYAQDMASAsAQBoBVosAgEwAvmwAQGEBCJ4AgEIA/QIAQDcAqRAAgLAAoKgAQH0BNokAQCQAiW4AgD4BNoAAQIsBQ4sAQIQAZbAAgKMAZ1UAQKEBSZMAQKUAUawAQJIAQAQAQOIAWVEAAAA=', NULL, '1', NULL, '2023-05-11 13:20:59', '2023-05-11 13:24:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gold_info`
+--
+
+CREATE TABLE `gold_info` (
+  `id` int(11) DEFAULT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `gold_sts` varchar(255) DEFAULT NULL,
+  `gold_type` varchar(255) DEFAULT NULL,
+  `Purity` varchar(255) DEFAULT NULL,
+  `gold_Count` varchar(255) DEFAULT NULL,
+  `gold_Weight` varchar(255) DEFAULT NULL,
+  `gold_Value` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -1146,7 +1189,7 @@ CREATE TABLE `in_issue` (
 --
 
 INSERT INTO `in_issue` (`id`, `req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, '18', '945454646565', '20', '0', '1', '1', NULL, '2023-04-28 17:19:16', '2023-05-10 12:34:39'),
+(1, '18', '945454646565', '21', '0', '1', '1', NULL, '2023-04-28 17:19:16', '2023-05-10 12:34:39'),
 (5, '15', '546546546465', '13', '0', '1', NULL, NULL, '2023-04-29 16:02:28', NULL),
 (6, '11', '123456789101', '14', '0', '1', '1', NULL, '2023-04-29 16:06:26', '2023-04-30 13:11:49'),
 (7, '10', '123456789101', '14', '0', '1', '1', NULL, '2023-05-01 11:04:42', '2023-05-05 18:49:21'),
@@ -1525,6 +1568,20 @@ INSERT INTO `loan_scheme` (`scheme_id`, `scheme_name`, `short_name`, `loan_categ
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `loan_summary_feedback`
+--
+
+CREATE TABLE `loan_summary_feedback` (
+  `id` int(11) NOT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `feedback_label` varchar(255) DEFAULT NULL,
+  `cus_feedback` varchar(255) DEFAULT NULL,
+  `feedback_remark` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `penalty_charges`
 --
 
@@ -1757,7 +1814,7 @@ CREATE TABLE `signed_doc_info` (
 INSERT INTO `signed_doc_info` (`id`, `doc_name`, `sign_type`, `signType_relationship`, `doc_Count`, `req_id`, `cus_profile_id`) VALUES
 (2, '1', '3', '4', '5', '2', '2'),
 (5, '2', '3', '3', '6', '2', '2'),
-(6, '1', '2', '1', '3', '3', '4'),
+(6, '1', '2', NULL, '3', '3', '4'),
 (7, '1', '1', '', '2', '17', '7'),
 (8, '2', '1', '', '2', '18', '4'),
 (9, '1', '1', '', '1', '15', '8'),
@@ -1765,7 +1822,8 @@ INSERT INTO `signed_doc_info` (`id`, `doc_name`, `sign_type`, `signType_relation
 (11, '0', '0', '', '2', '11', '12'),
 (12, '1', '1', '', '1', '20', '14'),
 (13, '0', '2', '', '1', '20', '14'),
-(14, '0', '0', '', '1', '14', '15');
+(14, '0', '0', '', '1', '14', '15'),
+(16, '1', '2', '', '1', '4', '');
 
 -- --------------------------------------------------------
 
@@ -2412,6 +2470,12 @@ ALTER TABLE `cheque_upd`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `closed_status`
+--
+ALTER TABLE `closed_status`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `collection`
 --
 ALTER TABLE `collection`
@@ -2524,6 +2588,12 @@ ALTER TABLE `loan_issue`
 --
 ALTER TABLE `loan_scheme`
   ADD PRIMARY KEY (`scheme_id`);
+
+--
+-- Indexes for table `loan_summary_feedback`
+--
+ALTER TABLE `loan_summary_feedback`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `purpose`
@@ -2735,6 +2805,12 @@ ALTER TABLE `cheque_upd`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
+-- AUTO_INCREMENT for table `closed_status`
+--
+ALTER TABLE `closed_status`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
@@ -2786,7 +2862,7 @@ ALTER TABLE `doc_mapping`
 -- AUTO_INCREMENT for table `fingerprints`
 --
 ALTER TABLE `fingerprints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `in_acknowledgement`
@@ -2843,6 +2919,12 @@ ALTER TABLE `loan_scheme`
   MODIFY `scheme_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `loan_summary_feedback`
+--
+ALTER TABLE `loan_summary_feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `purpose`
 --
 ALTER TABLE `purpose`
@@ -2870,7 +2952,7 @@ ALTER TABLE `signed_doc`
 -- AUTO_INCREMENT for table `signed_doc_info`
 --
 ALTER TABLE `signed_doc_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `staff_creation`
