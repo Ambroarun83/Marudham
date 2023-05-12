@@ -810,6 +810,10 @@ if($current_page == 'noc') { ?>
     <?php }
 
 //Closed
+if($current_page == 'edit_closed') { ?>
+    <script src="js/edit_closed.js"></script>
+    <?php }
+
 if($current_page == 'closed') { ?>
     <script src="js/closed.js"></script>
     <?php }
