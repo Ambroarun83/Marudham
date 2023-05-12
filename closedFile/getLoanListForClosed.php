@@ -24,47 +24,56 @@ if(isset($_POST["bal_amt"])){
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-    .dropbtn {
-		color: white;
-		/* background-color: #009688; */
-		/* padding: 10px; */
-		font-size: 10px;
-		border: none;
-		cursor: pointer;
-	}
-	.dropdown {
-		position: relative;
-		display: inline-block;
-	}
-	.dropdown-content {
-		display: none;
-		position: absolute;
-		right: 0;
-		background-color: #F9F9F9;
-		min-width: 160px;
-		margin-top:-50px;
-		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		z-index: 1;
-	}
-	.dropdown-content a {
-		color: black;
-		padding: 10px 10px;
-		text-decoration: none;
-		display: block;
-	}
-	.dropdown-content a:hover {background-color: #fafafa;}
-	.dropdown:hover .dropdown-content {
-		display: block;
-	}
-	.dropdown:hover .dropbtn {
-		background-color: #3E8E41;
-	}
-    .btn-outline-secondary {
-        color: #383737;
-        border-color: #383737;
-        position: inherit;
-        left: -20px;
-    }
+.dropbtn {
+    color: white;
+    /* background-color: #009688; */
+    /* padding: 10px; */
+    font-size: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #F9F9F9;
+    min-width: 160px;
+    margin-top: -50px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 10px 10px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #fafafa;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3E8E41;
+}
+
+.btn-outline-secondary {
+    color: #383737;
+    border-color: #383737;
+    position: inherit;
+    left: -20px;
+}
 </style>
 <?php
 function moneyFormatIndia($num) {
@@ -116,24 +125,30 @@ function moneyFormatIndia($num) {
 
         $i = 1;
         while ($row = $run->fetch()) {
+            //Show NOC button until closed_status submit so we check the count of closed status against the request id.
+            $ii_req_id = $row["req_id"];
+            $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
+            $closed_cnt = $closedSts->rowCount();
+            
         ?>
-            <tr>
-                <td><?php echo $i; ?></td> <!-- id -->
-                <td><?php echo $row["loan_catrgory_name"]; ?></td> <!-- Loan Cat -->
-                <td><?php echo $row["sub_category"]; ?></td> <!-- Loan Sub Cat -->
-                <td>
-                    <?php 
+        <tr>
+            <td><?php echo $i; ?></td> <!-- id -->
+            <td><?php echo $row["loan_catrgory_name"]; ?></td> <!-- Loan Cat -->
+            <td><?php echo $row["sub_category"]; ?></td> <!-- Loan Sub Cat -->
+            <td>
+                <?php 
                         if($row["agent_id"] != '' || $row["agent_id"] != NULL){
                             $run1 = $connect->query('SELECT ag_name from agent_creation where ag_id = "'.$row['agent_id'].'" ');
                             echo $run1->fetch()['ag_name'];
                         } 
                         ?>
-                </td> <!-- Agent -->
-                <td><?php echo date('d-m-Y',strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
-                <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td> <!-- Loan Amount -->
-                <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td> <!-- Balance Amount -->
-                <td><?php if($row['cus_status'] < 20){echo 'Present';}else if($row['cus_status'] >= 20){ echo 'Closed';} ?></td>  <!-- Status -->
-                <td><?php if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
+            </td> <!-- Agent -->
+            <td><?php echo date('d-m-Y',strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
+            <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td> <!-- Loan Amount -->
+            <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td> <!-- Balance Amount -->
+            <td><?php if($row['cus_status'] < 20){echo 'Present';}else if($row['cus_status'] >= 20){ echo 'Closed';} ?>
+            </td> <!-- Status -->
+            <td><?php if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
                             if($row['cus_status'] == '15'){
                                 echo 'Error';
                             }elseif($row['cus_status']== '16'){
@@ -170,36 +185,40 @@ function moneyFormatIndia($num) {
                                 }
                             }
                         } ?></td> <!-- Sub status -->
-                <td>
-                    <?php
-                    if($row['cus_status'] == '20'){
+            <td>
+                <?php
+                    if($closed_cnt== '0'){
+                    if($row['cus_status'] == '20'){ // 20 is collection completed.
                       echo  $action="<div class='dropdown' style='float:right;'><span class='btn btn-outline-secondary noc-window' style='background-color:#009688;' data-value='".$row['req_id']."'>  NOC </span></div>";
                     }
+                }else{
+                    
+                }
                     ?>
-                </td> <!-- Action -->
-            </tr>
+            </td> <!-- Action -->
+        </tr>
 
         <?php  $i++;} ?>
     </tbody>
 </table>
 
 <script type="text/javascript">
-    $(function() {
-        $('#loanListTable').DataTable({
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
+$(function() {
+    $('#loanListTable').DataTable({
+        'processing': true,
+        'iDisplayLength': 5,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find('td:first').html(dataIndex + 1);
+        },
+        "drawCallback": function(settings) {
+            this.api().column(0).nodes().each(function(cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        },
     });
+});
 </script>

@@ -4928,4 +4928,25 @@ function updateUser($mysqli,$id,$user_id){
 
 		}
 
+		//Closed
+		function addClosed($mysqli,$close_req_id,$userid){
+			if(isset($_POST['cus_id'])){
+				$cus_id = $_POST['cus_id'];
+			}
+			if(isset($_POST['closed_Sts'])){
+				$closed_Sts = $_POST['closed_Sts'];
+			}
+			$closed_Sts_consider = '';
+			if(isset($_POST['closed_Sts']) &&  $_POST['closed_Sts'] == '1'){ // If Status is Consider then level will store.
+				if(isset($_POST['closed_Sts_consider'])){
+					$closed_Sts_consider =  $_POST['closed_Sts_consider'];
+				}
+			}
+			if(isset($_POST['closed_Sts_remark'])){
+				$closed_Sts_remark = $_POST['closed_Sts_remark'];
+			}
+
+			$insertCloasedSts = $mysqli->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`) VALUES ('".strip_tags($close_req_id)."','".strip_tags($cus_id)."','".strip_tags($closed_Sts)."','".strip_tags($closed_Sts_consider)."','".strip_tags($closed_Sts_remark)."', '20','$userid' )");
+		}
+
 }//Class End

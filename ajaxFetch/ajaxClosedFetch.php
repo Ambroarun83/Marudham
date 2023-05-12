@@ -138,9 +138,20 @@ foreach ($result as $row) {
     
     $cus_id = $row['cp_cus_id'];
     $id          = $row['req_id'];
+// When in_issue and closed status count is equal then move to noc button will be shown. //if multiple request completed the collection means then complete closed for one time only so we check whether the request closed submit or not.. Move to Noc button wil not be show until all closed status submit.
+    $ii_cus_id          = $row['ii_cus_id'];
 
-    $action="<a href='closed&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>Close 
-    <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
+    $ii_count = $mysqli->query("SELECT * FROM `in_issue` WHERE `cus_status` = '20' && `cus_id`='".$ii_cus_id."' ");
+    $ii_cnt = mysqli_num_rows($ii_count);
+    $closed_sts_count = $mysqli->query("SELECT * FROM `closed_status` WHERE `cus_sts` ='20' && `cus_id`='".$ii_cus_id."'");
+    $close_cnt = mysqli_num_rows($closed_sts_count);
+
+    if($ii_cnt == $close_cnt){
+        $action="<button class='btn btn-outline-secondary Move_to_noc' value='$ii_cus_id'><span class = 'icon-arrow_forward'></span></button>";
+    }else{
+        $action="<a href='closed&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>Close </button></a>";
+    }
+
     
 
     $sub_array[] = $action;
