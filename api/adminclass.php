@@ -2309,7 +2309,8 @@ require 'PHPMailerAutoload.php';
         $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
-        `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,`insert_login_id`,`created_date`)
+        `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,
+		`collectionmodule`,`collection`,`collection_access`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
@@ -4915,7 +4916,10 @@ function updateUser($mysqli,$id,$user_id){
 
 			$check = intval($due_amt_track) + intval($pre_close_waiver) - intval($bal_amt);
 
-			if($check == 0){
+			$penalty_check = intval($penalty_track) + intval($penalty_waiver) - intval($penalty);
+            $coll_charge_check = intval($coll_charge_track) + intval($coll_charge_waiver) - intval($coll_charge);
+
+			if($check == 0 && $penalty_check == 0 && $coll_charge_check == 0){
 				$cus_status = 20;
 				$selectIC = $mysqli->query("UPDATE request_creation set cus_status = $cus_status, update_login_id = $userid WHERE  req_id = '".$req_id."' ") or die('Error on Request Table');
                 // $selectIC = $mysqli->query("UPDATE customer_register set cus_status = 14 WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
@@ -4924,6 +4928,106 @@ function updateUser($mysqli,$id,$user_id){
                 $selectIC = $mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
                 $insertIssue = $mysqli->query("UPDATE `in_issue` SET `cus_status`= $cus_status,`updated_date`=current_timestamp,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
 
+			}
+
+		}
+
+		//Add NOC
+		function addNOC($mysqli,$req_id, $userid){
+			if(isset($_POST['cusidupd'])){
+				$cus_id = $_POST['cusidupd'];
+			}
+			if(isset($_POST['sign_checklist'])){
+				$sign_checklist_arr = array();
+				$sign_checklist = $_POST['sign_checklist'];
+				$sign_checklist_arr = explode(',',$_POST['sign_checklist']);
+			}
+			if(isset($_POST['cheque_checklist'])){
+				$cheque_checklist_arr = array();
+				$cheque_checklist = $_POST['cheque_checklist'];
+				$cheque_checklist_arr = explode(',',$_POST['cheque_checklist']);
+			}
+			if(isset($_POST['gold_checklist'])){
+				$gold_checklist_arr = array();
+				$gold_checklist = $_POST['gold_checklist'];
+				$gold_checklist_arr = explode(',',$_POST['gold_checklist']);
+			}
+			if(isset($_POST['mort_checklist'])){
+				$mort_checklist_arr = array();
+				$mort_checklist = $_POST['mort_checklist'];
+				$mort_checklist_arr = explode(',',$_POST['mort_checklist']);
+			}
+			if(isset($_POST['endorse_checklist'])){
+				$endorse_checklist_arr = array();
+				$endorse_checklist = $_POST['endorse_checklist'];
+				$endorse_checklist_arr = explode(',',$_POST['endorse_checklist']);
+			}
+			if(isset($_POST['doc_checklist'])){
+				$doc_checklist_arr = array();
+				$doc_checklist = $_POST['doc_checklist'];
+				$doc_checklist_arr = explode(',',$_POST['doc_checklist']);
+			}else{
+				$doc_checklist_arr = ['asdf'];
+			}
+			// print_r(count($doc_checklist_arr));die;
+			if(isset($_POST['noc_date'])){
+				$noc_date = date('Y-m-d',strtotime($_POST['noc_date']));
+			}
+			if(isset($_POST['noc_member'])){
+				$noc_member = $_POST['noc_member'];
+			}
+			if(isset($_POST['noc_member'])){
+				$noc_member = $_POST['noc_member'];
+			}
+
+			if($noc_member == '3'){
+				if(isset($_POST['mem_relation_name'])){
+					$mem_name = $_POST['mem_relation_name'];
+				}
+			}elseif($noc_member == '1' or $noc_member == '2'){
+				if(isset($_POST['mem_name'])){
+					$mem_name = $_POST['mem_name'];
+				}
+			}
+
+			$qry = $mysqli->query("INSERT INTO `noc`(`req_id`, `cus_id`, `sign_checklist`, `cheque_checklist`, `gold_checklist`, `mort_checklist`, `endorse_checklist`, 
+			`doc_checklist`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."',
+			'".strip_tags($sign_checklist)."','".strip_tags($cheque_checklist)."','".strip_tags($gold_checklist)."','".strip_tags($mort_checklist)."','".strip_tags($endorse_checklist)."',
+			'".strip_tags($doc_checklist)."','".strip_tags($noc_date)."','".strip_tags($noc_member)."','".strip_tags($mem_name)."','21',$userid,now()) ");
+
+			for($i=0;$i<sizeof($sign_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `signed_doc` SET `noc_given`='1' WHERE id = '".$sign_checklist_arr[$i]."' and req_id = $req_id ");
+			}
+			
+			for($i=0;$i<sizeof($cheque_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `cheque_no_list` SET `noc_given`='1' WHERE id = '".$cheque_checklist_arr[$i]."' and req_id = $req_id ");
+			}
+			
+			for($i=0;$i<sizeof($gold_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `gold_info` SET `noc_given`='1' WHERE id = '".$gold_checklist_arr[$i]."' and req_id = $req_id ");
+			}
+			
+			for($i=0;$i<sizeof($mort_checklist_arr);$i++){
+
+				if($mort_checklist_arr[$i] == 'Mortgage Process noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_process_noc`='1' WHERE req_id = '".$req_id."' ");
+				}elseif($mort_checklist_arr[$i] == 'Mortgage Document noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_document_noc`='1' WHERE req_id = '".$req_id."' ");
+				}
+			}
+
+			for($i=0;$i<sizeof($endorse_checklist_arr);$i++){
+				if($endorse_checklist_arr[$i] == 'Endorsement Process noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `endorsement_process_noc`='1' WHERE req_id = '".$req_id."' ");
+				}elseif($endorse_checklist_arr[$i] == 'RC noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_RC_noc`='1' WHERE req_id = '".$req_id."' ");
+				}elseif($endorse_checklist_arr[$i] == 'Key noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_Key_noc`='1' WHERE req_id = '".$req_id."' ");
+				}
+			}
+			
+			if($doc_checklist_arr[0] != ''){
+				$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `doc_info_upload_noc`='1' WHERE req_id = '".$req_id."' ");
 			}
 
 		}

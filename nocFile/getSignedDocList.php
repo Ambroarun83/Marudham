@@ -31,7 +31,7 @@ function getGuarentorName($con,$req_id){
     </thead>
     <tbody>
         <?php
-        $qry = $con->query("SELECT a.doc_name,a.sign_type,a.signType_relationship,b.id,b.upload_doc_name FROM `signed_doc_info` a join signed_doc b on a.id = b.signed_doc_id  where b.req_id = $req_id");
+        $qry = $con->query("SELECT a.doc_name,a.sign_type,a.signType_relationship,b.id,b.upload_doc_name,b.noc_given FROM `signed_doc_info` a join signed_doc b on a.id = b.signed_doc_id  where b.req_id = $req_id and b.used_status != '1' ");
         while($row = $qry->fetch_assoc()){
             $rel_id = $row['signType_relationship'];
             $name ='';
@@ -43,7 +43,7 @@ function getGuarentorName($con,$req_id){
                             elseif($row['sign_type'] == '2'){echo 'Combined';}elseif($row['sign_type'] == '3'){echo 'Family Member'; $name = getfamName($con,$rel_id);} ?></td>
                 <td><?php echo $name;?></td>
                 <td><a href='<?php echo 'uploads/verification/signed_doc/'.$row['upload_doc_name'];?>' target="_blank"><?php echo $row['upload_doc_name'];?></a></td>
-                <td><input type='checkbox' id='sign_check' name='sign_check' class="form-control sign_check" data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'></td>
+                <td><input type='checkbox' id='sign_check' name='sign_check' class="form-control sign_check" <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'></td>
             </tr>
         <?php
         }
