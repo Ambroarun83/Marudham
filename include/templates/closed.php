@@ -5,14 +5,13 @@ if(isset($_SESSION['userid'])){
 }
 
 
-if(isset($_POST['submit_collection']) && $_POST['submit_collection'] != ''){
-	if(isset($_POST['req_id'])){$req_id = $_POST['req_id'];}
-	if(isset($_POST['collection_id'])){$coll_id = $_POST['collection_id'];}
+if(isset($_POST['submit_closed']) && $_POST['submit_closed'] != ''){
+	if(isset($_POST['noc_req_id'])){$close_req_id = $_POST['noc_req_id'];}
 
-	$addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
+	$addCollection = $userObj->addClosed($mysqli,$close_req_id,$userid);
 	
 ?>
-	<script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1&id=<?php echo $coll_id ?>';</script>
+	<script>location.href='<?php echo $HOSTPATH; ?>edit_closed&msc=1';</script>
 <?php
 }
 
@@ -40,9 +39,6 @@ if($idupd>0)
 			$mobile1					= $getLoanList['mobile1'];
 			$cus_pic					= $getLoanList['cus_pic'];
 	}
-
-	$getuser = $userObj->getuser($mysqli,$userid);
-	$collection_access = $getuser['collection_access'];
 }
 
 ?>
@@ -225,57 +221,22 @@ if($idupd>0)
 				<div class="card datachecking_card">
 					<div class="card-header"> Data Checking <span style="font-weight:bold" class=""></span></div>
 					<div class="card-body">
-
-						<div id="cus_check"> 
+						<div id="guarentor_checkDiv"> 
                         <table class="table custom-table " id="cus_garuentor_datacheck">
    						 <thead>
-       					 <tr>
-        			    <th>S.No</th>
-						<th>Customer ID</th>
-						<th>Custommer Name</th>            
-						<th>Mobile Number</th>
-						</tr>
+							<tr>
+								<th>S.No</th>
+								<th>Customer ID</th>
+								<th>Custommer Name</th>            
+								<th>Mobile Number</th>
+								<th>Guarentor Name</th>
+								<th>Status</th>
+								<th>Sub Status</th>
+							</tr>
 						</thead>
-						<tbody>
-								<?php
-								if (isset($cusidupd)){
-									$cusidupd;
-								}
-								
-								// if(isset($_POST['category'])){
-								// $category = $_POST['category'];
-								// if($category == '0'){ $category = "customer_name"; $category1 ="customer_name";}
-								// if($category == '1'){ $category = "cus_id"; $category1 = 'cus_id';}
-								// if($category == '2'){ $category = "mobile1"; $category1 = 'mobile2';}
-								// }
-								// if(isset($_POST['name'])){
-								// $name = $_POST['name'];
-								// }
-								// if(isset($_POST['req_id'])){
-								// $req_id = $_POST['req_id'];
-								// }
-
-								// $cusInfo = $connect->query("SELECT cus_id,customer_name,mobile1 FROM `customer_register` where ($category = '".strip_tags($name)."' or $category1 = '".strip_tags($name)."') && req_ref_id != '".strip_tags($req_id)."' order by cus_reg_id desc");
-
-								// $i = 1;
-								// while ($cus = $cusInfo->fetch()) {
-								?>
-									<tr>
-										<td> <?php // echo $i++; ?></td>
-										<td> <?php //echo $cus['cus_id']; ?></td>
-										<td> <?php // echo $cus['customer_name']; ?></td>
-										<td> <?php //echo $cus['mobile1']; ?></td>
-									</tr>
-								<?php
-								// }
-								?>
-							</tbody>
+						<tbody> </tbody>
 						</table>
                         </div></br>
-
-						<div id="cus_check"></div></br>
-						<div id="fam_check"></div></br>
-						<div id="group_check"></div>
 					</div>
 				</div>
 				<!-- Data Checking END -->
@@ -313,7 +274,8 @@ if($idupd>0)
                        <hr>
                        <div class="row">
 							<div class="col-12">
-						     <button type="button" class="btn btn-primary" id="add_cus_label" name="add_cus_label" data-toggle="modal" data-target=".addCusLabel" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
+							 <h5> Loan summary </h5>
+						     <button type="button" class="btn btn-primary" id="add_cus_label" name="add_cus_label" data-toggle="modal" data-target=".addloansummary" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
                           </div> 
 						</div> <br>
 
@@ -344,32 +306,35 @@ if($idupd>0)
                             <div class="form-group">
 							<label for="branch"> Closed Status  </label>
 							 <select type="text" class="form-control" name="closed_Sts" id="closed_Sts" >
-                             <option value=""> Select Status </option> 
+                             <option value=""> Select Closed Status </option> 
                              <option value="1"> Consider </option> 
                              <option value="2"> Waiting List </option> 
                              <option value="3"> Block List </option> 
                             </select>
+							<span class="text-danger" id="closedStatusCheck" style="display:none;"> Select Closed Status </span>
 							</div>
 						  </div>
 
-                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="considerlevel">
                             <div class="form-group">
 							<label for="branch"> Consider Level </label>
 							 <select type="text" class="form-control" name="closed_Sts_consider" id="closed_Sts_consider" >
-                             <option value=""> Select Consider </option> 
+                             <option value=""> Select Consider Level </option> 
                              <option value="1"> Bronze </option> 
                              <option value="2"> Silver </option> 
                              <option value="3"> Gold </option> 
                              <option value="4"> Platinum </option> 
                              <option value="5"> Diamond </option> 
                             </select>
+							<span class="text-danger" id="considerLevelCheck" style="display:none;"> Select Consider Level </span>
 							</div>
 						  </div>
 
                           <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                             <div class="form-group">
 							<label for="remark"> Remark  </label>
-							 <input type="text" class="form-control" name="closed_Sts_remark" id="closed_Sts_remark" >
+							 <textarea type="text" class="form-control" name="closed_Sts_remark" id="closed_Sts_remark" ></textarea>
+							 <span class="text-danger" id="remarkCheck" style="display:none;"> Enter Remark </span>
 							</div>
 						  </div>
 
@@ -381,7 +346,7 @@ if($idupd>0)
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_noc" id="submit_noc" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="submit" name="submit_closed" id="submit_closed" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
 						<!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
 					</div>
 				</div>
@@ -512,12 +477,12 @@ if($idupd>0)
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Collection Charges Chart Modal END ////////////////////////////////////////////////////////////////////// -->
-<!-- Add Customer Label Modal  START -->
-<div class="modal fade addCusLabel" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!-- Add Loan Summary Modal START -->
+<div class="modal fade addloansummary" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Customer Feedback </h5>
+				<h5 class="modal-title" id="myLargeModalLabel"> Add Loan Summary </h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="feedbackList()">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -555,7 +520,7 @@ if($idupd>0)
 					
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="feedback "> Feedback </label> <span class="required">&nbsp;*</span>
+							<label for="feedback "> Feedback Rating </label> <span class="required">&nbsp;*</span>
 							<select type="text" class="form-control" id="cus_feedback" name="cus_feedback">
 								<option value=""> Select Feedback </option>
 								<option value="1"> Bad </option>
@@ -571,7 +536,7 @@ if($idupd>0)
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
 					<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12">
 						<div class="form-group">
-							<label for="feedback_remark"> Remarks </label>
+							<label for="feedback_remark"> Remark </label>
 							<textarea class="form-control" name="feedback_remark" id="feedback_remark"></textarea>
 						</div>
 					</div>
@@ -607,4 +572,4 @@ if($idupd>0)
 		</div>
 	</div>
 </div>
-<!-- END  Add Customer Label Info Modal -->
+<!-- END  Add Loan Summary Modal -->

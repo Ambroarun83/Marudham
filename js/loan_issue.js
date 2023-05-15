@@ -421,7 +421,11 @@ function checkBalance(){
             if(response['rowCnt'] > '0'){
                 $('#net_cash').val(response['balance_amount']);
                 if(response['balance_amount'] == '0'){
+                    //Once Balance Zero then disabled all field.
                     $('#issued_mode').attr('disabled',true);
+                    $('#due_start_from').attr('disabled',true); 
+                    $('#cash_guarentor_name').attr('disabled',true);
+                    $('#submit_loanIssue').hide();
                 }
             }else{
                 var netcashamnt = parseInt($('#net_cash_cal').val());
