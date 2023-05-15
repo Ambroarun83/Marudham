@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 11, 2023 at 03:07 PM
+-- Generation Time: May 13, 2023 at 03:45 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -172,6 +172,7 @@ CREATE TABLE `acknowlegement_documentation` (
   `cus_profile_id` varchar(255) DEFAULT NULL,
   `doc_id` varchar(255) DEFAULT NULL,
   `mortgage_process` varchar(100) DEFAULT NULL,
+  `mortgage_process_noc` varchar(10) NOT NULL DEFAULT '0',
   `Propertyholder_type` varchar(100) DEFAULT NULL,
   `Propertyholder_name` varchar(255) DEFAULT NULL,
   `Propertyholder_relationship_name` varchar(100) DEFAULT NULL,
@@ -186,9 +187,12 @@ CREATE TABLE `acknowlegement_documentation` (
   `reg_office` varchar(255) DEFAULT NULL,
   `mortgage_value` varchar(255) DEFAULT NULL,
   `mortgage_document` varchar(255) DEFAULT NULL,
+  `mortgage_document_noc` varchar(10) NOT NULL DEFAULT '0',
+  `mortgage_document_used` varchar(10) NOT NULL DEFAULT '0',
   `mortgage_document_upd` varchar(255) DEFAULT NULL,
   `mortgage_document_pending` varchar(150) DEFAULT NULL,
   `endorsement_process` varchar(50) DEFAULT NULL,
+  `endorsement_process_noc` varchar(10) NOT NULL DEFAULT '0',
   `owner_type` varchar(100) DEFAULT NULL,
   `owner_name` varchar(200) DEFAULT NULL,
   `ownername_relationship_name` varchar(100) DEFAULT NULL,
@@ -200,9 +204,13 @@ CREATE TABLE `acknowlegement_documentation` (
   `vehicle_reg_no` varchar(150) DEFAULT NULL,
   `endorsement_name` varchar(255) DEFAULT NULL,
   `en_RC` varchar(50) DEFAULT NULL,
+  `en_RC_noc` varchar(10) NOT NULL DEFAULT '0',
+  `en_RC_used` varchar(10) NOT NULL DEFAULT '0',
   `Rc_document_upd` varchar(255) DEFAULT NULL,
   `Rc_document_pending` varchar(150) DEFAULT NULL,
   `en_Key` varchar(50) DEFAULT NULL,
+  `en_Key_noc` varchar(10) NOT NULL DEFAULT '0',
+  `en_Key_used` varchar(10) NOT NULL DEFAULT '0',
   `gold_info` varchar(50) DEFAULT NULL,
   `gold_sts` varchar(50) DEFAULT NULL,
   `gold_type` varchar(255) DEFAULT NULL,
@@ -214,6 +222,8 @@ CREATE TABLE `acknowlegement_documentation` (
   `document_details` varchar(255) DEFAULT NULL,
   `document_type` varchar(50) DEFAULT NULL,
   `doc_info_upload` varchar(255) DEFAULT NULL,
+  `doc_info_upload_noc` varchar(10) NOT NULL DEFAULT '0',
+  `doc_info_upload_used` varchar(10) NOT NULL DEFAULT '0',
   `document_holder` varchar(50) DEFAULT NULL,
   `docholder_name` varchar(255) DEFAULT NULL,
   `docholder_relationship_name` varchar(50) DEFAULT NULL,
@@ -224,7 +234,7 @@ CREATE TABLE `acknowlegement_documentation` (
   `insert_login_id` varchar(50) DEFAULT NULL,
   `update_login_id` varchar(50) DEFAULT NULL,
   `delete_login_id` varchar(50) DEFAULT NULL,
-  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `created_date` datetime NOT NULL,
   `updated_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -232,13 +242,13 @@ CREATE TABLE `acknowlegement_documentation` (
 -- Dumping data for table `acknowlegement_documentation`
 --
 
-INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `doc_info_upload`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `submitted`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(3, '18', '945454646565', 'Praveen', '4', 'DOC-102', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '1', '', '', '', '', '', '', 'Adhar', '123', '0', 'Invoice_4479904631.pdf,', '0', 'Praveen', '', 'NIL', '11', '0', '1', '28', '1', NULL, '2023-04-20 13:20:51', '2023-04-20 13:20:51'),
-(4, '17', '646546546546', 'Rajesh', '7', 'DOC-103', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '1', '', '', '', '', '', '', 'Adhar', '123', '0', '', '2', '', '30', 'Father', '11', '0', '1', '28', '1', NULL, '2023-04-20 17:30:15', '2023-04-20 17:30:15'),
-(5, '15', '546546546465', 'Kuppusamy', '8', 'DOC-104', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '1', '', '', '', '', '', '', 'House Document', 'House Document', '0', ',', '0', 'Kuppusamy', '', 'NIL', '11', '0', '1', '1', '1', NULL, '2023-04-28 16:36:15', '2023-04-28 16:36:15'),
-(6, '10', '123456789101', 'Triple H', '11', 'DOC-105', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '0', '0', 'TT', '24k', '2', '233', '54000', 'Adhar', '123', '0', 'loan_issue.sql,', '2', '', '34', 'Father', '11', '0', '1', '28', '1', NULL, '2023-04-28 16:42:03', '2023-04-28 16:42:03'),
-(7, '11', '123456789101', 'Triple H', '12', 'DOC-106', '0', '0', 'Triple H', '', 'NIL', 'Building', '1651', 'Chennai', '12345', 'gfgfddgh', 'gghd', '4654654', 'hfgh', '646545', '1', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '1', '', '', '', '', '', '', 'Adhar', '123', '1', ',', '1', 'Under taker', '', 'Brother', '11', '0', '1', '25', '1', NULL, '2023-04-29 15:43:43', '2023-04-29 15:43:43'),
-(9, '20', '105806052023', 'Rakesh', '14', 'DOC-108', '1', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '1', '', '', '', '', '', '', '', '', '', '', '', '', 'YES', '', '0', '0', 'Necklace', '24k', '1', '0.586g', '47500', 'DL', 'License', '0', 'rakesh.png,', '0', 'Rakesh', '', 'NIL', '11', '0', '1', '21', '28', NULL, '2023-05-06 11:10:41', '2023-05-06 11:10:41');
+INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `mortgage_process_noc`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_noc`, `mortgage_document_used`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `endorsement_process_noc`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `en_RC_noc`, `en_RC_used`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `en_Key_noc`, `en_Key_used`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `doc_info_upload`, `doc_info_upload_noc`, `doc_info_upload_used`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `submitted`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(3, '18', '945454646565', 'Praveen', '4', 'DOC-102', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', '1', '', '', '', '', '', '', 'Adhar', '123', '0', 'Invoice_4479904631.pdf', '0', '0', '0', 'Praveen', '', 'NIL', '11', '0', '1', '28', '1', NULL, '2023-04-20 13:20:51', '2023-04-20 13:20:51'),
+(4, '17', '646546546546', 'Rajesh', '7', 'DOC-103', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', '1', '', '', '', '', '', '', 'Adhar', '123', '0', '', '0', '0', '2', '', '30', 'Father', '11', '0', '1', '28', '1', NULL, '2023-04-20 17:30:15', '2023-04-20 17:30:15'),
+(5, '15', '546546546465', 'Kuppusamy', '8', 'DOC-104', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', '1', '', '', '', '', '', '', 'House Document', 'House Document', '0', ',', '0', '0', '0', 'Kuppusamy', '', 'NIL', '11', '0', '1', '1', '1', NULL, '2023-04-28 16:36:15', '2023-04-28 16:36:15'),
+(6, '10', '123456789101', 'Triple H', '11', 'DOC-105', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', '0', '0', 'TT', '24k', '2', '233', '54000', 'Adhar', '123', '0', 'loan_issue.sql', '0', '0', '2', '', '34', 'Father', '11', '0', '1', '28', '1', NULL, '2023-04-28 16:42:03', '2023-04-28 16:42:03'),
+(7, '11', '123456789101', 'Triple H', '12', 'DOC-106', '0', '0', '0', 'Triple H', '', 'NIL', 'Building', '1651', 'Chennai', '12345', 'gfgfddgh', 'gghd', '4654654', 'hfgh', '646545', '1', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', NULL, '0', '0', '', 'YES', NULL, '0', '0', '1', '', '', '', '', '', '', 'Adhar', '123', '1', ',', '0', '0', '1', 'Under taker', '', 'Brother', '11', '0', '1', '25', '1', NULL, '2023-04-29 15:43:43', '2023-04-29 15:43:43'),
+(9, '20', '105806052023', 'Rakesh', '14', 'DOC-108', '0', '0', '0', 'Rakesh', '', 'NIL', 'Construction', '1845', 'Coimbatore', '542126', 'Const', 'rrr', '654528', 'CB', '984654', '0', '0', '0', '', 'NO', '0', '0', '', '', '', '', '', '', '', '', '', '', NULL, '0', '0', '', 'YES', '0', '0', '0', '0', '0', 'Necklace', '24k', '1', '0.586g', '47500', 'DL', 'License', '0', 'rakesh.png', '0', '0', '0', 'Rakesh', '', 'NIL', '11', '0', '1', '21', '28', NULL, '2023-05-06 11:10:41', '2023-05-06 11:10:41');
 
 -- --------------------------------------------------------
 
@@ -607,7 +617,7 @@ INSERT INTO `cheque_info` (`id`, `req_id`, `cus_profile_id`, `holder_type`, `hol
 (8, '17', '7', '1', 'Manimegalai', '', 'Mother', 'ION', '3'),
 (9, '15', '8', '0', 'Kuppusamy', '', 'NIL', 'IOb', '2'),
 (10, '10', '11', '2', 'Dad', '34', 'Father', 'FF', '1'),
-(11, '20', '14', '2', '', '37', 'Father', 'HDFC', '1'),
+(11, '20', '14', '2', 'Delhi Babu', '37', 'Father', 'HDFC', '1'),
 (12, '20', '14', '0', 'Rakesh', '', 'NIL', 'KVB', '1'),
 (13, '14', '15', '1', 'Magesh', '', 'Brother', 'ION', '1');
 
@@ -624,20 +634,21 @@ CREATE TABLE `cheque_no_list` (
   `cheque_holder_type` varchar(255) DEFAULT NULL,
   `cheque_holder_name` varchar(255) DEFAULT NULL,
   `cheque_no` varchar(200) DEFAULT NULL,
-  `used_status` varchar(255) NOT NULL DEFAULT '0'
+  `used_status` varchar(255) NOT NULL DEFAULT '0',
+  `noc_given` varchar(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `cheque_no_list`
 --
 
-INSERT INTO `cheque_no_list` (`id`, `req_id`, `cheque_table_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`, `used_status`) VALUES
-(1, '17', NULL, ' 1', 'Manimegalai', '2343', '0'),
-(2, '17', NULL, ' 1', 'Manimegalai', '2345', '0'),
-(3, '17', NULL, ' 1', 'Manimegalai', '345', '0'),
-(4, '10', NULL, '2', 'Dad', '84654654654', '0'),
-(5, '20', NULL, ' 0', 'Rakesh', '27123', '0'),
-(6, '20', NULL, ' 2', '37', '8338', '0');
+INSERT INTO `cheque_no_list` (`id`, `req_id`, `cheque_table_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`, `used_status`, `noc_given`) VALUES
+(1, '17', '8', ' 1', 'Manimegalai', '2343', '0', '0'),
+(2, '17', '8', ' 1', 'Manimegalai', '2345', '0', '0'),
+(3, '17', '8', ' 1', 'Manimegalai', '345', '0', '0'),
+(4, '10', NULL, '2', 'Dad', '84654654654', '0', '0'),
+(5, '20', '12', ' 0', 'Rakesh', '27123', '0', '0'),
+(6, '20', '11', ' 2', '37', '8338', '0', '1');
 
 -- --------------------------------------------------------
 
@@ -685,15 +696,17 @@ CREATE TABLE `closed_status` (
   `remark` varchar(255) DEFAULT NULL,
   `cus_sts` varchar(50) DEFAULT NULL,
   `insert_login_id` varchar(100) DEFAULT NULL,
-  `created_date` datetime NOT NULL DEFAULT current_timestamp()
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `closed_status`
 --
 
-INSERT INTO `closed_status` (`id`, `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`, `cus_sts`, `insert_login_id`, `created_date`) VALUES
-(1, '18', '945454646565', '1', '5', 'Ok', NULL, NULL, '2023-05-11 18:33:37');
+INSERT INTO `closed_status` (`id`, `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`, `cus_sts`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '20', '105806052023', '1', '5', 'Ok', '20', '1', '1', '2023-05-11 18:33:37', '2023-05-11 18:33:37');
 
 -- --------------------------------------------------------
 
@@ -1086,7 +1099,8 @@ CREATE TABLE `fingerprints` (
 INSERT INTO `fingerprints` (`id`, `adhar_num`, `name`, `hand`, `ansi_template`, `bitmap_data`, `insert_user_id`, `update_user_id`, `created_date`, `updated_date`) VALUES
 (1, '894454545465', 'Anto', '2', 'Rk1SACAyMAAA7AA1AA0AAAE8AWIAxQDFAQAAACgiQHoA82IAQHUBCwoAQIoBHAQAQFMBE2wAQD0A3WsAQI4AmU8AgGIBQncAQC4AsW4AQK8BVmQAgBoAxhQAgBYAtBQAQO4BSVIAQIsA+mUAQGMA+wgAQLcA41QAQL4BDKwAQHMAn6sAQNMAzlIAQKIBS7IAgLIBTlsAQPIBFLAAgCwAng0AgMYAgU4AQIoA1FcAQKUBCV4AgIEAtlIAQI8Ap1IAgDUA1A0AgDIBFGcAQLwBPloAQD8AmWYAQNMBQqwAQPABH1QAQE8AbFcAAAA=', NULL, '1', '1', '2023-05-10 17:29:36', '2023-05-10 17:34:52'),
 (2, '945454646565', 'Praveen', '1', 'Rk1SACAyMAABlAA1AA0AAAE8AWIAxQDFAQAAACg+QIYAvmoAQLkAxAsAQHoAoWkAQIUBA3AAQFUAxGwAQIkBDgwAQK4BEZQAgKsAgGgAgOEAlq8AQEMAlWgAQN0BE48AQPQA/JQAQC4AoQ4AQIsBQxwAgEIAdg8AQBgA22MAQHABTY8AQNoBSoIAQQYAb64AQJEALhQAQHIAGHEAQHEA1m4AgKkA864AgMIAumcAQJ8BBWUAQNMA2qIAgFEAumwAQMMBBpYAgEEAyxMAQFEBE3YAQKIBM3gAQL4AcQsAgHMBMhwAgGYBOIYAQFsAZWkAQC8Ah2cAQE0BOn8AgNkAXAoAgKwBW3MAgOABTYcAQGIAKhYAQIIADxcAQHUA3xAAgI4A+ggAgLQAogkAQIcAkQ0AgJ0BDqQAgNgAtqwAgIcBGXMAgJsBJncAQF0BHRkAQEgBDXMAQO8AolsAgHkAYw8AgKwBQ3UAQC0BCBgAgMwBPH8AQO4AcWMAQLwARQgAQMkAR2EAQP4BPI0AQPAAPA8AAAA=', NULL, '1', NULL, '2023-05-10 17:34:52', '2023-05-10 17:34:52'),
-(3, '874554548745', 'Arun', '1', 'Rk1SACAyMAABLgA1AA0AAAE8AWIAxQDFAQAAACgtQGQA2KoAQEcAzAsAgIABC5cAgGEAlgMAQFIBGpoAQD0BJXkAQC0BIBQAgKkBK5QAQFABP4AAgLoAfKoAQNYAo00AgF8BUH8AQDQBUSUAQD8ASmUAQGgAORAAQGIAtrMAgJEA75sAQHMAmmAAQLMAz54AQD4BEW4AgMsAwaQAQGoAbmcAQDwAdQ8AgCoBLX8AQJUBQY0AQFcAXw4AgLkBO5kAgCEBSyYAQDMASAsAQBoBVosAgEwAvmwAQGEBCJ4AgEIA/QIAQDcAqRAAgLAAoKgAQH0BNokAQCQAiW4AgD4BNoAAQIsBQ4sAQIQAZbAAgKMAZ1UAQKEBSZMAQKUAUawAQJIAQAQAQOIAWVEAAAA=', NULL, '1', NULL, '2023-05-11 13:20:59', '2023-05-11 13:24:03');
+(3, '874554548745', 'Arun', '1', 'Rk1SACAyMAABLgA1AA0AAAE8AWIAxQDFAQAAACgtQGQA2KoAQEcAzAsAgIABC5cAgGEAlgMAQFIBGpoAQD0BJXkAQC0BIBQAgKkBK5QAQFABP4AAgLoAfKoAQNYAo00AgF8BUH8AQDQBUSUAQD8ASmUAQGgAORAAQGIAtrMAgJEA75sAQHMAmmAAQLMAz54AQD4BEW4AgMsAwaQAQGoAbmcAQDwAdQ8AgCoBLX8AQJUBQY0AQFcAXw4AgLkBO5kAgCEBSyYAQDMASAsAQBoBVosAgEwAvmwAQGEBCJ4AgEIA/QIAQDcAqRAAgLAAoKgAQH0BNokAQCQAiW4AgD4BNoAAQIsBQ4sAQIQAZbAAgKMAZ1UAQKEBSZMAQKUAUawAQJIAQAQAQOIAWVEAAAA=', NULL, '1', NULL, '2023-05-11 13:20:59', '2023-05-11 13:24:03'),
+(4, '105806052023', 'Rakesh', '1', 'Rk1SACAyMAAAAAFcAAABPAFiAMUAxQEAAAAoNYCPANanAECBALmjAICCAPiqAEDjAN7wAEBnAOumAIC8AHocAIB1AHcgAIBTAPknAIClAS4pAEA2ALOdAIC7ATjKAED5AR7TAECyAEcWAEEAAGP8AECzAVG8AEBSAEgpAEDcAV5RAEChABckAIC1AKcaAIDMAMObAECMAQEmAECpAIagAIBgAOGmAICoARoZAED1AJ2LAEC8ASadAEBWAIChAIBCAJkhAEDpAGmYAIDSAFcXAEBpAT2uAEDFAUzFAICBAUwuAIDyAVDBAEBgADGnAEEMADgEAEDHANITAECMAKMfAIDjALb9AIDAAQkFAIDiAJUDAEBMALyjAIDZARndAICkASevAEA6ANEjAEELAP/bAIC0AT23AICmAUGwAEC/AEaUAEBwAUmwAECBADomAEDkADIaAEBrACIrAAAA', NULL, '1', '1', '2023-05-12 16:56:49', '2023-05-12 16:57:16');
 
 -- --------------------------------------------------------
 
@@ -1095,15 +1109,25 @@ INSERT INTO `fingerprints` (`id`, `adhar_num`, `name`, `hand`, `ansi_template`, 
 --
 
 CREATE TABLE `gold_info` (
-  `id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL,
   `req_id` varchar(255) DEFAULT NULL,
   `gold_sts` varchar(255) DEFAULT NULL,
   `gold_type` varchar(255) DEFAULT NULL,
   `Purity` varchar(255) DEFAULT NULL,
   `gold_Count` varchar(255) DEFAULT NULL,
   `gold_Weight` varchar(255) DEFAULT NULL,
-  `gold_Value` varchar(255) DEFAULT NULL
+  `gold_Value` varchar(255) DEFAULT NULL,
+  `noc_given` varchar(10) NOT NULL DEFAULT '0',
+  `used_status` varchar(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gold_info`
+--
+
+INSERT INTO `gold_info` (`id`, `req_id`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `noc_given`, `used_status`) VALUES
+(1, '20', '1', 'Bar', '18k', '1', '56', '37869', '1', '0'),
+(2, '20', '0', 'Chain', '21k', '1', '108', '45156', '1', '0');
 
 -- --------------------------------------------------------
 
@@ -1193,7 +1217,7 @@ INSERT INTO `in_issue` (`id`, `req_id`, `cus_id`, `cus_status`, `status`, `inser
 (5, '15', '546546546465', '13', '0', '1', NULL, NULL, '2023-04-29 16:02:28', NULL),
 (6, '11', '123456789101', '14', '0', '1', '1', NULL, '2023-04-29 16:06:26', '2023-04-30 13:11:49'),
 (7, '10', '123456789101', '14', '0', '1', '1', NULL, '2023-05-01 11:04:42', '2023-05-05 18:49:21'),
-(8, '20', '105806052023', '14', '0', '28', '1', NULL, '2023-05-06 11:26:56', '2023-05-09 12:46:06');
+(8, '20', '105806052023', '21', '0', '28', '1', NULL, '2023-05-06 11:26:56', '2023-05-09 12:46:06');
 
 -- --------------------------------------------------------
 
@@ -1582,6 +1606,39 @@ CREATE TABLE `loan_summary_feedback` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `noc`
+--
+
+CREATE TABLE `noc` (
+  `noc_id` int(11) NOT NULL COMMENT 'Primary Key',
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
+  `sign_checklist` varchar(255) DEFAULT NULL,
+  `cheque_checklist` varchar(255) DEFAULT NULL,
+  `gold_checklist` varchar(255) DEFAULT NULL,
+  `mort_checklist` varchar(255) DEFAULT NULL,
+  `endorse_checklist` varchar(255) DEFAULT NULL,
+  `doc_checklist` varchar(255) DEFAULT NULL,
+  `noc_date` varchar(255) DEFAULT NULL,
+  `noc_member` varchar(255) DEFAULT NULL,
+  `mem_name` varchar(255) DEFAULT NULL,
+  `cus_status` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `noc`
+--
+
+INSERT INTO `noc` (`noc_id`, `req_id`, `cus_id`, `sign_checklist`, `cheque_checklist`, `gold_checklist`, `mort_checklist`, `endorse_checklist`, `doc_checklist`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(15, '20', '105806052023', '', '6', '', '', '', '', '2023-05-13', '1', 'Rakesh', '21', '1', NULL, '2023-05-13 19:08:43', '2023-05-13 19:08:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `penalty_charges`
 --
 
@@ -1602,15 +1659,19 @@ CREATE TABLE `penalty_charges` (
 
 INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`, `paid_amnt`, `waiver_amnt`, `created_date`, `updated_time`) VALUES
 ('11', NULL, NULL, '05-05-2023', '0', '311', '2023-05-05 11:41:57', '2023-05-05 11:41:57'),
-('11', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-09 18:37:06', '2023-05-09 18:37:06'),
-('11', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-09 18:37:06', '2023-05-09 18:37:06'),
-('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-09 18:37:06', '2023-05-09 18:37:06'),
 ('18', '2023-05-05', '10.35', NULL, '0', '0', '2023-05-10 12:34:20', '2023-05-10 12:34:20'),
 ('18', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-10 12:34:20', '2023-05-10 12:34:20'),
 ('18', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-10 12:34:20', '2023-05-10 12:34:20'),
 ('18', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-10 12:34:20', '2023-05-10 12:34:20'),
 ('18', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-10 12:34:20', '2023-05-10 12:34:20'),
-('18', NULL, NULL, '2023-05-10', '', '54', '2023-05-10 12:34:39', '2023-05-10 12:34:39');
+('18', NULL, NULL, '2023-05-10', '', '54', '2023-05-10 12:34:39', '2023-05-10 12:34:39'),
+('11', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-13 16:41:47', '2023-05-13 16:41:47'),
+('11', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-13 16:41:47', '2023-05-13 16:41:47'),
+('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-13 16:41:47', '2023-05-13 16:41:47'),
+('11', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-13 16:41:47', '2023-05-13 16:41:47'),
+('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-13 16:41:47', '2023-05-13 16:41:47'),
+('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-13 16:41:47', '2023-05-13 16:41:47'),
+('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-13 16:41:47', '2023-05-13 16:41:47');
 
 -- --------------------------------------------------------
 
@@ -1776,20 +1837,22 @@ CREATE TABLE `signed_doc` (
   `id` int(11) NOT NULL,
   `req_id` varchar(255) DEFAULT NULL,
   `signed_doc_id` varchar(255) DEFAULT NULL,
-  `upload_doc_name` varchar(255) DEFAULT NULL
+  `upload_doc_name` varchar(255) DEFAULT NULL,
+  `noc_given` varchar(10) NOT NULL DEFAULT '0',
+  `used_status` varchar(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `signed_doc`
 --
 
-INSERT INTO `signed_doc` (`id`, `req_id`, `signed_doc_id`, `upload_doc_name`) VALUES
-(1, '18', '8', 'Mantra_RD_Service_Manual_Windows.pdf'),
-(2, '18', '8', 'verification_family_info.sql'),
-(3, '15', '9', 'ecpXIUeY_400x400.jpg'),
-(4, '10', '10', 'loan_issue.sql'),
-(5, '20', '13', 'rakesh.png'),
-(6, '20', '12', 'janaki.png');
+INSERT INTO `signed_doc` (`id`, `req_id`, `signed_doc_id`, `upload_doc_name`, `noc_given`, `used_status`) VALUES
+(1, '18', '8', 'Mantra_RD_Service_Manual_Windows.pdf', '0', '0'),
+(2, '18', '8', 'verification_family_info.sql', '0', '0'),
+(3, '15', '9', 'ecpXIUeY_400x400.jpg', '0', '0'),
+(4, '10', '10', 'loan_issue.sql', '0', '0'),
+(5, '20', '13', 'rakesh.png', '0', '0'),
+(6, '20', '12', 'janaki.png', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -2530,6 +2593,12 @@ ALTER TABLE `fingerprints`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `gold_info`
+--
+ALTER TABLE `gold_info`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `in_acknowledgement`
 --
 ALTER TABLE `in_acknowledgement`
@@ -2594,6 +2663,12 @@ ALTER TABLE `loan_scheme`
 --
 ALTER TABLE `loan_summary_feedback`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `noc`
+--
+ALTER TABLE `noc`
+  ADD PRIMARY KEY (`noc_id`);
 
 --
 -- Indexes for table `purpose`
@@ -2862,7 +2937,13 @@ ALTER TABLE `doc_mapping`
 -- AUTO_INCREMENT for table `fingerprints`
 --
 ALTER TABLE `fingerprints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `gold_info`
+--
+ALTER TABLE `gold_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `in_acknowledgement`
@@ -2923,6 +3004,12 @@ ALTER TABLE `loan_scheme`
 --
 ALTER TABLE `loan_summary_feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `noc`
+--
+ALTER TABLE `noc`
+  MODIFY `noc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `purpose`

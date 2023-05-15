@@ -1,5 +1,5 @@
-﻿//var uri = "https://localhost:8003/mfs100/"; //Secure
-var uri = "http://localhost:8004/mfs100/"; //Non-Secure
+﻿var uri = "https://localhost:8003/mfs100/"; //Secure
+// var uri = "http://localhost:8004/mfs100/"; //Non-Secure
 function GetMFS100Info() {
     return GetMFS100Client("info");
 }

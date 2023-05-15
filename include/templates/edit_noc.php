@@ -69,7 +69,6 @@
 							<div class="alert alert-success" role="alert">
 								<div class="alert-text"> NOC Submitted Successfully! </div>
 								<!-- To show print page and assign id value as collection id from collection.php -->
-								<input type="hidden" id='id' name='id' value=<?php echo $id;?>>
 							</div> 
 						<?php
 						}

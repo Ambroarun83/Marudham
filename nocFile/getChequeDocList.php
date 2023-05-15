@@ -7,16 +7,6 @@ if(isset($_POST['cus_name'])){
     $cus_name = $_POST['cus_name'];
 }
 
-function getfamName($con,$rel_id){
-    $qry1=$con->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
-    $run=$qry1->fetch_assoc();
-    return $run['famname'];
-}
-function getGuarentorName($con,$req_id){
-    $qry1=$con->query("SELECT famname FROM `verification_family_info` a JOIN `acknowlegement_customer_profile` b on b.guarentor_name = a.id where b.req_id=$req_id");
-    $run=$qry1->fetch_assoc();
-    return $run['famname'];
-}
 ?>
 <table class="table custom-table" id='chequeTable'>
     <thead>
@@ -27,24 +17,29 @@ function getGuarentorName($con,$req_id){
             <th>Relationship</th>
             <th>Bank Name</th>
             <th>Cheque No.</th>
-            <th>Action</th>
+            <th>Checklist</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        $qry = $con->query("SELECT a.doc_name,a.sign_type,a.signType_relationship,b.id,b.upload_doc_name FROM `signed_doc_info` a join signed_doc b on a.id = b.signed_doc_id  where b.req_id = $req_id");
+        $qry = $con->query("SELECT a.id,a.cheque_holder_type,a.cheque_holder_name,a.cheque_no,a.noc_given,b.cheque_relation,b.chequebank_name from `cheque_no_list` a JOIN cheque_info b on a.cheque_table_id = b.id where a.req_id = $req_id && a.used_status != '1' ");
         while($row = $qry->fetch_assoc()){
-            $rel_id = $row['signType_relationship'];
-            $name ='';
+
+            if(is_numeric($row['cheque_holder_name'])){
+                $qry1 = $con->query("SELECT famname from verification_family_info where id = '".$row['cheque_holder_name']."' ");
+                $row1 = $qry1->fetch_assoc();
+                $holder_name = $row1['famname'];
+            }else{$holder_name = $row['cheque_holder_name'];}
+
         ?>
             <tr>
                 <td></td>
-                <td><?php if($row['doc_name'] == '0'){echo 'Promissory Note';}elseif($row['doc_name'] == '1'){echo 'Stamp Paper';}elseif($row['doc_name'] == '2'){echo 'P Additional';}elseif($row['doc_name'] == '3'){echo 'S Additional';}?></td>
-                <td><?php if($row['sign_type'] == '0'){echo 'Customer'; $name=$cus_name;}elseif($row['sign_type'] == '1'){echo 'Guarentor';$name = getGuarentorName($con,$req_id);}
-                            elseif($row['sign_type'] == '2'){echo 'Combined';}elseif($row['sign_type'] == '3'){echo 'Family Member'; $name = getfamName($con,$rel_id);} ?></td>
-                <td><?php echo $name;?></td>
-                <td><a href='<?php echo 'uploads/verification/signed_doc/'.$row['upload_doc_name'];?>' target="_blank"><?php echo $row['upload_doc_name'];?></a></td>
-                <td><input type='checkbox' id='sign_check' name='sign_check' class="form-control sign_check" data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'></td>
+                <td><?php if($row['cheque_holder_type'] == '0'){echo 'Customer';}elseif($row['cheque_holder_type'] == '1'){echo 'Guarentor';}elseif($row['cheque_holder_type'] == '2'){echo 'Family Member';}else ?></td>
+                <td><?php echo $holder_name;?></td>
+                <td><?php echo $row['cheque_relation'];?></td>
+                <td><?php echo $row['chequebank_name'];?></td>
+                <td><?php echo $row['cheque_no'];?></td>
+                <td><input type='checkbox' id='cheque_check' name='cheque_check' class="form-control cheque_check" <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of cheque list table?>'></td>
             </tr>
         <?php
         }
@@ -55,7 +50,7 @@ function getGuarentorName($con,$req_id){
 
 <script type='text/javascript'>
     $(function() {
-        $('#chequeDiv').DataTable({
+        $('#chequeTable').DataTable({
             "title":"Signed Document List",
             'processing': true,
             'iDisplayLength': 5,
