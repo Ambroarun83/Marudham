@@ -150,6 +150,9 @@ function moneyFormatIndia($num)
             <td></td>
         </tr>
         <?php
+        $due_amt_track = 0;
+        $waiver = 0;
+        $bal_amt = 0;
         foreach ($dueMonth as $cusDueMonth) {
             if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
                 //Query for Monthly.
@@ -165,9 +168,7 @@ function moneyFormatIndia($num)
             }
 
             if ($run->rowCount() > 0) {
-                $due_amt_track = 0;
-                $waiver = 0;
-                $bal_amt = 0;
+
                 while ($row = $run->fetch()) {
                     $role = $row['role'];
                     $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);

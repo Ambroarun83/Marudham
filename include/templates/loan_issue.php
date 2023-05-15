@@ -335,6 +335,49 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+
+/*Finger Print */
+.overlay {
+	position: fixed;
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* Add semi-transparent black background */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.loader {
+	border: 4px solid #f3f3f3;
+	border-top: 4px solid #3498db;
+	border-radius: 50%;
+	width: 30px;
+	height: 30px;
+	animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+.overlay-text {
+	color: white;
+	font-size: 1.5rem;
+	margin-left: 10px;
+}
+
+#icon-flipped {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+}
 </style>
 
 <!-- Page header start -->
@@ -808,8 +851,9 @@ input:checked + .slider:before {
 					<!-- Issued Info End -->
 
 					 <!-- Cash Acknowledgement  Start -->
-					 <div class="card">
+					 <div class="card" id="cashAck">
 						<div class="card-header">Cash Acknowledgement <span style="font-weight:bold" class="" ></span></div>
+						<span class="text-danger" style="display: none;" id="finger_check"> Please Scan your Finger Print </span>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -829,6 +873,16 @@ input:checked + .slider:before {
 										<div class="form-group">
 											<label for="GuarentorRelationship">  Relationship </label>
 											<input type="text" class="form-control" id="relationship" name="relationship" readonly>
+										</div>
+									</div>
+									
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<input type="hidden" class="form-control" id="compare_finger" name="compare_finger" > <!--Already Store in Finger Print Table... when select fam name above the finger print will be shown here to compare. -->
+											<input type="hidden" class="form-control" id="ack_fingerprint" name="ack_fingerprint" > <!-- finger print value from Device when scanning.-->
+											<input type="hidden" class="form-control" id="fingerValidation" name="fingerValidation" > <!-- set val as 1 when finger Print Matching becuz to use for finger print validation if submit click.-->
+											<button type="button" class='btn btn-success scanBtn' style='background-color: #009688;margin-top: 19px;' onclick="event.preventDefault()" title='Put Your Thumb'><i class="material-icons" id="icon-flipped"> &#xe90d; </i>&nbsp;Scan</button>
+											<span class="text-danger" id="hand_type" style="position: relative;top: 12px;"> </span>
 										</div>
 									</div>
 
@@ -856,4 +910,6 @@ input:checked + .slider:before {
 	 <!-- Form End -->
 
 </div>
-
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="vendor/mfs100/Library/js/jquery-1.8.2.js" type="text/javascript"></script>
+<script src="vendor/mfs100/Library/js/mfs100.js"></script>

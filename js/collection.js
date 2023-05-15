@@ -343,9 +343,9 @@ function OnLoadFunctions(req_id,cus_id){
                             $('.payablespan').text('* (No of Due : '+payablespan+')')
                             
                             //To set limitations for input fields
-                            $('#due_amt_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['balance'] + ` ){ alert("Enter Lesser Value"); $(this).val(""); }`)
-                            $('#penalty_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['penalty'] + ` ){ alert("Enter Lesser Value"); $(this).val(""); }`)
-                            $('#coll_charge_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['coll_charge'] + ` ){ alert("Enter Lesser Value"); $(this).val(""); }`)
+                            $('#due_amt_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['balance'] + ` ){ alert("Enter Lesser Value"); $(this).val("");$('#total_paid_track').val(""); }`)
+                            $('#penalty_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['penalty'] + ` ){ alert("Enter Lesser Value"); $(this).val("");$('#total_paid_track').val(""); }`)
+                            $('#coll_charge_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['coll_charge'] + ` ){ alert("Enter Lesser Value"); $(this).val("");$('#total_paid_track').val(""); }`)
                             
                             //To set Limitation that should not cross its limit with considering track values and previous readonly values
                             $('#pre_close_waiver').attr('onblur',`var due_track = $('#due_amt_track').val(); if( parseFloat($(this).val()) > '` + response['balance'] + `' -due_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)

@@ -1,9 +1,12 @@
 $(document).ready(function () {
 
+    //Hide Cash Acknowledgement card.. show only if cash enter.
+    $('#cashAck').hide();
+
     // Issue Mode
     $('#issued_mode').change(function () {
         var mode = $(this).val();
-
+        $('#cashAck').hide();
         
         $('#cash').removeAttr('readonly');
         $('#chequeValue').removeAttr('readonly');
@@ -63,6 +66,7 @@ $(document).ready(function () {
             $('#balance').val('0');
             $('.checque').hide();
             $('.transaction').hide();
+            $('#cashAck').show(); // Cash Acknowledgement.
 
         } else if (type == '1') {
             $('.cash_issue').hide();
@@ -71,6 +75,7 @@ $(document).ready(function () {
             $('#chequeValue').attr('readonly', true);
             $('#balance').val('0');
             $('.transaction').hide();
+            $('#cashAck').hide(); // Cash Acknowledgement.
 
         } else if (type == '2') {
             $('.cash_issue').hide();
@@ -79,46 +84,157 @@ $(document).ready(function () {
             $('#transaction_value').val(netcash);
             $('#transaction_value').attr('readonly', true);
             $('#balance').val('0');
+            $('#cashAck').hide(); // Cash Acknowledgement.
 
         } else {
             $('.cash_issue').hide();
             $('.checque').hide();
             $('.transaction').hide();
             $('#balance').val('');
+            $('#cashAck').hide(); // Cash Acknowledgement.
         }
 
         hideCheckSpan();
     })
 
     //Check Cash limit based on Net Cash
-    $('#cash').change(function () {
+    $('#cash').keyup(function () {
         checkIssuedAmount('0');
     });
-    $('#chequeValue').change(function () {
+    $('#chequeValue').keyup(function () {
         checkIssuedAmount('1');
     });
-    $('#transaction_value').change(function () {
+    $('#transaction_value').keyup(function () {
         checkIssuedAmount('2');
+    });
+
+    //when cash enter the cash acknowledgement card will be show.
+    $('#cash').keyup(function () {
+        var cashVal = $(this).val();
+        if(cashVal){
+            $('#cashAck').show();
+        }else{
+            $('#cashAck').hide();
+        }
     });
 
     $('#cash_guarentor_name').change(function () { //Select Guarantor Name relationship will show in input.
 
-        let famId = document.querySelector("#cash_guarentor_name").value;
+        let famAdhaarNo = document.querySelector("#cash_guarentor_name").value;
+        $('#cash_guarentor').hide();
+        $('#compare_finger').val('')
+        var cusId = $('#cus_id').val();
+        if(famAdhaarNo == cusId){
+            var cus = '1';
+        }else{
+            var cus = '2';
+        }
     
         $.ajax({
-            url: 'verificationFile/verification_guarantor.php',
+            url: 'loanIssueFile/getFamRelationship.php',
             type: 'POST',
-            data: { "famid": famId },
+            data: { "adhaarno": famAdhaarNo,"cus": cus,"cusId": cusId },
             dataType: 'json',
             cache: false,
             success: function (result) {
     
                 $("#relationship").val(result['relation']);
+                $("#compare_finger").val(result['fpTemplate']);
+                if(result['hand'] == '1'){
+                    $('.scanBtn').removeAttr('disabled');
+                    var hand = "Put Your Left Thumb"
+                }else if(result['hand'] == '2'){
+                    $('.scanBtn').removeAttr('disabled');
+                    var hand = "Put Your Right Thumb"
+                }else{
+                    var hand = "Finger Print Not Registered";
+                    $('.scanBtn').attr('disabled',true);
+                }
+                $("#hand_type").text(hand);
     
             }
         });
     
     });
+
+
+    $('.scanBtn').click(function(){
+        var g_name = $('#cash_guarentor_name').val();
+
+        if(g_name != ''){
+
+            $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
+            $(this).attr('disabled',true);
+
+            setTimeout(()=>{ //Set Timeout, because loadin animation will be intrupped by this capture event
+                var quality = 60; //(1 to 100) (recommended minimum 55)
+                var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
+                var res = CaptureFinger(quality, timeout);
+                if (res.httpStaus) {
+                    if (res.data.ErrorCode == "0") {
+                        $('#ack_fingerprint').val(res.data.AnsiTemplate); // Take ansi template that is the unique id which is passed by sensor
+                    }//Error codes and alerts below
+                    else if(res.data.ErrorCode == -1307){
+                        alert('Connect Your Device');
+                        $(this).removeAttr('disabled');
+                    }else if(res.data.ErrorCode == -1140 || res.data.ErrorCode == 700){
+                        alert('Timeout');
+                        $(this).removeAttr('disabled');
+                    }else if(res.data.ErrorCode == 720){
+                        alert('Reconnect Device');
+                        $(this).removeAttr('disabled');
+                    }else if(res.data.ErrorCode == 730){
+                        alert('Capture Finger Again');
+                        $(this).removeAttr('disabled');
+                    }else {
+                        alert('Error Code:' + res.data.ErrorCode);
+                        $(this).removeAttr('disabled');
+                    }
+                }
+                else {
+                    alert(res.err);
+                }
+                // Hide the loading animation and remove blur effect from the body
+                $('.overlay').remove();
+
+                //Verify the finger is matched with member name
+                var compare_finger = $('#compare_finger').val()
+                var ack_fingerprint = $('#ack_fingerprint').val()
+                var res = VerifyFinger(compare_finger,ack_fingerprint)
+                if(res.httpStaus){
+                    if(res.data.Status){
+                        Swal.fire({
+                            title: 'Fingerprint Matching',
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                        $('#fingerValidation').val('1'); 
+                    }else{
+                        if (res.data.ErrorCode != "0") {
+                            alert(res.data.ErrorDescription);
+                        }
+                        else {
+                            Swal.fire({
+                                title: 'Fingerprint Not Matching',
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                            $(this).removeAttr('disabled');
+                        }
+                    }
+                }else{
+                    alert(res.err)
+                }
+
+            },700) //Timeout End
+
+        }else{//If End
+          $('#cash_guarentor').show();
+        }
+
+    })//Scan button Onclick end
 
     $('#due_start_from').change(function(){
         var due_start_from = $('#due_start_from').val(); // get start date to calculate maturity date
@@ -382,9 +498,11 @@ function checkIssuedAmount(type) {
 //cash Acknowledgement Name 
 function cashAckName() {
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
+    let cus_name = $('#cus_name').val();
 
     $.ajax({
-        url: 'verificationFile/verificationFam.php',
+        url: 'loanIssueFile/famnameForloanIssue.php',
         type: 'post',
         data: { "reqId": req_id },
         dataType: 'json',
@@ -393,18 +511,19 @@ function cashAckName() {
             var len = response.length;
             $("#cash_guarentor_name").empty();
             $("#cash_guarentor_name").append("<option value=''>" + 'Select Guarantor' + "</option>");
+            $("#cash_guarentor_name").append("<option value='" + cus_id + "'>" + cus_name + "</option>");
             for (var i = 0; i < len; i++) {
                 var fam_name = response[i]['fam_name'];
-                var fam_id = response[i]['fam_id'];
-                $("#cash_guarentor_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
+                var fam_aadharno = response[i]['aadharno'];
+                $("#cash_guarentor_name").append("<option value='" + fam_aadharno + "'>" + fam_name + "</option>");
             }
-            {//To Order ag_group Alphabetically
-                var firstOption = $("#cash_guarentor_name option:first-child");
-                $("#cash_guarentor_name").html($("#cash_guarentor_name option:not(:first-child)").sort(function (a, b) {
-                    return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-                }));
-                $("#cash_guarentor_name").prepend(firstOption);
-            }
+            // {//To Order ag_group Alphabetically
+            //     var firstOption = $("#cash_guarentor_name option:first-child");
+            //     $("#cash_guarentor_name").html($("#cash_guarentor_name option:not(:first-child)").sort(function (a, b) {
+            //         return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+            //     }));
+            //     $("#cash_guarentor_name").prepend(firstOption);
+            // }
         }
     });
 }
@@ -440,7 +559,7 @@ function checkBalance(){
 
 //Submit Validation
 function loanIssueSumitValidation(){
-    var issueMode = $('#issued_mode').val(); var paymenType =  $('#payment_type').val(); var cash =  $('#cash').val(); var chequeNum =  $('#chequeno').val(); var chequeVal =  $('#chequeValue').val(); var chequeRemark = $('#chequeRemark').val(); var transactionID = $('#transaction_id').val(); var transactionVal =  $('#transaction_value').val(); var transactionRemark = $('#transaction_remark').val(); var guarentorName = $('#cash_guarentor_name').val();
+    var issueMode = $('#issued_mode').val(); var paymenType =  $('#payment_type').val(); var cash =  $('#cash').val(); var chequeNum =  $('#chequeno').val(); var chequeVal =  $('#chequeValue').val(); var chequeRemark = $('#chequeRemark').val(); var transactionID = $('#transaction_id').val(); var transactionVal =  $('#transaction_value').val(); var transactionRemark = $('#transaction_remark').val(); var guarentorName = $('#cash_guarentor_name').val(); var fingerMatch =  $('#fingerValidation').val();
     //Check Issue Mode
     if(issueMode == ''){
         event.preventDefault();
@@ -576,6 +695,13 @@ function loanIssueSumitValidation(){
         $('#cash_guarentor').show();
     }else{
         $('#cash_guarentor').hide();
+    }
+
+    if(fingerMatch != '1'){
+        event.preventDefault();
+        $('#finger_check').show();
+    }else{
+        $('#finger_check').hide();
     }
   }
 
