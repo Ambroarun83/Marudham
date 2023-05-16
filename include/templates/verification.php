@@ -452,25 +452,18 @@ if (sizeof($getLoanCalculation) > 0) {
 									</div>
 								</div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {
-																										if ($role != '1') { ?> style="display: none" <?php }
-																																									} ?>>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role != '1') { ?> style="display: none" <?php }} ?>>
 									<div class="form-group">
 										<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
-										<input tabindex="4" type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {
-																																			echo 'Yes';
-																																		} else {
-																																			echo 'No';
-																																		} ?>" readonly>
+										<input tabindex="3" type="text" class="form-control" id="responsible" name="responsible" 
+										value="<?php if (isset($responsible) and $responsible == '0') {echo 'Yes';} else {echo 'No';} ?>" readonly>
 									</div>
 								</div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {
-																									if ($role != '3') { ?>style="display: none" <?php }
-																																								} ?>>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {if ($role != '3') { ?>style="display: none" <?php }} ?>>
 									<div class="form-group">
 										<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='5' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
+										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='4' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
 									</div>
 								</div>
 
@@ -479,7 +472,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																																									} ?>>
 									<div class="form-group">
 										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='4' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
+										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='5' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
 									</div>
 								</div>
 
@@ -531,7 +524,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="gender">Gender&nbsp;<span class="required">&nbsp;*</span></label>
-												<select tabindex="14" type="text" class="form-control" id="gender" name="gender">
+												<select tabindex="11" type="text" class="form-control" id="gender" name="gender">
 													<option value="">Select Gender</option>
 													<option value="1" <?php if (isset($gender) and $gender == '1') echo 'selected'; ?>>Male</option>
 													<option value="2" <?php if (isset($gender) and $gender == '2') echo 'selected'; ?>>Female</option>
@@ -670,7 +663,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="GuarentorName"> Guarentor Name </label><span class="required">&nbsp;*</span>
-												<select type="text" class="form-control" id="guarentor_name" name="guarentor_name">
+												<select type="text" class="form-control" id="guarentor_name" name="guarentor_name" tabindex="19">
 													<option> Select Guarantor </option>
 												</select>
 												<span class="text-danger" style='display:none' id='guarentor_nameCheck'>Please Choose Guarentor Name</span>
@@ -680,7 +673,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="GuarentorRelationship"> Guarentor Relationship </label>
-												<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" value='<?php if (isset($guarentor_relation)) {
+												<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" tabindex="20" value='<?php if (isset($guarentor_relation)) {
 																																								echo $guarentor_relation;
 																																							} ?>' readonly>
 											</div>
@@ -696,7 +689,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																														echo $guarentor_photo;
 																													} ?>">
 											<img id='imgshows' class="img_show" src='img/avatar.png' />
-											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" value="<?php if (isset($guarentor_photo)) {
+											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="21" value="<?php if (isset($guarentor_photo)) {
 																																		echo $guarentor_photo;
 																																	} ?>">
 											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
@@ -753,7 +746,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_name"> Category </label>
-										<select type="text" class="form-control" id="category" name="category">
+										<select type="text" class="form-control" id="category" name="category" tabindex="22">
 											<option> Select Category </option>
 											<option value="0"> Name </option>
 											<option value="1"> Aadhar Number </option>
@@ -765,7 +758,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div id="nameCheck" style="display: none" class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="name"> Name </label>
-										<select type="text" class="form-control" name="check_name" id="check_name">
+										<select type="text" class="form-control" name="check_name" id="check_name" tabindex="23">
 											<option> Select Name </option>
 										</select>
 									</div>
@@ -774,7 +767,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div id="aadharNo" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="aadharNo"> Aadhar Number </label>
-										<select type="text" class="form-control" name="check_aadhar" id="check_aadhar">
+										<select type="text" class="form-control" name="check_aadhar" id="check_aadhar" tabindex="24"> 
 											<option> Select Aadhar Number </option>
 										</select>
 									</div>
@@ -783,7 +776,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div id="mobileNo" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="mobileNo"> Mobile Number </label>
-										<select type="text" class="form-control" name="check_mobileno" id="check_mobileno">
+										<select type="text" class="form-control" name="check_mobileno" id="check_mobileno" tabindex="25">
 											<option> Select Mobile Number </option>
 										</select>
 									</div>
@@ -808,7 +801,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<label for="name"> Customer Type </label>
 										<input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_data)) {
 																															echo $cus_data;
-																														} ?>" readonly>
+																														} ?>" readonly tabindex="26">
 									</div>
 								</div>
 
@@ -817,9 +810,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																																		} ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="ExistType"> Exist Type </label>
-										<input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" value="<?php if (isset($cus_exist_type)) {
-																																		echo $cus_exist_type;
-																																	} ?>" readonly>
+										<input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" value="<?php if (isset($cus_exist_type)) {echo $cus_exist_type;} ?>" readonly tabindex="27">
 									</div>
 								</div>
 
@@ -838,7 +829,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="resType"> Residential Type </label>
-										<select type="text" class="form-control" name="cus_res_type" id="cus_res_type">
+										<select type="text" class="form-control" name="cus_res_type" id="cus_res_type" tabindex="28">
 											<option> Select Residential Type </option>
 											<option value="0" <?php if (isset($residential_type) and $residential_type == '0') echo 'selected'; ?>> Own </option>
 											<option value="1" <?php if (isset($residential_type) and $residential_type == '1') echo 'selected'; ?>> Rental </option>
@@ -851,27 +842,24 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="ResidentDetails"> Resident Details </label>
-										<input type="text" class="form-control" name="cus_res_details" id="cus_res_details" placeholder="Enter Resident Details" value="<?php if (isset($residential_details)) {
-																																											echo $residential_details;
-																																										} ?>">
+										<input type="text" class="form-control" name="cus_res_details" id="cus_res_details" placeholder="Enter Resident Details" 
+										value="<?php if (isset($residential_details)) {echo $residential_details;} ?>" tabindex="29">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="resAddress"> Address </label>
-										<input type="text" class="form-control" name="cus_res_address" id="cus_res_address" placeholder="Enter Address" value="<?php if (isset($residential_address)) {
-																																									echo $residential_address;
-																																								} ?>">
+										<input type="text" class="form-control" name="cus_res_address" id="cus_res_address" placeholder="Enter Address" 
+										value="<?php if (isset($residential_address)) {echo $residential_address;} ?>" tabindex="30">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="resnativeAddress"> Native Address </label>
-										<input type="text" class="form-control" name="cus_res_native" id="cus_res_native" placeholder="Enter Native Address" value="<?php if (isset($residential_native_address)) {
-																																										echo $residential_native_address;
-																																									} ?>">
+										<input type="text" class="form-control" name="cus_res_native" id="cus_res_native" placeholder="Enter Native Address" 
+										value="<?php if (isset($residential_native_address)) {echo $residential_native_address;} ?>" tabindex="31">
 									</div>
 								</div>
 
@@ -890,7 +878,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="occType"> Occupation Type </label>
-										<select type="text" class="form-control" name="cus_occ_type" id="cus_occ_type">
+										<select type="text" class="form-control" name="cus_occ_type" id="cus_occ_type" tabindex="32">
 											<option value="">Select Occupation Type</option>
 											<option value="1" <?php if (isset($cp_occupation_type) and $cp_occupation_type == '1') echo 'selected'; ?>>Govt Job</option>
 											<option value="2" <?php if (isset($cp_occupation_type) and $cp_occupation_type == '2') echo 'selected'; ?>>Pvt Job</option>
@@ -906,27 +894,24 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="occDetails"> Occupation Detail </label>
-										<input type="text" class="form-control" name="cus_occ_detail" id="cus_occ_detail" placeholder="Enter Occupation Detail" onkeydown="return /[a-z ]/i.test(event.key)" value="<?php if (isset($occupation_details)) {
-																																																						echo $occupation_details;
-																																																					} ?>">
+										<input type="text" class="form-control" name="cus_occ_detail" id="cus_occ_detail" placeholder="Enter Occupation Detail"
+										 onkeydown="return /[a-z ]/i.test(event.key)" value="<?php if (isset($occupation_details)) {echo $occupation_details;} ?>" tabindex="33">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="occIncome"> Income </label>
-										<input type="number" class="form-control" name="cus_occ_income" id="cus_occ_income" placeholder="Enter Income" value="<?php if (isset($occupation_income)) {
-																																									echo $occupation_income;
-																																								} ?>">
+										<input type="number" class="form-control" name="cus_occ_income" id="cus_occ_income" placeholder="Enter Income" 
+										value="<?php if (isset($occupation_income)) {echo $occupation_income;} ?>" tabindex="34">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="occAddress"> Address </label>
-										<input type="text" class="form-control" name="cus_occ_address" id="cus_occ_address" placeholder="Enter Address" value="<?php if (isset($occupation_address)) {
-																																									echo $occupation_address;
-																																								} ?>">
+										<input type="text" class="form-control" name="cus_occ_address" id="cus_occ_address" placeholder="Enter Address" 
+										value="<?php if (isset($occupation_address)) {echo $occupation_address;} ?>" tabindex="35">
 									</div>
 								</div>
 
@@ -944,7 +929,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="areaCnfirm"> Area confirm </label><span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" name="area_cnfrm" id="area_cnfrm">
+										<select type="text" class="form-control" name="area_cnfrm" id="area_cnfrm" tabindex="36">
 											<option value="">Select Area Type</option>
 											<option value="0" <?php if (isset($area_confirm_type) and $area_confirm_type == '0') echo 'selected'; ?>> Residential Area </option>
 											<option value="1" <?php if (isset($area_confirm_type) and $area_confirm_type == '1') echo 'selected'; ?>> Occupation Area </option>
@@ -956,7 +941,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
 									<div class="form-group">
 										<label for="disabledInput">State</label>&nbsp;<span class="text-danger">*</span>
-										<select type="text" class="form-control" id="state" name="state" tabindex="16">
+										<select type="text" class="form-control" id="state" name="state" tabindex="37">
 											<option value="SelectState">Select State</option>
 											<option value="TamilNadu" <?php if (isset($area_confirm_state) and $area_confirm_state == 'TamilNadu') echo 'selected'; ?>>Tamil Nadu</option>
 											<option value="Puducherry" <?php if (isset($area_confirm_state) and $area_confirm_state == 'Puducherry') echo 'selected'; ?>>Puducherry</option>
@@ -969,7 +954,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="form-group">
 										<label for="disabledInput">District</label>&nbsp;<span class="text-danger">*</span>
 										<input type="hidden" class="form-control" id="district1" name="district1">
-										<select type="text" class="form-control" id="district" name="district" tabindex='17'>
+										<select type="text" class="form-control" id="district" name="district" tabindex='38'>
 											<option value="Select District">Select District</option>
 										</select>
 										<span class="text-danger" style='display:none' id='districtCheck'>Please Select District</span>
@@ -980,7 +965,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="form-group">
 										<label for="disabledInput">Taluk</label>&nbsp;<span class="text-danger">*</span>
 										<input type="hidden" class="form-control" id="taluk1" name="taluk1">
-										<select type="text" class="form-control" id="taluk" name="taluk" tabindex="18">
+										<select type="text" class="form-control" id="taluk" name="taluk" tabindex="39">
 											<option value="Select Taluk">Select Taluk</option>
 										</select>
 										<span class="text-danger" style='display:none' id='talukCheck'>Please Select Taluk</span>
@@ -990,7 +975,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="disabledInput">Area</label>&nbsp;<span class="text-danger">*</span>
-										<select tabindex="19" type="text" class="form-control" id="area" name="area">
+										<select tabindex="40" type="text" class="form-control" id="area" name="area">
 											<option value="">Select Area</option>
 
 										</select>
@@ -1001,7 +986,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="disabledInput">Sub Area</label>&nbsp;<span class="text-danger">*</span>
-										<select tabindex="20" type="text" class="form-control" id="sub_area" name="sub_area">
+										<select tabindex="41" type="text" class="form-control" id="sub_area" name="sub_area">
 											<option value=''>Select Sub Area</option>
 										</select>
 										<span class="text-danger" style='display:none' id='subareaCheck'>Please Select Sub Area</span>
@@ -1011,18 +996,15 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="disabledInput">Group</label>
-										<input type="text" class="form-control" name="area_group" id="area_group" value="<?php if (isset($area_group)) {
-																																echo $area_group;
-																															} ?>" readonly>
+										<input type="text" class="form-control" name="area_group" id="area_group" 
+										value="<?php if (isset($area_group)) {echo $area_group;} ?>" readonly tabindex="42">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="disabledInput">Line</label>
-										<input type="text" class="form-control" name="area_line" id="area_line" value="<?php if (isset($area_line)) {
-																															echo $area_line;
-																														} ?>" readonly>
+										<input type="text" class="form-control" name="area_line" id="area_line" value="<?php if (isset($area_line)) {echo $area_line;} ?>" readonly tabindex="43">
 									</div>
 								</div>
 
@@ -1144,7 +1126,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="summarykmnw"> How to Know </label> <span class="required">*</span>
-										<select type="text" class="form-control" name="cus_how_know" id="cus_how_know">
+										<select type="text" class="form-control" name="cus_how_know" id="cus_how_know" tabindex="44">
 											<option value=""> Select How to Know </option>
 											<option value="0" <?php if (isset($how_to_know) and $how_to_know == '0') echo 'selected'; ?>> Customer Reference </option>
 											<option value="1" <?php if (isset($how_to_know) and $how_to_know == '1') echo 'selected'; ?>> Advertisement </option>
@@ -1160,27 +1142,24 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="loancnt"> Loan Counts </label>
-										<input type="text" class="form-control" name="cus_loan_count" id="cus_loan_count" value="<?php if (isset($loan_count)) {
-																																		echo $loan_count;
-																																	} ?>" readonly>
+										<input type="text" class="form-control" name="cus_loan_count" id="cus_loan_count" 
+										value="<?php if (isset($loan_count)) {echo $loan_count;} ?>" readonly tabindex="45">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="loandate"> First Loan Date </label>
-										<input type="text" class="form-control" name="cus_frst_loanDate" id="cus_frst_loanDate" value="<?php if (isset($first_loan_date)) {
-																																			echo $first_loan_date;
-																																		} ?>" readonly>
+										<input type="text" class="form-control" name="cus_frst_loanDate" id="cus_frst_loanDate" 
+										value="<?php if (isset($first_loan_date)) {echo $first_loan_date;} ?>" readonly tabindex="46">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="travel"> Travel with Company </label>
-										<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" value="<?php if (isset($travel_with_company)) {
-																																		echo $travel_with_company;
-																																	} ?>" readonly>
+										<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" 
+										value="<?php if (isset($travel_with_company)) {echo $travel_with_company;} ?>" readonly tabindex="47">
 									</div>
 								</div>
 
@@ -1193,9 +1172,8 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="minvcome"> Monthly Income </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income" placeholder="Enter Monthly Income" value="<?php if (isset($monthly_income)) {
-																																													echo $monthly_income;
-																																												} ?>">
+										<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income" placeholder="Enter Monthly Income" 
+										value="<?php if (isset($monthly_income)) {echo $monthly_income;} ?>" tabindex="48">
 										<span class="text-danger" style='display:none' id='monthlyIncomeCheck'>Please Enter Monthly Income </span>
 									</div>
 								</div>
@@ -1203,9 +1181,8 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="otherincome"> Other Income </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_other_income" id="cus_other_income" placeholder="Enter Other Income" value="<?php if (isset($other_income)) {
-																																											echo $other_income;
-																																										} ?>">
+										<input type="number" class="form-control" name="cus_other_income" id="cus_other_income" placeholder="Enter Other Income" 
+										value="<?php if (isset($other_income)) {echo $other_income;} ?>" tabindex="49">
 										<span class="text-danger" style='display:none' id='otherIncomeCheck'>Please Enter Other Income </span>
 									</div>
 								</div>
@@ -1213,9 +1190,8 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="suppincome"> Support Income </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_support_income" id="cus_support_income" placeholder="Enter Support Income" value="<?php if (isset($support_income)) {
-																																													echo $support_income;
-																																												} ?>">
+										<input type="number" class="form-control" name="cus_support_income" id="cus_support_income" placeholder="Enter Support Income" 
+										value="<?php if (isset($support_income)) {echo $support_income;} ?>" tabindex="50">
 										<span class="text-danger" style='display:none' id='supportIncomeCheck'>Please Enter Support Income </span>
 									</div>
 								</div>
@@ -1223,9 +1199,8 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="commit"> Commitment </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment" placeholder="Enter Commitment" value="<?php if (isset($commitment)) {
-																																										echo $commitment;
-																																									} ?>">
+										<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment" placeholder="Enter Commitment" 
+										value="<?php if (isset($commitment)) {echo $commitment;} ?>" tabindex="51">
 										<span class="text-danger" style='display:none' id='commitmentCheck'>Please Enter Commitment </span>
 									</div>
 								</div>
@@ -1233,9 +1208,8 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="duecapacity"> Monthly Due Capacity </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity" placeholder="Enter Monthly Due Capacity" value="<?php if (isset($monthly_due_capacity)) {
-																																															echo $monthly_due_capacity;
-																																														} ?>">
+										<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity" placeholder="Enter Monthly Due Capacity" 
+										value="<?php if (isset($monthly_due_capacity)) {echo $monthly_due_capacity;} ?>" tabindex="52">
 										<span class="text-danger" style='display:none' id='monthlyDueCapacityCheck'> Please Enter Monthly Due Capacity </span>
 									</div>
 								</div>
@@ -1243,9 +1217,8 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="loanlimit"> Loan Limit </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit" value="<?php if (isset($loan_limit)) {
-																																										echo $loan_limit;
-																																									} ?>">
+										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit" 
+										value="<?php if (isset($loan_limit)) {echo $loan_limit;} ?>" tabindex="53">
 										<span class="text-danger" style='display:none' id='loanLimitCheck'>Please Enter Loan Limit </span>
 									</div>
 								</div>
@@ -1255,7 +1228,7 @@ if (sizeof($getLoanCalculation) > 0) {
 							<hr>
 							<div class="row">
 								<div class="col-12">
-									<button type="button" class="btn btn-primary" id="add_cus_label" name="add_cus_label" data-toggle="modal" data-target=".addCusLabel" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
+									<button type="button" class="btn btn-primary" id="add_cus_label" name="add_cus_label" data-toggle="modal" data-target=".addCusLabel" style="padding: 5px 35px; float: right;" tabindex="54"><span class="icon-add"></span></button>
 								</div>
 							</div> <br>
 
@@ -1285,7 +1258,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="abtCustomer"> About Customer </label> <span class="required">*</span>
-										<textarea class="form-control" name="about_cus" id="about_cus"><?php if (isset($about_customer)) {
+										<textarea class="form-control" name="about_cus" id="about_cus" tabindex="55"><?php if (isset($about_customer)) {
 																											echo $about_customer;
 																										} ?></textarea>
 										<span class="text-danger" style='display:none' id='aboutcusCheck'> Please Enter About Customer </span>
@@ -1369,7 +1342,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="Communitcation"> Communitcation </label> <span class="required">*</span>
-										<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus">
+										<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus" tabindex="56">
 											<option value=""> Select Communication </option>
 											<option value="0" <?php if (isset($communication) and $communication == '0') echo 'selected'; ?>> Phone </option>
 											<option value="1" <?php if (isset($communication) and $communication == '1') echo 'selected'; ?>> Direct </option>
@@ -1385,7 +1358,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if (isset($com_audio)) {
 																																	echo $com_audio;
 																																} ?>">
-										<input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*">
+										<input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="57">
 										<?php if (isset($communication)) {
 											if ($communication == '0') { ?>
 												<a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>
@@ -1397,7 +1370,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="form-group">
 										<label for="Verificationperson"> Verification person </label> <span class="required">*</span>
 										<input type="hidden" id="verifyPerson" name="verifyPerson">
-										<select type="text" class="form-control" name="verification_person" id="verification_person" multiple>
+										<select type="text" class="form-control" name="verification_person" id="verification_person" multiple tabindex="58">
 											<option value=""> Select Verification Person </option>
 										</select>
 										<span class="text-danger" style='display:none' id='verificationPersonCheck'>Please Select Verification Person </span>
@@ -1407,7 +1380,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="Verificationlocation"> Verification location </label> <span class="required">*</span>
-										<select type="text" class="form-control" name="verification_location" id="verification_location">
+										<select type="text" class="form-control" name="verification_location" id="verification_location" tabindex="59">
 											<option value=""> Select Verification location </option>
 											<option value="0" <?php if (isset($verification_location) and $verification_location == '0') echo 'selected'; ?>> On Spot </option>
 											<option value="1" <?php if (isset($verification_location) and $verification_location == '1') echo 'selected'; ?>> Customer Spot </option>
@@ -1427,8 +1400,8 @@ if (sizeof($getLoanCalculation) > 0) {
 
 					<div class="col-md-12 ">
 						<div class="text-right">
-							<button type="submit" name="submit_verification" id="submit_verification" class="btn btn-primary" value="Submit" tabindex="19"><span class="icon-check"></span>&nbsp;Submit</button>
-							<button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button>
+							<button type="submit" name="submit_verification" id="submit_verification" class="btn btn-primary" value="Submit" tabindex="60"><span class="icon-check"></span>&nbsp;Submit</button>
+							<button type="reset" class="btn btn-outline-secondary" tabindex="61">Clear</button>
 						</div>
 					</div>
 
@@ -1474,35 +1447,35 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="CustomerId">Customer ID </label> <span class="required">* </span>
-										<input type="text" class="form-control" id="cus_id_doc" name="cus_id_doc" value='<?php if (isset($doc_cus_id)) echo $doc_cus_id; ?>' readonly>
+										<input type="text" class="form-control" id="cus_id_doc" name="cus_id_doc" value='<?php if (isset($doc_cus_id)) echo $doc_cus_id; ?>' readonly tabindex="1">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="CustomerName"> Customer Name </label> <span class="required"> * </span>
-										<input type="text" class="form-control" id="Customer_name" name="Customer_name" value='<?php if (isset($doc_cus_name)) echo $doc_cus_name; ?>' readonly>
+										<input type="text" class="form-control" id="Customer_name" name="Customer_name" value='<?php if (isset($doc_cus_name)) echo $doc_cus_name; ?>' readonly tabindex="2">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocArea"> Area </label> <span class="required"> * </span>
-										<input tabindex="4" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
+										<input tabindex="3" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocSubArea"> Sub Area </label> <span class="required"> * </span>
-										<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly>
+										<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly tabindex="4">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocID">Document ID</label> <span class="required"> * </span>
-										<input type="text" class="form-control" id="doc_id" name="doc_id" readonly>
+										<input type="text" class="form-control" id="doc_id" name="doc_id" readonly tabindex="5">
 									</div>
 								</div>
 							</div>
@@ -1513,7 +1486,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<!-- Signed Doc Info START -->
 					<div class="card">
 						<div class="card-header"> Signed Doc Info
-							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6"><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='signed_infoCheck'>Please Fill Signed Doc Info </span>
 						<div class="card-body">
@@ -1547,7 +1520,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<!-- Cheque Info START -->
 					<div class="card">
 						<div class="card-header"> Cheque Info
-							<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7"><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='Cheque_infoCheck'>Please Fill Cheque Info </span>
 						<div class="card-body">
@@ -1590,7 +1563,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="MortgageProcess"> Mortgage Process</label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="mortgage_process" name="mortgage_process">
+										<select type="text" class="form-control" id="mortgage_process" name="mortgage_process" tabindex="8">
 											<option value=""> Select Mortgage Process </option>
 											<option value="0" <?php if (isset($mortgage_process) and $mortgage_process == '0') echo 'selected'; ?>> YES </option>
 											<option value="1" <?php if (isset($mortgage_process) and $mortgage_process == '1') echo 'selected'; ?>> NO </option>
@@ -1607,7 +1580,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="PropertyHoldertype "> Property Holder type </label> <span class="required">&nbsp;*</span>
-											<select type="text" class="form-control" id="Propertyholder_type" name="Propertyholder_type">
+											<select type="text" class="form-control" id="Propertyholder_type" name="Propertyholder_type" tabindex="9">
 												<option value=""> Select Holder type </option>
 												<option value="0" <?php if (isset($Propertyholder_type) and $Propertyholder_type == '0') echo 'selected'; ?>> Customer </option>
 												<option value="1" <?php if (isset($Propertyholder_type) and $Propertyholder_type == '1') echo 'selected'; ?>> Guarantor </option>
@@ -1620,7 +1593,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="PropertyHolderName "> Property Holder Name </label>
-											<input type="text" class="form-control" id="Propertyholder_name" name="Propertyholder_name" value="<?php if (isset($Propertyholder_name)) echo $Propertyholder_name; ?>" readonly>
+											<input type="text" class="form-control" id="Propertyholder_name" name="Propertyholder_name" value="<?php if (isset($Propertyholder_name)) echo $Propertyholder_name; ?>" readonly tabindex="10">
 
 											<select type="text" class="form-control" id="Propertyholder_relationship_name" name="Propertyholder_relationship_name" style="display: none;">
 												<option value=""> Select Relationship </option>
@@ -1632,14 +1605,14 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="chequeRelationship"> Relationship </label>
-											<input type="text" class="form-control" id="doc_property_relation" name="doc_property_relation" value="<?php if (isset($doc_property_relation)) echo $doc_property_relation; ?>" readonly>
+											<input type="text" class="form-control" id="doc_property_relation" name="doc_property_relation" value="<?php if (isset($doc_property_relation)) echo $doc_property_relation; ?>" readonly tabindex="11">
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="DocPropertyType"> Property Type </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_pype" name="doc_property_pype" placeholder="Enter Property Type" value="<?php if (isset($doc_property_type)) echo $doc_property_type; ?>">
+											<input type="text" class="form-control" id="doc_property_pype" name="doc_property_pype" placeholder="Enter Property Type" value="<?php if (isset($doc_property_type)) echo $doc_property_type; ?>" tabindex="12">
 											<span class="text-danger" id="docpropertytypeCheck"> Enter Property Type </span>
 										</div>
 									</div>
@@ -1647,7 +1620,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="DocPropertyMeasurement"> Property Measurement </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_measurement" name="doc_property_measurement" placeholder="Enter Property Measurement" value="<?php if (isset($doc_property_measurement)) echo $doc_property_measurement; ?>">
+											<input type="text" class="form-control" id="doc_property_measurement" name="doc_property_measurement" placeholder="Enter Property Measurement" value="<?php if (isset($doc_property_measurement)) echo $doc_property_measurement; ?>" tabindex="13">
 											<span class="text-danger" id="docpropertymeasureCheck"> Enter Property Measurement </span>
 										</div>
 									</div>
@@ -1655,7 +1628,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="DocPropertyLocation"> Property Location </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_location" name="doc_property_location" placeholder="Enter Property Location" value="<?php if (isset($doc_property_location)) echo $doc_property_location; ?>">
+											<input type="text" class="form-control" id="doc_property_location" name="doc_property_location" placeholder="Enter Property Location" value="<?php if (isset($doc_property_location)) echo $doc_property_location; ?>" tabindex="14">
 											<span class="text-danger" id="docpropertylocCheck"> Enter Property Location </span>
 										</div>
 									</div>
@@ -1663,7 +1636,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="PropertyValue"> Property Value </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_value" name="doc_property_value" placeholder="Enter Property Value" value="<?php if (isset($doc_property_value)) echo $doc_property_value; ?>">
+											<input type="text" class="form-control" id="doc_property_value" name="doc_property_value" placeholder="Enter Property Value" value="<?php if (isset($doc_property_value)) echo $doc_property_value; ?>" tabindex="15">
 											<span class="text-danger" id="docpropertyvalueCheck"> Enter Property Value </span>
 										</div>
 									</div>
@@ -1738,7 +1711,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="EndorsementProcess"> Endorsement Process</label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="endorsement_process" name="endorsement_process">
+										<select type="text" class="form-control" id="endorsement_process" name="endorsement_process" tabindex="16">
 											<option value=""> Select Endorsement Process </option>
 											<option value="0" <?php if (isset($endorsement_process) and $endorsement_process == '0') echo 'selected'; ?>> YES </option>
 											<option value="1" <?php if (isset($endorsement_process) and $endorsement_process == '1') echo 'selected'; ?>> NO </option>
@@ -1755,7 +1728,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="OwnerType "> Owner Type </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="owner_type" name="owner_type">
+										<select type="text" class="form-control" id="owner_type" name="owner_type" tabindex="17">
 											<option value=""> Select Holder type </option>
 											<option value="0" <?php if (isset($owner_type) and $owner_type == '0') echo 'selected'; ?>> Customer </option>
 											<option value="1" <?php if (isset($owner_type) and $owner_type == '1') echo 'selected'; ?>> Guarantor </option>
@@ -1770,7 +1743,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<label for="OwnerName "> Owner Name </label>
 										<input type="text" class="form-control" id="owner_name" name="owner_name" value="<?php if (isset($owner_name)) echo $owner_name; ?>" readonly>
 
-										<select type="text" class="form-control" id="ownername_relationship_name" name="ownername_relationship_name" style="display: none;">
+										<select type="text" class="form-control" id="ownername_relationship_name" name="ownername_relationship_name" style="display: none;" tabindex="18">
 											<option value=""> Select Relationship </option>
 										</select>
 									</div>
@@ -1780,14 +1753,14 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="chequeRelationship"> Relationship </label>
-										<input type="text" class="form-control" id="en_relation" name="en_relation" value="<?php if (isset($en_relation)) echo $en_relation; ?>" readonly>
+										<input type="text" class="form-control" id="en_relation" name="en_relation" value="<?php if (isset($en_relation)) echo $en_relation; ?>" readonly tabindex="19">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="Vehicletype"> Vehicle type </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="vehicle_type" name="vehicle_type">
+										<select type="text" class="form-control" id="vehicle_type" name="vehicle_type" tabindex="20">
 											<option value=""> Select Vehicle type </option>
 											<option value="0" <?php if (isset($vehicle_type) and $vehicle_type == '0') echo 'selected'; ?>> 2 Wheeler </option>
 											<option value="1" <?php if (isset($vehicle_type) and $vehicle_type == '1') echo 'selected'; ?>> 4 Wheeler </option>
@@ -1799,7 +1772,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="VehicleProcess"> Vehicle Process </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="vehicle_process" name="vehicle_process">
+										<select type="text" class="form-control" id="vehicle_process" name="vehicle_process" tabindex="21 ">
 											<option value=""> Select Vehicle Process </option>
 											<option value="0" <?php if (isset($vehicle_process) and $vehicle_process == '0') echo 'selected'; ?>> New </option>
 											<option value="1" <?php if (isset($vehicle_process) and $vehicle_process == '1') echo 'selected'; ?>> Old </option>
@@ -1811,7 +1784,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="endro_Company"> Company </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="en_Company" name="en_Company" placeholder="Enter Company" value="<?php if (isset($en_Company)) echo $en_Company; ?>">
+										<input type="text" class="form-control" id="en_Company" name="en_Company" placeholder="Enter Company" value="<?php if (isset($en_Company)) echo $en_Company; ?>" tabindex="22">
 										<span class="text-danger" id="enCompanyCheck"> Enter Company </span>
 									</div>
 								</div>
@@ -1819,7 +1792,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="enModel"> Model </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="en_Model" name="en_Model" placeholder="Enter Model" value="<?php if (isset($en_Model)) echo $en_Model; ?>">
+										<input type="text" class="form-control" id="en_Model" name="en_Model" placeholder="Enter Model" value="<?php if (isset($en_Model)) echo $en_Model; ?>" tabindex="23">
 										<span class="text-danger" id="enModelCheck"> Enter Model </span>
 									</div>
 								</div>
@@ -1872,7 +1845,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<!-- Gold Info START-->
 					<div class="card">
 						<div class="card-header"> Gold Info
-							<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;" tabindex="24"><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
 						<div class="card-body">
@@ -1996,7 +1969,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="<?php if (isset($document_name)) echo $document_name; ?>">
+										<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="<?php if (isset($document_name)) echo $document_name; ?>" tabindex="25">
 										<span class="text-danger" id="documentnameCheck"> Enter Document name </span>
 									</div>
 								</div>
@@ -2004,7 +1977,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="<?php if (isset($document_details)) echo $document_details; ?>">
+										<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="<?php if (isset($document_details)) echo $document_details; ?>" tabindex="26">
 										<span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
 									</div>
 								</div>
@@ -2012,7 +1985,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="Documenttype"> Document Type </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="document_type" name="document_type">
+										<select type="text" class="form-control" id="document_type" name="document_type" tabindex="27">
 											<option value=''> Select Document Type </option>
 											<option value='0' <?php if (isset($document_type) and $document_type == '0') echo 'selected'; ?>> Original </option>
 											<option value='1' <?php if (isset($document_type) and $document_type == '1') echo 'selected'; ?>> Xerox </option>
@@ -2024,7 +1997,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocumentHolder"> Document Holder </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="document_holder" name="document_holder">
+										<select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="28">
 											<option value=""> Select Holder type </option>
 											<option value="0" <?php if (isset($document_holder) and $document_holder == '0') echo 'selected'; ?>> Customer </option>
 											<option value="1" <?php if (isset($document_holder) and $document_holder == '1') echo 'selected'; ?>> Guarantor </option>
@@ -2037,9 +2010,9 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="docholdername"> Holder Name </label>
-										<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="<?php if (isset($docholder_name)) echo $docholder_name; ?>" readonly>
+										<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="<?php if (isset($docholder_name)) echo $docholder_name; ?>" readonly tabindex="29">
 
-										<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;">
+										<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="30">
 											<option value=""> Select Relationship </option>
 										</select>
 									</div>
@@ -2049,7 +2022,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocRelationship"> Relationship </label>
-										<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="<?php if (isset($doc_relation)) echo $doc_relation; ?>" readonly>
+										<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="<?php if (isset($doc_relation)) echo $doc_relation; ?>" readonly tabindex="31">
 									</div>
 								</div>
 
@@ -2061,8 +2034,8 @@ if (sizeof($getLoanCalculation) > 0) {
 
 					<div class="col-md-12 ">
 						<div class="text-right">
-							<button type="submit" name="submit_documentation" id="submit_documentation" class="btn btn-primary" value="Submit" tabindex="19"><span class="icon-check"></span>&nbsp;Submit</button>
-							<button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button>
+							<button type="submit" name="submit_documentation" id="submit_documentation" class="btn btn-primary" value="Submit" tabindex="32"><span class="icon-check"></span>&nbsp;Submit</button>
+							<button type="reset" class="btn btn-outline-secondary" tabindex="33">Clear</button>
 						</div>
 					</div>
 
@@ -2134,13 +2107,13 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="user_type">User type</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="user_type" name="user_type" readonly value='<?php if (isset($user_type)) echo $user_type; ?>'>
+										<input type="text" class="form-control" id="user_type" name="user_type" readonly value='<?php if (isset($user_type)) echo $user_type; ?>' tabindex="1">
 									</div>
 								</div>
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="user">User Name</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="user" name="user" readonly value='<?php if (isset($user_name)) echo $user_name; ?>'>
+										<input type="text" class="form-control" id="user" name="user" readonly value='<?php if (isset($user_name)) echo $user_name; ?>' tabindex="2">
 									</div>
 								</div>
 
@@ -2153,7 +2126,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																																echo 'Yes';
 																															} else {
 																																echo 'No';
-																															} ?>" readonly>
+																															} ?>" readonly tabindex="3">
 									</div>
 								</div>
 
@@ -2162,21 +2135,21 @@ if (sizeof($getLoanCalculation) > 0) {
 																																								} ?>>
 									<div class="form-group">
 										<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
+										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly tabindex="4">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocArea"> Area </label> <span class="required"> * </span>
-										<input tabindex="4" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
+										<input tabindex="5" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="DocSubArea"> Sub Area </label> <span class="required"> * </span>
-										<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly>
+										<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly tabindex="6">
 									</div>
 								</div>
 
@@ -2185,14 +2158,14 @@ if (sizeof($getLoanCalculation) > 0) {
 																																									} ?>>
 									<div class="form-group">
 										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
+										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly tabindex="7">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="req_code">Request ID</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="req_code" name="req_code" readonly value='<?php if (isset($req_code)) echo $req_code; ?>'>
+										<input type="text" class="form-control" id="req_code" name="req_code" readonly value='<?php if (isset($req_code)) echo $req_code; ?>' tabindex="8">
 									</div>
 								</div>
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -2202,7 +2175,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																														echo $dor;
 																													} else {
 																														echo date('Y-m-d');
-																													} ?>'>
+																													} ?>' tabindex="9">
 									</div>
 								</div>
 							</div>
@@ -2222,7 +2195,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																																				echo $cus_id_loan;
 																																			} elseif (isset($cus_id_lc)) {
 																																				echo $cus_id_lc;
-																																			} ?>'>
+																																			} ?>' tabindex="10">
 											</div>
 										</div>
 
@@ -2233,7 +2206,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																																					echo $cus_name_loan;
 																																				} elseif (isset($cus_name_lc)) {
 																																					echo $cus_name_lc;
-																																				} ?>'>
+																																				} ?>' tabindex="11">
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
@@ -2243,7 +2216,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																																					echo $cus_data_loan;
 																																				} elseif (isset($cus_data_lc)) {
 																																					echo $cus_data_lc;
-																																				} ?>'>
+																																				} ?>' tabindex="12">
 											</div>
 										</div>
 
@@ -2254,7 +2227,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																																					echo $mobile_loan;
 																																				} elseif (isset($mobile_lc)) {
 																																					echo $mobile_lc;
-																																				} ?>'>
+																																				} ?>' tabindex="13">
 											</div>
 										</div>
 									</div>
@@ -2295,7 +2268,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
 											<div class="form-group">
 												<label class="label">Loan Category</label>&nbsp;<span class="text-danger">*</span>
-												<select tabindex="1" type="text" class="form-control" id="loan_category" name="loan_category">
+												<select tabindex="15" type="text" class="form-control" id="loan_category" name="loan_category">
 													<option value="">Select Loan Category</option>
 												</select>
 												<span class="text-danger" style='display:none' id='loancategoryCheck'>Please Select Loan Category</span>
@@ -2304,7 +2277,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Sub Category</label>&nbsp;<span class="text-danger">*</span>
-												<select tabindex="2" type="text" class="form-control" id="sub_category" name="sub_category">
+												<select tabindex="16" type="text" class="form-control" id="sub_category" name="sub_category">
 													<option value="">Select Sub Category</option>
 												</select>
 												<span class="text-danger" style='display:none' id='subcategoryCheck'>Please Select Sub Category</span>
@@ -2323,7 +2296,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Total Value</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="4" type="text" class="form-control" id="tot_value" name="tot_value" value='<?php if (isset($tot_value_lc)) {
+												<input tabindex="17" type="text" class="form-control" id="tot_value" name="tot_value" value='<?php if (isset($tot_value_lc)) {
 																																				echo $tot_value_lc;
 																																			} elseif (isset($tot_value)) {
 																																				echo $tot_value;
@@ -2334,7 +2307,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Advance Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="5" type="text" class="form-control" id="ad_amt" name="ad_amt" value='<?php if (isset($ad_amt_lc)) {
+												<input tabindex="18" type="text" class="form-control" id="ad_amt" name="ad_amt" value='<?php if (isset($ad_amt_lc)) {
 																																			echo $ad_amt_lc;
 																																		} elseif (isset($ad_amt)) {
 																																			echo $ad_amt;
@@ -2345,7 +2318,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Loan Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="6" type="text" class="form-control" id="loan_amt" name="loan_amt" value='<?php if (isset($loan_amt_lc)) {
+												<input tabindex="19" type="text" class="form-control" id="loan_amt" name="loan_amt" value='<?php if (isset($loan_amt_lc)) {
 																																				echo $loan_amt_lc;
 																																			} elseif (isset($loan_amt)) {
 																																				echo $loan_amt;
@@ -2357,7 +2330,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Profit Type</label>&nbsp;<span class="text-danger">*</span>
-												<select tabindex="7" type="text" class="form-control" id="profit_type" name="profit_type">
+												<select tabindex="20" type="text" class="form-control" id="profit_type" name="profit_type">
 													<option value="">Select Profit Type</option>
 													<option value="1" <?php if (isset($profit_type_lc) and $profit_type_lc == '1') echo 'selected'; ?>>Calculation</option>
 													<option value="2" <?php if (isset($profit_type_lc) and $profit_type_lc == '2') echo 'selected'; ?>>Scheme</option>
@@ -2368,19 +2341,19 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 calculation" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Due Method</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="8" type="text" class="form-control" id="due_method_calc" name="due_method_calc" readonly value='Monthly'>
+												<input tabindex="21" type="text" class="form-control" id="due_method_calc" name="due_method_calc" readonly value='Monthly'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 calculation" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Due Type</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="9" type="text" class="form-control" id="due_type" name="due_type" readonly value='<?php if (isset($due_type)) echo $due_type; ?>'>
+												<input tabindex="22" type="text" class="form-control" id="due_type" name="due_type" readonly value='<?php if (isset($due_type)) echo $due_type; ?>'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 emi-calculation" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Profit Method</label>&nbsp;<span class="text-danger">*</span>
-												<select tabindex="10" type="text" class="form-control" id="profit_method" name="profit_method">
+												<select tabindex="23" type="text" class="form-control" id="profit_method" name="profit_method">
 													<option value="">Select Profit Method</option>
 												</select>
 												<span class="text-danger" style='display:none' id='profit_methodCheck'>Please Select Profit Method</span>
@@ -2389,13 +2362,13 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 interest-calculation" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Calculation Method</label>&nbsp;<span class="text-danger">*</span>
-												<input tabindex="11" type="text" class="form-control" id="calc_method" name="calc_method" readonly value='<?php if (isset($calc_method)) echo $calc_method; ?>'>
+												<input tabindex="24" type="text" class="form-control" id="calc_method" name="calc_method" readonly value='<?php if (isset($calc_method)) echo $calc_method; ?>'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 scheme" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Due Method</label>&nbsp;<span class="text-danger">*</span>
-												<select tabindex="8" type="text" class="form-control" id="due_method_scheme" name="due_method_scheme">
+												<select tabindex="25" type="text" class="form-control" id="due_method_scheme" name="due_method_scheme">
 													<option value="">Select Due Method</option>
 													<option value="1" <?php if (isset($due_method_scheme_lc) and $due_method_scheme_lc == '1') echo 'selected'; ?>>Monthly</option>
 													<option value="2" <?php if (isset($due_method_scheme_lc) and $due_method_scheme_lc == '2') echo 'selected'; ?>>Weekly</option>
@@ -2407,7 +2380,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 day_scheme" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Day</label>&nbsp;<span class="text-danger">*</span>
-												<select tabindex="9" type="text" class="form-control" id="day_scheme" name="day_scheme">
+												<select tabindex="26" type="text" class="form-control" id="day_scheme" name="day_scheme">
 													<option value="">Select a Day</option>
 													<option value="1" <?php if (isset($day_scheme_lc) and $day_scheme_lc == '1') echo 'selected'; ?>>Monday</option>
 													<option value="2" <?php if (isset($day_scheme_lc) and $day_scheme_lc == '2') echo 'selected'; ?>>Tuesday</option>
@@ -2423,7 +2396,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 scheme" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Scheme Name</label>&nbsp;<span class="text-danger">*</span>
-												<select tabindex="10" type="text" class="form-control" id="scheme_name" name="scheme_name">
+												<select tabindex="27" type="text" class="form-control" id="scheme_name" name="scheme_name">
 													<option value="">Select Scheme Name</option>
 												</select>
 												<span class="text-danger" style='display:none' id='scheme_nameCheck'>Please Select Scheme Name</span>
@@ -2432,28 +2405,28 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Interest Rate </label>&nbsp;<span class="text-danger min-max-int">*</span><!-- Min and max intrest rate-->
-												<input tabindex="12" type="text" class="form-control" id="int_rate" name="int_rate" value='<?php if (isset($int_rate)) echo $int_rate; ?>'>
+												<input tabindex="28" type="text" class="form-control" id="int_rate" name="int_rate" value='<?php if (isset($int_rate)) echo $int_rate; ?>'>
 												<span class="text-danger" style='display:none' id='int_rateCheck'>Please Enter Interest Rate</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Due Period </label>&nbsp;<span class="text-danger min-max-due">*</span><!-- Min and max Profit Method-->
-												<input tabindex="13" type="text" class="form-control" id="due_period" name="due_period" value=''>
+												<input tabindex="29" type="text" class="form-control" id="due_period" name="due_period" value=''>
 												<span class="text-danger" style='display:none' id='due_periodCheck'>Please Enter Due Period</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Document Charges </label>&nbsp;<span class="text-danger min-max-doc">*</span><!-- Min and max Document charges-->
-												<input tabindex="14" type="text" class="form-control" id="doc_charge" name="doc_charge" value='<?php if (isset($doc_charge)) echo $doc_charge; ?>'>
+												<input tabindex="30" type="text" class="form-control" id="doc_charge" name="doc_charge" value='<?php if (isset($doc_charge)) echo $doc_charge; ?>'>
 												<span class="text-danger" style='display:none' id='doc_chargeCheck'>Please Enter Document Charge</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Processing Fees</label>&nbsp;<span class="text-danger min-max-proc">*</span><!-- Min and max Processing fee-->
-												<input tabindex="15" type="text" class="form-control" id="proc_fee" name="proc_fee" value='<?php if (isset($proc_fee)) echo $proc_fee; ?>'>
+												<input tabindex="31" type="text" class="form-control" id="proc_fee" name="proc_fee" value='<?php if (isset($proc_fee)) echo $proc_fee; ?>'>
 												<span class="text-danger" style='display:none' id='proc_feeCheck'>Please Enter Processing fee</span>
 											</div>
 										</div>
@@ -2540,7 +2513,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Due Start From</label>&nbsp;<span class="text-danger">*</span>
-												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if (isset($due_start_from)) echo $due_start_from; ?>'>
+												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if (isset($due_start_from)) echo $due_start_from; ?>' tabindex="32">
 												<span class="text-danger" style='display:none' id='due_start_fromCheck'>Please Select Due Start Month</span>
 											</div>
 										</div>
@@ -2554,7 +2527,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Collection Method</label>&nbsp;<span class="text-danger">*</span>
-												<select type="text" class="form-control" id="collection_method" name="collection_method">
+												<select type="text" class="form-control" id="collection_method" name="collection_method" tabindex="33">
 													<option value="">Select Collection Method</option>
 													<option value="1" <?php if (isset($collection_method) and $collection_method == '1') echo 'selected'; ?>>BySelf</option>
 													<option value="2" <?php if (isset($collection_method) and $collection_method == '2') echo 'selected'; ?>>Spot Collection</option>
@@ -2572,8 +2545,8 @@ if (sizeof($getLoanCalculation) > 0) {
 					<!-- Collection Info End -->
 					<div class="col-md-12 ">
 						<div class="text-right">
-							<button type="submit" name="submit_loan_calculation" id="submit_loan_calculation" class="btn btn-primary" value="Submit" tabindex="19"><span class="icon-check"></span>&nbsp;Submit</button>
-							<button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button>
+							<button type="submit" name="submit_loan_calculation" id="submit_loan_calculation" class="btn btn-primary" value="Submit" tabindex="34"><span class="icon-check"></span>&nbsp;Submit</button>
+							<button type="reset" class="btn btn-outline-secondary" tabindex="35">Clear</button>
 						</div>
 					</div>
 				</div>

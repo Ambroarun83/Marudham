@@ -109,7 +109,7 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">State</label>&nbsp;<span class="text-danger">*</span>
-                                            <select type="text" class="form-control" id="state" name="state"  >
+                                            <select type="text" class="form-control" id="state" name="state" tabindex="1" >
 												<option value="SelectState">Select State</option>
 												<option value="TamilNadu" <?php if(isset($state) && $state == 'TamilNadu') echo 'selected' ?>>Tamil Nadu</option>
 												<option value="Puducherry"  <?php if(isset($state) && $state == 'Puducherry') echo 'selected' ?> >Puducherry</option>
@@ -120,7 +120,7 @@ if($idupd>0)
                                         <div class="form-group">
 											<label for="disabledInput">District</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="district1" name="district1" >
-                                            <select type="text" class="form-control" id="district" name="district" >
+                                            <select type="text" class="form-control" id="district" name="district" tabindex="2">
 												<option value="Select District">Select District</option>
 											</select>	
                                         </div>
@@ -129,7 +129,7 @@ if($idupd>0)
                                         <div class="form-group">
                                             <label for="disabledInput">Taluk</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="taluk1" name="taluk1" >
-                                            <select type="text" class="form-control" id="taluk" name="taluk" >
+                                            <select type="text" class="form-control" id="taluk" name="taluk" tabindex="3">
 												<option value="Select Taluk">Select Taluk</option>
 											</select>
                                         </div>
@@ -137,7 +137,7 @@ if($idupd>0)
 									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Area</label>&nbsp;<span class="text-danger">*</span>
-                                            <select tabindex="2" type="text" class="form-control" id="area" name="area" tabindex="1" >
+                                            <select type="text" class="form-control" id="area" name="area" tabindex="4" >
 											<option value="">Select Area</option>   
 											<!-- <?php if (sizeof($areaList)>0) { 
 											for($j=0;$j<count($areaList);$j++) { ?>
@@ -150,14 +150,14 @@ if($idupd>0)
                                     </div>
                                     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12" style="margin-top: 19px;">
                                         <div class="form-group float-right">
-                                            <button type="button"  tabindex="3" class="btn btn-primary" id="add_area" name="add_area"  style="padding: 5px 35px;"><span class="icon-add"></span></button>
+                                            <button type="button"  tabindex="5" class="btn btn-primary" id="add_area" name="add_area"  style="padding: 5px 35px;"><span class="icon-add"></span></button>
                                         </div>
                                     </div>
 									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Sub Area</label>&nbsp;<span class="text-danger">*</span>
 											<input type="hidden" id="sub_area" name="sub_area" value="">
-											<select tabindex="2" type="text" class="form-control " id="sub_area1" name="sub_area1" tabindex="1" multiple  data-selected-text-format="count > 2" data-actions-box="true">
+											<select type="text" class="form-control " id="sub_area1" name="sub_area1" tabindex="6" multiple  data-selected-text-format="count > 2" data-actions-box="true">
 												<option value="">Select Sub Area</option>   
 												<!-- <?php if (sizeof($subAreaList)>0) { 
 												for($j=0;$j<count($subAreaList);$j++) { ?>
@@ -170,13 +170,13 @@ if($idupd>0)
                                     </div>
 									<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12" style="margin-top: 19px;">
                                         <div class="form-group float-right">
-                                            <button type="button"  tabindex="3" class="btn btn-primary" id="add_sub_area" name="add_sub_area"  style="padding: 5px 35px;"><span class="icon-add"></span></button>
+                                            <button type="button"  tabindex="7" class="btn btn-primary" id="add_sub_area" name="add_sub_area"  style="padding: 5px 35px;"><span class="icon-add"></span></button>
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Pincode</label>&nbsp;<span class="text-danger"></span>
-                                            <input type="number" onKeyPress="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>"placeholder="Enter Pincode">
+                                            <input type="number" tabindex="8" onKeyPress="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>"placeholder="Enter Pincode">
                                         </div>
                                     </div>
 									<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -194,8 +194,8 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div><br><br><br><br>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-										<button type="button"  tabindex="13"  id="downloadarea" name="downloadarea" class="btn btn-primary"><span class="icon-download"></span>Download</button>
-										<button type="button" data-toggle="modal" data-target="#areaUploadModal" tabindex="14"  id="uploadArea" name="uploadArea"  class="btn btn-primary"><span class="icon-upload"></span>Upload</button>		
+										<button type="button"  tabindex="9"  id="downloadarea" name="downloadarea" class="btn btn-primary"><span class="icon-download"></span>Download</button>
+										<button type="button" data-toggle="modal" data-target="#areaUploadModal" tabindex="10"  id="uploadArea" name="uploadArea"  class="btn btn-primary"><span class="icon-upload"></span>Upload</button>		
 									</div>
 
 								</div>
@@ -209,8 +209,8 @@ if($idupd>0)
 						<!-- <a href="edit_area_creation">
 							<button type="button" class="btn btn-outline-secondary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
 						</a> -->
-							<button type="submit" name="submit_area_creation" id="submit_area_creation" class="btn btn-primary" value="Submit" tabindex="15"><span class="icon-check"></span>&nbsp;Submit</button>
-							<button type="reset" class="btn btn-outline-secondary" tabindex="7" >Clear</button>
+							<button type="submit" name="submit_area_creation" id="submit_area_creation" class="btn btn-primary" value="Submit" tabindex="11"><span class="icon-check"></span>&nbsp;Submit</button>
+							<button type="reset" class="btn btn-outline-secondary" tabindex="12" >Clear</button>
 						</div>
 					
 				</div>

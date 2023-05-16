@@ -282,7 +282,7 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if(isset($role)){ if($role == '3') {?>style="display: none" <?php } } ?>>
 										<div class="form-group">
 											<label for="declaration" >Declaration</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if(isset($declaration)) echo $declaration; ?>' tabindex='4' placeholder="Enter Declaration"  pattern="[a-zA-Z\s]+">
+											<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if(isset($declaration)) echo $declaration; ?>' tabindex='6' placeholder="Enter Declaration"  pattern="[a-zA-Z\s]+">
 											<span class="text-danger" style='display:none' id='declarationCheck'>Please Enter Declaration</span>
 										</div>
 									</div>
@@ -295,7 +295,7 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="dor">Date Of request</label><span class="required">&nbsp;*</span>
-											<input type="hidden" class="form-control" id="dor" name="dor" readonly value='<?php if(isset($dor1)) {echo $dor1;}else{echo date('Y-m-d');} ?>' tabindex='8'>
+											<input type="hidden" class="form-control" id="dor" name="dor" readonly value='<?php if(isset($dor1)) {echo $dor1;}else{echo date('Y-m-d');} ?>' >
 											<input type="text" class="form-control" id="dor1" name="dor1" readonly value='<?php if(isset($dor)) {echo $dor;}else{echo date('d-m-Y');} ?>' tabindex='8'>
 										</div>
 									</div>
@@ -488,7 +488,7 @@ if($idupd>0)
 									<div class="form-group" style="margin-left: 30px;">
 										<label for="pic"style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
 										<img id='imgshow' src='img/avatar.png'/>
-										<input type="file" class="form-control" id="pic" name="pic" value='<?php if(isset($pic)) {echo $pic;} ?>' tabindex='15' >
+										<input type="file" class="form-control" id="pic" name="pic" value='<?php if(isset($pic)) {echo $pic;} ?>' tabindex='30' >
 										<span class="text-danger" style='display:none' id='picCheck'>Please Choose Image</span>
 									</div>
 								</div>
@@ -503,7 +503,7 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label class="label">Loan Category</label>&nbsp;<span class="text-danger">*</span>
-									<select tabindex="30" type="text" class="form-control" id="loan_category" name="loan_category">
+									<select tabindex="31" type="text" class="form-control" id="loan_category" name="loan_category">
 										<option value="">Select Loan Category</option> 
 										<?php if (sizeof($loanCategoryList)>0) { 
 											for($j=0;$j<count($loanCategoryList);$j++) { ?>
@@ -517,7 +517,7 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="disabledInput">Sub Category</label>&nbsp;<span class="text-danger">*</span>
-									<select tabindex="31" type="text" class="form-control" id="sub_category" name="sub_category" >
+									<select tabindex="32" type="text" class="form-control" id="sub_category" name="sub_category" >
 										<option value="">Select Sub Category</option> 
 									</select> 
 									<span class="text-danger" style='display:none' id='subcategoryCheck'>Please Select Sub Category</span>
@@ -527,14 +527,14 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" style="display:none">
 								<div class="form-group">
 									<label for="tot_value">Total value</label><span class="required">&nbsp;*</span>
-									<input type="number" class="form-control" id="tot_value" name="tot_value" value='<?php if(isset($tot_value)) {echo $tot_value;} ?>' tabindex='32' placeholder="Enter Total Value">
+									<input type="number" class="form-control" id="tot_value" name="tot_value" value='<?php if(isset($tot_value)) {echo $tot_value;} ?>' tabindex='33' placeholder="Enter Total Value">
 								</div>
 								<span class="text-danger" style='display:none' id='totvalueCheck'>Please Enter Total Value</span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" style="display:none">
 								<div class="form-group">
 									<label for="ad_amt">Advance Amount</label><span class="required">&nbsp;*</span>
-									<input type="number" class="form-control" id="ad_amt" name="ad_amt" value='<?php if(isset($ad_amt)) {echo $ad_amt;} ?>' tabindex='33' placeholder="Enter Advance Amount">
+									<input type="number" class="form-control" id="ad_amt" name="ad_amt" value='<?php if(isset($ad_amt)) {echo $ad_amt;} ?>' tabindex='34' placeholder="Enter Advance Amount">
 									<span class="text-danger" style='display:none' id='adamtCheck'>Please Enter Advance Amount</span>
 								</div>
 							</div>
@@ -542,13 +542,13 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" style="display:none">
 								<div class="form-group">
 									<label for="ad_perc">Advance %</label><span class="required">&nbsp;*</span>
-									<input type="text" class="form-control" id="ad_perc" name="ad_perc" readonly value='<?php if(isset($ad_perc)) {echo $ad_perc;} ?>' tabindex='34'>
+									<input type="text" class="form-control" id="ad_perc" name="ad_perc" readonly value='<?php if(isset($ad_perc)) {echo $ad_perc;} ?>' tabindex='35'>
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 loan_amt" style="display:none">
 								<div class="form-group">
 									<label for="loan_amt">Loan Amount</label><span class="required">&nbsp;*</span>
-									<input type="text" class="form-control" id="loan_amt" name="loan_amt" readonly value='<?php if(isset($loan_amt)) {echo $loan_amt;} ?>' tabindex='35'>
+									<input type="text" class="form-control" id="loan_amt" name="loan_amt" readonly value='<?php if(isset($loan_amt)) {echo $loan_amt;} ?>' tabindex='36'>
 									<span class="text-danger" style='display:none' id='loanamtCheck'>Please Enter Loan Amount</span>
 								</div>
 							</div>
@@ -654,8 +654,8 @@ if($idupd>0)
 				</div>
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_request" id="submit_request" class="btn btn-primary" value="Submit" tabindex="107"><span class="icon-check"></span>&nbsp;Submit</button>
-						<button type="reset" class="btn btn-outline-secondary" tabindex="20" >Clear</button>
+						<button type="submit" name="submit_request" id="submit_request" class="btn btn-primary" value="Submit" tabindex="108"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="reset" class="btn btn-outline-secondary" tabindex="109" >Clear</button>
 					</div>
 				</div>
 

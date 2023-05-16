@@ -616,7 +616,7 @@ if(sizeof($documentationInfo)>0){
 								<div class="form-group">
 									<label for="mem_name">Member Name</label><span class="required">&nbsp;*</span>
 									<input type="hidden"id="mem_id" name="mem_id" value='' readonly>
-									<input type="text" class="form-control" id="mem_name" name="mem_name" value='' readonly tabindex='2'>
+									<input type="text" class="form-control" id="mem_name" name="mem_name" value='' readonly tabindex='3'>
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
@@ -626,7 +626,7 @@ if(sizeof($documentationInfo)>0){
 									<input type="hidden" class="form-control" id="ack_fingerprint" name="ack_fingerprint" value='' readonly >
 									<input type="text" class="form-control" value='' readonly style="visibility:hidden;"><!--Just for spacing-->
 									<button type="button" class='btn btn-success scanBtn' id="" name="" style='background-color:#009688;margin-top: -50px;width: 509px;' 
-									onclick="event.preventDefault()" title='Put Your Thumb'><i class="material-icons" id="icon-flipped"  tabindex='3'>&#xe90d;</i>&nbsp;Scan</button>
+									onclick="event.preventDefault()" title='Put Your Thumb'><i class="material-icons" id="icon-flipped"  tabindex='4'>&#xe90d;</i>&nbsp;Scan</button>
 									<span class="text-danger scanBtnCheck" style="display:none">Please Scan fingerprint</span>
 								</div>
 							</div>
@@ -640,7 +640,7 @@ if(sizeof($documentationInfo)>0){
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_noc" id="submit_noc" class="btn btn-primary" value="Submit"  tabindex='4'><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="submit" name="submit_noc" id="submit_noc" class="btn btn-primary" value="Submit"  tabindex='5'><span class="icon-check"></span>&nbsp;Submit</button>
 					</div>
 				</div>
 				<!-- Submit Button End -->

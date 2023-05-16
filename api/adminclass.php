@@ -54,6 +54,10 @@ require 'PHPMailerAutoload.php';
                 $detailrecords['collectionmodule']              = strip_tags($row->collectionmodule);
                 $detailrecords['collection']              = strip_tags($row->collection);
                 $detailrecords['collection_access']              = strip_tags($row->collection_access);
+                $detailrecords['closedmodule']              = strip_tags($row->closedmodule);
+                $detailrecords['closed']              = strip_tags($row->closed);
+                $detailrecords['nocmodule']              = strip_tags($row->nocmodule);
+                $detailrecords['noc']              = strip_tags($row->noc);
                 $detailrecords['status']                     = strip_tags($row->status);
             }
             return $detailrecords;
@@ -2306,11 +2310,35 @@ require 'PHPMailerAutoload.php';
         }else{
             $collection_access=1;
         }
+        if(isset($_POST['closedmodule']) &&    $_POST['closedmodule'] == 'Yes')
+        {
+            $closedmodule=0;
+        }else{
+            $closedmodule=1;
+        }
+        if(isset($_POST['closed']) &&    $_POST['closed'] == 'Yes')
+        {
+            $closed=0;
+        }else{
+            $closed=1;
+        }
+        if(isset($_POST['nocmodule']) &&    $_POST['nocmodule'] == 'Yes')
+        {
+            $nocmodule=0;
+        }else{
+            $nocmodule=1;
+        }
+        if(isset($_POST['noc']) &&    $_POST['noc'] == 'Yes')
+        {
+            $noc=0;
+        }else{
+            $noc=1;
+        }
         $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
         `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,
-		`collectionmodule`,`collection`,`collection_access`,`insert_login_id`,`created_date`)
+		`collectionmodule`,`collection`,`collection_access`,`closedmodule`,`closed`,`nocmodule`,`noc`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
@@ -2319,7 +2347,8 @@ require 'PHPMailerAutoload.php';
         '".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
         '".strip_tags($request_list_access)."','".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($approvalmodule)."','".strip_tags($approval)."',
         '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($loanissuemodule)."','".strip_tags($loan_issue)."',
-		'".strip_tags($collectionmodule)."','".strip_tags($collection)."','".strip_tags($collection_access)."','".strip_tags($userid)."',current_timestamp )";
+		'".strip_tags($collectionmodule)."','".strip_tags($collection)."','".strip_tags($collection_access)."','".strip_tags($closedmodule)."','".strip_tags($closed)."',
+		'".strip_tags($nocmodule)."','".strip_tags($noc)."','".strip_tags($userid)."',current_timestamp )";
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
 
@@ -2547,6 +2576,30 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$collection_access=1;
 	}
+	if(isset($_POST['closedmodule']) &&    $_POST['closedmodule'] == 'Yes')
+	{
+		$closedmodule=0;
+	}else{
+		$closedmodule=1;
+	}
+	if(isset($_POST['closed']) &&    $_POST['closed'] == 'Yes')
+	{
+		$closed=0;
+	}else{
+		$closed=1;
+	}
+	if(isset($_POST['nocmodule']) &&    $_POST['nocmodule'] == 'Yes')
+	{
+		$nocmodule=0;
+	}else{
+		$nocmodule=1;
+	}
+	if(isset($_POST['noc']) &&    $_POST['noc'] == 'Yes')
+	{
+		$noc=0;
+	}else{
+		$noc=1;
+	}
 	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
 	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
 	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
@@ -2560,6 +2613,7 @@ function updateUser($mysqli,$id,$user_id){
 	`approvalmodule`='".strip_tags($approvalmodule)."',`approval`='".strip_tags($approval)."',`acknowledgementmodule`='".strip_tags($acknowledgementmodule)."',
 	`acknowledgement`='".strip_tags($acknowledgement)."',`loanissuemodule`='".strip_tags($loanissuemodule)."',`loan_issue`='".strip_tags($loan_issue)."',
 	`collectionmodule` = '".strip_tags($collectionmodule)."', `collection` = '".strip_tags($collection)."', `collection_access` = '".strip_tags($collection_access)."',
+	`closedmodule` = '".strip_tags($closedmodule)."', `closed` = '".strip_tags($closed)."', `nocmodule` = '".strip_tags($nocmodule)."',`noc` = '".strip_tags($noc)."',
 	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()' WHERE user_id = '".strip_tags($id)."' ";
 	$result = $mysqli->query($updateQry) or die;
 }

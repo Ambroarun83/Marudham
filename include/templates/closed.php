@@ -251,21 +251,21 @@ if($idupd>0)
 					<div class="card-body">
                         <div class="row">
 
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
 								<div class="form-group">
-                                <button type="button" class="btn btn-primary due-chart" id="due_chart" name="due_chart" data-toggle="modal" data-target=".DueChart" style="padding: 5px 35px;"> Due Chart </button>
+									<button type="button" class="btn btn-primary due-chart" id="due_chart" name="due_chart" data-toggle="modal" data-target=".DueChart" style="padding: 10px 35px;"> Due Chart </button>
 								</div>
 							</div>
 
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
 								<div class="form-group">
-								<button type="button" class="btn btn-primary penalty-chart" id="penalty_chart" name="penalty_chart" data-toggle="modal" data-target=".PenaltyChart" style="padding: 5px 35px;"> Penalty Chart </button>
+									<button type="button" class="btn btn-primary penalty-chart" id="penalty_chart" name="penalty_chart" data-toggle="modal" data-target=".PenaltyChart" style="padding: 10px 35px;"> Penalty Chart </button>
 								</div>
 							</div>
 
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
 								<div class="form-group">
-								<button type="button" class="btn btn-primary coll-charge-chart" id="collection_charge_chart" name="collection_charge_chart" data-toggle="modal" data-target=".collectionChargeChart" style="padding: 5px 35px;"> Collection Charges Chart </button>
+									<button type="button" class="btn btn-primary coll-charge-chart" id="collection_charge_chart" name="collection_charge_chart" data-toggle="modal" data-target=".collectionChargeChart" style="padding: 10px 35px;"> Collection Charges Chart </button>
 								</div>
 							</div>
 
