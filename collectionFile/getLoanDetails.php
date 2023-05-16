@@ -127,48 +127,47 @@ function calculateOthers($loan_arr,$response,$con){
 
         $interval = new DateInterval('P1M'); // Create a one month interval
 
-        $count = 0;
         $qry = $con->query("DELETE FROM penalty_charges where req_id = '$req_id' and (penalty_date != '' or penalty_date != NULL ) ");
-
-        while ($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj) 
-        {
-            //To raise penalty in seperate table
-            $penalty_raised_date  = $start_date_obj->format('Y-m');
-            // If due month exceeded
-            if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
-                $result=$con->query("SELECT overdue FROM `loan_calculation` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
-            }else{
-                $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
-            }
-            $row = $result->fetch_assoc();
-            $penalty_per = $row['overdue'] ; //get penalty percentage to insert
-            $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
-            
             //condition start
-            $start_dat_obj = DateTime::createFromFormat('Y-m', $due_start_from);
+            $count = 0;
             $loandate_tillnow = 0;
-            while($start_dat_obj < $current_date_obj){ // To find loan date count till now from start date.
-            $loandate_tillnow += 1;
-            $start_dat_obj->add($interval);
-            
+            $countForPenalty = 0;
+
             $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
-            $toPaytilldate = intval($loandate_tillnow) * intval($dueCharge);
-                        
-            $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((MONTH(coll_date)= MONTH('$penalty_raised_date') || MONTH(trans_date)= MONTH('$penalty_raised_date')) && (YEAR(coll_date)= YEAR('$penalty_raised_date') || YEAR(trans_date)= YEAR('$penalty_raised_date')))");
-            $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
+            $start = DateTime::createFromFormat('Y-m', $due_start_from);
+            $current = DateTime::createFromFormat('Y-m', $current_date);
+
+            for($i=$start; $i<$current;$start->add($interval) ){
+                $loandate_tillnow += 1;
+                $toPaytilldate = intval($loandate_tillnow) * intval($dueCharge);
             }
-            if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
-                $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_raised_date','$penalty',current_timestamp)");
-             } 
+
+            while($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj){ // To find loan date count till now from start date.
+                $penalty_checking_date  = $start_date_obj->format('Y-m-d'); // This format is for query.. month , year function accept only if (Y-m-d).
+                $penalty_date  = $start_date_obj->format('Y-m');
+                $start_date_obj->add($interval);
+                            
+                $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((MONTH(coll_date)= MONTH('$penalty_checking_date') || MONTH(trans_date)= MONTH('$penalty_checking_date')) && (YEAR(coll_date)= YEAR('$penalty_checking_date') || YEAR(trans_date)= YEAR('$penalty_checking_date')))");
+                $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
+
+                if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
+                    $result=$con->query("SELECT overdue FROM `loan_calculation` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
+                }else{
+                    $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
+                }
+                $row = $result->fetch_assoc();
+                $penalty_per = $row['overdue'] ; //get penalty percentage to insert
+                $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
+                $count++; //Count represents how many months are exceeded
+
+                if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
+                    $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_date','$penalty',current_timestamp)");
+                    $countForPenalty++;
+                 } 
+            }
            //condition END
 
-            $start_date_obj->add($interval);
-            $count++; //Count represents how many months are exceeded
-        }
-            // //Insert Penalty once again because its showing extra one penalty in collection for current month
-            // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_raised_date','$penalty',current_timestamp)");
         if($count>0){
-            // echo $count;
             //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
             $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
@@ -179,7 +178,7 @@ function calculateOthers($loan_arr,$response,$con){
                 $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
             }
             $row = $result->fetch_assoc();
-            $penalty_per = number_format($row['overdue'] * $count); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
+            $penalty_per = number_format($row['overdue'] * $countForPenalty); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
 
             $result=$con->query("SELECT SUM(penalty_track) as penalty,SUM(penalty_waiver) as penalty_waiver FROM `collection` WHERE req_id = '".$req_id."' ");
             $row = $result->fetch_assoc();
@@ -216,47 +215,46 @@ function calculateOthers($loan_arr,$response,$con){
 
         $interval = new DateInterval('P1W'); // Create a one Week interval
 
-        $count = 0;
         $qry = $con->query("DELETE FROM penalty_charges where req_id = '$req_id' and (penalty_date != '' or penalty_date != NULL ) ");
-        while ($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj) 
-        {
-            //To raise penalty in seperate table
-            $penalty_raised_date  = $start_date_obj->format('Y-m-d');
-            // If due month exceeded
-            if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
-                $result=$con->query("SELECT overdue FROM `loan_calculation` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
-            }else{
-                $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
+            //condition start
+            $count = 0;
+            $loandate_tillnow = 0;
+            $countForPenalty = 0;
+
+            $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
+            $start = DateTime::createFromFormat('Y-m-d', $due_start_from);
+            $current = DateTime::createFromFormat('Y-m-d', $current_date);
+
+            for($i=$start; $i<$current;$start->add($interval) ){
+                $loandate_tillnow += 1;
+                $toPaytilldate = intval($loandate_tillnow) * intval($dueCharge);
             }
-            $row = $result->fetch_assoc();
-            $penalty_per = $row['overdue'] ; //get penalty percentage to insert
-            
-            $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
 
-                        //condition start
-                        $start_dat_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
+            while($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj){ // To find loan date count till now from start date.
+                
+                $penalty_checking_date  = $start_date_obj->format('Y-m-d'); // This format is for query.. month , year function accept only if (Y-m-d).
+                $start_date_obj->add($interval);
+                            
+                $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((WEEK(coll_date)= WEEK('$penalty_checking_date') || WEEK(trans_date)= WEEK('$penalty_checking_date')) && (YEAR(coll_date)= YEAR('$penalty_checking_date') || YEAR(trans_date)= YEAR('$penalty_checking_date')))");
+                $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
 
-                        $loandate_tillnow = 0;
-                        while($start_dat_obj < $current_date_obj){ // To find loan date count till now from start date.
-                            $loandate_tillnow += 1;
-                            $start_dat_obj->add($interval);
-                        
-                        $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
-                        $toPaytilldate = intval($loandate_tillnow) * intval($dueCharge);
-            
-                        $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((WEEK(coll_date)= WEEK('$penalty_raised_date') || WEEK(trans_date)= WEEK('$penalty_raised_date')) && (YEAR(coll_date)= YEAR('$penalty_raised_date') || YEAR(trans_date)= YEAR('$penalty_raised_date')))");
-                        $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
-            
-                        if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
-                            $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_raised_date','$penalty',current_timestamp)");
-                        }
-                    }
-                     //condition END
+                if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
+                    $result=$con->query("SELECT overdue FROM `loan_calculation` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
+                }else{
+                    $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
+                }
+                $row = $result->fetch_assoc();
+                $penalty_per = $row['overdue'] ; //get penalty percentage to insert
+                $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
+                $count++; //Count represents how many months are exceeded
 
+                if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){
+                    $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
+                    $countForPenalty++;
+                 } 
+            }
+           //condition END
 
-            $start_date_obj->add($interval);
-            $count++; //Count represents how many months are exceeded
-        }
         if($count>0){
             
             //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
@@ -269,7 +267,7 @@ function calculateOthers($loan_arr,$response,$con){
                 $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
             }
             $row = $result->fetch_assoc();
-            $penalty_per = number_format($row['overdue'] * $count); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
+            $penalty_per = number_format($row['overdue'] * $countForPenalty); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
 
             $result=$con->query("SELECT SUM(penalty_track) as penalty,SUM(penalty_waiver) as penalty_waiver FROM `collection` WHERE req_id = '".$req_id."' ");
             $row = $result->fetch_assoc();
@@ -305,48 +303,47 @@ function calculateOthers($loan_arr,$response,$con){
         
         $interval = new DateInterval('P1D'); // Create a one Week interval
 
-        $count = 0;
         $qry = $con->query("DELETE FROM penalty_charges where req_id = '$req_id' and (penalty_date != '' or penalty_date != NULL ) ");
-        // echo "DELETE FROM penalty_charges where req_id = '$req_id' and (penalty_date != '' or penalty_date != NULL ) ";
-        while ($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj) 
-        {
-            //To raise penalty in seperate table
-            $penalty_raised_date  = $start_date_obj->format('Y-m-d');
-            // If due month exceeded
-            if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
-                $result=$con->query("SELECT overdue FROM `loan_calculation` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
-            }else{
-                $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
-            }
-            $row = $result->fetch_assoc();
-            $penalty_per = $row['overdue'] ; //get penalty percentage to insert
-            
-            $penalty = ($response['due_amt'] * $penalty_per) / 100;
-            //condition start
-            $start_dat_obj = DateTime::createFromFormat('Y-m-d', $due_start_from);
 
-            $loandate_tillnow = 0;
-            while($start_dat_obj < $current_date_obj){ // To find loan date count till now from start date.
-                $loandate_tillnow += 1;
-                $start_dat_obj->add($interval);
-            
-            $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
-            $toPaytilldate = intval($loandate_tillnow) * intval($dueCharge);
+                     //condition start
+                     $count = 0;
+                     $loandate_tillnow = 0;
+                     $countForPenalty = 0;
 
-            $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((DAY(coll_date)= DAY('$penalty_raised_date') || DAY(trans_date)= DAY('$penalty_raised_date')) && (YEAR(coll_date)= YEAR('$penalty_raised_date') || YEAR(trans_date)= YEAR('$penalty_raised_date')))");
-            $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
+                     $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
+                     $start = DateTime::createFromFormat('Y-m-d', $due_start_from);
+                     $current = DateTime::createFromFormat('Y-m-d', $current_date);
+         
+                     for($i=$start; $i<$current;$start->add($interval) ){
+                         $loandate_tillnow += 1;
+                         $toPaytilldate = intval($loandate_tillnow) * intval($dueCharge);
+                     }
 
-            if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
-                $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_raised_date','$penalty',current_timestamp)");
-            }
-        }
-         //condition END
+                     while($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj){ // To find loan date count till now from start date.
+                         $penalty_checking_date  = $start_date_obj->format('Y-m-d'); // This format is for query.. month , year function accept only if (Y-m-d).
+                         $start_date_obj->add($interval);
+                                     
+                         $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((DAY(coll_date)= DAY('$penalty_checking_date') || DAY(trans_date)= DAY('$penalty_checking_date')) && (YEAR(coll_date)= YEAR('$penalty_checking_date') || YEAR(trans_date)= YEAR('$penalty_checking_date')))");
+                         $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
+         
+                         if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
+                             $result=$con->query("SELECT overdue FROM `loan_calculation` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
+                         }else{
+                             $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
+                         }
+                         $row = $result->fetch_assoc();
+                         $penalty_per = $row['overdue'] ; //get penalty percentage to insert
+                         $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
+                         $count++; //Count represents how many months are exceeded
+         
+                         if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
+                             $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
+                             $countForPenalty++;
+                          } 
+                     }
+                    //condition END
 
-            $start_date_obj->add($interval);
-            $count++; //Count represents how many months are exceeded
-        }
         if($count>0){
-            
             //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
             $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
 
@@ -357,7 +354,7 @@ function calculateOthers($loan_arr,$response,$con){
                 $result=$con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '".$loan_arr['loan_category']."' and sub_category = '".$loan_arr['sub_category']."' ");
             }
             $row = $result->fetch_assoc();
-            $penalty_per = number_format($row['overdue'] * $count); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
+            $penalty_per = number_format($row['overdue'] * $countForPenalty); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
             
             $result=$con->query("SELECT SUM(penalty_track) as penalty,SUM(penalty_waiver) as penalty_waiver FROM `collection` WHERE req_id = '".$req_id."' ");
             $row = $result->fetch_assoc();

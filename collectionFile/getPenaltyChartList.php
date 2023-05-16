@@ -85,11 +85,11 @@ function moneyFormatIndia($num)
 <tr>
     <td></td>
     <td></td>
-    <td><b><?php echo $penalty; ?></b></td>
+    <td><b><?php echo number_format($penalty,1); ?></b></td>
     <td></td>
-    <td><b><?php echo $paid_amt; ?></b></td>
+    <td><b><?php echo number_format($paid_amt,1); ?></b></td>
     <td></td>
-    <td><b><?php echo $penalty_waiver; ?></b></td>
+    <td><b><?php echo number_format($penalty_waiver,1); ?></b></td>
 </tr>
 </table>
 
