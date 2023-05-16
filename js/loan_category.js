@@ -150,14 +150,15 @@ $(function(){
 
 
  // add module 
+ var k=30;
 $(document).on("click", '.add_category_ref', function () { 
 
     validateLoanCategoryTable();
 
     if(loanCategoryTableError == true){    
-        var appendTxt = "<tr><td><input type='text' tabindex='13' class='chosen-select form-control loan_category_ref_name' id='loan_category_ref_name' name='loan_category_ref_name[]' /></td>" +
-        "<td><button type='button' tabindex='26' id='add_category_ref' name='add_category_ref' value='Submit' class='btn btn-primary add_category_ref'>Add</button></td>" +
-        "<td><span class='deleterow icon-trash-2' tabindex='18'></span></td>"+
+        var appendTxt = "<tr><td><input type='text' tabindex='"+k+"' class='chosen-select form-control loan_category_ref_name' id='loan_category_ref_name' name='loan_category_ref_name[]' /></td>" +
+        "<td><button type='button' tabindex='"+k+"' id='add_category_ref' name='add_category_ref' value='Submit' class='btn btn-primary add_category_ref'>Add</button></td>" +
+        "<td><span class='deleterow icon-trash-2' tabindex='"+k+"'></span></td>"+
         "</tr>";
     } 
     else 
@@ -166,6 +167,7 @@ $(document).on("click", '.add_category_ref', function () {
     }
 
     $('#moduleTable').find('tbody').append(appendTxt);
+    k++;
 });
 
 // Delete unwanted Rows

@@ -36,7 +36,7 @@ function VerifyFinger(ProbFMR, GalleryFMR) {
     var MFS100Request = {
         "ProbTemplate": ProbFMR,
         "GalleryTemplate": GalleryFMR,
-        "BioType": "FMR" // you can paas here BioType as "ANSI" if you are using ANSI Template
+        "BioType": "ANSI" // you can paas here BioType as "ANSI" if you are using ANSI Template
     };
     var jsondata = JSON.stringify(MFS100Request);
     return PostMFS100Client("verify", jsondata);

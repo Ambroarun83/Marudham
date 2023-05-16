@@ -882,7 +882,7 @@ function getCategoryInfo(sub_cat){
             $('.category_info .card-body .row').empty();
             $('.category_info .card-body .row').prepend('<table id="moduleTable" class="table custom-table"><tbody><tr>');
             if(response.length != 0){
-                var tb = 35;
+                var tb = 40;
                 for(var i=0;i<response.length;i++){
                     category_info ='';
                     // if(getCategoryInfo != undefined){
@@ -895,8 +895,8 @@ function getCategoryInfo(sub_cat){
                     
                     
                 }
-                $('.category_info .card-body .row table tbody tr').append(`<td><button type="button" tabindex='`+tb+`' id="add_category_info[]" name="add_category_info" 
-                class="btn btn-primary add_category_info">Add</button> </td><td><span class='icon-trash-2 deleterow' id='deleterow' tabindex='`+tb+`'></span></td>
+                $('.category_info .card-body .row table tbody tr').append(`<td><button type="button" id="add_category_info[]" name="add_category_info" 
+                class="btn btn-primary add_category_info">Add</button> </td><td><span class='icon-trash-2 deleterow' id='deleterow' </span></td>
                 </tr></tbody></table>`);
                 
                 category_content = $('#moduleTable tbody').html(); //To get the appended category list

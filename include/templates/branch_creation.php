@@ -139,7 +139,7 @@ if($idupd>0)
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Address</label>
-                                            <input type="text" tabindex="4" id="address1" name="address1" class="form-control"  value="<?php if(isset($address1)) echo $address1; ?>" placeholder="Enter Address">
+                                            <input type="text" tabindex="3" id="address1" name="address1" class="form-control"  value="<?php if(isset($address1)) echo $address1; ?>" placeholder="Enter Address">
                                              <!-- <span id="address1check" class="text-danger" >Enter Address1 </span>  -->
                                         </div>
                                     </div>
@@ -154,7 +154,7 @@ if($idupd>0)
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">State</label>&nbsp;<span class="text-danger">*</span>
-                                            <select type="text" class="form-control" id="state" name="state" required>
+                                            <select type="text" class="form-control" id="state" name="state" required tabindex="4">
 												<option value="SelectState">Select State</option>
 												<option value="TamilNadu" <?php if(isset($state) && $state == 'TamilNadu') echo 'selected' ?>>Tamil Nadu</option>
 												<option value="Puducherry"  <?php if(isset($state) && $state == 'Puducherry') echo 'selected' ?> >Puducherry</option>
@@ -165,7 +165,7 @@ if($idupd>0)
                                         <div class="form-group">
 											<label for="disabledInput">District</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="district1" name="district1" >
-                                            <select type="text" class="form-control" id="district" name="district" required>
+                                            <select type="text" class="form-control" id="district" name="district" required tabindex="5">
                                              <?php if($idupd == ''){?>
                                                 <option value="Select District">Select District</option>
                                                 <?php } else { ?>
@@ -178,7 +178,7 @@ if($idupd>0)
                                         <div class="form-group">
                                             <label for="disabledInput">Taluk</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="taluk1" name="taluk1" >
-                                            <select type="text" class="form-control" id="taluk" name="taluk" required>
+                                            <select type="text" class="form-control" id="taluk" name="taluk" required tabindex="6">
                                                 <?php if($idupd == ''){?>
                                                 <option value="Select Taluk">Select Taluk</option>
                                                 <?php } else { ?>
@@ -224,7 +224,7 @@ if($idupd>0)
                                     <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Mobile Number</label>
-                                            <input tabindex="8" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="mobile_number" 
+                                            <input tabindex="10" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="mobile_number" 
                                             id="mobile_number" class="form-control" placeholder="Enter Mobile Number" value="<?php if(isset($mobile_number )) 
                                             echo $mobile_number ; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;">
                                                 <!-- <span id="mobile_nocheck" class="text-danger" >Enter Mobile Number</span>  -->
@@ -233,7 +233,7 @@ if($idupd>0)
                                     <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">WhatsApp Number</label>
-                                            <input tabindex="8" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="whatsapp_number" 
+                                            <input tabindex="11" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="whatsapp_number" 
                                             id="whatsapp_number" class="form-control" placeholder="Enter WhatsApp Number" value="<?php if(isset($whatsapp_number )) 
                                             echo $whatsapp_number ; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;">
 
@@ -244,7 +244,7 @@ if($idupd>0)
                                     <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Landline Number</label>
-                                            <input tabindex="8" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="landline_number"
+                                            <input tabindex="12" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="landline_number"
                                              id="landline_number" class="form-control" placeholder="Enter Landline Number" value="<?php if(isset($landline_number )) 
                                              echo $landline_number ; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;">
 

@@ -46,11 +46,20 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'collection';
 
+}else if($current_page == 'edit_closed' || $current_page == 'closed' ){
+
+	$current_module = 'closed';
+
+}else if($current_page == 'edit_noc' || $current_page == 'noc' ){
+
+	$current_module = 'noc';
+
 }else{
 	$current_module = '';
 }
 ?>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
 <script>
 	setTimeout(() => {
 		var currentPage = "<?php echo $current_page; ?>"; // set the current page value to local variable
@@ -108,6 +117,10 @@ $loanissuemodule = '';
 $loan_issue = '';
 $collectionmodule = '';
 $collection = '';
+$closedmodule = '';
+$closed = '';
+$nocmodule = '';
+$noc = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -152,6 +165,10 @@ if (sizeof($getUser)>0) {
 		$loan_issue          		     = $getUser['loan_issue'];
 		$collectionmodule          		     = $getUser['collectionmodule'];
 		$collection          		     = $getUser['collection'];
+		$closedmodule          		     = $getUser['closedmodule'];
+		$closed          		     = $getUser['closed'];
+		$nocmodule          		     = $getUser['nocmodule'];
+		$noc          		     = $getUser['noc'];
 	}
 }
 ?>
@@ -406,14 +423,14 @@ if (sizeof($getUser)>0) {
 				<?php if($acknowledgementmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-rate_review"></i>
+                            <i class="icon-accessibility"></i>
                             <span class="menu-text">Acknowledgement</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='acknowledgement') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($acknowledgement == 0){ ?>
                                     <li>
-                                        <a href="edit_acknowledgement_list"><i class="icon-rate_review"></i>Acknowledgement</a>
+                                        <a href="edit_acknowledgement_list"><i class="icon-accessibility"></i>Acknowledgement</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -423,14 +440,14 @@ if (sizeof($getUser)>0) {
 				<?php if($loanissuemodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-attach_money"></i>
+                            <i class="icon-wallet"></i>
                             <span class="menu-text">Loan Issue</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='loanissue') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($loan_issue == 0){ ?>
                                     <li>
-                                        <a href="edit_loan_issue"><i class="icon-attach_money"></i>Loan Issue</a>
+                                        <a href="edit_loan_issue"><i class="icon-wallet"></i>Loan Issue</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -454,34 +471,34 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
-				<?php if($collectionmodule == 0){?>
+				<?php if($closedmodule == 0){?>
                     <li class="sidebar-dropdown closed">
                         <a href="javascript:void(0)">
-                            <i class="icon-attach_money"></i>
+                            <i class="icon-assignment_turned_in"></i>
                             <span class="menu-text">Closed</span>
                         </a>
-                        <div class="sidebar-submenu" <?php if($current_module=='collection') echo 'style="display:block" '; ?>>
+                        <div class="sidebar-submenu" <?php if($current_module=='closed') echo 'style="display:block" '; ?>>
                             <ul>
-                                <?php  if($collection == 0){ ?>
+                                <?php  if($closed == 0){ ?>
                                     <li>
-                                        <a href="edit_closed"><i class="icon-attach_money"></i>Closed</a>
+                                        <a href="edit_closed"><i class="icon-assignment_turned_in"></i>Closed</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
                         </div>
                     </li>
                 <?php  } ?>
-				<?php if($collectionmodule == 0){?>
+				<?php if($nocmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-attach_money"></i>
+                            <i class="icon-export"></i>
                             <span class="menu-text">NOC</span>
                         </a>
-                        <div class="sidebar-submenu" <?php if($current_module=='collection') echo 'style="display:block" '; ?>>
+                        <div class="sidebar-submenu" <?php if($current_module=='noc') echo 'style="display:block" '; ?>>
                             <ul>
-                                <?php  if($collection == 0){ ?>
+                                <?php  if($noc == 0){ ?>
                                     <li>
-                                        <a href="edit_noc"><i class="icon-attach_money"></i>NOC</a>
+                                        <a href="edit_noc"><i class="icon-export"></i>NOC</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -497,102 +514,7 @@ if (sizeof($getUser)>0) {
 
 <?php //$current_page = $_GET[''];?>
 	<!-- <input type="hidden" id='current_page' name='current_page' value="<?php //echo $current_page; ?>" -->
-<script>
-	
-/* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
-// var dropdown = document.getElementsByClassName("dropdown-btn");
-// var i;
 
-// for (i = 0; i < dropdown.length; i++) {
-//   dropdown[i].addEventListener("click", function() {
-//   this.classList.toggle("active");
-//   var dropdownContent = this.nextElementSibling;
-//   if (dropdownContent.style.display === "block") {
-//   	dropdownContent.style.display = "none";
-//   } else {
-//   	dropdownContent.style.display = "block";
-//   }
-//   });
-// }
-
-// var dropdown1 = document.getElementsByClassName("dropdown-btn1");
-// var i;
-
-// for (i = 0; i < dropdown1.length; i++) {
-//   dropdown1[i].addEventListener("click", function() {
-// 	this.classList.toggle("active");
-// 	var dropdownContent = this.nextElementSibling;
-// 	if (dropdownContent.style.display === "block") {
-// 		dropdownContent.style.display = "none";
-// 	} else {
-// 		dropdownContent.style.display = "block";
-// 	}
-//   });
-// }
-
-// Set a cookie to store the menu state
-// function setMenuStateCookie(state,menu) {
-//   document.cookie = "menuState=" + state + ";menu=" + menu ;alert(menu)
-// }
-
-// // Get the value of the menu state cookie
-// function getMenuStateCookie() {
-//   var name = "menuState=";
-//   var decodedCookie = decodeURIComponent(document.cookie);
-//   var ca = decodedCookie.split(';');
-//   for(var i = 0; i <ca.length; i++) {
-//     var c = ca[i];
-//     while (c.charAt(0) == ' ') {
-//       c = c.substring(1);
-//     }
-//     if (c.indexOf(name) == 0) {
-//       return c.substring(name.length, c.length);
-//     }
-//   }
-//   return "";
-// }
-
-// // Keep track of the menu state using a cookie
-// var dropdowns = document.getElementsByClassName("master");
-// for (var i = 0; i < dropdowns.length; i++) {
-//   dropdowns[i].addEventListener("click", function() {
-//     this.classList.toggle("active");
-//     var dropdownContent = this.nextElementSibling;
-//     if (dropdownContent.style.display === "block") {
-//       dropdownContent.style.display = "none";
-//       setMenuStateCookie("open","master");
-//     } else {
-//       dropdownContent.style.display = "block";
-//       setMenuStateCookie("open","master");
-//     }
-//   });
-// }
-// // var dropdowns = document.getElementsByClassName("administration");
-// // for (var i = 0; i < dropdowns.length; i++) {
-// //   dropdowns[i].addEventListener("click", function() {
-// //     this.classList.toggle("active");
-// //     var dropdownContent = this.nextElementSibling;
-// //     if (dropdowns.style.display === "block") {
-// //       dropdowns.style.display = "none";
-// //       setMenuStateCookie("open");
-// //     } else {
-// //       dropdowns.style.display = "block";
-// //       setMenuStateCookie("open");
-// //     }
-// //   });
-// // }
-
-// // Set the initial menu state based on the cookie value
-// window.onload = function() {
-//   var menuState = getMenuStateCookie();
-//   if (menuState === "open" ) {
-//     document.querySelector(".master").classList.add("active");
-//     // document.querySelector(".administration").classList.add("active");
-//     document.querySelector(".sidebar-submenu").style.display = "block";
-//     // document.querySelector(".administration .sidebar-submenu").style.display = "block";
-//   }
-// }
-</script>
 <?php
 $user_id        = '';
 $full_name      = '';
@@ -626,4 +548,16 @@ $requestmodule = '';
 $request = '';
 $verificationmodule = '';
 $verification = '';
+$approvalmodule = '';
+$approval = '';
+$acknowledgementmodule = '';
+$acknowledgement = '';
+$loanissuemodule = '';
+$loan_issue = '';
+$collectionmodule = '';
+$collection = '';
+$closedmodule = '';
+$closed = '';
+$nocmodule = '';
+$noc = '';
 ?>

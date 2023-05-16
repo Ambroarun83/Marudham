@@ -102,7 +102,7 @@ if($idupd>0)
 								<div class="col-xl-3 col-lg-3 col-md-5 col-sm-5 col-12">
 									<div class="form-group">
 										<label for="disabledInput">Loan Category</label>&nbsp;<span class="required">*</span>
-										<select tabindex="2" type="text" class="form-control" id="loan_category_name" name="loan_category_name" tabindex="1" >
+										<select type="text" class="form-control" id="loan_category_name" name="loan_category_name" tabindex="1" >
 											<option value="">Select Loan Category</option>   
 											<?php if (sizeof($loanCategoryCreationList)>0) { 
 											for($j=0;$j<count($loanCategoryCreationList);$j++) { ?>
@@ -115,13 +115,13 @@ if($idupd>0)
 								</div>
 								<div class="col-xl-1 col-lg-1 col-md-6 col-sm-6 col-12" style="margin-top: 19px;">
 									<div class="form-group float-right">
-										<button type="button"  tabindex="3" class="btn btn-primary" id="add_loanCategoryDetails" name="add_loanCategoryDetails" data-toggle="modal" data-target=".addloanCategoryModal" style="padding: 5px 35px;"><span class="icon-add"></span></button>
+										<button type="button"  tabindex="2" class="btn btn-primary" id="add_loanCategoryDetails" name="add_loanCategoryDetails" data-toggle="modal" data-target=".addloanCategoryModal" style="padding: 5px 35px;"><span class="icon-add"></span></button>
 									</div>
 								</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Sub Category</label>&nbsp;<span class="required">*</span>
-                                            <input type="text" class="form-control" id="sub_category_name" name="sub_category_name" value="<?php if(isset($sub_category_name)) echo $sub_category_name; ?>"  >
+                                            <input type="text" class="form-control" id="sub_category_name" name="sub_category_name" value="<?php if(isset($sub_category_name)) echo $sub_category_name; ?>" tabindex="3" >
 											<span id="subCategoryCheck" class="text-danger" >Enter Sub Category</span>
                                         </div>
                                     </div>
@@ -153,33 +153,33 @@ if($idupd>0)
 												<tbody>
 													<tr>
 														<td>
-															<input type="text" tabindex="2" name="loan_category_ref_name[]" id="loan_category_ref_name" class="form-control" value="<?php if(isset($loan_category_ref_name)){ echo $loan_category_ref_name[$i]; } ?>">
+															<input type="text" tabindex="4" name="loan_category_ref_name[]" id="loan_category_ref_name" class="form-control" value="<?php if(isset($loan_category_ref_name)){ echo $loan_category_ref_name[$i]; } ?>">
 														</td>
 														<td>
-															<button type="button" tabindex="2" id="add_category_ref[]" name="add_category_ref" value="Submit" class="btn btn-primary add_category_ref">Add</button> 
+															<button type="button" tabindex="4" id="add_category_ref[]" name="add_category_ref" value="Submit" class="btn btn-primary add_category_ref">Add</button> 
 														</td>
 														<td>
-															<span class='icon-trash-2' tabindex="2"></span>
+															<span class='icon-trash-2' tabindex="4"></span>
 														</td>
 													</tr>
 												</tbody>
 											<?php } if($idupd>0){ 
-                                            if(isset($loan_category_ref_name)){ ?>
+                                            if(isset($loan_category_ref_name)){$k=30; ?>
 												<tbody>
                                                     <?php for($i=0; $i<=sizeof($loan_category_ref_name)-1; $i++) { ?>
                                                         <tr>
                                                         <input type="hidden" name="loan_category_ref_id[]" id="loan_category_ref_id" value="<?php if(isset($loan_category_ref_id)){ echo $loan_category_ref_id[$i]; } ?>">
                                                             <td>
-                                                                <input type="text" tabindex="2" name="loan_category_ref_name[]" id="loan_category_ref_name" class="form-control" value="<?php if(isset($loan_category_ref_name)){ echo $loan_category_ref_name[$i]; } ?>">
+                                                                <input type="text" tabindex="<?php echo $k;?>" name="loan_category_ref_name[]" id="loan_category_ref_name" class="form-control" value="<?php if(isset($loan_category_ref_name)){ echo $loan_category_ref_name[$i]; } ?>">
                                                             </td>
                                                             <td>
-																<button type="button" tabindex="2" id="add_category_ref[]" name="add_category_ref" value="Submit" class="btn btn-primary add_category_ref">Add</button> 
+																<button type="button" tabindex="<?php echo $k;?>" id="add_category_ref[]" name="add_category_ref" value="Submit" class="btn btn-primary add_category_ref">Add</button> 
                                                             </td>
                                                             <td>
-																<span class='deleterow icon-trash-2' tabindex="2" id="delete_row"></span>
+																<span class='deleterow icon-trash-2' tabindex="<?php echo $k;?>" id="delete_row"></span>
 															</td>
                                                         </tr>
-                                                    <?php } ?>
+                                                    <?php $k++;} ?>
                                                 </tbody>
                                             <?php }
                                         } ?>
@@ -196,8 +196,8 @@ if($idupd>0)
 					<!-- <a href="edit_loan_category">
 						<button type="button" class="btn btn-outline-secondary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
 					</a> -->
-						<button type="submit" name="submitLoanCategory" id="submitLoanCategory" class="btn btn-primary" value="Submit" tabindex="15"><span class="icon-check"></span>&nbsp;Submit</button>
-                        <button type="reset" class="btn btn-outline-secondary" tabindex="7" >Clear</button>
+						<button type="submit" name="submitLoanCategory" id="submitLoanCategory" class="btn btn-primary" value="Submit" tabindex="50"><span class="icon-check"></span>&nbsp;Submit</button>
+                        <button type="reset" class="btn btn-outline-secondary" tabindex="51" >Clear</button>
 					</div>
 				</div>
 

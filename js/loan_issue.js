@@ -300,6 +300,10 @@ $(function () {
     cashAckName(); // To show Cash Acknowledgement Name.
     checkBalance(); // To check in DB.
 
+    setTimeout(() => {
+        getCustomerLoanCounts();// To Get loan existing type
+    }, 1000);
+
 });
 
 // Cus img show onload.
@@ -309,6 +313,23 @@ function getImage() {
 
     var guarentorimg = $('#guarentor_image').val();
     $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
+}
+
+function getCustomerLoanCounts(){
+    var cus_id = $('#cus_id').val();
+    $.ajax({
+        url: 'verificationFile/getCustomerLoanCounts.php',
+        data: {'cus_id':cus_id},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#cus_exist_type').val(response['existing_type'])
+        },
+        error:function(){
+            $('#cus_exist_type').val('Renewal');
+        }
+    })
 }
 
 //Guarentor Name
