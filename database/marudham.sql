@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2023 at 03:03 PM
+-- Generation Time: May 18, 2023 at 03:04 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -50,7 +50,8 @@ INSERT INTO `acknowledgement_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_i
 (55, '10', '14', 'Fridge'),
 (56, '10', '14', 'VCSM'),
 (57, '11', '15', 'News Channel'),
-(60, '20', '17', 'Onleplus');
+(60, '20', '17', 'Onleplus'),
+(61, '2', '18', 'Medical shop');
 
 -- --------------------------------------------------------
 
@@ -110,6 +111,7 @@ CREATE TABLE `acknowlegement_customer_profile` (
 --
 
 INSERT INTO `acknowlegement_customer_profile` (`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(2, '2', '885558978787', 'Remo', '1', '1997-05-15', '26', 'A1B+ve', '9696988888', '8788787874', '8788787874', 'pondicherry-has-beautiful-coast-india-famous-unexplored-beaches-beautiful-coastline-india-123124828.jpg', '4', 'Brother', 'photo-1541963463532-d68292c34b19.jpg', 'New', '', '0', 'House', 'Chennai', 'Chennai', '2', 'IT', '650000', 'Chennai', '0', 'TamilNadu', 'Chennai', 'Mylapore', '1', '1', 'GB', 'GB', '1', '', '3,4', '0', '10', NULL, '28', '28', NULL, '2023-04-13 11:56:13', '2023-04-19 14:56:55'),
 (4, '18', '945454646565', 'Praveen', '1', '2009-04-17', '14', 'O+', '9844654654', '9846546546', '', 'wallpaperflare.com_wallpaper.jpg', '29', 'Brother', 'Order_ID_4479904631.jpg', 'New', '', '1', 'Vandavasi', 'Vandavasi', 'Vandavasi', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '11', 'G4', 'L4', '1', '', '28,29', '0', '10', NULL, '28', '28', NULL, '2023-04-20 10:58:38', '2023-04-21 10:16:27'),
 (7, '17', '646546546546', 'Rajesh', '1', '1999-02-10', '24', 'O+', '9565565465', '9651321321', '', 'pexels-cesar-perez-733745.jpg', '31', 'Mother', 'programming-funny-jokes-e1600486875722.jpg', 'New', '', 'Select Residential Type', '', '', '', '2', 'Pondy', '15000', 'Pondy', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '12', 'G4', 'L4', '1', '', '30', '1', '10', NULL, '28', NULL, NULL, '2023-04-20 17:27:28', '2023-04-20 17:27:28'),
 (8, '15', '546546546465', 'Kuppusamy', '1', '1999-03-29', '24', 'AB+', '9646465546', '94654654', '', 'pexels-jakub-novacek-924824.jpg', '32', 'Father', 'WhatsApp Image 2023-01-20 at 11.43.56 AM.jpeg', 'Existing', '', '0', 'MG road', 'MG road', 'MG road', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'G1', 'L2', '1', '', '32', '1', '10', NULL, '28', '28', NULL, '2023-04-21 09:56:49', '2023-04-21 10:15:22'),
@@ -202,6 +204,7 @@ CREATE TABLE `acknowlegement_documentation` (
 --
 
 INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `mortgage_process_noc`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_noc`, `mortgage_document_used`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `endorsement_process_noc`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `en_RC_noc`, `en_RC_used`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `en_Key_noc`, `en_Key_used`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `doc_info_upload`, `doc_info_upload_noc`, `doc_info_upload_used`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `submitted`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, '2', '885558978787', 'Remo', '2', 'DOC-101', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', NULL, NULL, '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', NULL, NULL, '', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'XYZ', 'ABC', '0', NULL, '0', '0', '2', '', '3', 'Brother', '11', '0', NULL, '1', '1', NULL, '2023-04-17 17:51:47', '2023-04-17 17:51:47'),
 (3, '18', '945454646565', 'Praveen', '4', 'DOC-102', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', '1', '', '', '', '', '', '', 'Adhar', '123', '0', 'Invoice_4479904631.pdf', '0', '0', '0', 'Praveen', '', 'NIL', '11', '0', '1', '28', '1', NULL, '2023-04-20 13:20:51', '2023-04-20 13:20:51'),
 (4, '17', '646546546546', 'Rajesh', '7', 'DOC-103', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', '1', '', '', '', '', '', '', 'Adhar', '123', '0', '', '0', '0', '2', '', '30', 'Father', '11', '0', '1', '28', '1', NULL, '2023-04-20 17:30:15', '2023-04-20 17:30:15'),
 (5, '15', '546546546465', 'Kuppusamy', '8', 'DOC-104', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', '1', '', '', '', '', '', '', 'House Document', 'House Document', '0', ',', '0', '0', '0', 'Kuppusamy', '', 'NIL', '11', '0', '1', '1', '1', NULL, '2023-04-28 16:36:15', '2023-04-28 16:36:15'),
@@ -268,7 +271,8 @@ INSERT INTO `acknowlegement_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_
 (13, '15', '546546546465', 'Kuppusamy', 'Existing', '9646465546', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '94654', '7504', '87150', '1', 'Monthly', 'Interest', '', 'Monthly', '', '', '', '2', '2', '2', '2', '87150', '87150', '1745', '', '', '1743', '1743', '83664', '2023-04-07', '2023-06-07', '1', '12', '1', NULL, '2023-04-28 16:36:56', '2023-04-28 16:36:56'),
 (14, '10', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '5', 'Multi Things', '24864', '943', '23921', '2', '', '', '', '', '1', '', '4', '5', '9', '1000', '1242', '23921', '22725', '1200', '23921', '2657', '1000', '1242', '20483', '2023-05-06', '2024-01-05', '2', '12', '28', NULL, '2023-04-28 16:43:27', '2023-04-28 16:43:27'),
 (15, '11', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '20', '10', '45000', '40500', '4500', '45000', '450', '20', '10', '40470', '2023-05-06', '2023-08-13', '1', '12', '25', NULL, '2023-04-29 15:44:10', '2023-04-29 15:44:10'),
-(17, '20', '105806052023', 'Rakesh', 'New', '8783565696', 'rakesh.png', '5', 'Mobile', '23500', '3500', '20000', '2', '', '', '', '', '1', '', '11', '0.7', '10', '1500', '1500', '20000', '19860', '140', '20000', '2000', '1500', '1500', '16860', '2023-05-03', '2024-03-03', '1', '12', '21', NULL, '2023-05-06 11:20:14', '2023-05-06 11:20:14');
+(17, '20', '105806052023', 'Rakesh', 'New', '8783565696', 'rakesh.png', '5', 'Mobile', '23500', '3500', '20000', '2', '', '', '', '', '1', '', '11', '0.7', '10', '1500', '1500', '20000', '19860', '140', '20000', '2000', '1500', '1500', '16860', '2023-05-03', '2024-03-03', '1', '12', '21', NULL, '2023-05-06 11:20:14', '2023-05-06 11:20:14'),
+(18, '2', '885558978787', 'Remo', 'New', '9696988888', 'pondicherry-has-beautiful-coast-india-famous-unexplored-beaches-beautiful-coastline-india-123124828.jpg', '2', 'Business', '15000', '5000', '10000', '1', 'Monthly', 'Interest', '', 'Monthly', '', '', '', '1.5', '3', '1.5', '1.8', '10000', '10000', '150', '', '', '150', '180', '9670', '2023-06-02', '2023-09-02', '1', '12', '28', NULL, '2023-05-18 12:39:07', '2023-05-18 12:39:07');
 
 -- --------------------------------------------------------
 
@@ -786,6 +790,23 @@ INSERT INTO `company_creation` (`company_id`, `company_name`, `address1`, `addre
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `concern_subject`
+--
+
+CREATE TABLE `concern_subject` (
+  `concern_sub_id` int(11) NOT NULL,
+  `concern_subject` varchar(255) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `insert_user_id` int(11) DEFAULT NULL,
+  `update_user_id` int(11) DEFAULT NULL,
+  `delete_user_id` int(11) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `customer_profile`
 --
 
@@ -908,7 +929,7 @@ CREATE TABLE `customer_register` (
 --
 
 INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `cus_character`, `approach`, `relationship`, `attitude`, `behavior`, `incident_remark`, `about_customer`, `cus_status`, `create_time`) VALUES
-(2, '2', '213132132132', 'Logeshwaran', '1981-01-28', '42', '2', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '9969696969', '9695494996', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'pexels-markus-spiske-4383298.jpg', '0', '', '', '', '234', '234', '234', '12', '2', '1', 'dfg', 'sdf', 'gsdfg', 'sdfsg', 'dfg', 'sdfg', 'sdfg', '8', '2023-04-01 11:39:58'),
+(2, '2', '213132132132', 'Logeshwaran', '1981-01-28', '42', '2', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '9969696969', '9695494996', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'pexels-markus-spiske-4383298.jpg', '0', '', '', '', '234', '234', '234', '12', '2', '1', 'dfg', 'sdf', 'gsdfg', 'sdfsg', 'dfg', 'sdfg', 'sdfg', '3', '2023-04-01 11:39:58'),
 (3, '3', '546546546465', 'Kuppusamy', '2023-03-29', '0', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '1', '', '', '', '23344', '0', '0', '0', '2620', '26000', NULL, NULL, NULL, NULL, NULL, NULL, 'ok', '2', '2023-04-01 13:19:58'),
 (4, '5', '289499396919', 'Arun', '1999-04-27', '24', '1', NULL, 'Puducherry', 'Puducherry', 'Puducherry', '8', '7', 'Chinnakadai', '9654566456', '', 'Natarajan', 'Parameswari', '2', '', '3', 'Developer', 'pexels-aleksandar-pasaric-325185.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-04-03 12:29:54'),
 (7, '6', '123456789101', 'Triple H', '1999-07-15', '24', '1', '', 'Puducherry', 'Puducherry', 'Puducherry', '8', '8', 'MG road', '9565654654', '', 'Roman reigns', 'Nikki', '1', 'Manju warrior', '4', 'Uzhavan', 'pexels-hansen-tang-13435926.jpg', '2', '', '', '', '6546', '654', '984', '654', '654', '94401', NULL, NULL, NULL, NULL, NULL, NULL, 'Ok', '1', '2023-04-03 13:35:26'),
@@ -966,6 +987,36 @@ INSERT INTO `director_creation` (`dir_id`, `dir_code`, `dir_type`, `dir_name`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `document_info`
+--
+
+CREATE TABLE `document_info` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `req_id` varchar(255) NOT NULL,
+  `doc_name` varchar(255) DEFAULT NULL,
+  `doc_detail` varchar(255) DEFAULT NULL,
+  `doc_type` varchar(255) DEFAULT NULL,
+  `doc_holder` varchar(255) DEFAULT NULL,
+  `holder_name` varchar(255) DEFAULT NULL,
+  `relation_name` varchar(255) NOT NULL,
+  `relation` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `delete_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `document_info`
+--
+
+INSERT INTO `document_info` (`id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(3, '17', 'House Document', 'House Document', '0', '1', 'Magesh', '', 'Brother', '28', '28', NULL, '2023-05-18 16:47:50', '2023-05-18 16:47:50');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `doc_mapping`
 --
 
@@ -989,7 +1040,8 @@ CREATE TABLE `doc_mapping` (
 INSERT INTO `doc_mapping` (`doc_map_id`, `loan_category`, `sub_category`, `doc_creation`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, '3', '4 Wheeler', '1,3', '0', '1', '1', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, '5', 'Multi Things', '2,4', '0', '1', NULL, NULL, '0000-00-00 00:00:00', '2023-03-22 10:03:56'),
-(3, '6', 'Education', '6,7', '0', '1', '1', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(3, '6', 'Education', '6,7', '0', '1', '1', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, '2', 'Business', '1,2,5', '0', '28', NULL, NULL, '0000-00-00 00:00:00', '2023-05-18 12:47:26');
 
 -- --------------------------------------------------------
 
@@ -1076,7 +1128,8 @@ INSERT INTO `in_acknowledgement` (`id`, `req_id`, `cus_id`, `cus_status`, `statu
 (5, '11', '123456789101', '14', '0', '1', '1', NULL, '2023-04-29 15:58:29'),
 (6, '15', '546546546465', '13', '0', '1', NULL, NULL, '2023-04-29 15:58:39'),
 (7, '17', '646546546546', '3', '0', '1', NULL, NULL, '2023-05-03 12:10:30'),
-(8, '20', '105806052023', '14', '0', '28', '1', NULL, '2023-05-06 11:21:02');
+(8, '20', '105806052023', '14', '0', '28', '1', NULL, '2023-05-06 11:21:02'),
+(9, '2', '213132132132', '3', '0', '28', NULL, NULL, '2023-05-18 12:46:04');
 
 -- --------------------------------------------------------
 
@@ -1105,7 +1158,8 @@ INSERT INTO `in_approval` (`req_id`, `cus_id`, `cus_status`, `status`, `insert_l
 ('10', '123456789101', '14', '0', '28', '1', NULL),
 ('11', '123456789101', '14', '0', '25', '1', NULL),
 ('3', '546546546465', '2', '0', '25', NULL, NULL),
-('20', '105806052023', '14', '0', '21', '1', NULL);
+('20', '105806052023', '14', '0', '21', '1', NULL),
+('2', '213132132132', '3', '0', '28', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1199,6 +1253,7 @@ CREATE TABLE `in_verification` (
 --
 
 INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(2, 'Staff', 'Kumar', NULL, '', '123', '', 'REQ-101', '2023-04-01', '2', '213132132132', 'New', 'Logeshwaran', '2021-10-13', '1', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', '2', 'Business', '15000', '5000', '33.3', '10000', '1', '2750', '', '3', '0', '21', '28', NULL, '2023-04-01 11:39:58', '2023-04-01 11:39:58'),
 (3, 'Director', 'Big show', '', '1', '', 'Declaration', 'REQ-102', '2023-04-01', NULL, '546546546465', 'New', 'Kuppusamy', '2023-03-29', '0', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '5', 'Furniture', '', '', '', '15000', '1', '1500', '', '2', '0', '25', '25', NULL, '2023-04-01 13:19:58', '2023-04-01 13:19:58'),
 (4, 'Agent', 'Darling & Co', '28', '0', '', 'v', 'REQ-103', '2023-04-01', NULL, '213132132132', 'Existing', 'Logeshwaran', '2021-10-13', '1', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', '2', 'Business', '15000', '5000', '33.3', '10000', '2', '', '12', '1', '0', '24', '1', '24', '2023-04-01 15:09:46', '0000-00-00 00:00:00'),
 (5, 'Staff', 'Kumar', '', '', 'test remarks', '', 'REQ-104', '2023-04-03', NULL, '289499396919', 'New', 'Arun', '1999-04-27', '24', '1', NULL, 'Puducherry', 'Puducherry', 'Puducherry', '8', '7', 'Chinnakadai', '9654566456', '', 'Natarajan', 'Parameswari', '2', '', '3', 'Developer', 'pexels-aleksandar-pasaric-325185.jpg', '5', 'Mobile', '25000', '5000', '20.0', '20000', '1', '2583', '', '1', '0', '21', '1', NULL, '2023-04-03 12:29:54', '2023-04-03 12:29:54'),
@@ -1683,7 +1738,7 @@ CREATE TABLE `request_creation` (
 --
 
 INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(2, 'Staff', 'Kumar', NULL, '', '123', '', 'REQ-101', '2023-04-01', NULL, '213132132132', 'New', 'Logeshwaran', '2021-10-13', '1', '2', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', '2', 'Business', '15000', '5000', '33.3', '10000', '1', '2750', '', '0', '0', '21', '21', NULL, '2023-04-01 11:39:58', '2023-04-01 11:39:58'),
+(2, 'Staff', 'Kumar', NULL, '', '123', '', 'REQ-101', '2023-04-01', '2', '213132132132', 'New', 'Logeshwaran', '2021-10-13', '1', '2', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', '2', 'Business', '15000', '5000', '33.3', '10000', '1', '2750', '', '3', '0', '21', '28', NULL, '2023-04-01 11:39:58', '2023-04-01 11:39:58'),
 (3, 'Director', 'Big show', '', '1', '', 'Declaration', 'REQ-102', '2023-04-01', NULL, '546546546465', 'New', 'Kuppusamy', '2023-03-29', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '5', 'Furniture', '', '', '', '15000', '1', '1500', '', '2', '0', '25', '25', NULL, '2023-04-01 13:19:58', '2023-04-01 13:19:58'),
 (4, 'Agent', 'Darling & Co', '28', '0', '', 'v', 'REQ-103', '2023-04-01', NULL, '213132132132', 'Existing', 'Logeshwaran', '2021-10-13', '1', '2', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', '2', 'Business', '15000', '5000', '33.3', '10000', '2', '', '12', '1', '0', '24', '1', '24', '2023-04-01 15:09:46', '0000-00-00 00:00:00'),
 (5, 'Staff', 'Kumar', '', '', 'test remarks', '', 'REQ-104', '2023-04-03', NULL, '289499396919', 'New', 'Arun', '1999-04-27', '24', '1', 'Puducherry', 'Puducherry', 'Puducherry', '8', '7', 'Chinnakadai', '9654566456', '', 'Natarajan', 'Parameswari', '2', '', '3', 'Developer', 'pexels-aleksandar-pasaric-325185.jpg', '5', 'Mobile', '25000', '5000', '20.0', '20000', '1', '2583', '', '1', '0', '21', '1', NULL, '2023-04-03 12:29:54', '2023-04-03 12:29:54'),
@@ -1752,7 +1807,7 @@ INSERT INTO `signed_doc_info` (`id`, `doc_name`, `sign_type`, `signType_relation
 (2, '1', '3', '4', '5', '2', '2'),
 (5, '2', '3', '3', '6', '2', '2'),
 (6, '1', '2', NULL, '3', '3', '4'),
-(7, '1', '1', '', '2', '17', '7'),
+(7, '1', '1', '37', '2', '17', '7'),
 (8, '2', '1', '', '2', '18', '4'),
 (9, '1', '1', '', '1', '15', '8'),
 (10, '2', '0', '', '1', '10', '11'),
@@ -1760,7 +1815,8 @@ INSERT INTO `signed_doc_info` (`id`, `doc_name`, `sign_type`, `signType_relation
 (12, '1', '1', '', '1', '20', '14'),
 (13, '0', '2', '', '1', '20', '14'),
 (14, '0', '0', '', '1', '14', '15'),
-(16, '1', '2', '', '1', '4', '');
+(16, '1', '2', '', '1', '4', ''),
+(17, '1', '1', '39', '1', '14', '15');
 
 -- --------------------------------------------------------
 
@@ -2248,7 +2304,8 @@ INSERT INTO `verification_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_lo
 (14, '10', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '5', 'Multi Things', '24864', '943', '23921', '2', '', '', '', '', '1', '', '4', '5', '9', '1000', '1242', '23921', '22725', '1200', '23921', '2657', '1000', '1242', '20483', '2023-05-05', '2024-02-05', '2', '12', '28', NULL, '2023-04-28 16:43:27', '2023-04-28 16:43:27'),
 (15, '11', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '20', '10', '45000', '40500', '4500', '45000', '450', '20', '10', '40470', '2023-05-05', '2023-08-13', '1', '12', '25', NULL, '2023-04-29 15:44:10', '2023-04-29 15:44:10'),
 (16, '3', '546546546465', 'Kuppusamy', 'New', '9646465546', 'pexels-jakub-novacek-924824.jpg', '5', 'Furniture', '', '', '15000', '1', 'Monthly', 'Interest', '', 'Monthly', '', '', '', '10', '15', '10', '6', '15000', '15000', '1500', '', '', '1500', '900', '12600', '2023-05-05', '2024-08-05', '2', '12', '25', NULL, '2023-04-29 15:56:28', '2023-04-29 15:56:28'),
-(17, '20', '105806052023', 'Rakesh', 'New', '8783565696', 'rakesh.png', '5', 'Mobile', '23500', '3500', '20000', '2', '', '', '', '', '1', '', '11', '0.7', '10', '1500', '1500', '20000', '19860', '140', '20000', '2000', '1500', '1500', '16860', '2023-06-03', '2024-04-03', '1', '12', '21', NULL, '2023-05-06 11:20:14', '2023-05-06 11:20:14');
+(17, '20', '105806052023', 'Rakesh', 'New', '8783565696', 'rakesh.png', '5', 'Mobile', '23500', '3500', '20000', '2', '', '', '', '', '1', '', '11', '0.7', '10', '1500', '1500', '20000', '19860', '140', '20000', '2000', '1500', '1500', '16860', '2023-06-03', '2024-04-03', '1', '12', '21', NULL, '2023-05-06 11:20:14', '2023-05-06 11:20:14'),
+(18, '2', '885558978787', 'Remo', 'New', '9696988888', 'pondicherry-has-beautiful-coast-india-famous-unexplored-beaches-beautiful-coastline-india-123124828.jpg', '2', 'Business', '15000', '5000', '10000', '1', 'Monthly', 'Interest', '', 'Monthly', '', '', '', '1.5', '3', '1.5', '1.8', '10000', '10000', '150', '', '', '150', '180', '9670', '2023-06-02', '2023-09-02', '1', '12', '28', NULL, '2023-05-18 12:39:07', '2023-05-18 12:39:07');
 
 -- --------------------------------------------------------
 
@@ -2308,7 +2365,8 @@ INSERT INTO `verif_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_id`, `categ
 (57, '11', '15', 'News Channel'),
 (58, '3', '16', 'Sofa'),
 (59, '3', '16', 'Samsung'),
-(60, '20', '17', 'Onleplus');
+(60, '20', '17', 'Onleplus'),
+(61, '2', '18', 'Medical shop');
 
 --
 -- Indexes for dumped tables
@@ -2429,6 +2487,12 @@ ALTER TABLE `company_creation`
   ADD PRIMARY KEY (`company_id`);
 
 --
+-- Indexes for table `concern_subject`
+--
+ALTER TABLE `concern_subject`
+  ADD PRIMARY KEY (`concern_sub_id`);
+
+--
 -- Indexes for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
@@ -2445,6 +2509,12 @@ ALTER TABLE `customer_register`
 --
 ALTER TABLE `director_creation`
   ADD PRIMARY KEY (`dir_id`);
+
+--
+-- Indexes for table `document_info`
+--
+ALTER TABLE `document_info`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `doc_mapping`
@@ -2641,7 +2711,7 @@ ALTER TABLE `verif_loan_cal_category`
 -- AUTO_INCREMENT for table `acknowledgement_loan_cal_category`
 --
 ALTER TABLE `acknowledgement_loan_cal_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `acknowlegement_customer_profile`
@@ -2659,7 +2729,7 @@ ALTER TABLE `acknowlegement_documentation`
 -- AUTO_INCREMENT for table `acknowlegement_loan_calculation`
 --
 ALTER TABLE `acknowlegement_loan_calculation`
-  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `agent_communication_details`
@@ -2752,6 +2822,12 @@ ALTER TABLE `company_creation`
   MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `concern_subject`
+--
+ALTER TABLE `concern_subject`
+  MODIFY `concern_sub_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
@@ -2770,10 +2846,16 @@ ALTER TABLE `director_creation`
   MODIFY `dir_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `document_info`
+--
+ALTER TABLE `document_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `doc_mapping`
 --
 ALTER TABLE `doc_mapping`
-  MODIFY `doc_map_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `doc_map_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `fingerprints`
@@ -2791,7 +2873,7 @@ ALTER TABLE `gold_info`
 -- AUTO_INCREMENT for table `in_acknowledgement`
 --
 ALTER TABLE `in_acknowledgement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `in_issue`
@@ -2869,7 +2951,7 @@ ALTER TABLE `signed_doc`
 -- AUTO_INCREMENT for table `signed_doc_info`
 --
 ALTER TABLE `signed_doc_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `staff_creation`
@@ -2935,7 +3017,7 @@ ALTER TABLE `verification_kyc_info`
 -- AUTO_INCREMENT for table `verification_loan_calculation`
 --
 ALTER TABLE `verification_loan_calculation`
-  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `verification_property_info`
@@ -2947,7 +3029,7 @@ ALTER TABLE `verification_property_info`
 -- AUTO_INCREMENT for table `verif_loan_cal_category`
 --
 ALTER TABLE `verif_loan_cal_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

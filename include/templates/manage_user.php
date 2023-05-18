@@ -493,12 +493,12 @@ if($idupd>0)
                                 <label class="custom-control-label" for="manage_user">Manage User</label>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                        <!-- <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($doc_mapping==0){ echo'checked'; }} ?> tabindex="24" class=" admin-checkbox" id="doc_mapping" name="doc_mapping" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="doc_mapping">Documentation Mapping</label>
                             </div>
-                        </div>
+                        </div> -->
 					</div>
 
 					<hr>
