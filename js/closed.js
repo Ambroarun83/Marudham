@@ -122,6 +122,7 @@ function OnLoadFunctions(req_id,cus_id){
             
         }
     }); 
+    $('<div/>', {class: 'overlay'}).appendTo('.loanlist_card').html('<div class="loader"></div><span class="overlay-text">Please Wait</span>');
     setTimeout(()=>{
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
@@ -135,6 +136,7 @@ function OnLoadFunctions(req_id,cus_id){
             type:'post',
             cache: false,
             success: function(response){
+                $('.overlay').remove();
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
                 
@@ -334,6 +336,7 @@ $('#feedbacklabelCheck').hide(); $('#feedbackCheck').hide();
 $(document).on("click", "#feedbackBtn", function () {
 
     let nocreq_id = $('#noc_req_id').val();
+    let cusidupd = $('#cusidupd').val();
     let feedback_label = $("#feedback_label").val();
     let cus_feedback = $("#cus_feedback").val();
     let feedback_remark = $("#feedback_remark").val();
@@ -344,7 +347,7 @@ $(document).on("click", "#feedbackBtn", function () {
         $.ajax({
             url: 'closedFile/loan_summary_submit.php',
             type: 'POST',
-            data: { "feedback_label": feedback_label, "cus_feedback": cus_feedback,"feedback_remark":feedback_remark,"feedbackID": feedbackID,  "reqId": nocreq_id },
+            data: { "feedback_label": feedback_label, "cus_feedback": cus_feedback,"feedback_remark":feedback_remark,"feedbackID": feedbackID,  "reqId": nocreq_id,"cusidupd":cusidupd },
             cache: false,
             success: function (response) {
 

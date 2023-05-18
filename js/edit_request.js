@@ -55,6 +55,21 @@ $(document).ready(function () {
                 }
             })
         })
+        $('a.loan-summary').click(function(){
+            var cus_id = $(this).data('value');
+            var req_id = $(this).data('value1');
+            $.ajax({
+                url:'requestFile/getLoanSummary.php',
+                data: {"cus_id":cus_id,"req_id":req_id},
+                // dataType: 'json',
+                type:'post',
+                cachec: false,
+                success: function(response){
+                    $('#loanSummaryTable').empty();
+                    $('#loanSummaryTable').html(response);
+                }
+            })
+        });
         
     }, 500);
 

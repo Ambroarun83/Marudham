@@ -140,27 +140,6 @@ $('#collChargeBtn').click(function () {
         }
     }
 });
-    //Current Date
-    //To Set the date input not to choose future date
-    var mintoday = new Date();
-    var mindd = mintoday.getDate();
-    var minmm = mintoday.getMonth()+1; //January is 0 so need to add 1 to make it 1!
-    var minyyyy = mintoday.getFullYear();
-    if(mindd<10){
-        mindate='0'+mindd
-    }else{
-        mindate=mindd
-    }
-    if(minmm<10){
-        minmm='0'+minmm
-    }else{
-        minmm=minmm
-    }
-    mintoday = minyyyy+'-'+minmm+'-'+mindate;
-    // Set Maximum date
-    document.getElementById("collectionCharge_date").setAttribute("max", mintoday);
-
-
 
     $('#submit_collection').click(function(){ 
         validations();
@@ -217,6 +196,7 @@ function OnLoadFunctions(req_id,cus_id){
             
         }
     }); 
+    $('<div/>', {class: 'overlay'}).appendTo('.loanlist_card').html('<div class="loader"></div><span class="overlay-text">Please Wait</span>');
     setTimeout(()=>{
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
@@ -230,6 +210,7 @@ function OnLoadFunctions(req_id,cus_id){
             type:'post',
             cache: false,
             success: function(response){
+                $('.overlay').remove();
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
                 

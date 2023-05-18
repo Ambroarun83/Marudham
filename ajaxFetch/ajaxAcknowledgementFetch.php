@@ -213,11 +213,11 @@ foreach ($result as $row) {
         $action .= "<a href='acknowledgement_creation&rem=$id&pge=1' class='ack-remove' value='$id' > Remove </a>";
     }
 
-    if($user_type != 'Agent'){
+    if($user_type != 'Agent' or $userid == 1){
         $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
-    }elseif($userid == 1){
-        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
+        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='loan-summary' data-toggle='modal' data-target='.loansummary'>Loan Summary</a>";
     }
+
 
     
     $action .= "</div></div>";
