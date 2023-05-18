@@ -190,6 +190,52 @@
 	</div>
 </div>
 
+<!-- Loan Summary Modal -->
+<div class="modal fade loansummary" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Loan Summary</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeLoanModal()">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				
+				<br />
+				<div class="row">
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12"></div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<input type="hidden" name="req_id" id="req_id">
+							<!-- <label class="label">Existing Type</label>
+							<input type="text" name="exist_type" id="exist_type" class="form-control" readonly > -->
+						</div>
+					</div>
+					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12"></div>
+				</div>
+				<div id="updatedloanSummaryTable"> 
+					<table class="table custom-table" id="loanSummaryTable"> 
+						<thead>
+							<tr>
+								<th width="25">S. No</th>
+								<th>Feedback Label</th>
+								<th>Feedback Rating</th>
+								<th>Remarks</th>
+							</tr>
+						</thead>
+						<tbody>
+                            
+                        </tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeLoanModal()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <script>
 	var sortOrder = 1; // 1 for ascending, -1 for descending

@@ -196,10 +196,9 @@ foreach ($result as $row) {
     if($cus_status == '4' or $cus_status == '5' or $cus_status == '6'){
         $action .= "<a href='request&del=$id'class='removerequest'>Remove Request</a>";
     }
-    if($user_type != 'Agent'){
+    if($user_type != 'Agent' or $userid == 1){
         $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
-    }elseif($userid == 1){
-        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
+        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='loan-summary' data-toggle='modal' data-target='.loansummary'>Loan Summary</a>";
     }
     
     $action .= "</div></div>";

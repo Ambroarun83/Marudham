@@ -253,30 +253,30 @@ if($idupd>0)
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
 								<div class="form-group">
-									<button type="button" class="btn btn-primary due-chart" id="due_chart" name="due_chart" data-toggle="modal" data-target=".DueChart" style="padding: 10px 35px;"> Due Chart </button>
+									<button type="button" class="btn btn-primary due-chart" id="due_chart" name="due_chart" data-toggle="modal" data-target=".DueChart" style="padding: 10px 35px;width: 100%;"> Due Chart </button>
 								</div>
 							</div>
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
 								<div class="form-group">
-									<button type="button" class="btn btn-primary penalty-chart" id="penalty_chart" name="penalty_chart" data-toggle="modal" data-target=".PenaltyChart" style="padding: 10px 35px;"> Penalty Chart </button>
+									<button type="button" class="btn btn-primary penalty-chart" id="penalty_chart" name="penalty_chart" data-toggle="modal" data-target=".PenaltyChart" style="padding: 10px 35px;width: 100%;"> Penalty Chart </button>
 								</div>
 							</div>
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
 								<div class="form-group">
-									<button type="button" class="btn btn-primary coll-charge-chart" id="collection_charge_chart" name="collection_charge_chart" data-toggle="modal" data-target=".collectionChargeChart" style="padding: 10px 35px;"> Collection Charges Chart </button>
+									<button type="button" class="btn btn-primary coll-charge-chart" id="collection_charge_chart" name="collection_charge_chart" data-toggle="modal" data-target=".collectionChargeChart" style="padding: 10px 35px;width: 100%;"> Collection Charges Chart </button>
 								</div>
 							</div>
 
-					   </div>
+						</div>
 
-                       <hr>
-                       <div class="row">
+						<hr>
+						<div class="row">
 							<div class="col-12">
-							 <h5> Loan summary </h5>
-						     <button type="button" class="btn btn-primary" id="add_cus_label" name="add_cus_label" data-toggle="modal" data-target=".addloansummary" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
-                          </div> 
+								<h5> Loan summary </h5>
+								<button type="button" class="btn btn-primary" id="add_cus_label" name="add_cus_label" data-toggle="modal" data-target=".addloansummary" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
+							</div> 
 						</div> <br>
 
 						<div class="row">
@@ -302,41 +302,41 @@ if($idupd>0)
 
                         <div class="row">
 
-                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                             <div class="form-group">
-							<label for="branch"> Closed Status  </label>
-							 <select type="text" class="form-control" name="closed_Sts" id="closed_Sts" >
-                             <option value=""> Select Closed Status </option> 
-                             <option value="1"> Consider </option> 
-                             <option value="2"> Waiting List </option> 
-                             <option value="3"> Block List </option> 
-                            </select>
-							<span class="text-danger" id="closedStatusCheck" style="display:none;"> Select Closed Status </span>
+								<label for="branch"> Closed Status  </label>
+								<select type="text" class="form-control" name="closed_Sts" id="closed_Sts" >
+									<option value=""> Select Closed Status </option> 
+									<option value="1"> Consider </option> 
+									<option value="2"> Waiting List </option> 
+									<option value="3"> Block List </option> 
+								</select>
+								<span class="text-danger" id="closedStatusCheck" style="display:none;"> Select Closed Status </span>
 							</div>
-						  </div>
+						</div>
 
-                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="considerlevel">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="considerlevel">
                             <div class="form-group">
-							<label for="branch"> Consider Level </label>
-							 <select type="text" class="form-control" name="closed_Sts_consider" id="closed_Sts_consider" >
-                             <option value=""> Select Consider Level </option> 
-                             <option value="1"> Bronze </option> 
-                             <option value="2"> Silver </option> 
-                             <option value="3"> Gold </option> 
-                             <option value="4"> Platinum </option> 
-                             <option value="5"> Diamond </option> 
-                            </select>
-							<span class="text-danger" id="considerLevelCheck" style="display:none;"> Select Consider Level </span>
+								<label for="branch"> Consider Level </label>
+								<select type="text" class="form-control" name="closed_Sts_consider" id="closed_Sts_consider" >
+									<option value=""> Select Consider Level </option> 
+									<option value="1"> Bronze </option> 
+									<option value="2"> Silver </option> 
+									<option value="3"> Gold </option> 
+									<option value="4"> Platinum </option> 
+									<option value="5"> Diamond </option> 
+								</select>
+								<span class="text-danger" id="considerLevelCheck" style="display:none;"> Select Consider Level </span>
 							</div>
-						  </div>
+						</div>
 
-                          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                             <div class="form-group">
-							<label for="remark"> Remark  </label>
-							 <textarea type="text" class="form-control" name="closed_Sts_remark" id="closed_Sts_remark" ></textarea>
-							 <span class="text-danger" id="remarkCheck" style="display:none;"> Enter Remark </span>
+								<label for="remark"> Remark  </label>
+								<textarea type="text" class="form-control" name="closed_Sts_remark" id="closed_Sts_remark" ></textarea>
+								<span class="text-danger" id="remarkCheck" style="display:none;"> Enter Remark </span>
 							</div>
-						  </div>
+						</div>
 
 						</div>
 					</div>

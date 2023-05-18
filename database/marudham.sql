@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2023 at 03:26 PM
+-- Generation Time: May 17, 2023 at 03:03 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -20,47 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `marudham`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `accountsgroup`
---
-
-CREATE TABLE `accountsgroup` (
-  `Id` int(11) NOT NULL,
-  `AccountsName` longtext DEFAULT NULL,
-  `ParentId` int(11) DEFAULT 0,
-  `status` int(11) DEFAULT 0,
-  `order_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `accountsgroup`
---
-
-INSERT INTO `accountsgroup` (`Id`, `AccountsName`, `ParentId`, `status`, `order_id`) VALUES
-(1, 'Capital Account', 0, 0, 1),
-(2, 'Current Liabilities', 0, 0, 2),
-(3, 'Current Assets', 0, 0, 4),
-(4, 'Purchase Accounts', 0, 0, 5),
-(5, 'Direct Income', 0, 0, 6),
-(6, 'Direct Expenses', 0, 0, 7),
-(7, 'Indirect Income', 0, 0, 8),
-(8, 'Indirect Expenses', 0, 0, 9),
-(9, 'Profit & Loss A/c', 0, 0, 10),
-(10, 'Diff. in Opening Balances', 0, 0, 11),
-(11, 'Reserve & Surplus', 1, 0, 12),
-(12, 'Sundry Creditors', 2, 0, 13),
-(13, 'Loans(Liability)', 2, 0, 14),
-(14, 'Bank OD', 2, 0, 15),
-(15, 'Opening Stock', 3, 0, 16),
-(16, 'Cash-in-hand', 3, 0, 17),
-(17, 'Bank Accounts', 3, 0, 18),
-(18, 'Investments', 3, 0, 19),
-(19, 'Loans and Advances', 3, 0, 20),
-(40, 'Sundry Debtors', 3, 0, 35),
-(42, 'Fixed Assets', 0, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -762,13 +721,7 @@ CREATE TABLE `collection` (
 --
 
 INSERT INTO `collection` (`coll_id`, `coll_code`, `req_id`, `cus_id`, `cus_name`, `branch`, `area`, `sub_area`, `line`, `loan_category`, `sub_category`, `coll_status`, `coll_sub_status`, `tot_amt`, `paid_amt`, `bal_amt`, `due_amt`, `pending_amt`, `payable_amt`, `penalty`, `coll_charge`, `coll_mode`, `cheque_no`, `trans_id`, `trans_date`, `coll_location`, `coll_date`, `due_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, `total_waiver`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(13, 'COL-101', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Current', '23921', '0', '23921', '2657', '2657', '5314', '53', '100', '1', '', '', '0000-00-00', '1', '2023-05-04 00:00:00', '', '53', '', '53', '', '', '', '', '1', NULL, NULL, '2023-05-04 16:21:49', '2023-05-04 16:21:49'),
-(22, 'COL-102', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '0', '45000', '450', '13500', '13950', '311', '200', '1', '', '', '0000-00-00', '1', '2023-05-05 00:00:00', '', '0', '', '0', '', '311', '', '311', '1', NULL, NULL, '2023-05-05 11:41:57', '2023-05-05 11:41:57'),
-(23, 'COL-103', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '0', '45000', '450', '13500', '13950', '0', '200', '1', '', '', '0000-00-00', '1', '2023-05-06 00:00:00', '450', '', '', '450', '', '', '', '', '1', NULL, NULL, '2023-05-05 11:52:01', '2023-05-05 11:52:01'),
-(24, 'COL-104', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Current', '45000', '450', '44550', '450', '13050', '13500', '0', '200', '1', '', '', '0000-00-00', '1', '2023-05-05 00:00:00', '', '', '', '0', '', '', '200', '200', '1', NULL, NULL, '2023-05-05 15:15:02', '2023-05-05 15:15:02'),
-(25, 'COL-105', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Pending', '23921', '0', '23921', '2657', '2657', '2657', '0', '0', '2', '4', '94654546', '2023-05-06', '3', '2023-05-07 00:00:00', '2657', '', '', '2657', '', '', '', '', '1', NULL, NULL, '2023-05-06 10:09:53', '2023-05-06 10:09:53'),
-(26, 'COL-106', '20', '105806052023', 'Rakesh', '2', '1', '3', '2', '5', 'Mobile', 'Present', 'Pending', '20000', '0', '20000', '2000', '2000', '2000', '0', '0', '1', '', '', '0000-00-00', '1', '2023-05-06 00:00:00', '', '', '', '0', '2000', '', '', '2000', '1', NULL, NULL, '2023-05-06 12:47:43', '2023-05-06 12:47:43'),
-(28, 'COL-107', '18', '945454646565', 'Praveen', '1', '6', '11', '3', '2', 'Business', 'Present', 'Pending', '45000', '0', '45000', '450', '2250', '2700', '54', '0', '1', '', '', '0000-00-00', '2', '2023-05-10 00:00:00', '45000', '', '', '45000', '', '54', '', '54', '1', NULL, NULL, '2023-05-10 12:34:39', '2023-05-10 12:34:39');
+(29, 'COL-101', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Pending', '23921', '0', '23921', '2657', '2657', '2657', '0', '0', '1', '', '', '0000-00-00', '3', '2023-05-16 00:00:00', '2657', '', '', '2657', '', '', '', '', '1', NULL, NULL, '2023-05-16 09:50:33', '2023-05-16 09:50:33');
 
 -- --------------------------------------------------------
 
@@ -792,16 +745,6 @@ CREATE TABLE `collection_charges` (
   `created_date` datetime DEFAULT NULL COMMENT 'Create Time',
   `updated_date` datetime DEFAULT current_timestamp() COMMENT 'Update Time'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `collection_charges`
---
-
-INSERT INTO `collection_charges` (`id`, `req_id`, `cus_id`, `coll_date`, `coll_purpose`, `coll_charge`, `paid_date`, `paid_amnt`, `waiver_amnt`, `status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(3, '11', '123456789101', '2023-04-28', 'False commitment', '200', NULL, '0', '0', 0, '1', NULL, '2023-05-05 10:48:31', '2023-05-05 10:48:31'),
-(4, '18', NULL, NULL, NULL, '', '05-05-2023', '', '', NULL, NULL, NULL, NULL, '2023-05-05 11:15:33'),
-(5, '11', NULL, NULL, NULL, '', '05-05-2023', '0', '200', NULL, NULL, NULL, NULL, '2023-05-05 11:37:04'),
-(6, '11', NULL, NULL, NULL, '', '2023-05-05', '', '200', NULL, NULL, NULL, NULL, '2023-05-05 15:15:02');
 
 -- --------------------------------------------------------
 
@@ -839,31 +782,6 @@ INSERT INTO `company_creation` (`company_id`, `company_name`, `address1`, `addre
 (1, 'Darling', 'MG road', 'Chinnakadai', 'Puducherry', 'Puducherry', 'Villianur', 'Bussy Street', '605100', '', '', '', '', '', '0', 1, 1, '2023-03-11 14:34:40', '2023-03-17 15:52:47'),
 (2, 'ABC Furnitures', 'Bussy street', 'line 2', 'TamilNadu', 'Ariyalur', 'Sendurai', 'Tamilnadu', '605312', '', '', '', '', '', '0', 1, 1, '2023-03-11 14:41:09', '2023-03-17 15:53:11'),
 (4, 'as motors', 'bussy street', 'pondicherry', 'Puducherry', 'Puducherry', 'Oulgaret', 'Pondicherry', '123', '', '', '', '', '', '0', 1, 1, '2023-03-17 15:51:56', '2023-03-17 15:53:17');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `costcentre`
---
-
-CREATE TABLE `costcentre` (
-  `costcentreid` int(11) NOT NULL,
-  `costcentrename` varchar(255) DEFAULT NULL,
-  `status` varchar(255) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `costcentre`
---
-
-INSERT INTO `costcentre` (`costcentreid`, `costcentrename`, `status`) VALUES
-(1, 'Celebration Charges', '0'),
-(2, 'Faculty Bus', '0'),
-(3, 'Sale', '0'),
-(4, 'Purchase', '0'),
-(5, 'Salary', '0'),
-(6, 'Admin', '0'),
-(7, 'test', '0');
 
 -- --------------------------------------------------------
 
@@ -1295,48 +1213,6 @@ INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ledger`
---
-
-CREATE TABLE `ledger` (
-  `ledgerid` int(11) NOT NULL,
-  `ledgername` varchar(255) DEFAULT NULL,
-  `groupname` varchar(255) DEFAULT NULL,
-  `subgroupname` varchar(255) DEFAULT NULL,
-  `inventory` varchar(255) DEFAULT NULL,
-  `costcentre` varchar(255) DEFAULT NULL,
-  `openingbalancedr` varchar(200) DEFAULT NULL,
-  `opening_credit` varchar(255) DEFAULT NULL,
-  `opening_debit` varchar(255) DEFAULT NULL,
-  `openingbalance` int(200) DEFAULT 0,
-  `status` varchar(255) DEFAULT '0',
-  `exciseduty` varchar(255) DEFAULT NULL,
-  `pan` varchar(255) DEFAULT NULL,
-  `tin` varchar(255) DEFAULT NULL,
-  `servicetax` varchar(255) DEFAULT NULL,
-  `contactperson` varchar(255) DEFAULT NULL,
-  `address1` varchar(255) DEFAULT NULL,
-  `address2` varchar(255) DEFAULT NULL,
-  `address3` varchar(255) DEFAULT NULL,
-  `address4` varchar(255) DEFAULT NULL,
-  `contactnumber` varchar(255) DEFAULT NULL,
-  `AccountRefId` int(11) DEFAULT NULL,
-  `ServiceTaxNumber` varchar(255) DEFAULT NULL,
-  `ExciseDutyReg` varchar(255) DEFAULT NULL,
-  `DebitCredit` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ledger`
---
-
-INSERT INTO `ledger` (`ledgerid`, `ledgername`, `groupname`, `subgroupname`, `inventory`, `costcentre`, `openingbalancedr`, `opening_credit`, `opening_debit`, `openingbalance`, `status`, `exciseduty`, `pan`, `tin`, `servicetax`, `contactperson`, `address1`, `address2`, `address3`, `address4`, `contactnumber`, `AccountRefId`, `ServiceTaxNumber`, `ExciseDutyReg`, `DebitCredit`) VALUES
-(3, 'SBI', '3', '17', 'No', 'No', 'CR', '0', '0', 0, '0', '', '', '', '', '', '', '', '', '', '', 17, NULL, NULL, NULL),
-(4, 'Mukesh', '3', '3', 'No', 'No', 'CR', '50000', '0', 50000, '0', '', '', '', '', '', '', '', '', '', '', 3, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `loan_calculation`
 --
 
@@ -1598,10 +1474,19 @@ INSERT INTO `loan_scheme` (`scheme_id`, `scheme_name`, `short_name`, `loan_categ
 CREATE TABLE `loan_summary_feedback` (
   `id` int(11) NOT NULL,
   `req_id` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
   `feedback_label` varchar(255) DEFAULT NULL,
   `cus_feedback` varchar(255) DEFAULT NULL,
   `feedback_remark` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `loan_summary_feedback`
+--
+
+INSERT INTO `loan_summary_feedback` (`id`, `req_id`, `cus_id`, `feedback_label`, `cus_feedback`, `feedback_remark`) VALUES
+(3, '18', '945454646565', 'Check Three', '5', 'Three 3'),
+(4, '18', '945454646565', 'Check Four', '1', 'Four 4');
 
 -- --------------------------------------------------------
 
@@ -1658,46 +1543,28 @@ CREATE TABLE `penalty_charges` (
 --
 
 INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`, `paid_amnt`, `waiver_amnt`, `created_date`, `updated_time`) VALUES
-('11', NULL, NULL, '05-05-2023', '0', '311', '2023-05-05 11:41:57', '2023-05-05 11:41:57'),
-('18', NULL, NULL, '2023-05-10', '', '54', '2023-05-10 12:34:39', '2023-05-10 12:34:39'),
-('11', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-15 18:27:11', '2023-05-15 18:27:11'),
-('18', '2023-05-05', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05'),
-('18', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-15 18:28:05', '2023-05-15 18:28:05');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `purpose`
---
-
-CREATE TABLE `purpose` (
-  `purposeid` int(11) NOT NULL,
-  `purposename` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `purpose`
---
-
-INSERT INTO `purpose` (`purposeid`, `purposename`, `status`) VALUES
-(1, 'test', 0);
+('18', '2023-05-05', '10.35', NULL, '0', '0', '2023-05-16 13:58:52', '2023-05-16 13:58:52'),
+('18', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-16 13:58:52', '2023-05-16 13:58:52'),
+('18', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('18', '2023-05-15', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
+('11', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
+('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57');
 
 -- --------------------------------------------------------
 
@@ -2448,12 +2315,6 @@ INSERT INTO `verif_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_id`, `categ
 --
 
 --
--- Indexes for table `accountsgroup`
---
-ALTER TABLE `accountsgroup`
-  ADD PRIMARY KEY (`Id`);
-
---
 -- Indexes for table `acknowledgement_loan_cal_category`
 --
 ALTER TABLE `acknowledgement_loan_cal_category`
@@ -2568,12 +2429,6 @@ ALTER TABLE `company_creation`
   ADD PRIMARY KEY (`company_id`);
 
 --
--- Indexes for table `costcentre`
---
-ALTER TABLE `costcentre`
-  ADD PRIMARY KEY (`costcentreid`);
-
---
 -- Indexes for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
@@ -2628,12 +2483,6 @@ ALTER TABLE `in_verification`
   ADD PRIMARY KEY (`req_id`);
 
 --
--- Indexes for table `ledger`
---
-ALTER TABLE `ledger`
-  ADD PRIMARY KEY (`ledgerid`);
-
---
 -- Indexes for table `loan_calculation`
 --
 ALTER TABLE `loan_calculation`
@@ -2680,12 +2529,6 @@ ALTER TABLE `loan_summary_feedback`
 --
 ALTER TABLE `noc`
   ADD PRIMARY KEY (`noc_id`);
-
---
--- Indexes for table `purpose`
---
-ALTER TABLE `purpose`
-  ADD PRIMARY KEY (`purposeid`);
 
 --
 -- Indexes for table `request_category_info`
@@ -2795,12 +2638,6 @@ ALTER TABLE `verif_loan_cal_category`
 --
 
 --
--- AUTO_INCREMENT for table `accountsgroup`
---
-ALTER TABLE `accountsgroup`
-  MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
-
---
 -- AUTO_INCREMENT for table `acknowledgement_loan_cal_category`
 --
 ALTER TABLE `acknowledgement_loan_cal_category`
@@ -2900,7 +2737,7 @@ ALTER TABLE `closed_status`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=29;
+  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `collection_charges`
@@ -2913,12 +2750,6 @@ ALTER TABLE `collection_charges`
 --
 ALTER TABLE `company_creation`
   MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `costcentre`
---
-ALTER TABLE `costcentre`
-  MODIFY `costcentreid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `customer_profile`
@@ -2969,12 +2800,6 @@ ALTER TABLE `in_issue`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `ledger`
---
-ALTER TABLE `ledger`
-  MODIFY `ledgerid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `loan_calculation`
 --
 ALTER TABLE `loan_calculation`
@@ -3014,19 +2839,13 @@ ALTER TABLE `loan_scheme`
 -- AUTO_INCREMENT for table `loan_summary_feedback`
 --
 ALTER TABLE `loan_summary_feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `noc`
 --
 ALTER TABLE `noc`
   MODIFY `noc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=16;
-
---
--- AUTO_INCREMENT for table `purpose`
---
-ALTER TABLE `purpose`
-  MODIFY `purposeid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `request_category_info`

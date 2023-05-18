@@ -191,11 +191,11 @@ jQuery(function ($) {
 			$(".page-wrapper").addClass("pinned");
 			$("#sidebar").hover(
 				function () {
-					console.log("mouseenter");
+					// console.log("mouseenter");
 					$(".page-wrapper").addClass("sidebar-hovered");
 				},
 				function () {
-					console.log("mouseout");
+					// console.log("mouseout");
 					$(".page-wrapper").removeClass("sidebar-hovered");
 				}
 			)
@@ -209,11 +209,11 @@ jQuery(function ($) {
 		$(".page-wrapper").hasClass("pinned");
 		$("#sidebar").hover(
 			function () {
-				console.log("mouseenter");
+				// console.log("mouseenter");
 				$(".page-wrapper").addClass("sidebar-hovered");
 			},
 			function () {
-				console.log("mouseout");
+				// console.log("mouseout");
 				$(".page-wrapper").removeClass("sidebar-hovered");
 			}
 		)
