@@ -5107,4 +5107,19 @@ function updateUser($mysqli,$id,$user_id){
 			$insertCloasedSts = $mysqli->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`) VALUES ('".strip_tags($close_req_id)."','".strip_tags($cus_id)."','".strip_tags($closed_Sts)."','".strip_tags($closed_Sts_consider)."','".strip_tags($closed_Sts_remark)."', '20','$userid' )");
 		}
 
+		//Get User Details for Consent Creation.
+		function getUserDetails($mysqli,$userid){
+			$getDetails =array();
+			$selectQry = $mysqli->query("SELECT `user_id`,`fullname`,`user_name`,`role`,`role_type`,`staff_id`,`company_id`,`branch_id` FROM `user` WHERE user_id='".$userid."' ");
+			if($selectQry->num_rows>0){
+				$row = $selectQry->fetch_assoc();
+				$getDetails = $row;
+			}
+			//Getting Company Name
+			$qry = $mysqli->query("SELECT company_name FROM company_creation WHERE company_id = " . $getDetails['company_id']);
+			$getDetails['company_name'] = $qry->fetch_assoc()['company_name'];
+
+			return $getDetails;
+		}
+
 }//Class End
