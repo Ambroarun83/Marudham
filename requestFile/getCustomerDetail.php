@@ -31,6 +31,32 @@ if($result->num_rows>0){
     $records['pic'] = $row['pic'];
 
     $records['message'] = "Existing";
+
+    $subArea = $records['sub_area'];
+    $grpList = $con->query("SELECT `group_name` FROM `area_group_mapping` WHERE find_in_set($subArea,`sub_area_id`)");
+    if($grpList->num_rows>0){
+        $grprow = $grpList->fetch_assoc();
+        $records['grp_name'] = $grprow['group_name'];
+    }
+
+    $lineList = $con->query("SELECT `line_name` FROM `area_line_mapping` WHERE find_in_set($subArea,`sub_area_id`)");
+    if($lineList->num_rows>0){
+        $linerow = $lineList->fetch_assoc();
+        $records['line_name'] = $linerow['line_name'];
+    }
+
+    $area = $records['area'];
+    $area_list = $con->query("SELECT area_name FROM area_list_creation where area_id = '".$area."' and status=0 and area_enable = 0");
+    if($area_list->num_rows>0){
+        $arearow = $area_list->fetch_assoc();
+        $records['area_name'] = $arearow['area_name'];
+    }
+    
+    $sub_area_list = $con->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id ='".$subArea."' and status=0 and sub_area_enable = 0");
+    if($sub_area_list->num_rows>0){
+        $subArearow = $sub_area_list->fetch_assoc();
+        $records['sub_area_name'] = $subArearow['sub_area_name'];
+    }
     
 }else{
     $records['message'] = "New";

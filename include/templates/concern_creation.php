@@ -3,17 +3,20 @@
 $getUserDetails = $userObj->getUserDetails($mysqli,$userid);
 // print_r($getUserDetails);
 if($getUserDetails){
-    $branch_id = $getUserDetails['branch_id'];
-    $company_name = $getUserDetails['company_name'];
+    // $branch_id = $getUserDetails['branch_id'];
+    $company_id = $getUserDetails['company_id'];
     $user_name = $getUserDetails['fullname'];
+    $staff_code = $getUserDetails['staff_code'];
 }
 
 //Getting Branch Name
-$branch_name ='';
-$branchqry = $mysqli->query("SELECT branch_name FROM branch_creation WHERE branch_id in($branch_id) ");
-while($row = $branchqry->fetch_assoc()){
-    $branch_name .= $row['branch_name'].', ';
-}
+// $branch_name ='';
+// $branchqry = $mysqli->query("SELECT branch_name FROM branch_creation WHERE branch_id in($branch_id) ");
+// while($row = $branchqry->fetch_assoc()){
+//     $branch_name .= $row['branch_name'].', ';
+// }
+
+// $getconSubjectList = $userObj->getconSubject($mysqli);
 ?>
 <style>
     .img_show {
@@ -45,9 +48,10 @@ while($row = $branchqry->fetch_assoc()){
 <div class="main-container">
 
     <!-- Concern Creation form start-->
-    <div id="considerDiv">
-        <form id="consider_form" name="consider_form" action="" method="post" enctype="multipart/form-data">
-
+    <div id="concernDiv">
+        <form id="concern_form" name="concern_form" action="" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="company_id" id="company_id" value="<?php if(isset($company_id)) echo $company_id; ?>" >
+            <input type="hidden" class="form-control" id="taluk1" name="taluk1" >
             <!-- Row start -->
             <div class="row gutters">
                 <!-- Concern Creation Start -->
@@ -56,16 +60,16 @@ while($row = $branchqry->fetch_assoc()){
                         <div class="card-header">Concern Creation <span style="font-weight:bold" class=""></span></div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="Company">Company Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="user_company_name" name="company_name" readonly value='<?php  if(isset($company_name)) echo $company_name; ?>' tabindex="1">
+                                        <input type="text" class="form-control" id="user_company_name" name="user_company_name" readonly value='<?php  if(isset($company_name)) echo $company_name; ?>' tabindex="1">
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="branch_name">Branch Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="user_branch_name" name="branch_name" readonly value='<?php if(isset($branch_name)) echo $branch_name; ?>' tabindex='2'>
+                                        <input type="text" class="form-control" id="user_branch_name" name="user_branch_name" readonly value='<?php if(isset($branch_name)) echo $branch_name; ?>' tabindex='2'>
                                     </div>
                                 </div>
 
@@ -74,11 +78,11 @@ while($row = $branchqry->fetch_assoc()){
                                         <label for="user_name">User Name <span class="required">&nbsp;*</span></label>
                                         <input tabindex="3" type="text" class="form-control" id="user_name" name="user_name" value="<?php  if(isset($user_name)) echo $user_name; ?>" readonly>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
                                     <div class="form-group">
-                                        <label for="remark">Raising For</label><span class="required">&nbsp;*</span>
+                                        <label for="raising">Raising For</label><span class="required">&nbsp;*</span>
                                         <select type="text" class="form-control" id="raising_for" name="raising_for" tabindex='4' > 
                                             <option value="">Select Raising For</option>
                                             <option value="1">Myself</option>
@@ -94,15 +98,15 @@ while($row = $branchqry->fetch_assoc()){
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
                                     <div class="form-group">
-                                        <label for="staff_name">Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="self_name" name="self_name" tabindex='5' readonly>
+                                        <label for="name">Name</label><span class="required">&nbsp;*</span>
+                                        <input type="text" class="form-control" id="self_name" name="self_name" tabindex='5' value="<?php  if(isset($user_name)) echo $user_name; ?>" readonly>
                                     </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
                                     <div class="form-group">
-                                        <label for="staff_id">ID</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="self_id" name="self_id" tabindex='6' readonly>
+                                        <label for="code">Staff Code</label><span class="required">&nbsp;*</span>
+                                        <input type="text" class="form-control" id="self_code" name="self_code" tabindex='6' value="<?php  if(isset($staff_code)) echo $staff_code; ?>" readonly>
                                     </div>
                                 </div>
 
@@ -117,10 +121,23 @@ while($row = $branchqry->fetch_assoc()){
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="staff_id">Staff ID</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="staff_id" name="staff_id" tabindex='6' >
+                                        <label for="deptname">Department Name </label> <span class="required">&nbsp;*</span>
+                                        <select tabindex="6" type="text" class="form-control" id="staff_dept_name" name="staff_dept_name">
+                                            <option value="">Select Department Name</option>
+                                        </select>
+                                        <span class="text-danger" style='display:none' id='staffdeptnameCheck'>Please Select Department</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="teamname">Team Name </label> <span class="required">&nbsp;*</span>
+                                        <select tabindex="6" type="text" class="form-control" id="staff_team_name" name="staff_team_name">
+                                            <option value="">Select Team Name</option>
+                                        </select>
+                                        <span class="text-danger" style='display:none' id='staffteamnameCheck'>Please Select Team</span>
                                     </div>
                                 </div>
 
@@ -130,15 +147,16 @@ while($row = $branchqry->fetch_assoc()){
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
                                     <div class="form-group">
-                                        <label for="staff_name">Agent Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="ag_name" name="ag_name" tabindex='5' >
+                                        <label for="ag-name">Agent Name</label><span class="required">&nbsp;*</span>
+                                        <select type="text" class="form-control" id="ag_name" name="ag_name" tabindex='5' >
+                                        </select>
                                     </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
                                     <div class="form-group">
-                                        <label for="staff_id">ID</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="ag_id" name="ag_id" tabindex='6' >
+                                        <label for="ag-grp">Agent Group</label><span class="required">&nbsp;*</span>
+                                        <input type="text" class="form-control" id="ag_grp" name="ag_grp" tabindex='6' readonly>
                                     </div>
                                 </div>
 
@@ -149,7 +167,7 @@ while($row = $branchqry->fetch_assoc()){
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
-                                            <input type="text" class="form-control" id="cus_id" name="cus_id"  tabindex='5'>
+                                            <input type="text" class="form-control" id="cus_id" name="cus_id" data-type="adhaar-number" maxlength="14" tabindex='5'>
                                         </div>
                                     </div>
                                     
@@ -163,28 +181,28 @@ while($row = $branchqry->fetch_assoc()){
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="area">Area</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="area" name="cus_area" readonly  tabindex='7'>
+                                        <input type="text" class="form-control" id="cus_area" name="cus_area" readonly  tabindex='7'>
                                     </div>
                                 </div>
                                 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="subarea">Sub Area</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="sub_area" name="cus_sub_area" readonly  tabindex='8'>
+                                        <input type="text" class="form-control" id="cus_sub_area" name="cus_sub_area" readonly  tabindex='8'>
                                     </div>
                                 </div>
                                 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="group">Group</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="group" name="cus_group" readonly  tabindex='9'>
+                                        <input type="text" class="form-control" id="cus_group" name="cus_group" readonly  tabindex='9'>
                                     </div>
                                 </div>
                                 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="line">Line</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="line" name="cus_line" readonly  tabindex='10'>
+                                        <input type="text" class="form-control" id="cus_line" name="cus_line" readonly  tabindex='10'>
                                     </div>
                                 </div>
 
@@ -201,14 +219,14 @@ while($row = $branchqry->fetch_assoc()){
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="comdate">Complaint Date </label><span class="required">&nbsp;*</span>
+                                        <label for="comdate">Concern Date </label><span class="required">&nbsp;*</span>
                                         <input type="date" class="form-control" id="com_date" name="com_date" tabindex='11' value="<?php echo date('Y-m-d'); ?>" readonly>
                                     </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="comcode">Complaint Code</label><span class="required">&nbsp;*</span>
+                                        <label for="comcode">Concern Code</label><span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="com_code" name="com_code" readonly tabindex='12'>
                                     </div>
                                 </div>
@@ -225,17 +243,17 @@ while($row = $branchqry->fetch_assoc()){
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="to">To</label><span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="complaint_to" name="complaint_to" tabindex='14'> 
-                                            <option> Select To </option>
+                                        <label for="to">Concern To</label><span class="required">&nbsp;*</span>
+                                        <select type="text" class="form-control" id="concern_to" name="concern_to" tabindex='14'> 
+                                            <option> Select Concern To </option>
                                             <option value="1"> Department </option>
-                                            <option value="2"> Staff </option>
+                                            <option value="2"> Team </option>
                                         </select>
                                         <span class="text-danger" style='display:none' id='comtoCheck'>Please Select To</span>
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 dept" style="display: none">
                                     <div class="form-group">
                                         <label for="toname">Department Name </label> <span class="required">&nbsp;*</span>
                                         <select tabindex="15" type="text" class="form-control" id="to_dept_name" name="to_dept_name">
@@ -244,7 +262,7 @@ while($row = $branchqry->fetch_assoc()){
                                         <span class="text-danger" style='display:none' id='todeptnameCheck'>Please Select Name</span>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 team" style="display: none">
                                     <div class="form-group">
                                         <label for="toname">Team Name </label> <span class="required">&nbsp;*</span>
                                         <select tabindex="15" type="text" class="form-control" id="to_team_name" name="to_team_name">
@@ -256,13 +274,11 @@ while($row = $branchqry->fetch_assoc()){
 
                                 <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                     <div class="form-group">
-                                        <label for="comsub">Complaint Subject</label><span class="required">&nbsp;*</span>
+                                        <label for="comsub">Concern Subject</label><span class="required">&nbsp;*</span>
                                         <select type="text" class="form-control" id="com_sub" name="com_sub" tabindex='16'> 
-                                            <option value=""> Select Complaint Subject </option>
-                                            <option value="1"> Work Based </option>
-                                            <option value="2"> Behaviour Based </option>
+                                            <option value=""> Select Concern Subject </option>
                                         </select>
-                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Enter Complaint Remark</span>
+                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Enter Concern Remark</span>
                                     </div>
                                 </div>
 
@@ -274,29 +290,29 @@ while($row = $branchqry->fetch_assoc()){
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="com_remark">Complaint Remark</label><span class="required">&nbsp;*</span>
+                                        <label for="comremark">Concern Remark</label><span class="required">&nbsp;*</span>
                                         <textarea class="form-control" id="com_remark" name="com_remark" tabindex='17'></textarea>
-                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Enter Complaint Remark</span>
+                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Enter Concern Remark</span>
                                     </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="com_remark">Complaint Priority</label><span class="required">&nbsp;*</span>
+                                        <label for="com-priority">Concern Priority</label><span class="required">&nbsp;*</span>
                                         <select class="form-control" id="com_priority" name="com_priority" tabindex='18'>
-                                            <option>Select Complaint Priority</option>
+                                            <option>Select Concern Priority</option>
                                             <option>High</option>
                                             <option>Medium</option>
                                             <option>Low</option>
                                         </select>
-                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Select Complaint Priority</span>
+                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Select Concern Priority</span>
                                     </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="com_remark">Staff Assign To</label><span class="required">&nbsp;*</span>
-                                        <select class="form-control" id="com_priority" name="com_priority" tabindex='19'>
+                                        <label for="assign-to">Staff Assign To</label><span class="required">&nbsp;*</span>
+                                        <select class="form-control" id="staff_assign_to" name="staff_assign_to" tabindex='19'>
                                             <option>Select Staff Assign To</option>
                                         </select>
                                         <span class="text-danger" style='display:none' id='staffAssignCheck'>Please Select Staff Assign</span>
@@ -324,79 +340,83 @@ while($row = $branchqry->fetch_assoc()){
 
 </div>
 
-<!-- Complaint To Modal Start -->
+<!-- Concern To Modal Start -->
 <div class="modal fade addComplaint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Concern Assign</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeFamModal()">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="FamInsertNotOk" class="unsuccessalert"> Name Already Exists, Please Enter a Different Name!
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel">Add Concern Subject</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="DropDownCourse()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- alert messages -->
+                <div id="categoryInsertNotOk" class="unsuccessalert">Subject Already Exists, Please Enter a Different Name!
+                <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
 
-				<div id="FamInsertOk" class="successalert">Family Info Added Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+                <div id="categoryInsertOk" class="successalert">Concern Subject Added Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
 
-				<div id="famUpdateok" class="successalert">Family Info Updated Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+                <div id="categoryUpdateOk" class="successalert">Concern Subject Updated Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
 
-				<div id="NotOk" class="unsuccessalert">Please Retry!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+                <div id="categoryDeleteNotOk" class="unsuccessalert">You Don't Have Rights To Delete This Category!
+                <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
 
-				<div id="FamDeleteNotOk" class="unsuccessalert"> Please Retry to Delete Family Info!
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+                <div id="categoryDeleteOk" class="successalert">Concern Subject Has been Inactivated!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
 
-				<div id="FamDeleteOk" class="unsuccessalert"> Family Info Has been Deleted!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<br />
-
-				<div class="row">
-
-                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                    <div class="form-group">
-                        <label for="comsub">Complaint Subject</label><span class="required">&nbsp;*</span>
-                        <select type="text" class="form-control" id="com_sub" name="com_sub" tabindex='16'> 
-                            <option value=""> Select Complaint Subject </option>
-                        </select>
-                        <span class="text-danger" style='display:none' id='comsubCheck'>Please Enter Complaint Subject</span>
+                <br />
+                <div class="row">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-12"></div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                        <div class="form-group">
+                            <label class="label">Concern Subject</label>
+                            <input type="hidden" name="con_sub_id" id="con_sub_id">
+                            <input type="text" name="com_sub_add" id="com_sub_add" class="form-control" placeholder="Enter Concern Subject">
+                            <span class="text-danger" style='display:none' id='comsubCheck'>Please Enter Concern Subject</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+                            <label class="label" style="visibility: hidden;">Submit</label>
+                        <button type="button" name="submitConSub" id="submitConSub" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
 
-                <div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-                    <input type="hidden" name="famID" id="famID">
-                    <button type="button" tabindex="2" name="comSubBtn" id="comSubBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+                <div id="updatedconSubTable"> 
+                    <table class="table custom-table" id="coursecategoryTable"> 
+                        <thead>
+                            <tr>
+                                <th width="15px">S. No</th>
+                                <th>SUBJECT</th>
+                                <th>ACTION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <?php if (sizeof($getconSubjectList)>0) { 
+                                for($j=0;$j<count($getconSubjectList);$j++) { ?>
+                                <tr>
+                                    <td class="col-md-2 col-xl-2"></td>
+                                    <td><?php  echo $getconSubjectList[$j]['concern_subject']; ?></td>
+                                    <td>
+                                        <a id="edit_subject" value="<?php echo $getconSubjectList[$j]['concern_sub_id'] ?>"><span class="icon-border_color"></span></a> &nbsp
+                                        <a id="delete_subject" value="<?php echo $getconSubjectList[$j]['concern_sub_id'] ?>"><span class='icon-trash-2'></span></a>
+                                    </td>
+                                </tr>
+                            <?php } } ?> -->
+                        </tbody>
+                    </table>
                 </div>
+            </div>
 
-				</div>
-				</br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="DropDownCourse()">Close</button>
+            </div>
 
-				<div id="updatedComTable">
-					<table class="table custom-table">
-						<thead>
-							<tr>
-								<th width="25%">S.No</th>
-								<th>Name</th>
-								<th>ACTION</th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeFamModal()">Close</button>
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
 </div>
-<!--  Complaint To Modal END-->
+<!--  Concern To Modal END-->
