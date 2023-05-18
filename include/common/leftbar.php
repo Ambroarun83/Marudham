@@ -358,9 +358,9 @@ if (sizeof($getUser)>0) {
 										<a href="edit_manage_user"><i class="icon-cog"></i>Manage User</a>
 									</li>
 								<?php  }if($doc_mapping == 0){ ?>
-									<li>
+									<!-- <li>
 										<a href="edit_doc_mapping"><i class="icon-briefcase"></i>Documentation Mapping</a>
-									</li>
+									</li> -->
 								<?php  } ?>
 							</ul>
 						</div>

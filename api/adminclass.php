@@ -2735,7 +2735,7 @@ function updateUser($mysqli,$id,$user_id){
 			$dor = $_POST['dor'];
 		}
 		if(isset($_POST['cus_id'])){
-			$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);;
+			$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);
 		}
 		if(isset($_POST['cus_data'])){
 			$cus_data = $_POST['cus_data'];
@@ -3204,7 +3204,7 @@ function updateUser($mysqli,$id,$user_id){
                 $req_id = $_POST['req_id'];
             }
             if(isset($_POST['cus_id'])){
-                $cus_id = $_POST['cus_id'];
+				$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);
             }
             if(isset($_POST['cus_name'])){
                 $cus_name = $_POST['cus_name'];
@@ -4737,7 +4737,7 @@ function updateUser($mysqli,$id,$user_id){
 				$req_id = $_POST['req_id'];
 			}
 			if(isset($_POST['cus_id'])){
-				$cus_id = $_POST['cus_id'];
+				$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);
 			}
 			if(isset($_POST['loan_amt_cal'])){
 				$loan_amt_cal = $_POST['loan_amt_cal'];
@@ -4812,11 +4812,11 @@ function updateUser($mysqli,$id,$user_id){
 			}
 			
 			//Getting area Name
-			$qry = $mysqli->query("SELECT area_name FROM area_list_creation WHERE area_id = " . $detailrecords['area_confirm_area']);
+			$qry = $mysqli->query("SELECT area_name FROM area_list_creation WHERE area_id = '".$detailrecords['area_confirm_area']."' ");
 			$detailrecords['area_name'] = $qry->fetch_assoc()['area_name'];
 
 			//Getting sub area Name
-			$qry = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation WHERE sub_area_id = " . $detailrecords['area_confirm_subarea']);
+			$qry = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation WHERE sub_area_id = '".$detailrecords['area_confirm_subarea']."' ");
 			$detailrecords['sub_area_name'] = $qry->fetch_assoc()['sub_area_name'];
 
 			// Getting Line Id, Branch ID, Branch Name
@@ -5108,18 +5108,39 @@ function updateUser($mysqli,$id,$user_id){
 		}
 
 		//Get User Details for Consent Creation.
-		function getUserDetails($mysqli,$userid){
-			$getDetails =array();
-			$selectQry = $mysqli->query("SELECT `user_id`,`fullname`,`user_name`,`role`,`role_type`,`staff_id`,`company_id`,`branch_id` FROM `user` WHERE user_id='".$userid."' ");
-			if($selectQry->num_rows>0){
-				$row = $selectQry->fetch_assoc();
-				$getDetails = $row;
-			}
-			//Getting Company Name
-			$qry = $mysqli->query("SELECT company_name FROM company_creation WHERE company_id = " . $getDetails['company_id']);
-			$getDetails['company_name'] = $qry->fetch_assoc()['company_name'];
-
-			return $getDetails;
-		}
+        function getUserDetails($mysqli,$userid){
+            $getDetails =array();
+            $selectQry = $mysqli->query("SELECT `user_id`,`fullname`,`user_name`,`role`,`role_type`,`staff_id`,`company_id`,`branch_id` FROM `user` WHERE user_id='".$userid."' ");
+            if($selectQry->num_rows>0){
+                $row = $selectQry->fetch_assoc();
+                $getDetails = $row;
+            }
+            // //Getting Company Name
+            // $qry = $mysqli->query("SELECT company_name FROM company_creation WHERE company_id = " . $getDetails['company_id']);
+            // $getDetails['company_name'] = $qry->fetch_assoc()['company_name'];
+            //Getting Staff Code
+            if($getDetails['staff_id'] != ''){
+            $qry = $mysqli->query("SELECT staff_code FROM staff_creation WHERE staff_id = '".$getDetails['staff_id']."' ");
+            $getDetails['staff_code'] = $qry->fetch_assoc()['staff_code'];
+            }
+            return $getDetails;
+        }
+        //Concern Subject
+        public function getconSubject($mysqli) {
+            $qry = "SELECT * FROM concern_subject WHERE 1 AND status=0 ORDER BY concern_sub_id DESC";
+            $res =$mysqli->query($qry)or die("Error in Get All Records".$mysqli->error);
+            $detailrecords = array();
+            $i=0;
+            if ($mysqli->affected_rows>0)
+            {
+                while($row = $res->fetch_object())
+                {
+                    $detailrecords[$i]['concern_sub_id']            = $row->concern_sub_id;
+                    $detailrecords[$i]['concern_subject']           = strip_tags($row->concern_subject);
+                    $i++;
+                }
+            }
+            return $detailrecords;
+        }
 
 }//Class End

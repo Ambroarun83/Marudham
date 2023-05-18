@@ -84,8 +84,9 @@ function getSubCategory(loan_cat){
 					var selected = '';
 					if(sub_category_upd == response[i]['sub_category_name']){
 						selected = 'selected';
+                        response[i]['disabled'] = '';
 					}
-					$('#sub_category').append("<option value= '"+response[i]['sub_category_name']+"' "+selected+" > "+response[i]['sub_category_name']+" </option>")
+					$('#sub_category').append("<option value= '"+response[i]['sub_category_name']+"' "+selected+" "+response[i]['disabled']+" > "+response[i]['sub_category_name']+" </option>")
 				}
 			}
             {//To Order sub_category Alphabetically

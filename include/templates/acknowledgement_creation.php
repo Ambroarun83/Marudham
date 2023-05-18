@@ -1734,12 +1734,32 @@ input:checked + .slider:before {
                     <!-- Documents Info START-->
 
                     <div class="card">
-                        <div class="card-header"> Documents Info </div>
+						<div class="card-header"> Documents Info 
+							<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25"><span class="icon-add"></span></button>
+						</div>
                         <div class="card-body">
-
                             <div class="row">
+									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+										<div class="form-group" id="DocResetTableDiv">
+											<table class="table custom-table">
+												<thead>
+													<tr>
+														<th width="50"> S.No </th>
+														<th> Document Name </th>
+														<th> Document Details</th>
+														<th> Document Type </th>
+														<th> Document Holder</th>
+														<th> Holder Name</th>
+														<th> Relationship</th>
+													</tr>
+												</thead>
+												<tbody>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+												</tbody>
+											</table>
+										</div>
+									</div>
+                                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="<?php if(isset($document_name)) echo $document_name; ?>" tabindex="38">
@@ -1772,7 +1792,6 @@ input:checked + .slider:before {
                                             <label for="DocumentUpd"> Document Uploads </label>
                                             <input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="41">
 											<input type="hidden" id="doc_info_upd" name="doc_info_upd"  value="<?php if (isset($doc_info_upload)) echo $doc_info_upload; ?>">
-											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/".$doc_info_upload; ?>" target="_blank" >  <?php if (isset($doc_info_upload)) echo $doc_info_upload; ?> </a> -->
                                         </div>
                                     </div>
 
@@ -1806,7 +1825,7 @@ input:checked + .slider:before {
                                         <label for="DocRelationship"> Relationship </label>
                                         <input type="text" class="form-control" id="doc_relation" name="doc_relation" value="<?php if(isset($doc_relation)) echo $doc_relation; ?>" readonly tabindex="45">
                                     </div>
-                                </div>
+                                </div> -->
 
 
                             </div>
@@ -2530,6 +2549,136 @@ input:checked + .slider:before {
 </form>
 </div>
 <!-- END  Add Cheque Info Modal -->
+<!-- Add Document info Modal  START -->
+<div class="modal fade addDocument" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="docUploads">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Add Document Info</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="docinfoList()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- alert messages -->
+				<div id="docInsertOk" class="successalert"> Document Info Added Successfully
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="docUpdateok" class="successalert"> Document Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="docNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="docDeleteOk" class="unsuccessalert"> Document Info Deleted
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="docDeleteNotOk" class="unsuccessalert"> Document Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<br />
+
+				<div class="row">
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="" tabindex="1" readonly />
+										<span class="text-danger" id="documentnameCheck"> Enter Document name </span>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="" tabindex="2" readonly />
+										<span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="Documenttype"> Document Type </label> <span class="required">&nbsp;*</span>
+										<select type="text" class="form-control" id="document_type" name="document_type" tabindex="3" readonly>
+											<option value=''> Select Document Type </option>
+											<option value='0' > Original </option>
+											<option value='1' > Xerox </option>
+										</select>
+										<span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="DocumentHolder"> Document Holder </label> <span class="required">&nbsp;*</span>
+										<select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="4" readonly>
+											<option value=""> Select Holder type </option>
+											<option value="0" > Customer </option>
+											<option value="1" > Guarantor </option>
+											<option value="2" > Family Members </option>
+										</select>
+										<span class="text-danger" id="docholderCheck"> Select Document Holder </span>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="docholdername"> Holder Name </label>
+										<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="" readonly tabindex="5" readonly>
+
+										<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="6" readonly>
+											<option value=""> Select Relationship </option>
+										</select>
+									</div>
+								</div>
+
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="DocRelationship"> Relationship </label>
+										<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="" readonly tabindex="7" >
+									</div>
+								</div>
+
+					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+						<input type="hidden" name="doc_info_id" id="doc_info_id" value=''>
+						<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="8">Submit</button>
+					</div>
+				</div>
+				</br>
+
+
+				<div id="docModalDiv">
+					<table class="table custom-table">
+						<thead>
+							<tr>
+								<th width="15%"> S.No </th>
+								<th> Document Name </th>
+								<th> Document Details</th>
+								<th> Document Type </th>
+								<th> Document Holder</th>
+								<th> Holder Name</th>
+								<th> Relationship</th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="docinfoList()">Close</button>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+<!-- END  Add Document Info Modal -->
+
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="vendor/mfs100/Library/js/jquery-1.8.2.js" type="text/javascript"></script>
 <script src="vendor/mfs100/Library/js/mfs100.js"></script>

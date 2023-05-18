@@ -33,7 +33,7 @@ include '../../ajaxconfig.php';
 
                 <td><?php  if($signed["sign_type"] == '0'){ echo 'Customer';}elseif($signed["sign_type"] == '1'){ echo 'Guarantor';}elseif($signed["sign_type"] == '2'){ echo 'Combined';}elseif($signed["sign_type"] == '3'){ echo 'Family Members';} ?></td>
                 
-                <td><?php if($signed["sign_type"] == '3'){ echo $row["famname"].' - '.$row["relationship"];}  ?></td>
+                <td> <?php if($signed["sign_type"] == '3' or $signed["sign_type"] == '1'){ echo $row["famname"].' - '.$row["relationship"];}else{echo 'NIL';} ?></td>
                 <td><?php echo $signed["doc_Count"]; ?></td>
                 <td>
                     <a id="signed_doc_edit" value="<?php echo $signed['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp

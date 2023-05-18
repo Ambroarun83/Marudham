@@ -853,7 +853,7 @@ $(document).ready(function () {
         let type = $(this).val();
         let req_id = $('#req_id').val();
 
-        if (type == '0') {
+        if (type == '0') {//Customer
             $('#docholder_name').show();
             $('#docholder_relationship_name').val('');
             $('#docholder_relationship_name').hide();
@@ -870,7 +870,7 @@ $(document).ready(function () {
                 }
             });
 
-        } else if (type == '1') {
+        } else if (type == '1') {//Guarentor
             $('#docholder_name').show();
             $('#docholder_relationship_name').val('');
             $('#docholder_relationship_name').hide();
@@ -887,7 +887,7 @@ $(document).ready(function () {
                 }
             });
 
-        } else if (type == '2') {
+        } else if (type == '2') {//Family member
             $('#docholder_name').hide();
             $('#docholder_relationship_name').show();
             $('#docholder_name').val('');
@@ -981,6 +981,7 @@ $(function () {
 
     //Documentation
     getstaffCode(); // Atuo Generate Doc ID.
+    
     resetsignInfo(); // Signed Doc info Reset.
     resetsigninfoList(); // Signed Doc List Reset.
 
@@ -989,6 +990,9 @@ $(function () {
 
     resetgoldInfo(); // Gold Info Reset.
     goldinfoList(); // Gold Info List.
+    
+    resetdocInfo(); // Document Info Reset.
+    docinfoList(); // Document Info List.
 
     resetfeedback(); //Reset Feedback Modal Table.
     feedbackList(); // Feedback List.
@@ -3545,6 +3549,176 @@ function goldinfoList() {
     });
 }
 
+
+// ///////////////////////////  Document Info Modal //////////////////////////////
+
+$('#documentnameCheck').hide();$('#documentdetailsCheck').hide();$('#documentTypeCheck').hide();$('#docholderCheck').hide();
+//Document info submit button action
+$('#docInfoBtn').click(function(){
+    let req_id = $("#req_id").val();
+    let doc_id = $("#doc_info_id").val();
+    let doc_name = $("#document_name").val();
+    let doc_details = $("#document_details").val();
+    let doc_type = $("#document_type").val();
+    let doc_holder = $("#document_holder").val();
+    let holder_name = $("#docholder_name").val();
+    let relation_name = $("#docholder_relationship_name").val();
+    let relation = $("#doc_relation").val();
+      
+    if (doc_name !='' && doc_details !='' && doc_type!='' && doc_holder!='' && relation!='') { console.log('sf')
+
+        $.ajax({
+            url:'verificationFile/documentation/doc_info_submit.php',
+            data:{'req_id':req_id,'doc_id':doc_id,'doc_name':doc_name,'doc_details':doc_details,'doc_type':doc_type,'doc_holder':doc_holder,'holder_name':holder_name,'relation_name':relation_name,'relation':relation},
+            dataType:'json',
+            type:'POST',
+            cache: false,
+            success:function(response){
+                
+                var insresult = response.includes("Inserted");
+                var updresult = response.includes("Updated");
+                if (insresult) {
+                    $('#docInsertOk').show();
+                    setTimeout(function () {
+                        $('#docInsertOk').fadeOut('fast');
+                    }, 2000);
+                }
+                else if (updresult) {
+                    $('#docUpdateok').show();
+                    setTimeout(function () {
+                        $('#docUpdateok').fadeOut('fast');
+                    }, 2000);
+                }
+                else {
+                    $('#docNotOk').show();
+                    setTimeout(function () {
+                        $('#docNotOk').fadeOut('fast');
+                    }, 2000);
+                }
+
+                resetdocInfo();
+            }
+        })
+    }else{
+        $('#documentnameCheck').show();$('#documentdetailsCheck').show();$('#documentTypeCheck').show();$('#docholderCheck').show();
+    }
+})
+
+$("body").on("click", "#doc_info_edit", function () {console.log('asdf')
+    let id = $(this).attr('value');
+    $.ajax({
+        url: 'verificationFile/documentation/doc_info_edit.php',
+        type: 'POST',
+        data: { "id": id },
+        dataType: 'json',
+        cache: false,
+        beforeSend:function(){
+            docHolderName();
+        },
+        success: function (response) {
+            
+            $("#doc_info_id").val(response['doc_id']);
+            $("#document_name").val(response['doc_name']);
+            $("#document_details").val(response['doc_details']);
+            $("#document_type").val(response['doc_type']);
+            $("#document_holder").val(response['doc_holder']);
+            if(response['doc_holder'] == '0' || response['doc_holder'] == '1' ){
+                $("#docholder_name").show();
+                $("#docholder_relationship_name").hide();
+                $("#docholder_name").val(response['holder_name']);
+            }else{
+                $("#docholder_name").hide();
+                $("#docholder_relationship_name").show();
+                $("#docholder_relationship_name").val(response['relation_name']);
+            }
+            $("#doc_relation").val(response['relation']);
+
+        }
+    });
+
+});
+
+
+$("body").on("click", "#doc_info_delete", function () {
+    var isok = confirm("Do you want delete this Document Info?");
+    if (isok == false) {
+        return false;
+    } else {
+        var id = $(this).attr('value');
+
+        $.ajax({
+            url: 'verificationFile/documentation/doc_info_delete.php',
+            type: 'POST',
+            data: { "id": id },
+            cache: false,
+            success: function (response) {
+                var delresult = response.includes("Deleted");
+                if (delresult) {
+                    $('#docDeleteOk').show();
+                    setTimeout(function () {
+                        $('#docDeleteOk').fadeOut('fast');
+                    }, 2000);
+                }
+                else {
+
+                    $('#docDeleteNotOk').show();
+                    setTimeout(function () {
+                        $('#docDeleteNotOk').fadeOut('fast');
+                    }, 2000);
+                }
+
+                resetdocInfo();
+            }
+        });
+    }
+});
+//Document Info List Modal Table
+function resetdocInfo() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/doc_info_reset.php',
+        type: 'POST',
+        data: { "req_id": req_id },
+        cache: false,
+        success: function (html) {
+            $("#docModalDiv").empty();
+            $("#docModalDiv").html(html);
+
+            $("#document_name").val('');
+            $("#document_details").val('');
+            $("#document_type").val('');
+            $("#document_holder").val('');
+            $("#docholder_name").val('');
+            $("#relation_name").val('');
+            $("#doc_relation").val('');
+
+        }
+    });
+}
+//Document Info List
+function docinfoList() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/doc_info_list.php',
+        type: 'POST',
+        data: { "req_id": req_id },
+        cache: false,
+        success: function (html) {
+            $("#DocResetTableDiv").empty();
+            $("#DocResetTableDiv").html(html);
+
+            $("#document_name").val('');
+            $("#document_details").val('');
+            $("#document_type").val('');
+            $("#document_holder").val('');
+            $("#docholder_name").val('');
+            $("#docholder_relationship_name").val('');
+            $("#doc_relation").val('');
+        }
+    });
+}
+// ///////////////////////////  Document Info Modal END //////////////////////////////
+
 // $('#loanCategoryTableCheck').hide();	
 let loanCategoryTableError = true;
 function validateLoanCategoryTable() {
@@ -3793,34 +3967,34 @@ function doc_submit_validation() {
     }
 
 
-    $.ajax({
-        url: 'verificationFile/documentation/docValidationModal.php',
-        data: { 'req_id': req_id, 'table': 'signed_doc_info' },
-        type: 'post',
-        cache: false,
-        success: function (response) {
-            if (response == "0") {
-                event.preventDefault();
-                $('#signed_infoCheck').show();
-            } else if (response == "1") {
-                $('#signed_infoCheck').hide();
-            }
-        }
-    })
-    $.ajax({
-        url: 'verificationFile/documentation/docValidationModal.php',
-        data: { 'req_id': req_id, 'table': 'cheque_info' },
-        type: 'post',
-        cache: false,
-        success: function (response) {
-            if (response == "0") {
-                event.preventDefault();
-                $('#Cheque_infoCheck').show();
-            } else if (response == "1") {
-                $('#Cheque_infoCheck').hide();
-            }
-        }
-    })
+    // $.ajax({
+    //     url: 'verificationFile/documentation/docValidationModal.php',
+    //     data: { 'req_id': req_id, 'table': 'signed_doc_info' },
+    //     type: 'post',
+    //     cache: false,
+    //     success: function (response) {
+    //         if (response == "0") {
+    //             event.preventDefault();
+    //             $('#signed_infoCheck').show();
+    //         } else if (response == "1") {
+    //             $('#signed_infoCheck').hide();
+    //         }
+    //     }
+    // })
+    // $.ajax({
+    //     url: 'verificationFile/documentation/docValidationModal.php',
+    //     data: { 'req_id': req_id, 'table': 'cheque_info' },
+    //     type: 'post',
+    //     cache: false,
+    //     success: function (response) {
+    //         if (response == "0") {
+    //             event.preventDefault();
+    //             $('#Cheque_infoCheck').show();
+    //         } else if (response == "1") {
+    //             $('#Cheque_infoCheck').hide();
+    //         }
+    //     }
+    // })
 
 
 }

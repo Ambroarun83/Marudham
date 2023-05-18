@@ -11,7 +11,7 @@ if($selectIC->num_rows>0)
     while($row = $selectIC->fetch_assoc()){
         $records[$i]['sub_category_name'] = $row["sub_category_name"];
 
-        $checkSub = $con->query("SELECT * from loan_calculation where sub_category = '".$row["sub_category_name"]."'");
+        $checkSub = $con->query("SELECT * from doc_mapping where sub_category = '".$row["sub_category_name"]."'");
         if($checkSub->num_rows>0){
             $records[$i]['disabled'] = 'disabled';
         }else{
