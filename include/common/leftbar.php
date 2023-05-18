@@ -69,7 +69,7 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 		sidebarLinks.forEach(function(link) {
 			var href = link.getAttribute('href');
-			if (href === currentPage || href.includes(currentPage)) {console.log(currentPage)
+			if (href === currentPage || href.includes(currentPage)) {
 				link.style.backgroundColor = '#646969d9';
 			}
 		});
@@ -499,6 +499,23 @@ if (sizeof($getUser)>0) {
                                 <?php  if($noc == 0){ ?>
                                     <li>
                                         <a href="edit_noc"><i class="icon-export"></i>NOC</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
+				<?php if($nocmodule == 0){?>
+                    <li class="sidebar-dropdown ">
+                        <a href="javascript:void(0)">
+                            <i class="icon-export"></i>
+                            <span class="menu-text">Concern Creation</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='concerncreation') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($noc == 0){ ?>
+                                    <li>
+                                        <a href="edit_concern_creation"><i class="icon-export"></i>Concern Creation</a>
                                     </li>
                                 <?php  } ?>
                             </ul>

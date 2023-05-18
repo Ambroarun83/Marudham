@@ -817,8 +817,16 @@ if($current_page == 'edit_closed') { ?>
 if($current_page == 'closed') { ?>
     <script src="js/closed.js"></script>
     <?php }
+
+//Concern Creation
+if($current_page == 'edit_concern_creation') { ?>
+    <script src="js/edit_concern_creation.js"></script>
+    <?php }
+
+if($current_page == 'concern_creation') { ?>
+    <script src="js/concern_creation.js"></script>
+    <?php }
 ?>
-?> 
 
 <script src="js/logincreation.js"></script>
 

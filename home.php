@@ -290,6 +290,15 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/noc.php" ?>
 			<?php } ?>
 
+			<!-- Concern Creation -->
+			<?php if($current_page == 'edit_concern_creation') { ?>
+			<?php include "include/templates/edit_concern_creation.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'concern_creation') { ?>
+			<?php include "include/templates/concern_creation.php" ?>
+			<?php } ?>
+
 		</div>
 		<!-- Page content end -->
 
