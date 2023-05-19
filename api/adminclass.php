@@ -5143,4 +5143,248 @@ function updateUser($mysqli,$id,$user_id){
             return $detailrecords;
         }
 
+			// Add Concern
+			function addConcern($mysqli,$userid){
+			
+				if(isset($_POST['raising_for'])){
+					$raising_for = $_POST['raising_for'];
+				}
+
+				$self_name ='';
+				$self_code ='';
+				if(isset($raising_for) && $raising_for == '1'){
+					if(isset($_POST['self_name'])){
+						$self_name = $_POST['self_name'];
+					}
+					if(isset($_POST['self_code'])){
+						$self_code =  $_POST['self_code'];
+					}
+				}
+
+				$staff_name ='';
+				$staff_dept_name ='';
+				$staff_team_name ='';
+				if(isset($raising_for) && $raising_for == '2'){
+				if(isset($_POST['staff_name'])){
+					$staff_name = $_POST['staff_name'];
+				}
+				if(isset($_POST['staff_dept_name'])){
+					$staff_dept_name = $_POST['staff_dept_name'];
+				}
+				if(isset($_POST['staff_team_name'])){
+					$staff_team_name = $_POST['staff_team_name'];
+				}
+			  }
+
+			  $ag_name ='';
+			  $ag_grp ='';
+			  if(isset($raising_for) && $raising_for == '3'){
+				if(isset($_POST['ag_name'])){
+					$ag_name = $_POST['ag_name'];
+				}
+				if(isset($_POST['ag_grp'])){
+					$ag_grp = $_POST['ag_grp'];
+				}
+				}
+
+				$cus_id ='';
+				$cus_name ='';
+				$cus_area ='';
+				$cus_sub_area ='';
+				$cus_group ='';
+				$cus_line ='';
+				if(isset($raising_for) && $raising_for == '4'){
+				if(isset($_POST['cus_id'])){
+					$cus_id = $_POST['cus_id'];
+				}
+				if(isset($_POST['cus_name'])){
+					$cus_name = $_POST['cus_name'];
+				}
+				if(isset($_POST['cus_area'])){
+					$cus_area = $_POST['cus_area'];
+				}
+				if(isset($_POST['cus_sub_area'])){
+					$cus_sub_area = $_POST['cus_sub_area'];
+				}
+				if(isset($_POST['cus_group'])){
+					$cus_group = $_POST['cus_group'];
+				}
+				if(isset($_POST['cus_line'])){
+					$cus_line = $_POST['cus_line'];
+				}
+			  }
+
+				if(isset($_POST['com_date'])){
+					$com_date = $_POST['com_date'];
+				}
+				if(isset($_POST['com_code'])){
+					$com_code = $_POST['com_code'];
+				}
+				if(isset($_POST['branch_name'])){
+					$branch_name = $_POST['branch_name'];
+				}
+				if(isset($_POST['concern_to'])){
+					$concern_to = $_POST['concern_to'];
+				}
+
+				$to_dept_name ='';
+				if(isset($concern_to) && $concern_to == '1'){
+				if(isset($_POST['to_dept_name'])){
+					$to_dept_name = $_POST['to_dept_name'];
+				}
+				}
+
+				$to_team_name ='';
+				if(isset($concern_to) && $concern_to == '2'){
+				if(isset($_POST['to_team_name'])){
+					$to_team_name = $_POST['to_team_name'];
+				}
+				}
+
+				if(isset($_POST['com_sub'])){
+					$com_sub = $_POST['com_sub'];
+				}
+				if(isset($_POST['com_remark'])){
+					$com_remark = $_POST['com_remark'];
+				}
+				if(isset($_POST['com_priority'])){
+					$com_priority = $_POST['com_priority'];
+				}
+				if(isset($_POST['staff_assign_to'])){
+					$staff_assign_to = $_POST['staff_assign_to'];
+				}
+
+	
+				$insertQry = "INSERT INTO `concern_creation`( `raising_for`, `self_name`, `self_code`, `staff_name`, `staff_dept_name`, `staff_team_name`, `ag_name`, `ag_grp`, `cus_id`, `cus_name`, `cus_area`, `cus_sub_area`, `cus_group`, `cus_line`, `com_date`, `com_code`, `branch_name`, `concern_to`, `to_dept_name`, `to_team_name`, `com_sub`, `com_remark`, `com_priority`, `staff_assign_to`, `insert_user_id`) VALUES('".strip_tags($raising_for)."','".strip_tags($self_name)."','".strip_tags($self_code)."','".strip_tags($staff_name)."',
+				'".strip_tags($staff_dept_name)."', '".strip_tags($staff_team_name)."', '".strip_tags($ag_name)."', '".strip_tags($ag_grp)."','".strip_tags($cus_id)."',
+				'".strip_tags($cus_name)."','".strip_tags($cus_area)."','".strip_tags($cus_sub_area)."', '".strip_tags($cus_group)."', '".strip_tags($cus_line)."', 
+				'".strip_tags($com_date)."','".strip_tags($com_code)."','".strip_tags($branch_name)."','".strip_tags($concern_to)."','".strip_tags($to_dept_name)."','".strip_tags($to_team_name)."',
+				'".strip_tags($com_sub)."','".strip_tags($com_remark)."','".strip_tags($com_priority)."','".strip_tags($staff_assign_to)."','".strip_tags($userid)."')";
+	
+				$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+		
+			} //
+
+			function getConcernCreation($mysqli,$idupd,$userid){
+				$detailrecords = array();
+				$Qry = $mysqli->query("SELECT * FROM `concern_creation` WHERE id = '".strip_tags($idupd)."' ");
+				if($mysqli->affected_rows>0){
+					$row = $Qry->fetch_assoc();
+						$detailrecords['id'] = $row['id'];
+						$detailrecords['raising_for'] = $row['raising_for'];
+						$detailrecords['self_name'] = $row['self_name'];
+						$detailrecords['self_code'] = $row['self_code'];
+						$detailrecords['staff_name'] = $row['staff_name'];
+						$detailrecords['staff_dept_name'] = $row['staff_dept_name'];
+						$detailrecords['staff_team_name'] = $row['staff_team_name'];
+						// $detailrecords['ag_name'] = $row['ag_name'];
+						$detailrecords['ag_grp'] = $row['ag_grp'];
+						$detailrecords['cus_id'] = $row['cus_id'];
+						$detailrecords['cus_name'] = $row['cus_name'];
+						$detailrecords['cus_area'] = $row['cus_area'];
+						$detailrecords['cus_sub_area'] = $row['cus_sub_area'];
+						$detailrecords['cus_group'] = $row['cus_group'];
+						$detailrecords['cus_line'] = $row['cus_line'];
+						$detailrecords['com_date'] = $row['com_date'];
+						$detailrecords['com_code'] = $row['com_code'];
+						// $detailrecords['branch_name'] = $row['branch_name'];
+						$detailrecords['concern_to'] = $row['concern_to'];
+						$detailrecords['to_dept_name'] = $row['to_dept_name'];
+						$detailrecords['to_team_name'] = $row['to_team_name'];
+						$detailrecords['com_sub'] = $row['com_sub'];
+						$detailrecords['com_remark'] = $row['com_remark'];
+						$detailrecords['com_priority'] = $row['com_priority'];
+						// $detailrecords['staff_assign_to'] = $row['staff_assign_to'];
+						$detailrecords['solution_date'] = $row['solution_date'];
+						$detailrecords['communication'] = $row['communication'];
+						$detailrecords['uploads'] = $row['uploads'];
+						$detailrecords['solution_remark'] = $row['solution_remark'];
+					
+
+					//Agent Name.
+					$ag_name = $row['ag_name'];
+					if($ag_name !=''){
+						$qry = $mysqli->query("SELECT ag_name FROM agent_creation  where ag_id = '".strip_tags($ag_name)."' ");
+						$row1 = $qry->fetch_assoc();
+						$detailrecords['ag_name'] = $row1['ag_name'];
+					}else{
+						$detailrecords['ag_name'] = '';
+					}
+
+					//Branch Name.
+					$branch_id = $row['branch_name'];
+					if($branch_id !=''){
+					$qry = $mysqli->query("SELECT b.branch_name FROM branch_creation b  where b.branch_id = '".strip_tags($branch_id)."' ");
+					$row1 = $qry->fetch_assoc();
+					$detailrecords['branch_name'] = $row1['branch_name'];
+					}else{
+						$detailrecords['branch_name'] = '';
+					}
+
+					// //Concern Subject Name 
+					// $com_sub_id = $row['com_sub'];
+					// if($com_sub_id !=''){
+					// $qry = $mysqli->query("SELECT concern_subject FROM concern_subject where concern_sub_id = '".strip_tags($com_sub_id)."' ");
+					// $row1 = $qry->fetch_assoc();
+					// $detailrecords['com_sub'] = $row1['concern_subject'];
+					// }else{
+					// 	$detailrecords['com_sub'] = '';
+					// }
+
+					//Staff Assign Name
+					$staff_id = $row['staff_assign_to'];
+					if($staff_id !=''){
+					$qry = $mysqli->query("SELECT staff_name FROM `staff_creation` where staff_id ='".strip_tags($staff_id)."'");
+					$row1 = $qry->fetch_assoc();
+					$detailrecords['staff_assign_to'] = $row1['staff_name'];
+					}else{
+						$detailrecords['staff_assign_to'] = '';
+					}
+				}
+				return $detailrecords;
+			}
+
+			//Add Concern Solution 
+			function addConcernsolution($mysqli,$userid){
+
+				if(isset($_POST['solution_date'])){
+					$solution_date = $_POST['solution_date'];
+				}
+				if(isset($_POST['Com_for_solution'])){
+					$Com_for_solution = $_POST['Com_for_solution'];
+				}
+				
+				$concern_upload ='';
+				if(isset($_FILES['concern_upload']) && $_POST['Com_for_solution'] == '1'){
+
+					$filesArr3 = $_FILES['concern_upload'];
+					$concern_upload = ''; 
+					$uploadDir = "uploads/concern/";
+					// File upload path  
+					foreach($filesArr3['name'] as $key=>$val)
+					{
+						$fileName = basename($filesArr3['name'][$key]);  
+						$targetFilePath = $uploadDir . $fileName; 
+						
+						// Check whether file type is valid  
+						$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);  
+						
+							// Upload file to server  
+							if(move_uploaded_file($filesArr3["tmp_name"][$key], $targetFilePath)){  
+								$concern_upload .= $fileName.',';  
+						}
+					}
+				}
+
+				if(isset($_POST['solution_remark'])){
+					$solution_remark = $_POST['solution_remark'];
+				}
+				if(isset($_POST['id'])){
+					$id = $_POST['id'];
+				}
+
+				$updConcern = $mysqli->query("UPDATE `concern_creation` SET `status`= 1 ,`solution_date`='".strip_tags($solution_date)."',`communication`='".strip_tags($Com_for_solution)."',`uploads`='".strip_tags($concern_upload)."',`solution_remark`='".strip_tags($solution_remark)."',`update_user_id`='".strip_tags($userid)."',`updated_date`= now() WHERE `id`='".strip_tags($id)."' ");
+
+			}
+
 }//Class End

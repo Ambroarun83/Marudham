@@ -219,6 +219,11 @@ $(document).ready(function(){
     }
   });
 
+  //Submit Validation 
+  $('#submit_concern').click(function(){
+    submitValidation();
+  });
+
 
 }); //Document END.
 
@@ -243,6 +248,8 @@ $(function(){
     getBranchName(); // To Show Branch Name List.
     DropDownCourse(); //To Show Concern Subject.
     resetConSubTable(); //To Reset.
+
+    getConcernCode(); //Auto Generate Concern Code.
 
 }); //OnLoad END.
 
@@ -321,6 +328,21 @@ function getCustomerDetails(cus_id){
             }
         }
     });
+}
+
+//Get Concern code 
+function getConcernCode() {
+    $.ajax({
+        url: 'concernFile/comCode_autoGen.php',
+        type: "post",
+        dataType: "json",
+        data: { },
+        cache: false,
+        success: function (response) {
+            var docId = response;
+            $('#com_code').val(docId);
+        }
+    })
 }
 
 function getBranchName(){
@@ -449,4 +471,124 @@ function resetConSubTable(){
     
             }
         });
+    }
+
+    function submitValidation(){
+        var raising = $('#raising_for').val();
+        var staff_name = $('#staff_name').val();
+        var staff_dept_name = $('#staff_dept_name').val();
+        var staff_team_name = $('#staff_team_name').val();
+        var ag_name = $('#ag_name').val();
+        var cus_id = $('#cus_id').val();
+        var branch_name = $('#branch_name').val();
+        var concern_to = $('#concern_to').val(); console.log(concern_to);
+        var to_dept_name = $('#to_dept_name').val();
+        var to_team_name = $('#to_team_name').val();
+        var com_sub = $('#com_sub').val();
+        var com_remark = $('#com_remark').val();
+        var com_priority = $('#com_priority').val();
+        var staff_assign_to = $('#staff_assign_to').val();
+
+        if(raising == ''){
+            event.preventDefault();
+            $('#raisingForCheck').show();
+        }else{
+            $('#raisingForCheck').hide();
+        }
+
+        if(raising =='2'){
+            if(staff_name == ''){
+                event.preventDefault();
+                $('#staffnameCheck').show();
+            }else{
+                $('#staffnameCheck').hide();
+            }
+            if(staff_dept_name == ''){
+                event.preventDefault();
+                $('#staffdeptnameCheck').show();
+            }else{
+                $('#staffdeptnameCheck').hide();
+            }
+            if(staff_team_name == ''){
+                event.preventDefault();
+                $('#staffteamnameCheck').show();
+            }else{
+                $('#staffteamnameCheck').hide();
+            }
+        }
+
+        if(raising == '3'){
+            if(ag_name == ''){
+                event.preventDefault();
+                $('#agentnameCheck').show();
+            }else{
+                $('#agentnameCheck').hide();
+            }
+        }
+
+        if(raising == '4'){
+            if(cus_id == ''){
+                event.preventDefault();
+                $('#cusIdCheck').show();
+            }else{
+                $('#cusIdCheck').hide();
+            }
+        }
+
+        if(branch_name == ''){
+            event.preventDefault();
+            $('#branchCheck').show();
+        }else{
+            $('#branchCheck').hide();
+        }
+        if(concern_to == ''){
+            event.preventDefault();
+            $('#comtoCheck').show();
+        }else{
+            $('#comtoCheck').hide();
+        }
+
+        if(concern_to == '1'){
+            if(to_dept_name == ''){
+                event.preventDefault();
+                $('#todeptnameCheck').show();
+            }else{
+                $('#todeptnameCheck').hide();
+            }
+        }
+
+        if(concern_to == '2'){
+            if(to_team_name == ''){
+                event.preventDefault();
+                $('#toteamnameCheck').show();
+            }else{
+                $('#toteamnameCheck').hide();
+            }
+        }
+
+        if(com_sub == ''){
+            event.preventDefault();
+            $('#concernsubCheck').show();
+        }else{
+            $('#concernsubCheck').hide();
+        }
+        if(com_remark == ''){
+            event.preventDefault();
+            $('#comRemarkCheck').show();
+        }else{
+            $('#comRemarkCheck').hide();
+        }
+        if(com_priority == ''){
+            event.preventDefault();
+            $('#conpriorityCheck').show();
+        }else{
+            $('#conpriorityCheck').hide();
+        }
+        if(staff_assign_to == ''){
+            event.preventDefault();
+            $('#staffAssignCheck').show();
+        }else{
+            $('#staffAssignCheck').hide();
+        }
+
     }

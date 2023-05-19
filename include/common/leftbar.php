@@ -518,6 +518,11 @@ if (sizeof($getUser)>0) {
                                         <a href="edit_concern_creation"><i class="icon-export"></i>Concern Creation</a>
                                     </li>
                                 <?php  } ?>
+                                <?php  if($noc == 0){ ?>
+                                    <li>
+                                        <a href="edit_concern_solution"><i class="icon-export"></i>Concern Solution</a>
+                                    </li>
+                                <?php  } ?>
                             </ul>
                         </div>
                     </li>

@@ -680,6 +680,70 @@ $(document).ready(function() {
             ]
         });
 
+        //Concern Table
+        var concern_table = $('#concern_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxConcernFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "NOC List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ]
+        });
+
+        //Concern Solution Table
+        var concern_solution_table = $('#concern_solution_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxConcernSolutionFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "NOC List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ]
+        });
+
         $('#search').change(function(){
             company_creation_table.draw();
             loan_creation_table.draw();
@@ -825,6 +889,10 @@ if($current_page == 'edit_concern_creation') { ?>
 
 if($current_page == 'concern_creation') { ?>
     <script src="js/concern_creation.js"></script>
+    <?php }
+
+if($current_page == 'concern_solution') { ?>
+    <script src="js/concern_solution.js"></script>
     <?php }
 ?>
 
