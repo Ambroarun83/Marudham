@@ -41,14 +41,14 @@
 <br><br>
 <div class="page-header">
     <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Concern Creation
+		Marudham - Concern Solution
 	</div>
 </div><br>
-<div class="text-right" style="margin-right: 25px;">
+<!-- <div class="text-right" style="margin-right: 25px;">
     <a href="concern_creation">
         <button type="button" class="btn btn-primary"><span class="icon-add"></span>&nbsp; Add Concern Creation</button>
     </a>
-</div><br><br>
+</div><br><br> -->
 <!-- Page header end -->
 
 <!-- Main container start -->
@@ -68,7 +68,7 @@
 					if($mscid==1)
 					{?>
 					<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Concern Submitted Successfully! </div>
+						<div class="alert-text"> Concern solution Submitted Successfully! </div>
 					</div> 
 					<?php
 					}
@@ -82,7 +82,7 @@
 					
 					}
 					?>
-					<table id="concern_table" class="table custom-table" >
+					<table id="concern_solution_table" class="table custom-table" >
 						<thead>
 							<tr>
 								<th width="50">S.No.</th>

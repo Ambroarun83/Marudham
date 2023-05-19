@@ -299,6 +299,19 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/concern_creation.php" ?>
 			<?php } ?>
 
+			<!-- Concern Solution -->
+			<?php if($current_page == 'edit_concern_solution') { ?>
+			<?php include "include/templates/edit_concern_solution.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'concern_solution') { ?>
+			<?php include "include/templates/concern_solution.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'concern_solution_view') { ?>
+			<?php include "include/templates/concern_solution_view.php" ?>
+			<?php } ?>
+
 		</div>
 		<!-- Page content end -->
 
