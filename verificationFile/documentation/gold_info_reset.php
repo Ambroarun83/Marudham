@@ -41,6 +41,7 @@ function moneyFormatIndia($num)
 
         <?php
         $req_id = $_POST['reqId'];
+        $pages = $_POST['pages'];
         $goldInfo = $connect->query("SELECT * FROM `gold_info` where req_id = '$req_id' order by id desc");
 
         $i = 1;
@@ -58,7 +59,9 @@ function moneyFormatIndia($num)
 
                 <td>
                     <a id="gold_info_edit" value="<?php echo $gold['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp
-                    <a id="gold_info_delete" value="<?php echo $gold['id']; ?>"> <span class='icon-trash-2'></span> </a>
+                    <?php if($pages == 1){  // Verification screen only delete option. ?>
+                        <a id="gold_info_delete" value="<?php echo $gold['id']; ?>"> <span class='icon-trash-2'></span> </a>
+                  <?php  } ?>
                 </td>
 
             </tr>

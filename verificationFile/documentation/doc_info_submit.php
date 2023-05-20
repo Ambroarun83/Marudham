@@ -35,6 +35,28 @@ if(isset($_POST['relation'])){
 }
 
 
+$doc_upload ='';
+if(isset($_FILES['document_info_upd'])){
+
+    $filesArr3 = $_FILES['document_info_upd'];
+    $uploadDir = "../../uploads/verification/doc_info/";
+    // File upload path  
+    foreach($filesArr3['name'] as $key=>$val)
+    {
+        $fileName = basename($filesArr3['name'][$key]);  
+        $targetFilePath = $uploadDir . $fileName; 
+        
+        // Check whether file type is valid  
+        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);  
+        
+            // Upload file to server  
+            if(move_uploaded_file($filesArr3["tmp_name"][$key], $targetFilePath)){  
+                $doc_upload .= $fileName.',';  
+        }
+    }
+}
+
+
 if($doc_id == ''){
 
     $insert_qry = $connect ->query("INSERT INTO `document_info`( `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`,`relation_name`, `relation`, `insert_login_id`,`created_date`) 
@@ -47,7 +69,7 @@ if($doc_id == ''){
 else{
     
     $update = $connect->query("UPDATE `document_info` SET `req_id`='$req_id',`doc_name`='$doc_name',`doc_detail`='$doc_details',`doc_type`='$doc_type',`doc_holder`='$doc_holder',
-    `holder_name`='$holder_name',`relation_name`='$relation_name',`relation`='$relation',`update_login_id`=$userid WHERE `id`='$doc_id' ");
+    `holder_name`='$holder_name',`relation_name`='$relation_name',`relation`='$relation',`doc_upload`='$doc_upload',`update_login_id`=$userid WHERE `id`='$doc_id' ");
 
     if($update){
         $result = "Document Info Updated Successfully.";

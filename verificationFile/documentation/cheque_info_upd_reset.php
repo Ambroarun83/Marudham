@@ -64,7 +64,7 @@ include '../../ajaxconfig.php';
                 <td><?php echo $doc_upd_name; ?></td>
 
                 <td>
-                    <a id="cheque_info_edit" value="<?php echo $cheque['id']; ?>" style="text-decoration: underline;"> Upload </a> 
+                    <a id="cheque_info_edit" value="<?php echo $cheque['id']; ?>" style="text-decoration: underline;"> ENTRY </a> 
                 </td>
 
             </tr>

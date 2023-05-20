@@ -1704,7 +1704,7 @@ input:checked + .slider:before {
 					<!-- Gold Info Start -->
 					<div class="card">
                         <div class="card-header"> Gold Info
-                            <!-- <button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button> -->
+                            <button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
                         </div>
                         <span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
                         <div class="card-body">
@@ -2378,7 +2378,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="upd"> Uploads </label> <span class="required">&nbsp;*</span>
 							<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()">
-							<span class="text-danger" id="docupdCheck"> Enter Count </span>
+							<span class="text-danger" id="docupdCheck"> Upload Document </span>
 						</div>
 					</div>
 
@@ -2549,6 +2549,129 @@ input:checked + .slider:before {
 </form>
 </div>
 <!-- END  Add Cheque Info Modal -->
+
+
+<!-- Add Gold info Modal  START -->
+<div class="modal fade addGold" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Add Gold Info</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="goldinfoList()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- alert messages -->
+				<div id="goldInsertOk" class="successalert"> Gold Info Added Successfully
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="goldUpdateok" class="successalert"> Gold Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="goldNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="goldDeleteOk" class="unsuccessalert"> Gold Info Deleted
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="goldDeleteNotOk" class="unsuccessalert"> Gold Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<br />
+
+				<div class="row">
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="GoldStatus "> Gold Status </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="gold_sts" name="gold_sts">
+								<option value=""> Select Gold Status </option>
+								<option value="0" > Old </option>
+								<option value="1" > New </option>
+							</select>
+							<span class="text-danger" id="GoldstatusCheck"> Select Gold Status </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="Goldtype "> Gold Type </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type" >
+							<span class="text-danger" id="GoldtypeCheck"> Enter Gold Type </span>
+						</div>
+					</div>
+
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="Purity "> Purity </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity" >
+							<span class="text-danger" id="purityCheck"> Enter Purity </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="gold_Count" name="gold_Count" placeholder="Enter Count" >
+							<span class="text-danger" id="goldCountCheck"> Enter Count </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="Weight"> Weight </label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight in Grams" >
+							<span class="text-danger" id="goldWeightCheck"> Enter Weight </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="Value"> Value </label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value" >
+							<span class="text-danger" id="goldValueCheck"> Enter Value </span>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+						<input type="hidden" name="goldID" id="goldID">
+						<button type="button" name="goldInfoBtn" id="goldInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+					</div>
+				</div>
+				</br>
+
+
+				<div id="goldTable">
+					<table class="table custom-table">
+						<thead>
+							<tr>
+								<th width="15%"> S.No </th>
+								<th> Gold Status </th>
+								<th> Purity </th>
+								<th> Count </th>
+								<th> Weight </th>
+								<th> Value </th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="goldinfoList()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END  Add Gold Info Modal -->
+
+
 <!-- Add Document info Modal  START -->
 <div class="modal fade addDocument" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <form method="POST" enctype="multipart/form-data"  id="docUploads">
@@ -2643,9 +2766,16 @@ input:checked + .slider:before {
 									</div>
 								</div>
 
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="DocumentUpd"> Document Uploads </label>
+										<input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]"  multiple tabindex="8">
+									</div>
+								</div>
+
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="doc_info_id" id="doc_info_id" value=''>
-						<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="8">Submit</button>
+						<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="9">Submit</button>
 					</div>
 				</div>
 				</br>

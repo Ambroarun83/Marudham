@@ -34,7 +34,7 @@ $connect->query("DELETE FROM `cheque_no_list` WHERE `cheque_table_id`='$chequeID
  }
 
 
-if($update && $insert){
+if($update || $insert){
     $result = "Cheque Uploaded Successfully.";
 }
 

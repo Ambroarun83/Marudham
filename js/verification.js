@@ -831,23 +831,23 @@ $(document).ready(function () {
 
 
     //Document Info 
-    $('#gold_info').change(function () {
+    // $('#gold_info').change(function () {
 
-        let gold = $(this).val();
+    //     let gold = $(this).val();
 
-        if (gold == '0') {
-            $('#GoldInfo').show();
-        } else {
-            $('#GoldInfo').hide();
+    //     if (gold == '0') {
+    //         $('#GoldInfo').show();
+    //     } else {
+    //         $('#GoldInfo').hide();
 
-            $('#gold_sts').val('');
-            $('#gold_type').val('');
-            $('#Purity').val('');
-            $('#gold_Count').val('');
-            $('#gold_Weight').val('');
-            $('#gold_Value').val('');
-        }
-    })
+    //         $('#gold_sts').val('');
+    //         $('#gold_type').val('');
+    //         $('#Purity').val('');
+    //         $('#gold_Count').val('');
+    //         $('#gold_Weight').val('');
+    //         $('#gold_Value').val('');
+    //     }
+    // })
 
     $('#document_holder').change(function () {
         let type = $(this).val();
@@ -3508,7 +3508,7 @@ function resetgoldInfo() {
     $.ajax({
         url: 'verificationFile/documentation/gold_info_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "reqId": req_id,'pages': 1 },
         cache: false,
         success: function (html) {
             $("#goldTable").empty();
@@ -3565,7 +3565,7 @@ $('#docInfoBtn').click(function(){
     let relation_name = $("#docholder_relationship_name").val();
     let relation = $("#doc_relation").val();
       
-    if (doc_name !='' && doc_details !='' && doc_type!='' && doc_holder!='' && relation!='') { console.log('sf')
+    if (doc_name !='' && doc_details !='' && doc_type!='' && doc_holder!='' && relation!='') { 
 
         $.ajax({
             url:'verificationFile/documentation/doc_info_submit.php',
@@ -3678,7 +3678,7 @@ function resetdocInfo() {
     $.ajax({
         url: 'verificationFile/documentation/doc_info_reset.php',
         type: 'POST',
-        data: { "req_id": req_id },
+        data: { "req_id": req_id,'pages': 1 },
         cache: false,
         success: function (html) {
             $("#docModalDiv").empty();
@@ -3941,30 +3941,30 @@ function doc_submit_validation() {
 
 
 
-    if (document_name == '') {
-        event.preventDefault();
-        $('#documentnameCheck').show();
-    } else {
-        $('#documentnameCheck').hide();
-    }
-    if (document_details == '') {
-        event.preventDefault();
-        $('#documentdetailsCheck').show();
-    } else {
-        $('#documentdetailsCheck').hide();
-    }
-    if (document_type == '') {
-        event.preventDefault();
-        $('#documentTypeCheck').show();
-    } else {
-        $('#documentTypeCheck').hide();
-    }
-    if (document_holder == '') {
-        event.preventDefault();
-        $('#docholderCheck').show();
-    } else {
-        $('#docholderCheck').hide();
-    }
+    // if (document_name == '') {
+    //     event.preventDefault();
+    //     $('#documentnameCheck').show();
+    // } else {
+    //     $('#documentnameCheck').hide();
+    // }
+    // if (document_details == '') {
+    //     event.preventDefault();
+    //     $('#documentdetailsCheck').show();
+    // } else {
+    //     $('#documentdetailsCheck').hide();
+    // }
+    // if (document_type == '') {
+    //     event.preventDefault();
+    //     $('#documentTypeCheck').show();
+    // } else {
+    //     $('#documentTypeCheck').hide();
+    // }
+    // if (document_holder == '') {
+    //     event.preventDefault();
+    //     $('#docholderCheck').show();
+    // } else {
+    //     $('#docholderCheck').hide();
+    // }
 
 
     // $.ajax({
