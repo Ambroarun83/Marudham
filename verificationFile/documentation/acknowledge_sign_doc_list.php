@@ -46,7 +46,7 @@ include '../../ajaxconfig.php';
 
                 <td> <?php if($signedDoc["sign_type"] == '0'){ echo 'Customer';}elseif($signedDoc["sign_type"] == '1'){ echo 'Guarantor';}elseif($signedDoc["sign_type"] == '2'){ echo 'Combined';}elseif($signedDoc["sign_type"] == '3'){ echo 'Family Members';} ?></td>
 
-                <td> <?php if($signedDoc["sign_type"] == '3' or $signedDoc["sign_type"] == '1'){ echo $row["famname"].' - '.$row["relationship"];}else{echo 'NIL';} ?></td>
+                <td> <?php if($signedDoc["sign_type"] == '3' or $signedDoc["sign_type"] == '1' or $signedDoc["sign_type"] == '2'){ echo $row["famname"].' - '.$row["relationship"];}else{echo 'NIL';} ?></td>
                 
                 <td> <?php echo $signedDoc['doc_Count']; ?></td>
                 <td><?php echo $doc_upd_name; ?></td>

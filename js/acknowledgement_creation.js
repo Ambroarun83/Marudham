@@ -172,7 +172,7 @@ $(document).ready(function () {
         let cheque_count = $("#cheque_count").val();
         // let cheque_upd = $("#cheque_upd")[0];
         let formdata = new FormData();
-        let files = $("#cheque_upd")[0].files;
+        let files = $("#cheque_upd")[0].files;     
         for(var i=0; i<files.length; i++){
             formdata.append('cheque_upd[]', files[i])
         }
@@ -184,11 +184,7 @@ $(document).ready(function () {
            i++;        
         })
 
-        console.log(chequeArr);
         let chequeID = $("#chequeID").val();
-
-    
-    
         
         formdata.append('holder_type', holder_type)
         formdata.append('holder_name', holder_name)
@@ -198,7 +194,7 @@ $(document).ready(function () {
         formdata.append('cheque_upd_no', chequeArr)
         formdata.append('cheque_req_id', req_id)
         
-        if (holder_type != "" && chequebank_name != "" && cheque_count != "" && req_id != "" && cheque_upd != "") {
+        if (holder_type != "" && chequebank_name != "" && cheque_count != "" && req_id != "" ) {
             $.ajax({
                 type: 'POST',
                 url: 'verificationFile/documentation/cheque_upload.php',
@@ -245,11 +241,11 @@ $(document).ready(function () {
                 $('#chequeCountCheck').hide();
             }
 
-            if (cheque_upd == "") {
-                $('#chequeupdCheck').show();
-            } else {
-                $('#chequeupdCheck').hide();
-            }
+            // if (checkupd == 0) {
+            //     $('#chequeupdCheck').show();
+            // } else {
+            //     $('#chequeupdCheck').hide();
+            // }
 
         }
     });
@@ -562,24 +558,25 @@ $(document).ready(function () {
     })
 
     //Gold Info
-    $('#goldCheck').hide(); $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
-    $('#gold_info').change(function () {
+    // $('#goldCheck').hide();
+    $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
+    // $('#gold_info').change(function () {
 
-        let gold = $(this).val();
+    //     let gold = $(this).val();
 
-        if (gold == '0') {
-            $('#GoldInfo').show();
-        } else {
-            $('#GoldInfo').hide();
+    //     if (gold == '0') {
+    //         $('#GoldInfo').show();
+    //     } else {
+    //         $('#GoldInfo').hide();
 
-            $('#gold_sts').val('');
-            $('#gold_type').val('');
-            $('#Purity').val('');
-            $('#gold_Count').val('');
-            $('#gold_Weight').val('');
-            $('#gold_Value').val('');
-        }
-    })
+    //         $('#gold_sts').val('');
+    //         $('#gold_type').val('');
+    //         $('#Purity').val('');
+    //         $('#gold_Count').val('');
+    //         $('#gold_Weight').val('');
+    //         $('#gold_Value').val('');
+    //     }
+    // })
 
     $('#document_holder').change(function () {
         let type = $(this).val();
@@ -687,6 +684,68 @@ $(document).ready(function () {
         }, 500);
     }
 
+    //Gold Info START ///
+    $("body").on("click", "#gold_info_edit", function () {
+        let id = $(this).attr('value');
+        chequeHolderName(); // Holder Name From Family Table.
+
+        $.ajax({
+            url: 'verificationFile/documentation/gold_info_edit.php',
+            type: 'POST',
+            data: { "id": id },
+            dataType: 'json',
+            cache: false,
+            success: function (result) {
+
+                $("#goldID").val(result['id']);
+                $("#gold_sts").val(result['gold_sts']);
+                $("#gold_type").val(result['gold_type']);
+                $("#Purity").val(result['Purity']);
+                $("#gold_Count").val(result['gold_Count']);
+                $("#gold_Weight").val(result['gold_Weight']);
+                $("#gold_Value").val(result['gold_Value']);
+
+            }
+        });
+
+    });
+
+
+    $("body").on("click", "#gold_info_delete", function () {
+        var isok = confirm("Do you want delete this Gold Info?");
+        if (isok == false) {
+            return false;
+        } else {
+            var chequeid = $(this).attr('value');
+
+            $.ajax({
+                url: 'verificationFile/documentation/gold_info_delete.php',
+                type: 'POST',
+                data: { "chequeid": chequeid },
+                cache: false,
+                success: function (response) {
+                    var delresult = response.includes("Deleted");
+                    if (delresult) {
+                        $('#goldDeleteOk').show();
+                        setTimeout(function () {
+                            $('#goldDeleteOk').fadeOut('fast');
+                        }, 2000);
+                    }
+                    else {
+
+                        $('#goldDeleteNotOk').show();
+                        setTimeout(function () {
+                            $('#goldDeleteNotOk').fadeOut('fast');
+                        }, 2000);
+                    }
+
+                    resetgoldInfo();
+                }
+            });
+        }
+    });
+    //Gold Info END ///
+
 
 });   ////////Document Ready End
 
@@ -716,6 +775,7 @@ $(function () {
     chequeinfoList(); // Cheque Info List.
     resetchequeInfo();
 
+    resetgoldInfo(); // Gold Info Reset.
     goldinfoList(); // Gold Info List.
     
     resetdocInfo(); // Document Info Reset.
@@ -1540,6 +1600,13 @@ function resetsigninfoList() {
         success: function (html) {
             $("#signDocResetTable").empty();
             $("#signDocResetTable").html(html);
+
+            $("#doc_name").val('');
+            $("#sign_type").val('');
+            $("#signType_relationship").val('');
+            $("#doc_Count").val('');
+            $("#signdoc_upd").val('');
+            $("#signedID").val('');
         }
     });
 }
@@ -1548,10 +1615,10 @@ function filesCount() {
     var cnt = $('#doc_Count').val();
     var signFile = document.querySelector('#signdoc_upd');
 
-    if (signFile.files.length == cnt) {
+    if (signFile.files.length <= cnt) {
         return true;
     } else {
-        alert('Please select ' + cnt + ' files.')
+        alert('Please select Less than ' + cnt + ' files.')
         $("#signdoc_upd").val('');
         return false;
     }
@@ -1641,10 +1708,10 @@ function chequefilesCount() {
     var cnt = $('#cheque_count').val();
     var chequeFile = document.querySelector('#cheque_upd');
 
-    if (chequeFile.files.length == cnt) {
+    if (chequeFile.files.length <= cnt) {
         return true;
     } else {
-        alert('Please select ' + cnt + ' files.')
+        alert('Please select Less than ' + cnt + ' files.')
         $("#cheque_upd").val('');
         return false;
     }
@@ -1666,6 +1733,115 @@ function getChequeColumn(cnt){
 
 }
 
+/////////////////////////////////////// Gold Info Modal START/////////////////////////////////
+//Gold Info 
+$(document).on("click", "#goldInfoBtn", function () {
+
+    let req_id = $('#req_id').val();
+    let gold_sts = $("#gold_sts").val();
+    let gold_type = $("#gold_type").val();
+    let Purity = $("#Purity").val();
+    let gold_Count = $("#gold_Count").val();
+    let gold_Weight = $("#gold_Weight").val();
+    let gold_Value = $("#gold_Value").val();
+    let goldID = $("#goldID").val();
+
+    if ( gold_sts != "" && gold_type != "" && Purity != "" && gold_Count != "" && gold_Weight != "" && gold_Value != "" && req_id != "") {
+        $.ajax({
+            url: 'verificationFile/documentation/gold_info_submit.php',
+            type: 'POST',
+            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id },
+            cache: false,
+            success: function (response) {
+
+                var insresult = response.includes("Inserted");
+                var updresult = response.includes("Updated");
+                if (insresult) {
+                    $('#goldInsertOk').show();
+                    setTimeout(function () {
+                        $('#goldInsertOk').fadeOut('fast');
+                    }, 2000);
+                }
+                else if (updresult) {
+                    $('#goldUpdateok').show();
+                    setTimeout(function () {
+                        $('#goldUpdateok').fadeOut('fast');
+                    }, 2000);
+                }
+                else {
+                    $('#goldNotOk').show();
+                    setTimeout(function () {
+                        $('#goldNotOk').fadeOut('fast');
+                    }, 2000);
+                }
+
+                resetgoldInfo();
+            }
+        });
+
+        
+    $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
+    }
+    else {
+
+        if (gold_sts == '') {
+            $('#GoldstatusCheck').show();
+        } else {
+            $('#GoldstatusCheck').hide();
+        }
+        if (gold_type == '') {
+            $('#GoldtypeCheck').show();
+        } else {
+            $('#GoldtypeCheck').hide();
+        }
+        if (Purity == '') {
+            $('#purityCheck').show();
+        } else {
+            $('#purityCheck').hide();
+        }
+        if (gold_Count == '') {
+            $('#goldCountCheck').show();
+        } else {
+            $('#goldCountCheck').hide();
+        }
+        if (gold_Weight == '') {
+            $('#goldWeightCheck').show();
+        } else {
+            $('#goldWeightCheck').hide();
+        }
+        if (gold_Value == '') {
+            $('#goldValueCheck').show();
+        } else {
+            $('#goldValueCheck').hide();
+        }
+
+    }
+
+});
+
+function resetgoldInfo() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/gold_info_reset.php',
+        type: 'POST',
+        data: { "reqId": req_id,'pages': 2 },
+        cache: false,
+        success: function (html) {
+            $("#goldTable").empty();
+            $("#goldTable").html(html);
+
+            $("#gold_sts").val('');
+            $("#gold_type").val('');
+            $("#Purity").val('');
+            $("#gold_Count").val('');
+            $("#gold_Weight").val('');
+            $("#gold_Value").val('');
+            $("#goldID").val('');
+
+        }
+    });
+}
+
 //Gold Info List
 function goldinfoList() {
     let req_id = $('#req_id').val();
@@ -1677,6 +1853,7 @@ function goldinfoList() {
         success: function (html) {
             $("#GoldResetTableDiv").empty();
             $("#GoldResetTableDiv").html(html);
+
             $("#gold_sts").val('');
             $("#gold_type").val('');
             $("#Purity").val('');
@@ -1687,6 +1864,8 @@ function goldinfoList() {
         }
     });
 }
+
+/////////////////////////////////////// Gold Info Modal END/////////////////////////////////
 
 // ///////////////////////////  Document Info Modal //////////////////////////////
 
@@ -1702,15 +1881,33 @@ $('#docInfoBtn').click(function(){
     let holder_name = $("#docholder_name").val();
     let relation_name = $("#docholder_relationship_name").val();
     let relation = $("#doc_relation").val();
+
+    var formdata = new FormData();
+    formdata.append('req_id',req_id)
+    formdata.append('doc_id',doc_id)
+    formdata.append('doc_name',doc_name)
+    formdata.append('doc_details',doc_details)
+    formdata.append('doc_type',doc_type)
+    formdata.append('doc_holder',doc_holder)
+    formdata.append('holder_name',holder_name)
+    formdata.append('relation_name',relation_name)
+    formdata.append('relation',relation)
+    formdata.append('req_id',req_id)
+
+    var files = $("#document_info_upd")[0].files;     
+    for(var i=0; i<files.length; i++){
+        formdata.append('document_info_upd[]', files[i])
+    }
       
-    if (doc_name !='' && doc_details !='' && doc_type!='' && doc_holder!='' && relation!='') { console.log('sf')
+    if (doc_name !='' && doc_details !='' && doc_type!='' && doc_holder!='' && relation!='') {
 
         $.ajax({
             url:'verificationFile/documentation/doc_info_submit.php',
-            data:{'req_id':req_id,'doc_id':doc_id,'doc_name':doc_name,'doc_details':doc_details,'doc_type':doc_type,'doc_holder':doc_holder,'holder_name':holder_name,'relation_name':relation_name,'relation':relation},
-            dataType:'json',
+            data: formdata,
+            contentType: false,
+            processData: false,
             type:'POST',
-            cache: false,
+            // cache: false,
             success:function(response){
                 
                 var insresult = response.includes("Inserted");
@@ -1742,7 +1939,7 @@ $('#docInfoBtn').click(function(){
     }
 })
 
-$("body").on("click", "#doc_info_edit", function () {console.log('asdf')
+$("body").on("click", "#doc_info_edit", function () {
     let id = $(this).attr('value');
     $.ajax({
         url: 'verificationFile/documentation/doc_info_edit.php',
@@ -1816,7 +2013,7 @@ function resetdocInfo() {
     $.ajax({
         url: 'verificationFile/documentation/doc_info_reset.php',
         type: 'POST',
-        data: { "req_id": req_id },
+        data: { "req_id": req_id,'pages': 2 },
         cache: false,
         success: function (html) {
             $("#docModalDiv").empty();
@@ -1829,6 +2026,7 @@ function resetdocInfo() {
             $("#docholder_name").val('');
             $("#relation_name").val('');
             $("#doc_relation").val('');
+            $("#document_info_upd").val('');
 
         }
     });
@@ -1837,7 +2035,7 @@ function resetdocInfo() {
 function docinfoList() {
     let req_id = $('#req_id').val();
     $.ajax({
-        url: 'verificationFile/documentation/doc_info_list.php',
+        url: 'verificationFile/documentation/doc_info_upd_list.php',
         type: 'POST',
         data: { "req_id": req_id },
         cache: false,
@@ -1852,6 +2050,7 @@ function docinfoList() {
             $("#docholder_name").val('');
             $("#docholder_relationship_name").val('');
             $("#doc_relation").val('');
+            $("#document_info_upd").val('');
         }
     });
 }
@@ -1867,7 +2066,12 @@ function doc_submit_validation() {
 
     var cus_id_doc = $('#cus_id_doc').val(); var mortgage_process = $('#mortgage_process').val(); var Propertyholder_type = $('#Propertyholder_type').val(); var doc_property_pype = $('#doc_property_pype').val(); var doc_property_measurement = $('#doc_property_measurement').val(); var doc_property_location = $('#doc_property_location').val(); var doc_property_value = $('#doc_property_value').val();
     var endorsement_process = $('#endorsement_process').val(); var owner_type = $('#owner_type').val(); var vehicle_type = $('#vehicle_type').val(); var vehicle_process = $('#vehicle_process').val();
-    var en_Company = $('#en_Company').val(); var en_Model = $('#en_Model').val(); var gold_info = $('#gold_info').val(); var gold_sts = $('#gold_sts').val(); var gold_type = $('#gold_type').val(); var Purity = $('#Purity').val(); var gold_Count = $('#gold_Count').val(); var gold_Weight = $('#gold_Weight').val(); var gold_Value = $('#gold_Value').val(); var document_name = $('#document_name').val(); var document_details = $('#document_details').val(); var document_type = $('#document_type').val(); var document_holder = $('#document_holder').val();
+    var en_Company = $('#en_Company').val(); var en_Model = $('#en_Model').val();
+    
+    // var gold_info = $('#gold_info').val(); var gold_sts = $('#gold_sts').val(); var gold_type = $('#gold_type').val(); var Purity = $('#Purity').val(); var gold_Count = $('#gold_Count').val(); var gold_Weight = $('#gold_Weight').val(); var gold_Value = $('#gold_Value').val(); 
+    
+    // var document_name = $('#document_name').val(); var document_details = $('#document_details').val(); var document_type = $('#document_type').val(); var document_holder = $('#document_holder').val();
+
     var req_id = $('#req_id').val(); $('#mortgage_document_upd').val(); $('#RC_document_upd').val();
 
     var mortgage_name = $('#mortgage_name').val(); var mortgage_dsgn = $('#mortgage_dsgn').val(); var mortgage_nuumber = $('#mortgage_nuumber').val(); var reg_office = $('#reg_office').val(); var mortgage_value = $('#mortgage_value').val(); var mortgage_document = $('#mortgage_document').val();
@@ -2031,79 +2235,79 @@ function doc_submit_validation() {
     }
 
 
-    if (gold_info == '') {
-        event.preventDefault();
-        $('#goldCheck').show();
-    } else {
-        $('#goldCheck').hide();
-    }
+    // if (gold_info == '') {
+    //     event.preventDefault();
+    //     $('#goldCheck').show();
+    // } else {
+    //     $('#goldCheck').hide();
+    // }
 
-    if (gold_info == '0') {
+    // if (gold_info == '0') {
 
-        if (gold_sts == '') {
-            event.preventDefault();
-            $('#GoldstatusCheck').show();
-        } else {
-            $('#GoldstatusCheck').hide();
-        }
-        if (gold_type == '') {
-            event.preventDefault();
-            $('#GoldtypeCheck').show();
-        } else {
-            $('#GoldtypeCheck').hide();
-        }
-        if (Purity == '') {
-            event.preventDefault();
-            $('#purityCheck').show();
-        } else {
-            $('#purityCheck').hide();
-        }
-        if (gold_Count == '') {
-            event.preventDefault();
-            $('#goldCountCheck').show();
-        } else {
-            $('#goldCountCheck').hide();
-        }
-        if (gold_Weight == '') {
-            event.preventDefault();
-            $('#goldWeightCheck').show();
-        } else {
-            $('#goldWeightCheck').hide();
-        }
-        if (gold_Value == '') {
-            event.preventDefault();
-            $('#goldValueCheck').show();
-        } else {
-            $('#goldValueCheck').hide();
-        }
+    //     if (gold_sts == '') {
+    //         event.preventDefault();
+    //         $('#GoldstatusCheck').show();
+    //     } else {
+    //         $('#GoldstatusCheck').hide();
+    //     }
+    //     if (gold_type == '') {
+    //         event.preventDefault();
+    //         $('#GoldtypeCheck').show();
+    //     } else {
+    //         $('#GoldtypeCheck').hide();
+    //     }
+    //     if (Purity == '') {
+    //         event.preventDefault();
+    //         $('#purityCheck').show();
+    //     } else {
+    //         $('#purityCheck').hide();
+    //     }
+    //     if (gold_Count == '') {
+    //         event.preventDefault();
+    //         $('#goldCountCheck').show();
+    //     } else {
+    //         $('#goldCountCheck').hide();
+    //     }
+    //     if (gold_Weight == '') {
+    //         event.preventDefault();
+    //         $('#goldWeightCheck').show();
+    //     } else {
+    //         $('#goldWeightCheck').hide();
+    //     }
+    //     if (gold_Value == '') {
+    //         event.preventDefault();
+    //         $('#goldValueCheck').show();
+    //     } else {
+    //         $('#goldValueCheck').hide();
+    //     }
 
-    }
+    // }
 
 
-    if (document_name == '') {
-        event.preventDefault();
-        $('#documentnameCheck').show();
-    } else {
-        $('#documentnameCheck').hide();
-    }
-    if (document_details == '') {
-        event.preventDefault();
-        $('#documentdetailsCheck').show();
-    } else {
-        $('#documentdetailsCheck').hide();
-    }
-    if (document_type == '') {
-        event.preventDefault();
-        $('#documentTypeCheck').show();
-    } else {
-        $('#documentTypeCheck').hide();
-    }
-    if (document_holder == '') {
-        event.preventDefault();
-        $('#docholderCheck').show();
-    } else {
-        $('#docholderCheck').hide();
-    }
+    // if (document_name == '') {
+    //     event.preventDefault();
+    //     $('#documentnameCheck').show();
+    // } else {
+    //     $('#documentnameCheck').hide();
+    // }
+    // if (document_details == '') {
+    //     event.preventDefault();
+    //     $('#documentdetailsCheck').show();
+    // } else {
+    //     $('#documentdetailsCheck').hide();
+    // }
+    // if (document_type == '') {
+    //     event.preventDefault();
+    //     $('#documentTypeCheck').show();
+    // } else {
+    //     $('#documentTypeCheck').hide();
+    // }
+    // if (document_holder == '') {
+    //     event.preventDefault();
+    //     $('#docholderCheck').show();
+    // } else {
+    //     $('#docholderCheck').hide();
+    // }
 
     if(submitted == undefined || submitted == '' || submitted == null){
         if(fingerprint == ''){

@@ -4,12 +4,10 @@ include '../../ajaxconfig.php';
 if(isset($_POST['req_id'])){
     $req_id = $_POST['req_id'];
 }
-if(isset($_POST['pages'])){
-    $pages = $_POST['pages'];
-}
+
 ?>
 
-<table class="table custom-table" id="docModalTable">
+<table class="table custom-table" id="document_table">
     <thead>
         <tr>
             <th width="50"> S.No </th>
@@ -19,7 +17,7 @@ if(isset($_POST['pages'])){
             <th> Document Holder</th>
             <th> Holder Name</th>
             <th> Relationship</th>
-            <th> ACTION </th>
+            <th> Document </th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +25,10 @@ if(isset($_POST['pages'])){
         <?php
         $qry = $connect->query("SELECT * FROM `document_info` where req_id = '$req_id' order by id desc");
 
+        $i = 1;
         while ($row = $qry->fetch()) {
+            $docUpd = explode(',',$row["doc_upload"]);
+
             if($row["holder_name"] == ''){
                 $qry1 = $con->query("SELECT * FROM verification_family_info where id = '".$row['relation_name']."' ");
                 $holder_name = $qry1->fetch_assoc()['famname'];
@@ -35,34 +36,30 @@ if(isset($_POST['pages'])){
                 $holder_name = $row["holder_name"];
             }
         ?>
-
-            <tr>
-            <td></td>
+             <tr>
+                <td></td>
                 <td><?php echo $row["doc_name"]; ?></td>
                 <td><?php echo $row["doc_detail"]; ?></td>
                 <td><?php if($row["doc_type"] == '0'){ echo 'Original';}else if($row["doc_type"] == '1'){echo 'Xerox'; } ?></td>
                 <td><?php if($row["doc_holder"] == '0'){ echo 'Customer';}else if($row["doc_holder"] == '1'){echo 'Guarentor'; }elseif($row["doc_holder"] == '2'){echo 'Family Member';} ?></td>
                 <td><?php echo $holder_name; ?></td>
                 <td><?php echo $row["relation"]; ?></td>
-
-                <td>
-                    <a id="doc_info_edit" value="<?php echo $row['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp;
-                    <?php if($pages == 1){  // Verification screen only delete option. ?>
-                     <a id="doc_info_delete" value="<?php echo $row['id']; ?>"> <span class='icon-trash-2'></span> </a>
-                    <?php  } ?>
-                </td>
-
+                <td><?php foreach($docUpd as $upd){
+                    if($upd != null){
+                        echo '<a href="uploads/verification/doc_info/'.$upd.'" target="_blank" title="View Document"> ' .$upd.  ',</a>';
+                    }
+                } ?></td>
             </tr>
 
-        <?php 
-        }     ?>
+        <?php  } ?>
     </tbody>
 </table>
 
 
+
 <script type="text/javascript">
     $(function() {
-        $('#docModalTable').DataTable({
+        $('#document_table').DataTable({
             'processing': true,
             'iDisplayLength': 5,
             "lengthMenu": [

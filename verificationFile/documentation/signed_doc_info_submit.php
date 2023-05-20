@@ -9,8 +9,9 @@ $doc_Count             = $_POST['doc_Count'];
 $cus_profile_id        = $_POST['cus_profile_id'];
 $signedID              = $_POST['signedID'];
 
-if($sign_type == '1'){
-    $qry = $con->query("SELECT fam.id from verification_family_info fam JOIN customer_profile cp on cp.req_id = fam.req_id where fam.req_id = $req_id");
+if($sign_type == '1' || $sign_type == '2'){
+    $qry = $con->query("SELECT fam.id from verification_family_info fam JOIN customer_profile cp on cp.guarentor_name = fam.id where fam.req_id = $req_id");
+    // $qry = $con->query("SELECT fam.id from verification_family_info fam JOIN customer_profile cp on cp.req_id = fam.req_id where fam.req_id = $req_id"); 
     $signType_relationship = $qry->fetch_assoc()['id'];
 }
 
