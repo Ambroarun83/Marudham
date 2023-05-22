@@ -907,7 +907,7 @@ input:checked + .slider:before {
 									<table class="table custom-table modalTable">
 										<thead>
 											<tr>
-												<th width="15%"> S.No </th>
+												<th width="50"> S.No </th>
 												<th> Property Type </th>
 												<th> Property Measurement </th>
 												<th> Property Value </th>
@@ -940,7 +940,7 @@ input:checked + .slider:before {
 									<table class="table custom-table modalTable">
 										<thead>
 											<tr>
-												<th width="15%"> S.No </th>
+												<th width="50"> S.No </th>
 												<th> Bank Name </th>
 												<th> Branch Name </th>
 												<th> Account Holder Name </th>
@@ -973,7 +973,7 @@ input:checked + .slider:before {
 									<table class="table custom-table modalTable">
 										<thead>
 											<tr>
-												<th width="20%"> S.No </th>
+												<th width="50"> S.No </th>
 												<th> Proof of </th>
 												<th> Proof type </th>
 												<th> Proof Number </th>
@@ -1093,7 +1093,7 @@ input:checked + .slider:before {
 									<table class="table custom-table modalTable">
 										<thead>
 											<tr>
-												<th width="20%"> S.No </th>
+												<th width="50"> S.No </th>
 												<th> Feedback Label </th>
 												<th> Feedback </th>
 												<th> Remarks </th>
@@ -1319,7 +1319,7 @@ input:checked + .slider:before {
                                         <table class="table custom-table">
                                             <thead>
                                                 <tr>
-                                                    <th width="15%"> S.No </th>
+                                                    <th width="50"> S.No </th>
                                                     <th> Doc Name </th>
                                                     <th> Sign Type </th>
                                                     <th> Count </th>
@@ -1353,7 +1353,7 @@ input:checked + .slider:before {
                                         <table class="table custom-table">
                                             <thead>
                                                 <tr>
-                                                    <th width="15%"> S.No </th>
+                                                    <th width="50"> S.No </th>
                                                     <th> Holder type </th>
                                                     <th> Holder Name </th>
                                                     <th> Relationship </th>
@@ -1714,7 +1714,7 @@ input:checked + .slider:before {
                                         <table class="table custom-table">
                                             <thead>
                                                 <tr>
-                                                    <th width="15%"> S.No </th>
+                                                    <th width="50"> S.No </th>
                                                     <th> Gold type </th>
                                                     <th> Purity </th>
                                                     <th> Count </th>
@@ -2376,7 +2376,7 @@ input:checked + .slider:before {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="upd"> Uploads </label> <span class="required">&nbsp;*</span>
+							<label for="upd"> Uploads </label>
 							<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()">
 							<span class="text-danger" id="docupdCheck"> Upload Document </span>
 						</div>
@@ -2394,7 +2394,7 @@ input:checked + .slider:before {
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Doc Name </th>
 								<th> Sign Type </th>
 								<th> Relationship </th>
@@ -2504,7 +2504,7 @@ input:checked + .slider:before {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="upd"> Uploads </label> <span class="required">&nbsp;*</span>
+							<label for="upd"> Uploads </label>
 							<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple  onchange="chequefilesCount()">
 							<span class="text-danger" id="chequeupdCheck"> Upload Cheque </span>
 						</div>
@@ -2526,7 +2526,7 @@ input:checked + .slider:before {
 					<table class="table custom-table">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Holder type </th>
 								<th> Holder Name </th>
 								<th> Relationship </th>
@@ -2649,7 +2649,7 @@ input:checked + .slider:before {
 					<table class="table custom-table">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Gold Status </th>
 								<th> Purity </th>
 								<th> Count </th>
@@ -2785,7 +2785,7 @@ input:checked + .slider:before {
 					<table class="table custom-table">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Document Name </th>
 								<th> Document Details</th>
 								<th> Document Type </th>

@@ -5,7 +5,7 @@ include '../../ajaxconfig.php';
 <table class="table custom-table" id="signed_table">
     <thead>
         <tr>
-        <th width="15%"> S.No </th>
+        <th width="50"> S.No </th>
 		<th> Doc Name </th>
 		<th> Sign Type </th>
 		<th> Relationship </th>

@@ -870,7 +870,7 @@ function getAgentBasedLoanCategory(ag_id){
 function getCategoryInfo(sub_cat){
     var idupd = $('#id').val();
     if(idupd > 0){
-        var getCategoryInfo = $('#getCategoryInfo_upd').val().split(',');;
+        var getCategoryInfo = $('#getCategoryInfo_upd').val().split(',');console.log(getCategoryInfo.length)
     }else{var getCategoryInfo = undefined;}
     $.ajax({
         url:'requestFile/getCategoryInfo.php',
@@ -882,17 +882,14 @@ function getCategoryInfo(sub_cat){
             $('.category_info .card-body .row').empty();
             $('.category_info .card-body .row').prepend('<table id="moduleTable" class="table custom-table"><tbody><tr>');
             if(response.length != 0){
-                var tb = 40;
                 for(var i=0;i<response.length;i++){
                     category_info ='';
                     // if(getCategoryInfo != undefined){
                     //     category_info = getCategoryInfo[i];
                     // }
                     $('.category_info .card-body .row table tbody tr').append( `<td><label for="disabledInput">`+response[i]['loan_category_ref_name']+`</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
-                    value='`+category_info+`' tabindex='`+tb+`' required placeholder='Enter `+response[i]['loan_category_ref_name']+`'></td>`);
+                    value='`+category_info+`' tabindex='40' required placeholder='Enter `+response[i]['loan_category_ref_name']+`'></td>`);
                     $('.category_info').show();
-                    tb++;
-                    
                     
                 }
                 $('.category_info .card-body .row table tbody tr').append(`<td><button type="button" id="add_category_info[]" name="add_category_info" 

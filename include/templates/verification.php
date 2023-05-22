@@ -1028,7 +1028,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
-													<th width="15%"> S.No </th>
+													<th width="50"> S.No </th>
 													<th> Property Type </th>
 													<th> Property Measurement </th>
 													<th> Property Value </th>
@@ -1063,7 +1063,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
-													<th width="15%"> S.No </th>
+													<th width="50"> S.No </th>
 													<th> Bank Name </th>
 													<th> Branch Name </th>
 													<th> Account Holder Name </th>
@@ -1098,7 +1098,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
-													<th width="20%"> S.No </th>
+													<th width="50"> S.No </th>
 													<th> Proof of </th>
 													<th> Proof type </th>
 													<th> Proof Number </th>
@@ -1238,7 +1238,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
-													<th width="20%"> S.No </th>
+													<th width="50"> S.No </th>
 													<th> Feedback Label </th>
 													<th> Feedback </th>
 													<th> Remarks </th>
@@ -1498,7 +1498,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<table class="table custom-table">
 											<thead>
 												<tr>
-													<th width="15%"> S.No </th>
+													<th width="50"> S.No </th>
 													<th> Doc Name </th>
 													<th> Sign Type </th>
 													<th> Count </th>
@@ -1532,7 +1532,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<table class="table custom-table">
 											<thead>
 												<tr>
-													<th width="15%"> S.No </th>
+													<th width="50"> S.No </th>
 													<th> Holder type </th>
 													<th> Holder Name </th>
 													<th> Relationship </th>
@@ -1857,7 +1857,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<table class="table custom-table">
 											<thead>
 												<tr>
-													<th width="15%"> S.No </th>
+													<th width="50"> S.No </th>
 													<th> Gold type </th>
 													<th> Purity </th>
 													<th> Count </th>
@@ -2629,7 +2629,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="disabledInput"> Relationship </label> &nbsp;<span class="text-danger">*</span>
-							<select tabindex="30" type="text" class="form-control" id="relationship" name="relationship">
+							<select  type="text" class="form-control" id="relationship" name="relationship">
 								<option value=""> Select Relationship </option>
 								<option value="Father"> Father </option>
 								<option value="Mother"> Mother </option>
@@ -2720,7 +2720,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
-								<th width="25%">S.No</th>
+								<th width="50">S.No</th>
 								<th>Name</th>
 								<th>Relationship</th>
 								<th>ACTION</th>
@@ -2838,7 +2838,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
-								<th width="25%">S.No</th>
+								<th width="50">S.No</th>
 								<th>Name</th>
 								<th>Aadhar Number</th>
 								<th>ACTION</th>
@@ -2937,7 +2937,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Property Type </th>
 								<!-- <th> Property Measurement </th> -->
 								<th> Property Value </th>
@@ -3044,7 +3044,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Bank Name </th>
 								<!-- <th> Branch Name </th> -->
 								<th> Account Holder Name </th>
@@ -3165,7 +3165,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
-								<th width="20%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Proof of </th>
 								<th> Proof type </th>
 								<th> Proof Number </th>
@@ -3276,7 +3276,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Doc Name </th>
 								<th> Sign Type </th>
 								<th> Relationship </th>
@@ -3429,7 +3429,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Holder type </th>
 								<th> Holder Name </th>
 								<th> Relationship </th>
@@ -3529,7 +3529,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table">
 						<thead>
 							<tr>
-								<th width="20%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Feedback Label </th>
 								<th> Feedback </th>
 								<th> ACTION </th>
@@ -3647,7 +3647,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Gold Status </th>
 								<th> Purity </th>
 								<th> Count </th>
@@ -3774,7 +3774,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<table class="table custom-table">
 						<thead>
 							<tr>
-								<th width="15%"> S.No </th>
+								<th width="50"> S.No </th>
 								<th> Document Name </th>
 								<th> Document Details</th>
 								<th> Document Type </th>

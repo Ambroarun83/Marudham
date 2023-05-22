@@ -72,7 +72,10 @@ $(document).ready(function() {
 			"lengthMenu": [
 				[10, 25, 50, -1],
 				[10, 25, 50, "All"]
-			]
+			],
+            'drawCallback':function(){
+                searchFunction();
+            }
 		});
 
 		var loan_creation_table = $('#loan_creation_table').DataTable({
@@ -111,7 +114,10 @@ $(document).ready(function() {
 			"lengthMenu": [
 				[10, 25, 50, -1],
 				[10, 25, 50, "All"]
-			]
+			],
+            'drawCallback':function(){
+                searchFunction();
+            }
 		});
 
 		var branch_creation_info = $('#branch_creation_info').DataTable({
@@ -150,7 +156,10 @@ $(document).ready(function() {
 			"lengthMenu": [
 				[10, 25, 50, -1],
 				[10, 25, 50, "All"]
-			]
+			],
+            'drawCallback':function(){
+                searchFunction();
+            }
 		});
 
 		var area_creation_info = $('#area_creation_info').DataTable({
@@ -189,7 +198,10 @@ $(document).ready(function() {
 			"lengthMenu": [
 				[10, 25, 50, -1],
 				[10, 25, 50, "All"]
-			]
+			],
+            'drawCallback':function(){
+                searchFunction();
+            }
 		});
 
         // Loan Calculation datatable
@@ -234,7 +246,10 @@ $(document).ready(function() {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
         
@@ -274,7 +289,10 @@ $(document).ready(function() {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
         // Agent Creation datatable
         var agent_creation_table = $('#agent_creation_table').DataTable({
@@ -311,7 +329,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
         // Staff Creation datatable
         var staff_creation_table = $('#staff_creation_table').DataTable({
@@ -348,7 +368,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
         // Manage user datatable
@@ -386,7 +408,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
         // Documentation Mapping datatable
         var doc_mapping_table = $('#doc_mapping_table').DataTable({
@@ -417,7 +441,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
         // Request datatable
         var request_table = $('#request_table').DataTable({
@@ -452,7 +478,9 @@ $(document).ready(function() {
             //     "targets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
             //     "orderable": false
             // } ]
-            
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
         
 
@@ -486,6 +514,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
 
@@ -519,6 +550,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
         // Acknowledgement List
@@ -551,6 +585,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
         
         // Loan Issue List
@@ -583,6 +620,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
         // Collection List
         var collection_table = $('#collection_table').DataTable({
@@ -614,6 +654,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
         // Closed
@@ -646,6 +689,9 @@ $(document).ready(function() {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
         //NOC Table
@@ -677,7 +723,10 @@ $(document).ready(function() {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
         //Concern Table
@@ -709,7 +758,10 @@ $(document).ready(function() {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
         //Concern Solution Table
@@ -741,27 +793,12 @@ $(document).ready(function() {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
         });
 
-        $('#search').change(function(){
-            company_creation_table.draw();
-            loan_creation_table.draw();
-            branch_creation_info.draw();
-            area_creation_info.draw();
-            loan_calculation_info.draw();
-            loan_scheme_monthly_table.draw();
-            director_creation_table.draw();
-            staff_creation_table.draw();
-            manage_user_table.draw();
-            doc_mapping_table.draw();
-            request_table.draw();
-            verification_table.draw();
-            approval_table.draw();
-            acknowledge_table.draw();
-            loanIssue_table.draw();
-        });
-        
 });//Document Ready End
 </script>
 
@@ -883,15 +920,11 @@ if($current_page == 'closed') { ?>
     <?php }
 
 //Concern Creation
-if($current_page == 'edit_concern_creation') { ?>
-    <script src="js/edit_concern_creation.js"></script>
-    <?php }
-
 if($current_page == 'concern_creation') { ?>
     <script src="js/concern_creation.js"></script>
     <?php }
 
-if($current_page == 'concern_solution') { ?>
+if($current_page == 'concern_solution'|| $current_page == 'concern_solution_view') { ?>
     <script src="js/concern_solution.js"></script>
     <?php }
 ?>
@@ -1133,4 +1166,29 @@ if($current_page == 'concern_solution') { ?>
         return thecash;
     }
 
+    function searchFunction(){
+
+        // Unbind or disable all other event listeners to avoid conflict
+        $('#search').unbind('input');
+        $('#search').unbind('keypress');
+        $('#search').unbind('keyup');
+        $('#search').unbind('search');
+        
+        // new search on keyup event for search by display content
+        $('#search').keyup(function(){
+            // Retrieve the input field text and reset the count to zero
+            var filter = $(this).val(), count = 0;
+            // Loop through the comment list
+            $("table tbody tr").each(function(){
+                // If the list item does not contain the text phrase fade it out
+                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                    $(this).fadeOut();
+                // Show the list item if the phrase matches and increase the count by 1
+                } else {
+                    $(this).show();
+                    count++;
+                }
+            })
+        })
+    }
 </script>
