@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    console.log('sajdgjkds');
 
     $('#raising_for').change(function(){
         refershInput();

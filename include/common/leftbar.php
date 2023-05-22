@@ -54,6 +54,10 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'noc';
 
+}else if($current_page == 'edit_concern_creation' || $current_page == 'edit_concern_solution' || $current_page == 'concern_creation' || $current_page == 'concern_solution' || $current_page == 'concern_solution_view' ){
+
+	$current_module = 'concerncreation';
+
 }else{
 	$current_module = '';
 }
@@ -121,6 +125,9 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$concernmodule = '';
+$concern_creation = '';
+$concern_solution = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -169,6 +176,9 @@ if (sizeof($getUser)>0) {
 		$closed          		     = $getUser['closed'];
 		$nocmodule          		     = $getUser['nocmodule'];
 		$noc          		     = $getUser['noc'];
+		$concernmodule          		     = $getUser['concernmodule'];
+		$concern_creation          		     = $getUser['concern_creation'];
+		$concern_solution          		     = $getUser['concern_solution'];
 	}
 }
 ?>
@@ -505,20 +515,20 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
-				<?php if($nocmodule == 0){?>
+				<?php if($concernmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
                             <i class="icon-export"></i>
-                            <span class="menu-text">Concern Creation</span>
+                            <span class="menu-text">Concern</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='concerncreation') echo 'style="display:block" '; ?>>
                             <ul>
-                                <?php  if($noc == 0){ ?>
+                                <?php  if($concern_creation == 0){ ?>
                                     <li>
                                         <a href="edit_concern_creation"><i class="icon-export"></i>Concern Creation</a>
                                     </li>
                                 <?php  } ?>
-                                <?php  if($noc == 0){ ?>
+                                <?php  if($concern_solution == 0){ ?>
                                     <li>
                                         <a href="edit_concern_solution"><i class="icon-export"></i>Concern Solution</a>
                                     </li>
@@ -582,4 +592,7 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$concernmodule = '';
+$concern_creation = '';
+$concern_solution = '';
 ?>

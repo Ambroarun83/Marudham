@@ -50,6 +50,9 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$concernmodule = '';
+$concern_creation = '';
+$concern_solution = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -141,6 +144,9 @@ if($idupd>0)
 			$closed          		     = $getUser['closed'];
 			$nocmodule          		     = $getUser['nocmodule'];
 			$noc          		     = $getUser['noc'];
+			$concernmodule          		     = $getUser['concernmodule'];
+			$concern_creation          		     = $getUser['concern_creation'];
+			$concern_solution          		     = $getUser['concern_solution'];
 		}
 	}
 }
@@ -653,6 +659,31 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($noc==0){ echo'checked'; }} ?> tabindex="42" class="noc-checkbox" id="noc" name="noc" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="noc">NOC</label>
+                            </div>
+                        </div>
+					</div>
+
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($concernmodule==0){ echo'checked'; }} ?> tabindex="41" class="" id="concernmodule" name="concernmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="concernmodule">
+							<h5>Concern</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($concern_creation==0){ echo'checked'; }} ?> tabindex="42" class="concern-checkbox" id="concernCreation" name="concernCreation" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="concernCreation">Concern Creation</label>
+                            </div>
+                        </div>
+
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($concern_solution==0){ echo'checked'; }} ?> tabindex="42" class="concern-checkbox" id="concernSolution" name="concernSolution" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="concernSolution">Concern Solution</label>
                             </div>
                         </div>
 					</div>
