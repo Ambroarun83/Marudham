@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2023 at 03:04 PM
+-- Generation Time: May 22, 2023 at 09:22 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -790,6 +790,50 @@ INSERT INTO `company_creation` (`company_id`, `company_name`, `address1`, `addre
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `concern_creation`
+--
+
+CREATE TABLE `concern_creation` (
+  `id` int(11) NOT NULL,
+  `raising_for` varchar(50) DEFAULT NULL,
+  `self_name` varchar(255) DEFAULT NULL,
+  `self_code` varchar(150) DEFAULT NULL,
+  `staff_name` varchar(255) DEFAULT NULL,
+  `staff_dept_name` varchar(255) DEFAULT NULL,
+  `staff_team_name` varchar(255) DEFAULT NULL,
+  `ag_name` varchar(255) DEFAULT NULL,
+  `ag_grp` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
+  `cus_name` varchar(255) DEFAULT NULL,
+  `cus_area` varchar(255) DEFAULT NULL,
+  `cus_sub_area` varchar(255) DEFAULT NULL,
+  `cus_group` varchar(255) DEFAULT NULL,
+  `cus_line` varchar(255) DEFAULT NULL,
+  `com_date` varchar(50) DEFAULT NULL,
+  `com_code` varchar(50) DEFAULT NULL,
+  `branch_name` varchar(50) DEFAULT NULL,
+  `concern_to` varchar(50) DEFAULT NULL,
+  `to_dept_name` varchar(255) DEFAULT NULL,
+  `to_team_name` varchar(255) DEFAULT NULL,
+  `com_sub` varchar(50) DEFAULT NULL,
+  `com_remark` varchar(255) DEFAULT NULL,
+  `com_priority` varchar(10) DEFAULT NULL,
+  `staff_assign_to` varchar(50) DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 0,
+  `solution_date` varchar(50) DEFAULT NULL,
+  `communication` varchar(50) DEFAULT NULL,
+  `uploads` varchar(255) DEFAULT NULL,
+  `solution_remark` varchar(255) DEFAULT NULL,
+  `insert_user_id` varchar(50) DEFAULT NULL,
+  `update_user_id` varchar(50) DEFAULT NULL,
+  `delete_user_id` varchar(50) DEFAULT NULL,
+  `created_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `concern_subject`
 --
 
@@ -1000,6 +1044,7 @@ CREATE TABLE `document_info` (
   `holder_name` varchar(255) DEFAULT NULL,
   `relation_name` varchar(255) NOT NULL,
   `relation` varchar(255) DEFAULT NULL,
+  `doc_upload` varchar(255) DEFAULT NULL,
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
   `delete_login_id` varchar(255) DEFAULT NULL,
@@ -1011,8 +1056,8 @@ CREATE TABLE `document_info` (
 -- Dumping data for table `document_info`
 --
 
-INSERT INTO `document_info` (`id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(3, '17', 'House Document', 'House Document', '0', '1', 'Magesh', '', 'Brother', '28', '28', NULL, '2023-05-18 16:47:50', '2023-05-18 16:47:50');
+INSERT INTO `document_info` (`id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `doc_upload`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(3, '17', 'House Document', 'House Document', '0', '1', 'Magesh', '', 'Brother', NULL, '28', '28', NULL, '2023-05-18 16:47:50', '2023-05-18 16:47:50');
 
 -- --------------------------------------------------------
 
@@ -1973,6 +2018,9 @@ CREATE TABLE `user` (
   `closed` varchar(10) NOT NULL DEFAULT '1',
   `nocmodule` varchar(10) NOT NULL DEFAULT '1',
   `noc` varchar(10) NOT NULL DEFAULT '1',
+  `concernmodule` varchar(10) DEFAULT '1',
+  `concern_creation` varchar(10) DEFAULT '1',
+  `concern_solution` varchar(10) DEFAULT '1',
   `status` varchar(255) NOT NULL DEFAULT '0',
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
@@ -1985,13 +2033,13 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
-(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '0', '1', '21', NULL, '2023-03-21 12:23:50', '0000-00-00 00:00:00'),
-(24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '2023-03-21 15:12:31', '0000-00-00 00:00:00'),
-(25, NULL, NULL, 'Big show', NULL, '', 'bigshow@gmail.com', '123', '1', '12', '3', '', '', '1', '1,2', '', '1,2,3', '1,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '0', '1', '25', NULL, '2023-03-31 12:03:21', '0000-00-00 00:00:00'),
-(27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
-(28, NULL, NULL, 'Chithambaram', NULL, '', 'director@gmail.com', '123', '1', '11', '1', '', '', '1', '1,2', '', '1,2,3,4,5', '1,5,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '1', '1', NULL, '2023-04-13 16:49:09', '0000-00-00 00:00:00');
+INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `concernmodule`, `concern_creation`, `concern_solution`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
+(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '0', '1', '21', NULL, '2023-03-21 12:23:50', '0000-00-00 00:00:00'),
+(24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '2023-03-21 15:12:31', '0000-00-00 00:00:00'),
+(25, NULL, NULL, 'Big show', NULL, '', 'bigshow@gmail.com', '123', '1', '12', '3', '', '', '1', '1,2', '', '1,2,3', '1,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '25', NULL, '2023-03-31 12:03:21', '0000-00-00 00:00:00'),
+(27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
+(28, NULL, NULL, 'Chithambaram', NULL, '', 'director@gmail.com', '123', '1', '11', '1', '', '', '1', '1,2', '', '1,2,3,4,5', '1,5,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '0', '1', '1', NULL, '2023-04-13 16:49:09', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2487,6 +2535,12 @@ ALTER TABLE `company_creation`
   ADD PRIMARY KEY (`company_id`);
 
 --
+-- Indexes for table `concern_creation`
+--
+ALTER TABLE `concern_creation`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `concern_subject`
 --
 ALTER TABLE `concern_subject`
@@ -2820,6 +2874,12 @@ ALTER TABLE `collection_charges`
 --
 ALTER TABLE `company_creation`
   MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `concern_creation`
+--
+ALTER TABLE `concern_creation`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `concern_subject`
