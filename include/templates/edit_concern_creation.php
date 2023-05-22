@@ -1,4 +1,3 @@
-
 <style>
     .dropbtn {
 		color: white;
@@ -44,7 +43,21 @@
 		Marudham - Concern Creation
 	</div>
 </div><br>
-<div class="text-right" style="margin-right: 25px;">
+
+<?php 
+@session_start();
+include('ajaxconfig.php');
+
+if(isset($_SESSION["userid"])){
+    $userid = $_SESSION["userid"];
+}
+    
+$userQry = $con->query("SELECT 1 FROM USER WHERE user_id = '$userid' && role ='3'"); // Check Whether the user is staff or not ,if not means concern screen will not be show.
+$rowuser = mysqli_num_rows($userQry);
+if($rowuser > 0){ 
+?>
+
+	<div class="text-right" style="margin-right: 25px;">
     <a href="concern_creation">
         <button type="button" class="btn btn-primary"><span class="icon-add"></span>&nbsp; Add Concern Creation</button>
     </a>
@@ -105,7 +118,26 @@
 	<!-- Row end -->
 </div>
 <!-- Main container end -->
+ <?php }else{?> 
+	
+	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+		<div class="card">
+			<div class="card-header" style="text-align: center;">  </div>
+			<div class="card-body">
+				<div class="row">
 
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" >
+						<div class="form-group">
+							<h4 style="display: flex; justify-content: center; align-items: center; font-weight: bold;"> Concern Creation is only for Staffs </h4>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<?php } ?>
 
 <script>
 	var sortOrder = 1; // 1 for ascending, -1 for descending

@@ -16,7 +16,6 @@ if($getUserDetails){
 //     $branch_name .= $row['branch_name'].', ';
 // }
 
-// $getconSubjectList = $userObj->getconSubject($mysqli);
 
 if(isset($_POST['submit_concern']) && $_POST['submit_concern'] != ''){
 	$addConcern = $userObj->addConcern($mysqli,$userid);
@@ -409,17 +408,6 @@ if(isset($_POST['submit_concern']) && $_POST['submit_concern'] != ''){
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <?php if (sizeof($getconSubjectList)>0) { 
-                                for($j=0;$j<count($getconSubjectList);$j++) { ?>
-                                <tr>
-                                    <td class="col-md-2 col-xl-2"></td>
-                                    <td><?php  echo $getconSubjectList[$j]['concern_subject']; ?></td>
-                                    <td>
-                                        <a id="edit_subject" value="<?php echo $getconSubjectList[$j]['concern_sub_id'] ?>"><span class="icon-border_color"></span></a> &nbsp
-                                        <a id="delete_subject" value="<?php echo $getconSubjectList[$j]['concern_sub_id'] ?>"><span class='icon-trash-2'></span></a>
-                                    </td>
-                                </tr>
-                            <?php } } ?> -->
                         </tbody>
                     </table>
                 </div>

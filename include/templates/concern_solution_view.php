@@ -37,9 +37,10 @@ if (count($getConcernCreation) > 0) {
     $assignStaffName      = $getConcernCreation['staff_assign_to'];
     $solution_date        = $getConcernCreation['solution_date'];
     $communication          = $getConcernCreation['communication'];
-    $uploads      = $getConcernCreation['uploads'];
     $solution_remark      = $getConcernCreation['solution_remark'];
-
+    $insert_user_name      = $getConcernCreation['insert_user_name'];
+    
+    $uploads      = $getConcernCreation['uploads'];
     $upds = explode(',',$uploads);
 }
 
@@ -148,6 +149,16 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                         <span class="text-danger" style='display:none' id='raisingForCheck'>Please Select Raising For</span>
                                     </div>
                                 </div>
+
+                                <?php if (isset($raisingFor) and $raisingFor != '1'){?>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="created-username">Created User Name</label><span class="required">&nbsp;*</span>
+                                        <input type="text" class="form-control" id="created_user_name" name="created_user_name" tabindex='4' value='<?php if(isset($insert_user_name)) echo $insert_user_name; ?>' readonly>
+                                    </div>
+                                </div>
+                                <?php } ?>
+
                             </div>
 
                             <div class="row" id="myself" <?php if (isset($raisingFor) and $raisingFor == '1'){ }else{ echo 'style="display: none;"'; } ?>> <!-- When Raising For is Myself Means Myself will show -->
@@ -289,13 +300,13 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="branch">Branch Name</label><span class="required">&nbsp;*</span>
                                         <input type="text" class="form-control" id="branch_name" name="branch_name" tabindex='13' value="<?php if (isset($branchName)) echo $branchName; ?>" readonly>
                                         <span class="text-danger" style='display:none' id='branchCheck'>Please Select Branch Name</span>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
@@ -339,15 +350,7 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                         <button type="button" class="btn btn-primary" id="add_complaint" name="add_complaint" data-toggle="modal" data-target=".addComplaint" style="padding: 5px 35px; margin-top: 20px;"><span class="icon-add"></span></button>
                                     </div>
                                 </div> -->
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="comremark">Concern Remark</label><span class="required">&nbsp;*</span>
-                                        <textarea class="form-control" id="com_remark" name="com_remark" tabindex='17' onkeydown="return /[a-z ]/i.test(event.key)" readonly><?php if (isset($conRemark)) echo $conRemark; ?></textarea>
-                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Enter Concern Remark</span>
-                                    </div>
-                                </div>
-
+                               
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="com-priority">Concern Priority</label><span class="required">&nbsp;*</span>
@@ -360,14 +363,22 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                         <span class="text-danger" style='display:none' id='conpriorityCheck'>Please Select Concern Priority</span>
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="comremark">Concern Remark</label><span class="required">&nbsp;*</span>
+                                        <textarea class="form-control" id="com_remark" name="com_remark" tabindex='17' onkeydown="return /[a-z ]/i.test(event.key)" readonly><?php if (isset($conRemark)) echo $conRemark; ?></textarea>
+                                        <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Enter Concern Remark</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="assign-to">Staff Assign To</label><span class="required">&nbsp;*</span>
                                         <input class="form-control" id="staff_assign_to" name="staff_assign_to" tabindex='19' value="<?php if (isset($assignStaffName)) echo $assignStaffName; ?>" readonly>
                                         <span class="text-danger" style='display:none' id='staffAssignCheck'>Please Select Staff Assign</span>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </div>
                         </div>
