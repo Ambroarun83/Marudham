@@ -41,7 +41,7 @@
 <br><br>
 <div class="page-header">
     <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Concern Solution
+		Marudham - Concern Feedback
 	</div>
 </div><br>
 
@@ -66,30 +66,7 @@ if($rowuser > 0){
 			<div class="table-container" >
 
 				<div class="table-responsive">
-					<?php
-					$mscid=0;
-					$id=0;
-					if(isset($_GET['msc']))
-					{
-					$mscid=$_GET['msc'];
-					if($mscid==1)
-					{?>
-					<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Concern solution Submitted Successfully! </div>
-					</div> 
-					<?php
-					}
-					if($mscid==2)
-					{?>
-						<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Collection Removed Successfully! </div>
-					</div>
-					<?php
-					}
-					
-					}
-					?>
-					<table id="concern_solution_table" class="table custom-table" >
+					<table id="concern_feedback_table" class="table custom-table" >
 						<thead>
 							<tr>
 								<th width="50">S.No.</th>
@@ -123,7 +100,7 @@ if($rowuser > 0){
 
 					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" >
 						<div class="form-group">
-							<h4 style="display: flex; justify-content: center; align-items: center; font-weight: bold;"> Concern Solution is only for Staffs </h4>
+							<h4 style="display: flex; justify-content: center; align-items: center; font-weight: bold;"> Concern Feedback is only for Staffs </h4>
 						</div>
 					</div>
 
@@ -133,7 +110,6 @@ if($rowuser > 0){
 	</div>
 
 	<?php } ?>
-
 
 <script>
 	var sortOrder = 1; // 1 for ascending, -1 for descending

@@ -42,9 +42,9 @@ $column = array(
 );
 
 if($userid == 1){
-    $query = 'SELECT * FROM `concern_creation`'; // 
+    $query = 'SELECT * FROM `concern_creation` WHERE status != 2'; // 
 }else{
-    $query = "SELECT * FROM `concern_creation` where staff_assign_to = '".strip_tags($staff_id)."'";// 
+    $query = "SELECT * FROM `concern_creation` WHERE  status != 2 && staff_assign_to = '".strip_tags($staff_id)."'";// 
 }
 // echo $query;
 
@@ -131,15 +131,15 @@ foreach ($result as $row) {
     //Status
     $con_sts = $row['status'];
     if($con_sts == 0){  $sub_array[] = 'Pending'; }
-    if($con_sts == 1){  $sub_array[] = 'Completed'; }
+    if($con_sts == 1){  $sub_array[] = 'Resolved'; }
 
     $id= $row['id'];
 
     if($con_sts == 0){
-        $action="<a href='concern_solution&upd=$id' title='Add Solution' > <!--<button class='btn btn-success' style='background-color:#009688;'> --> <span class='icon-border_color' style='font-size: 17px;position: relative;top: 2px;'></span> <!-- </button> --> </a>";
+        $action="<a href='concern_solution&upd=$id' title='Add Solution' >  <span class='icon-border_color' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
     }
     else if($con_sts == 1){
-        $action="<a href='concern_solution_view&upd=$id&pageId=2' title='View Solution' >  <span class='icon-eye' style='font-size: 17px;position: relative;top: 2px;'></span> </a>";
+        $action="<a href='concern_solution_view&upd=$id&pageId=2' title='View Solution' >  <span class='icon-eye' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
         
     }
 
