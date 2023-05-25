@@ -44,26 +44,29 @@ if (count($getConcernCreation) > 0) {
     $upds = explode(',',$uploads);
 }
 ?>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 <style>
-    .img_show {
-        height: 150px;
-        width: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        background-color: white;
-    }
+.stars i {
+  font-size: 35px;
+  color: #b5b8b1;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.stars i.active {
+  color: #ffb851;
+  transform: scale(1.2);
+}
 </style>
 
 <!-- Page header start -->
 <br><br>
 <div class="page-header">
     <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-        Marudham - Concern Solution
+        Marudham - Concern feedback
     </div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
-   <?php if($pageId == '1'){?> <a href="edit_concern_creation"> <?php }elseif($pageId =='2'){?><a href="edit_concern_solution"> <?php } ?>
+    <a href="edit_concern_feedback"> 
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
     </a>
 </div><br><br>
@@ -89,7 +92,7 @@ if (count($getConcernCreation) > 0) {
                         <div class="card-header">Concern Creation <span style="font-weight:bold" class=""></span></div>
                         <div class="card-body">
                             <div class="row">
-
+                               
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="raising">Raising For</label><span class="required">&nbsp;*</span>
@@ -358,7 +361,7 @@ if (count($getConcernCreation) > 0) {
                                             ?>
                                             <a href="<?php echo "uploads/concern/".$fileupd; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($fileupd)) echo $fileupd; ?> File </a> <br><br>
                                         <?php } } ?>
-                                        
+
                                         <span class="text-danger" style='display:none' id='updCheck'>Please Upload </span>
 									</div>
 								</div>
@@ -369,8 +372,44 @@ if (count($getConcernCreation) > 0) {
 					</div>
                     <!-- Consern Solution END-->
 
-                </div>
-            </div>
+                    <!-- Consern Feedback START-->
+                    <div class="card">
+						<div class="card-header"> Concern Feedback <span style="font-weight:bold" class=""></span></div>
+						<div class="card-body">
+							<div class="row">
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="sol-date"> Feedback Date </label> <span class="required">*</span>
+										<input type="date" class="form-control" name="feedback_date" id="feedback_date" tabindex="23" value="<?php echo date('Y-m-d');?>" readonly>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="Communitcation"> Feedback Rating </label> <span class="required">*</span>
+                                        <input type='hidden' id='rating_value' name='rating_value'>
+                                      <div class="stars">
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                        <i class="fa-solid fa-star"></i>
+                                     </div><br>
+                                         <span class="text-danger" style='display:none' id='ratingCheck'>Please Select Feedback Rating </span>
+								     </div>
+							    </div>
+
+						    </div>
+					    </div>  
+                    </div>
+                    <!-- Consern Feedback END-->
+
+                    <div class="col-md-12 ">
+                        <div class="text-right">
+                            <button type="submit" name="submit_concern_feedback" id="submit_concern_feedback" class="btn btn-primary" value="Submit" tabindex="24"><span class="icon-check"></span>&nbsp;Submit</button>
+                        </div>
+                    </div>
         </form>
     </div>
     <!-- Concern Creation Form End -->

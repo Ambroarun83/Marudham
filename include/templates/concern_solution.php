@@ -34,22 +34,6 @@ if (count($getConcernCreation) > 0) {
     $insert_user_name      = $getConcernCreation['insert_user_name'];
 }
 
-// $getUserDetails = $userObj->getUserDetails($mysqli, $userid);
-// // print_r($getUserDetails);
-// if ($getUserDetails) {
-//     // $branch_id = $getUserDetails['branch_id'];
-//     $company_id = $getUserDetails['company_id'];
-//     $user_name = $getUserDetails['fullname'];
-//     $staff_code = $getUserDetails['staff_code'];
-// }
-
-//Getting Branch Name
-// $branch_name ='';
-// $branchqry = $mysqli->query("SELECT branch_name FROM branch_creation WHERE branch_id in($branch_id) ");
-// while($row = $branchqry->fetch_assoc()){
-//     $branch_name .= $row['branch_name'].', ';
-// }
-
 if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'] != '') {
     $addConcern = $userObj->addConcernsolution($mysqli, $userid);
 
@@ -104,25 +88,6 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                         <div class="card-header">Concern Creation <span style="font-weight:bold" class=""></span></div>
                         <div class="card-body">
                             <div class="row">
-                                <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                    <div class="form-group">
-                                        <label for="Company">Company Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="user_company_name" name="user_company_name" readonly value='<?php if (isset($company_name)) echo $company_name; ?>' tabindex="1">
-                                    </div>
-                                </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="branch_name">Branch Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="user_branch_name" name="user_branch_name" readonly value='<?php if (isset($branch_name)) echo $branch_name; ?>' tabindex='2'>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 " >
-                                    <div class="form-group">
-                                        <label for="user_name">User Name <span class="required">&nbsp;*</span></label>
-                                        <input tabindex="3" type="text" class="form-control" id="user_name" name="user_name" value="<?php if (isset($user_name)) echo $user_name; ?>" readonly>
-                                    </div>
-                                </div> -->
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
@@ -288,14 +253,6 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                     </div>
                                 </div>
 
-                                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="branch">Branch Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="branch_name" name="branch_name" tabindex='13' value="<?php if (isset($branchName)) echo $branchName; ?>" readonly>
-                                        <span class="text-danger" style='display:none' id='branchCheck'>Please Select Branch Name</span>
-                                    </div>
-                                </div> -->
-
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="to">Concern To</label><span class="required">&nbsp;*</span>
@@ -332,12 +289,6 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                         <span class="text-danger" style='display:none' id='concernsubCheck'>Please Select Concern Subject</span>
                                     </div>
                                 </div>
-
-                                <!-- <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-primary" id="add_complaint" name="add_complaint" data-toggle="modal" data-target=".addComplaint" style="padding: 5px 35px; margin-top: 20px;"><span class="icon-add"></span></button>
-                                    </div>
-                                </div> -->
                                
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
@@ -359,14 +310,6 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                         <span class="text-danger" style='display:none' id='comRemarkCheck'>Please Enter Concern Remark</span>
                                     </div>
                                 </div>
-
-                                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="assign-to">Staff Assign To</label><span class="required">&nbsp;*</span>
-                                        <input class="form-control" id="staff_assign_to" name="staff_assign_to" tabindex='19' value="<?php if (isset($assignStaffName)) echo $assignStaffName; ?>" readonly>
-                                        <span class="text-danger" style='display:none' id='staffAssignCheck'>Please Select Staff Assign</span>
-                                    </div>
-                                </div> -->
 
                             </div>
                         </div>

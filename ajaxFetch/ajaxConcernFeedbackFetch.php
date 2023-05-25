@@ -9,23 +9,24 @@ if($userid != 1){
     
     $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
     while($rowuser = $userQry->fetch_assoc()){
-        $group_id = $rowuser['group_id'];
-        $line_id = $rowuser['line_id'];
+        // $group_id = $rowuser['group_id'];
+        // $line_id = $rowuser['line_id'];
+        $staff_id = $rowuser['staff_id'];
     }
 
-    $line_id = explode(',',$line_id);
-    $sub_area_list = array();
-    foreach($line_id as $line){
-        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
-        $sub_area_list[] = $row_sub['sub_area_id'];
-    }
-    $sub_area_ids = array();
-    foreach ($sub_area_list as $subarray) {
-        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
-    }
-    $sub_area_list = array();
-    $sub_area_list = implode(',',$sub_area_ids);
+    // $line_id = explode(',',$line_id);
+    // $sub_area_list = array();
+    // foreach($line_id as $line){
+    //     $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
+    //     $row_sub = $lineQry->fetch_assoc();
+    //     $sub_area_list[] = $row_sub['sub_area_id'];
+    // }
+    // $sub_area_ids = array();
+    // foreach ($sub_area_list as $subarray) {
+    //     $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+    // }
+    // $sub_area_list = array();
+    // $sub_area_list = implode(',',$sub_area_ids);
 }
 
 $column = array(
@@ -41,42 +42,10 @@ $column = array(
 );
 
 if($userid == 1){
-    $query = 'SELECT * FROM `concern_creation` WHERE status != 2'; // 
-}else{
-    $query = "SELECT * FROM `concern_creation` WHERE status != 2  && insert_user_id = '".strip_tags($userid)."'";// 
+    $query = 'SELECT * FROM `concern_creation` WHERE status = 1'; // 
+}else{ 
+    $query = "SELECT * FROM `concern_creation` WHERE status = 1 ";// 
 }
-// echo $query;
-
-// if($_POST['search'] != "")
-// {
-//     if (isset($_POST['search'])) {
-
-//         $query .= "
-//             and (req_id LIKE '%".$_POST['search']."%'
-//             OR dor LIKE '%".$_POST['search']."%'
-//             OR cus_id LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR area LIKE '%".$_POST['search']."%'
-//             OR sub_area LIKE '%".$_POST['search']."%'
-//             OR loan_category LIKE '%".$_POST['search']."%'
-//             OR sub_category LIKE '%".$_POST['search']."%'
-//             OR loan_amt LIKE '%".$_POST['search']."%'
-//             OR user_type LIKE '%".$_POST['search']."%'
-//             OR user_name LIKE '%".$_POST['search']."%'
-//             OR agent_id LIKE '%".$_POST['search']."%'
-//             OR responsible LIKE '%".$_POST['search']."%'
-//             OR cus_data LIKE '%".$_POST['search']."%'
-//             OR cus_status LIKE '%".$_POST['search']."%' ) ";
-//     }
-// }
-// if (isset($_POST['order'])) {
-//     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
-// } else {
-//     $query .= ' ';
-// }
 
 $query1 = '';
 
@@ -132,18 +101,15 @@ foreach ($result as $row) {
     if($con_sts == 0){  $sub_array[] = 'Pending'; }
     if($con_sts == 1){  $sub_array[] = 'Resolved'; }
 
-    $id          = $row['id'];
+    $id= $row['id'];
 
-    // $action="<a href='concern_creation&upd=$id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'> Concern 
-    // <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
-
-    // $sub_array[] = $action;
     if($con_sts == 1){
-        $action="<a href='concern_solution_view&upd=$id&pageId=1' title='View Solution' >  <span class='icon-eye' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
-        
-    }else{
+        $action="<a href='concern_feedback&upd=$id' title='Add Feedback'>  <span class='icon-border_color' style='font-size: 12px;position: relative;top: 2px;'></span> </a>"; 
+    }
+    else{
         $action = '';
     }
+        
     $sub_array[] = $action;
 
     $data[]      = $sub_array;
