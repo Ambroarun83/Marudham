@@ -40,6 +40,7 @@ require 'PHPMailerAutoload.php';
                 $detailrecords['staff_creation']              = strip_tags($row->staff_creation);
                 $detailrecords['manage_user']              = strip_tags($row->manage_user);
                 $detailrecords['doc_mapping']              = strip_tags($row->doc_mapping);
+                $detailrecords['bank_creation']              = strip_tags($row->bank_creation);
                 $detailrecords['requestmodule']              = strip_tags($row->requestmodule);
                 $detailrecords['request']              = strip_tags($row->request);
                 $detailrecords['request_list_access']              = strip_tags($row->request_list_access);
@@ -61,6 +62,10 @@ require 'PHPMailerAutoload.php';
                 $detailrecords['concernmodule']              = strip_tags($row->concernmodule);
                 $detailrecords['concern_creation']              = strip_tags($row->concern_creation);
                 $detailrecords['concern_solution']              = strip_tags($row->concern_solution);
+				$detailrecords['concern_feedback']              = strip_tags($row->concern_feedback);
+                $detailrecords['accountsmodule']              = strip_tags($row->accountsmodule);
+                $detailrecords['cash_tally']              = strip_tags($row->cash_tally);
+                $detailrecords['bank_details']              = strip_tags($row->bank_details);
                 $detailrecords['status']                     = strip_tags($row->status);
             }
             return $detailrecords;
@@ -2229,6 +2234,12 @@ require 'PHPMailerAutoload.php';
         }else{
             $doc_mapping=1;
         }
+        if(isset($_POST['bank_creation']) &&    $_POST['bank_creation'] == 'Yes')
+        {
+            $bank_creation=0;
+        }else{
+            $bank_creation=1;
+        }
         if(isset($_POST['requestmodule']) &&    $_POST['requestmodule'] == 'Yes')
         {
             $requestmodule=0;
@@ -2355,21 +2366,44 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$concernSolution=1;
 		}
+		if(isset($_POST['concernFeedback']) &&    $_POST['concernFeedback'] == 'Yes')
+        {
+            $concernFeedback=0;
+        }else{
+            $concernFeedback=1;
+        }
+		if(isset($_POST['accountsmodule']) &&    $_POST['accountsmodule'] == 'Yes')
+		{
+			$accountsmodule=0;
+		}else{
+			$accountsmodule=1;
+		}
+		if(isset($_POST['cash_tally']) &&    $_POST['cash_tally'] == 'Yes')
+		{
+			$cash_tally=0;
+		}else{
+			$cash_tally=1;
+		}
+		if(isset($_POST['bank_details'])){
+			$bank_details = $_POST['bank_details'];
+		}
         $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
-        `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`requestmodule`,
+        `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`bank_creation`,`requestmodule`,
         `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,
-		`collectionmodule`,`collection`,`collection_access`,`closedmodule`,`closed`,`nocmodule`,`noc`,`concernmodule`, `concern_creation`, `concern_solution`,`insert_login_id`,`created_date`)
+		`collectionmodule`,`collection`,`collection_access`,`closedmodule`,`closed`,`nocmodule`,`noc`,`concernmodule`, `concern_creation`, `concern_solution`,`concern_feedback`,
+		`accountsmodule`,`cash_tally`,`bank_details`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
         '".strip_tags($branch_creation)."','".strip_tags($loan_category)."','".strip_tags($loan_calculation)."','".strip_tags($loan_scheme)."','".strip_tags($area_creation)."',
         '".strip_tags($area_mapping)."','".strip_tags($area_approval)."','".strip_tags($adminmodule)."','".strip_tags($director_creation)."',
-        '".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
+        '".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($bank_creation)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
         '".strip_tags($request_list_access)."','".strip_tags($verificationmodule)."','".strip_tags($verification)."','".strip_tags($approvalmodule)."','".strip_tags($approval)."',
         '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($loanissuemodule)."','".strip_tags($loan_issue)."',
 		'".strip_tags($collectionmodule)."','".strip_tags($collection)."','".strip_tags($collection_access)."','".strip_tags($closedmodule)."','".strip_tags($closed)."',
-		'".strip_tags($nocmodule)."','".strip_tags($noc)."','".strip_tags($concernmodule)."','".strip_tags($concernCreation)."','".strip_tags($concernSolution)."','".strip_tags($userid)."',current_timestamp )";
+		'".strip_tags($nocmodule)."','".strip_tags($noc)."','".strip_tags($concernmodule)."','".strip_tags($concernCreation)."','".strip_tags($concernSolution)."','".strip_tags($concernFeedback)."',
+		'".strip_tags($accountsmodule)."','".strip_tags($cash_tally)."','".strip_tags($bank_details)."','".strip_tags($userid)."',now() )";
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
 
@@ -2513,6 +2547,12 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$doc_mapping=1;
 	}
+	if(isset($_POST['bank_creation']) &&    $_POST['bank_creation'] == 'Yes')
+	{
+		$bank_creation=0;
+	}else{
+		$bank_creation=1;
+	}
 	if(isset($_POST['requestmodule']) &&    $_POST['requestmodule'] == 'Yes')
 	{
 		$requestmodule=0;
@@ -2639,6 +2679,27 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$concernSolution=1;
 	}
+	if(isset($_POST['concernFeedback']) &&    $_POST['concernFeedback'] == 'Yes')
+	{
+		$concernFeedback=0;
+	}else{
+		$concernFeedback=1;
+	}
+	if(isset($_POST['accountsmodule']) &&    $_POST['accountsmodule'] == 'Yes')
+	{
+		$accountsmodule=0;
+	}else{
+		$accountsmodule=1;
+	}
+	if(isset($_POST['cash_tally']) &&    $_POST['cash_tally'] == 'Yes')
+	{
+		$cash_tally=0;
+	}else{
+		$cash_tally=1;
+	}
+	if(isset($_POST['bank_details'])){
+		$bank_details = $_POST['bank_details'];
+	}
 	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
 	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
 	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
@@ -2647,13 +2708,15 @@ function updateUser($mysqli,$id,$user_id){
 	`loan_calculation` = '".strip_tags($loan_calculation)."',`loan_scheme` = '".strip_tags($loan_scheme)."',`area_creation` = '".strip_tags($area_creation)."',
 	`area_mapping` = '".strip_tags($area_mapping)."',`area_approval` = '".strip_tags($area_approval)."',`adminmodule` = '".strip_tags($adminmodule)."',
 	`director_creation` = '".strip_tags($director_creation)."',`agent_creation` = '".strip_tags($agent_creation)."',`staff_creation` = '".strip_tags($staff_creation)."',
-	`manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`requestmodule`='".strip_tags($requestmodule)."',
+	`manage_user` = '".strip_tags($manage_user)."',`doc_mapping`='".strip_tags($doc_mapping)."',`bank_creation`='".strip_tags($bank_creation)."',`requestmodule`='".strip_tags($requestmodule)."',
 	`request`='".strip_tags($request)."',`request_list_access`='".strip_tags($request_list_access)."',`verificationmodule`='".strip_tags($verificationmodule)."',`verification`='".strip_tags($verification)."',
 	`approvalmodule`='".strip_tags($approvalmodule)."',`approval`='".strip_tags($approval)."',`acknowledgementmodule`='".strip_tags($acknowledgementmodule)."',
 	`acknowledgement`='".strip_tags($acknowledgement)."',`loanissuemodule`='".strip_tags($loanissuemodule)."',`loan_issue`='".strip_tags($loan_issue)."',
 	`collectionmodule` = '".strip_tags($collectionmodule)."', `collection` = '".strip_tags($collection)."', `collection_access` = '".strip_tags($collection_access)."',
-	`closedmodule` = '".strip_tags($closedmodule)."', `closed` = '".strip_tags($closed)."', `nocmodule` = '".strip_tags($nocmodule)."',`noc` = '".strip_tags($noc)."',`concernmodule`='".strip_tags($concernmodule)."',`concern_creation`='".strip_tags($concernCreation)."',`concern_solution`='".strip_tags($concernSolution)."',
-	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = 'current_timestamp()' WHERE user_id = '".strip_tags($id)."' ";
+	`closedmodule` = '".strip_tags($closedmodule)."', `closed` = '".strip_tags($closed)."', `nocmodule` = '".strip_tags($nocmodule)."',`noc` = '".strip_tags($noc)."',
+	`concernmodule`='".strip_tags($concernmodule)."',`concern_creation`='".strip_tags($concernCreation)."',`concern_solution`='".strip_tags($concernSolution)."',`concern_feedback`='".strip_tags($concernFeedback)."',
+	`accountsmodule`='".strip_tags($accountsmodule)."',`cash_tally`='".strip_tags($cash_tally)."',`bank_details`='".strip_tags($bank_details)."',
+	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = current_timestamp() WHERE user_id = '".strip_tags($id)."' ";
 	$result = $mysqli->query($updateQry) or die;
 }
 
@@ -3449,8 +3512,8 @@ function updateUser($mysqli,$id,$user_id){
 				$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			}
 
-			$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
-			$insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
+			$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_info_occ_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($state)."',`area_confirm_district`='".strip_tags($district)."',`area_confirm_taluk`='".strip_tags($taluk)."',`area_confirm_area`='".strip_tags($area)."',`area_confirm_subarea`='".strip_tags($sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
+            $insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
 
         }
 
@@ -5441,5 +5504,255 @@ function updateUser($mysqli,$id,$user_id){
 				$updConcern = $mysqli->query("UPDATE `concern_creation` SET `status`= 1 ,`solution_date`='".strip_tags($solution_date)."',`communication`='".strip_tags($Com_for_solution)."',`uploads`='".strip_tags($concern_upload)."',`solution_remark`='".strip_tags($solution_remark)."',`update_user_id`='".strip_tags($userid)."',`updated_date`= now() WHERE `id`='".strip_tags($id)."' ");
 
 			}
+		function getCustomerRegister($mysqli,$cus_id){
+			$qry = $mysqli->query("SELECT *  FROM `customer_register` WHERE cus_id = '$cus_id' ");
+			$detailrecords = array();
+			$i=0;
+			if($mysqli->affected_rows>0){
+				while($row = $qry->fetch_assoc()){
+					$detailrecords['cus_reg_id'] = $row['cus_reg_id'];
+					$detailrecords['req_id'] = $row['req_ref_id'];
+					$detailrecords['cus_id'] = $row['cus_id'];
+					// $detailrecords['cus_id'] = $row['cus_data']; //
+					$detailrecords['cus_name'] = $row['customer_name'];
+					$detailrecords['dob'] = $row['dob'];
+					$detailrecords['age'] = $row['age'];
+					$detailrecords['gender'] = $row['gender'];
+					$detailrecords['state'] = $row['state'];
+					$detailrecords['district'] = $row['district'];
+					$detailrecords['taluk'] = $row['taluk'];
+					$detailrecords['area'] = $row['area'];
+					$detailrecords['sub_area'] = $row['sub_area'];
+					$detailrecords['address'] = $row['address'];
+					$detailrecords['mobile1'] = $row['mobile1'];
+					$detailrecords['mobile2'] = $row['mobile2'];
+					$detailrecords['father_name'] = $row['father_name'];
+					$detailrecords['mother_name'] = $row['mother_name'];
+					$detailrecords['marital'] = $row['marital'];
+					$detailrecords['spouse'] = $row['spouse'];
+					$detailrecords['occupation_type'] = $row['occupation_type'];
+					$detailrecords['occupation'] = $row['occupation'];
+					$detailrecords['cus_pic'] = $row['pic'];
+					$detailrecords['how_to_know'] = $row['how_to_know'];
+					$detailrecords['loan_count'] = $row['loan_count'];
+					$detailrecords['first_loan_date'] = $row['first_loan_date'];
+					$detailrecords['travel_with_company'] = $row['travel_with_company'];
+					$detailrecords['monthly_income'] = $row['monthly_income'];
+					$detailrecords['other_income'] = $row['other_income'];
+					$detailrecords['support_income'] = $row['support_income'];
+					$detailrecords['commitment'] = $row['commitment'];
+					$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
+					$detailrecords['loan_limit'] = $row['loan_limit'];
+					$detailrecords['about_customer'] = $row['about_customer'];
+					// $detailrecords['cus_type'] = $row['cus_type'];
+					// $detailrecords['cus_exist_type'] = $row['cus_exist_type'];
+					$detailrecords['residential_type'] = $row['residential_type'];
+					$detailrecords['residential_details'] = $row['residential_details'];
+					$detailrecords['residential_address'] = $row['residential_address'];
+					$detailrecords['residential_native_address'] = $row['residential_native_address'];
+					$detailrecords['occupation_info_occ_type'] = $row['occupation_info_occ_type'];
+					$detailrecords['occupation_details'] = $row['occupation_details'];
+					$detailrecords['occupation_income'] = $row['occupation_income'];
+					$detailrecords['occupation_address'] = $row['occupation_address'];
+					$detailrecords['area_confirm_type'] = $row['area_confirm_type'];
+					$detailrecords['area_confirm_state'] = $row['area_confirm_state'];
+					$detailrecords['area_confirm_district'] = $row['area_confirm_district'];
+					$detailrecords['area_confirm_taluk'] = $row['area_confirm_taluk'];
+					$detailrecords['area_confirm_area'] = $row['area_confirm_area'];
+					$detailrecords['area_confirm_subarea'] = $row['area_confirm_subarea'];
+					$detailrecords['area_group'] = $row['area_group'];
+					$detailrecords['area_line'] = $row['area_line'];
+					$detailrecords['cus_status'] = $row['cus_status'];
+					$result = $mysqli->query("SELECT area_name FROM area_list_creation where area_id = '".$row['area_confirm_area']."' and status=0 and area_enable = 0");
+					$area = $result ->fetch_assoc();
+					$detailrecords['area_name'] = $area['area_name'];
+					$subarearesult = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$row['area_confirm_subarea']."' and status=0 and sub_area_enable = 0");
+					$subarea = $subarearesult ->fetch_assoc();
+					$detailrecords['sub_area_name'] = $subarea['sub_area_name'];
+					$i++;
+				}
+			}
+			return $detailrecords;
+		}
+			// Get Documentation Info.
+		public function getDocumentDetails($mysqli,$cus_id){
+			$qry = $mysqli->query("SELECT * FROM verification_documentation where cus_id_doc = $cus_id ");
+			$detailrecords = array();
+			$i=0;
+			if($mysqli->affected_rows>0){
+				while($row = $qry->fetch_assoc()){
+					$detailrecords['doc_Tableid'] = $row['id'];
+					$detailrecords['req_id'] = $row['req_id'];
+					$detailrecords['mortgage_process'] = $row['mortgage_process'];
+					$detailrecords['Propertyholder_type'] = $row['Propertyholder_type'];
+					$detailrecords['Propertyholder_name'] = $row['Propertyholder_name'];
+					$detailrecords['Propertyholder_relationship_name'] = $row['Propertyholder_relationship_name'];
+					$detailrecords['doc_property_relation'] = $row['doc_property_relation'];
+					$detailrecords['doc_property_type'] = $row['doc_property_type'];
+					$detailrecords['doc_property_measurement'] = $row['doc_property_measurement'];
+					$detailrecords['doc_property_location'] = $row['doc_property_location'];
+					$detailrecords['doc_property_value'] = $row['doc_property_value'];
+					$detailrecords['mortgage_name'] = $row['mortgage_name'];
+					$detailrecords['mortgage_dsgn'] = $row['mortgage_dsgn'];
+					$detailrecords['mortgage_nuumber'] = $row['mortgage_nuumber'];
+					$detailrecords['reg_office'] = $row['reg_office'];
+					$detailrecords['mortgage_value'] = $row['mortgage_value'];
+					$detailrecords['mortgage_document'] = $row['mortgage_document'];
+					$detailrecords['mortgage_document_upd'] = $row['mortgage_document_upd'];
+					$detailrecords['mortgage_document_pending'] = $row['mortgage_document_pending'];
+					$detailrecords['endorsement_process'] = $row['endorsement_process'];
+					$detailrecords['owner_type'] = $row['owner_type'];
+					$detailrecords['owner_name'] = $row['owner_name'];
+					$detailrecords['ownername_relationship_name'] = $row['ownername_relationship_name'];
+					$detailrecords['en_relation'] = $row['en_relation'];
+					$detailrecords['vehicle_type'] = $row['vehicle_type'];
+					$detailrecords['vehicle_process'] = $row['vehicle_process'];
+					$detailrecords['en_Company'] = $row['en_Company'];
+					$detailrecords['en_Model'] = $row['en_Model'];
+					$detailrecords['vehicle_reg_no'] = $row['vehicle_reg_no'];
+					$detailrecords['endorsement_name'] = $row['endorsement_name'];
+					$detailrecords['en_RC'] = $row['en_RC'];
+					$detailrecords['Rc_document_upd'] = $row['Rc_document_upd'];
+					$detailrecords['Rc_document_pending'] = $row['Rc_document_pending'];
+					$detailrecords['en_Key'] = $row['en_Key'];
+					$detailrecords['gold_info'] = $row['gold_info'];
+					$detailrecords['gold_sts'] = $row['gold_sts'];
+					$detailrecords['gold_type'] = $row['gold_type'];
+					$detailrecords['Purity'] = $row['Purity'];
+					$detailrecords['gold_Count'] = $row['gold_Count'];
+					$detailrecords['gold_Weight'] = $row['gold_Weight'];
+					$detailrecords['gold_Value'] = $row['gold_Value'];
+					$detailrecords['document_name'] = $row['document_name'];
+					$detailrecords['document_details'] = $row['document_details'];
+					$detailrecords['document_type'] = $row['document_type'];
+					// $detailrecords['doc_info_upload'] = $row['doc_info_upload'];
+					$detailrecords['document_holder'] = $row['document_holder'];
+					$detailrecords['docholder_name'] = $row['docholder_name'];
+					$detailrecords['docholder_relationship_name'] = $row['docholder_relationship_name'];
+					$detailrecords['doc_relation'] = $row['doc_relation'];
+					$detailrecords['cus_status'] = $row['cus_status'];
+					$i++;
+				}
+			}
+			return $detailrecords;
+		}
 
+		// Add Company
+		public function addBankCreation($mysqli, $userid){
+
+			if(isset($_POST['bank_name'])){
+				$bank_name = $_POST['bank_name'];
+			}
+			if(isset($_POST['short_name'])){
+				$short_name = $_POST['short_name'];
+			}
+			if(isset($_POST['acc_no'])){
+				$acc_no = $_POST['acc_no'];
+			}
+			if(isset($_POST['ifsc'])){
+				$ifsc = $_POST['ifsc'];
+			}
+			if(isset($_POST['branch'])){
+				$branch = $_POST['branch'];
+			}
+			if(isset($_FILES['qr_code'])){
+				$qr_code = $_FILES['qr_code']['name'];
+				$qr_code_temp = $_FILES['qr_code']['tmp_name'];
+				$qr_codefolder="uploads/bank/".$qr_code ;
+				move_uploaded_file($qr_code_temp, $qr_codefolder);
+			}
+			if(isset($_POST['gpay'])){
+				$gpay = $_POST['gpay'];
+			}
+			if(isset($_POST['company'])){
+				$company = $_POST['company'];
+			}
+			if(isset($_POST['under_branch'])){
+				$under_branch = $_POST['under_branch'];
+			}
+			
+			$insertQry="INSERT INTO `bank_creation`(`bank_name`,`short_name`, `acc_no`, `ifsc`, `branch`, `qr_code`, `gpay`,`company`, `under_branch`,`insert_login_id`, `created_date`) VALUES 
+			('".strip_tags($bank_name)."','".strip_tags($short_name)."','".strip_tags($acc_no)."','".strip_tags($ifsc)."','".strip_tags($branch)."','".strip_tags($qr_code)."','".strip_tags($gpay)."',
+			'".strip_tags($company)."','".strip_tags($under_branch)."',$userid ,now() )";
+
+			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+		}
+
+		// Update Company
+		public function updateBankCreation($mysqli, $id, $userid){
+
+			if(isset($_POST['bank_name'])){
+				$bank_name = $_POST['bank_name'];
+			}
+			if(isset($_POST['short_name'])){
+				$short_name = $_POST['short_name'];
+			}
+			if(isset($_POST['acc_no'])){
+				$acc_no = $_POST['acc_no'];
+			}
+			if(isset($_POST['ifsc'])){
+				$ifsc = $_POST['ifsc'];
+			}
+			if(isset($_POST['branch'])){
+				$branch = $_POST['branch'];
+			}
+			if(isset($_FILES['qr_code']) && $_FILES['qr_code']['name'] != ''){
+				//remove old file
+				unlink('uploads/bank/'. $_POST['qr_code_name']);
+
+				$qr_code = $_FILES['qr_code']['name'];
+				$qr_code_temp = $_FILES['qr_code']['tmp_name'];
+				$qr_codefolder="uploads/bank/".$qr_code ;
+				move_uploaded_file($qr_code_temp, $qr_codefolder);
+			}else{
+				$qr_code = $_POST['qr_code_name'];
+			}
+			if(isset($_POST['gpay'])){
+				$gpay = $_POST['gpay'];
+			}
+			if(isset($_POST['company'])){
+				$company = $_POST['company'];
+			}
+			if(isset($_POST['under_branch'])){
+				$under_branch = $_POST['under_branch'];
+			}
+
+			$updateQry = "UPDATE `bank_creation` SET `bank_name`='".strip_tags($bank_name)."',`short_name`='".strip_tags($short_name)."',`acc_no`='".strip_tags($acc_no)."',`ifsc`='".strip_tags($ifsc)."',
+			`branch`='".strip_tags($branch)."',`qr_code`='".strip_tags($qr_code)."',`gpay`='".strip_tags($gpay)."',`company`='".strip_tags($company)."',
+			`under_branch`='".strip_tags($under_branch)."',`update_login_id`=$userid WHERE id= $id";
+			$updresult = $mysqli->query($updateQry )or die ("Error in in update Query!.".$mysqli->error);
+		
+		}
+		// Get Company
+		public function getBankCreation($mysqli, $id){
+
+			$trusteeSelect = "SELECT * FROM bank_creation WHERE id='" . mysqli_real_escape_string($mysqli, $id) . "' ";
+			$res = $mysqli->query($trusteeSelect) or die("Error in Get All Records" . $mysqli->error);
+
+			if ($row = $res->fetch_object()) {
+				$detailrecords = [
+					'id'   => $row->id,
+					'bank_name'   => $row->bank_name,
+					'short_name'   => $row->short_name,
+					'acc_no'   => $row->acc_no,
+					'ifsc'   => $row->ifsc,
+					'branch'   => $row->branch,
+					'qr_code'   => $row->qr_code,
+					'gpay'   => $row->gpay,
+					'company'   => $row->company,
+					'under_branch'   => $row->under_branch
+				];
+			} else {
+				$detailrecords = array();
+			}
+			return $detailrecords;
+		}
+
+		//  Delete Company
+		public function deleteBankCreation($mysqli, $id, $userid){
+			$deleteQry = "UPDATE bank_creation set status='1', delete_login_id='".strip_tags($userid)."' WHERE id  = '".strip_tags($id)."' ";
+			$runQry = $mysqli->query($deleteQry) or die("Error in delete query".$mysqli->error);
+		}
+		
+		
 }//Class End

@@ -798,6 +798,108 @@ $(document).ready(function() {
                 searchFunction();
             }
         });
+        //Concern Feedback Table
+        var concern_feedback_table = $('#concern_feedback_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxConcernFeedbackFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "NOC List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
+        });
+        //UPDATE Table
+        var update_table = $('#update_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxUpdateFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "NOC List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
+        });
+        //Bank Creation Table
+        var bank_creation_table = $('#bank_creation_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxBankCreationFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "NOC List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
+        });
 
 });//Document Ready End
 </script>
@@ -858,6 +960,10 @@ if($current_page == 'staff_creation') { ?>
 
 if($current_page == 'manage_user') { ?>
     <script src="js/manage_user.js"></script>
+    <?php }
+
+if($current_page == 'bank_creation') { ?>
+    <script src="js/bank_creation.js"></script>
     <?php }
 
 if($current_page == 'doc_mapping') { ?>
@@ -926,6 +1032,20 @@ if($current_page == 'concern_creation') { ?>
 
 if($current_page == 'concern_solution'|| $current_page == 'concern_solution_view') { ?>
     <script src="js/concern_solution.js"></script>
+    <?php }
+//Concern Feedback
+if($current_page == 'concern_feedback') { ?>
+    <script src="js/concern_feedback.js"></script>
+    <?php }
+    
+//Update Screen
+if($current_page == 'update') { ?>
+    <script src="js/update.js"></script>
+    <?php }
+
+//Cash Tally
+if($current_page == 'cash_tally') { ?>
+    <script src="js/cash_tally.js"></script>
     <?php }
 ?>
 
@@ -1038,6 +1158,15 @@ if($current_page == 'concern_solution'|| $current_page == 'concern_solution_view
     // Manage user delete
     $(document).on("click", '.delete_user', function(){
         var dlt = confirm("Do you want to delete this User ?");
+        if(dlt){
+                return true;
+            }else{
+                return false;
+            }
+    });
+    // Bank Creation delete
+    $(document).on("click", '.delete_bank', function(){
+        var dlt = confirm("Do you want to delete this Bank Account ?");
         if(dlt){
                 return true;
             }else{
@@ -1166,29 +1295,32 @@ if($current_page == 'concern_solution'|| $current_page == 'concern_solution_view
         return thecash;
     }
 
-    function searchFunction(){
-
+    function searchFunction() {
         // Unbind or disable all other event listeners to avoid conflict
         $('#search').unbind('input');
         $('#search').unbind('keypress');
         $('#search').unbind('keyup');
         $('#search').unbind('search');
-        
+
         // new search on keyup event for search by display content
-        $('#search').keyup(function(){
+        $('#search').keyup(function() {
             // Retrieve the input field text and reset the count to zero
-            var filter = $(this).val(), count = 0;
+            var filter = $(this).val().trim().toLowerCase();
+            var count = 0;
+
             // Loop through the comment list
-            $("table tbody tr").each(function(){
+            $("table tbody tr").each(function(index) {
                 // If the list item does not contain the text phrase fade it out
-                if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                if ($(this).text().toLowerCase().search(new RegExp(filter, "i")) < 0) {
                     $(this).fadeOut();
-                // Show the list item if the phrase matches and increase the count by 1
                 } else {
-                    $(this).show();
+                    // Show the list item if the phrase matches and update the serial number
                     count++;
+                    $(this).find('td:first').text(count);
+                    $(this).show();
                 }
-            })
-        })
+            });
+        });
     }
+
 </script>

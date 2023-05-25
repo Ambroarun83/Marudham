@@ -312,6 +312,37 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/concern_solution_view.php" ?>
 			<?php } ?>
 
+			<?php if($current_page == 'edit_concern_feedback') { ?>
+            <?php include "include/templates/edit_concern_feedback.php" ?>
+            <?php } ?>
+
+            <?php if($current_page == 'concern_feedback') { ?>
+            <?php include "include/templates/concern_feedback.php" ?>
+            <?php } ?>
+
+			<!-- Update Screen -->
+            <?php if($current_page == 'edit_update') { ?>
+            <?php include "include/templates/edit_update.php" ?>
+            <?php } ?>
+
+            <?php if($current_page == 'update') { ?>
+            <?php include "include/templates/update.php" ?>
+            <?php } ?>
+
+			<!-- Bank Creation -->
+			<?php if($current_page == 'bank_creation') { ?>
+			<?php include "include/templates/bank_creation.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'edit_bank_creation') { ?>
+			<?php include "include/templates/edit_bank_creation.php" ?>
+			<?php } ?>
+
+			<!-- Cash Tally -->
+			<?php if($current_page == 'cash_tally') { ?>
+			<?php include "include/templates/cash_tally.php" ?>
+			<?php } ?>
+
 		</div>
 		<!-- Page content end -->
 

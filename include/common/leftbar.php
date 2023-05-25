@@ -14,7 +14,7 @@ $current_page == 'edit_area_mapping' || $current_page == 'area_mapping' || $curr
 
 }else if($current_page == 'edit_director_creation' ||$current_page == 'director_creation' || $current_page == 'edit_agent_creation' || $current_page == 'agent_creation' || 
 $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $current_page == 'edit_manage_user'|| $current_page == 'manage_user' || $current_page == 'edit_doc_mapping'
-|| $current_page == 'doc_mapping'){
+|| $current_page == 'doc_mapping' || $current_page == 'edit_bank_creation' || $current_page == 'bank_creation'){
 
 	$current_module = 'admin';
 
@@ -54,9 +54,13 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'noc';
 
-}else if($current_page == 'edit_concern_creation' || $current_page == 'edit_concern_solution' || $current_page == 'concern_creation' || $current_page == 'concern_solution' || $current_page == 'concern_solution_view' ){
+}else if($current_page == 'edit_concern_creation' || $current_page == 'edit_concern_solution' || $current_page == 'concern_creation' || $current_page == 'concern_solution' || $current_page == 'concern_solution_view' || $current_page == 'edit_concern_feedback' || $current_page == 'concern_feedback'){
 
 	$current_module = 'concerncreation';
+
+}else if($current_page == 'cash_tally' ){
+
+	$current_module = 'accounts';
 
 }else{
 	$current_module = '';
@@ -109,6 +113,7 @@ $agent_creation = '';
 $staff_creation = '';
 $manage_user = '';
 $doc_mapping = '';
+$bank_creation = '';
 $requestmodule = '';
 $request = '';
 $verificationmodule = '';
@@ -128,6 +133,9 @@ $noc = '';
 $concernmodule = '';
 $concern_creation = '';
 $concern_solution = '';
+$concern_feedback = '';
+$accountsmodule = '';
+$cash_tally = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -160,6 +168,7 @@ if (sizeof($getUser)>0) {
 		$staff_creation          		     = $getUser['staff_creation'];
 		$manage_user          		     = $getUser['manage_user'];
 		$doc_mapping          		     = $getUser['doc_mapping'];
+		$bank_creation          		     = $getUser['bank_creation'];
 		$requestmodule          		     = $getUser['requestmodule'];
 		$request          		     = $getUser['request'];
 		$verificationmodule          		     = $getUser['verificationmodule'];
@@ -179,6 +188,9 @@ if (sizeof($getUser)>0) {
 		$concernmodule          		     = $getUser['concernmodule'];
 		$concern_creation          		     = $getUser['concern_creation'];
 		$concern_solution          		     = $getUser['concern_solution'];
+		$concern_feedback          		     = $getUser['concern_feedback'];
+		$accountsmodule          		     = $getUser['accountsmodule'];
+		$cash_tally          		     = $getUser['cash_tally'];
 	}
 }
 ?>
@@ -188,6 +200,11 @@ if (sizeof($getUser)>0) {
 	font-family: "Lato", sans-serif;
 	}
 
+	.svg-icon {
+        width: 24px; /* Set the desired width */
+        height: 24px; /* Set the desired height */
+		fill: white;
+      }
 	/* Fixed sidenav, full height */
 	.sidenav {
 	height: 100%;
@@ -367,6 +384,10 @@ if (sizeof($getUser)>0) {
 									<li>
 										<a href="edit_manage_user"><i class="icon-cog"></i>Manage User</a>
 									</li>
+								<?php  }if($bank_creation == 0){ ?>
+								<li>
+									<a href="edit_bank_creation"><i><object class="svg-icon" data="svg/bank.svg" type="image/svg+xml"></object></i>Bank Creation</a>
+								</li>
 								<?php  }if($doc_mapping == 0){ ?>
 									<!-- <li>
 										<a href="edit_doc_mapping"><i class="icon-briefcase"></i>Documentation Mapping</a>
@@ -501,14 +522,14 @@ if (sizeof($getUser)>0) {
 				<?php if($nocmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-export"></i>
+							<i><object class="svg-icon" data="svg/noc.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">NOC</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='noc') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($noc == 0){ ?>
                                     <li>
-                                        <a href="edit_noc"><i class="icon-export"></i>NOC</a>
+                                        <a href="edit_noc"><i><object class="svg-icon" data="svg/noc.svg" type="image/svg+xml"></object></i>NOC</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -519,18 +540,57 @@ if (sizeof($getUser)>0) {
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
                             <i class="icon-export"></i>
+                            <span class="menu-text">Update</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='concerncreation') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($concern_creation == 0){ ?>
+                                    <li>
+                                        <a href="edit_update"><i class="icon-export"></i>Update</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
+				<?php if($concernmodule == 0){ ?>
+                    <li class="sidebar-dropdown ">
+                        <a href="javascript:void(0)">
+							<i><object class="svg-icon" data="svg/concern.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Concern</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='concerncreation') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($concern_creation == 0){ ?>
                                     <li>
-                                        <a href="edit_concern_creation"><i class="icon-export"></i>Concern Creation</a>
+                                        <a href="edit_concern_creation"><i><object class="svg-icon" data="svg/concern.svg" type="image/svg+xml"></object></i>Concern Creation</a>
                                     </li>
                                 <?php  } ?>
                                 <?php  if($concern_solution == 0){ ?>
                                     <li>
-                                        <a href="edit_concern_solution"><i class="icon-export"></i>Concern Solution</a>
+                                        <a href="edit_concern_solution"><i><object class="svg-icon" data="svg/concern.svg" type="image/svg+xml"></object></i>Concern Solution</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($concern_feedback == 0){ ?>
+                                    <li>
+                                        <a href="edit_concern_feedback"><i class="icon-export"></i>Concern Feedback</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
+				<?php if($accountsmodule == 0){ ?>
+                    <li class="sidebar-dropdown ">
+                        <a href="javascript:void(0)">
+							<i><object class="svg-icon" data="svg/accounts.svg" type="image/svg+xml"></object></i>
+                            <span class="menu-text">Accounts</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='accounts') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($cash_tally == 0){ ?>
+                                    <li>
+                                        <a href="cash_tally"><i><object class="svg-icon" data="svg/cash_tally.svg" type="image/svg+xml"></object></i>Cash Tally</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -576,6 +636,7 @@ $agent_creation = '';
 $staff_creation = '';
 $manage_user = '';
 $doc_mapping = '';
+$bank_creation = '';
 $requestmodule = '';
 $request = '';
 $verificationmodule = '';
@@ -595,4 +656,7 @@ $noc = '';
 $concernmodule = '';
 $concern_creation = '';
 $concern_solution = '';
+$concern_feedback = '';
+$accountsmodule = '';
+$cash_tally = '';
 ?>
