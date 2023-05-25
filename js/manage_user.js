@@ -15,7 +15,11 @@
         removeItemButton: true,
         noChoicesText: 'Select Group Name',
         });
-    
+    const bankMultiselect = new Choices('#bank_details1', {
+        removeItemButton: true,
+        noChoicesText: 'Select Bank Name',
+    });
+
 // Document is ready
 $(document).ready(function () {
 
@@ -134,6 +138,23 @@ $(document).ready(function () {
         
     })
 
+    $('#bank_details1').change(function(){
+        var bank_details1 = bankMultiselect.getValue();
+        var bank_details = '';
+        for(var i = 0 ; i< bank_details1.length; i++){
+            if (i > 0) {
+                bank_details += ',';
+            }
+            bank_details += bank_details1[i].value;
+        }
+        var arr = bank_details.split(",");
+        arr.sort(function(a,b){return a-b});
+		var sortedStr = arr.join(",");
+
+        $('#bank_details').val(sortedStr);
+        
+    })
+
     //modules checkbox events
     $("#adminmodule").on("change", function() {
         const checkboxesToEnable = document.querySelectorAll("input.admin-checkbox");
@@ -200,9 +221,27 @@ $(document).ready(function () {
         var concernmodule = document.querySelector('#concernmodule');
         checkbox(checkboxesToEnable,concernmodule);
     });
+    
+    $("#accountsmodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.accounts-checkbox");
+        var accountsmodule = document.querySelector('#accountsmodule');
+        checkbox(checkboxesToEnable,accountsmodule);
+        if(!accountsmodule.checked){
+            $('.bank_details').hide()
+        }
+    });
+
+    $('#cash_tally').click(function(){
+        var cash_tally = document.querySelector('#cash_tally');
+        if(cash_tally.checked){
+            getBankDetails();
+            $('.bank_details').show()
+        }else{
+            $('.bank_details').hide()
+        }
+    })
 
     $('#submit_manage_user').click(function(){
-        
         
         var branch_id1 = branchMultiselect.getValue();
         var branch_id = '';
@@ -295,6 +334,8 @@ $(function(){
         }
         getLineDropdown(branch_id_upd);
         getGroupDropdown(branch_id_upd);
+        
+        getBankDetails();
 
         var mastermodule = document.getElementById('mastermodule');
         var adminmodule = document.getElementById('adminmodule');
@@ -307,6 +348,7 @@ $(function(){
         var closedmodule = document.getElementById('closedmodule');
         var nocmodule = document.getElementById('nocmodule');
         var concernmodule = document.getElementById('concernmodule');
+        var accountsmodule = document.getElementById('accountsmodule');
         if(mastermodule.checked){const checkboxesToEnable = document.querySelectorAll("input.master-checkbox");var mastermodule = document.querySelector('#mastermodule');checkbox(checkboxesToEnable,mastermodule);}
         if(adminmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.admin-checkbox");var adminmodule = document.querySelector('#adminmodule');checkbox(checkboxesToEnable,adminmodule);}
         if(requestmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.request-checkbox");var requestmodule = document.querySelector('#requestmodule');checkbox(checkboxesToEnable,requestmodule);}
@@ -318,6 +360,7 @@ $(function(){
         if(closedmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.closed-checkbox");var closedmodule = document.querySelector('#closedmodule');checkbox(checkboxesToEnable,closedmodule);}
         if(nocmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.noc-checkbox");var nocmodule = document.querySelector('#nocmodule');checkbox(checkboxesToEnable,nocmodule);}
         if(concernmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.concern-checkbox");var concernmodule = document.querySelector('#concernmodule');checkbox(checkboxesToEnable,concernmodule);}
+        if(accountsmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.accounts-checkbox");var accountsmodule = document.querySelector('#accountsmodule');checkbox(checkboxesToEnable,accountsmodule);}
     }else{
 
     }
@@ -649,7 +692,43 @@ function getGroupDropdown(branch_id){
         }
     })
 }
-
+//Get Bank Details list
+function getBankDetails(){
+    var bank_details_upd = $('#bank_details_upd').val().split(',');
+    if(bank_details_upd != ''){
+        $('.bank_details').show();
+    }
+    $.ajax({
+        url:'manageUser/getBankDetails.php',
+        data:{},
+        dataType:'json',
+        type:'post',
+        cache: false,
+        success: function(response){
+            bankMultiselect.clearStore();
+            for(var i=0;i<response.length;i++){
+                var id = response[i]['id'];
+                var short_name = response[i]['short_name'];
+                var acc_no = response[i]['acc_no'].slice(-5);
+                var selected = '';
+                if(bank_details_upd != ''){
+                    for(var j=0;j<bank_details_upd.length;j++){
+                        if(bank_details_upd[j] == id){
+                            selected = 'selected';
+                        }
+                    }
+                }
+                var items = [{
+                    value : id,
+                    label : short_name+' - '+acc_no,
+                    selected: selected
+                }]
+                bankMultiselect.setChoices(items);
+                bankMultiselect.init();
+            }
+        }
+    })
+}
 //Screen Mapping
 //modules checkbox events
 function checkbox(checkboxesToEnable,module){
@@ -749,7 +828,18 @@ function validation(){
     }else{
         $('#BranchCheck').hide();
     }
-    
+    var cash_tally = document.querySelector('#cash_tally');
+    var bank_details = bankMultiselect.getValue();
+    if(!cash_tally.checked){
+        $('#bank_details').val('')
+    }else{
+        if(bank_details.length == 0){
+            event.preventDefault();
+            $('.bankdetailsCheck').show();
+        }else{
+            $('.bankdetailsCheck').hide();
+        }
+    }
 }
 
 

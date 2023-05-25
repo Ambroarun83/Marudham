@@ -33,6 +33,7 @@ $agent_creation = '';
 $staff_creation = '';
 $manage_user = '';
 $doc_mapping = '';
+$bank_creation = '';
 $requestmodule = '';
 $request = '';
 $request_list_access = '';
@@ -53,6 +54,10 @@ $noc = '';
 $concernmodule = '';
 $concern_creation = '';
 $concern_solution = '';
+$concern_feedback = '';
+$accountsmodule = '';
+$cash_tally = '';
+$bank_details = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -126,6 +131,7 @@ if($idupd>0)
 			$staff_creation          		     = $getUser['staff_creation'];
 			$manage_user          		     = $getUser['manage_user'];
 			$doc_mapping          		     = $getUser['doc_mapping'];
+			$bank_creation          		     = $getUser['bank_creation'];
 			$requestmodule          		     = $getUser['requestmodule'];
 			$request          		     = $getUser['request'];
 			$request_list_access          		     = $getUser['request_list_access'];
@@ -147,10 +153,14 @@ if($idupd>0)
 			$concernmodule          		     = $getUser['concernmodule'];
 			$concern_creation          		     = $getUser['concern_creation'];
 			$concern_solution          		     = $getUser['concern_solution'];
+			$accountsmodule          		     = $getUser['accountsmodule'];
+			$cash_tally          		     = $getUser['cash_tally'];
+			$bank_details          		     = $getUser['bank_details'];
 		}
 	}
 }
 // print_r($getUser);
+
 
 ?>
 
@@ -186,6 +196,7 @@ if($idupd>0)
 		<input type="hidden" class="form-control" value="<?php if(isset($agent_id)) echo $agent_id; ?>"  id="agent_id_upd" name="agent_id_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($line_id)) echo $line_id; ?>"  id="line_id_upd" name="line_id_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($group_id)) echo $group_id; ?>"  id="group_id_upd" name="group_id_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if(isset($bank_details)) echo $bank_details; ?>"  id="bank_details_upd" name="bank_details_upd" aria-describedby="id" placeholder="Enter id">
 		<!-- Row start -->
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -499,6 +510,12 @@ if($idupd>0)
                                 <label class="custom-control-label" for="manage_user">Manage User</label>
                             </div>
                         </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($bank_creation==0){ echo'checked'; }} ?> tabindex="24" class=" admin-checkbox" id="bank_creation" name="bank_creation" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="bank_creation">Bank Creation</label>
+                            </div>
+                        </div>
                         <!-- <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($doc_mapping==0){ echo'checked'; }} ?> tabindex="24" class=" admin-checkbox" id="doc_mapping" name="doc_mapping" disabled>&nbsp;&nbsp;
@@ -684,6 +701,42 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($concern_solution==0){ echo'checked'; }} ?> tabindex="42" class="concern-checkbox" id="concernSolution" name="concernSolution" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="concernSolution">Concern Solution</label>
+                            </div>
+                        </div>
+
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($concern_feedback==0){ echo'checked'; }} ?> tabindex="42" class="concern-checkbox" id="concernFeedback" name="concernFeedback" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="concernFeedback">Concern Feedback</label>
+                            </div>
+                        </div>
+						
+					</div>
+
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($accountsmodule==0){ echo'checked'; }} ?> tabindex="43" class="" id="accountsmodule" name="accountsmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="accountsmodule">
+							<h5>Accounts</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($cash_tally==0){ echo'checked'; }} ?> tabindex="44" class="accounts-checkbox" id="cash_tally" name="cash_tally" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="cash_tally">Cash Tally</label>
+                            </div>
+                        </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 bank_details"  style='display:none'>
+                            <div class="custom-control custom-checkbox">
+                                <label class="custom-control-label" for="cash_tally">Bank Name</label>
+								<input type='hidden' id='bank_details' name='bank_details' value=''>
+                                <select class='form-control' id='bank_details1' name='bank_details1' multiple>
+									<option value="">Select Bank Account</option>
+								</select>
+								<span class='text-danger bankdetailsCheck' style="display:none">Please Select Bank Account</span>
                             </div>
                         </div>
 					</div>
