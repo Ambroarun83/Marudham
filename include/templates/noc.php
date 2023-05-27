@@ -113,6 +113,7 @@ if(sizeof($documentationInfo)>0){
 		<form id="noc_form" name="noc_form" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="idupd" id="idupd" value="<?php if (isset($idupd)) {echo $idupd;} ?>" />
 		<input type="hidden" name="cusidupd" id="cusidupd" value="<?php if (isset($cusidupd)) {echo $cusidupd;} ?>" />
+		<input type="hidden" name="cuspicupd" id="cuspicupd" value="<?php if (isset($cus_pic)) {echo $cus_pic;} ?>" />
 		<input type="hidden" name="req_id" id="req_id" value='' />
 		
 		<input type="hidden" name="sign_checklist" id="sign_checklist" value='' />
@@ -191,7 +192,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="form-group" style="margin-left: 30px;">
 										<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
 										<input type="hidden" name="cus_pic" id="cus_pic" value="<?php if (isset($cus_pic)) {echo $cus_pic;} ?>">
-										<img id='imgshow' class="img_show" src=<?php if (isset($cus_pic)) {echo 'uploads/request/customer/'.$cus_pic;}else{echo 'img/avatar.png';} ?> />
+										<img id='imgshow' class="img_show" src=<?php //if (isset($cus_pic)) {echo 'uploads/request/customer/'.$cus_pic;}else{echo 'img/avatar.png';} ?> />
 									</div>
 								</div>
 							</div>
