@@ -54,6 +54,7 @@ if(isset($_FILES['document_info_upd'])){
                 $doc_upload .= $fileName.',';  
         }
     }
+    $doc_upload = rtrim($doc_upload,',');
 }
 
 
