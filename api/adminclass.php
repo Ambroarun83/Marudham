@@ -5110,8 +5110,6 @@ function updateUser($mysqli,$id,$user_id){
 				$doc_checklist_arr = array();
 				$doc_checklist = $_POST['doc_checklist'];
 				$doc_checklist_arr = explode(',',$_POST['doc_checklist']);
-			}else{
-				$doc_checklist_arr = ['asdf'];
 			}
 			// print_r(count($doc_checklist_arr));die;
 			if(isset($_POST['noc_date'])){
@@ -5170,8 +5168,8 @@ function updateUser($mysqli,$id,$user_id){
 				}
 			}
 			
-			if($doc_checklist_arr[0] != ''){
-				$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `doc_info_upload_noc`='1' WHERE req_id = '".$req_id."' ");
+			for($i=0;$i<sizeof($doc_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `document_info` SET `doc_info_upload_noc`='1' WHERE id= '".$doc_checklist_arr[$i]."' and  req_id = '".$req_id."' ");
 			}
 
 		}

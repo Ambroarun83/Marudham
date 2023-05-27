@@ -159,6 +159,9 @@ $(function(){
     var req_id = $('#idupd').val()
     const cus_id = $('#cusidupd').val()
     OnLoadFunctions(req_id,cus_id);
+
+    var cus_pic = $('#cuspicupd').val();
+    $('#imgshow').attr('src','uploads/request/customer/'+cus_pic);
 })
 
 function OnLoadFunctions(req_id,cus_id){

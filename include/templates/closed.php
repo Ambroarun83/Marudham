@@ -84,6 +84,7 @@ if($idupd>0)
 		<input type="hidden" name="idupd" id="idupd" value="<?php if (isset($idupd)) {echo $idupd;} ?>" />
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
 		<input type="hidden" name="cusidupd" id="cusidupd" value="<?php if (isset($cusidupd)) {echo $cusidupd;} ?>" />
+		<input type="hidden" name="cuspicupd" id="cuspicupd" value="<?php if (isset($cus_pic)) {echo $cus_pic;} ?>" />
 		<input type="hidden" name="collection_access" id="collection_access" value="<?php if (isset($collection_access)) {echo $collection_access;} ?>" />
 		<input type="hidden" name="pending_sts" id="pending_sts" value="" />
 		<input type="hidden" name="od_sts" id="od_sts" value="" />
@@ -164,7 +165,7 @@ if($idupd>0)
 									<div class="form-group" style="margin-left: 30px;">
 										<label for="pic" style="margin-left: -20px;">Photo</label>
 										<input type="hidden" name="cus_image" id="cus_image" value="<?php if (isset($cus_pic)) {echo $cus_pic;} ?>">
-										<img id='imgshow' class="img_show" src=<?php if (isset($cus_pic)){echo 'uploads/request/customer/'.$cus_pic ;}else{ echo 'img/avatar.png'; }?> />
+										<img id='imgshow' class="img_show" src=<?php //if (isset($cus_pic)){echo 'uploads/request/customer/'.$cus_pic ;}else{ echo 'img/avatar.png'; }?> />
 									</div>
 								</div>
 							</div>
