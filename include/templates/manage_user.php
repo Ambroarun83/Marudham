@@ -57,6 +57,7 @@ $concern_solution = '';
 $concern_feedback = '';
 $accountsmodule = '';
 $cash_tally = '';
+$cash_tally_admin = '';
 $bank_details = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
@@ -155,6 +156,7 @@ if($idupd>0)
 			$concern_solution          		     = $getUser['concern_solution'];
 			$accountsmodule          		     = $getUser['accountsmodule'];
 			$cash_tally          		     = $getUser['cash_tally'];
+			$cash_tally_admin          		     = $getUser['cash_tally_admin'];
 			$bank_details          		     = $getUser['bank_details'];
 		}
 	}
@@ -727,6 +729,12 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($cash_tally==0){ echo'checked'; }} ?> tabindex="44" class="accounts-checkbox" id="cash_tally" name="cash_tally" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="cash_tally">Cash Tally</label>
+                            </div>
+                        </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 bank_details" style='display:none'>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($cash_tally_admin==0){ echo'checked'; }} ?> tabindex="44" class="accounts-checkbox" id="cash_tally_admin" name="cash_tally_admin" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="cash_tally_admin">Cash Tally Admin</label>
                             </div>
                         </div>
 						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 bank_details"  style='display:none'>

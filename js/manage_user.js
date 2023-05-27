@@ -833,12 +833,12 @@ function validation(){
     if(!cash_tally.checked){
         $('#bank_details').val('')
     }else{
-        if(bank_details.length == 0){
-            event.preventDefault();
-            $('.bankdetailsCheck').show();
-        }else{
-            $('.bankdetailsCheck').hide();
-        }
+        // if(bank_details.length == 0){
+        //     event.preventDefault();
+        //     $('.bankdetailsCheck').show();
+        // }else{
+        //     $('.bankdetailsCheck').hide();
+        // }
     }
 }
 

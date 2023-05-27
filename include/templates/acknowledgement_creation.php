@@ -1739,7 +1739,7 @@ input:checked + .slider:before {
 						</div>
                         <div class="card-body">
                             <div class="row">
-									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="overflow-x: auto;">
 										<div class="form-group" id="DocResetTableDiv">
 											<table class="table custom-table">
 												<thead>
@@ -2390,7 +2390,7 @@ input:checked + .slider:before {
 				</div>
 				</br>
 
-				<div id="signTable">
+				<div id="signTable" style="overflow-x: auto;">
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
@@ -2522,7 +2522,7 @@ input:checked + .slider:before {
 				</br>
 
 
-				<div id="chequeTable">
+				<div id="chequeTable" style="overflow-x: auto;">
 					<table class="table custom-table">
 						<thead>
 							<tr>
@@ -2645,7 +2645,7 @@ input:checked + .slider:before {
 				</br>
 
 
-				<div id="goldTable">
+				<div id="goldTable" style="overflow-x: auto;">
 					<table class="table custom-table">
 						<thead>
 							<tr>
@@ -2781,7 +2781,7 @@ input:checked + .slider:before {
 				</br>
 
 
-				<div id="docModalDiv">
+				<div id="docModalDiv" style="overflow-x: auto;">
 					<table class="table custom-table">
 						<thead>
 							<tr>

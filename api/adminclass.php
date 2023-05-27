@@ -65,6 +65,7 @@ require 'PHPMailerAutoload.php';
 				$detailrecords['concern_feedback']              = strip_tags($row->concern_feedback);
                 $detailrecords['accountsmodule']              = strip_tags($row->accountsmodule);
                 $detailrecords['cash_tally']              = strip_tags($row->cash_tally);
+                $detailrecords['cash_tally_admin']              = strip_tags($row->cash_tally_admin);
                 $detailrecords['bank_details']              = strip_tags($row->bank_details);
                 $detailrecords['status']                     = strip_tags($row->status);
             }
@@ -2384,6 +2385,12 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$cash_tally=1;
 		}
+		if(isset($_POST['cash_tally_admin']) &&    $_POST['cash_tally_admin'] == 'Yes')
+		{
+			$cash_tally_admin=0;
+		}else{
+			$cash_tally_admin=1;
+		}
 		if(isset($_POST['bank_details'])){
 			$bank_details = $_POST['bank_details'];
 		}
@@ -2392,7 +2399,7 @@ require 'PHPMailerAutoload.php';
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`bank_creation`,`requestmodule`,
         `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,
 		`collectionmodule`,`collection`,`collection_access`,`closedmodule`,`closed`,`nocmodule`,`noc`,`concernmodule`, `concern_creation`, `concern_solution`,`concern_feedback`,
-		`accountsmodule`,`cash_tally`,`bank_details`,`insert_login_id`,`created_date`)
+		`accountsmodule`,`cash_tally`,`cash_tally_admin`,`bank_details`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
@@ -2403,7 +2410,7 @@ require 'PHPMailerAutoload.php';
         '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($loanissuemodule)."','".strip_tags($loan_issue)."',
 		'".strip_tags($collectionmodule)."','".strip_tags($collection)."','".strip_tags($collection_access)."','".strip_tags($closedmodule)."','".strip_tags($closed)."',
 		'".strip_tags($nocmodule)."','".strip_tags($noc)."','".strip_tags($concernmodule)."','".strip_tags($concernCreation)."','".strip_tags($concernSolution)."','".strip_tags($concernFeedback)."',
-		'".strip_tags($accountsmodule)."','".strip_tags($cash_tally)."','".strip_tags($bank_details)."','".strip_tags($userid)."',now() )";
+		'".strip_tags($accountsmodule)."','".strip_tags($cash_tally)."','".strip_tags($cash_tally_admin)."','".strip_tags($bank_details)."','".strip_tags($userid)."',now() )";
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
 
@@ -2697,6 +2704,12 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$cash_tally=1;
 	}
+	if(isset($_POST['cash_tally_admin']) &&    $_POST['cash_tally_admin'] == 'Yes')
+	{
+		$cash_tally_admin=0;
+	}else{
+		$cash_tally_admin=1;
+	}
 	if(isset($_POST['bank_details'])){
 		$bank_details = $_POST['bank_details'];
 	}
@@ -2715,7 +2728,7 @@ function updateUser($mysqli,$id,$user_id){
 	`collectionmodule` = '".strip_tags($collectionmodule)."', `collection` = '".strip_tags($collection)."', `collection_access` = '".strip_tags($collection_access)."',
 	`closedmodule` = '".strip_tags($closedmodule)."', `closed` = '".strip_tags($closed)."', `nocmodule` = '".strip_tags($nocmodule)."',`noc` = '".strip_tags($noc)."',
 	`concernmodule`='".strip_tags($concernmodule)."',`concern_creation`='".strip_tags($concernCreation)."',`concern_solution`='".strip_tags($concernSolution)."',`concern_feedback`='".strip_tags($concernFeedback)."',
-	`accountsmodule`='".strip_tags($accountsmodule)."',`cash_tally`='".strip_tags($cash_tally)."',`bank_details`='".strip_tags($bank_details)."',
+	`accountsmodule`='".strip_tags($accountsmodule)."',`cash_tally`='".strip_tags($cash_tally)."',`cash_tally_admin`='".strip_tags($cash_tally_admin)."',`bank_details`='".strip_tags($bank_details)."',
 	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = current_timestamp() WHERE user_id = '".strip_tags($id)."' ";
 	$result = $mysqli->query($updateQry) or die;
 }
@@ -3446,24 +3459,6 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['cus_loan_limit'])){
                 $cus_loan_limit = $_POST['cus_loan_limit'];
             }
-            // if(isset($_POST['cus_Character'])){
-            //     $cus_Character = $_POST['cus_Character'];
-            // }
-            // if(isset($_POST['cus_Approach'])){
-            //     $cus_Approach = $_POST['cus_Approach'];
-            // }
-            // if(isset($_POST['cus_Relationship'])){
-            //     $cus_Relationship = $_POST['cus_Relationship'];
-            // }
-            // if(isset($_POST['cus_Attitude'])){
-            //     $cus_Attitude = $_POST['cus_Attitude'];
-            // }
-            // if(isset($_POST['cus_Behavior'])){
-            //     $cus_Behavior = $_POST['cus_Behavior'];
-            // }
-            // if(isset($_POST['cus_Incidents_Remarks'])){
-            //     $cus_Incidents_Remarks = $_POST['cus_Incidents_Remarks'];
-            // }
             if(isset($_POST['about_cus'])){
                 $about_cus = $_POST['about_cus'];
             }
@@ -3520,7 +3515,7 @@ function updateUser($mysqli,$id,$user_id){
 			// Get Customer Profile Info.
 			public function getCustomerProfile($mysqli,$req_id){
 
-				$qry = $mysqli->query("SELECT cp.*,cr.how_to_know,cr.loan_count,cr.first_loan_date,cr.travel_with_company,cr.monthly_income,cr.other_income,cr.support_income,cr.commitment,cr.monthly_due_capacity,cr.loan_limit,cr.cus_character,cr.approach,cr.relationship,cr.attitude,cr.behavior,cr.incident_remark,cr.about_customer FROM `customer_profile` cp  LEFT JOIN `customer_register` cr on cp.cus_id = cr.cus_id WHERE cp.req_id='$req_id' ");
+				$qry = $mysqli->query("SELECT cp.*,cr.how_to_know,cr.loan_count,cr.first_loan_date,cr.travel_with_company,cr.monthly_income,cr.other_income,cr.support_income,cr.commitment,cr.monthly_due_capacity,cr.loan_limit,cr.about_customer FROM `customer_profile` cp  LEFT JOIN `customer_register` cr on cp.cus_id = cr.cus_id WHERE cp.req_id='$req_id' ");
 				$detailrecords = array();
 				$i=0;
 				if($mysqli->affected_rows>0){
@@ -3573,12 +3568,6 @@ function updateUser($mysqli,$id,$user_id){
 						$detailrecords['commitment'] = $row['commitment'];
 						$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
 						$detailrecords['loan_limit'] = $row['loan_limit'];
-						// $detailrecords['cus_character'] = $row['cus_character'];
-						// $detailrecords['approach'] = $row['approach'];
-						// $detailrecords['relationship'] = $row['relationship'];
-						// $detailrecords['attitude'] = $row['attitude'];
-						// $detailrecords['behavior'] = $row['behavior'];
-						// $detailrecords['incident_remark'] = $row['incident_remark'];
 						$detailrecords['about_customer'] = $row['about_customer'];
 						$i++;
 					}
@@ -4144,7 +4133,7 @@ function updateUser($mysqli,$id,$user_id){
 	// Get Acknowlegement Customer Profile Info.
 	public function getAcknowlegeCustomerProfile($mysqli,$req_id){
 
-				$qry = $mysqli->query("SELECT cp.*,cr.how_to_know,cr.loan_count,cr.first_loan_date,cr.travel_with_company,cr.monthly_income,cr.other_income,cr.support_income,cr.commitment,cr.monthly_due_capacity,cr.loan_limit,cr.cus_character,cr.approach,cr.relationship,cr.attitude,cr.behavior,cr.incident_remark,cr.about_customer FROM `acknowlegement_customer_profile` cp  LEFT JOIN `customer_register` cr on cp.cus_id = cr.cus_id WHERE cp.req_id='$req_id' ");
+		$qry = $mysqli->query("SELECT cp.*,cr.how_to_know,cr.loan_count,cr.first_loan_date,cr.travel_with_company,cr.monthly_income,cr.other_income,cr.support_income,cr.commitment,cr.monthly_due_capacity,cr.loan_limit,cr.about_customer FROM `acknowlegement_customer_profile` cp  LEFT JOIN `customer_register` cr on cp.cus_id = cr.cus_id WHERE cp.req_id='$req_id' ");
 				$detailrecords = array();
 				$i=0;
 				if($mysqli->affected_rows>0){
@@ -4197,12 +4186,6 @@ function updateUser($mysqli,$id,$user_id){
 						$detailrecords['commitment'] = $row['commitment'];
 						$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
 						$detailrecords['loan_limit'] = $row['loan_limit'];
-						// $detailrecords['cus_character'] = $row['cus_character'];
-						// $detailrecords['approach'] = $row['approach'];
-						// $detailrecords['relationship'] = $row['relationship'];
-						// $detailrecords['attitude'] = $row['attitude'];
-						// $detailrecords['behavior'] = $row['behavior'];
-						// $detailrecords['incident_remark'] = $row['incident_remark'];
 						$detailrecords['about_customer'] = $row['about_customer'];
 						$i++;
 					}
@@ -5569,6 +5552,13 @@ function updateUser($mysqli,$id,$user_id){
 					$subarearesult = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$row['area_confirm_subarea']."' and status=0 and sub_area_enable = 0");
 					$subarea = $subarearesult ->fetch_assoc();
 					$detailrecords['sub_area_name'] = $subarea['sub_area_name'];
+					
+					$reqResult = $mysqli->query("SELECT `req_id` FROM `request_creation` WHERE `cus_id`='".$row['cus_id']."' ");
+                    // $request_id = '';
+                    while($req_row = $reqResult->fetch_assoc()){
+                        $request_id[]= $req_row['req_id'];
+                    }
+                    $detailrecords['request_id'] = $request_id;
 					$i++;
 				}
 			}

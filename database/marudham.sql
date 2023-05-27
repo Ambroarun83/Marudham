@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 24, 2023 at 03:00 PM
+-- Generation Time: May 26, 2023 at 03:46 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -480,7 +480,7 @@ INSERT INTO `area_line_mapping` (`map_id`, `line_name`, `area_id`, `sub_area_id`
 (2, 'L2', '1', '2,3', '1', '2', '0', '1', '1', NULL, '2023-03-20 16:36:51', '2023-03-23 18:26:13'),
 (3, 'L4', '6', '10,11,12', '1', '1', '0', '1', '1', NULL, '2023-03-29 10:08:25', '2023-04-04 17:25:43'),
 (4, 'L5', '8', '7,8,9', '1', '2', '0', '25', NULL, NULL, '2023-04-03 12:24:47', '2023-04-03 12:24:47'),
-(5, 'L5', '7,9', '13', '1', '2', '0', '1', NULL, NULL, '2023-04-10 16:04:25', '2023-04-10 16:04:25');
+(5, 'L6', '7,9', '13', '1', '2', '0', '1', '1', NULL, '2023-04-10 16:04:25', '2023-05-25 15:13:56');
 
 -- --------------------------------------------------------
 
@@ -583,6 +583,42 @@ INSERT INTO `branch_creation` (`branch_id`, `branch_code`, `branch_name`, `compa
 (1, 'D-101', 'Darling Outlet 1', '1', '', 'Address 1', 'Address 2', '', 'Pondicherry', '605002', '', '', 'Puducherry', 'Puducherry', 'Bahour', 0, 1, 1, 1, '2023-03-11 14:42:28', '2023-03-11 14:42:28'),
 (2, 'D-102', 'Darling Outlet 2', '1', '', 'Address 1', 'Address 2', '', 'Ambatur', '631513', '', '', 'TamilNadu', 'Ariyalur', 'Andimadam', 0, 1, NULL, NULL, '2023-03-11 15:04:29', '2023-03-11 15:04:29'),
 (3, 'A-103', 'ABC Outlet 1', '2', '', '', '', '', 'Ambatur', '243543', '', '', 'TamilNadu', 'Ariyalur', 'Ariyalur', 0, 1, NULL, NULL, '2023-03-20 16:33:52', '2023-03-20 16:33:52');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cash_tally_modes`
+--
+
+CREATE TABLE `cash_tally_modes` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `modes` varchar(255) DEFAULT NULL,
+  `admin_access` varchar(10) NOT NULL DEFAULT '1',
+  `handcredit` varchar(10) NOT NULL DEFAULT '1',
+  `bankcredit` varchar(10) NOT NULL DEFAULT '1',
+  `handdebit` varchar(10) NOT NULL DEFAULT '1',
+  `bankdebit` varchar(10) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `cash_tally_modes`
+--
+
+INSERT INTO `cash_tally_modes` (`id`, `modes`, `admin_access`, `handcredit`, `bankcredit`, `handdebit`, `bankdebit`) VALUES
+(1, 'Collection', '1', '0', '0', '1', '1'),
+(2, 'Bank Withdrawal', '1', '0', '1', '1', '1'),
+(3, 'Other Income', '1', '0', '0', '1', '1'),
+(4, 'Exchange', '1', '0', '0', '0', '0'),
+(5, 'Cash Deposit', '1', '1', '0', '1', '1'),
+(6, 'Bank Deposit', '1', '1', '1', '0', '1'),
+(7, 'Cash Withdrawal', '1', '1', '1', '1', '0'),
+(8, 'Agent', '1', '0', '0', '0', '0'),
+(9, 'Investment', '0', '0', '0', '0', '0'),
+(10, 'Deposit', '0', '0', '0', '0', '0'),
+(11, 'EL', '0', '0', '0', '0', '0'),
+(12, 'Excess Fund', '0', '1', '1', '1', '0'),
+(13, 'Issued', '1', '1', '1', '0', '0'),
+(14, 'Expenses', '1', '1', '1', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -759,7 +795,15 @@ CREATE TABLE `collection` (
 --
 
 INSERT INTO `collection` (`coll_id`, `coll_code`, `req_id`, `cus_id`, `cus_name`, `branch`, `area`, `sub_area`, `line`, `loan_category`, `sub_category`, `coll_status`, `coll_sub_status`, `tot_amt`, `paid_amt`, `bal_amt`, `due_amt`, `pending_amt`, `payable_amt`, `penalty`, `coll_charge`, `coll_mode`, `cheque_no`, `trans_id`, `trans_date`, `coll_location`, `coll_date`, `due_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, `total_waiver`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(29, 'COL-101', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Pending', '23921', '0', '23921', '2657', '2657', '2657', '0', '0', '1', '', '', '0000-00-00', '3', '2023-05-16 00:00:00', '2657', '', '', '2657', '', '', '', '', '1', NULL, NULL, '2023-05-16 09:50:33', '2023-05-16 09:50:33');
+(29, 'COL-101', '10', '123456789101', 'Triple H', '2', '1', '3', '2', '5', 'Multi Things', 'Present', 'Pending', '23921', '0', '23921', '2657', '2657', '2657', '0', '0', '1', '', '', '0000-00-00', '3', '2023-05-16 00:00:00', '2657', '', '', '2657', '', '', '', '', '1', NULL, NULL, '2023-05-16 09:50:33', '2023-05-16 09:50:33'),
+(31, 'COL-102', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '0', '45000', '450', '9000', '9450', '207', '0', '2', '', '', '0000-00-00', '2', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '28', NULL, NULL, '2023-05-26 18:25:41', '2023-05-26 18:25:41'),
+(32, 'COL-103', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '450', '44550', '450', '8550', '9000', '207', '0', '1', '', '', '0000-00-00', '2', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '28', NULL, NULL, '2023-05-26 18:25:54', '2023-05-26 18:25:54'),
+(33, 'COL-104', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '900', '44100', '450', '8100', '8550', '207', '0', '1', '', '', '0000-00-00', '3', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '28', NULL, NULL, '2023-05-26 18:26:05', '2023-05-26 18:26:05'),
+(34, 'COL-105', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '1350', '43650', '450', '7650', '8100', '207', '0', '1', '', '', '0000-00-00', '1', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '24', NULL, NULL, '2023-05-26 18:26:18', '2023-05-26 18:26:18'),
+(35, 'COL-106', '11', '123456789101', 'Triple H', '3', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '1800', '43200', '450', '7200', '7650', '207', '0', '1', '', '', '0000-00-00', '1', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '28', NULL, NULL, '2023-05-26 18:26:30', '2023-05-26 18:26:30'),
+(36, 'COL-107', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '2250', '42750', '450', '6750', '7200', '207', '0', '3', '', '', '0000-00-00', '1', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '28', NULL, NULL, '2023-05-26 18:26:48', '2023-05-26 18:26:48'),
+(37, 'COL-108', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '2700', '42300', '450', '6300', '6750', '207', '0', '2', '', '', '0000-00-00', '2', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '1', NULL, NULL, '2023-05-26 18:28:03', '2023-05-26 18:28:03'),
+(38, 'COL-109', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '3150', '41850', '450', '5850', '6300', '207', '0', '1', '', '', '0000-00-00', '1', '2023-05-26 00:00:00', '900', '', '', '900', '', '', '', '', '24', NULL, NULL, '2023-05-26 18:28:15', '2023-05-26 18:28:15');
 
 -- --------------------------------------------------------
 
@@ -867,6 +911,13 @@ CREATE TABLE `concern_creation` (
   `updated_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `concern_creation`
+--
+
+INSERT INTO `concern_creation` (`id`, `raising_for`, `self_name`, `self_code`, `staff_name`, `staff_dept_name`, `staff_team_name`, `ag_name`, `ag_grp`, `cus_id`, `cus_name`, `cus_area`, `cus_sub_area`, `cus_group`, `cus_line`, `com_date`, `com_code`, `branch_name`, `concern_to`, `to_dept_name`, `to_team_name`, `com_sub`, `com_remark`, `com_priority`, `staff_assign_to`, `status`, `solution_date`, `communication`, `uploads`, `solution_remark`, `feedback_date`, `feedback_rating`, `insert_user_id`, `update_user_id`, `delete_user_id`, `created_date`, `updated_date`) VALUES
+(1, '4', '', '', '', '', '', '', '', '546546546465', 'Kuppusamy', 'Vandavasi', 'Pudhu Street', 'G1', 'L2', '2023-05-25', 'CC-101', '1', '1', 'Sales', '', '1', 'Bad behaviour', '2', '7', 1, '2023-05-25', '2', '', 'gook', NULL, NULL, '21', '29', NULL, '2023-05-25 14:54:50', '2023-05-25 14:56:16');
+
 -- --------------------------------------------------------
 
 --
@@ -883,6 +934,13 @@ CREATE TABLE `concern_subject` (
   `created_date` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `concern_subject`
+--
+
+INSERT INTO `concern_subject` (`concern_sub_id`, `concern_subject`, `status`, `insert_user_id`, `update_user_id`, `delete_user_id`, `created_date`, `updated_date`) VALUES
+(1, 'Behaviour', 0, NULL, NULL, NULL, '2023-05-25 14:54:38', '2023-05-25 14:54:38');
 
 -- --------------------------------------------------------
 
@@ -993,13 +1051,23 @@ CREATE TABLE `customer_register` (
   `commitment` varchar(255) DEFAULT NULL,
   `monthly_due_capacity` varchar(255) DEFAULT NULL,
   `loan_limit` varchar(255) DEFAULT NULL,
-  `cus_character` varchar(255) DEFAULT NULL,
-  `approach` varchar(255) DEFAULT NULL,
-  `relationship` varchar(255) DEFAULT NULL,
-  `attitude` varchar(255) DEFAULT NULL,
-  `behavior` varchar(255) DEFAULT NULL,
-  `incident_remark` varchar(255) DEFAULT NULL,
   `about_customer` varchar(255) DEFAULT NULL,
+  `residential_type` varchar(10) DEFAULT NULL,
+  `residential_details` varchar(150) DEFAULT NULL,
+  `residential_address` varchar(255) DEFAULT NULL,
+  `residential_native_address` varchar(255) DEFAULT NULL,
+  `occupation_info_occ_type` varchar(10) DEFAULT NULL,
+  `occupation_details` varchar(255) DEFAULT NULL,
+  `occupation_income` varchar(255) DEFAULT NULL,
+  `occupation_address` varchar(255) DEFAULT NULL,
+  `area_confirm_type` varchar(50) DEFAULT NULL,
+  `area_confirm_state` varchar(50) DEFAULT NULL,
+  `area_confirm_district` varchar(50) DEFAULT NULL,
+  `area_confirm_taluk` varchar(50) DEFAULT NULL,
+  `area_confirm_area` varchar(50) DEFAULT NULL,
+  `area_confirm_subarea` varchar(50) DEFAULT NULL,
+  `area_group` varchar(50) DEFAULT NULL,
+  `area_line` varchar(50) DEFAULT NULL,
   `cus_status` varchar(255) DEFAULT '0',
   `create_time` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1008,22 +1076,22 @@ CREATE TABLE `customer_register` (
 -- Dumping data for table `customer_register`
 --
 
-INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `cus_character`, `approach`, `relationship`, `attitude`, `behavior`, `incident_remark`, `about_customer`, `cus_status`, `create_time`) VALUES
-(2, '2', '213132132132', 'Logeshwaran', '1981-01-28', '42', '2', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '9969696969', '9695494996', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'pexels-markus-spiske-4383298.jpg', '0', '', '', '', '234', '234', '234', '12', '2', '1', 'dfg', 'sdf', 'gsdfg', 'sdfsg', 'dfg', 'sdfg', 'sdfg', '3', '2023-04-01 11:39:58'),
-(3, '3', '546546546465', 'Kuppusamy', '2023-03-29', '0', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '1', '', '', '', '23344', '0', '0', '0', '2620', '26000', NULL, NULL, NULL, NULL, NULL, NULL, 'ok', '2', '2023-04-01 13:19:58'),
-(4, '5', '289499396919', 'Arun', '1999-04-27', '24', '1', NULL, 'Puducherry', 'Puducherry', 'Puducherry', '8', '7', 'Chinnakadai', '9654566456', '', 'Natarajan', 'Parameswari', '2', '', '3', 'Developer', 'pexels-aleksandar-pasaric-325185.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-04-03 12:29:54'),
-(7, '6', '123456789101', 'Triple H', '1999-07-15', '24', '1', '', 'Puducherry', 'Puducherry', 'Puducherry', '8', '8', 'MG road', '9565654654', '', 'Roman reigns', 'Nikki', '1', 'Manju warrior', '4', 'Uzhavan', 'pexels-hansen-tang-13435926.jpg', '2', '', '', '', '6546', '654', '984', '654', '654', '94401', NULL, NULL, NULL, NULL, NULL, NULL, 'Ok', '1', '2023-04-03 13:35:26'),
-(8, '7', '123456789102', 'Swetha', '2005-05-02', '18', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Pudhu street', '9694999999', '', 'Thookudurai', 'Niranjana', '2', '', '4', 'Actor', 'wallpaperflare.com_wallpaper.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', '2023-04-03 13:39:44'),
-(11, '7', '123456789102', 'Swetha', '2005-05-02', '18', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Pudhu street', '9694999999', '', 'Thookudurai', 'Niranjana', '2', '', '4', 'Actor', 'wallpaperflare.com_wallpaper.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-03 14:46:05'),
-(12, '12', '546546546465', 'Kuppusamy', '2023-03-29', '0', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '1', '', '', '', '23344', '0', '0', '0', '2620', '26000', NULL, NULL, NULL, NULL, NULL, NULL, 'ok', '0', '2023-04-04 10:56:10'),
-(13, '13', '963852741123', 'Kumaran', '2023-03-16', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '2353645675', '', 'Eeswaran', 'Mahalakshmi', '1', 'Mythili', '7', 'Boxer', 'WhatsApp Image 2023-01-20 at 11.43.56 AM.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-04 12:28:32'),
-(14, '16', '963852741236', 'Ambi', '2023-03-31', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'bussy street', '9654811325', '9456465465', 'Parthasarathy Iyengar', 'Susheela', '2', '', '7', 'Anniyan', 'images.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', '2023-04-10 15:01:23'),
-(16, '4', '213132132132', 'Logeshwaran', '2021-10-13', '1', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-04-13 14:14:07'),
-(17, '17', '646546546546', 'Rajesh', '1999-02-10', '24', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'pexels-cesar-perez-733745.jpg', '3', '', '', '', '654', '645', '654', '654', '654', '6465', NULL, NULL, NULL, NULL, NULL, NULL, '  sadf', '3', '2023-04-13 16:52:26'),
-(18, '18', '945454646565', 'Praveen', '2009-04-17', '14', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '2', '', '', '', '3121', '321', '321', '231', '31', '21', '', '', '', '', '', '', '     Ok   ', '13', '2023-04-13 17:01:11'),
-(20, '19', '132132132132', 'Rajesh', '2023-04-04', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '12', 'Birdur', '9846546546', '94654654', 'Appa', 'Amma', '2', '', '1', 'ABC', 'pexels-cesar-perez-733745.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-26 10:40:41'),
-(21, '20', '105806052023', 'Rakesh', '1990-06-06', '33', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', '58,Pudhu street,vandavasi', '8783565696', '9648123657', 'Delhi Babu', 'Janaki', '2', '', '3', 'Coconut shop', 'rakesh.png', '0', '', '', '', '15000', '0', '0', '0', '3000', '25000', NULL, NULL, NULL, NULL, NULL, NULL, 'Polite', '13', '2023-05-06 11:02:00'),
-(22, '21', '784512895623', 'Mark henry', '1978-10-10', '45', '1', NULL, 'Puducherry', 'Puducherry', 'Puducherry', '8', '7', 'bussy street', '7347437356', '4563456735', 'Ernest Henry', 'Barbara Jean', '1', 'Jana Henry', '7', 'WWE', 'ramasamy-periyar.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-05-22 15:46:34');
+INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `about_customer`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_info_occ_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `cus_status`, `create_time`) VALUES
+(2, '2', '213132132132', 'Logeshwaran', '1981-01-28', '42', '2', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '9969696969', '9695494996', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'pexels-markus-spiske-4383298.jpg', '0', '', '', '', '234', '234', '234', '12', '2', '1', 'sdfg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', '2023-04-01 11:39:58'),
+(3, '3', '546546546465', 'Kuppusamy', '2023-03-29', '0', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '1', '', '', '', '23344', '0', '0', '0', '2620', '26000', 'ok', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', '2023-04-01 13:19:58'),
+(4, '5', '289499396919', 'Arun', '1999-04-27', '24', '1', NULL, 'Puducherry', 'Puducherry', 'Puducherry', '8', '7', 'Chinnakadai', '9654566456', '', 'Natarajan', 'Parameswari', '2', '', '3', 'Developer', 'pexels-aleksandar-pasaric-325185.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-04-03 12:29:54'),
+(7, '6', '123456789101', 'Triple H', '1999-07-15', '24', '1', '', 'Puducherry', 'Puducherry', 'Puducherry', '8', '8', 'MG road', '9565654654', '', 'Roman reigns', 'Nikki', '1', 'Manju warrior', '4', 'Uzhavan', 'pexels-hansen-tang-13435926.jpg', '2', '', '', '', '6546', '654', '984', '654', '654', '94401', 'Ok', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-04-03 13:35:26'),
+(8, '7', '123456789102', 'Swetha', '2005-05-02', '18', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Pudhu street', '9694999999', '', 'Thookudurai', 'Niranjana', '2', '', '4', 'Actor', 'wallpaperflare.com_wallpaper.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', '2023-04-03 13:39:44'),
+(11, '7', '123456789102', 'Swetha', '2005-05-02', '18', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Pudhu street', '9694999999', '', 'Thookudurai', 'Niranjana', '2', '', '4', 'Actor', 'wallpaperflare.com_wallpaper.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-03 14:46:05'),
+(12, '12', '546546546465', 'Kuppusamy', '2023-03-29', '0', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9646465546', '94654654', 'Karuppan', 'Jekkamma', '2', '', '2', 'KMC', 'pexels-jakub-novacek-924824.jpg', '1', '', '', '', '23344', '0', '0', '0', '2620', '26000', 'ok', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-04 10:56:10'),
+(13, '13', '963852741123', 'Kumaran', '2023-03-16', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '2353645675', '', 'Eeswaran', 'Mahalakshmi', '1', 'Mythili', '7', 'Boxer', 'WhatsApp Image 2023-01-20 at 11.43.56 AM.jpeg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-04 12:28:32'),
+(14, '16', '963852741236', 'Ambi', '2023-03-31', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'bussy street', '9654811325', '9456465465', 'Parthasarathy Iyengar', 'Susheela', '2', '', '7', 'Anniyan', 'images.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', '2023-04-10 15:01:23'),
+(16, '4', '213132132132', 'Logeshwaran', '2021-10-13', '1', '2', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'Check', '3456455765', '253465465', 'Kuppusamy', 'Mariyamma', '1', 'Selvi', '7', 'KMC', 'programming-funny-jokes-e1600486875722.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-04-13 14:14:07'),
+(17, '17', '646546546546', 'Rajesh', '1999-02-10', '24', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '10', 'Birdur', '9565565465', '9651321321', 'Appa', 'Amma', '2', '', '2', 'ABC', 'pexels-cesar-perez-733745.jpg', '3', '', '', '', '654', '645', '654', '654', '654', '6465', '  sadf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', '2023-04-13 16:52:26'),
+(18, '18', '945454646565', 'Praveen', '2009-04-17', '14', '1', 'O+', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', 'bussy street', '9844654654', '9846546546', 'Appa', 'Amma', '2', '', '4', 'MM', 'wallpaperflare.com_wallpaper.jpg', '2', '', '', '', '3121', '321', '321', '231', '31', '21', '     Ok   ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '13', '2023-04-13 17:01:11'),
+(20, '19', '132132132132', 'Rajesh', '2023-04-04', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '6', '12', 'Birdur', '9846546546', '94654654', 'Appa', 'Amma', '2', '', '1', 'ABC', 'pexels-cesar-perez-733745.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-04-26 10:40:41'),
+(21, '20', '105806052023', 'Rakesh', '1990-06-06', '33', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '3', '58,Pudhu street,vandavasi', '8783565696', '9648123657', 'Delhi Babu', 'Janaki', '2', '', '3', 'Coconut shop', 'rakesh.png', '0', '', '', '', '15000', '0', '0', '0', '3000', '25000', 'Polite', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '13', '2023-05-06 11:02:00'),
+(22, '21', '784512895623', 'Mark henry', '1978-10-10', '45', '1', NULL, 'Puducherry', 'Puducherry', 'Puducherry', '8', '7', 'bussy street', '7347437356', '4563456735', 'Ernest Henry', 'Barbara Jean', '1', 'Jana Henry', '7', 'WWE', 'ramasamy-periyar.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-05-22 15:46:34');
 
 -- --------------------------------------------------------
 
@@ -1082,6 +1150,8 @@ CREATE TABLE `document_info` (
   `relation_name` varchar(255) NOT NULL,
   `relation` varchar(255) DEFAULT NULL,
   `doc_upload` varchar(255) DEFAULT NULL,
+  `doc_info_upload_noc` int(11) DEFAULT 0,
+  `doc_info_upload_used` int(11) DEFAULT 0,
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
   `delete_login_id` varchar(255) DEFAULT NULL,
@@ -1093,8 +1163,8 @@ CREATE TABLE `document_info` (
 -- Dumping data for table `document_info`
 --
 
-INSERT INTO `document_info` (`id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `doc_upload`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(3, '17', 'House Document', 'House Document', '0', '1', 'Magesh', '', 'Brother', NULL, '28', '28', NULL, '2023-05-18 16:47:50', '2023-05-18 16:47:50');
+INSERT INTO `document_info` (`id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `doc_upload`, `doc_info_upload_noc`, `doc_info_upload_used`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(3, '17', 'House Document', 'House Document', '0', '1', 'Magesh', '', 'Brother', NULL, 0, 0, '28', '28', NULL, '2023-05-18 16:47:50', '2023-05-18 16:47:50');
 
 -- --------------------------------------------------------
 
@@ -1681,28 +1751,46 @@ CREATE TABLE `penalty_charges` (
 --
 
 INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`, `paid_amnt`, `waiver_amnt`, `created_date`, `updated_time`) VALUES
-('18', '2023-05-05', '10.35', NULL, '0', '0', '2023-05-16 13:58:52', '2023-05-16 13:58:52'),
-('18', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-16 13:58:52', '2023-05-16 13:58:52'),
-('18', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('18', '2023-05-15', '10.35', NULL, '0', '0', '2023-05-16 13:58:53', '2023-05-16 13:58:53'),
-('11', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57'),
-('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-05-17 18:29:57', '2023-05-17 18:29:57');
+('18', '2023-05-05', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-15', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-16', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-17', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-18', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-19', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-20', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-21', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-22', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-23', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('18', '2023-05-24', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
+('11', '2023-05-06', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-07', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-09', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-17', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-18', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-19', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-20', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-21', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-22', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-23', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-24', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02'),
+('11', '2023-05-25', '10.35', NULL, '0', '0', '2023-05-26 18:52:02', '2023-05-26 18:52:02');
 
 -- --------------------------------------------------------
 
@@ -2068,6 +2156,10 @@ CREATE TABLE `user` (
   `concern_creation` varchar(10) DEFAULT '1',
   `concern_solution` varchar(10) DEFAULT '1',
   `concern_feedback` varchar(50) DEFAULT '1',
+  `accountsmodule` varchar(10) NOT NULL DEFAULT '1',
+  `cash_tally` varchar(10) NOT NULL DEFAULT '1',
+  `bank_details` varchar(255) DEFAULT NULL,
+  `cash_tally_admin` varchar(10) NOT NULL DEFAULT '1',
   `status` varchar(255) NOT NULL DEFAULT '0',
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
@@ -2080,14 +2172,14 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
-(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', NULL, '0', '1', '21', NULL, '2023-03-21 12:23:50', '0000-00-00 00:00:00'),
-(24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '0', '1', '1', '1', '2023-03-21 15:12:31', '0000-00-00 00:00:00'),
-(25, NULL, NULL, 'Big show', NULL, '', 'bigshow@gmail.com', '123', '1', '12', '3', '', '', '1', '1,2', '', '1,2,3', '1,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '0', '1', '25', NULL, '2023-03-31 12:03:21', '0000-00-00 00:00:00'),
-(27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
-(28, NULL, NULL, 'Chithambaram', NULL, '', 'director@gmail.com', '123', '1', '11', '1', '', '', '1', '1,2', '', '1,2,3,4,5', '1,5,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', NULL, '0', '1', '1', NULL, '2023-04-13 16:49:09', '0000-00-00 00:00:00'),
-(29, NULL, NULL, 'Gokul', NULL, '', 'goku', '123', '3', '5', '', '', '7', '1', '1,2', '30', '3,4', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '0', '1', '1', NULL, '2023-05-22 15:27:11', '0000-00-00 00:00:00');
+INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `accountsmodule`, `cash_tally`, `bank_details`, `cash_tally_admin`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, '0', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
+(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '0', '0', '', '1', '0', '1', '28', NULL, '2023-03-21 12:23:50', '2023-05-26 10:17:00'),
+(24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '0', '1', '28', '1', '2023-03-21 15:12:31', '2023-05-26 18:53:10'),
+(25, NULL, NULL, 'Big show', NULL, '', 'bigshow@gmail.com', '123', '1', '12', '3', '', '', '1', '1,2', '', '1,2,3', '1,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '1', '0', '1', '25', NULL, '2023-03-31 12:03:21', '0000-00-00 00:00:00'),
+(27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '1', '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
+(28, NULL, NULL, 'Chithambaram', NULL, '', 'director@gmail.com', '123', '1', '11', '1', '', '', '1', '1,2', '', '1,2,3,4,5', '1,5,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '3', '0', '0', '1', '28', NULL, '2023-04-13 16:49:09', '2023-05-26 10:15:24'),
+(29, NULL, NULL, 'Gokul', NULL, '', 'goku', '123', '3', '5', '', '', '7', '1', '1,2', '30', '3,4', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '0', '1', '1', '1', '', '1', '0', '1', '1', NULL, '2023-05-22 15:27:11', '2023-05-25 14:55:39');
 
 -- --------------------------------------------------------
 
@@ -2238,6 +2330,7 @@ INSERT INTO `verification_documentation` (`id`, `req_id`, `cus_id_doc`, `custome
 
 CREATE TABLE `verification_family_info` (
   `id` int(11) NOT NULL,
+  `cus_id` varchar(100) DEFAULT NULL,
   `req_id` int(11) NOT NULL,
   `famname` varchar(100) NOT NULL,
   `relationship` text NOT NULL,
@@ -2256,24 +2349,24 @@ CREATE TABLE `verification_family_info` (
 -- Dumping data for table `verification_family_info`
 --
 
-INSERT INTO `verification_family_info` (`id`, `req_id`, `famname`, `relationship`, `other_remark`, `other_address`, `relation_age`, `relation_aadhar`, `relation_Mobile`, `relation_Occupation`, `relation_Income`, `relation_Blood`, `status`) VALUES
-(23, 5, 'Arun', 'Father', '', '', 25, '234353455625', 9654566456, 'IT', 6554454, 'A', 0),
-(24, 5, 'Kumari', 'Mother', '', '', 23, '465465465465', 9654654654, 'IT', 150000, 'B', 0),
-(25, 4, 'Jegatheesh', 'Brother', '', ' ', 15, '5646-5465-4654', 1565465465, 'School', 0, 'o', 0),
-(26, 5, 'Kumar', 'Brother', '', ' ', 25, '984651316546', 98465654, 'ds', 5432, 'df', 0),
-(27, 16, 'Appa', 'Father', '', ' ', 45, '654654654654', 9454654654, 'sfd', 54000, 's', 0),
-(28, 18, 'Arun', 'Son', '', ' ', 24, '874554548745', 7441852454, 'IT', 500000, 'A+ve', 0),
-(29, 18, 'Anto', 'Brother', '', ' ', 25, '894454545465', 7444845445, 'IT', 751211, 'A+ve', 0),
-(30, 17, 'Kumar', 'Father', '', ' ', 45, '65465654654', 9551616516, 'Business', 150000, 'O', 0),
-(31, 17, 'Manimegalai', 'Mother', '', ' ', 40, '984651565653', 9846546546, 'HW', 0, 'AB+', 0),
-(32, 15, 'Sivasamy', 'Brother', '', '', 46, '465465465465', 9846546546, 'Electronics', 50000, 'B+', 0),
-(33, 15, 'Arun', 'Father', '', ' ', 25, '234353455625', 9654566456, 'IT', 25000, '', 0),
-(34, 10, 'Dad', 'Father', '', ' ', 56, '946546546545', 946546546, 'Kooli', 15000, '', 0),
-(35, 11, 'Under taker', 'Brother', '', ' ', 12, '646465454654', 694654654, 'WWE', 655000, '', 0),
-(36, 3, 'Ramasamy', 'Other', 'Cousin', 'OKKK ', 25, '646546546546', 9465132132, 'It', 151312, '', 0),
-(37, 20, 'Delhi Babu', 'Father', '', ' ', 49, '110206052023', 9456513213, 'Kooli', 8000, '', 0),
-(38, 20, 'Janaki', 'Mother', '', ' ', 45, '110406052023', 8546546546, 'House wife', 0, '', 0),
-(39, 14, 'Magesh', 'Brother', '', ' ', 26, '984653213213', 8946546465, 'Student', 0, '', 0);
+INSERT INTO `verification_family_info` (`id`, `cus_id`, `req_id`, `famname`, `relationship`, `other_remark`, `other_address`, `relation_age`, `relation_aadhar`, `relation_Mobile`, `relation_Occupation`, `relation_Income`, `relation_Blood`, `status`) VALUES
+(23, NULL, 5, 'Arun', 'Father', '', '', 25, '234353455625', 9654566456, 'IT', 6554454, 'A', 0),
+(24, NULL, 5, 'Kumari', 'Mother', '', '', 23, '465465465465', 9654654654, 'IT', 150000, 'B', 0),
+(25, NULL, 4, 'Jegatheesh', 'Brother', '', ' ', 15, '5646-5465-4654', 1565465465, 'School', 0, 'o', 0),
+(26, NULL, 5, 'Kumar', 'Brother', '', ' ', 25, '984651316546', 98465654, 'ds', 5432, 'df', 0),
+(27, NULL, 16, 'Appa', 'Father', '', ' ', 45, '654654654654', 9454654654, 'sfd', 54000, 's', 0),
+(28, NULL, 18, 'Arun', 'Son', '', ' ', 24, '874554548745', 7441852454, 'IT', 500000, 'A+ve', 0),
+(29, NULL, 18, 'Anto', 'Brother', '', ' ', 25, '894454545465', 7444845445, 'IT', 751211, 'A+ve', 0),
+(30, NULL, 17, 'Kumar', 'Father', '', ' ', 45, '65465654654', 9551616516, 'Business', 150000, 'O', 0),
+(31, NULL, 17, 'Manimegalai', 'Mother', '', ' ', 40, '984651565653', 9846546546, 'HW', 0, 'AB+', 0),
+(32, NULL, 15, 'Sivasamy', 'Brother', '', '', 46, '465465465465', 9846546546, 'Electronics', 50000, 'B+', 0),
+(33, NULL, 15, 'Arun', 'Father', '', ' ', 25, '234353455625', 9654566456, 'IT', 25000, '', 0),
+(34, NULL, 10, 'Dad', 'Father', '', ' ', 56, '946546546545', 946546546, 'Kooli', 15000, '', 0),
+(35, NULL, 11, 'Under taker', 'Brother', '', ' ', 12, '646465454654', 694654654, 'WWE', 655000, '', 0),
+(36, NULL, 3, 'Ramasamy', 'Other', 'Cousin', 'OKKK ', 25, '646546546546', 9465132132, 'It', 151312, '', 0),
+(37, NULL, 20, 'Delhi Babu', 'Father', '', ' ', 49, '110206052023', 9456513213, 'Kooli', 8000, '', 0),
+(38, NULL, 20, 'Janaki', 'Mother', '', ' ', 45, '110406052023', 8546546546, 'House wife', 0, '', 0),
+(39, NULL, 14, 'Magesh', 'Brother', '', ' ', 26, '984653213213', 8946546465, 'Student', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -2545,6 +2638,12 @@ ALTER TABLE `bank_creation`
 --
 ALTER TABLE `branch_creation`
   ADD PRIMARY KEY (`branch_id`);
+
+--
+-- Indexes for table `cash_tally_modes`
+--
+ALTER TABLE `cash_tally_modes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cheque_info`
@@ -2894,6 +2993,12 @@ ALTER TABLE `branch_creation`
   MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `cash_tally_modes`
+--
+ALTER TABLE `cash_tally_modes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `cheque_info`
 --
 ALTER TABLE `cheque_info`
@@ -2921,7 +3026,7 @@ ALTER TABLE `closed_status`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=30;
+  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `collection_charges`
@@ -2939,13 +3044,13 @@ ALTER TABLE `company_creation`
 -- AUTO_INCREMENT for table `concern_creation`
 --
 ALTER TABLE `concern_creation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `concern_subject`
 --
 ALTER TABLE `concern_subject`
-  MODIFY `concern_sub_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `concern_sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `customer_profile`
