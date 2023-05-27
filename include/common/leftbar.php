@@ -380,14 +380,14 @@ if (sizeof($getUser)>0) {
 									<li>
 										<a href="edit_staff_creation"><i class="icon-user-plus"></i>Staff Creation</a>
 									</li>
+								<?php  }if($bank_creation == 0){ ?>
+									<li>
+										<a href="edit_bank_creation"><i><object class="svg-icon" data="svg/bank.svg" type="image/svg+xml"></object></i>Bank Creation</a>
+									</li>
 								<?php  }if($manage_user == 0){ ?>
 									<li>
 										<a href="edit_manage_user"><i class="icon-cog"></i>Manage User</a>
 									</li>
-								<?php  }if($bank_creation == 0){ ?>
-								<li>
-									<a href="edit_bank_creation"><i><object class="svg-icon" data="svg/bank.svg" type="image/svg+xml"></object></i>Bank Creation</a>
-								</li>
 								<?php  }if($doc_mapping == 0){ ?>
 									<!-- <li>
 										<a href="edit_doc_mapping"><i class="icon-briefcase"></i>Documentation Mapping</a>
@@ -471,14 +471,14 @@ if (sizeof($getUser)>0) {
 				<?php if($loanissuemodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-wallet"></i>
+							<i><object class="svg-icon" data="svg/issue.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Loan Issue</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='loanissue') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($loan_issue == 0){ ?>
                                     <li>
-                                        <a href="edit_loan_issue"><i class="icon-wallet"></i>Loan Issue</a>
+                                        <a href="edit_loan_issue"><i><object class="svg-icon" data="svg/issue.svg" type="image/svg+xml"></object></i>Loan Issue</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -488,14 +488,14 @@ if (sizeof($getUser)>0) {
 				<?php if($collectionmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-attach_money"></i>
+						<i><object class="svg-icon" data="svg/collection.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Collection</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='collection') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($collection == 0){ ?>
                                     <li>
-                                        <a href="edit_collection"><i class="icon-attach_money"></i>Collection</a>
+                                        <a href="edit_collection"><i><object class="svg-icon" data="svg/collection.svg" type="image/svg+xml"></object></i>Collection</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -505,14 +505,14 @@ if (sizeof($getUser)>0) {
 				<?php if($closedmodule == 0){?>
                     <li class="sidebar-dropdown closed">
                         <a href="javascript:void(0)">
-                            <i class="icon-assignment_turned_in"></i>
+							<i><object class="svg-icon" data="svg/closed.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Closed</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='closed') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($closed == 0){ ?>
                                     <li>
-                                        <a href="edit_closed"><i class="icon-assignment_turned_in"></i>Closed</a>
+                                        <a href="edit_closed"><i><object class="svg-icon" data="svg/closed.svg" type="image/svg+xml"></object></i>Closed</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -539,14 +539,14 @@ if (sizeof($getUser)>0) {
 				<?php if($concernmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-                            <i class="icon-export"></i>
+							<i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Update</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='concerncreation') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($concern_creation == 0){ ?>
                                     <li>
-                                        <a href="edit_update"><i class="icon-export"></i>Update</a>
+                                        <a href="edit_update"><i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>Update</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -573,7 +573,7 @@ if (sizeof($getUser)>0) {
                                 <?php  } ?>
 								<?php  if($concern_feedback == 0){ ?>
                                     <li>
-                                        <a href="edit_concern_feedback"><i class="icon-export"></i>Concern Feedback</a>
+                                        <a href="edit_concern_feedback"><i><object class="svg-icon" data="svg/concern.svg" type="image/svg+xml"></object></i>Concern Feedback</a>
                                     </li>
                                 <?php  } ?>
                             </ul>

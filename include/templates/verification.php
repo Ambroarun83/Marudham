@@ -3770,7 +3770,7 @@ if (sizeof($getLoanCalculation) > 0) {
 				</br>
 
 
-				<div id="docModalDiv">
+				<div id="docModalDiv" style="overflow-x: auto;">
 					<table class="table custom-table">
 						<thead>
 							<tr>

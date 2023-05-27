@@ -2557,27 +2557,25 @@ function getAreaBasedSubArea(area) {
     });
 }
 
-$('#cus_loan_limit').change(function () { /// Loan Limit will Check the Loan Amount in Request Loan Category./////
-    let loanLimit = parseInt($(this).val());
-    let loanSubCat = $('#loan_sub_cat').val();
+// $('#cus_loan_limit').change(function () { /// Loan Limit will Check the Loan Amount in Request Loan Category./////
+//     let loanLimit = parseInt($(this).val());
+//     let loanSubCat = $('#loan_sub_cat').val();
 
-    $.ajax({
-        type: 'POST',
-        url:'verificationFile/check_loan_limit.php',
-        data:{'loan_sub_id': loanSubCat},
-        dataType: 'json',
-        success: function(response){
-            if (loanLimit > parseInt(response)) {
-                alert("Kindly Enter Loan Limit Lesser Than Loan Amount " + response);
-                $('#cus_loan_limit').val('');
-                return false;
-            }
-        }
-    })
+//     $.ajax({
+//         type: 'POST',
+//         url:'verificationFile/check_loan_limit.php',
+//         data:{'loan_sub_id': loanSubCat},
+//         dataType: 'json',
+//         success: function(response){
+//             if (loanLimit > parseInt(response)) {
+//                 alert("Kindly Enter Loan Limit Lesser Than Loan Amount " + response);
+//                 $('#cus_loan_limit').val('');
+//                 return false;
+//             }
+//         }
+//     })
 
-
-
-})
+// })
 
 
 //Customer Feedback Modal 

@@ -6,8 +6,7 @@ if(isset($_SESSION['userid'])){
 
 
 if(isset($_POST['submit_collection']) && $_POST['submit_collection'] != ''){
-	if(isset($_POST['req_id'])){$req_id = $_POST['req_id'];}
-	if(isset($_POST['collection_id'])){$coll_id = $_POST['collection_id'];}
+	if(isset($_POST['id'])){$id = $_POST['id'];}
 
 	$addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
 	
@@ -20,29 +19,24 @@ $idupd=0;
 if(isset($_GET['upd']))
 {
 $idupd=$_GET['upd'];
-$cusidupd=$_GET['cusidupd'];
 }
 if($idupd>0)
 {
-	$getLoanList = $userObj->getLoanList($mysqli,$idupd); 
-	// print_r($getLoanList);
-	if (sizeof($getLoanList)>0) {
-			$cus_id						= $getLoanList['cus_id'];
-			$cus_name					= $getLoanList['cus_name'];
-			$area_id					= $getLoanList['area_confirm_area'];
-			$area_name					= $getLoanList['area_name'];
-			$sub_area_id				= $getLoanList['area_confirm_subarea'];
-			$sub_area_name				= $getLoanList['sub_area_name'];
-			$branch_id					= $getLoanList['branch_id'];
-			$branch_name				= $getLoanList['branch_name'];
-			$line_id					= $getLoanList['line_id'];
-			$line_name					= $getLoanList['area_line'];
-			$mobile1					= $getLoanList['mobile1'];
-			$cus_pic					= $getLoanList['cus_pic'];
-	}
 
-	$getuser = $userObj->getuser($mysqli,$userid);
-	$collection_access = $getuser['collection_access'];
+}
+$getuser = $userObj->getuser($mysqli,$userid);
+$bank_details = $getuser['bank_details'];
+$branch_id = $getuser['branch_id'];
+
+//To get bank name details for mentioning it on opening and closing balance
+if($bank_details != null){
+	$bank_details_arr = explode(',',$getuser['bank_details']);
+	foreach($bank_details_arr as $val){
+		$qry11 = $mysqli->query("SELECT id,short_name, acc_no from bank_creation where id = '".strip_tags($val)."' ");
+		$row = $qry11->fetch_assoc();
+		$bank_name_arr[] = $row['short_name'] . ' - ' . substr($row['acc_no'],-5);
+		$bank_id_arr[] = $row['id'];
+	}
 }
 
 ?>
@@ -86,13 +80,13 @@ input[type="radio"]{
 <div class="main-container">
 	<!--form start-->
 	<form id="cash_tally" name="cash_tally" action="" method="post" enctype="multipart/form-data">
-
+		<input type="hidden" id='user_branch_id' name='user_branch_id' value='<?php if(isset($branch_id)) echo $branch_id;?>'>
 		<!-- Row start -->
 		<div class="row gutters">
 			<!-- Request Info -->
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				
-				<!-- Opening Balance Card -->
+<!-- //////////////////////////////////////////////////////////// Opening Balance Card ////////////////////////////////////////////////////////////////////////////-->
 				<div class="card">
 					<!-- <div class="card-header">Cash Tally</div> -->
 					<div class="card-body">
@@ -121,8 +115,11 @@ input[type="radio"]{
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"></div>
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12" style="max-width: 198px;">
 										<div class="form-group">
-											<label class="lable-style"> Hand Cash</label><br>
-											<label class="lable-style">IOB - 03775</label><br>
+											<label class="lable-style">Hand Cash</label><br>
+											<?php if(isset($bank_name_arr)){
+												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
+													<label class="lable-style"><?php echo $bank_name_arr[$i];?></label><br>
+												<?php }}?>
 											<label class="lable-style">Agent Cash</label><br><br><hr>
 											<label class="lable-style">Total Opening Balance</label>
 										</div>
@@ -130,7 +127,10 @@ input[type="radio"]{
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12" style="max-width: 20px;">
 										<div class="form-group">
 											<label class="lable-style">:</label><br>
-											<label class="lable-style">:</label><br>
+											<?php if(isset($bank_name_arr)){
+												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
+												<label class="lable-style">:</label><br>
+											<?php }}?>
 											<label class="lable-style">:</label><br><br><hr>
 											<label class="lable-style">:</label>
 										</div>
@@ -139,7 +139,10 @@ input[type="radio"]{
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"  style="max-width: 150px;">
 										<div class="form-group">
 											<label class="lable-style" id='hand_cash'>150000</label><br>
-											<label class="lable-style" id='bank_cash'>181500</label><br>
+											<?php if(isset($bank_name_arr)){
+												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
+													<label class="lable-style"><?php echo '0';?></label><br>
+												<?php }}?>
 											<label class="lable-style" id='agent_cash'>16510</label><br><br><hr>
 											<label class="lable-style" id='agent_cash'>348010</label>
 										</div>
@@ -150,29 +153,32 @@ input[type="radio"]{
 						</div>
 					</div>
 				</div>
-				<!-- Opening Balance Card -->
+<!-- //////////////////////////////////////////////////////////// Opening Balance Card ////////////////////////////////////////////////////////////////////////////-->
 		
-				<!-- Cash tally Card -->
+<!-- //////////////////////////////////////////////////////////// Cash tally Card ////////////////////////////////////////////////////////////////////////////-->
 				<div class="card">
 					<div class="card-header" style='font-size:18px;font-weight:bold;'>Cash Tally</div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-12">
 								<div class="row">
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
+									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"></div>
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
 										<div class="form-group">
-											<input type="radio" id="hand_cash_radio" name="cash_type" value='1' />&emsp;<label for="hand_cash_radio" class='radio-style'>Hand Cash</label>&emsp;
+											<input type="radio" id="hand_cash_radio" name="cash_type" value='0' />&emsp;<label class='radio-style'>Hand Cash</label>&emsp;
 										</div>
 									</div>
-									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
+									<?php if(isset($bank_details) && $bank_details != null){
+										for($i=0;$i<sizeof($bank_name_arr);$i++){?>
+									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12" style="max-width: 30%;">
 										<div class="form-group">
-											<input type="radio" id="bank_cash_radio" name="cash_type" value="2" />&emsp;<label for="bank_cash_radio" class='radio-style'>Bank Cash</label>
+											<input type="radio" id="bank_cash_radio" name="cash_type" value="<?php echo $bank_id_arr[$i];?>" class="bank_cash_radio" />&emsp;<label  class='radio-style'><?php echo $bank_name_arr[$i];?></label>
 										</div>
 									</div>
+									<?php } }?>
 								</div>
 								<div class="row">
-									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"></div>
+									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"></div>
 									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
 										<div class="form-group">
 											<label for='credit_type'>Credit</label>
@@ -194,8 +200,29 @@ input[type="radio"]{
 						</div>
 					</div>
 				</div>
-				<!-- Cash tally Card -->
-				<!-- Closing Balance Card -->
+<!-- //////////////////////////////////////////////////////////// Cash tally Card ////////////////////////////////////////////////////////////////////////////-->
+
+<!-- //////////////////////////////////////////////////////////// Collection Card ////////////////////////////////////////////////////////////////////////////-->
+				<div class="card">
+					<div class="card-header" style='font-size:18px;font-weight:bold;'>Collection</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									
+								<div class="modal-body">
+									<div id="collectionTableDiv">
+									</div>
+								</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- //////////////////////////////////////////////////////////// Collection Card ////////////////////////////////////////////////////////////////////////////-->
+
+<!-- //////////////////////////////////////////////////////////// Closing Balance Card ////////////////////////////////////////////////////////////////////////////-->
 				<div class="card">
 					<!-- <div class="card-header">Cash Tally</div> -->
 					<div class="card-body">
@@ -214,7 +241,10 @@ input[type="radio"]{
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12" style="max-width: 198px;">
 										<div class="form-group">
 											<label class="lable-style"> Hand Cash</label><br>
-											<label class="lable-style">IOB - 03775</label><br>
+											<?php if(isset($bank_name_arr)){
+												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
+													<label class="lable-style"><?php echo $bank_name_arr[$i];?></label><br>
+												<?php }}?>
 											<label class="lable-style">Agent Cash</label><br><br><hr>
 											<label class="lable-style">Total Closing Balance</label>
 										</div>
@@ -222,7 +252,10 @@ input[type="radio"]{
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12" style="max-width: 20px;">
 										<div class="form-group">
 											<label class="lable-style">:</label><br>
-											<label class="lable-style">:</label><br>
+											<?php if(isset($bank_name_arr)){
+												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
+												<label class="lable-style">:</label><br>
+											<?php }}?>
 											<label class="lable-style">:</label><br><br><hr>
 											<label class="lable-style">:</label>
 										</div>
@@ -231,7 +264,10 @@ input[type="radio"]{
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"  style="max-width: 150px;">
 										<div class="form-group">
 											<label class="lable-style" id='hand_cash'>150000</label><br>
-											<label class="lable-style" id='bank_cash'>181500</label><br>
+											<?php if(isset($bank_name_arr)){
+												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
+													<label class="lable-style"><?php echo '0';?></label><br>
+												<?php }}?>
 											<label class="lable-style" id='agent_cash'>16510</label><br><br><hr>
 											<label class="lable-style" id='agent_cash'>348010</label>
 										</div>
@@ -242,7 +278,7 @@ input[type="radio"]{
 						</div>
 					</div>
 				</div>
-				<!-- Opening Balance Card -->
+<!-- //////////////////////////////////////////////////////////// Closing Balance Card ////////////////////////////////////////////////////////////////////////////-->
 
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
