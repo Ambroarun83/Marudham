@@ -345,12 +345,14 @@ if($idupd>0)
 										<div class="form-group">
 											<label for="disabledInput">Pending Amount</label>&nbsp;<span class="text-danger pendingspan">*</span>
 											<input type="text" class="form-control" readonly id="pending_amt" name="pending_amt" value=''>
+											<input type="hidden" class="form-control" readonly id="pend_amt" name="pend_amt">
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Payable Amount</label>&nbsp;<span class="text-danger payablespan">*</span>
 											<input type="text" class="form-control" readonly id="payable_amt" name="payable_amt" value=''>
+											<input type="hidden" class="form-control" readonly id="payableAmount" name="payableAmount" >
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -448,7 +450,7 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" class="form-control" id="due_amt_track" name="due_amt_track" value='' placeholder='Enter Due Amount'>
+											<input type="text" class="form-control pendingcalc" id="due_amt_track" name="due_amt_track" value='' placeholder='Enter Due Amount'>
 											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
 										</div>
 									</div>
@@ -480,7 +482,7 @@ if($idupd>0)
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Pre Closure</label>
-												<input type="text" class="form-control" id="pre_close_waiver" name="pre_close_waiver" value='' placeholder='Enter Pre Closure Amount'>
+												<input type="text" class="form-control pendingcalc" id="pre_close_waiver" name="pre_close_waiver" value='' placeholder='Enter Pre Closure Amount'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">

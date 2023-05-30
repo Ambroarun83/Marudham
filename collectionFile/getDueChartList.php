@@ -116,14 +116,23 @@ function moneyFormatIndia($num)
             }
         }
         if($closed == 'true'){
-            $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by li.id desc limit 1 ");
+            // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by li.id desc limit 1 ");
+            $issueDate = $connect->query("SELECT alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by alc.loan_cal_id desc limit 1 ");
 
         }else{
-            $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
+            // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
+            $issueDate = $connect->query("SELECT alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by alc.loan_cal_id desc limit 1 ");
         }
         $loanIssue = $issueDate->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
-        $loan_amt = $loanIssue['loan_amt'];
+        if($loanIssue['tot_amt_cal'] == '' || $loanIssue['tot_amt_cal'] == null){
+            //(For monthly interest total amount will not be there, so take principals)
+            $loan_amt = intVal($loanIssue['principal_amt_cal']);
+        }else{
+            $loan_amt = intVal($loanIssue['tot_amt_cal']);
+        }
+
+        // $loan_amt = $loanIssue['loan_amt'];
         $issue_date = $loanIssue['updated_date'];
         ?>
         <tr>
@@ -150,6 +159,116 @@ function moneyFormatIndia($num)
             <td></td>
         </tr>
         <?php
+            $issued = date('Y-m-d',strtotime($issue_date));
+        if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+            //Query for Monthly.
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            FROM `collection` c
+            LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
+            LEFT JOIN user u ON c.insert_login_id = u.user_id
+            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
+            AND (
+                (MONTH(c.coll_date) = MONTH('$issued') AND YEAR(c.coll_date) = YEAR('$issued')) OR
+                (MONTH(c.trans_date) = MONTH('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
+            )
+            AND (
+                (c.coll_date BETWEEN '$issued' AND '$due_start_from') OR
+                (c.trans_date BETWEEN '$issued' AND '$due_start_from')
+            )");
+            
+        } else
+        if ($loanFrom['due_method_scheme'] == '2') {
+            //Query For Weekly.
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            FROM `collection` c
+            LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
+            LEFT JOIN user u ON c.insert_login_id = u.user_id
+            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
+            AND (
+                (WEEK(c.coll_date) = WEEK('$issued') AND YEAR(c.coll_date) = YEAR('$issued')) OR
+                (WEEK(c.trans_date) = WEEK('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
+            )
+            AND (
+                (c.coll_date BETWEEN '$issued' AND '$due_start_from') OR
+                (c.trans_date BETWEEN '$issued' AND '$due_start_from')
+            ) ");
+        } else
+        if ($loanFrom['due_method_scheme'] == '3') {
+            //Query For Day.
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            FROM `collection` c
+            LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
+            LEFT JOIN user u ON c.insert_login_id = u.user_id
+            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
+            AND (
+                (DAY(c.coll_date) = DAY('$issued') AND YEAR(c.coll_date) = YEAR('$issued')) OR
+                (DAY(c.trans_date) = DAY('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
+            )
+            AND (
+                (c.coll_date BETWEEN '$issued' AND '$due_start_from') OR
+                (c.trans_date BETWEEN '$issued' AND '$due_start_from')
+            ) ");
+        }
+
+        if ($run->rowCount() > 0) {
+            $due_amt_track = 0;
+            $waiver = 0;
+            while ($row = $run->fetch()) {
+                $role = $row['role'];
+                $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
+                $waiver = $waiver + intVal($row['pre_close_waiver']);
+                $bal_amt = $loan_amt - $due_amt_track - $waiver;
+                ?>
+                <tr>
+                    <td></td>
+                    <td><?php
+                        if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                            //For Monthly.
+                            echo date('m-Y', strtotime($issue_date));
+                        } else {
+                            //For Weekly && Day.
+                            echo date('d-m-Y', strtotime($cusDueMonth));
+                        }
+                        ?></td>
+                    <td><?php echo date('M', strtotime($issue_date)); ?></td>
+                    <td><?php echo $row['due_amt']; ?></td>
+                    <td><?php echo $row['pending_amt']; ?></td>
+                    <td><?php echo $row['payable_amt']; ?></td>
+                    <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
+                    <td><?php if ($row['due_amt_track'] > 0) {
+                            echo $row['due_amt_track'];
+                        } elseif ($row['pre_close_waiver'] > 0) {
+                            echo $row['pre_close_waiver'];
+                        } ?></td>
+                    <td><?php echo $bal_amt; ?></td>
+                    <td><?php if ($row['pre_close_waiver'] > 0) {
+                            echo $row['pre_close_waiver'];
+                        } else {
+                            echo '0';
+                        } ?></td>
+                    <td><?php if (isset($role) && $role == '1') {
+                            echo 'Director';
+                        } else if (isset($role) && $role == '2') {
+                            echo 'Agent';
+                        } else if (isset($role) && $role == '3') {
+                            echo 'Staff';
+                        } ?>
+                    </td>
+                    <td><?php echo $row['fullname']; ?></td>
+                    <td><?php if ($row['coll_location'] == '1') {
+                            echo 'Office';
+                        } elseif ($row['coll_location'] == '2') {
+                            echo 'On Spot';
+                        } elseif ($row['coll_location'] == '3') {
+                            echo 'Bank Transfer';
+                        } ?></td>
+                    <td> <a class='print_due_coll' id="" value="<?php echo $row['coll_code']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a> </td>
+                </tr>
+
+                <?php 
+            } 
+        }
+
         $due_amt_track = 0;
         $waiver = 0;
         $bal_amt = 0;
@@ -171,9 +290,11 @@ function moneyFormatIndia($num)
 
                 while ($row = $run->fetch()) {
                     $role = $row['role'];
-                    $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
-                    $waiver = $waiver + intVal($row['pre_close_waiver']);
-                    $bal_amt = $loan_amt - $due_amt_track - $waiver;
+                    // $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
+                    $due_amt_track = intVal($row['due_amt_track']);
+                    // $waiver = $waiver + intVal($row['pre_close_waiver']);
+                    $waiver = intVal($row['pre_close_waiver']);
+                    $bal_amt = intVal($row['bal_amt']) - $due_amt_track - $waiver;
 
         ?>
                     <tr>
@@ -253,7 +374,107 @@ function moneyFormatIndia($num)
         <?php
                 $i++;
             }
-        } ?>
+        } 
+        
+        $currentMonth = date('Y-m-d');
+        if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+            //Query for Monthly.
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            FROM `collection` c
+            LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
+            LEFT JOIN user u ON c.insert_login_id = u.user_id
+            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
+            AND (
+                (c.coll_date BETWEEN '$maturity_month' AND '$currentMonth') OR
+                (c.trans_date BETWEEN '$maturity_month' AND '$currentMonth')
+            )");
+            
+        } else
+        if ($loanFrom['due_method_scheme'] == '2') {
+            //Query For Weekly.
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            FROM `collection` c
+            LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
+            LEFT JOIN user u ON c.insert_login_id = u.user_id
+            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
+            AND (
+                (c.coll_date BETWEEN '$maturity_month' AND '$currentMonth'  ) OR
+                (c.trans_date BETWEEN '$maturity_month' AND '$currentMonth' )
+            ) ");
+        } else
+        if ($loanFrom['due_method_scheme'] == '3') {
+            //Query For Day.
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            FROM `collection` c
+            LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
+            LEFT JOIN user u ON c.insert_login_id = u.user_id
+            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
+            AND (
+                (c.coll_date BETWEEN  '$maturity_month' AND '$currentMonth') OR
+                (c.trans_date BETWEEN '$maturity_month' AND '$currentMonth')
+            ) ");
+        }
+
+        if ($run->rowCount() > 0) {
+            $due_amt_track = 0;
+            $waiver = 0;
+            while ($row = $run->fetch()) {
+                $role = $row['role'];
+                $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
+                $waiver = $waiver + intVal($row['pre_close_waiver']);
+                $bal_amt = $loan_amt - $due_amt_track - $waiver;
+                ?>
+                <tr>
+                    <td> <?php echo $i;?></td>
+                    <td><?php
+                        if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                            //For Monthly.
+                            echo date('m-Y', strtotime($issue_date));
+                        } else {
+                            //For Weekly && Day.
+                            echo date('d-m-Y', strtotime($row['coll_date']));
+                        }
+                        ?></td>
+                    <td><?php echo date('M', strtotime($issue_date)); ?></td>
+                    <td><?php echo $row['due_amt']; ?></td>
+                    <td><?php echo $row['pending_amt']; ?></td>
+                    <td><?php echo $row['payable_amt']; ?></td>
+                    <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
+                    <td><?php if ($row['due_amt_track'] > 0) {
+                            echo $row['due_amt_track'];
+                        } elseif ($row['pre_close_waiver'] > 0) {
+                            echo $row['pre_close_waiver'];
+                        } ?></td>
+                    <td><?php echo $bal_amt; ?></td>
+                    <td><?php if ($row['pre_close_waiver'] > 0) {
+                            echo $row['pre_close_waiver'];
+                        } else {
+                            echo '0';
+                        } ?></td>
+                    <td><?php if (isset($role) && $role == '1') {
+                            echo 'Director';
+                        } else if (isset($role) && $role == '2') {
+                            echo 'Agent';
+                        } else if (isset($role) && $role == '3') {
+                            echo 'Staff';
+                        } ?>
+                    </td>
+                    <td><?php echo $row['fullname']; ?></td>
+                    <td><?php if ($row['coll_location'] == '1') {
+                            echo 'Office';
+                        } elseif ($row['coll_location'] == '2') {
+                            echo 'On Spot';
+                        } elseif ($row['coll_location'] == '3') {
+                            echo 'Bank Transfer';
+                        } ?></td>
+                    <td> <a class='print_due_coll' id="" value="<?php echo $row['coll_code']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a> </td>
+                </tr>
+
+                <?php 
+        $i++; } 
+        }
+
+        ?>
     </tbody>
 </table>
 
