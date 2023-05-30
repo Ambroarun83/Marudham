@@ -80,6 +80,19 @@ $(document).ready(function(){
         $('#total_waiver').val(total_waiver)
     })
 
+    $('.pendingcalc').keyup(function(){ //Minus Pending && Payable amount 
+        var due = $('#due_amt_track').val();
+        var close = $('#pre_close_waiver').val();
+        var pending = $('#pend_amt').val();
+        var payable = $('#payableAmount').val();
+
+        var total = ((pending) ? parseInt(pending) : 0 ) - (((due) ? parseInt(due) : 0 ) + ((close) ? parseInt(close) : 0 ));
+        var totalpayable = ((payable) ? parseInt(payable) : 0 ) - (((due) ? parseInt(due) : 0 ) + ((close) ? parseInt(close) : 0 ));
+        $('#pending_amt').val(total);
+        $('#payable_amt').val(totalpayable);
+
+    });
+
 
     //Collection Charge
 $('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
@@ -308,7 +321,9 @@ function OnLoadFunctions(req_id,cus_id){
                             $('#bal_amt').val(response['balance'])
                             $('#due_amt').val(response['due_amt'])
                             $('#pending_amt').val(response['pending'])
+                            $('#pend_amt').val(response['pending'])
                             $('#payable_amt').val(response['payable'])
+                            $('#payableAmount').val(response['payable'])
                             $('#penalty').val(response['penalty'])
                             $('#coll_charge').val(response['coll_charge'])
                             

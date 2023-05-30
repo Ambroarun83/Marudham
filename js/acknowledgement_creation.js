@@ -2591,7 +2591,7 @@ function getCategoryInfo() {
 
         var req_id = $('#req_id').val();
         $.ajax({
-            url: 'verificationFile/LoanCalculation/getCategoryInfo.php',
+            url: 'verificationFile/LoanCalculation/getCategoryInfoForAck.php',
             data: { 'req_id': req_id, 'sub_category_upd': sub_category_upd },
             dataType: 'json',
             type: 'post',
