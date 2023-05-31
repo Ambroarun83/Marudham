@@ -357,7 +357,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             $row = $result->fetch_assoc();
 
             $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
-            $response['penalty'] = $penalty - $row['penalty'] - $row['penalty_waiver'];
+            $response['penalty'] = intVal($penalty) - intVal($row['penalty']) - intVal($row['penalty_waiver']);
 
             //Payable amount will be pending amount added with current month due amount
             $response['payable'] = $response['due_amt'] + $response['pending'];
@@ -462,7 +462,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             $row = $result->fetch_assoc();
 
             $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
-            $response['penalty'] = $penalty - $row['penalty'] - $row['penalty_waiver'];
+            $response['penalty'] = intVal($penalty) - intVal($row['penalty']) - intVal($row['penalty_waiver']);
 
             //Payable amount will be pending amount added with current month due amount
             $response['payable'] = $response['due_amt'] + $response['pending'];

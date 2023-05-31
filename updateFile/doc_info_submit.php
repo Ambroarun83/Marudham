@@ -1,13 +1,10 @@
 <?php
 session_start();
 
-require '../../ajaxconfig.php';
+require '../ajaxconfig.php';
 
 if(isset($_SESSION['userid'])){
     $userid = $_SESSION['userid'];
-}
-if(isset($_POST['req_id'])){
-    $req_id = $_POST['req_id'];
 }
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
@@ -42,7 +39,7 @@ $doc_upload ='';
 if(isset($_FILES['document_info_upd'])){
 
     $filesArr3 = $_FILES['document_info_upd'];
-    $uploadDir = "../../uploads/verification/doc_info/";
+    $uploadDir = "../uploads/verification/doc_info/";
     // File upload path  
     foreach($filesArr3['name'] as $key=>$val)
     {
@@ -63,8 +60,8 @@ if(isset($_FILES['document_info_upd'])){
 
 if($doc_id == ''){
 
-    $insert_qry = $connect ->query("INSERT INTO `document_info`(`cus_id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`,`relation_name`, `relation`, `insert_login_id`,`created_date`) 
-    VALUES ('$cus_id','$req_id','$doc_name','$doc_details','$doc_type','$doc_holder','$holder_name','$relation_name','$relation','$userid',now())");
+    $insert_qry = $connect ->query("INSERT INTO `document_info`(`cus_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`,`relation_name`, `relation`, `insert_login_id`,`created_date`) 
+    VALUES ('$cus_id','$doc_name','$doc_details','$doc_type','$doc_holder','$holder_name','$relation_name','$relation','$userid',now())");
 
     if($insert_qry){
         $result = "Document Info Inserted Successfully.";
@@ -72,7 +69,7 @@ if($doc_id == ''){
 }
 else{
     
-    $update = $connect->query("UPDATE `document_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`doc_name`='$doc_name',`doc_detail`='$doc_details',`doc_type`='$doc_type',`doc_holder`='$doc_holder',
+    $update = $connect->query("UPDATE `document_info` SET `cus_id`='$cus_id',`doc_name`='$doc_name',`doc_detail`='$doc_details',`doc_type`='$doc_type',`doc_holder`='$doc_holder',
     `holder_name`='$holder_name',`relation_name`='$relation_name',`relation`='$relation',`doc_upload`='$doc_upload',`update_login_id`=$userid WHERE `id`='$doc_id' ");
 
     if($update){

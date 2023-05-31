@@ -165,6 +165,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         let req_id = $('#cheque_req_id').val();
+        let cus_id = $('#cus_id').val();
         let holder_type = $("#holder_type").val();
         var holder_name = $("#holder_name").val();
         var holder_relationship_name = $("#holder_relationship_name").val();
@@ -193,6 +194,7 @@ $(document).ready(function () {
         formdata.append('chequeID', chequeID)
         formdata.append('cheque_upd_no', chequeArr)
         formdata.append('cheque_req_id', req_id)
+        formdata.append('cus_id', cus_id)
         
         if (holder_type != "" && chequebank_name != "" && cheque_count != "" && req_id != "" ) {
             $.ajax({
@@ -1650,30 +1652,8 @@ function chequeinfoList() {
     });
 }
 
-function resetchequeInfo() {
-    let req_id = $('#req_id').val();
-    $.ajax({
-        url: 'verificationFile/documentation/cheque_info_upd_reset.php',
-        type: 'POST',
-        data: { "reqId": req_id },
-        cache: false,
-        success: function (html) {
-            $('#chequeColumnDiv').empty();
-            $("#chequeTable").empty();
-            $("#chequeTable").html(html);
 
-            $("#holder_type").val('');
-            $("#holder_name").val('');
-            $("#holder_relationship_name").val('');
-            $("#cheque_relation").val('');
-            $("#chequebank_name").val('');
-            $("#cheque_count").val('');
-            $("#cheque_upd").val('');
-            $("#chequeID").val('');
 
-        }
-    });
-}
 
 function chequeHolderName() {
     let req_id = $('#req_id').val();
@@ -1738,6 +1718,7 @@ function getChequeColumn(cnt){
 $(document).on("click", "#goldInfoBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let gold_sts = $("#gold_sts").val();
     let gold_type = $("#gold_type").val();
     let Purity = $("#Purity").val();
@@ -1750,7 +1731,7 @@ $(document).on("click", "#goldInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/documentation/gold_info_submit.php',
             type: 'POST',
-            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id },
+            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id, "cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -1873,6 +1854,7 @@ $('#documentnameCheck').hide();$('#documentdetailsCheck').hide();$('#documentTyp
 //Document info submit button action
 $('#docInfoBtn').click(function(){
     let req_id = $("#req_id").val();
+    let cus_id = $("#cus_id").val();
     let doc_id = $("#doc_info_id").val();
     let doc_name = $("#document_name").val();
     let doc_details = $("#document_details").val();
@@ -1892,7 +1874,7 @@ $('#docInfoBtn').click(function(){
     formdata.append('holder_name',holder_name)
     formdata.append('relation_name',relation_name)
     formdata.append('relation',relation)
-    formdata.append('req_id',req_id)
+    formdata.append('cus_id',cus_id)
 
     var files = $("#document_info_upd")[0].files;     
     for(var i=0; i<files.length; i++){

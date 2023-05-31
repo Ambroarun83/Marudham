@@ -2297,6 +2297,7 @@ input:checked + .slider:before {
 <div class="modal fade addSignDoc" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
  <form method="POST" enctype="multipart/form-data"  id="signDocUploads">
 	<input type="hidden" name="doc_req_id" id="doc_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
+	<input type="hidden" name="doc_cus_id" id="doc_cus_id" value="<?php if(isset($cus_id)){echo $cus_id;} ?>" >
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
@@ -2331,7 +2332,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="doc_name" name="doc_name">
+							<select type="text" class="form-control" id="doc_name" name="doc_name" disabled>
 								<option value=""> Select Doc Name </option>
 								<option value="0"> Promissory Note </option>
 								<option value="1"> Stamp Paper </option>
@@ -2345,7 +2346,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="SignType"> Sign Type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="sign_type" name="sign_type">
+							<select type="text" class="form-control" id="sign_type" name="sign_type" disabled>
 								<option value=""> Select Sign Type </option>
 								<option value="0"> Customer </option>
 								<option value="1"> Guarantor </option>
@@ -2360,7 +2361,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
 						<div class="form-group">
 							<label for="signRelationship"> Relationship </label>
-							<select type="text" class="form-control" id="signType_relationship" name="signType_relationship">
+							<select type="text" class="form-control" id="signType_relationship" name="signType_relationship" disabled>
 								<option value=""> Select Relationship </option>
 							</select>
 						</div>
@@ -2369,7 +2370,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count">
+							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count" readonly>
 							<span class="text-danger" id="docCountCheck"> Enter Count </span>
 						</div>
 					</div>
@@ -2456,7 +2457,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="Holdertype "> Holder type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="holder_type" name="holder_type">
+							<select type="text" class="form-control" id="holder_type" name="holder_type" disabled>
 								<option value=""> Select Holder type </option>
 								<option value="0"> Customer </option>
 								<option value="1"> Guarantor </option>
@@ -2471,7 +2472,7 @@ input:checked + .slider:before {
 							<label for="HolderName "> Holder Name </label>
 							<input type="text" class="form-control" id="holder_name" name="holder_name" readonly>
 
-							<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;">
+							<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;" disabled>
 								<option value=""> Select Holder Name </option>
 							</select>
 						</div>
@@ -2489,7 +2490,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="BankName"> Bank Name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)">
+							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)" readonly>
 							<span class="text-danger" id="chequebankCheck"> Enter Bank Name </span>
 						</div>
 					</div>
@@ -2497,7 +2498,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="chequeNo"> Cheque Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count">
+							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count" readonly>
 							<span class="text-danger" id="chequeCountCheck"> Enter Cheque Count </span>
 						</div>
 					</div>

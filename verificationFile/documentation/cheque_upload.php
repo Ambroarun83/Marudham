@@ -2,6 +2,7 @@
 require '../../ajaxconfig.php';
 
 $req_id                = $_POST['cheque_req_id'];
+$cus_id                = $_POST['cus_id'];
 $chequeID              = $_POST['chequeID'];
 $filesArr3             = $_FILES['cheque_upd'];
 $cheque_upd_no         = explode(',',$_POST['cheque_upd_no']);
@@ -24,13 +25,13 @@ $connect->query("DELETE FROM `cheque_no_list` WHERE `cheque_table_id`='$chequeID
 		 // Upload file to server  
 		 if(move_uploaded_file($filesArr3["tmp_name"][$key], $targetFilePath)){  
 
-             $update =  $connect->query("INSERT INTO `cheque_upd`(`req_id`, `cheque_table_id`, `upload_cheque_name`) VALUES ('$req_id','$chequeID','$fileName')");
+             $update =  $connect->query("INSERT INTO `cheque_upd`(`cus_id`,`req_id`, `cheque_table_id`, `upload_cheque_name`) VALUES ('$cus_id','$req_id','$chequeID','$fileName')");
 	 }
  }
 
 
  foreach($cheque_upd_no as $chequeNo){
-	$insert  = $connect->query("INSERT INTO `cheque_no_list`( `req_id`, `cheque_table_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`) VALUES ('$req_id','$chequeID',' $holder_type','$holderName','$chequeNo')");
+	$insert  = $connect->query("INSERT INTO `cheque_no_list`( `cus_id`,`req_id`, `cheque_table_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`) VALUES ('$cus_id','$req_id','$chequeID',' $holder_type','$holderName','$chequeNo')");
  }
 
 

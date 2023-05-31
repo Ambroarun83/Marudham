@@ -59,7 +59,7 @@ if (sizeof($getCustomerReg) > 0) {
 		$area_line 					= $getCustomerReg['area_line'];
 		$area_name 					= $getCustomerReg['area_name'];
 		$sub_area_name 					= $getCustomerReg['sub_area_name'];
-		$request_id 					= $getCustomerReg['request_id'];
+		// $request_id 					= $getCustomerReg['request_id'];
 	}
 }
 //////////////////////// Customer Profile Info END ///////////////////////////////
@@ -155,7 +155,6 @@ if (sizeof($documentationInfo) > 0) {
 			<input type="hidden" name="area_taluk_upd" id="area_taluk_upd" value="<?php if (isset($area_confirm_taluk)) {echo $area_confirm_taluk;} ?>" />
 			<input type="hidden" name="area_confirm_area" id="area_confirm_area" value="<?php if (isset($area_confirm_area)) {echo $area_confirm_area;} ?>" />
 			<input type="hidden" name="sub_area_confirm" id="sub_area_confirm" value="<?php if (isset($area_confirm_subarea)) {echo $area_confirm_subarea;} ?>" />
-			<input type="text" name="request_creation_ids" id="request_creation_ids" value="<?php if (isset($request_id)) {print_r($request_id);} ?>" />
 
 			<!-- Row start -->
 			<div class="row gutters">
@@ -1726,6 +1725,9 @@ if (sizeof($documentationInfo) > 0) {
 
 <!-- Add Signed Doc info Modal  START -->
 <div class="modal fade addSignDoc" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="signDocUploads">
+	<input type="hidden" name="doc_req_id" id="doc_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
+	<input type="hidden" name="doc_cus_id" id="doc_cus_id" value="<?php if(isset($cus_id)){echo $cus_id;} ?>" >
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
@@ -1736,7 +1738,7 @@ if (sizeof($documentationInfo) > 0) {
 			</div>
 			<div class="modal-body">
 				<!-- alert messages -->
-				<div id="signInsertOk" class="successalert"> Signed Doc Info Added Successfully
+				<div id="signInsertOk" class="successalert"> Signed Doc Info Uploaded Successfully
 					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
 				</div>
 
@@ -1759,8 +1761,8 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="doc_name"> Doc Name </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="doc_name" name="doc_name">
+							<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="doc_name" name="doc_name" disabled>
 								<option value=""> Select Doc Name </option>
 								<option value="0"> Promissory Note </option>
 								<option value="1"> Stamp Paper </option>
@@ -1773,8 +1775,8 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="sign_type"> Sign Type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="sign_type" name="sign_type">
+							<label for="SignType"> Sign Type </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="sign_type" name="sign_type" disabled>
 								<option value=""> Select Sign Type </option>
 								<option value="0"> Customer </option>
 								<option value="1"> Guarantor </option>
@@ -1788,8 +1790,8 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
 						<div class="form-group">
-							<label for="signType_relationship"> Relationship </label>
-							<select type="text" class="form-control" id="signType_relationship" name="signType_relationship">
+							<label for="signRelationship"> Relationship </label>
+							<select type="text" class="form-control" id="signType_relationship" name="signType_relationship" disabled>
 								<option value=""> Select Relationship </option>
 							</select>
 						</div>
@@ -1797,21 +1799,29 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="doc_Count"> Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count">
+							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count" readonly>
 							<span class="text-danger" id="docCountCheck"> Enter Count </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="upd"> Uploads </label>
+							<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()">
+							<span class="text-danger" id="docupdCheck" style="display: none;"> Upload Document </span>
 						</div>
 					</div>
 
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="signedID" id="signedID">
-						<button type="button" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+						<button type="submit" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
 					</div>
-
+				
 				</div>
 				</br>
 
-				<div id="signTable">
+				<div id="signTable" style="overflow-x: auto;">
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
@@ -1834,11 +1844,14 @@ if (sizeof($documentationInfo) > 0) {
 			</div>
 		</div>
 	</div>
+	</form>
 </div>
 <!-- END  Add Signed Doc Info Modal -->
 
 <!-- Add Cheque info Modal  START -->
 <div class="modal fade addCheque" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="chequeUploads">
+	<input type="hidden" name="cheque_req_id" id="cheque_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
@@ -1849,7 +1862,7 @@ if (sizeof($documentationInfo) > 0) {
 			</div>
 			<div class="modal-body">
 				<!-- alert messages -->
-				<div id="chequeInsertOk" class="successalert"> Cheque Info Added Successfully
+				<div id="chequeInsertOk" class="successalert"> Cheque Info Uploaded Successfully
 					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
 				</div>
 
@@ -1872,8 +1885,8 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="holder_type"> Holder type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="holder_type" name="holder_type">
+							<label for="Holdertype "> Holder type </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="holder_type" name="holder_type" disabled>
 								<option value=""> Select Holder type </option>
 								<option value="0"> Customer </option>
 								<option value="1"> Guarantor </option>
@@ -1885,10 +1898,10 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="holder_name"> Holder Name </label>
+							<label for="HolderName "> Holder Name </label>
 							<input type="text" class="form-control" id="holder_name" name="holder_name" readonly>
 
-							<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;">
+							<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;" disabled>
 								<option value=""> Select Holder Name </option>
 							</select>
 						</div>
@@ -1897,7 +1910,7 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="cheque_relation"> Relationship </label>
+							<label for="chequeRelationship"> Relationship </label>
 							<input type="text" class="form-control" id="cheque_relation" name="cheque_relation" readonly>
 
 						</div>
@@ -1905,66 +1918,41 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="chequebank_name"> Bank Name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)">
+							<label for="BankName"> Bank Name </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)" readonly>
 							<span class="text-danger" id="chequebankCheck"> Enter Bank Name </span>
 						</div>
 					</div>
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="cheque_count"> Cheque Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count">
+							<label for="chequeNo"> Cheque Count </label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count" readonly>
 							<span class="text-danger" id="chequeCountCheck"> Enter Cheque Count </span>
 						</div>
 					</div>
 
-					<!-- </br> -->
-
-					<!-- <div class="row "> -->
-					<!--Fields -->
-					<!-- <div class="col-md-12 ">
-						<div class="row">
-							<div class="col-md-12">
-
-								<table id="moduleTable" class="table custom-table">
-									<thead>
-										<tr>
-											<th>Cheque No</th>
-											<th></th>
-											<th>Action</th>
-										</tr>
-									</thead>
-
-									<tbody>
-										<tr>
-											<td>
-												<input type="text" tabindex="2" name="cheque_no[]" id="cheque_no" class="form-control">
-											</td>
-											<td>
-												<button type="button" tabindex="2" id="add_checqueNo[]" name="add_checqueNo" value="Submit" class="btn btn-primary add_checqueNo">Add</button>
-											</td>
-											<td>
-												<span class='icon-trash-2' tabindex="2"></span>
-											</td>
-										</tr>
-									</tbody>
-
-								</table>
-							</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="upd"> Uploads </label>
+							<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple  onchange="chequefilesCount()">
+							<span class="text-danger" id="chequeupdCheck"> Upload Cheque </span>
 						</div>
+					</div>
+				</div>
 
-					</div> -->
+				<div class="row" id="chequeColumnDiv">  </div>
 
+				<div class="row">
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="chequeID" id="chequeID">
-						<button type="button" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+						<button type="submit" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
 					</div>
 				</div>
 				</br>
 
 
-				<div id="chequeTable">
+				<div id="chequeTable" style="overflow-x: auto;">
 					<table class="table custom-table">
 						<thead>
 							<tr>
@@ -1988,6 +1976,7 @@ if (sizeof($documentationInfo) > 0) {
 			</div>
 		</div>
 	</div>
+</form>
 </div>
 <!-- END  Add Cheque Info Modal -->
 
@@ -2210,6 +2199,7 @@ if (sizeof($documentationInfo) > 0) {
 
 <!-- Add Document info Modal  START -->
 <div class="modal fade addDocument" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="docUploads">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
@@ -2241,75 +2231,82 @@ if (sizeof($documentationInfo) > 0) {
 
 				<div class="row">
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="document_name"> Document name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="" tabindex="1">
-							<span class="text-danger" id="documentnameCheck"> Enter Document name </span>
-						</div>
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="form-group">
+						<label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
+						<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="" tabindex="1" readonly />
+						<span class="text-danger" id="documentnameCheck"> Enter Document name </span>
 					</div>
+				</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="document_details"> Document Details </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="" tabindex="2">
-							<span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
-						</div>
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="form-group">
+						<label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
+						<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="" tabindex="2" readonly />
+						<span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
 					</div>
+				</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="document_type"> Document Type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="document_type" name="document_type" tabindex="3">
-								<option value=''> Select Document Type </option>
-								<option value='0'> Original </option>
-								<option value='1'> Xerox </option>
-							</select>
-							<span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
-						</div>
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="form-group">
+						<label for="Documenttype"> Document Type </label> <span class="required">&nbsp;*</span>
+						<select type="text" class="form-control" id="document_type" name="document_type" tabindex="3" disabled>
+							<option value=''> Select Document Type </option>
+							<option value='0' > Original </option>
+							<option value='1' > Xerox </option>
+						</select>
+						<span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
 					</div>
+				</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="document_holder"> Document Holder </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="4">
-								<option value=""> Select Holder type </option>
-								<option value="0"> Customer </option>
-								<option value="1"> Guarantor </option>
-								<option value="2"> Family Members </option>
-							</select>
-							<span class="text-danger" id="docholderCheck"> Select Document Holder </span>
-						</div>
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="form-group">
+						<label for="DocumentHolder"> Document Holder </label> <span class="required">&nbsp;*</span>
+						<select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="4" disabled>
+							<option value=""> Select Holder type </option>
+							<option value="0" > Customer </option>
+							<option value="1" > Guarantor </option>
+							<option value="2" > Family Members </option>
+						</select>
+						<span class="text-danger" id="docholderCheck"> Select Document Holder </span>
 					</div>
+				</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="docholder_name"> Holder Name </label>
-							<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="" readonly tabindex="5">
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="form-group">
+						<label for="docholdername"> Holder Name </label>
+						<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="" readonly tabindex="5" readonly>
 
-							<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="6">
-								<option value=""> Select Relationship </option>
-							</select>
-						</div>
+						<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="6" disabled>
+							<option value=""> Select Relationship </option>
+						</select>
 					</div>
+				</div>
 
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="doc_relation"> Relationship </label>
-							<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="" readonly tabindex="7">
-						</div>
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="form-group">
+						<label for="DocRelationship"> Relationship </label>
+						<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="" readonly tabindex="7" >
 					</div>
+				</div>
+
+				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+					<div class="form-group">
+						<label for="DocumentUpd"> Document Uploads </label>
+						<input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]"  multiple tabindex="8">
+					</div>
+				</div>
 
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="doc_info_id" id="doc_info_id" value=''>
-						<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="8">Submit</button>
+						<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="9">Submit</button>
 					</div>
 				</div>
 				</br>
 
 
-				<div id="docModalDiv">
+				<div id="docModalDiv" style="overflow-x: auto;">
 					<table class="table custom-table">
 						<thead>
 							<tr>
@@ -2333,5 +2330,6 @@ if (sizeof($documentationInfo) > 0) {
 			</div>
 		</div>
 	</div>
+</form>
 </div>
 <!-- END  Add Document Info Modal -->

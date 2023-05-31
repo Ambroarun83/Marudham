@@ -2,6 +2,7 @@
 require '../ajaxconfig.php';
 
 $req_id                = $_POST['reqId'];
+$cus_id                = $_POST['cus_id'];
 $bank_name             = $_POST['bank_name'];
 $branch_name           = $_POST['branch_name'];
 $account_holder_name   = $_POST['account_holder_name'];
@@ -12,12 +13,11 @@ $bankID                = $_POST['bankID'];
 
 if($bankID == ''){
 
-$insert_qry = $connect ->query("INSERT INTO `verification_bank_info`( `req_id`, `bank_name`, `branch_name`, `acc_holder_name`, `acc_no`, `ifsc_code`) VALUES ('$req_id','$bank_name','$branch_name','$account_holder_name','$account_number','$Ifsc_code')");
+$insert_qry = $connect ->query("INSERT INTO `verification_bank_info`(`cus_id`, `req_id`, `bank_name`, `branch_name`, `acc_holder_name`, `acc_no`, `ifsc_code`) VALUES ('$cus_id','$req_id','$bank_name','$branch_name','$account_holder_name','$account_number','$Ifsc_code')");
 
 }
 else{
-    
- $update = $connect->query("UPDATE `verification_bank_info` SET `req_id`='$req_id',`bank_name`='$bank_name',`branch_name`='$branch_name',`acc_holder_name`='$account_holder_name',`acc_no`='$account_number',`ifsc_code`='$Ifsc_code' WHERE `id`='$bankID'");
+$update = $connect->query("UPDATE `verification_bank_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`bank_name`='$bank_name',`branch_name`='$branch_name',`acc_holder_name`='$account_holder_name',`acc_no`='$account_number',`ifsc_code`='$Ifsc_code' WHERE `id`='$bankID'");
 
 }
 
