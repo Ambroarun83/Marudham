@@ -2,6 +2,7 @@
 require '../../ajaxconfig.php';
 
 $req_id                = $_POST['reqId'];
+$cus_id                = $_POST['cus_id'];
 $doc_name              = $_POST['doc_name'];
 $sign_type             = $_POST['sign_type'];
 $signType_relationship = $_POST['signType_relationship'];
@@ -17,12 +18,11 @@ if($sign_type == '1' || $sign_type == '2'){
 
 if($signedID == ''){
 
-$insert_qry = $connect ->query("INSERT INTO `signed_doc_info`(`doc_name`, `sign_type`, `signType_relationship`, `doc_Count`, `req_id`, `cus_profile_id`) VALUES ('$doc_name','$sign_type','$signType_relationship','$doc_Count','$req_id','$cus_profile_id')");
+$insert_qry = $connect ->query("INSERT INTO `signed_doc_info`(`cus_id`,`doc_name`, `sign_type`, `signType_relationship`, `doc_Count`, `req_id`, `cus_profile_id`) VALUES ('$cus_id','$doc_name','$sign_type','$signType_relationship','$doc_Count','$req_id','$cus_profile_id')");
 
 }
 else{
-    
- $update = $connect->query("UPDATE `signed_doc_info` SET `doc_name`='$doc_name',`sign_type`='$sign_type',`signType_relationship`='$signType_relationship',`doc_Count`='$doc_Count' WHERE `id`='$signedID' ");
+$update = $connect->query("UPDATE `signed_doc_info` SET `cus_id`='$cus_id',`doc_name`='$doc_name',`sign_type`='$sign_type',`signType_relationship`='$signType_relationship',`doc_Count`='$doc_Count' WHERE `id`='$signedID' ");
 
 }
 

@@ -5551,12 +5551,12 @@ function updateUser($mysqli,$id,$user_id){
 					$subarea = $subarearesult ->fetch_assoc();
 					$detailrecords['sub_area_name'] = $subarea['sub_area_name'];
 					
-					$reqResult = $mysqli->query("SELECT `req_id` FROM `request_creation` WHERE `cus_id`='".$row['cus_id']."' ");
-                    // $request_id = '';
-                    while($req_row = $reqResult->fetch_assoc()){
-                        $request_id[]= $req_row['req_id'];
-                    }
-                    $detailrecords['request_id'] = $request_id;
+					// $reqResult = $mysqli->query("SELECT `req_id` FROM `request_creation` WHERE `cus_id`='".$row['cus_id']."' ");
+                    // // $request_id = '';
+                    // while($req_row = $reqResult->fetch_assoc()){
+                    //     $request_id[]= $req_row['req_id'];
+                    // }
+                    // $detailrecords['request_id'] = $request_id;
 					$i++;
 				}
 			}

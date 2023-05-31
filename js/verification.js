@@ -1068,6 +1068,7 @@ function getCustomerLoanCounts(){
 $('#famnameCheck').hide(); $('#famrelationCheck').hide(); $('#famremarkCheck').hide(); $('#famaddressCheck').hide(); $('#famageCheck').hide(); $('#famaadharCheck').hide(); $('#fammobileCheck').hide(); $('#famoccCheck').hide(); $('#famincomeCheck').hide();
 $(document).on("click", "#submitFamInfoBtn", function () {
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let famname = $("#famname").val();
     let relationship = $("#relationship").val();
     let other_remark = $("#other_remark").val();
@@ -1084,7 +1085,7 @@ $(document).on("click", "#submitFamInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/verification_family_submit.php',
             type: 'POST',
-            data: { "famname": famname, "realtionship": relationship, "other_remark": other_remark, "other_address": other_address, "relation_age": relation_age, "relation_aadhar": relation_aadhar, "relation_Mobile": relation_Mobile, "relation_Occupation": relation_Occupation, "relation_Income": relation_Income, "relation_Blood": relation_Blood, "famTableId": famTableId, "reqId": req_id },
+            data: { "famname": famname, "realtionship": relationship, "other_remark": other_remark, "other_address": other_address, "relation_age": relation_age, "relation_aadhar": relation_aadhar, "relation_Mobile": relation_Mobile, "relation_Occupation": relation_Occupation, "relation_Income": relation_Income, "relation_Blood": relation_Blood, "famTableId": famTableId, "reqId": req_id, "cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -1397,6 +1398,7 @@ $('#grpnameCheck').hide(); $('#grpageCheck').hide(); $('#grpaadharCheck').hide()
 
 $(document).on("click", "#groupInfoBtn", function () {
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let group_name = $("#group_name").val();
     let group_age = $("#group_age").val();
     let group_aadhar = $("#group_aadhar").val();
@@ -1409,7 +1411,7 @@ $(document).on("click", "#groupInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/verification_group_submit.php',
             type: 'POST',
-            data: { "group_name": group_name, "group_age": group_age, "group_aadhar": group_aadhar, "group_mobile": group_mobile, "group_gender": group_gender, "group_designation": group_designation, "grpTableId": grpID, "req_id": req_id },
+            data: { "group_name": group_name, "group_age": group_age, "group_aadhar": group_aadhar, "group_mobile": group_mobile, "group_gender": group_gender, "group_designation": group_designation, "grpTableId": grpID, "req_id": req_id, "cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -1645,6 +1647,7 @@ $('#prtytypeCheck').hide(); $('#prtymeasureCheck').hide(); $('#prtyvalCheck').hi
 
 $(document).on("click", "#propertyInfoBtn", function () {
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let property_type = $("#property_typ").val();
     let property_measurement = $("#property_measurement").val();
     let property_value = $("#property_value").val();
@@ -1655,7 +1658,7 @@ $(document).on("click", "#propertyInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/verification_property_submit.php',
             type: 'POST',
-            data: { "property_type": property_type, "property_measurement": property_measurement, "property_value": property_value, "property_holder": property_holder, "propertyID": propertyID, "reqId": req_id },
+            data: { "property_type": property_type, "property_measurement": property_measurement, "property_value": property_value, "property_holder": property_holder, "propertyID": propertyID, "reqId": req_id, "cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -1847,6 +1850,7 @@ $('#bankNameCheck').hide(); $('#branchCheck').hide(); $('#accholdCheck').hide();
 $(document).on("click", "#bankInfoBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let bank_name = $("#bank_name").val();
     let branch_name = $("#branch_name").val();
     let account_holder_name = $("#account_holder_name").val();
@@ -1858,7 +1862,7 @@ $(document).on("click", "#bankInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/verification_bank_submit.php',
             type: 'POST',
-            data: { "bank_name": bank_name, "branch_name": branch_name, "account_holder_name": account_holder_name, "account_number": account_number, "Ifsc_code": Ifsc_code, "bankID": bankID, "reqId": req_id },
+            data: { "bank_name": bank_name, "branch_name": branch_name, "account_holder_name": account_holder_name, "account_number": account_number, "Ifsc_code": Ifsc_code, "bankID": bankID, "reqId": req_id, "cus_id": cus_id  },
             cache: false,
             success: function (response) {
 
@@ -2059,6 +2063,7 @@ $('#proofCheck').hide(); $('#proofTypeCheck').hide(); $('#proofnoCheck').hide();
 $(document).on("click", "#kycInfoBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let proofof = $("#proofof").val();
     let proof_type = $("#proof_type").val();
     let proof_number = $("#proof_number").val();
@@ -2076,6 +2081,7 @@ $(document).on("click", "#kycInfoBtn", function () {
     formdata.append('kycID', kycID)
     formdata.append('kyc_upload', kyc_upload)
     formdata.append('reqId', req_id)
+    formdata.append('cus_id', cus_id)
 
     if (proofof != "" && proof_type != "" && proof_number != "" && file != undefined && req_id != "") {
         $.ajax({
@@ -2135,7 +2141,7 @@ $(document).on("click", "#kycInfoBtn", function () {
             $('#proofnoCheck').hide();
         }
 
-        if (file == undefined && kycID == "") {
+        if (file == undefined || file == '') {
             $('#proofUploadCheck').show();
         } else {
             $('#proofUploadCheck').hide();
@@ -2585,6 +2591,7 @@ $('#feedbacklabelCheck').hide(); $('#feedbackCheck').hide();
 $(document).on("click", "#feedbackBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let feedback_label = $("#feedback_label").val();
     let cus_feedback = $("#cus_feedback").val();
     let feedback_remark = $("#feedback_remark").val();
@@ -2595,7 +2602,7 @@ $(document).on("click", "#feedbackBtn", function () {
         $.ajax({
             url: 'verificationFile/customer_feedback_submit.php',
             type: 'POST',
-            data: { "feedback_label": feedback_label, "cus_feedback": cus_feedback,"feedback_remark":feedback_remark,"feedbackID": feedbackID,  "reqId": req_id },
+            data: { "feedback_label": feedback_label, "cus_feedback": cus_feedback,"feedback_remark":feedback_remark,"feedbackID": feedbackID,  "reqId": req_id, "cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -3127,6 +3134,7 @@ $('#docNameCheck').hide(); $('#signTypeCheck').hide(); $('#docCountCheck').hide(
 $(document).on("click", "#signInfoBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let cus_profile_id = $("#cus_profile_id").val();
     let doc_name = $("#doc_name").val();
     let sign_type = $("#sign_type").val();
@@ -3138,7 +3146,7 @@ $(document).on("click", "#signInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/documentation/signed_doc_info_submit.php',
             type: 'POST',
-            data: { "doc_name": doc_name, "sign_type": sign_type, "signType_relationship": signType_relationship, "doc_Count": doc_Count, "signedID": signedID, "cus_profile_id": cus_profile_id, "reqId": req_id },
+            data: { "doc_name": doc_name, "sign_type": sign_type, "signType_relationship": signType_relationship, "doc_Count": doc_Count, "signedID": signedID, "cus_profile_id": cus_profile_id, "reqId": req_id,"cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -3272,6 +3280,7 @@ $('#chequebankCheck').hide(); $('#holdertypeCheck').hide(); $('#chequeCountCheck
 $(document).on("click", "#chequeInfoBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let cus_profile_id = $("#cus_profile_id").val();
     let holder_type = $("#holder_type").val();
     let holder_name = $("#holder_name").val();
@@ -3285,7 +3294,7 @@ $(document).on("click", "#chequeInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/documentation/cheque_info_submit.php',
             type: 'POST',
-            data: { "holder_type": holder_type, "holder_name": holder_name, "holder_relationship_name": holder_relationship_name, "cheque_relation": cheque_relation, "chequebank_name": chequebank_name, "cheque_count": cheque_count, "chequeID": chequeID, "cus_profile_id": cus_profile_id, "reqId": req_id },
+            data: { "holder_type": holder_type, "holder_name": holder_name, "holder_relationship_name": holder_relationship_name, "cheque_relation": cheque_relation, "chequebank_name": chequebank_name, "cheque_count": cheque_count, "chequeID": chequeID, "cus_profile_id": cus_profile_id, "reqId": req_id, "cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -3420,6 +3429,7 @@ function chequeinfoList() {
 $(document).on("click", "#goldInfoBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let gold_sts = $("#gold_sts").val();
     let gold_type = $("#gold_type").val();
     let Purity = $("#Purity").val();
@@ -3432,7 +3442,7 @@ $(document).on("click", "#goldInfoBtn", function () {
         $.ajax({
             url: 'verificationFile/documentation/gold_info_submit.php',
             type: 'POST',
-            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id },
+            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id, "cus_id": cus_id },
             cache: false,
             success: function (response) {
 
@@ -3554,6 +3564,7 @@ $('#documentnameCheck').hide();$('#documentdetailsCheck').hide();$('#documentTyp
 //Document info submit button action
 $('#docInfoBtn').click(function(){
     let req_id = $("#req_id").val();
+    let cus_id = $("#cus_id").val();
     let doc_id = $("#doc_info_id").val();
     let doc_name = $("#document_name").val();
     let doc_details = $("#document_details").val();
@@ -3567,7 +3578,7 @@ $('#docInfoBtn').click(function(){
 
         $.ajax({
             url:'verificationFile/documentation/doc_info_submit.php',
-            data:{'req_id':req_id,'doc_id':doc_id,'doc_name':doc_name,'doc_details':doc_details,'doc_type':doc_type,'doc_holder':doc_holder,'holder_name':holder_name,'relation_name':relation_name,'relation':relation},
+            data:{'cus_id':cus_id,'req_id':req_id,'doc_id':doc_id,'doc_name':doc_name,'doc_details':doc_details,'doc_type':doc_type,'doc_holder':doc_holder,'holder_name':holder_name,'relation_name':relation_name,'relation':relation},
             dataType:'json',
             type:'POST',
             cache: false,
