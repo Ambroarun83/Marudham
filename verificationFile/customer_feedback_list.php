@@ -14,8 +14,8 @@ include '../ajaxconfig.php';
     <tbody>
 
         <?php
-        $req_id = $_POST['reqId'];
-        $feedbackDetails = $connect->query("SELECT * FROM `verification_cus_feedback` where req_id = '$req_id' order by id desc");
+        $cus_id = $_POST['cus_id'];
+        $feedbackDetails = $connect->query("SELECT * FROM `verification_cus_feedback` where cus_id = '$cus_id' order by id desc");
 
         $i = 1;
         while ($feedback = $feedbackDetails->fetch()) {

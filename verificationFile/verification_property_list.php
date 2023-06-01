@@ -15,8 +15,8 @@ include '../ajaxconfig.php';
     <tbody>
 
         <?php
-        $req_id = $_POST['reqId'];
-        $prptyInfo = $connect->query("SELECT * FROM `verification_property_info` where req_id = '$req_id' order by id desc");
+        $cus_id = $_POST['cus_id'];
+        $prptyInfo = $connect->query("SELECT * FROM `verification_property_info` where cus_id = '$cus_id' order by id desc");
 
         $i = 1;
         while ($property = $prptyInfo->fetch()) {

@@ -132,10 +132,10 @@ if(sizeof($getCustomerProfile) > 0 ){
 	$area_confirm_subarea = $getCustomerProfile['area_confirm_subarea'];
 	$area_group = $getCustomerProfile['area_group'];
 	$area_line = $getCustomerProfile['area_line'];
-	$communication = $getCustomerProfile['communication'];
-	$com_audio = $getCustomerProfile['com_audio'];
-	$verification_person = $getCustomerProfile['verification_person'];
-	$verification_location = $getCustomerProfile['verification_location'];
+	// $communication = $getCustomerProfile['communication'];
+	// $com_audio = $getCustomerProfile['com_audio'];
+	// $verification_person = $getCustomerProfile['verification_person'];
+	// $verification_location = $getCustomerProfile['verification_location'];
 	$cp_cus_status = $getCustomerProfile['cus_status'];
 	$how_to_know = $getCustomerProfile['how_to_know'];
 	$loan_count = $getCustomerProfile['loan_count'];
@@ -247,6 +247,10 @@ if (sizeof($getCusInfoForLoanCal) > 0) {
 	$cus_pic_lc = $getCusInfoForLoanCal['cus_pic'];
 	$cus_data_lc = $getCusInfoForLoanCal['cus_type'];
 	$mobile_lc = $getCusInfoForLoanCal['mobile'];
+	$communication = $getCusInfoForLoanCal['communication'];
+	$com_audio = $getCusInfoForLoanCal['com_audio'];
+	$verification_person = $getCusInfoForLoanCal['verification_person'];
+	$verification_location = $getCusInfoForLoanCal['verification_location'];
 	}
 }
 //Get Loan Calculation info for edit
@@ -1186,7 +1190,7 @@ input:checked + .slider:before {
 
 
 				<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
-				<div class="card">
+				<!-- <div class="card">
 					<div class="card-header"> Verfication Info  <span style="font-weight:bold" class="" ></span></div>
 					<div class="card-body">
 						<div class="row">
@@ -1234,7 +1238,7 @@ input:checked + .slider:before {
 						</div>
 
 					</div>
-				</div>
+				</div> -->
 				<!-- ///////////////////////////////////////////////  Verification Info  END /////////////////////////////////////////////////////////// -->
 
 			</div>
@@ -1882,6 +1886,7 @@ input:checked + .slider:before {
 			<input type="hidden" name="due_period_upd" id="due_period_upd" value="<?php if (isset($due_period_lc)) {echo $due_period_lc;} ?>" />
 			<input type="hidden" name="doc_charge_upd" id="doc_charge_upd" value="<?php if (isset($doc_charge_lc)) {echo $doc_charge_lc;} ?>" />
 			<input type="hidden" name="proc_fee_upd" id="proc_fee_upd" value="<?php if (isset($proc_fee_lc)) {echo $proc_fee_lc;} ?>" />
+			<input type="hidden" name="cus_profile_id" id="cus_profile_id" value="<?php if (isset($cus_Tableid)) {echo $cus_Tableid;} ?>" />
 			<!-- Row start -->
 			<div class="row gutters">
 				<!-- Request Info -->
@@ -2005,6 +2010,63 @@ input:checked + .slider:before {
 						</div>
 					</div>
 					<!-- Personal info END -->
+
+				<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
+				<div class="card">
+					<div class="card-header"> Verfication Info  <span style="font-weight:bold" class="" ></span></div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Communitcation"> Communitcation </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus">
+										<option value=""> Select Communication </option>
+										<option value="0" <?php if(isset($communication) and $communication == '0') echo 'selected'; ?>> Phone </option>
+										<option value="1" <?php if(isset($communication) and $communication == '1') echo 'selected'; ?>> Direct </option>
+									</select>
+									<span class="text-danger" style='display:none' id='communicationCheck'>Please Select communication </span>
+								</div>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" <?php if(isset($communication)){if($communication == '1'){?> style="display: none;" <?php }} else{ ?> style="display: none;" <?php }?>  id="verifyaudio">
+                                <div class="form-group">
+                                    <label for="Communitcation"> Audio </label>
+                                    <input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if(isset($com_audio)){ echo $com_audio; }?>">
+									<input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="57">
+                                    <?php if(isset($communication)){if($communication == '0'){ ?>
+                                        <a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>
+                                    <?php }}?>
+                                </div>
+                            </div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Verificationperson"> Verification person </label> <span class="required">*</span>
+									<input type="hidden" id="verifyPerson" name="verifyPerson" >
+									<select type="text" class="form-control" name="verification_person" id="verification_person" multiple >
+										<option value=""> Select Verification Person </option>
+									</select>
+									<span class="text-danger" style='display:none' id='verificationPersonCheck'>Please Select Verification Person </span>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Verificationlocation"> Verification location </label> <span class="required">*</span>
+									<select type="text" class="form-control" name="verification_location" id="verification_location">
+										<option value=""> Select Verification location </option>
+										<option value="0" <?php if(isset($verification_location) and $verification_location == '0') echo 'selected'; ?>> On Spot </option>
+										<option value="1" <?php if(isset($verification_location) and $verification_location == '1') echo 'selected'; ?>> Customer Spot </option>
+									</select>
+									<span class="text-danger" style='display:none' id='verificationLocCheck'>Please Select Verification Location </span>
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- ///////////////////////////////////////////////  Verification Info  END /////////////////////////////////////////////////////////// -->
+
 					<!-- Loan Info Start -->
 					<div class="card">
 						<div class="card-header">Loan Info <span style="font-weight:bold" class="" ></span></div>

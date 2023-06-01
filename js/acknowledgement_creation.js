@@ -939,13 +939,13 @@ function fingerprintTable(){//To Get family member's name are required for scann
 
 function resetFamDetails() {
 
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     var guarentor_name = $('#guarentor_name_upd').val();
 
     $.ajax({
         url: 'verificationFile/verification_fam_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#famList").empty();
@@ -956,7 +956,7 @@ function resetFamDetails() {
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -986,7 +986,7 @@ function resetFamDetails() {
 
 // Verification Info Person 
 function verificationPerson() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     var verification_person_upd = $('#verification_person_upd').val();
     var values = verification_person_upd.split(',');
@@ -995,7 +995,7 @@ function verificationPerson() {
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
             personMultiselect.clearStore();
@@ -1022,11 +1022,11 @@ function verificationPerson() {
 }
 
 function resetGroupDetails() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_group_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#GroupList").empty();
@@ -1037,11 +1037,11 @@ function resetGroupDetails() {
 
 ///////////////////////// Property Info Starts /////////////////////////////////////
 function resetPropertyinfoList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_property_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#propertyList").empty();
@@ -1052,11 +1052,11 @@ function resetPropertyinfoList() {
 
 ////////////////////////////// Bank Info ///////////////////////////////////////////////////////
 function resetbankinfoList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_bank_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#bankResetTable").empty();
@@ -1067,12 +1067,12 @@ function resetbankinfoList() {
 
 ////////////////////////// KYC Info ////////////////////////////////////////////////
 function resetkycinfoList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#kycListTable").empty();
@@ -1373,11 +1373,11 @@ function getAreaBasedSubArea(area) {
 
 //Customer Feedback Modal 
 function feedbackList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/customer_feedback_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#feedbackListTable").empty();
@@ -1451,12 +1451,12 @@ function getstaffCode() {
 
 function endorseHolderName() {
 
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -1481,12 +1481,12 @@ function endorseHolderName() {
 }
 
 function mortgageHolderName() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -1511,12 +1511,12 @@ function mortgageHolderName() {
 }
 
 function docHolderName() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -1563,11 +1563,11 @@ function resetsignInfo() {
 }
 
 function signTypeRelation() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -1652,15 +1652,39 @@ function chequeinfoList() {
     });
 }
 
+function resetchequeInfo() {
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/documentation/cheque_info_upd_reset.php',
+        type: 'POST',
+        data: { "reqId": req_id },
+        cache: false,
+        success: function (html) {
+            $('#chequeColumnDiv').empty();
+            $("#chequeTable").empty();
+            $("#chequeTable").html(html);
+
+            $("#holder_type").val('');
+            $("#holder_name").val('');
+            $("#holder_relationship_name").val('');
+            $("#cheque_relation").val('');
+            $("#chequebank_name").val('');
+            $("#cheque_count").val('');
+            $("#cheque_upd").val('');
+            $("#chequeID").val('');
+
+        }
+    });
+}
 
 
 
 function chequeHolderName() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -2355,8 +2379,20 @@ function onLoadEditFunction() {//On load for Loan Calculation edit
     $('input#due_start_from').removeAttr('readonly');
     $('input#refresh_cal').removeAttr('readonly');
     $('select#collection_method').removeAttr('disabled');
+    $('select#Communitcation_to_cus').removeAttr('disabled');
+    $('select#verification_location').removeAttr('disabled');
     // },100)
 }
+
+$('#Communitcation_to_cus').change(function () {
+    let com = $(this).val();
+
+    if (com == '0') {
+        $('#verifyaudio').show();
+    } else {
+        $('#verifyaudio').hide();
+    }
+})
 
 $('#loan_category').change(function () {
     var loan_cat = $(this).val();
@@ -3335,7 +3371,19 @@ function loan_calc_validation() {
         $('#collection_methodCheck').hide();
     }
 
-
+    //Verification Person Multi select store
+    var person_list = personMultiselect.getValue();
+    var person = '';
+    for (var i = 0; i < person_list.length; i++) {
+        if (i > 0) {
+            person += ',';
+        }
+        person += person_list[i].value;
+    }
+    var arr = person.split(",");
+    arr.sort(function (a, b) { return a - b });
+    var sortedStr = arr.join(",");
+    $('#verifyPerson').val(sortedStr);
 
 }
 
