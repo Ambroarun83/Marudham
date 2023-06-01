@@ -16,8 +16,8 @@ include '../ajaxconfig.php';
     </thead>
     <tbody>
         <?php
-        $reqId = $_POST['reqId'];
-        $grpInfo = $connect->query("SELECT * FROM `verification_group_info` where req_id='$reqId' order by id desc");
+        $cus_id = $_POST['cus_id'];
+        $grpInfo = $connect->query("SELECT * FROM `verification_group_info` where cus_id='$cus_id' order by id desc");
 
         $i = 1;
         while ($grp = $grpInfo->fetch()) {

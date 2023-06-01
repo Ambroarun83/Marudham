@@ -334,12 +334,12 @@ function getCustomerLoanCounts(){
 
 //Guarentor Name
 function guarentorName() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     var guarentor_name = $('#guarentor_name_upd').val();
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 

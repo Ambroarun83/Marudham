@@ -155,6 +155,41 @@ if (sizeof($getRequestData) > 0) {
 
 //////////////////////// Customer Profile Info ///////////////////////////////
 
+$getCustomerReg = $userObj->getCustomerRegister($mysqli, $cus_id);
+if (sizeof($getCustomerReg) > 0) {
+	for ($i = 0; $i < sizeof($getCustomerReg); $i++) {
+		$how_to_know 			= $getCustomerReg['how_to_know'];
+		$loan_count 			= $getCustomerReg['loan_count'];
+		$first_loan_date 		= $getCustomerReg['first_loan_date'];
+		$travel_with_company 	= $getCustomerReg['travel_with_company'];
+		$monthly_income 		= $getCustomerReg['monthly_income'];
+		$other_income 			= $getCustomerReg['other_income'];
+		$support_income 		= $getCustomerReg['support_income'];
+		$commitment 			= $getCustomerReg['commitment'];
+		$monthly_due_capacity 	= $getCustomerReg['monthly_due_capacity'];
+		$loan_limit 			= $getCustomerReg['loan_limit'];
+		$about_customer 		= $getCustomerReg['about_customer'];
+		$residential_type 		= $getCustomerReg['residential_type'];
+		$residential_details 	= $getCustomerReg['residential_details'];
+		$residential_address 	= $getCustomerReg['residential_address'];
+		$residential_native_address = $getCustomerReg['residential_native_address'];
+		$cp_occupation_type 		= $getCustomerReg['occupation_info_occ_type'];
+		$occupation_details 		= $getCustomerReg['occupation_details'];
+		$occupation_income 			= $getCustomerReg['occupation_income'];
+		$occupation_address 		= $getCustomerReg['occupation_address'];
+		$area_confirm_type 			= $getCustomerReg['area_confirm_type'];
+		$area_confirm_state 		= $getCustomerReg['area_confirm_state'];
+		$area_confirm_district 		= $getCustomerReg['area_confirm_district'];
+		$area_confirm_taluk 		= $getCustomerReg['area_confirm_taluk'];
+		$area_confirm_area 			= $getCustomerReg['area_confirm_area'];
+		$area_confirm_subarea 		= $getCustomerReg['area_confirm_subarea'];
+		$area_group 				= $getCustomerReg['area_group'];
+		$area_line 					= $getCustomerReg['area_line'];
+		$area_name 					= $getCustomerReg['area_name'];
+		$sub_area_name 					= $getCustomerReg['sub_area_name'];
+}
+}
+
 $getCustomerProfile = $userObj->getCustomerProfile($mysqli, $idupd);
 
 if (sizeof($getCustomerProfile) > 0) {
@@ -175,44 +210,44 @@ if (sizeof($getCustomerProfile) > 0) {
 	$guarentor_photo = $getCustomerProfile['guarentor_photo'];
 	$cus_type = $getCustomerProfile['cus_type'];
 	$cus_exist_type = $getCustomerProfile['cus_exist_type'];
-	$residential_type = $getCustomerProfile['residential_type'];
-	$residential_details = $getCustomerProfile['residential_details'];
-	$residential_address = $getCustomerProfile['residential_address'];
-	$residential_native_address = $getCustomerProfile['residential_native_address'];
-	$cp_occupation_type = $getCustomerProfile['occupation_type'];
-	$occupation_details = $getCustomerProfile['occupation_details'];
-	$occupation_income = $getCustomerProfile['occupation_income'];
-	$occupation_address = $getCustomerProfile['occupation_address'];
-	$area_confirm_type = $getCustomerProfile['area_confirm_type'];
-	$area_confirm_state = $getCustomerProfile['area_confirm_state'];
-	$area_confirm_district = $getCustomerProfile['area_confirm_district'];
-	$area_confirm_taluk = $getCustomerProfile['area_confirm_taluk'];
-	$area_confirm_area = $getCustomerProfile['area_confirm_area'];
-	$area_confirm_subarea = $getCustomerProfile['area_confirm_subarea'];
-	$area_group = $getCustomerProfile['area_group'];
-	$area_line = $getCustomerProfile['area_line'];
+	// $residential_type = $getCustomerProfile['residential_type'];
+	// $residential_details = $getCustomerProfile['residential_details'];
+	// $residential_address = $getCustomerProfile['residential_address'];
+	// $residential_native_address = $getCustomerProfile['residential_native_address'];
+	// $cp_occupation_type = $getCustomerProfile['occupation_type'];
+	// $occupation_details = $getCustomerProfile['occupation_details'];
+	// $occupation_income = $getCustomerProfile['occupation_income'];
+	// $occupation_address = $getCustomerProfile['occupation_address'];
+	// $area_confirm_type = $getCustomerProfile['area_confirm_type'];
+	// $area_confirm_state = $getCustomerProfile['area_confirm_state'];
+	// $area_confirm_district = $getCustomerProfile['area_confirm_district'];
+	// $area_confirm_taluk = $getCustomerProfile['area_confirm_taluk'];
+	// $area_confirm_area = $getCustomerProfile['area_confirm_area'];
+	// $area_confirm_subarea = $getCustomerProfile['area_confirm_subarea'];
+	// $area_group = $getCustomerProfile['area_group'];
+	// $area_line = $getCustomerProfile['area_line'];
 	$communication = $getCustomerProfile['communication'];
 	$com_audio = $getCustomerProfile['com_audio'];
 	$verification_person = $getCustomerProfile['verification_person'];
 	$verification_location = $getCustomerProfile['verification_location'];
 	$cp_cus_status = $getCustomerProfile['cus_status'];
-	$how_to_know = $getCustomerProfile['how_to_know'];
-	$loan_count = $getCustomerProfile['loan_count'];
-	$first_loan_date = $getCustomerProfile['first_loan_date'];
-	$travel_with_company = $getCustomerProfile['travel_with_company'];
-	$monthly_income = $getCustomerProfile['monthly_income'];
-	$other_income = $getCustomerProfile['other_income'];
-	$support_income = $getCustomerProfile['support_income'];
-	$commitment = $getCustomerProfile['commitment'];
-	$monthly_due_capacity = $getCustomerProfile['monthly_due_capacity'];
-	$loan_limit = $getCustomerProfile['loan_limit'];
+	// $how_to_know = $getCustomerProfile['how_to_know'];
+	// $loan_count = $getCustomerProfile['loan_count'];
+	// $first_loan_date = $getCustomerProfile['first_loan_date'];
+	// $travel_with_company = $getCustomerProfile['travel_with_company'];
+	// $monthly_income = $getCustomerProfile['monthly_income'];
+	// $other_income = $getCustomerProfile['other_income'];
+	// $support_income = $getCustomerProfile['support_income'];
+	// $commitment = $getCustomerProfile['commitment'];
+	// $monthly_due_capacity = $getCustomerProfile['monthly_due_capacity'];
+	// $loan_limit = $getCustomerProfile['loan_limit'];
 	// $cus_character = $getCustomerProfile['cus_character'];
 	// $approach = $getCustomerProfile['approach'];
 	// $relationship = $getCustomerProfile['relationship'] ;
 	// $attitude = $getCustomerProfile['attitude'] ;
 	// $behavior = $getCustomerProfile['behavior'] ;
 	// $incident_remark  = $getCustomerProfile['incident_remark'] ;
-	$about_customer = $getCustomerProfile['about_customer'];
+	// $about_customer = $getCustomerProfile['about_customer'];
 }
 
 //////////////////////// Customer Profile Info END ///////////////////////////////
@@ -385,15 +420,9 @@ if (sizeof($getLoanCalculation) > 0) {
 	<div class="col-md-12">
 		<div class="form-group" style="text-align:center">
 			<!-- <label for=''style="font-size:16px" >Verification:</label><br><br> -->
-			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile"></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile <?php if (isset($customer_profile_sts)) {
-																																									if ($customer_profile_sts == 10) { ?> <span class="icon-done"></span> <?php }
-																																																																	} ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="documentation" value="documentation"></input><label for='documentation'>&nbsp;&nbsp; Documentation <?php if (isset($document_sts)) {
-																																									if ($document_sts == 11) { ?> <span class="icon-done"></span> <?php }
-																																																													} ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="loan_calc" value="loan_calc"></input><label for='loan_calc'>&nbsp;&nbsp; Loan Calculation <?php if (isset($cus_status_lc)) {
-																																							if ($cus_status_lc == 12) { ?> <span class="icon-done"></span> <?php }
-																																																											} ?> </label>
+			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile"></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile <?php if (isset($customer_profile_sts)) {if ($customer_profile_sts == 10) { ?> <span class="icon-done"></span> <?php }} ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="verification_type" id="documentation" value="documentation"></input><label for='documentation'>&nbsp;&nbsp; Documentation <?php if (isset($document_sts)) {if ($document_sts == 11) { ?> <span class="icon-done"></span> <?php }} ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="verification_type" id="loan_calc" value="loan_calc"></input><label for='loan_calc'>&nbsp;&nbsp; Loan Calculation <?php if (isset($cus_status_lc)) {if ($cus_status_lc == 12) { ?> <span class="icon-done"></span> <?php }} ?> </label>
 		</div>
 	</div>
 
@@ -597,9 +626,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 										<div class="form-group" style="margin-left: 30px;">
 											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
-											<input type="hidden" name="cus_image" id="cus_image" value="<?php if (isset($pic)) {
-																											echo $pic;
-																										} ?>">
+											<input type="hidden" name="cus_image" id="cus_image" value="<?php if (isset($pic)) {echo $pic;} ?>">
 											<img id='imgshow' class="img_show" src='img/avatar.png' />
 											<input type="file" class="form-control" id="pic" name="pic" tabindex='18' value='<?php if (isset($pic)) {
 																																	echo $pic;
@@ -2747,7 +2774,7 @@ if (sizeof($getLoanCalculation) > 0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel">Add Group Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeGroupModal()">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetgroupInfo()">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -2851,7 +2878,7 @@ if (sizeof($getLoanCalculation) > 0) {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeGroupModal()">Close</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetgroupInfo()">Close</button>
 			</div>
 		</div>
 	</div>

@@ -1127,7 +1127,7 @@ function resetFamInfo() {
     let cus_id = $('#cus_id').val();
 
     $.ajax({
-        url: 'updateFile/update_fam_reset.php',
+        url: 'verificationFile/verification_fam_reset.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -1155,7 +1155,7 @@ function resetFamDetails() {
     let cus_id = $('#cus_id').val();
 
     $.ajax({
-        url: 'updateFile/update_fam_list.php',
+        url: 'verificationFile/verification_fam_list.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -1255,7 +1255,7 @@ resetFamDetails();
 function propertyHolder() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/property_holder.php',
+        url: 'verificationFile/property_holder.php',
         type: 'post',
         data: { "cus_id": cus_id },
         dataType: 'json',
@@ -1355,7 +1355,7 @@ $(document).on("click", "#propertyInfoBtn", function () {
 function resetpropertyInfo() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/update_property_reset.php',
+        url: 'verificationFile/verification_property_reset.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -1435,7 +1435,7 @@ $("body").on("click", "#verification_property_delete", function () {
 function resetPropertyinfoList() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/update_property_list.php',
+        url: 'verificationFile/verification_property_list.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -1542,7 +1542,7 @@ $(document).on("click", "#bankInfoBtn", function () {
 function resetbankInfo() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/update_bank_reset.php',
+        url: 'verificationFile/verification_bank_reset.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -1623,7 +1623,7 @@ $("body").on("click", "#verification_bank_delete", function () {
 function resetbankinfoList() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/update_bank_list.php',
+        url: 'verificationFile/verification_bank_list.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -1729,11 +1729,11 @@ $(document).on("click", "#kycInfoBtn", function () {
 });
 
 function resetkycInfo() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_kyc_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#kycTable").empty();
@@ -1810,12 +1810,12 @@ $("body").on("click", "#verification_kyc_delete", function () {
 });
 
 function resetkycinfoList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#kycListTable").empty();
@@ -2294,7 +2294,7 @@ $(document).on("click", "#feedbackBtn", function () {
 function resetfeedback() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/customer_feedback_reset.php',
+        url: 'verificationFile/customer_feedback_reset.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -2313,7 +2313,7 @@ function resetfeedback() {
 function feedbackList() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/customer_feedback_list.php',
+        url: 'verificationFile/customer_feedback_list.php',
         type: 'POST',
         data: { "cus_id": cus_id },
         cache: false,
@@ -2484,42 +2484,6 @@ function validation() {
     } else {
         $('#loanLimitCheck').hide();
     }
-    // if (cus_Character == '') {
-    //     event.preventDefault();
-    //     $('#CharacterCheck').show();
-    // } else {
-    //     $('#CharacterCheck').hide();
-    // }
-    // if (cus_Approach == '') {
-    //     event.preventDefault();
-    //     $('#ApproachCheck').show();
-    // } else {
-    //     $('#ApproachCheck').hide();
-    // }
-    // if (cus_Relationship == '') {
-    //     event.preventDefault();
-    //     $('#cusRelationshipCheck').show();
-    // } else {
-    //     $('#cusRelationshipCheck').hide();
-    // }
-    // if (cus_Attitude == '') {
-    //     event.preventDefault();
-    //     $('#cusAttitudeCheck').show();
-    // } else {
-    //     $('#cusAttitudeCheck').hide();
-    // }
-    // if (cus_Behavior == '') {
-    //     event.preventDefault();
-    //     $('#cusBehaviorCheck').show();
-    // } else {
-    //     $('#cusBehaviorCheck').hide();
-    // }
-    // if (cus_Incidents_Remarks == '') {
-    //     event.preventDefault();
-    //     $('#cusIncidentsRemarksCheck').show();
-    // } else {
-    //     $('#cusIncidentsRemarksCheck').hide();
-    // }
     if (about_cus == '') {
         event.preventDefault();
         $('#aboutcusCheck').show();
@@ -2560,48 +2524,6 @@ function validation() {
             }
         }
     })
-    // $.ajax({
-    //     url: 'verificationFile/validateModals.php',
-    //     data: { 'req_id': req_id, 'table': 'verification_group_info' },
-    //     type: 'post',
-    //     cache: false,
-    //     success: function (response) {
-    //         if (response == "0") {
-    //             event.preventDefault();
-    //             $('#group_infoCheck').show();
-    //         } else if (response == "1") {
-    //             $('#group_infoCheck').hide();
-    //         }
-    //     }
-    // })
-    // $.ajax({
-    //     url: 'verificationFile/validateModals.php',
-    //     data: { 'req_id': req_id, 'table': 'verification_property_info' },
-    //     type: 'post',
-    //     cache: false,
-    //     success: function (response) {
-    //         if (response == "0") {
-    //             event.preventDefault();
-    //             $('#property_infoCheck').show();
-    //         } else if (response == "1") {
-    //             $('#property_infoCheck').hide();
-    //         }
-    //     }
-    // })
-    // $.ajax({
-    //     url: 'verificationFile/validateModals.php',
-    //     data: { 'req_id': req_id, 'table': 'verification_bank_info' },
-    //     type: 'post',
-    //     cache: false,
-    //     success: function (response) {
-    //         if (response == "0") {
-    //             event.preventDefault();
-    //             $('#bank_infoCheck').show();
-    //         } else if (response == "1") {
-    //             $('#bank_infoCheck').hide();
-    //         }
-    //     }
-    // })
     $.ajax({
         url: 'verificationFile/validateModals.php',
         data: { 'req_id': req_id, 'table': 'verification_kyc_info' },
@@ -2636,7 +2558,7 @@ function endorseHolderName(){
     let cus_id = $('#cus_id').val();
 
     $.ajax({
-        url: 'updateFile/familyName.php',
+        url: 'verificationFile/verificationFam.php',
         type: 'post',
         data: { "cus_id": cus_id },
         dataType: 'json',
@@ -2666,7 +2588,7 @@ function mortgageHolderName(){
     let cus_id = $('#cus_id').val();
 
     $.ajax({
-        url: 'updateFile/familyName.php',
+        url: 'verificationFile/verificationFam.php',
         type: 'post',
         data: { "cus_id": cus_id },
         dataType: 'json',
@@ -2696,7 +2618,7 @@ function docHolderName(){
     let cus_id = $('#cus_id').val();
 
     $.ajax({
-        url: 'updateFile/familyName.php',
+        url: 'verificationFile/verificationFam.php',
         type: 'post',
         data: { "cus_id": cus_id },
         dataType: 'json',
@@ -2750,7 +2672,7 @@ function resetsignInfo() {
 function signTypeRelation() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/familyName.php',
+        url: 'verificationFile/verificationFam.php',
         type: 'post',
         data: { "cus_id": cus_id },
         dataType: 'json',
@@ -2842,7 +2764,7 @@ function resetchequeInfo() {
 function chequeHolderName() {
     let cus_id = $('#cus_id').val();
     $.ajax({
-        url: 'updateFile/familyName.php',
+        url: 'verificationFile/verificationFam.php',
         type: 'post',
         data: { "cus_id": cus_id },
         dataType: 'json',

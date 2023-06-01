@@ -4550,6 +4550,10 @@ function updateUser($mysqli,$id,$user_id){
 					$detailrecords['cus_pic'] = $row['cus_pic'];
 					$detailrecords['cus_type'] = $row['cus_type'];
 					$detailrecords['mobile'] = $row['mobile1'];
+					$detailrecords['communication'] = $row['communication'];
+					$detailrecords['com_audio'] = $row['com_audio'];
+					$detailrecords['verification_person'] = $row['verification_person'];
+					$detailrecords['verification_location'] = $row['verification_location'];
 					$i++;
 				}
 			}
@@ -4698,6 +4702,29 @@ function updateUser($mysqli,$id,$user_id){
 				if(isset($_POST['loan_cal_id'])){//To check Whether it is for update 
 					$loan_cal_id = $_POST['loan_cal_id'];
 				}
+
+				if(isset($_POST['Communitcation_to_cus'])){
+					$Communitcation_to_cus = $_POST['Communitcation_to_cus'];
+				}
+	
+				if(!empty($_FILES['verification_audio']['name']))
+				{
+					$verify_audio = $_FILES['verification_audio']['name'];
+					$audio_temp = $_FILES['verification_audio']['tmp_name'];
+					$audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
+					move_uploaded_file($audio_temp, $audiofolder);
+				}else{
+					$verify_audio = $_POST['verification_audio_upd'];
+				}
+				if(isset($_POST['verifyPerson'])){
+					$verifyPerson = $_POST['verifyPerson'];
+				}
+				if(isset($_POST['verification_location'])){
+					$verification_location = $_POST['verification_location'];
+				}
+				if(isset($_POST['cus_profile_id'])){
+					$cus_profile_id = $_POST['cus_profile_id'];
+				}
 		
 				if($loan_cal_id > 0 or $loan_cal_id != ''){
 					$updateQry = $mysqli->query("UPDATE acknowlegement_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
@@ -4740,6 +4767,10 @@ function updateUser($mysqli,$id,$user_id){
 					}
 		
 				}
+
+				$cusUpd = "UPDATE `acknowlegement_customer_profile` SET `communication`='".strip_tags($Communitcation_to_cus)."',`com_audio`='".strip_tags($verify_audio)."',`verification_person`='".strip_tags($verifyPerson)."',`verification_location`='".strip_tags($verification_location)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `id`='".strip_tags($cus_profile_id)."' ";
+
+				$updateCus = $mysqli->query($cusUpd) or die("Error ".$mysqli->error);
 		}
 
 		function getAckLoanCalculationForVerification($mysqli,$req_id){
@@ -5546,10 +5577,18 @@ function updateUser($mysqli,$id,$user_id){
 					$detailrecords['cus_status'] = $row['cus_status'];
 					$result = $mysqli->query("SELECT area_name FROM area_list_creation where area_id = '".$row['area_confirm_area']."' and status=0 and area_enable = 0");
 					$area = $result ->fetch_assoc();
-					$detailrecords['area_name'] = $area['area_name'];
+					if($mysqli->affected_rows>0){
+						$detailrecords['area_name'] = $area['area_name'];
+					}else{
+						$detailrecords['area_name'] = '';
+					}
 					$subarearesult = $mysqli->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$row['area_confirm_subarea']."' and status=0 and sub_area_enable = 0");
 					$subarea = $subarearesult ->fetch_assoc();
+					if($mysqli->affected_rows>0){
 					$detailrecords['sub_area_name'] = $subarea['sub_area_name'];
+					}else{
+						$detailrecords['sub_area_name'] = '';
+					}
 					
 					// $reqResult = $mysqli->query("SELECT `req_id` FROM `request_creation` WHERE `cus_id`='".$row['cus_id']."' ");
                     // // $request_id = '';

@@ -1175,12 +1175,12 @@ $(document).on("click", "#submitFamInfoBtn", function () {
 });
 
 function resetFamInfo() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_fam_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#updatedFamTable").empty();
@@ -1203,12 +1203,12 @@ function resetFamInfo() {
 
 function resetFamDetails() {
 
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_fam_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#famList").empty();
@@ -1296,12 +1296,12 @@ $("body").on("click", "#verification_fam_delete", function () {
 
 //FamilyModal Close
 function closeFamModal() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     var guarentor_name = $('#guarentor_name_upd').val();
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -1334,7 +1334,7 @@ function closeFamModal() {
 
 // Verification Info Person 
 function verificationPerson() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     var verification_person_upd = $('#verification_person_upd').val();
     var values = verification_person_upd.split(',');
@@ -1343,7 +1343,7 @@ function verificationPerson() {
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
             personMultiselect.clearStore();
@@ -1485,12 +1485,12 @@ $(document).on("click", "#groupInfoBtn", function () {
 });
 
 function resetgroupInfo() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_grp_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#GroupTable").empty();
@@ -1508,11 +1508,11 @@ function resetgroupInfo() {
 }
 
 function resetGroupDetails() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_group_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#GroupList").empty();
@@ -1617,11 +1617,11 @@ $("body").on("click", "#verification_grp_delete", function () {
 ///////////////////////// Property Info Starts /////////////////////////////////////
 
 function propertyHolder() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/property_holder.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -1720,11 +1720,11 @@ $(document).on("click", "#propertyInfoBtn", function () {
 });
 
 function resetpropertyInfo() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_property_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#propertyTable").empty();
@@ -1830,11 +1830,11 @@ $("body").on("click", "#verification_property_delete", function () {
 // }
 
 function resetPropertyinfoList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_property_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { 'cus_id': cus_id },
         cache: false,
         success: function (html) {
             $("#propertyList").empty();
@@ -1930,11 +1930,11 @@ $(document).on("click", "#bankInfoBtn", function () {
 
 
 function resetbankInfo() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_bank_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { 'cus_id': cus_id },
         cache: false,
         success: function (html) {
             $("#bankTable").empty();
@@ -2042,11 +2042,11 @@ $("body").on("click", "#verification_bank_delete", function () {
 
 
 function resetbankinfoList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_bank_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#bankResetTable").empty();
@@ -2083,7 +2083,7 @@ $(document).on("click", "#kycInfoBtn", function () {
     formdata.append('reqId', req_id)
     formdata.append('cus_id', cus_id)
 
-    if (proofof != "" && proof_type != "" && proof_number != "" && file != undefined && req_id != "") {
+    if (proofof != "" && proof_type != "" && proof_number != "" && req_id != "") {
         $.ajax({
             url: 'verificationFile/verification_kyc_submit.php',
             type: 'POST',
@@ -2141,22 +2141,22 @@ $(document).on("click", "#kycInfoBtn", function () {
             $('#proofnoCheck').hide();
         }
 
-        if (file == undefined || file == '') {
-            $('#proofUploadCheck').show();
-        } else {
-            $('#proofUploadCheck').hide();
-        }
+        // if (file == undefined || file == '') {
+        //     $('#proofUploadCheck').show();
+        // } else {
+        //     $('#proofUploadCheck').hide();
+        // }
 
     }
 
 });
 
 function resetkycInfo() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_kyc_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#kycTable").empty();
@@ -2233,12 +2233,12 @@ $("body").on("click", "#verification_kyc_delete", function () {
 });
 
 function resetkycinfoList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#kycListTable").empty();
@@ -2652,11 +2652,11 @@ $(document).on("click", "#feedbackBtn", function () {
 });
 
 function resetfeedback() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/customer_feedback_reset.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#feedbackTable").empty();
@@ -2665,17 +2665,18 @@ function resetfeedback() {
             $("#feedback_label").val('');
             $("#cus_feedback").val('');
             $("#feedbackID").val('');
+            $("#feedback_remark").val('');
 
         }
     });
 }
 
 function feedbackList() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/customer_feedback_list.php',
         type: 'POST',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#feedbackListTable").empty();
@@ -3039,12 +3040,12 @@ function getstaffCode() {
 
 function endorseHolderName(){
 
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -3069,12 +3070,12 @@ function endorseHolderName(){
 }
 
 function mortgageHolderName(){
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -3099,12 +3100,12 @@ function mortgageHolderName(){
 }
 
 function docHolderName(){
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
 
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -3224,11 +3225,11 @@ function resetsignInfo() {
 
 // Signed Doc 
 function signTypeRelation() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
@@ -3374,11 +3375,11 @@ function resetchequeInfo() {
 
 //Cheque Holder Name 
 function chequeHolderName() {
-    let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "cus_id": cus_id },
         dataType: 'json',
         success: function (response) {
 
