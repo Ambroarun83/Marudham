@@ -4,6 +4,24 @@ if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd']; //Customer ID.
 }
 
+if (isset($_POST['submit_update_cus_profile']) && $_POST['submit_update_cus_profile'] != '') {
+
+	$addUpdateCustomerProfile = $userObj->addUpdateCustomerProfile($mysqli, $userid);
+?>
+	<script>
+		alert('Customer Profile Updated');
+	</script>
+	<?php
+}
+
+if(isset($_POST['update_documentation']) && $_POST['update_documentation'] != ''){
+
+	$updateDoc = $userObj->addUpdateDocumentation($mysqli, $userid);
+?>
+	<script> alert('Documentation Details Updated'); </script>
+<?php
+}
+
 //////////////////////// Customer Profile Info ///////////////////////////////
 $getCustomerReg = $userObj->getCustomerRegister($mysqli, $idupd);
 if (sizeof($getCustomerReg) > 0) {
@@ -70,6 +88,7 @@ $documentationInfo = $userObj->getDocumentDetails($mysqli, $idupd);
 if (sizeof($documentationInfo) > 0) {
 	$document_table_id = $documentationInfo['doc_Tableid'];
 	$document_sts = $documentationInfo['cus_status'];
+	$doc_id = $documentationInfo['doc_id'];
 	$mortgage_process = $documentationInfo['mortgage_process'];
 	$Propertyholder_type = $documentationInfo['Propertyholder_type'];
 	$Propertyholder_name = $documentationInfo['Propertyholder_name'];
@@ -107,6 +126,68 @@ if (sizeof($documentationInfo) > 0) {
 		object-fit: cover;
 		background-color: white;
 	}
+
+	.switch {
+	position: relative;
+	display: inline-block;
+	width: 60px;
+	height: 34px;
+	left: 10px;
+}
+
+.switch input { 
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 26px;
+	width: 26px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+input:checked + .slider {
+	background-color: #009688;
+}
+
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+	-webkit-transform: translateX(26px);
+	-ms-transform: translateX(26px);
+	transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+
 </style>
 
 <!-- Page header start -->
@@ -170,7 +251,7 @@ if (sizeof($documentationInfo) > 0) {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cus_id)) {echo $cus_id;} ?>' tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number">
+												<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cus_id)) {echo $cus_id;} ?>' tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" readonly>
 												<span class="text-danger" style='display:none' id='cusidCheck'>Please Enter Customer ID</span>
 											</div>
 										</div>
@@ -811,7 +892,7 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-md-12 ">
 						<div class="text-right">
-							<button type="submit" name="submit_verification" id="submit_verification" class="btn btn-primary" value="Submit" tabindex="60"><span class="icon-check"></span>&nbsp;Submit</button>
+							<button type="submit" name="submit_update_cus_profile" id="submit_update_cus_profile" class="btn btn-primary" value="Submit" tabindex="60"><span class="icon-check"></span>&nbsp;Submit</button>
 							<button type="reset" class="btn btn-outline-secondary" tabindex="61">Clear</button>
 						</div>
 					</div>
@@ -829,6 +910,7 @@ if (sizeof($documentationInfo) > 0) {
 		<form id="cus_doc" name="cus_doc" action="" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="req_id_doc" id="req_id_doc" value="<?php if (isset($req_id)) {echo $req_id;} ?>">
 			<input type="hidden" name="doc_table_id" id="doc_table_id" value="<?php if (isset($document_table_id)) {echo $document_table_id;} ?>">
+			<input type="hidden" name="doc_id" id="doc_id" value="<?php if (isset($doc_id)) {echo $doc_id;} ?>">
 			<input type="hidden" name="en_relation_name" id="en_relation_name" value="<?php if (isset($ownername_relationship_name)) {echo $ownername_relationship_name;} ?>">
 			<input type="hidden" name="mortgage_relation_name" id="mortgage_relation_name"	value="<?php if (isset($Propertyholder_relationship_name)) {echo $Propertyholder_relationship_name;} ?>">
 			<input type="hidden" name="docrelation_name" id="docrelation_name" value="<?php if (isset($docholder_relationship_name)) {echo $docholder_relationship_name;} ?>">
@@ -1340,7 +1422,7 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-md-12 ">
 						<div class="text-right">
-							<button type="submit" name="submit_documentation" id="submit_documentation" class="btn btn-primary" value="Submit" tabindex="46"><span class="icon-check"></span>&nbsp;Submit</button>
+							<button type="submit" name="update_documentation" id="update_documentation" class="btn btn-primary" value="Submit" tabindex="46"><span class="icon-check"></span>&nbsp;Submit</button>
 							<button type="reset" class="btn btn-outline-secondary" tabindex="47">Clear</button>
 						</div>
 					</div>

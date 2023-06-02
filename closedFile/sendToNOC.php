@@ -11,6 +11,7 @@ if (isset($_SESSION['userid'])) {
 //Closed  Completed And Move to NOC = 21.
 
     $selectIC = $con->query("UPDATE request_creation set cus_status = 21, update_login_id = $userid WHERE  cus_id = '".$cus_id."' && cus_status = '20' ") or die('Error on Request Table');
+    $selectIC = $con->query("UPDATE customer_register set cus_status = 21 WHERE cus_id = '".$cus_id."' ")or die('Error on Customer Table');
     $selectIC = $con->query("UPDATE in_verification set cus_status = 21, update_login_id = $userid WHERE cus_id = '".$cus_id."' && cus_status = '20' ")or die('Error on inVerification Table');
     $selectIC = $con->query("UPDATE `in_approval` SET `cus_status`= 21,`update_login_id`= $userid WHERE  cus_id = '".$cus_id."' && cus_status = '20' ") or die('Error on in_approval Table');
     $selectIC = $con->query("UPDATE `in_acknowledgement` SET `cus_status`= 21,`update_login_id`= $userid WHERE  cus_id = '".$cus_id."' && cus_status = '20' ") or die('Error on in_acknowledgement Table');
