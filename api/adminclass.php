@@ -5603,13 +5603,14 @@ function updateUser($mysqli,$id,$user_id){
 		}
 			// Get Documentation Info.
 		public function getDocumentDetails($mysqli,$cus_id){
-			$qry = $mysqli->query("SELECT * FROM verification_documentation where cus_id_doc = $cus_id ");
+			$qry = $mysqli->query("SELECT * FROM acknowlegement_documentation where cus_id_doc = $cus_id ");
 			$detailrecords = array();
 			$i=0;
 			if($mysqli->affected_rows>0){
 				while($row = $qry->fetch_assoc()){
 					$detailrecords['doc_Tableid'] = $row['id'];
 					$detailrecords['req_id'] = $row['req_id'];
+					$detailrecords['doc_id'] = $row['doc_id'];
 					$detailrecords['mortgage_process'] = $row['mortgage_process'];
 					$detailrecords['Propertyholder_type'] = $row['Propertyholder_type'];
 					$detailrecords['Propertyholder_name'] = $row['Propertyholder_name'];
@@ -5652,7 +5653,7 @@ function updateUser($mysqli,$id,$user_id){
 					$detailrecords['document_name'] = $row['document_name'];
 					$detailrecords['document_details'] = $row['document_details'];
 					$detailrecords['document_type'] = $row['document_type'];
-					// $detailrecords['doc_info_upload'] = $row['doc_info_upload'];
+					$detailrecords['doc_info_upload'] = $row['doc_info_upload'];
 					$detailrecords['document_holder'] = $row['document_holder'];
 					$detailrecords['docholder_name'] = $row['docholder_name'];
 					$detailrecords['docholder_relationship_name'] = $row['docholder_relationship_name'];
@@ -5780,6 +5781,289 @@ function updateUser($mysqli,$id,$user_id){
 			$deleteQry = "UPDATE bank_creation set status='1', delete_login_id='".strip_tags($userid)."' WHERE id  = '".strip_tags($id)."' ";
 			$runQry = $mysqli->query($deleteQry) or die("Error in delete query".$mysqli->error);
 		}
+		
+		// Add Update
+        public function addUpdateCustomerProfile($mysqli, $userid){
+
+            if(isset($_POST['cus_id'])){
+				$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);
+            }
+            if(isset($_POST['cus_name'])){
+                $cus_name = $_POST['cus_name'];
+            }
+            if(isset($_POST['dob'])){
+				$dob =  $_POST['dob'];
+            }
+            if(isset($_POST['age'])){
+				$age = $_POST['age'];
+            }
+			if(isset($_POST['gender'])){
+				$gender = $_POST['gender'];
+			}
+			if(isset($_POST['state'])){
+				$state = $_POST['state'];
+			}
+			if(isset($_POST['district'])){
+				$district = $_POST['district'];
+			}
+			if(isset($_POST['taluk'])){
+				$taluk = $_POST['taluk'];
+			}
+			if(isset($_POST['area'])){
+				$area = $_POST['area'];
+			}
+			if(isset($_POST['sub_area'])){
+				$sub_area = $_POST['sub_area'];
+			}
+			if(isset($_POST['address'])){
+				$address = $_POST['address'];
+			}
+            if(isset($_POST['mobile1'])){
+                $mobile1 = $_POST['mobile1'];
+            }
+            $mobile2='';
+            if(isset($_POST['mobile2'])){
+                $mobile2 = $_POST['mobile2'];
+            }
+            if(isset($_POST['father_name'])){
+                $father_name = $_POST['father_name'];
+            }
+            if(isset($_POST['mother_name'])){
+                $mother_name = $_POST['mother_name'];
+            }
+            if(isset($_POST['marital'])){
+                $marital = $_POST['marital'];
+            }
+			$spouse_name='';
+            if(isset($_POST['spouse_name'])){
+                $spouse_name = $_POST['spouse_name'];
+            }
+            if(isset($_POST['occupation_type'])){
+                $occupation_type = $_POST['occupation_type'];
+            }
+            if(isset($_POST['occupation'])){
+                $occupation = $_POST['occupation'];
+            }
+            if(isset($_POST['cus_res_type'])){
+                $cus_res_type = $_POST['cus_res_type'];
+            }
+            if(isset($_POST['cus_res_details'])){
+                $cus_res_details = $_POST['cus_res_details'];
+            }
+            if(isset($_POST['cus_res_address'])){
+                $cus_res_address = $_POST['cus_res_address'];
+            }
+            if(isset($_POST['cus_res_native'])){
+                $cus_res_native = $_POST['cus_res_native'];
+            }
+            if(isset($_POST['cus_occ_type'])){
+                $cus_occ_type = $_POST['cus_occ_type'];
+            }
+            if(isset($_POST['cus_occ_detail'])){
+                $cus_occ_detail = $_POST['cus_occ_detail'];
+            }
+            if(isset($_POST['cus_occ_income'])){
+                $cus_occ_income = $_POST['cus_occ_income'];
+            }
+            if(isset($_POST['cus_occ_address'])){
+                $cus_occ_address = $_POST['cus_occ_address'];
+            }
+            if(isset($_POST['area_cnfrm'])){
+                $area_cnfrm = $_POST['area_cnfrm'];
+            }
+            if(isset($_POST['area_state'])){
+                $area_state = $_POST['area_state'];
+            }
+            if(isset($_POST['area_district'])){
+                $area_district = $_POST['area_district'];
+            }
+            if(isset($_POST['area_taluk'])){
+                $area_taluk = $_POST['area_taluk'];
+            }
+            if(isset($_POST['area_confirm'])){
+                $area_confirm = $_POST['area_confirm'];
+            }
+            if(isset($_POST['area_sub_area'])){
+                $area_sub_area = $_POST['area_sub_area'];
+            }
+            if(isset($_POST['area_group'])){
+                $area_group = $_POST['area_group'];
+            }
+            if(isset($_POST['area_line'])){
+                $area_line = $_POST['area_line'];
+            }
+
+            if(isset($_POST['cus_how_know'])){
+                $cus_how_know = $_POST['cus_how_know'];
+            }
+            if(isset($_POST['cus_loan_count'])){
+                $cus_loan_count = $_POST['cus_loan_count'];
+            }
+            if(isset($_POST['cus_frst_loanDate'])){
+                $cus_frst_loanDate = $_POST['cus_frst_loanDate'];
+            }
+            if(isset($_POST['cus_travel_cmpy'])){
+                $cus_travel_cmpy = $_POST['cus_travel_cmpy'];
+            }
+            if(isset($_POST['cus_monthly_income'])){
+                $cus_monthly_income = $_POST['cus_monthly_income'];
+            }
+            if(isset($_POST['cus_other_income'])){
+                $cus_other_income = $_POST['cus_other_income'];
+            }
+            if(isset($_POST['cus_support_income'])){
+                $cus_support_income = $_POST['cus_support_income'];
+            }
+            if(isset($_POST['cus_Commitment'])){
+                $cus_Commitment = $_POST['cus_Commitment'];
+            }
+            if(isset($_POST['cus_monDue_capacity'])){
+                $cus_monDue_capacity = $_POST['cus_monDue_capacity'];
+            }
+            if(isset($_POST['cus_loan_limit'])){
+                $cus_loan_limit = $_POST['cus_loan_limit'];
+            }
+            if(isset($_POST['about_cus'])){
+                $about_cus = $_POST['about_cus'];
+            }
+
+			$updateCus = "UPDATE `customer_register` SET `customer_name`='".strip_tags($cus_name)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`gender`='".strip_tags($gender)."',`state`='".strip_tags($state)."',`district`='".strip_tags($district)."',`taluk`='".strip_tags($taluk)."',`area`='".strip_tags($area)."',`sub_area`='".strip_tags($sub_area)."',`address`='".strip_tags($address)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`father_name`='".strip_tags($father_name)."',`mother_name`='".strip_tags($mother_name)."',`marital`='".strip_tags($marital)."',`spouse`='".strip_tags($spouse_name)."',`occupation_type`='".strip_tags($occupation_type)."',`occupation`='".strip_tags($occupation)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_info_occ_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
+            $insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
+
+        }
+
+
+		// Add Update Documentation
+		public function addUpdateDocumentation($mysqli, $userid){
+			if(isset($_POST['doc_id'])){
+				$doc_id = $_POST['doc_id'];
+			}
+			if(isset($_POST['mortgage_process'])){
+				$mortgage_process = $_POST['mortgage_process'];
+			}
+			if(isset($_POST['Propertyholder_type'])){
+				$Propertyholder_type = $_POST['Propertyholder_type'];
+			}
+			$Propertyholder_name='';
+			if(isset($_POST['Propertyholder_name'])){
+				$Propertyholder_name = $_POST['Propertyholder_name'];
+			}
+			$Propertyholder_relationship_name='';
+			if(isset($_POST['Propertyholder_relationship_name'])){
+				$Propertyholder_relationship_name = $_POST['Propertyholder_relationship_name'];
+			}
+			if(isset($_POST['doc_property_relation'])){
+				$doc_property_relation = $_POST['doc_property_relation'];
+			}
+			if(isset($_POST['doc_property_pype'])){
+				$doc_property_pype = $_POST['doc_property_pype'];
+			}
+			if(isset($_POST['doc_property_measurement'])){
+				$doc_property_measurement = $_POST['doc_property_measurement'];
+			}
+			if(isset($_POST['doc_property_location'])){
+				$doc_property_location = $_POST['doc_property_location'];
+			}
+			if(isset($_POST['doc_property_value'])){
+				$doc_property_value = $_POST['doc_property_value'];
+			}
+			if(isset($_POST['mortgage_name'])){
+				$mortgage_name = $_POST['mortgage_name'];
+			}
+			if(isset($_POST['mortgage_dsgn'])){
+				$mortgage_dsgn = $_POST['mortgage_dsgn'];
+			}
+			if(isset($_POST['mortgage_nuumber'])){
+				$mortgage_nuumber = $_POST['mortgage_nuumber'];
+			}
+			if(isset($_POST['reg_office'])){
+				$reg_office = $_POST['reg_office'];
+			}
+			if(isset($_POST['mortgage_value'])){
+				$mortgage_value = $_POST['mortgage_value'];
+			}
+			if(isset($_POST['mortgage_document'])){
+				$mortgage_document = $_POST['mortgage_document'];    
+			}
+			$pendingchk = '';
+			if(!empty($_FILES['mortgage_document_upd']['name']))
+			{
+				$mortgage_document_upd = $_FILES['mortgage_document_upd']['name'];
+				$upd_temp = $_FILES['mortgage_document_upd']['tmp_name'];
+				$folder="uploads/verification/mortgage_doc/".$mortgage_document_upd ;
+				move_uploaded_file($upd_temp, $folder);
+			}else{
+				$mortgage_document_upd = $_POST['mortgage_doc_upd']; 
+			}
+			if(isset($_POST['pendingchk'])){
+				$pendingchk = $_POST['pendingchk'];
+				$mortgage_document_upd = '';
+			} 
+			if(isset($_POST['endorsement_process'])){
+				$endorsement_process = $_POST['endorsement_process'];
+			}
+			if(isset($_POST['owner_type'])){
+				$owner_type = $_POST['owner_type'];
+			}
+			$owner_name ='';
+			if(isset($_POST['owner_name'])){
+				$owner_name = $_POST['owner_name'];
+			}
+			$ownername_relationship_name='';
+			if(isset($_POST['ownername_relationship_name'])){
+				$ownername_relationship_name = $_POST['ownername_relationship_name'];
+			}
+			if(isset($_POST['en_relation'])){
+				$en_relation = $_POST['en_relation'];
+			}
+			if(isset($_POST['vehicle_type'])){
+				$vehicle_type = $_POST['vehicle_type'];
+			}
+			if(isset($_POST['vehicle_process'])){
+				$vehicle_process = $_POST['vehicle_process'];
+			}
+			if(isset($_POST['en_Company'])){
+				$en_Company = $_POST['en_Company'];
+			}
+
+			if(isset($_POST['en_Model'])){
+				$en_Model = $_POST['en_Model'];
+			}
+			if(isset($_POST['vehicle_reg_no'])){
+				$vehicle_reg_no = $_POST['vehicle_reg_no'];
+			}
+			if(isset($_POST['endorsement_name'])){
+				$endorsement_name = $_POST['endorsement_name'];
+			}
+			if(isset($_POST['en_RC'])){
+				$en_RC = $_POST['en_RC'];
+			}
+			$endorsependingchk ='';
+			if(!empty($_FILES['Rc_document_upd']['name']))
+			{
+				$Rc_document_upd = $_FILES['Rc_document_upd']['name'];
+				$upd_temp = $_FILES['Rc_document_upd']['tmp_name'];
+				$folder="uploads/verification/endorsement_doc/".$Rc_document_upd ;
+				move_uploaded_file($upd_temp, $folder);
+			}else{
+				$Rc_document_upd = $_POST['rc_doc_upd']; 
+			}
+			if(isset($_POST['endorsependingchk'])){
+				$endorsependingchk = $_POST['endorsependingchk']; 
+				$Rc_document_upd = '';
+			}
+			if(isset($_POST['en_Key'])){
+				$en_Key = $_POST['en_Key'];
+			}
+	
+			if(isset($_POST['doc_table_id'])){
+				$doc_table_id = $_POST['doc_table_id'];
+			}
+
+				$update_doc = " UPDATE `acknowlegement_documentation` SET `mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',`mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',`mortgage_document`='".strip_tags($mortgage_document)."',`mortgage_document_upd`='".strip_tags($mortgage_document_upd)."',`mortgage_document_pending`='".strip_tags($pendingchk)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',`Rc_document_upd`='".strip_tags($Rc_document_upd)."',`Rc_document_pending`='".strip_tags($endorsependingchk)."',`en_Key`='".strip_tags($en_Key)."',`status`='0',`submitted`='1',`update_login_id`='".$userid."' WHERE `doc_id`='".strip_tags($doc_id)."' ";
+
+				$updDocResult = $mysqli->query($update_doc) or die("Error ".$mysqli->error);
+	}
 		
 		
 }//Class End

@@ -597,6 +597,8 @@ $(document).ready(function () {
     });
 
     // Mortgage Info
+    $('#mortgageprocessCheck').hide(); $('#propertyholdertypeCheck').hide(); $('#docpropertytypeCheck').hide(); $('#docpropertymeasureCheck').hide(); $('#docpropertylocCheck').hide(); $('#docpropertyvalueCheck').hide();
+    $('#mortgagenameCheck').hide(); $('#mortgagedsgnCheck').hide(); $('#mortgagenumCheck').hide(); $('#regofficeCheck').hide(); $('#mortgagevalueCheck').hide(); $('#mortgagedocCheck').hide(); $('#mortgagedocUpdCheck').hide();
     $('#mortgage_process').change(function () {
 
         let process = $(this).val();
@@ -686,7 +688,37 @@ $(document).ready(function () {
         });
     });
 
+        //Mortgage Document upload show/hide based on select YES/NO.
+        var pend = document.querySelector('#pendingchk');
+        $('#mortgage_document').change(function () {
+            var docupd = $(this).val();
+    
+            if (docupd == '0') {
+                $('#docUpd').show();
+                $('#pendingchk').removeAttr('checked')
+    
+            } else {
+                $('#mortgage_document_upd').val('');
+                $('#docUpd').hide();
+                pend.checked = true;
+            }
+        })
+    
+        //when Mortgage Document pending is Checked then document will empty and Doc is NO////
+        $('#pendingchk').click(function () {
+    
+            if (pend.checked == true) {
+                $('#mortgage_document_upd').val('');
+                $('#mortgage_document').val('1');
+                $('#docUpd').hide();
+            } else {
+                $('#mortgage_document').val('0');
+                $('#docUpd').show();
+            }
+        })
+
     //Endrosement Info 
+    $('#endorsementprocessCheck').hide(); $('#ownertypeCheck').hide(); $('#vehicletypeCheck').hide(); $('#vehicleprocessCheck').hide(); $('#enCompanyCheck').hide(); $('#enModelCheck').hide(); $('#vehicle_reg_noCheck').hide(); $('#endorsementnameCheck').hide(); $('#enRCCheck').hide(); $('#enKeyCheck').hide(); $('#rcdocUpdCheck').hide();
     $('#endorsement_process').change(function () {
 
         let process = $(this).val();
@@ -774,6 +806,32 @@ $(document).ready(function () {
         });
     });
 
+    var enpend = document.querySelector('#endorsependingchk');
+    $('#endorsependingchk').click(function () {
+
+        if (enpend.checked == true) {
+            $('#RC_document_upd').val('');
+            $('#en_RC').val('1');
+            $('#RCdocUpd').hide();
+        } else {
+            $('#en_RC').val('0');
+            $('#RCdocUpd').show();
+        }
+    })
+
+    $('#en_RC').change(function () {
+        var rcupd = $(this).val();
+
+        if (rcupd == '0') {
+            $('#RCdocUpd').show();
+            enpend.checked = false;
+
+        } else {
+            $('#RC_document_upd').val('');
+            $('#RCdocUpd').hide();
+            enpend.checked = true;
+        }
+    })
 
     $('#document_holder').change(function () {
         let type = $(this).val();
@@ -3211,23 +3269,17 @@ $('#submit_documentation').click(function () {
 
 function doc_submit_validation() {
 
-    var cus_id_doc = $('#cus_id_doc').val(); var mortgage_process = $('#mortgage_process').val(); var Propertyholder_type = $('#Propertyholder_type').val(); var doc_property_pype = $('#doc_property_pype').val(); var doc_property_measurement = $('#doc_property_measurement').val(); var doc_property_location = $('#doc_property_location').val(); var doc_property_value = $('#doc_property_value').val();
-    var endorsement_process = $('#endorsement_process').val(); var owner_type = $('#owner_type').val(); var vehicle_type = $('#vehicle_type').val(); var vehicle_process = $('#vehicle_process').val();
-    var en_Company = $('#en_Company').val(); var en_Model = $('#en_Model').val();  var document_name = $('#document_name').val(); var document_details = $('#document_details').val(); var document_type = $('#document_type').val(); var document_holder = $('#document_holder').val();
-    var req_id = $('#req_id').val();
+    var mortgage_process = $('#mortgage_process').val(); var Propertyholder_type = $('#Propertyholder_type').val(); var doc_property_pype = $('#doc_property_pype').val(); var doc_property_measurement = $('#doc_property_measurement').val(); var doc_property_location = $('#doc_property_location').val(); var doc_property_value = $('#doc_property_value').val();
+    var mortgage_name = $('#mortgage_name').val(); var mortgage_dsgn = $('#mortgage_dsgn').val(); var mortgage_nuumber = $('#mortgage_nuumber').val(); var reg_office = $('#reg_office').val(); var mortgage_value = $('#mortgage_value').val(); var mortgage_document = $('#mortgage_document').val();
 
-    if(cus_id_doc == ''){
-        Swal.fire({
-            timerProgressBar: true,
-            timer: 2000,
-            title: 'Please Complete Customer Profile!',
-            icon: 'error',
-            showConfirmButton: true,
-            confirmButtonColor: '#009688'
-        });
-        event.preventDefault();
-    }
-        
+    var endorsement_process = $('#endorsement_process').val(); var owner_type = $('#owner_type').val(); var vehicle_type = $('#vehicle_type').val(); var vehicle_process = $('#vehicle_process').val();
+    var en_Company = $('#en_Company').val(); var en_Model = $('#en_Model').val();
+
+
+    var vehicle_reg_no = $('#vehicle_reg_no').val();
+    var endorsement_name = $('#endorsement_name').val(); var en_RC = $('#en_RC').val(); var en_Key = $('#en_Key').val();
+
+
     if (mortgage_process == '') {
         event.preventDefault();
         $('#mortgageprocessCheck').show();
@@ -3266,42 +3318,42 @@ function doc_submit_validation() {
         } else {
             $('#docpropertyvalueCheck').hide();
         }
-        // if (mortgage_name == '') {
-        //     event.preventDefault();
-        //     $('#mortgagenameCheck').show();
-        // } else {
-        //     $('#mortgagenameCheck').hide();
-        // }
-        // if (mortgage_dsgn == '') {
-        //     event.preventDefault();
-        //     $('#mortgagedsgnCheck').show();
-        // } else {
-        //     $('#mortgagedsgnCheck').hide();
-        // }
-        // if (mortgage_nuumber == '') {
-        //     event.preventDefault();
-        //     $('#mortgagenumCheck').show();
-        // } else {
-        //     $('#mortgagenumCheck').hide();
-        // }
-        // if (reg_office == '') {
-        //     event.preventDefault();
-        //     $('#regofficeCheck').show();
-        // } else {
-        //     $('#regofficeCheck').hide();
-        // }
-        // if (mortgage_value == '') {
-        //     event.preventDefault();
-        //     $('#mortgagevalueCheck').show();
-        // } else {
-        //     $('#mortgagevalueCheck').hide();
-        // }
-        // if (mortgage_document == '') {
-        //     event.preventDefault();
-        //     $('#mortgagedocCheck').show();
-        // } else {
-        //     $('#mortgagedocCheck').hide();
-        // }
+        if (mortgage_name == '') {
+            event.preventDefault();
+            $('#mortgagenameCheck').show();
+        } else {
+            $('#mortgagenameCheck').hide();
+        }
+        if (mortgage_dsgn == '') {
+            event.preventDefault();
+            $('#mortgagedsgnCheck').show();
+        } else {
+            $('#mortgagedsgnCheck').hide();
+        }
+        if (mortgage_nuumber == '') {
+            event.preventDefault();
+            $('#mortgagenumCheck').show();
+        } else {
+            $('#mortgagenumCheck').hide();
+        }
+        if (reg_office == '') {
+            event.preventDefault();
+            $('#regofficeCheck').show();
+        } else {
+            $('#regofficeCheck').hide();
+        }
+        if (mortgage_value == '') {
+            event.preventDefault();
+            $('#mortgagevalueCheck').show();
+        } else {
+            $('#mortgagevalueCheck').hide();
+        }
+        if (mortgage_document == '') {
+            event.preventDefault();
+            $('#mortgagedocCheck').show();
+        } else {
+            $('#mortgagedocCheck').hide();
+        }
     }
 
 
@@ -3343,98 +3395,32 @@ function doc_submit_validation() {
         } else {
             $('#enModelCheck').hide();
         }
-        // if (vehicle_reg_no == '') {
-        //     event.preventDefault();
-        //     $('#vehicle_reg_noCheck').show();
-        // } else {
-        //     $('#vehicle_reg_noCheck').hide();
-        // }
-        // if (endorsement_name == '') {
-        //     event.preventDefault();
-        //     $('#endorsementnameCheck').show();
-        // } else {
-        //     $('#endorsementnameCheck').hide();
-        // }
-        // if (en_RC == '') {
-        //     event.preventDefault();
-        //     $('#enRCCheck').show();
-        // } else {
-        //     $('#enRCCheck').hide();
-        // }
-        // if (en_Key == '') {
-        //     event.preventDefault();
-        //     $('#enKeyCheck').show();
-        // } else {
-        //     $('#enKeyCheck').hide();
-        // }
+        if (vehicle_reg_no == '') {
+            event.preventDefault();
+            $('#vehicle_reg_noCheck').show();
+        } else {
+            $('#vehicle_reg_noCheck').hide();
+        }
+        if (endorsement_name == '') {
+            event.preventDefault();
+            $('#endorsementnameCheck').show();
+        } else {
+            $('#endorsementnameCheck').hide();
+        }
+        if (en_RC == '') {
+            event.preventDefault();
+            $('#enRCCheck').show();
+        } else {
+            $('#enRCCheck').hide();
+        }
+        if (en_Key == '') {
+            event.preventDefault();
+            $('#enKeyCheck').show();
+        } else {
+            $('#enKeyCheck').hide();
+        }
     }
 
-
-    // if (gold_info == '') {
-    //     event.preventDefault();
-    //     $('#goldCheck').show();
-    // } else {
-    //     $('#goldCheck').hide();
-    // }
-
-
-
-
-    // if (document_name == '') {
-    //     event.preventDefault();
-    //     $('#documentnameCheck').show();
-    // } else {
-    //     $('#documentnameCheck').hide();
-    // }
-    // if (document_details == '') {
-    //     event.preventDefault();
-    //     $('#documentdetailsCheck').show();
-    // } else {
-    //     $('#documentdetailsCheck').hide();
-    // }
-    // if (document_type == '') {
-    //     event.preventDefault();
-    //     $('#documentTypeCheck').show();
-    // } else {
-    //     $('#documentTypeCheck').hide();
-    // }
-    // if (document_holder == '') {
-    //     event.preventDefault();
-    //     $('#docholderCheck').show();
-    // } else {
-    //     $('#docholderCheck').hide();
-    // }
-
-
-    // $.ajax({
-    //     url: 'verificationFile/documentation/docValidationModal.php',
-    //     data: { 'req_id': req_id, 'table': 'signed_doc_info' },
-    //     type: 'post',
-    //     cache: false,
-    //     success: function (response) {
-    //         if (response == "0") {
-    //             event.preventDefault();
-    //             $('#signed_infoCheck').show();
-    //         } else if (response == "1") {
-    //             $('#signed_infoCheck').hide();
-    //         }
-    //     }
-    // })
-    // $.ajax({
-    //     url: 'verificationFile/documentation/docValidationModal.php',
-    //     data: { 'req_id': req_id, 'table': 'cheque_info' },
-    //     type: 'post',
-    //     cache: false,
-    //     success: function (response) {
-    //         if (response == "0") {
-    //             event.preventDefault();
-    //             $('#Cheque_infoCheck').show();
-    //         } else if (response == "1") {
-    //             $('#Cheque_infoCheck').hide();
-    //         }
-    //     }
-    // })
-
-
 }
+
 //////////////////////////////////////////////////// Documentation  END////////////////////////////////////////

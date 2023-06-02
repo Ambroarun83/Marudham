@@ -27,9 +27,9 @@ if($userid != 1){
 }
 
 if($userid == 1){
-    $query = 'SELECT * FROM customer_register '; 
+    $query = 'SELECT * FROM customer_register WHERE cus_status >= 13'; 
 }else{
-    $query = "SELECT * FROM customer_register  WHERE sub_area IN ($sub_area_list)";
+    $query = "SELECT * FROM customer_register  WHERE cus_status >= 13 && sub_area IN ($sub_area_list)";
 }
 
 $query1 = '';
