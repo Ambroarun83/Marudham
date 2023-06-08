@@ -80,18 +80,18 @@ $(document).ready(function(){
         $('#total_waiver').val(total_waiver)
     })
 
-    $('.pendingcalc').keyup(function(){ //Minus Pending && Payable amount 
-        var due = $('#due_amt_track').val();
-        var close = $('#pre_close_waiver').val();
-        var pending = $('#pend_amt').val();
-        var payable = $('#payableAmount').val();
+    // $('.pendingcalc').keyup(function(){ //Minus Pending && Payable amount 
+    //     var due = $('#due_amt_track').val();
+    //     var close = $('#pre_close_waiver').val();
+    //     var pending = $('#pend_amt').val();
+    //     var payable = $('#payableAmount').val();
 
-        var total = ((pending) ? parseInt(pending) : 0 ) - (((due) ? parseInt(due) : 0 ) + ((close) ? parseInt(close) : 0 ));
-        var totalpayable = ((payable) ? parseInt(payable) : 0 ) - (((due) ? parseInt(due) : 0 ) + ((close) ? parseInt(close) : 0 ));
-        $('#pending_amt').val(total);
-        $('#payable_amt').val(totalpayable);
+    //     var total = ((pending) ? parseInt(pending) : 0 ) - (((due) ? parseInt(due) : 0 ) + ((close) ? parseInt(close) : 0 ));
+    //     var totalpayable = ((payable) ? parseInt(payable) : 0 ) - (((due) ? parseInt(due) : 0 ) + ((close) ? parseInt(close) : 0 ));
+    //     $('#pending_amt').val(total);
+    //     $('#payable_amt').val(totalpayable);
 
-    });
+    // });
 
 
     //Collection Charge
