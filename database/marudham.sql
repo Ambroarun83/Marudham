@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2023 at 03:03 PM
+-- Generation Time: Jun 08, 2023 at 03:51 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -808,7 +808,10 @@ INSERT INTO `collection` (`coll_id`, `coll_code`, `req_id`, `cus_id`, `cus_name`
 (37, 'COL-108', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '2700', '42300', '450', '6300', '6750', '207', '0', '2', '', '', '0000-00-00', '2', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '1', NULL, NULL, '2023-05-26 18:28:03', '2023-05-26 18:28:03'),
 (38, 'COL-109', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '3150', '41850', '450', '5850', '6300', '207', '0', '1', '', '', '0000-00-00', '1', '2023-05-26 00:00:00', '900', '', '', '900', '', '', '', '', '29', NULL, NULL, '2023-06-06 18:25:41', '2023-05-26 18:28:15'),
 (39, 'COL-110', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '4050', '40950', '450', '8900', '9350', '310', '0', '1', '', '', '0000-00-00', '3', '2023-06-06 00:00:00', '1000', '', '', '1000', '', '', '', '', '28', NULL, NULL, '2023-06-06 09:41:42', '2023-06-06 09:41:42'),
-(40, 'COL-111', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '5050', '39950', '450', '8000', '8450', '301', '0', '1', '', '', '0000-00-00', '1', '2023-06-06 00:00:00', '900', '', '', '900', '', '', '', '', '28', NULL, NULL, '2023-06-06 09:41:55', '2023-06-06 09:41:55');
+(40, 'COL-111', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '5050', '39950', '450', '8000', '8450', '301', '0', '1', '', '', '0000-00-00', '1', '2023-06-06 00:00:00', '900', '', '', '900', '', '', '', '', '28', NULL, NULL, '2023-06-06 09:41:55', '2023-06-06 09:41:55'),
+(41, 'COL-112', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '5950', '39050', '450', '8450', '8900', '301', '0', '1', '', '', '0000-00-00', '1', '2023-06-07 00:00:00', '', '200', '', '200', '', '', '', '', '28', NULL, NULL, '2023-06-07 10:16:32', '2023-06-07 10:16:32'),
+(42, 'COL-113', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '5950', '39050', '450', '7750', '8200', '88', '0', '1', '', '', '0000-00-00', '2', '2023-06-07 00:00:00', '700', '', '', '700', '', '', '', '', '21', NULL, NULL, '2023-06-07 10:18:30', '2023-06-07 10:18:30'),
+(43, 'COL-114', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '6650', '38350', '450', '7550', '8000', '88', '0', '1', '', '', '0000-00-00', '2', '2023-06-07 00:00:00', '200', '', '', '200', '', '', '', '', '21', NULL, NULL, '2023-06-07 10:18:45', '2023-06-07 10:18:45');
 
 -- --------------------------------------------------------
 
@@ -970,6 +973,106 @@ INSERT INTO `ct_bank_collection` (`id`, `bank_id`, `credited_amt`, `insert_login
 (4, '3', '0', '28', '2023-06-06 15:06:31', '2023-06-06 15:06:31'),
 (5, '5', '124556', '21', '2023-06-06 15:13:09', '2023-06-06 15:13:09'),
 (6, '6', '23435', '21', '2023-06-06 15:13:18', '2023-06-06 15:13:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_bank_withdraw`
+--
+
+CREATE TABLE `ct_cr_bank_withdraw` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `db_ref_id` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_dae` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_bank_withdraw`
+--
+
+INSERT INTO `ct_cr_bank_withdraw` (`id`, `db_ref_id`, `remark`, `insert_login_id`, `update_login_id`, `created_date`, `updated_dae`) VALUES
+(4, '1', 'revv', '28', NULL, '2023-06-08 19:13:05', '2023-06-08 19:13:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_cash_deposit`
+--
+
+CREATE TABLE `ct_cr_cash_deposit` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `db_ref_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(10) NOT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_bank_deposit`
+--
+
+CREATE TABLE `ct_db_bank_deposit` (
+  `id` int(11) NOT NULL,
+  `to_bank_id` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amount` varchar(255) DEFAULT NULL,
+  `received` int(10) NOT NULL DEFAULT 1,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_bank_deposit`
+--
+
+INSERT INTO `ct_db_bank_deposit` (`id`, `to_bank_id`, `location`, `remark`, `amount`, `received`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(9, '5', 'Puducherry', 'check one', '60000', 1, '21', NULL, '2023-06-07 18:17:13', '2023-06-07 18:17:13'),
+(10, '6', 'Karur', 'check two', '25000', 1, '21', NULL, '2023-06-07 18:17:30', '2023-06-07 18:17:30'),
+(11, '3', 'Coimbatore', 'daily deposit', '75000', 1, '28', NULL, '2023-06-08 10:29:56', '2023-06-08 10:29:56'),
+(12, '3', 'Pondicherry', 'collection amt', '46800', 1, '28', NULL, '2023-06-08 11:50:04', '2023-06-08 11:50:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_cash_withdraw`
+--
+
+CREATE TABLE `ct_db_cash_withdraw` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `from_bank_id` varchar(255) DEFAULT NULL,
+  `cheque_no` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `received` varchar(10) NOT NULL DEFAULT '1',
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_cash_withdraw`
+--
+
+INSERT INTO `ct_db_cash_withdraw` (`id`, `ref_code`, `trans_id`, `from_bank_id`, `cheque_no`, `remark`, `amt`, `received`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'WD-100001', '234235436', '3', '24646756786', 'Charges collection', '8215', '0', '28', NULL, '2023-06-08 17:35:28', '2023-06-08 17:35:28'),
+(2, 'WD-100002', '24235345', '5', '578679867', 'Check', '6842', '1', '21', NULL, '2023-06-08 17:36:09', '2023-06-08 17:36:09'),
+(4, 'WD-100003', '3454', '3', '35456', 'Remark check', '65400', '0', '28', NULL, '2023-06-08 17:39:17', '2023-06-08 17:39:17'),
+(5, 'WD-100004', '36545675467', '6', '35672346234', 'bank id check', '45200', '1', '21', NULL, '2023-06-08 17:42:16', '2023-06-08 17:42:16');
 
 -- --------------------------------------------------------
 
@@ -1836,35 +1939,35 @@ INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`,
 ('18', '2023-05-22', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
 ('18', '2023-05-23', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
 ('18', '2023-05-24', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
-('11', '2023-05-07', '10.35', NULL, '0', '0', '2023-06-06 10:50:10', '2023-06-06 10:50:10'),
-('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-06-06 10:50:10', '2023-06-06 10:50:10'),
-('11', '2023-05-09', '10.35', NULL, '0', '0', '2023-06-06 10:50:10', '2023-06-06 10:50:10'),
-('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-06-06 10:50:10', '2023-06-06 10:50:10'),
-('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-06-06 10:50:10', '2023-06-06 10:50:10'),
-('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-06-06 10:50:10', '2023-06-06 10:50:10'),
-('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-06-06 10:50:10', '2023-06-06 10:50:10'),
-('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-17', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-18', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-19', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-20', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-21', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-22', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-23', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-24', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-25', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-27', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-28', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-29', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-30', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-05-31', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-06-01', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-06-02', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-06-03', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-06-04', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11'),
-('11', '2023-06-05', '10.35', NULL, '0', '0', '2023-06-06 10:50:11', '2023-06-06 10:50:11');
+('11', NULL, NULL, '2023-06-07', '200', '', '2023-06-07 10:16:32', '2023-06-07 10:16:32'),
+('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-06-07 10:18:35', '2023-06-07 10:18:35'),
+('11', '2023-05-09', '10.35', NULL, '0', '0', '2023-06-07 10:18:35', '2023-06-07 10:18:35'),
+('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-06-07 10:18:35', '2023-06-07 10:18:35'),
+('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-06-07 10:18:35', '2023-06-07 10:18:35'),
+('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-06-07 10:18:35', '2023-06-07 10:18:35'),
+('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-06-07 10:18:35', '2023-06-07 10:18:35'),
+('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-17', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-18', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-19', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-20', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-21', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-22', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-23', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-24', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-25', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-27', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-28', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-29', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-30', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-05-31', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-06-01', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-06-02', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-06-03', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-06-04', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36'),
+('11', '2023-06-05', '10.35', NULL, '0', '0', '2023-06-07 10:18:36', '2023-06-07 10:18:36');
 
 -- --------------------------------------------------------
 
@@ -2250,12 +2353,12 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `accountsmodule`, `cash_tally`, `bank_details`, `cash_tally_admin`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, '0', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
-(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '0', '0', '5,6', '1', '0', '1', '28', NULL, '2023-03-21 12:23:50', '2023-06-06 15:12:50'),
+(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '1', '0', '0', '5,6', '1', '0', '1', '28', NULL, '2023-03-21 12:23:50', '2023-06-07 14:55:46'),
 (24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '0', '1', '28', '1', '2023-03-21 15:12:31', '2023-05-26 18:53:10'),
 (25, NULL, NULL, 'Big show', NULL, '', 'bigshow@gmail.com', '123', '1', '12', '3', '', '', '1', '1,2', '', '1,2,3', '1,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '1', '0', '1', '25', NULL, '2023-03-31 12:03:21', '0000-00-00 00:00:00'),
 (27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '1', '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
 (28, NULL, NULL, 'Chithambaram', NULL, '', 'director@gmail.com', '123', '1', '11', '1', '', '', '1', '1,2', '', '1,2,3,4,5', '1,5,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '3', '0', '0', '1', '28', NULL, '2023-04-13 16:49:09', '2023-05-26 10:15:24'),
-(29, NULL, NULL, 'Gokul', NULL, '', 'goku', '123', '3', '5', '', '', '7', '1', '1,2', '30', '3,4', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '0', '1', '1', '1', '', '1', '0', '1', '1', NULL, '2023-05-22 15:27:11', '2023-05-25 14:55:39');
+(29, NULL, NULL, 'Gokul', NULL, '', 'goku', '123', '3', '5', '', '', '7', '1', '1,2', '30', '3,4', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '0', '1', '0', '1', '1', '1', '', '1', '0', '1', '1', NULL, '2023-05-22 15:27:11', '2023-06-07 10:17:40');
 
 -- --------------------------------------------------------
 
@@ -2787,6 +2890,30 @@ ALTER TABLE `ct_bank_collection`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_cr_bank_withdraw`
+--
+ALTER TABLE `ct_cr_bank_withdraw`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_cr_cash_deposit`
+--
+ALTER TABLE `ct_cr_cash_deposit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_bank_deposit`
+--
+ALTER TABLE `ct_db_bank_deposit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_cash_withdraw`
+--
+ALTER TABLE `ct_db_cash_withdraw`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_hand_collection`
 --
 ALTER TABLE `ct_hand_collection`
@@ -3119,7 +3246,7 @@ ALTER TABLE `closed_status`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=41;
+  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `collection_charges`
@@ -3150,6 +3277,30 @@ ALTER TABLE `concern_subject`
 --
 ALTER TABLE `ct_bank_collection`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_bank_withdraw`
+--
+ALTER TABLE `ct_cr_bank_withdraw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_cash_deposit`
+--
+ALTER TABLE `ct_cr_cash_deposit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `ct_db_bank_deposit`
+--
+ALTER TABLE `ct_db_bank_deposit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `ct_db_cash_withdraw`
+--
+ALTER TABLE `ct_db_cash_withdraw`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `ct_hand_collection`

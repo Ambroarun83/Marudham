@@ -118,7 +118,7 @@ $records = array();
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                 <div class='form-group'>
                     <label style="visibility: hidden;">Submit button</label><br>
-                    <input type="button" class="btn btn-primary" id= 'submit_rec' name='submit_rec' value="Submit" onclick="check2()">
+                    <input type="button" class="btn btn-primary" id= 'submit_rec' name='submit_rec' value="Submit" >
                 </div>
             </div>
             

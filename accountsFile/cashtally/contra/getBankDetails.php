@@ -18,9 +18,11 @@ if($values != ''){
 
     foreach ($bank_id_arr as $val){
 
-        $qry = $con->query("SELECT id,short_name,acc_no from bank_creation where id=$val");
+        $qry = $con->query("SELECT id,bank_name,short_name,acc_no from bank_creation where id=$val");
         while($row = $qry->fetch_assoc()){
             $records[$i]['bank_id'] = $row['id'];
+            $records[$i]['bank_fullname'] = $row['bank_name'];
+            $records[$i]['acc_no'] = $row['acc_no'];
             $records[$i]['bank_name'] = $row['short_name'] .' - '. substr($row['acc_no'],-5) ;
             $i++;
         }

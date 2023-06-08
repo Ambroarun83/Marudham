@@ -5,16 +5,14 @@ include('../../../ajaxconfig.php');
 
 $user_id = $_SESSION['userid'];
 
-$bank_id = $_POST['bank_id'];
 
-$qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposit bdep LEFT JOIN bank_creation bc on bdep.to_bank_id = bc.id where bdep.received = 1 
-    and bdep.to_bank_id = $bank_id  ");
+$qry = $con->query("SELECT bwed.*,bc.short_name,bc.acc_no from ct_db_cash_withdraw bwed LEFT JOIN bank_creation bc on bwed.from_bank_id = bc.id where bwed.received = 1");
 // 0 means recevied or entered in credit bank deposit. not used current date because any time can be cash deposited to bank 
 
 ?>
 
 
-<table class="table custom-table" id='cdTable'>
+<table class="table custom-table" id='bwdTable'>
     <thead>
         <tr>
             <th width='50'>S.No</th>
@@ -22,8 +20,6 @@ $qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposi
             <th>Tansaction ID</th>
             <th>Bank</th>
             <th>Account No</th>
-            <th>Location</th>
-            <th>Remark</th>
             <th>Amount</th>
             <th>Action</th>
         </tr>
@@ -31,26 +27,17 @@ $qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposi
     <tbody>
         <?php
             while($row = $qry->fetch_assoc()){
-                $qry1 = $con->query("SELECT * from ct_cr_cash_deposit where db_ref_id = '".$row['id']."' ");
-                if($qry1->num_rows > 0){
-                    $row1 = $qry1->fetch_assoc();
-                    $ref_id = $row1['ref_code'];
-                    $trans_id = $row1['trans_id'];
-                }else{$ref_id = '';$trans_id = '';}
+                
         ?>
             <tr>
                 <td></td>
-                <td><?php if($ref_id) echo $ref_id; ?></td>
-                <td><?php if($trans_id) echo $trans_id; ?></td>
+                <td><?php echo $row['ref_code']; ?></td>
+                <td><?php echo $row['trans_id']; ?></td>
                 <td><?php echo $row['short_name'];?></td>
                 <td><?php echo $row['acc_no'];?></td>
-                <td><?php echo $row['location'];?></td>
-                <td><?php echo $row['remark'];?></td>
-                <td><?php echo moneyFormatIndia($row['amount']);?></td>
+                <td><?php echo moneyFormatIndia($row['amt']);?></td>
                 <td>
-                    <?php if($qry1->num_rows == 0){ ?>
-                        <input type='button' id='' name='' class="btn btn-primary receive_cd" data-value = '<?php echo $row['id']; ?>' data-toggle="modal" data-target=".cd_modal" value='Receive' onclick="receivecdBtnClick(this)">
-                    <?php } ?>
+                    <input type='button' id='' name='' class="btn btn-primary receive_bwd" data-value = '<?php echo $row['id']; ?>' data-toggle="modal" data-target=".bwd_modal" value='Receive' onclick="receivebwdBtnClick(this)">
                 </td>
             </tr>
         <?php
@@ -62,8 +49,8 @@ $qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposi
 
 <script type='text/javascript'>
     $(function() {
-        $('#cdTable').DataTable({
-            "title":"Cash Deposit List",
+        $('#bwdTable').DataTable({
+            "title":"Cash Withdrawal List",
             'processing': true,
             'iDisplayLength': 5,
             "lengthMenu": [
