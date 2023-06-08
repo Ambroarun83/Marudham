@@ -1323,4 +1323,59 @@ if($current_page == 'cash_tally') { ?>
         });
     }
 
+
+////////// Show Loader if ajax function is called inside anywhere in entire project  ////////
+    
+    $(document).ajaxStart(function() {
+        showOverlayWithDelay();
+    });
+    
+    $(document).ajaxStop(function() {
+        hideOverlay();
+    });
+    
+    
+    var overlayTimer; // Variable to store the timer
+    
+    // Function to add the overlay after a delay
+    function showOverlayWithDelay() {
+        overlayTimer = setTimeout(function() {
+            showOverlay();
+        }, 500);
+    }
+
+    // Function to add the overlay
+    function showOverlay() {
+        var overlayDiv = document.createElement('div');
+        overlayDiv.classList.add('overlay');
+        document.body.appendChild(overlayDiv);
+    
+        var loaderDiv = document.createElement('div');
+        loaderDiv.classList.add('loader');
+        overlayDiv.appendChild(loaderDiv);
+    
+        var overlayText = document.createElement('span');
+        overlayText.classList.add('overlay-text');
+        overlayText.innerText = 'Please Wait';
+        overlayDiv.appendChild(overlayText);
+    }
+    
+    // Function to remove the overlay and clear the timer
+    function hideOverlay() {
+        clearTimeout(overlayTimer); // Clear the timer if it's still running
+        var overlayDiv = document.querySelector('.overlay');
+        if (overlayDiv) {
+            overlayDiv.remove();
+        }
+    }
+
+    // Function to remove the overlay
+    // function hideOverlay() {
+    //     var overlayDiv = document.querySelector('.overlay');
+    //     if (overlayDiv) {
+    //     overlayDiv.remove();
+    //     }
+    // }
+    
+
 </script>
