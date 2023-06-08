@@ -341,7 +341,7 @@ input[type="radio"]{
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel"> Cash Deposit</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closCdModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -351,9 +351,33 @@ input[type="radio"]{
 				</div>
 			</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+                <button type="button" class="btn btn-secondary" id='closeCdModal' data-dismiss="modal" onclick="closCdModal()">Close</button>
             </div>
         </div>
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Credit Cash Deposit Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Credit Bank Withdrawal Modal START ////////////////////////////////////////////////////////////////////// -->
+<div class="modal fade bwd_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Bank Withdrawal</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="getBankWithdrawalDetails()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body">
+				<div id="receivebwdAmtDiv">
+					
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='closebwdModal' data-dismiss="modal" onclick="getBankWithdrawalDetails()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Credit Bank Withdrawal Modal END ////////////////////////////////////////////////////////////////////// -->

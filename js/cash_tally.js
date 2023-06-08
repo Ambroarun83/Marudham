@@ -48,6 +48,10 @@ $(document).ready(function(){
                 // 5 means cash deposit and cash type is bank
                 $('.contra_card').show();
                 getCashDepositDetails(cash_type);
+            }else if(credit_type == 2 && cash_type == '0'){
+                // 2 means Bank Withdrawal and cash type is hand
+                $('.contra_card').show();
+                getBankWithdrawalDetails();
             }
             else{
                 
@@ -74,6 +78,7 @@ $(document).ready(function(){
                 // 7 means Cash Withdrawal and cash type is Bank cash
                 // it meanst, amount from bank has been withdrawal for hand use
                 $('.contra_card').show();
+                getCashWithdrawalDetails();
             }
         }
     })
@@ -396,9 +401,9 @@ function getBankCollectionDetails(bank_id){
 
 // /////////////////////// Contra  ///////////////////////////// //
 
+//inputs for bank deposit 
 function getBankDepositDetails(){
     var appendTxt = `
-        
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
             <div class="form-group">
                 <label for="to_bank_bdep">To Bank</label>
@@ -425,8 +430,8 @@ function getBankDepositDetails(){
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
             <div class="form-group">
                 <label for="amt_bdep">Amount</label>
-                <input type="number" id="amt_bdep" name="amt_bdep" class="form-control" placeholder="Please Enter amt">
-                <span class="text-danger" id='amt_bdepCheck' style="display:none">Please Enter amt</span>
+                <input type="number" id="amt_bdep" name="amt_bdep" class="form-control" placeholder="Please Enter Amount">
+                <span class="text-danger" id='amt_bdepCheck' style="display:none">Please Enter Amount</span>
             </div>
         </div>
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
@@ -441,7 +446,7 @@ function getBankDepositDetails(){
     $('#contraTableDiv').html(appendTxt);
 
     $.ajax({
-        url:'accountsFile/cashtally/contra/getBankDepositDetails.php',
+        url:'accountsFile/cashtally/contra/getBankDetails.php',
         data:{},
         dataType: 'json',
         type: 'post',
@@ -450,7 +455,7 @@ function getBankDepositDetails(){
             $('#to_bank_bdep').empty()
             $('#to_bank_bdep').append(`<option value=''>Select Bank Name</option>`)
             for(var i=0;i<response.length;i++){
-                $('#to_bank_bdep').append(`<option value='`+response[i]['bank_id']+`'>`+response[i]['bank_name']+`</option>`)
+                    $('#to_bank_bdep').append(`<option value='`+response[i]['bank_id']+`'>`+response[i]['bank_name']+`</option>`)
             }
         }
     }).then(function(){
@@ -492,16 +497,17 @@ function getBankDepositDetails(){
     })
 }
 
+//Bank deposit validation
 function validationBankDeposit(){
     var to_bank_bdep = $('#to_bank_bdep').val();
     var location_bdep = $('#location_bdep').val();
     var remark_bdep = $('#remark_bdep').val();
     var amt_bdep = $('#amt_bdep').val();
-    var retval = 0;
+    var response = 0;
 
     function validateField(value, fieldId) {
         if (value === '') {
-            retval = 1;
+            response = 1;
             event.preventDefault();
             $(fieldId).show();
         } else {
@@ -513,17 +519,18 @@ function validationBankDeposit(){
     validateField(location_bdep, '#location_bdepCheck');
     validateField(remark_bdep, '#remark_bdepCheck');
     validateField(amt_bdep, '#amt_bdepCheck');
-    return retval;
+    return response;
 }
 
+//get BAnk deposited amount detail table for Cash Deposit 
 function getCashDepositDetails(bank_id){
-    
     $.ajax({
         url: 'accountsFile/cashtally/contra/getCashDepositDetails.php',
         data:{'bank_id':bank_id},
         type: 'post',
         cache: false,
         success: function(response){
+            $('.contra_card_header').text('Contra - Cash Deposit')
             $('#contraTableDiv').removeClass('row')
             $('#contraTableDiv').empty()
             $('#contraTableDiv').html(response)
@@ -531,15 +538,335 @@ function getCashDepositDetails(bank_id){
     })
 }
 
-// function receivecdBtnClick(bdep_id){
-//     $.ajax({
-//         url:'accountsFile/cashtally/contra/receivecdAmtModal.php',
-//         data: {'bdep_id':bdep_id},
-//         type: 'post',
-//         cache: false,
-//         success: function(response){
-//             $('#receivecdAmtModal').empty();
-//             $('#receivecdAmtModal').html(response);
-//         }
-//     })
-// }
+//Open modal when receive button clicked
+function receivecdBtnClick(bdep_id1){
+    var bdep_id = $(bdep_id1).data('value');
+    $.ajax({
+        url:'accountsFile/cashtally/contra/receivecdAmtModal.php',
+        data: {'bdep_id':bdep_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#receivecdAmtDiv').empty();
+            $('#receivecdAmtDiv').html(response);
+        }
+    }).then(function(){
+        $('#submit_cd').off('click');
+        $('#submit_cd').click(function(){
+            var formData = $('#cr_cd_form').serialize(); // Serialize the form inputs to send all data
+            console.log(cdValidation())
+            if(cdValidation() == 0){
+                $.ajax({
+                    url: 'accountsFile/cashtally/contra/submitCashDeposit.php',
+                    data: formData,
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }else if(response.includes('Already')){
+                            Swal.fire({
+                                title: response,
+                                text:'Please close this module',
+                                icon: 'warning',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                        $('#closeCdModal').trigger('click');
+                        
+                    }
+                })
+            }
+        })
+    })
+}
+
+//Validation for Cash Deposit
+function cdValidation(){
+    var trans_id = $('#trans_id_cd').val();var remark_cd = $('#remark_cd').val();var response = 0;
+    if(trans_id == ''){
+        event.preventDefault();
+        $('#trans_id_cdCheck').show();
+        response = 1;
+    }else{
+        $('#trans_id_cdCheck').hide();
+    }
+    if(remark_cd == ''){
+        event.preventDefault();
+        $('#remark_cdCheck').show();
+        response = 1;
+    }else{
+        $('#remark_cdCheck').hide();
+    }
+    return response;
+}
+
+//reset Bank Deposit table when Cash Deposit modal closed
+function closCdModal(){
+    //reset bank deposit modal
+    var cash_type =$('input[name=cash_type]:checked').val();
+    getCashDepositDetails(cash_type);
+}
+
+//get Cash withrawal from bank account input details
+function getCashWithdrawalDetails(){
+    var appendTxt = `
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+            <div class="form-group">
+                <label for="ref_code_cwd">Ref Code</label>
+                <input type="text" id="ref_code_cwd" name="ref_code_cwd" class="form-control" readonly>
+                <span class="text-danger" id='ref_code_cwdCheck' style="display:none">Please Enter Ref Code</span>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+            <div class="form-group">
+                <label for="trans_id_cwd">Transaction ID</label>
+                <input type="number" id="trans_id_cwd" name="trans_id_cwd" class="form-control" placeholder="Enter Transaction ID">
+                <span class="text-danger" id='trans_id_cwdCheck' style="display:none">Please Enter Transaction ID</span>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+            <div class="form-group">
+                <label for="from_bank_cwd">From Bank</label>
+                <!-- <select id="from_bank_cwd" name="from_bank_cwd" class="form-control"> -->
+                <!-- </select> -->
+                <input type='hidden' class='form-control' id='from_bank_id_cwd' name='from_bank_id_cwd' readonly>
+                <input type='text' class='form-control' id='from_bank_cwd' name='from_bank_cwd' readonly>
+                <span class="text-danger" id='from_bank_cwdCheck' style="display:none">Please Select Bank Name</span>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+            <div class="form-group">
+                <label for="acc_no_cwd">From Bank</label>
+                <input type='text' class='form-control' id='acc_no_cwd' name='acc_no_cwd' readonly>
+                <span class="text-danger" id='acc_no_cwdCheck' style="display:none">Please Select Account Number</span>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+            <div class="form-group">
+                <label for="cheque_cwd">Cheque No.</label>
+                <input type="number" id="cheque_cwd" name="cheque_cwd" class="form-control" placeholder="Enter Cheque No.">
+                <span class="text-danger" id='cheque_cwdCheck' style="display:none">Please Enter Cheque No.</span>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+            <div class="form-group">
+                <label for="remark_cwd">Remark</label>
+                <input type="text" id="remark_cwd" name="remark_cwd" class="form-control" placeholder="Enter Remark">
+                <span class="text-danger" id='remark_cwdCheck' style="display:none">Please Enter Remark</span>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+            <div class="form-group">
+                <label for="amt_cwd">Amount</label>
+                <input type="number" id="amt_cwd" name="amt_cwd" class="form-control" placeholder="Enter Amount">
+                <span class="text-danger" id='amt_cwdCheck' style="display:none">Please Enter Amount</span>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="text-right">
+                <label style="visibility:hidden"></label><br>
+                <input type="button" id="submit_cwd" name="submit_cwd" class="btn btn-primary" value="Submit">
+            </div>
+        </div>`;
+    $('.contra_card_header').text('Contra - Cash Withdrawal')
+    $('#contraTableDiv').addClass('row', !$('#contraTableDiv').hasClass('row'));
+    $('#contraTableDiv').empty()
+    $('#contraTableDiv').html(appendTxt);
+    
+    $.ajax({
+        url:'accountsFile/cashtally/contra/getRefCodeCWD.php',
+        data:{},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_cwd').empty()
+            $('#ref_code_cwd').val(response)
+        }
+    })
+    
+    var bank_id =$('input[name=cash_type]:checked').val();    
+
+    $.ajax({
+        url:'accountsFile/cashtally/contra/getBankDetails.php',
+        data:{},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#from_bank_cwd').empty()
+            // $('#from_bank_cwd').append(`<option value=''>Select Bank Name</option>`)
+            for(var i=0;i<response.length;i++){
+                // $('#from_bank_cwd').append(`<option value='`+response[i]['bank_id']+`'>`+response[i]['bank_name']+`</option>`)
+                if(bank_id == response[i]['bank_id']){
+                    $('#from_bank_id_cwd').val(response[i]['bank_id'])
+                    $('#from_bank_cwd').val(response[i]['bank_fullname'])
+                    $('#acc_no_cwd').val(response[i]['acc_no'])
+                }
+            }
+        }
+    }).then(function(){
+        $('#submit_cwd').off('click');
+        $('#submit_cwd').click(function(){
+            if(cwdvalidation() == 0){
+                var ref_code_cwd = $('#ref_code_cwd').val();
+                var trans_id_cwd = $('#trans_id_cwd').val();
+                var from_bank_cwd = $('#from_bank_id_cwd').val();
+                var cheque_cwd = $('#cheque_cwd').val();
+                var remark_cwd = $('#remark_cwd').val();
+                var amt_cwd = $('#amt_cwd').val();
+                $.ajax({
+                    url: 'accountsFile/cashtally/contra/submitCashWithdrawal.php',
+                    data: {'ref_code':ref_code_cwd,'trans_id':trans_id_cwd,'from_bank':from_bank_cwd,'cheque':cheque_cwd,'remark':remark_cwd,'amt':amt_cwd},
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                        getCashWithdrawalDetails();
+                    }
+                });
+            }
+        })
+    })
+}
+
+//Cash withdrawal validation
+function cwdvalidation(){
+    var ref_code_cwd = $('#ref_code_cwd').val();
+    var trans_id_cwd = $('#trans_id_cwd').val();
+    var from_bank_cwd = $('#from_bank_cwd').val();
+    var cheque_cwd = $('#cheque_cwd').val();
+    var remark_cwd = $('#remark_cwd').val();
+    var amt_cwd = $('#amt_cwd').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(trans_id_cwd, '#trans_id_cwdCheck');
+    validateField(cheque_cwd, '#cheque_cwdCheck');
+    validateField(remark_cwd, '#remark_cwdCheck');
+    validateField(amt_cwd, '#amt_cwdCheck');
+    return response;
+}
+
+//get Cash withdrawal entries in table for Bank withdrawal
+function getBankWithdrawalDetails(){
+    $.ajax({
+        url: 'accountsFile/cashtally/contra/getBankWithdrawalDetails.php',
+        data:{},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('.contra_card_header').text('Contra - Bank Withdrawal')
+            $('#contraTableDiv').removeClass('row')
+            $('#contraTableDiv').empty()
+            $('#contraTableDiv').html(response)
+        }
+    })
+}
+
+//To get cash withdrawal details on Bank withdrawal modal 
+function receivebwdBtnClick(bwd_id1){
+    var bwd_id = $(bwd_id1).data('value');
+    $.ajax({
+        url:'accountsFile/cashtally/contra/receivebwdAmtModal.php',
+        data: {'bwd_id':bwd_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#receivebwdAmtDiv').empty();
+            $('#receivebwdAmtDiv').html(response);
+        }
+    }).then(function(){
+        $('#submit_bwd').off('click');
+        $('#submit_bwd').click(function(){
+            var formData = $('#cr_bwd_form').serialize(); // Serialize the form inputs to send all data
+
+            if(bwdValidation() == 0){
+                $.ajax({
+                    url: 'accountsFile/cashtally/contra/submitBankWithdrawal.php',
+                    data: formData,
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }else if(response.includes('Already')){
+                            Swal.fire({
+                                title: response,
+                                text:'Please close this module',
+                                icon: 'warning',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                        $('#closebwdModal').trigger('click');
+                        
+                    }
+                })
+            }
+        })
+    })
+}
+
+//Validation for Bank Withdrawal
+function bwdValidation(){
+    var remark_bwd = $('#remark_bwd').val();var response = 0;
+    if(remark_bwd == ''){
+        event.preventDefault();
+        $('#remark_bwdCheck').show();
+        response = 1;
+    }else{
+        $('#remark_bwdCheck').hide();
+    }
+
+    return response;
+}
+
