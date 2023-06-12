@@ -1,44 +1,48 @@
-
 <?php
 session_start();
+$user_id = $_SESSION['userid'];
+
 include('../../../ajaxconfig.php');
 
-$user_id = $_SESSION['userid'];
-$bankqry = $con->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
-$bank_id = $bankqry->fetch_assoc()['bank_details'];
-
-$qry = $con->query("SELECT bwed.*,bc.short_name,bc.acc_no from ct_db_cash_withdraw bwed LEFT JOIN bank_creation bc on bwed.from_bank_id = bc.id where bwed.received = 1 and FIND_IN_SET(bwed.from_bank_id,'$bank_id')");
-// 0 means recevied or entered in credit bank deposit. not used current date because any time can be cash deposited to bank 
+$i=0;$records = array();
+$qry = $con->query("SELECT hex.*,us.fullname,us.role from ct_db_hexchange hex LEFT JOIN user us on us.user_id = hex.insert_login_id where hex.to_user_id = '$user_id' and received = 1 "); //1 means not received and 0 means already received
+while($row = $qry->fetch_assoc()){
+    $records[$i]['id'] = $row['id'];
+    $records[$i]['to_user_id'] = $row['to_user_id'];
+    $records[$i]['from_user_id'] = $row['insert_login_id'];
+    $records[$i]['remark'] = $row['remark'];
+    $records[$i]['amt'] = $row['amt'];
+    $records[$i]['fullname'] = $row['fullname'];
+    $records[$i]['role'] = $row['role'];
+    $i++;
+}
 
 ?>
 
 
-<table class="table custom-table" id='bwdTable'>
+<table class="table custom-table" id='hexCollectionTable'>
     <thead>
         <tr>
-            <th width='50'>S.No</th>
-            <th>Ref ID</th>
-            <th>Tansaction ID</th>
-            <th>Bank</th>
-            <th>Account No</th>
+            <th width="50">S.No</th>
+            <th>From User</th>
+            <th>User Type</th>
+            <th>Remark</th>
             <th>Amount</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
         <?php
-            while($row = $qry->fetch_assoc()){
-                
+            for($i=0;$i<sizeof($records);$i++){
         ?>
             <tr>
                 <td></td>
-                <td><?php echo $row['ref_code']; ?></td>
-                <td><?php echo $row['trans_id']; ?></td>
-                <td><?php echo $row['short_name'];?></td>
-                <td><?php echo $row['acc_no'];?></td>
-                <td><?php echo moneyFormatIndia($row['amt']);?></td>
+                <td><?php echo $records[$i]['fullname'];?></td>
+                <td><?php if($records[$i]['role'] == '1'){echo 'Director';}elseif($records[$i]['role'] == '3'){echo 'Staff';}?></td>
+                <td><?php echo $records[$i]['remark'];?></td>
+                <td><?php echo moneyFormatIndia($records[$i]['amt']);?></td>
                 <td>
-                    <input type='button' id='' name='' class="btn btn-primary receive_bwd" data-value = '<?php echo $row['id']; ?>' data-toggle="modal" data-target=".bwd_modal" value='Receive' onclick="receivebwdBtnClick(this)">
+                    <input type='button' id='' name='' class="btn btn-primary collect_btn" data-value = '<?php echo $records[$i]['id']; ?>' data-toggle="modal" data-target=".hexchange_modal" value='Receive' onclick="hexCollectBtnClick(this)">
                 </td>
             </tr>
         <?php
@@ -50,8 +54,8 @@ $qry = $con->query("SELECT bwed.*,bc.short_name,bc.acc_no from ct_db_cash_withdr
 
 <script type='text/javascript'>
     $(function() {
-        $('#bwdTable').DataTable({
-            "title":"Cash Withdrawal List",
+        $('#hexCollectionTable').DataTable({
+            "title":"Collection List",
             'processing': true,
             'iDisplayLength': 5,
             "lengthMenu": [

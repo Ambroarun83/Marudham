@@ -176,6 +176,11 @@ input[type="radio"]{
 										</div>
 									</div>
 									<?php } }?>
+									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
+										<div class="form-group">
+											<button type="button" name="blnc_sheet_btn" id="blnc_sheet_btn" class="btn btn-primary" data-toggle='modal' data-target='.blncModal' onclick="hideAllCardsfunction()">Balance Sheet</button>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"></div>
@@ -229,6 +234,21 @@ input[type="radio"]{
 						<div class="row">
 							<div class="col-md-12">
 								<div class="row modal-body" id="contraTableDiv">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- //////////////////////////////////////////////////////////// Contra Card ////////////////////////////////////////////////////////////////////////////-->
+
+<!-- //////////////////////////////////////////////////////////// Exchange Card ////////////////////////////////////////////////////////////////////////////-->
+				<div class="card exchange_card" style='display:none'>
+					<div class="card-header exchange_card_header" style='font-size:18px;font-weight:bold;'>Exchange</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row modal-body" id="exchangeDiv">
 									
 								</div>
 							</div>
@@ -381,3 +401,94 @@ input[type="radio"]{
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Credit Bank Withdrawal Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Balance Sheet Modal START ////////////////////////////////////////////////////////////////////// -->
+<div class="modal fade blncModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Balance Sheet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetBlncSheet()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8"></div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+								<div class="form-group">
+									<label for='sheet_type'>Balance Sheet Type</label>
+									<select class="form-control" id='sheet_type' name='sheet_type' >
+										<option value=''>Select Balance Sheet</option>
+										<option value='1'>Contra</option>
+										<option value='2'>Exchange</option>
+										<option value='3'>Other income</option>
+										<option value='4'>Expense</option>
+										<option value='5'>Inv/Dep/EL</option>
+										<option value='6'>Excess Fund</option>
+										<option value='7'>Agent</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				<div id="blncSheetDiv">
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='' data-dismiss="modal" onclick="resetBlncSheet()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Balance Sheet Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Exchange Modal START ////////////////////////////////////////////////////////////////////// -->
+<div class="modal fade hexchange_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Exchange Credit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="getCreditHexchangeDetails()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body">
+				<div id="hexchangeDiv">
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='closeHexchangeModal' data-dismiss="modal" onclick="getCreditHexchangeDetails()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bexchange_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Exchange Credit</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="getCreditBexchangeDetails()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body">
+				<div id="bexchangeDiv">
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='closeBexchangeModal' data-dismiss="modal" onclick="getCreditBexchangeDetails()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Exchange Modal END ////////////////////////////////////////////////////////////////////// -->
