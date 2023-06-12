@@ -52,6 +52,14 @@ $(document).ready(function(){
                 // 2 means Bank Withdrawal and cash type is hand
                 $('.contra_card').show();
                 getBankWithdrawalDetails();
+            }else if(credit_type == 4 && cash_type == '0'){
+                //4 Means Exchange and cash type hand cash
+                $('.exchange_card').show();
+                getCreditHexchangeDetails();
+            }else if(credit_type == 4 && cash_type > 0){
+                //4 Means Exchange and cash type Bank cash
+                $('.exchange_card').show();
+                getCreditBexchangeDetails();
             }
             else{
                 
@@ -79,7 +87,31 @@ $(document).ready(function(){
                 // it meanst, amount from bank has been withdrawal for hand use
                 $('.contra_card').show();
                 getCashWithdrawalDetails();
+            }else if(debit_type == 4 && cash_type == '0'){
+                //4 Means Exchange and cash type hand cash
+                $('.exchange_card').show();
+                getHandExchangeInputs();
+            }else if(debit_type == 4 && cash_type > 0){
+                //4 Means Exchange and cash type Bank cash
+                $('.exchange_card').show();
+                getBankExchangeInputs();
             }
+        }
+    })
+
+    $('#sheet_type').change(function(){
+        var sheet_type = $(this).val();
+        if(sheet_type != '' ){
+            $.ajax({
+                url: 'accountsFile/cashtally/contra/getBalanceSheet.php',
+                data:{'sheet_type':sheet_type},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#blncSheetDiv').empty()
+                    $('#blncSheetDiv').html(response)
+                }
+            })
         }
     })
 
@@ -181,14 +213,24 @@ function sortDropdowns() {
 
 function hideAllCardsfunction(){
     $('.collection_card').hide();
-    $('#collectionTableDiv').empty();// empty the card fileds when hiding
+    $('#collectionTableDiv').empty();// empty the card fields when hiding
+    $('#receiveAmtDiv').empty();// empty the Modal fields when hiding
 
     $('.contra_card').hide();
-    $('#contraTableDiv').empty();// empty the card fileds when hiding
+    $('#contraTableDiv').empty();// empty the card fields when hiding
+    $('#receivecdAmtDiv').empty();// empty the Modal fields when hiding
+    $('#receivebwdAmtDiv').empty();// empty the Modal fields when hiding
+    
+    $('#blncSheetDiv').empty();// empty the Balance sheet Modal fields when hiding
+    
+    $('.exchange_card').hide();
+    $('#exchangeDiv').empty(); //empty the card fields when hiding
+    $('#hexchangeDiv').empty(); //empty the Modal fields when hiding
+    $('#bexchangeDiv').empty(); //empty the Modal fields when hiding
 }
 
 
-// /////////////////////// Hand Collection ///////////////////////////// //
+// //////////////////////////////////////////////////// Hand Collection //////////////////////////////////////////////// //
 function getCollectionDetails(){
     var user_branch_id = $('#user_branch_id').val();
     $.ajax({
@@ -337,10 +379,10 @@ function closeReceiveModal(){
         }
     })
 }
-// /////////////////////// Hand Collection ///////////////////////////// //
+// ///////////////////////////////////////////////////// Hand Collection /////////////////////////////////////////////// //
 
 
-// /////////////////////// Bank Collection ///////////////////////////// //
+// ///////////////////////////////////////////////////// Bank Collection /////////////////////////////////////////////// //
 function getBankCollectionDetails(bank_id){
     $('#collectionTableDiv').empty();// empty the card fileds when hiding
     var fieldsAppend = `<div class='col-md-12'><div class='row'>
@@ -396,10 +438,10 @@ function getBankCollectionDetails(bank_id){
         }
     })
 }
-// /////////////////////// Bank Collection ///////////////////////////// //
+// //////////////////////////////////////////////////// Bank Collection //////////////////////////////////////////////// //
 
 
-// /////////////////////// Contra  ///////////////////////////// //
+// //////////////////////////////////////////////////// Contra Start //////////////////////////////////////////////////////// //
 
 //inputs for bank deposit 
 function getBankDepositDetails(){
@@ -620,6 +662,8 @@ function closCdModal(){
     var cash_type =$('input[name=cash_type]:checked').val();
     getCashDepositDetails(cash_type);
 }
+
+/********************************************************* Deposit Ends *******************************************************/
 
 //get Cash withrawal from bank account input details
 function getCashWithdrawalDetails(){
@@ -869,4 +913,448 @@ function bwdValidation(){
 
     return response;
 }
+
+/******************************************************** Withdrawal End ******************************************************/
+
+function resetBlncSheet(){
+    $('#credit_type').val('');
+    $('#debit_type').val('');
+    $('#sheet_type').val('');
+    $('#blncSheetDiv').empty();
+}
+
+// //////////////////////////////////////////////////// Contra END //////////////////////////////////////////////////////// //
+
+// //////////////////////////////////////////////////// Exhange Start //////////////////////////////////////////////////////// //
+
+// To get hand exchange inputs as html and submit action
+function getHandExchangeInputs(){
+    var appendText = `<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="user_id_hed">User Name</label>
+            <select id="user_id_hed" name="user_id_hed" class="form-control" >
+                <option value=''>Select User Name</option>
+            </select>
+            <span class="text-danger" id='user_id_hedCheck' style="display:none">Please Select User Name</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="user_type_hed">User Type</label>
+            <input type="text" id="user_type_hed" name="user_type_hed" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="remark_hed">Remark</label>
+            <input type="text" id="remark_hed" name="remark_hed" class="form-control" placeholder="Enter Remarks">
+            <span class="text-danger" id='remark_hedCheck' style="display:none">Please Enter Remarks</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="amt_hed">Amount</label>
+            <input type="number" id="amt_hed" name="amt_hed" class="form-control" placeholder="Enter Amount">
+            <span class="text-danger" id='amt_hedCheck' style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hed" name="submit_hed" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#exchangeDiv').addClass('row', !$('#exchangeDiv').hasClass('row'));
+    $('#exchangeDiv').empty()
+    $('#exchangeDiv').html(appendText);
+
+    $.ajax({
+        url: 'accountsFile/cashtally/exchange/getHandExchangeInputs.php',
+        data:{},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            
+            $('#user_id_hed').empty();
+            $('#user_id_hed').append("<option value=''>Select User Name</option>");
+            for(var i=0;i<response.length;i++){
+                $('#user_id_hed').append("<option value='"+response[i]['user_id']+"'>"+response[i]['user_name']+"</option>");
+            }
+            $('#user_id_hed').change(function(){
+                var user_id = $(this).val();
+                if(user_id != ''){
+                    for(var i=0;i<response.length;i++){
+                        if(user_id == response[i]['user_id']){
+                            var role = response[i]['role'];
+                            var rolename = (role == '1') ? "Director" : (role == '3') ? "Staff" : '';
+                            $('#user_type_hed').val(rolename);
+                        }
+                    }
+            }}) 
+
+        }
+    }).then(function(){
+        $('#submit_hed').click(function(){
+            if(handExchangeValidation() != 1){
+                var user_id = $('#user_id_hed').val(); var remark = $('#remark_hed').val(); var amt = $('#amt_hed').val();
+                $.ajax({
+                    url: 'accountsFile/cashtally/exchange/submitdbHandExchange.php',
+                    data: {'user_id':user_id,'remark':remark,'amt':amt},
+                    type: 'post',
+                    cache: false,
+                    success:function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                            $('#user_id_hed').val('');$('#user_type_hed').val('');$('#remark_hed').val('');$('#amt_hed').val('');
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }else if(response.includes('Already')){
+                            Swal.fire({
+                                title: response,
+                                text:'Please close this module',
+                                icon: 'warning',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                        
+                    }
+                })
+            }
+            
+        })
+    })
+
+}
+
+function handExchangeValidation(){
+    var user_id = $('#user_id_hed').val(); var remark = $('#remark_hed').val(); var amt = $('#amt_hed').val();var res = 0;
+    if(user_id == ''){
+        event.preventDefault();
+        $('#user_id_hedCheck').show();
+        res = 1;
+    }else{
+        $('#user_id_hedCheck').hide();
+    }
+    if(remark == ''){
+        event.preventDefault();
+        $('#remark_hedCheck').show();
+        res = 1;
+    }else{
+        $('#remark_hedCheck').hide();
+    }
+    if(amt == ''){
+        event.preventDefault();
+        $('#amt_hedCheck').show();
+        res = 1;
+    }else{
+        $('#amt_hedCheck').hide();
+    }
+    return res;
+}
+
+
+//to get hand exchange credit input table
+function getCreditHexchangeDetails(){
+    $.ajax({
+        url: 'accountsFile/cashtally/exchange/getCreditHexchangeDetails.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#exchangeDiv').removeClass('row')
+            $('#exchangeDiv').empty();
+            $('#exchangeDiv').html(response);
+        }
+    })
+}
+
+//To trigger modal and fetch details for hand exchange
+function hexCollectBtnClick(hex_id1){
+    var hex_id = $(hex_id1).data('value');
+    $.ajax({
+        url:'accountsFile/cashtally/exchange/getHexchangeDetailModal.php',
+        data: {'hex_id':hex_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#hexchangeDiv').empty();
+            $('#hexchangeDiv').html(response);
+        }
+    }).then(function(){
+        $('#submit_hex').click(function(){
+            var formdata = $('#cr_hex_form').serialize();
+            $.ajax({
+                url: 'accountsFile/cashtally/exchange/submitcrHandExchange.php',
+                data: formdata,
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                    $('#closeHexchangeModal').trigger('click');
+                }
+            })
+        })
+    })
+}
+
+//To get bank debit exchange details and submit button
+function getBankExchangeInputs(){
+    var appendText = `<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="ref_code_bex">Ref ID</label>
+            <input type='text' id="ref_code_bex" name="ref_code_bex" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="from_acc_bex">From Account</label>
+            <input type="hidden" id="from_acc_id_bex" name="from_acc_id_bex" class="form-control" readonly>
+            <input type="text" id="from_acc_bex" name="from_acc_bex" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="to_bank_bex">To Bank</label>
+            <select id="to_bank_bex" name="to_bank_bex" class="form-control">
+            </select>
+            <span class="text-danger" id='to_bank_bexCheck' style="display:none">Please Select Bank</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="user_name_bex">User Name</label>
+            <input type="hidden" id="user_id_bex" name="user_id_bex" class="form-control" readonly>
+            <input type="text" id="user_name_bex" name="user_name_bex" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="trans_id_bex">Transaction ID</label>
+            <input type="text" id="trans_id_bex" name="trans_id_bex" class="form-control" placeholder="Enter Transaction ID">
+            <span id="trans_id_bexCheck" class="text-danger" style="display:none">Please Enter Transaction ID </span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="remark_bex">Remark</label>
+            <input type="text" id="remark_bex" name="remark_bex" class="form-control" placeholder="Enter Remark">
+            <span id="remark_bexCheck" class="text-danger" style="display:none">Please Enter Remarks</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="amt_bex">Amount</label>
+            <input type="number" id="amt_bex" name="amt_bex" class="form-control" placeholder="Enter Amount">
+            <span id="amt_bexCheck" class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_bex" name="submit_bex" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#exchangeDiv').addClass('row', !$('#exchangeDiv').hasClass('row'));
+    $('#exchangeDiv').empty()
+    $('#exchangeDiv').html(appendText);
+
+    var cash_type =$('input[name=cash_type]:checked').val();
+
+    $.ajax({
+        url: 'accountsFile/cashtally/exchange/getBankExchangeInputs.php',
+        data: {'cash_type':cash_type},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_bex').val(response[0]['ref_code']);
+            $('#from_acc_id_bex').val(response[0]['bank_id']);
+            $('#from_acc_bex').val(response[0]['bank_name']);
+
+            $('#to_bank_bex').empty();
+            $('#to_bank_bex').append("<option value=''>Select Bank Name</option>");
+            for(var i=0;i<response.length;i++){
+                $('#to_bank_bex').append("<option value='"+response[i]['to_bank_id']+"'>"+response[i]['to_bank_name']+"</option>");
+            }
+
+            //to fetch user name based on to bank id selected
+            $('#to_bank_bex').change(function(){
+                var to_bank_id = $(this).val();
+                if(to_bank_id != ''){
+                    for(var i=0;i<response.length;i++){
+                        if(to_bank_id == response[i]['to_bank_id']){
+                            $('#user_id_bex').val(response[i]['bank_user_id'])
+                            $('#user_name_bex').val(response[i]['bank_user_name'])
+                        }
+                    }
+                }
+            })
+        }
+    }).then(function(){
+        $('#submit_bex').click(function(){
+            if(bankExchangeValidation() != 1){
+                var ref_code = $('#ref_code_bex').val();var from_acc_id_bex = $('#from_acc_id_bex').val();var from_acc_bex = $('#from_acc_bex').val();var to_bank_bex = $('#to_bank_bex').val();var trans_id_bex = $('#trans_id_bex').val();
+                var user_id_bex = $('#user_id_bex').val();var remark_bex = $('#remark_bex').val();var amt_bex = $('#amt_bex').val();
+                var formdata = {ref_code: ref_code,from_acc_id_bex:from_acc_id_bex,from_acc_bex: from_acc_bex,to_bank_bex: to_bank_bex,trans_id_bex: trans_id_bex,user_id_bex: user_id_bex,remark_bex: remark_bex,amt_bex: amt_bex};
+                $.ajax({
+                    url: 'accountsFile/cashtally/exchange/submitdbBankExchange.php',
+                    data: formdata,
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                            getBankExchangeInputs();
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                    }
+                })
+            }
+        })
+    })
+
+}
+
+function bankExchangeValidation(){
+    var to_bank_bex = $('#to_bank_bex').val();var trans_id_bex = $('#trans_id_bex').val();var remark_bex = $('#remark_bex').val();var amt_bex = $('#amt_bex').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(to_bank_bex, '#to_bank_bexCheck');
+    validateField(trans_id_bex, '#trans_id_bexCheck');
+    validateField(remark_bex, '#remark_bexCheck');
+    validateField(amt_bex, '#amt_bexCheck');
+    return response;
+}
+
+//to get Bank exchange credit input table
+function getCreditBexchangeDetails(){
+    var bank_id =$('input[name=cash_type]:checked').val();
+    $.ajax({
+        url: 'accountsFile/cashtally/exchange/getCreditBexchangeDetails.php',
+        data: {'bank_id':bank_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#exchangeDiv').removeClass('row')
+            $('#exchangeDiv').empty();
+            $('#exchangeDiv').html(response);
+        }
+    })
+}
+
+// to fetch details for Bank exchange credit modal
+function bexCollectBtnClick(bex_id1){
+    var bex_id = $(bex_id1).data('value');
+    $.ajax({
+        url:'accountsFile/cashtally/exchange/getBexchangeDetailModal.php',
+        data: {'bex_id':bex_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#bexchangeDiv').empty();
+            $('#bexchangeDiv').html(response);
+        }
+    }).then(function(){
+
+        $('#submit_bex').click(function(){
+            var formdata = $('#cr_bex_form').serialize();
+            if(bexValidation() != 1){
+                $.ajax({
+                    url: 'accountsFile/cashtally/exchange/submitcrBankExchange.php',
+                    data: formdata,
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                            $('#closebexchangeModal').trigger('click');
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                    }
+                })
+            }
+        })
+    })
+}
+
+function bexValidation(){
+    var trans_id = $('#trans_id').val();var remark = $('#remark').val();var response=0;
+    if(trans_id == ''){
+        event.preventDefault();
+        $('#trans_idCheck').show();
+        response = 1;
+    }else{
+        $('#trans_idCheck').hide();
+    }
+    if(remark == ''){
+        event.preventDefault();
+        $('#remarkCheck').show();
+        response = 1;
+    }else{
+        $('#remarkCheck').hide();
+    }
+    return response;
+}
+
+// //////////////////////////////////////////////////// Exhange End //////////////////////////////////////////////////////// //
 

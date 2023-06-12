@@ -28,7 +28,7 @@ foreach($row as $key=>$val){
                 <div class='form-group'>
                     <label for='from_bank_bwd'>Bank Name</label>
                     <input type="hidden" class="form-control" id= 'bwd_id' name='bwd_id' value='<?php echo $id ?>' >
-                    <input type="hidden" class="form-control" id= 'bank_id_bwd' name='bank_id_bwd' value='<?php echo $from_bank ?>' >
+                    <input type="hidden" class="form-control" id= 'bank_id_bwd' name='bank_id_bwd' value='<?php echo $from_bank_id ?>' >
                     <input type="text" class="form-control" id= 'from_bank_bwd' name='from_bank_bwd' value='<?php echo $short_name ?>' readonly>
                 </div>
             </div>
@@ -52,6 +52,12 @@ foreach($row as $key=>$val){
             </div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                 <div class='form-group'>
+                    <label for='cheque_no_bwd'>Cheque No.</label>
+                    <input type="text" class="form-control" id= 'cheque_no_bwd' name='cheque_no_bwd' value='<?php echo $cheque_no; ?>' readonly >
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                <div class='form-group'>
                     <label for='amt_bwd'>Amount</label>
                     <input type="text" class="form-control" id= 'amt_bwd' name='amt_bwd' value='<?php echo moneyFormatIndia($amt) ?>' readonly>
                 </div>
@@ -63,9 +69,8 @@ foreach($row as $key=>$val){
                     <span class='text-danger' style='display:none' id='remark_bwdCheck'>Please Enter Remark</span>
                 </div>
             </div>
-            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                <div class='text-center'>
+                <div class='form-group'>
                     <label style="visibility: hidden;">Submit button</label><br>
                     <input type="button" class="btn btn-primary" id= 'submit_bwd' name='submit_bwd' value="Submit" >
                 </div>

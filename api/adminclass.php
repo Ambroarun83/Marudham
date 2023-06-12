@@ -5048,6 +5048,7 @@ function updateUser($mysqli,$id,$user_id){
 			if(isset($_POST['total_paid_track'])){
 				$total_paid_track = $_POST['total_paid_track'];
 			}
+			$pre_close_waiver='';
 			if(isset($_POST['pre_close_waiver'])){
 				$pre_close_waiver = $_POST['pre_close_waiver'];
 			}
@@ -5059,6 +5060,7 @@ function updateUser($mysqli,$id,$user_id){
 			if(isset($_POST['coll_charge_waiver'])){
 				$coll_charge_waiver = $_POST['coll_charge_waiver'];
 			}
+			$total_waiver='';
 			if(isset($_POST['total_waiver'])){
 				$total_waiver = $_POST['total_waiver'];
 			}
