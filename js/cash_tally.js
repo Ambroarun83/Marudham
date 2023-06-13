@@ -60,6 +60,18 @@ $(document).ready(function(){
                 //4 Means Exchange and cash type Bank cash
                 $('.exchange_card').show();
                 getCreditBexchangeDetails();
+            }else if(credit_type == 3 && cash_type == '0'){
+                //3 Means Other income and cash type Hand cash
+                $('.oti_card').show();
+                getHotherincomeDetails();
+            }else if(credit_type == 3 && cash_type > 0){
+                //3 Means Other income and cash type Bank cash
+                $('.oti_card').show();
+                getBotherincomeDetails();
+            }else if(credit_type == 13 && cash_type == '0'){
+                //13 Means Issued and cash type Hand cash
+                $('.issued_card').show();
+                getHissuedTable();
             }
             else{
                 
@@ -227,6 +239,12 @@ function hideAllCardsfunction(){
     $('#exchangeDiv').empty(); //empty the card fields when hiding
     $('#hexchangeDiv').empty(); //empty the Modal fields when hiding
     $('#bexchangeDiv').empty(); //empty the Modal fields when hiding
+
+    $('.oti_card').hide();
+    $('#otiDiv').empty();//empy the card 
+    
+    $('.issued_card').hide();
+    $('#issuedDiv').empty();//empy the card 
 }
 
 
@@ -970,6 +988,46 @@ function getHandExchangeInputs(){
     $('#exchangeDiv').html(appendText);
 
     $.ajax({
+        url: 'accountsFile/cashtally/exchange/getHexchangeTableforDelete.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#exchangeDiv').append("<div class='col-12'><div class='form-group'>"+response+"</div></div>");
+        }
+    }).then(function(){
+        $('.delete_hex').click(function(){
+            if(confirm('Do You want to delete this?')){
+                var hex_id = $(this).data('value');
+                $.ajax({
+                    url: 'accountsFile/cashtally/exchange/getHexchangeDelete.php',
+                    data: {'hex_id':hex_id},
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                            getHandExchangeInputs();
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                    }
+                })
+            }
+        })
+    })
+
+    $.ajax({
         url: 'accountsFile/cashtally/exchange/getHandExchangeInputs.php',
         data:{},
         dataType: 'json',
@@ -1013,6 +1071,7 @@ function getHandExchangeInputs(){
                                 confirmButtonColor: '#009688'
                             })
                             $('#user_id_hed').val('');$('#user_type_hed').val('');$('#remark_hed').val('');$('#amt_hed').val('');
+                            getHandExchangeInputs();
                         }else if(response.includes('Error')){
                             Swal.fire({
                                 title: response,
@@ -1116,8 +1175,16 @@ function hexCollectBtnClick(hex_id1){
                             showConfirmButton: true,
                             confirmButtonColor: '#009688'
                         });
+                    }else if(response.includes('Debited')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'info',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
                     }
                     $('#closeHexchangeModal').trigger('click');
+                    getCreditHexchangeDetails();
                 }
             })
         })
@@ -1358,3 +1425,221 @@ function bexValidation(){
 
 // //////////////////////////////////////////////////// Exhange End //////////////////////////////////////////////////////// //
 
+// //////////////////////////////////////////////////// Other Income Start //////////////////////////////////////////////////////// //
+
+//to get the hand other income inputs and submit button action
+function getHotherincomeDetails(){
+    var appendText = `<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="cat_info">Category</label>
+            <input type='text' id="cat_info" name="cat_info" class="form-control" placeholder="Enter Category">
+            <span id='cat_infoCheck' class="text-danger" style="display:none">Please Enter Category</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="remark">Remark</label>
+            <input type="text" id="remark" name="remark" class="form-control" placeholder="Enter Remark">
+            <span id='remarkCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="amt">Amount</label>
+            <input type="number" id="amt" name="amt" class="form-control" placeholder="Enter Amount">
+            <span id='amtCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-8"></div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="text-right">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hoti" name="submit_hoti" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#otiDiv').addClass('row', !$('#otiDiv').hasClass('row'));
+    $('#otiDiv').empty()
+    $('#otiDiv').html(appendText);
+
+    $('#submit_hoti').click(function(){
+        if(otiValidation() == 0){
+            var cat_info = $('#cat_info').val();var remark = $('#remark').val();var amt = $('#amt').val();
+            $.ajax({
+                url:'accountsFile/cashtally/otherincome/submitHotherincome.php',
+                data: {'cat_info':cat_info,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success:function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                    getHotherincomeDetails();
+                }
+            })
+        }
+    })
+}
+
+//validation fot hand other income
+function otiValidation(){
+    var cat_info = $('#cat_info').val();var remark = $('#remark').val();var amt = $('#amt').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(cat_info, '#cat_infoCheck');
+    validateField(remark, '#remarkCheck');
+    validateField(amt, '#amtCheck');
+    return response;
+}
+
+//to get the Bank other income inputs and submit button action
+function getBotherincomeDetails(){
+    var appendText = `
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="ref_code_boti">Ref ID</label>
+            <input type='text' id="ref_code_boti" name="ref_code_boti" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="cat_info">Category</label>
+            <input type='text' id="cat_info" name="cat_info" class="form-control" placeholder="Enter Category">
+            <span id='cat_infoCheck' class="text-danger" style="display:none">Please Enter Category</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="trans_id">Transaction ID</label>
+            <input type='number' id="trans_id" name="trans_id" class="form-control" placeholder="Enter Transaction ID">
+            <span id='trans_idCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="remark">Remark</label>
+            <input type="text" id="remark" name="remark" class="form-control" placeholder="Enter Remark">
+            <span id='remarkCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label for="amt">Amount</label>
+            <input type="number" id="amt" name="amt" class="form-control" placeholder="Enter Amount">
+            <span id='amtCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+        <div class="form-group">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_boti" name="submit_boti" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#otiDiv').addClass('row', !$('#otiDiv').hasClass('row'));
+    $('#otiDiv').empty()
+    $('#otiDiv').html(appendText);
+
+    $.ajax({
+        url:'accountsFile/cashtally/otherincome/getrefcodeBoti.php',
+        data: {},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_boti').val(response);
+        }
+    })
+    $('#submit_boti').click(function(){
+        if(botiValidation() == 0){
+            var ref_code = $('#ref_code_boti').val();var cat_info = $('#cat_info').val();var trans_id = $('#trans_id').val();var remark = $('#remark').val();var amt = $('#amt').val();
+            var bank_id =$('input[name=cash_type]:checked').val();
+            $.ajax({
+                url:'accountsFile/cashtally/otherincome/submitBotherincome.php',
+                data: {'bank_id':bank_id,'ref_code':ref_code,'cat_info':cat_info,'trans_id':trans_id,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success:function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                    getBotherincomeDetails();
+                }
+            })
+        }
+    })
+}
+
+//validation fot hand other income
+function botiValidation(){
+    var cat_info = $('#cat_info').val();var remark = $('#remark').val();var amt = $('#amt').val();var trans_id = $('#trans_id').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(cat_info, '#cat_infoCheck');
+    validateField(trans_id, '#trans_idCheck');
+    validateField(remark, '#remarkCheck');
+    validateField(amt, '#amtCheck');
+    return response;
+}
+
+// //////////////////////////////////////////////////// Other Income End //////////////////////////////////////////////////////// //
+
+// //////////////////////////////////////////////////// Issued Start //////////////////////////////////////////////////////// //
+
+//get table Details for Hand issued from loan issue tables and submit button
+function getHissuedTable(){
+    $.ajax({
+        url: 'accountsFile/cashtally/issued/getHissuedTable.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#issuedDiv').empty();
+            $('#issuedDiv').html(response);
+        }
+    })
+}

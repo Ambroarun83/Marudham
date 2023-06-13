@@ -53,7 +53,7 @@ if($userid == 1){
     $query = "SELECT a.dor,a.cus_id,a.cus_name,a.area,a.sub_area,a.user_type,a.user_name,a.agent_id,a.responsible,a.cus_data,a.req_id,a.cus_status,a.req_id,b.loan_category,b.sub_category,b.loan_amt FROM in_verification a JOIN acknowlegement_loan_calculation b on a.req_id=b.req_id where a.status = 0 and (a.cus_status = 13 or a.cus_status = 14)"; // Move To Issue
 }else{
   //  $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 13 or cus_status = 14) and sub_area IN ($sub_area_list) ";
-  $query = "SELECT a.dor,a.cus_id,a.cus_name,a.area,a.sub_area,a.user_type,a.user_name,a.agent_id,a.responsible,a.cus_data,a.req_id,a.cus_status,a.req_id,b.loan_category,b.sub_category,b.loan_amt FROM in_verification a JOIN acknowlegement_loan_calculation b on a.req_id=b.req_id where a.status = 0 and (a.cus_status = 13 or a.cus_status = 14) and a.sub_area IN (1,3)";  //show only Approved Verification in Acknowledgement. // 13 Move to Issue. // 14 Move To Collection.
+  $query = "SELECT a.dor,a.cus_id,a.cus_name,a.area,a.sub_area,a.user_type,a.user_name,a.agent_id,a.responsible,a.cus_data,a.req_id,a.cus_status,a.req_id,b.loan_category,b.sub_category,b.loan_amt FROM in_verification a JOIN acknowlegement_loan_calculation b on a.req_id=b.req_id where a.status = 0 and (a.cus_status = 13 or a.cus_status = 14) and a.sub_area IN ($sub_area_list)";  //show only Approved Verification in Acknowledgement. // 13 Move to Issue. // 14 Move To Collection.
 }
 
 if($_POST['search'] != "")

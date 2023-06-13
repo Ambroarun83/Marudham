@@ -20,6 +20,8 @@ $(document).ready(function () {
 
             $('.paymentType').hide();
 
+            turnonCashKeyup();
+
         } else if (mode == '1') {
             $('.cash_issue').hide();
             $('.checque').hide();
@@ -66,7 +68,13 @@ $(document).ready(function () {
             $('#balance').val('0');
             $('.checque').hide();
             $('.transaction').hide();
-            $('#cashAck').show(); // Cash Acknowledgement.
+            var ag_id = $('#agent_id').val();
+            if(ag_id == ''){
+                $('#cashAck').show(); // Cash Acknowledgement.
+                turnonCashKeyup();
+            }else{
+                $('#cash').off('keyup');
+            }
 
         } else if (type == '1') {
             $('.cash_issue').hide();
@@ -97,16 +105,7 @@ $(document).ready(function () {
         hideCheckSpan();
     })
 
-    //Check Cash limit based on Net Cash
-    $('#cash').keyup(function () {
-        checkIssuedAmount('0');
-    });
-    $('#chequeValue').keyup(function () {
-        checkIssuedAmount('1');
-    });
-    $('#transaction_value').keyup(function () {
-        checkIssuedAmount('2');
-    });
+    
 
     //when cash enter the cash acknowledgement card will be show.
     $('#cash').keyup(function () {
@@ -290,6 +289,8 @@ $(document).ready(function () {
 
 
 $(function () {
+    turnonCashKeyup();
+
     getImage(); // To show customer image when window onload.
     guarentorName(); //To Show Guarentor Name.
     getLc(); // To get loan Category.
@@ -305,6 +306,20 @@ $(function () {
     }, 1000);
 
 });
+
+
+function turnonCashKeyup(){
+    //Check Cash limit based on Net Cash
+    $('#cash').keyup(function () {
+        checkIssuedAmount('0');
+    });
+    $('#chequeValue').keyup(function () {
+        checkIssuedAmount('1');
+    });
+    $('#transaction_value').keyup(function () {
+        checkIssuedAmount('2');
+    });
+}
 
 // Cus img show onload.
 function getImage() {
@@ -460,10 +475,14 @@ function getAgentDetails() {
                 $('#issue_to').val(ag_name);
                 $('#agent_id').val(agent_id);
 
+                $('#cashAck').hide(); //hide cash acknowledgement if agent is the payer/ loan issue person
+
             } else {
                 var cus_name = $('#cus_name').val();
                 // $('#agent').val(cus_name);
                 $('#issue_to').val(cus_name);
+                
+                $('#cashAck').show();
             }
 
         }
@@ -581,6 +600,7 @@ function checkBalance(){
 //Submit Validation
 function loanIssueSumitValidation(){
     var issueMode = $('#issued_mode').val(); var paymenType =  $('#payment_type').val(); var cash =  $('#cash').val(); var chequeNum =  $('#chequeno').val(); var chequeVal =  $('#chequeValue').val(); var chequeRemark = $('#chequeRemark').val(); var transactionID = $('#transaction_id').val(); var transactionVal =  $('#transaction_value').val(); var transactionRemark = $('#transaction_remark').val(); var guarentorName = $('#cash_guarentor_name').val(); var fingerMatch =  $('#fingerValidation').val();
+    var ag_id = $('#agent_id').val();
     //Check Issue Mode
     if(issueMode == ''){
         event.preventDefault();
@@ -710,19 +730,21 @@ function loanIssueSumitValidation(){
         }
     }
 
-    if(cash != ''){
-    if(guarentorName == ''){
-        event.preventDefault();
-        $('#cash_guarentor').show();
-    }else{
-        $('#cash_guarentor').hide();
-    }
+    if(ag_id == ''){ // check only if agent id is not set/ this issue is not for agent
+        if(cash != ''){
+        if(guarentorName == ''){
+            event.preventDefault();
+            $('#cash_guarentor').show();
+        }else{
+            $('#cash_guarentor').hide();
+        }
 
-    if(fingerMatch != '1'){
-        event.preventDefault();
-        $('#finger_check').show();
-    }else{
-        $('#finger_check').hide();
+        if(fingerMatch != '1'){
+            event.preventDefault();
+            $('#finger_check').show();
+        }else{
+            $('#finger_check').hide();
+        }
     }
   }
 
