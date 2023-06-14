@@ -4,26 +4,44 @@ $user_id = $_SESSION['userid'];
 
 include('../../../ajaxconfig.php');
 
+$bank_id = $_POST['bank_id'];
+
 $i=0;$records = array();
 $netcash = 0;
 
-// $qry = $con->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
-// $row = $qry->fetch_assoc();
-// $role = $row['role'];if($role == 1){$usertype = 'Director';}else if($role==3){$usertype = 'Staff';}
-// $username = $row['fullname'];
 
-
-$qry = $con->query("SELECT req_id,sum(cash) as cash,issued_to,insert_login_id,created_date FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((issued_mode = 1 and payment_type = '0') or (issued_mode = 0 and cash != '')) and date(created_date) = CURDATE() GROUP BY insert_login_id ");
+$qry = $con->query("SELECT id,cheque_no, cheque_value,transaction_id, transaction_value,issued_to,req_id,insert_login_id FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((cheque_value!= '' or transaction_value !='') or (cheque_value!= '' and transaction_value !='')) and  bank_id = '$bank_id'  ");
+//not used current date, bcoz if loan issued on friday payment may take time to reflect or payer may do this cash tally at any time.
+//so until this current bank account get closed it should show the amount userwise
+//not used group by and sum for cheque and transaction , bcoz all are getting summed up and giving wrong cheque numbers and trans ids
+//only single entries can be placed in tables 
 while($row = $qry->fetch_assoc()){
 
-    $dbCheck = $con->query("SELECT * from ct_db_hissued where date(created_date) = '".date('Y-m-d',strtotime($row['created_date']))."' and li_user_id = '".$row['insert_login_id']."' ");
+    $dbCheck = $con->query("SELECT * from ct_db_bissued where li_user_id = '".$row['insert_login_id']."' ");
     if($dbCheck->num_rows == 0){ 
-        // to check whether created date of loan issue is already entered in hissued table. if done, no need to show bcoz submitted hissued no need to show in table
+        // to check whether id of loan issue is already entered in bissued table. if done, no need to show bcoz submitted bissued no need to show in table
 
         // $netcash = $netcash + intVal($row['cash']);
-        $records[$i]['netcash'] = intVal($row['cash']);
+        if($row['cheque_value'] != '' and $row['transaction_value'] == ''){
+            
+            $records[$i]['netcash'] = intVal($row['cheque_value']);
+            $records[$i]['cheque_no'] = $row['cheque_no'];
+            $records[$i]['transaction_id'] = '';
+            
+        }else if($row['transaction_value'] != '' and $row['cheque_value'] == ''){
+            
+            $records[$i]['netcash'] = intVal($row['transaction_value']);
+            $records[$i]['transaction_id'] = $row['transaction_id'];
+            $records[$i]['cheque_no'] = '';
+        
+        }else if($row['cheque_value'] != '' and $row['transaction_value'] != ''){
+            $records[$i]['netcash'] = intVal($row['cheque_value']) + intVal($row['transaction_value']);
+            $records[$i]['cheque_no'] = $row['cheque_no'];
+            $records[$i]['transaction_id'] = $row['transaction_id'];
+        }
+
         $records[$i]['issued_to'] = $row['issued_to'];
-        $records[$i]['req_id'] = $row['req_id'];
+        $records[$i]['id'] = $row['id'];
         $records[$i]['user_id'] = $row['insert_login_id'];
         $user_id = $row['insert_login_id'];
 
@@ -38,15 +56,16 @@ while($row = $qry->fetch_assoc()){
 ?>
 
 
-<table class="table custom-table" id='HissuedTable'>
+<table class="table custom-table" id='BissuedTable'>
     <thead>
         <tr>
             <th width="50">S.No</th>
             <th>User Type</th>
             <th>User Name</th>
             <!-- <th>Issued To</th> -->
+            <th>Cheque No.</th>
+            <th>Transaction ID</th>
             <th>Net Cash</th>
-            <th>Amount</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -64,11 +83,14 @@ while($row = $qry->fetch_assoc()){
                 
                 <!-- <td><?php echo $records[$i]['issued_to'];?></td> -->
                 
+                <td><?php echo $records[$i]['cheque_no'];?></td>
+                <td><?php echo $records[$i]['transaction_id'];?></td>
+                
                 <!-- <td><?php echo moneyFormatIndia($netcash);  ?></td> -->
                 <td><?php echo moneyFormatIndia($records[$i]['netcash']);?></td>
-                <td width='300'><input type='text' class='form-control' readonly value='<?php echo moneyFormatIndia($records[$i]['netcash']);?>'></td>
+                
                 <td>
-                    <input type='button' id='' name='' class="btn btn-primary hissued_btn" data-value = '<?php echo $records[$i]['user_id']; ?>' value='Submit' >
+                    <input type='button' id='' name='' class="btn btn-primary bissued_btn" data-value = '<?php echo $records[$i]['user_id']; ?>' data-id="<?php echo $records[$i]['id']; ?>" data-toggle="modal" data-target='.bissued_modal' value='Enter' onclick="bissuedBtnClick(this)" >
                 </td>
             </tr>
         <?php
@@ -80,7 +102,7 @@ while($row = $qry->fetch_assoc()){
 
 <script type='text/javascript'>
     $(function() {
-        $('#HissuedTable').DataTable({
+        $('#BissuedTable').DataTable({
             "title":"Collection List",
             'processing': true,
             'iDisplayLength': 5,
