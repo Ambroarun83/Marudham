@@ -522,3 +522,27 @@ input[type="radio"]{
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Exchange Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Issued Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<div class="modal fade bissued_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Issued </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="getBissuedTable()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body">
+				<div id="bissuedDiv">
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='closeissuedModal' data-dismiss="modal" onclick="getBissuedTable()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Exchange Modal END ////////////////////////////////////////////////////////////////////// -->

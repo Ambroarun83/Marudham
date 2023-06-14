@@ -68,10 +68,6 @@ $(document).ready(function(){
                 //3 Means Other income and cash type Bank cash
                 $('.oti_card').show();
                 getBotherincomeDetails();
-            }else if(credit_type == 13 && cash_type == '0'){
-                //13 Means Issued and cash type Hand cash
-                $('.issued_card').show();
-                getHissuedTable();
             }
             else{
                 
@@ -107,6 +103,14 @@ $(document).ready(function(){
                 //4 Means Exchange and cash type Bank cash
                 $('.exchange_card').show();
                 getBankExchangeInputs();
+            }else if(debit_type == 13 && cash_type == '0'){
+                //13 Means Issued and cash type Hand cash
+                $('.issued_card').show();
+                getHissuedTable();
+            }else if(debit_type == 13 && cash_type > 0){
+                //13 Means Issued and cash type Bank cash
+                $('.issued_card').show();
+                getBissuedTable();
             }
         }
     })
@@ -245,6 +249,7 @@ function hideAllCardsfunction(){
     
     $('.issued_card').hide();
     $('#issuedDiv').empty();//empy the card 
+    $('#bissuedDiv').empty();//empy the Modal
 }
 
 
@@ -1638,8 +1643,108 @@ function getHissuedTable(){
         type: 'post',
         cache: false,
         success: function(response){
+            $('#issuedDiv').removeClass('row')
             $('#issuedDiv').empty();
             $('#issuedDiv').html(response);
         }
+    }).then(function(){
+        $('.hissued_btn').click(function(){
+            var amt = $(this).parent().prev().text();
+            var netcash = $(this).parent().prev().prev().text();
+            var username = $(this).parent().prev().prev().prev().text();
+            var usertype = $(this).parent().prev().prev().prev().prev().text();
+            var user_id = $(this).data('value');
+            
+            var fomrdata = {amt:amt,netcash:netcash,username:username,usertype:usertype,user_id:user_id}
+            if(confirm("Are you sure to submit this?")){
+
+                $.ajax({
+                    url: 'accountsFile/cashtally/issued/submitHissued.php',
+                    data: fomrdata,
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                        getHissuedTable();
+                    }
+                })
+            }
+        })
+
     })
 }
+
+//get table Details for Bank issued from loan issue tables and submit button
+function getBissuedTable(){
+    var bank_id =$('input[name=cash_type]:checked').val();    
+    $.ajax({
+        url: 'accountsFile/cashtally/issued/getBissuedTable.php',
+        data: {'bank_id':bank_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#issuedDiv').removeClass('row')
+            $('#issuedDiv').empty();
+            $('#issuedDiv').html(response);
+        }
+    }).then(function(){
+        $('.bissued_btn').click(function(){
+            var user_id = $(this).data('value');
+            var li_id = $(this).data('id');
+            $.ajax({
+                url: 'accountsFile/cashtally/issued/getBissuedForModal.php',
+                data: {'user_id':user_id,'li_id':li_id},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#bissuedDiv').empty();
+                    $('#bissuedDiv').html(response);
+                }
+            }).then(function(){
+                $('#submit_bissued').click(function(){
+                    var formdata = $('#db_bissued_form').serialize();
+                    $.ajax({
+                        url:'accountsFile/cashtally/issued/submitBissued.php',
+                        data: formdata,
+                        type: 'post',
+                        cache: false,
+                        success:function(response){
+                            if(response.includes('Successfully')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'success',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                })
+                            }else if(response.includes('Error')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                            }
+                            getBissuedTable();
+                            $('#closeissuedModal').trigger('click');
+                        }
+                    })
+                })
+            })
+        })
+    })
+}
+

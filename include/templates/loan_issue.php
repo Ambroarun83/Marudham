@@ -12,6 +12,8 @@ if(isset($_POST['submit_loanIssue']) && $_POST['submit_loanIssue'] != ''){
 <?php
 }
 
+$getBankDetails = $userObj->getBankDetails($mysqli);
+
 $getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
 if (sizeof($getRequestData) > 0) {
 	for ($i = 0; $i < sizeof($getRequestData); $i++) {
@@ -770,6 +772,26 @@ input:checked + .slider:before {
 												<span class="text-danger" style="display: none;" id="pay_type"> Please Select Payment Type </span>
 											</div>
 										</div>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="bankDiv" style="display:none">
+											<div class="form-group">
+												<label for="disabledInput">Bank Name </label>&nbsp;<span class="text-danger">*</span>
+												<select type="text" class="form-control" id="bank_id" name="bank_id" tabindex="3">
+                                                <option value=""> Select Bank Name</option>
+												<?php if (sizeof($getBankDetails) > 0) {
+														for ($i = 0; $i < sizeof($getBankDetails); $i++) 
+														{
+															$bank_id = $getBankDetails[$i]['id'];
+															$bank_name = $getBankDetails[$i]['short_name'] .' - '. substr($getBankDetails[$i]['acc_no'],-5);
+															?>
+															<option value="<?php echo $bank_id;?>">
+																<?php echo $bank_name;?>
+															</option>
+														<?php }
+													} ?>
+                                                </select>
+												<span class="text-danger" style="display: none;" id="bank_idCheck"> Please Select Bank Name </span>
+											</div>
+										</div>
 									</div>
 									
 									<div class="row">
@@ -795,14 +817,14 @@ input:checked + .slider:before {
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
-												<label for="disabledInput">cheque Value</label>
+												<label for="disabledInput">Cheque Value</label>
 												<input type="number" class="form-control" id="chequeValue" name="chequeValue" tabindex="6">
 												<span class="text-danger" style="display: none;" id="cheque_val"> Please Enter Cheque Value </span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
-												<label for="disabledInput">cheque Remark</label>
+												<label for="disabledInput">Cheque Remark</label>
 												<input type="text" class="form-control" id="chequeRemark" name="chequeRemark" tabindex="7">
 												<span class="text-danger" style="display: none;" id="cheque_remark"> Please Enter Cheque Remark </span>
 											</div>

@@ -4881,6 +4881,9 @@ function updateUser($mysqli,$id,$user_id){
 			if(isset($_POST['cash'])){
 				$cash = $_POST['cash'];
 			}
+			if(isset($_POST['bank_id'])){
+				$bank_id = $_POST['bank_id'];
+			}
 			if(isset($_POST['chequeno'])){
 				$chequeno = $_POST['chequeno'];
 			}
@@ -4915,7 +4918,7 @@ function updateUser($mysqli,$id,$user_id){
 				$maturity_month = $_POST['maturity_month'];
 			}
 
-			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($loan_amt_cal)."','".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
+			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`,`bank_id`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."','".strip_tags($bank_id)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($loan_amt_cal)."','".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
 
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
@@ -6068,4 +6071,26 @@ function updateUser($mysqli,$id,$user_id){
 	}
 		
 		
+	//Bank Details Fetch
+	public function getBankDetails($mysqli) {
+		$qry = "SELECT * FROM bank_creation WHERE 1 ";
+		$res = $mysqli->query($qry) or die("Error in Get All Records" . $mysqli->error);
+		$i=0;$detailrecords = array();
+		while($row = $res->fetch_object()) {
+			$detailrecords[$i]	 = [
+				'id'   => $row->id,
+				'bank_name'   => $row->bank_name,
+				'short_name'   => $row->short_name,
+				'acc_no'   => $row->acc_no,
+				'ifsc'   => $row->ifsc,
+				'branch'   => $row->branch,
+				'qr_code'   => $row->qr_code,
+				'gpay'   => $row->gpay,
+				'company'   => $row->company,
+				'under_branch'   => $row->under_branch
+			];
+			$i++;
+		}
+		return $detailrecords;
+	}
 }//Class End
