@@ -69,9 +69,6 @@ $(document).ready(function(){
                 $('.oti_card').show();
                 getBotherincomeDetails();
             }
-            else{
-                
-            }
 
             
         }
@@ -111,6 +108,14 @@ $(document).ready(function(){
                 //13 Means Issued and cash type Bank cash
                 $('.issued_card').show();
                 getBissuedTable();
+            }else if(debit_type == 14 && cash_type == '0'){
+                //14 Means Issued and cash type Hand cash
+                $('.expense_card').show();
+                getHexpenseTable();
+            }else if(debit_type == 14 && cash_type > 0){
+                //14 Means Issued and cash type Hand cash
+                $('.expense_card').show();
+                getBexpenseTable();
             }
         }
     })
@@ -250,6 +255,11 @@ function hideAllCardsfunction(){
     $('.issued_card').hide();
     $('#issuedDiv').empty();//empy the card 
     $('#bissuedDiv').empty();//empy the Modal
+    
+    $('.expense_card').hide();
+    $('#expenseDiv').empty();//empy the card 
+    $('#hexp_modalDiv').empty();//empy the Modal
+    $('#bexp_modalDiv').empty();//empy the Modal
 }
 
 
@@ -1747,4 +1757,508 @@ function getBissuedTable(){
         })
     })
 }
+
+// //////////////////////////////////////////////////// Issued End //////////////////////////////////////////////////////// //
+
+// //////////////////////////////////////////////////// Expenses Start //////////////////////////////////////////////////////// //
+
+//To get inputs Details for expense table 
+function getHexpenseTable(){
+    
+    $.ajax({
+        url: 'accountsFile/cashtally/expense/getHexpenseTable.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            
+            $('.expense_card_header').empty();
+            $('.expense_card_header').html('Expense<button type="button" class="btn btn-primary" id="" name="" data-toggle="modal" data-target=".hexp_modal" style="padding: 5px 35px; float: right;" onclick="hexpenseModalBtnClick()"><span class="icon-add"></span></button>')
+
+            $('#expenseDiv').empty();
+            $('#expenseDiv').removeClass('row');
+            $('#expenseDiv').html(response);
+        }
+    }).then(function(){
+        $('.delete_hexp').click(function(){
+            if(confirm("Do you want to delete this Expense?")){
+                var hexp_id = $(this).data('value');
+                $.ajax({
+                    url:'accountsFile/cashtally/expense/deleteHexpense.php',
+                    data:{'hexp_id':hexp_id},
+                    type: 'post',
+                    cache: false,
+                    success:function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                        getHexpenseTable();
+                    }
+                })
+            }
+        })
+    })
+}
+
+//Hand expense modal btn click and submit btn click events
+function hexpenseModalBtnClick(){
+    var appendTxt = `<div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="username_hexp">User Name</label>
+                            <input type='hidden' id="user_id_hexp" name="user_id_hexp">
+                            <input type='text' id="username_hexp" name="username_hexp" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="usertype_hexp">User Type</label>
+                            <input type='text' id="usertype_hexp" name="usertype_hexp" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="cat_hexp">Category</label><span class='text-danger'>&nbsp;*</span>
+                            <select id="cat_hexp" name="cat_hexp" class="form-control" ></select>
+                            <span id='cat_hexpCheck' class="text-danger" style="display:none">Please Select Category</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="part_hexp">Particulars</label><span class='text-danger'>&nbsp;*</span>
+                            <input type='text' id="part_hexp" name="part_hexp" class="form-control" placeholder="Enter Particulars">
+                            <span id='part_hexpCheck' class="text-danger" style="display:none">Please Enter Particulars</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="vou_id_hexp">Voucher ID</label><span class='text-danger'>&nbsp;*</span>
+                            <input type='number' id="vou_id_hexp" name="vou_id_hexp" class="form-control" placeholder="Enter Voucher ID">
+                            <span id='vou_id_hexpCheck' class="text-danger" style="display:none">Please Enter Voucher ID</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="rec_per_hexp">Receive Person</label><span class='text-danger'>&nbsp;*</span>
+                            <input type='text' id="rec_per_hexp" name="rec_per_hexp" class="form-control" placeholder="Enter Receive Person">
+                            <span id='rec_per_hexpCheck' class="text-danger" style="display:none">Please Enter Receive Person</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="remark_hexp">Remark</label><span class='text-danger'>&nbsp;*</span>
+                            <input type="text" id="remark_hexp" name="remark_hexp" class="form-control" placeholder="Enter Remark">
+                            <span id='remark_hexpCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="amt_hexp">Amount</label><span class='text-danger'>&nbsp;*</span>
+                            <input type="number" id="amt_hexp" name="amt_hexp" class="form-control" placeholder="Enter Amount">
+                            <span id='amt_hexpCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="upd_hexp">Upload</label>
+                            <input type="file" id="upd_hexp" name="upd_hexp" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                        <div class="text-center">
+                            <label style="visibility:hidden"></label><br>
+                            <input type="button" id="submit_hexp" name="submit_hexp" class="btn btn-primary" value="Submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`;
+
+            $('#hexp_modalDiv').empty();
+            $('#hexp_modalDiv').html(appendTxt);
+
+            $.ajax({//fetching hexpense modal details
+                url: 'accountsFile/cashtally/expense/getHexpenseModal.php',
+                data: {},
+                dataType: 'json',
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#cat_hexp').empty();
+                    $('#cat_hexp').append("<option value=''>Select Category</option>");
+                    for(var i=0;i<response.length;i++){
+                        $('#cat_hexp').append("<option value='"+response[i]['cat_id']+"'>"+response[i]['cat_name']+"</option>")
+                    }
+                    $('#user_id_hexp').val(response[0]['user_id'])
+                    $('#username_hexp').val(response[0]['user_name'])
+                    $('#usertype_hexp').val(response[0]['user_type'])
+
+                    {
+                        var firstOption = $("#cat_hexp option:first-child");
+                        $("#cat_hexp").html($("#cat_hexp option:not(:first-child)").sort(function(a, b) {
+                            return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+                        }));
+                        $("#cat_hexp").prepend(firstOption);
+                    }
+                }
+            }).then(function(){
+                $('#submit_hexp').click(function(){
+                    if(hexpenseValidation() == 0){
+    
+                        var user_id = $('#user_id_hexp').val();var username = $('#username_hexp').val();var usertype = $('#usertype_hexp').val();var cat_hexp = $('#cat_hexp').val();
+                        var part_hexp = $('#part_hexp').val();var vou_id_hexp = $('#vou_id_hexp').val();var rec_per_hexp = $('#rec_per_hexp').val();var remark_hexp = $('#remark_hexp').val();
+                        var amt_hexp = $('#amt_hexp').val();var upd_hexp = $('#upd_hexp')[0].files[0];
+                        
+                        var upload = $("#upd_hexp")[0];
+                        var file = upload.files[0];
+
+                        var formData = new FormData();
+                        formData.append('upd', file);
+                        formData.append('user_id', user_id);
+                        formData.append('username', username);
+                        formData.append('usertype', usertype);
+                        formData.append('cat', cat_hexp);
+                        formData.append('part', part_hexp);
+                        formData.append('vou_id', vou_id_hexp);
+                        formData.append('rec_per', rec_per_hexp);
+                        formData.append('remark', remark_hexp);
+                        formData.append('amt', amt_hexp);
+    
+    
+                        $.ajax({
+                            url: 'accountsFile/cashtally/expense/submitHexpenseModal.php',
+                            type: 'post',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            success: function(response){
+                                if(response.includes('Successfully')){
+                                    Swal.fire({
+                                        title: response,
+                                        icon: 'success',
+                                        showConfirmButton: true,
+                                        confirmButtonColor: '#009688'
+                                    })
+                                }else if(response.includes('Error')){
+                                    Swal.fire({
+                                        title: response,
+                                        icon: 'error',
+                                        showConfirmButton: true,
+                                        confirmButtonColor: '#009688'
+                                    });
+                                }
+                                getHexpenseTable();
+                                $('#closehexpModal').trigger('click');
+                            }
+                        })
+                    }
+                })
+
+                
+            })
+}
+
+// validation for hand expense
+function hexpenseValidation(){
+    var cat_hexp = $('#cat_hexp').val();var part_hexp = $('#part_hexp').val();var vou_id_hexp = $('#vou_id_hexp').val();var rec_per_hexp = $('#rec_per_hexp').val();var remark_hexp = $('#remark_hexp').val();var amt_hexp = $('#amt_hexp').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(cat_hexp, '#cat_hexpCheck');
+    validateField(part_hexp, '#part_hexpCheck');
+    validateField(vou_id_hexp, '#vou_id_hexpCheck');
+    validateField(rec_per_hexp, '#rec_per_hexpCheck');
+    validateField(remark_hexp, '#remark_hexpCheck');
+    validateField(amt_hexp, '#amt_hexpCheck');
+    return response;
+
+}
+
+
+//To get inputs Details for Bank expense table 
+function getBexpenseTable(){
+    
+    var bank_id =$('input[name=cash_type]:checked').val();    
+    $.ajax({
+        url: 'accountsFile/cashtally/expense/getBexpenseTable.php',
+        data: {'bank_id':bank_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            
+            $('.expense_card_header').empty();
+            $('.expense_card_header').html('Expense<button type="button" class="btn btn-primary" id="" name="" data-toggle="modal" data-target=".bexp_modal" style="padding: 5px 35px; float: right;" onclick="bexpenseModalBtnClick()"><span class="icon-add"></span></button>')
+
+            $('#expenseDiv').empty();
+            $('#expenseDiv').removeClass('row');
+            $('#expenseDiv').html(response);
+        }
+    }).then(function(){
+        $('.delete_bexp').click(function(){
+            if(confirm("Do you want to delete this Expense?")){
+                var bexp_id = $(this).data('value');
+                $.ajax({
+                    url:'accountsFile/cashtally/expense/deletebexpense.php',
+                    data:{'bexp_id':bexp_id},
+                    type: 'post',
+                    cache: false,
+                    success:function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                        getBexpenseTable();
+                    }
+                })
+            }
+        })
+    })
+}
+
+//Bank expense modal btn click and submit btn click events
+function bexpenseModalBtnClick(){
+    var appendTxt = `<div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="username_bexp">User Name</label>
+                            <input type='hidden' id="user_id_bexp" name="user_id_bexp">
+                            <input type='hidden' id="bank_id_bexp" name="bank_id_bexp">
+                            <input type='text' id="username_bexp" name="username_bexp" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="usertype_bexp">User Type</label>
+                            <input type='text' id="usertype_bexp" name="usertype_bexp" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="ref_code_bexp">Ref ID</label>
+                            <input type='text' id="ref_code_bexp" name="ref_code_bexp" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="cat_bexp">Category</label><span class='text-danger'>&nbsp;*</span>
+                            <select id="cat_bexp" name="cat_bexp" class="form-control" ></select>
+                            <span id='cat_bexpCheck' class="text-danger" style="display:none">Please Select Category</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="part_bexp">Particulars</label><span class='text-danger'>&nbsp;*</span>
+                            <input type='text' id="part_bexp" name="part_bexp" class="form-control" placeholder="Enter Particulars">
+                            <span id='part_bexpCheck' class="text-danger" style="display:none">Please Enter Particulars</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="vou_id_bexp">Voucher ID</label><span class='text-danger'>&nbsp;*</span>
+                            <input type='number' id="vou_id_bexp" name="vou_id_bexp" class="form-control" placeholder="Enter Voucher ID">
+                            <span id='vou_id_bexpCheck' class="text-danger" style="display:none">Please Enter Voucher ID</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="rec_per_bexp">Receive Person</label><span class='text-danger'>&nbsp;*</span>
+                            <input type='text' id="rec_per_bexp" name="rec_per_bexp" class="form-control" placeholder="Enter Receive Person">
+                            <span id='rec_per_bexpCheck' class="text-danger" style="display:none">Please Enter Receive Person</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="remark_bexp">Remark</label><span class='text-danger'>&nbsp;*</span>
+                            <input type="text" id="remark_bexp" name="remark_bexp" class="form-control" placeholder="Enter Remark">
+                            <span id='remark_bexpCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="amt_bexp">Amount</label><span class='text-danger'>&nbsp;*</span>
+                            <input type="number" id="amt_bexp" name="amt_bexp" class="form-control" placeholder="Enter Amount">
+                            <span id='amt_bexpCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="upd_bexp">Upload</label>
+                            <input type="file" id="upd_bexp" name="upd_bexp" class="form-control" >
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                        <div class="text-center">
+                            <label style="visibility:hidden"></label><br>
+                            <input type="button" id="submit_bexp" name="submit_bexp" class="btn btn-primary" value="Submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`;
+
+            $('#bexp_modalDiv').empty();
+            $('#bexp_modalDiv').html(appendTxt);
+            
+            var bank_id =$('input[name=cash_type]:checked').val();    
+            $('#bank_id_bexp').val(bank_id);
+            
+            $.ajax({//For fetching Ref code
+                url: 'accountsFile/cashtally/expense/geBexpenseRefCode.php',
+                data: {},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#ref_code_bexp').val(response);
+                }
+            })
+
+            $.ajax({//fetching expense modal details like username, type and categories
+                url: 'accountsFile/cashtally/expense/getHexpenseModal.php',
+                data: {},
+                dataType: 'json',
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#cat_bexp').empty();
+                    $('#cat_bexp').append("<option value=''>Select Category</option>");
+                    for(var i=0;i<response.length;i++){
+                        $('#cat_bexp').append("<option value='"+response[i]['cat_id']+"'>"+response[i]['cat_name']+"</option>")
+                    }
+                    $('#user_id_bexp').val(response[0]['user_id'])
+                    $('#username_bexp').val(response[0]['user_name'])
+                    $('#usertype_bexp').val(response[0]['user_type'])
+
+                    {
+                        var firstOption = $("#cat_bexp option:first-child");
+                        $("#cat_bexp").html($("#cat_bexp option:not(:first-child)").sort(function(a, b) {
+                            return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+                        }));
+                        $("#cat_bexp").prepend(firstOption);
+                    }
+                }
+            }).then(function(){
+                $('#submit_bexp').click(function(){
+                    if(bexpenseValidation() == 0){
+    
+                        var user_id = $('#user_id_bexp').val();var username = $('#username_bexp').val();var usertype = $('#usertype_bexp').val();var ref_code = $('#ref_code_bexp').val();var cat_bexp = $('#cat_bexp').val();
+                        var bank_id = $('#bank_id_bexp').val();var part_bexp = $('#part_bexp').val();var vou_id_bexp = $('#vou_id_bexp').val();var rec_per_bexp = $('#rec_per_bexp').val();var remark_bexp = $('#remark_bexp').val();
+                        var amt_bexp = $('#amt_bexp').val();var upd_bexp = $('#upd_bexp')[0].files[0];
+                        
+                        var upload = $("#upd_bexp")[0];
+                        var file = upload.files[0];
+
+                        var formData = new FormData();
+                        formData.append('upd', file);
+                        formData.append('user_id', user_id);
+                        formData.append('username', username);
+                        formData.append('usertype', usertype);
+                        formData.append('bank_id', bank_id);
+                        formData.append('ref_code', ref_code);
+                        formData.append('cat', cat_bexp);
+                        formData.append('part', part_bexp);
+                        formData.append('vou_id', vou_id_bexp);
+                        formData.append('rec_per', rec_per_bexp);
+                        formData.append('remark', remark_bexp);
+                        formData.append('amt', amt_bexp);
+    
+    
+                        $.ajax({
+                            url: 'accountsFile/cashtally/expense/submitBexpenseModal.php',
+                            type: 'post',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            success: function(response){
+                                if(response.includes('Successfully')){
+                                    Swal.fire({
+                                        title: response,
+                                        icon: 'success',
+                                        showConfirmButton: true,
+                                        confirmButtonColor: '#009688'
+                                    })
+                                }else if(response.includes('Error')){
+                                    Swal.fire({
+                                        title: response,
+                                        icon: 'error',
+                                        showConfirmButton: true,
+                                        confirmButtonColor: '#009688'
+                                    });
+                                }
+                                getBexpenseTable();
+                                $('#closebexpModal').trigger('click');
+                            }
+                        })
+                    }
+                })
+
+                
+            })
+}
+
+// Validation for bank expenses
+function bexpenseValidation(){
+    var cat_bexp = $('#cat_bexp').val();var part_bexp = $('#part_bexp').val();var vou_id_bexp = $('#vou_id_bexp').val();var rec_per_bexp = $('#rec_per_bexp').val();
+    var remark_bexp = $('#remark_bexp').val();var amt_bexp = $('#amt_bexp').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(cat_bexp, '#cat_bexpCheck');
+    validateField(part_bexp, '#part_bexpCheck');
+    validateField(vou_id_bexp, '#vou_id_bexpCheck');
+    validateField(rec_per_bexp, '#rec_per_bexpCheck');
+    validateField(remark_bexp, '#remark_bexpCheck');
+    validateField(amt_bexp, '#amt_bexpCheck');
+    return response;
+}
+
+// //////////////////////////////////////////////////// Expenses End //////////////////////////////////////////////////////// //
 
