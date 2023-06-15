@@ -49,3 +49,4 @@ elseif($update){
 }
 
 echo json_encode($result);
+?>

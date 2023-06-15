@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 14, 2023 at 03:07 PM
+-- Generation Time: Jun 15, 2023 at 03:19 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1223,6 +1223,39 @@ INSERT INTO `ct_db_bexchange` (`id`, `ref_code`, `from_acc_id`, `to_bank_id`, `t
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ct_db_bexpense`
+--
+
+CREATE TABLE `ct_db_bexpense` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `username` varchar(255) DEFAULT NULL,
+  `usertype` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `bank_id` varchar(10) NOT NULL,
+  `cat` varchar(255) DEFAULT NULL,
+  `part` varchar(255) DEFAULT NULL,
+  `vou_id` varchar(255) DEFAULT NULL,
+  `rec_per` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `upload` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_bexpense`
+--
+
+INSERT INTO `ct_db_bexpense` (`id`, `username`, `usertype`, `ref_code`, `bank_id`, `cat`, `part`, `vou_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(4, 'Chithambaram', 'Director', 'EXP-100003', '3', '13', 'sd', '2352', 'asgd', 'sdg', '23525', '648af29bec243.sql', '28', NULL, '2023-06-15 16:44:35', '2023-06-15 16:44:35'),
+(5, 'Kumar', 'Staff', 'EXP-100004', '5', '1', 'Oil', '6465465', 'kumari', 'nallennai', '50', '', '21', NULL, '2023-06-15 16:45:41', '2023-06-15 16:45:41');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ct_db_bissued`
 --
 
@@ -1304,6 +1337,38 @@ INSERT INTO `ct_db_hexchange` (`id`, `to_user_id`, `remark`, `amt`, `received`, 
 (7, '29', 'gdsfg', '457', 1, '21', '2023-06-13 11:20:25', '2023-06-13 11:20:25'),
 (24, '29', 'sfd', '243', 1, '28', '2023-06-13 19:04:39', '2023-06-13 19:04:39'),
 (25, '29', 'dsf', '32', 1, '28', '2023-06-13 19:04:55', '2023-06-13 19:04:55');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_hexpense`
+--
+
+CREATE TABLE `ct_db_hexpense` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `username` varchar(255) DEFAULT NULL,
+  `usertype` varchar(255) DEFAULT NULL,
+  `cat` varchar(255) DEFAULT NULL,
+  `part` varchar(255) DEFAULT NULL,
+  `vou_id` varchar(255) DEFAULT NULL,
+  `rec_per` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `upload` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_hexpense`
+--
+
+INSERT INTO `ct_db_hexpense` (`id`, `username`, `usertype`, `cat`, `part`, `vou_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Chithambaram', 'Director', '1', 'Sambrani', '6464654', 'Dinesh', 'Day1', '100', '', '28', NULL, '2023-06-15 15:42:17', '2023-06-15 15:42:17'),
+(8, 'Chithambaram', 'Director', '4', 'Tally note', '65464', 'Logesh', 'note1', '550', '', '28', NULL, '2023-06-15 17:04:27', '2023-06-15 17:04:27'),
+(9, 'Chithambaram', 'Director', '13', 'Check', '335', 'Hari', 'check', '1500', '', '28', NULL, '2023-06-15 17:05:27', '2023-06-15 17:05:27');
 
 -- --------------------------------------------------------
 
@@ -1614,6 +1679,38 @@ INSERT INTO `doc_mapping` (`doc_map_id`, `loan_category`, `sub_category`, `doc_c
 (2, '5', 'Multi Things', '2,4', '0', '1', NULL, NULL, '0000-00-00 00:00:00', '2023-03-22 10:03:56'),
 (3, '6', 'Education', '6,7', '0', '1', '1', '1', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (8, '2', 'Business', '1,2,5', '0', '28', NULL, NULL, '0000-00-00 00:00:00', '2023-05-18 12:47:26');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expense_category`
+--
+
+CREATE TABLE `expense_category` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `category` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `expense_category`
+--
+
+INSERT INTO `expense_category` (`id`, `category`) VALUES
+(1, 'Pooja'),
+(2, 'Vehicle'),
+(3, 'Fuel'),
+(4, 'Stationary'),
+(5, 'Press'),
+(6, 'Food'),
+(7, 'Donation'),
+(8, 'Maintenance'),
+(9, 'Salary'),
+(10, 'Staff Welfare'),
+(11, 'Tax'),
+(12, 'Incentive'),
+(13, 'Int Less'),
+(14, 'Interest'),
+(15, 'Common');
 
 -- --------------------------------------------------------
 
@@ -3217,6 +3314,12 @@ ALTER TABLE `ct_db_bexchange`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_db_bexpense`
+--
+ALTER TABLE `ct_db_bexpense`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_db_bissued`
 --
 ALTER TABLE `ct_db_bissued`
@@ -3232,6 +3335,12 @@ ALTER TABLE `ct_db_cash_withdraw`
 -- Indexes for table `ct_db_hexchange`
 --
 ALTER TABLE `ct_db_hexchange`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_hexpense`
+--
+ALTER TABLE `ct_db_hexpense`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3275,6 +3384,12 @@ ALTER TABLE `document_info`
 --
 ALTER TABLE `doc_mapping`
   ADD PRIMARY KEY (`doc_map_id`);
+
+--
+-- Indexes for table `expense_category`
+--
+ALTER TABLE `expense_category`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `fingerprints`
@@ -3654,6 +3769,12 @@ ALTER TABLE `ct_db_bexchange`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `ct_db_bexpense`
+--
+ALTER TABLE `ct_db_bexpense`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `ct_db_bissued`
 --
 ALTER TABLE `ct_db_bissued`
@@ -3670,6 +3791,12 @@ ALTER TABLE `ct_db_cash_withdraw`
 --
 ALTER TABLE `ct_db_hexchange`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `ct_db_hexpense`
+--
+ALTER TABLE `ct_db_hexpense`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ct_db_hissued`
@@ -3712,6 +3839,12 @@ ALTER TABLE `document_info`
 --
 ALTER TABLE `doc_mapping`
   MODIFY `doc_map_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `expense_category`
+--
+ALTER TABLE `expense_category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `fingerprints`

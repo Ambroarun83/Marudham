@@ -287,6 +287,21 @@ input[type="radio"]{
 				</div>
 <!-- //////////////////////////////////////////////////////////// Other income Card ////////////////////////////////////////////////////////////////////////////-->
 
+<!-- //////////////////////////////////////////////////////////// Expense Card ////////////////////////////////////////////////////////////////////////////-->
+				<div class="card expense_card" style='display:none'>
+					<div class="card-header expense_card_header" style='font-size:18px;font-weight:bold;'>Expense</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row modal-body" id="expenseDiv">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- //////////////////////////////////////////////////////////// Other income Card ////////////////////////////////////////////////////////////////////////////-->
+
 <!-- //////////////////////////////////////////////////////////// Closing Balance Card ////////////////////////////////////////////////////////////////////////////-->
 				<div class="card">
 					<!-- <div class="card-header">Cash Tally</div> -->
@@ -545,4 +560,48 @@ input[type="radio"]{
         </div>
     </div>
 </div>
-<!-- /////////////////////////////////////////////////////////////////// Exchange Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Issued Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Expense Modal Start ////////////////////////////////////////////////////////////////////// -->
+
+<div class="modal fade hexp_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Expense </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="getHexpenseTable()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body">
+				<div id="hexp_modalDiv">
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='closehexpModal' data-dismiss="modal" onclick="getHexpenseTable()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bexp_modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Expense </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="getBexpenseTable()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body">
+				<div id="bexp_modalDiv">
+				</div>
+			</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='closebexpModal' data-dismiss="modal" onclick="getBexpenseTable()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Expense Modal END ////////////////////////////////////////////////////////////////////// -->
