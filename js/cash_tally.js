@@ -36,7 +36,7 @@ $(document).ready(function(){
         if(credit_type != ''){
             
             /////////////////////// For Collection Credit types ////////////////////////////
-            if(credit_type == 1 && cash_type == '0'){ 
+            if(credit_type == 1 && cash_type == 0){ 
                 // 1 means Collection and cash type is hand cash
                 $('.collection_card').show();
                 getCollectionDetails();
@@ -48,11 +48,11 @@ $(document).ready(function(){
                 // 5 means cash deposit and cash type is bank
                 $('.contra_card').show();
                 getCashDepositDetails(cash_type);
-            }else if(credit_type == 2 && cash_type == '0'){
+            }else if(credit_type == 2 && cash_type == 0){
                 // 2 means Bank Withdrawal and cash type is hand
                 $('.contra_card').show();
                 getBankWithdrawalDetails();
-            }else if(credit_type == 4 && cash_type == '0'){
+            }else if(credit_type == 4 && cash_type == 0){
                 //4 Means Exchange and cash type hand cash
                 $('.exchange_card').show();
                 getCreditHexchangeDetails();
@@ -60,7 +60,7 @@ $(document).ready(function(){
                 //4 Means Exchange and cash type Bank cash
                 $('.exchange_card').show();
                 getCreditBexchangeDetails();
-            }else if(credit_type == 3 && cash_type == '0'){
+            }else if(credit_type == 3 && cash_type == 0){
                 //3 Means Other income and cash type Hand cash
                 $('.oti_card').show();
                 getHotherincomeDetails();
@@ -68,7 +68,32 @@ $(document).ready(function(){
                 //3 Means Other income and cash type Bank cash
                 $('.oti_card').show();
                 getBotherincomeDetails();
+            }else if(credit_type == 9 && cash_type == 0){
+                //9 Means Investment and cash type Hand cash
+                $('.inv_card').show();
+                getCHinvDetails();
+            }else if(credit_type == 9 && cash_type > 0){
+                //9 Means Investment and cash type Bank cash
+                $('.inv_card').show();
+                getCBinvDetails();
+            }else if(credit_type == 10 && cash_type == 0){
+                //10 Means Deposit and cash type Hand cash
+                $('.inv_card').show();
+                getCHdepDetails();
+            }else if(credit_type == 10 && cash_type > 0){
+                //10 Means Deposit and cash type Bank cash
+                $('.inv_card').show();
+                getCBDepDetails();
+            }else if(credit_type == 11 && cash_type == 0){
+                //11 Means EL and cash type Hand cash
+                $('.inv_card').show();
+                getCHelDetails();
+            }else if(credit_type == 11 && cash_type > 0){
+                //11 Means EL and cash type Bank cash
+                $('.inv_card').show();
+                getCBelDetails();
             }
+            
 
             
         }
@@ -82,7 +107,7 @@ $(document).ready(function(){
         if(debit_type != ''){
 
             ////////////////////// For Contra Debit Types ///////////////////////
-            if(debit_type == 6 && cash_type == '0'){
+            if(debit_type == 6 && cash_type == 0){
                 // 6 means Bank Deposit and cash type is hand cash
                 // it meanst, amount from hand has been taken for deposit into bank
                 $('.contra_card').show();
@@ -92,7 +117,7 @@ $(document).ready(function(){
                 // it meanst, amount from bank has been withdrawal for hand use
                 $('.contra_card').show();
                 getCashWithdrawalDetails();
-            }else if(debit_type == 4 && cash_type == '0'){
+            }else if(debit_type == 4 && cash_type == 0){
                 //4 Means Exchange and cash type hand cash
                 $('.exchange_card').show();
                 getHandExchangeInputs();
@@ -100,7 +125,7 @@ $(document).ready(function(){
                 //4 Means Exchange and cash type Bank cash
                 $('.exchange_card').show();
                 getBankExchangeInputs();
-            }else if(debit_type == 13 && cash_type == '0'){
+            }else if(debit_type == 13 && cash_type == 0){
                 //13 Means Issued and cash type Hand cash
                 $('.issued_card').show();
                 getHissuedTable();
@@ -108,21 +133,49 @@ $(document).ready(function(){
                 //13 Means Issued and cash type Bank cash
                 $('.issued_card').show();
                 getBissuedTable();
-            }else if(debit_type == 14 && cash_type == '0'){
+            }else if(debit_type == 14 && cash_type == 0){
                 //14 Means Issued and cash type Hand cash
                 $('.expense_card').show();
                 getHexpenseTable();
             }else if(debit_type == 14 && cash_type > 0){
-                //14 Means Issued and cash type Hand cash
+                //14 Means Issued and cash type Bank cash
                 $('.expense_card').show();
                 getBexpenseTable();
+            }else if(debit_type == 9 && cash_type == 0){
+                //9 Means Investment and cash type Hand cash
+                $('.inv_card').show();
+                getDHinvDetails();
+            }else if(debit_type == 9 && cash_type > 0){
+                //9 Means Investment and cash type Bank cash
+                $('.inv_card').show();
+                getDBinvDetails();
+            }else if(debit_type == 10 && cash_type == 0){
+                //10 Means Deposit and cash type Hand cash
+                $('.inv_card').show();
+                getDHdepDetails();
+            }else if(debit_type == 10 && cash_type > 0){
+                //10 Means Deposit and cash type Bank cash
+                $('.inv_card').show();
+                getDBDepDetails();
+            }else if(debit_type == 11 && cash_type == 0){
+                //11 Means EL and cash type Hand cash
+                $('.inv_card').show();
+                getDHelDetails();
+            }else if(debit_type == 11 && cash_type > 0){
+                //11 Means EL and cash type Bank cash
+                $('.inv_card').show();
+                getDBelDetails();
             }
         }
     })
 
     $('#sheet_type').change(function(){
         var sheet_type = $(this).val();
-        if(sheet_type != '' ){
+
+        if(sheet_type != '' && sheet_type != 4 ){ // blocking sheet type 4 beacause expense balsheet should showed after selecting view type
+            
+            $('#exp_typeDiv').hide();//hide expense view option 
+            
             $.ajax({
                 url: 'accountsFile/cashtally/contra/getBalanceSheet.php',
                 data:{'sheet_type':sheet_type},
@@ -133,9 +186,33 @@ $(document).ready(function(){
                     $('#blncSheetDiv').html(response)
                 }
             })
+        }else if(sheet_type == 4){
+            $('#blncSheetDiv').empty()
+            $('#exp_typeDiv').show()
         }
     })
+    
+    $('#exp_view_type').change(function(){
+        triggerExpViewActions();
+    });
 
+    $('#exp_cat_type').click(function(){
+        var sheet_type = $('#sheet_type').val();
+        var exp_cat_type = $(this).val();
+
+        if(exp_cat_type != ''){ // call balance sheet ajax with expense category type to show category wise
+            $.ajax({
+                url: 'accountsFile/cashtally/contra/getBalanceSheet.php',
+                data:{'sheet_type':sheet_type,'exp_cat_type':exp_cat_type},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#blncSheetDiv').empty()
+                    $('#blncSheetDiv').html(response)
+                }
+            })
+        }
+    })
 })//Document ready END
 
 
@@ -232,6 +309,47 @@ function sortDropdowns() {
     $("#debit_type").prepend(firstOption);
 }
 
+function triggerExpViewActions(){
+        var sheet_type = $('#sheet_type').val();
+        var exp_view_type = $('#exp_view_type').val();
+        
+        $('#blncSheetDiv').empty()
+
+        if(exp_view_type == 1){ //if balance sheet needs to show overall, then call ajax normally
+            
+            $('#exp_cat_typeDiv').hide()
+
+            $.ajax({
+                url: 'accountsFile/cashtally/contra/getBalanceSheet.php',
+                data:{'sheet_type':sheet_type},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#blncSheetDiv').empty()
+                    $('#blncSheetDiv').html(response)
+                }
+            })
+        }else if(exp_view_type == 2 ){
+            $.ajax({//fetching expense category dropdown
+                url: 'accountsFile/cashtally/expense/getHexpenseModal.php',
+                data: {},
+                dataType: 'json',
+                type: 'post',
+                success: function(response){
+                    $('#exp_cat_type').empty();
+                    $('#exp_cat_type').append("<option value=''>Select Category</option>");
+                    for(var i=0;i<response.length;i++){
+                        $('#exp_cat_type').append("<option value='"+response[i]['cat_id']+"'>"+response[i]['cat_name']+"</option>")
+                    }
+                    $('#exp_cat_typeDiv').show();
+                }
+            })
+
+        }else{
+            $('#exp_cat_typeDiv').hide()
+        }
+}
+
 function hideAllCardsfunction(){
     $('.collection_card').hide();
     $('#collectionTableDiv').empty();// empty the card fields when hiding
@@ -260,6 +378,9 @@ function hideAllCardsfunction(){
     $('#expenseDiv').empty();//empy the card 
     $('#hexp_modalDiv').empty();//empy the Modal
     $('#bexp_modalDiv').empty();//empy the Modal
+    
+    $('.inv_card').hide();
+    $('#invDiv').empty();//empy the card 
 }
 
 
@@ -954,6 +1075,10 @@ function resetBlncSheet(){
     $('#debit_type').val('');
     $('#sheet_type').val('');
     $('#blncSheetDiv').empty();
+    $('#exp_view_type').val('');
+    $('#exp_cat_type').val('');
+    $('#exp_cat_typeDiv').hide();
+    $('#exp_typeDiv').hide();
 }
 
 // //////////////////////////////////////////////////// Contra END //////////////////////////////////////////////////////// //
@@ -2262,3 +2387,1436 @@ function bexpenseValidation(){
 
 // //////////////////////////////////////////////////// Expenses End //////////////////////////////////////////////////////// //
 
+// //////////////////////////////////////////////////// Investment Start //////////////////////////////////////////////////////// //
+
+//to get input details of Hand invest card Credit
+function getCHinvDetails(){
+    var appendText = `<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_hinv">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_hinv" name="name_hinv" class="form-control"></select>
+            <span id='name_hinvCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_hinv">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_hinv" name="area_hinv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_hinv">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_hinv" name="ident_hinv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_hinv">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_hinv" name="remark_hinv" class="form-control" placeholder="Enter Remark">
+            <span id='remark_hinvCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_hinv">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount">
+            <span id='amt_hinvCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hinv" name="submit_hinv" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Investment');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+
+    $('#submit_hinv').click(function(){
+        if(hinvvalidation() == 0){
+            var name = $('#name_hinv').val();var area = $('#area_hinv').val();var ident = $('#ident_hinv').val();var remark = $('#remark_hinv').val();var amt = $('#amt_hinv').val();
+
+            $.ajax({
+                url: 'accountsFile/cashtally/investment/submitCHinvestment.php',
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCHinvDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//to get input details of investment card Debit
+function getDHinvDetails(){
+    var appendText = `<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_hinv">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_hinv" name="name_hinv" class="form-control"></select>
+            <span id='name_hinvCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_hinv">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_hinv" name="area_hinv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_hinv">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_hinv" name="ident_hinv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_hinv">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_hinv" name="remark_hinv" class="form-control" placeholder="Enter Remark">
+            <span id='remark_hinvCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_hinv">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount">
+            <span id='amt_hinvCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hinv" name="submit_hinv" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Investment');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+
+    $('#submit_hinv').click(function(){
+        if(hinvvalidation() == 0){
+            var name = $('#name_hinv').val();var area = $('#area_hinv').val();var ident = $('#ident_hinv').val();var remark = $('#remark_hinv').val();var amt = $('#amt_hinv').val();
+
+            $.ajax({
+                url: 'accountsFile/cashtally/investment/submitDHinvestment.php',
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDHinvDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//validation for hand investment Credit //Same validation can be used for Cr/Db due to same inputs
+function hinvvalidation(){
+    var name = $('#name_hinv').val();var remark = $('#remark_hinv').val();var amt = $('#amt_hinv').val();var response = 0;
+    if(name==''){event.preventDefault();$('#name_hinvCheck').show();response=1;}else{$('#name_hinvCheck').hide();}
+    if(remark==''){event.preventDefault();$('#remark_hinvCheck').show();response=1;}else{$('#remark_hinvCheck').hide();}
+    if(amt==''){event.preventDefault();$('#amt_hinvCheck').show();response=1;}else{$('#amt_hinvCheck').hide();}
+    return response;
+}
+
+
+
+//to get input details for bank investment card Credit
+function getCBinvDetails(){
+    var appendText = `
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ref_code_binv">Ref ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ref_code_binv" name="ref_code_binv" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_binv">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_binv" name="name_binv" class="form-control"></select>
+            <span id='name_binvCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_binv">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_binv" name="area_binv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_binv">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_binv" name="ident_binv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="trans_id_binv">Transaction ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="trans_id_binv" name="trans_id_binv" class="form-control" placeholder="Enter Transaction ID">
+            <span id='trans_id_binvCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_binv">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_binv" name="remark_binv" class="form-control" placeholder="Enter Remark">
+            <span id='remark_binvCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_binv">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_binv" name="amt_binv" class="form-control" placeholder="Enter Amount">
+            <span id='amt_binvCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_binv" name="submit_binv" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Investment');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+    getBinvestRefcode();//to get the reference code for bank investment
+
+    $('#submit_binv').click(function(){
+        if(binvvalidation() == 0){
+            var ref_code = $('#ref_code_binv').val();var name = $('#name_binv').val();var area = $('#area_binv').val();var ident = $('#ident_binv').val();
+            var trans_id = $('#trans_id_binv').val();var remark = $('#remark_binv').val();var amt = $('#amt_binv').val();
+            var bank_id =$('input[name=cash_type]:checked').val();    
+
+            $.ajax({
+                url: 'accountsFile/cashtally/investment/submitCBinvestment.php',
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCBinvDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//to get input details for bank investment card Debit
+function getDBinvDetails(){
+    var appendText = `
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ref_code_binv">Ref ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ref_code_binv" name="ref_code_binv" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_binv">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_binv" name="name_binv" class="form-control"></select>
+            <span id='name_binvCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_binv">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_binv" name="area_binv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_binv">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_binv" name="ident_binv" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="trans_id_binv">Transaction ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="trans_id_binv" name="trans_id_binv" class="form-control" placeholder="Enter Transaction ID">
+            <span id='trans_id_binvCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_binv">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_binv" name="remark_binv" class="form-control" placeholder="Enter Remark">
+            <span id='remark_binvCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_binv">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_binv" name="amt_binv" class="form-control" placeholder="Enter Amount">
+            <span id='amt_binvCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_binv" name="submit_binv" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Investment');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+    getBinvestRefcode();// to get ref code
+
+    $('#submit_binv').click(function(){
+        if(binvvalidation() == 0){
+            var ref_code = $('#ref_code_binv').val();var name = $('#name_binv').val();var area = $('#area_binv').val();var ident = $('#ident_binv').val();
+            var trans_id = $('#trans_id_binv').val();var remark = $('#remark_binv').val();var amt = $('#amt_binv').val();
+            var bank_id =$('input[name=cash_type]:checked').val();    
+
+            $.ajax({
+                url: 'accountsFile/cashtally/investment/submitDBinvestment.php',
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDBinvDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//validation for Bank investment //Same validation can be used for Cr/Db due to same inputs
+function binvvalidation(){
+    var name = $('#name_binv').val();var trans_id = $('#trans_id_binv').val();var remark = $('#remark_binv').val();var amt = $('#amt_binv').val();var response = 0;
+    if(name==''){event.preventDefault();$('#name_binvCheck').show();response=1;}else{$('#name_binvCheck').hide();}
+    if(trans_id==''){event.preventDefault();$('#trans_id_binvCheck').show();response=1;}else{$('#trans_id_binvCheck').hide();}
+    if(remark==''){event.preventDefault();$('#remark_binvCheck').show();response=1;}else{$('#remark_binvCheck').hide();}
+    if(amt==''){event.preventDefault();$('#amt_binvCheck').show();response=1;}else{$('#amt_binvCheck').hide();}
+    return response;
+}
+
+// to get ref code for bank inestment
+function getBinvestRefcode(){
+    $.ajax({
+        url: 'accountsFile/cashtally/investment/getBinvestRefcode.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_binv').val(response);
+        }
+    })
+}
+
+// //////////////////////////////////////////////////// Investment End //////////////////////////////////////////////////////// //
+
+// //////////////////////////////////////////////////// Deposit Start //////////////////////////////////////////////////////// //
+
+//to get input details of deposit card Credit
+function getCHdepDetails(){
+    var appendText = `<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_hdep">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_hdep" name="name_hdep" class="form-control"></select>
+            <span id='name_hdepCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_hdep">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_hdep" name="area_hdep" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_hdep">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_hdep" name="ident_hdep" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_hdep">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_hdep" name="remark_hdep" class="form-control" placeholder="Enter Remark">
+            <span id='remark_hdepCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_hdep">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_hdep" name="amt_hdep" class="form-control" placeholder="Enter Amount">
+            <span id='amt_hdepCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hdep" name="submit_hdep" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Deposit');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+
+    $('#submit_hdep').click(function(){
+        if(hdepvalidation() == 0){
+            var name = $('#name_hdep').val();var area = $('#area_hdep').val();var ident = $('#ident_hdep').val();var remark = $('#remark_hdep').val();var amt = $('#amt_hdep').val();
+
+            $.ajax({
+                url: 'accountsFile/cashtally/deposit/submitCHdeposit.php',
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCHdepDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+//to get input details of deposit card Debit
+function getDHdepDetails(){
+    var appendText = `<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_hdep">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_hdep" name="name_hdep" class="form-control"></select>
+            <span id='name_hdepCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_hdep">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_hdep" name="area_hdep" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_hdep">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_hdep" name="ident_hdep" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_hdep">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_hdep" name="remark_hdep" class="form-control" placeholder="Enter Remark">
+            <span id='remark_hdepCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_hdep">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_hdep" name="amt_hdep" class="form-control" placeholder="Enter Amount">
+            <span id='amt_hdepCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hdep" name="submit_hdep" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Deposit');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+
+    $('#submit_hdep').click(function(){
+        if(hdepvalidation() == 0){
+            var name = $('#name_hdep').val();var area = $('#area_hdep').val();var ident = $('#ident_hdep').val();var remark = $('#remark_hdep').val();var amt = $('#amt_hdep').val();
+
+            $.ajax({
+                url: 'accountsFile/cashtally/deposit/submitDHdeposit.php',
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDHdepDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//validation for hand Deposit Credit //Same validation can be used for Cr/Db due to same inputs
+function hdepvalidation(){
+    var name = $('#name_hdep').val();var remark = $('#remark_hdep').val();var amt = $('#amt_hdep').val();var response = 0;
+    if(name==''){event.preventDefault();$('#name_hdepCheck').show();response=1;}else{$('#name_hdepCheck').hide();}
+    if(remark==''){event.preventDefault();$('#remark_hdepCheck').show();response=1;}else{$('#remark_hdepCheck').hide();}
+    if(amt==''){event.preventDefault();$('#amt_hdepCheck').show();response=1;}else{$('#amt_hdepCheck').hide();}
+    return response;
+}
+
+//to get input details for bank Deposit card Credit
+function getCBDepDetails(){
+    var appendText = `
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ref_code_bdeposit">Ref ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ref_code_bdeposit" name="ref_code_bdeposit" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_bdeposit">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_bdeposit" name="name_bdeposit" class="form-control"></select>
+            <span id='name_bdepositCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_bdeposit">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_bdeposit" name="area_bdeposit" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_bdeposit">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_bdeposit" name="ident_bdeposit" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="trans_id_bdeposit">Transaction ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="trans_id_bdeposit" name="trans_id_bdeposit" class="form-control" placeholder="Enter Transaction ID">
+            <span id='trans_id_bdepositCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_bdeposit">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_bdeposit" name="remark_bdeposit" class="form-control" placeholder="Enter Remark">
+            <span id='remark_bdepositCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_bdeposit">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_bdeposit" name="amt_bdeposit" class="form-control" placeholder="Enter Amount">
+            <span id='amt_bdepositCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_bdeposit" name="submit_bdeposit" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Deposit');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+    getBdepositRefcode();//to get the reference code for bank Deposit
+
+    $('#submit_bdeposit').click(function(){
+        if(bdepositvalidation() == 0){
+            var ref_code = $('#ref_code_bdeposit').val();var name = $('#name_bdeposit').val();var area = $('#area_bdeposit').val();var ident = $('#ident_bdeposit').val();
+            var trans_id = $('#trans_id_bdeposit').val();var remark = $('#remark_bdeposit').val();var amt = $('#amt_bdeposit').val();
+            var bank_id =$('input[name=cash_type]:checked').val();    
+
+            $.ajax({
+                url: 'accountsFile/cashtally/deposit/submitCBdeposit.php',
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCBDepDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//to get input details for bank Deposit card Debit
+function getDBDepDetails(){
+    var appendText = `
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ref_code_bdeposit">Ref ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ref_code_bdeposit" name="ref_code_bdeposit" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_bdeposit">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_bdeposit" name="name_bdeposit" class="form-control"></select>
+            <span id='name_bdepositCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_bdeposit">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_bdeposit" name="area_bdeposit" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_bdeposit">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_bdeposit" name="ident_bdeposit" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="trans_id_bdeposit">Transaction ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="trans_id_bdeposit" name="trans_id_bdeposit" class="form-control" placeholder="Enter Transaction ID">
+            <span id='trans_id_bdepositCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_bdeposit">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_bdeposit" name="remark_bdeposit" class="form-control" placeholder="Enter Remark">
+            <span id='remark_bdepositCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_bdeposit">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_bdeposit" name="amt_bdeposit" class="form-control" placeholder="Enter Amount">
+            <span id='amt_bdepositCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_bdeposit" name="submit_bdeposit" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('Deposit');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+    getBdepositRefcode();// to get ref code
+
+    $('#submit_bdeposit').click(function(){
+        if(bdepositvalidation() == 0){
+            var ref_code = $('#ref_code_bdeposit').val();var name = $('#name_bdeposit').val();var area = $('#area_bdeposit').val();var ident = $('#ident_bdeposit').val();
+            var trans_id = $('#trans_id_bdeposit').val();var remark = $('#remark_bdeposit').val();var amt = $('#amt_bdeposit').val();
+            var bank_id =$('input[name=cash_type]:checked').val();    
+
+            $.ajax({
+                url: 'accountsFile/cashtally/deposit/submitDBdeposit.php',
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDBDepDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//validation for Bank Deposit //Same validation can be used for Cr/Db due to same inputs
+function bdepositvalidation(){
+    var name = $('#name_bdeposit').val();var trans_id = $('#trans_id_bdeposit').val();var remark = $('#remark_bdeposit').val();var amt = $('#amt_bdeposit').val();var response = 0;
+    if(name==''){event.preventDefault();$('#name_bdepositCheck').show();response=1;}else{$('#name_bdepositCheck').hide();}
+    if(trans_id==''){event.preventDefault();$('#trans_id_bdepositCheck').show();response=1;}else{$('#trans_id_bdepositCheck').hide();}
+    if(remark==''){event.preventDefault();$('#remark_bdepositCheck').show();response=1;}else{$('#remark_bdepositCheck').hide();}
+    if(amt==''){event.preventDefault();$('#amt_bdepositCheck').show();response=1;}else{$('#amt_bdepositCheck').hide();}
+    return response;
+}
+
+// to get ref code for bank Deposit
+function getBdepositRefcode(){
+    $.ajax({
+        url: 'accountsFile/cashtally/deposit/getBdepositRefcode.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_bdeposit').val(response);
+        }
+    })
+}
+// //////////////////////////////////////////////////// Deposit End //////////////////////////////////////////////////////// //
+
+// //////////////////////////////////////////////////// EL Start //////////////////////////////////////////////////////// //
+
+//to get input details of EL card Credit
+function getCHelDetails(){
+    var appendText = `<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_hel">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_hel" name="name_hel" class="form-control"></select>
+            <span id='name_helCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_hel">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_hel" name="area_hel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_hel">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_hel" name="ident_hel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_hel">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_hel" name="remark_hel" class="form-control" placeholder="Enter Remark">
+            <span id='remark_helCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_hel">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_hel" name="amt_hel" class="form-control" placeholder="Enter Amount">
+            <span id='amt_helCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hel" name="submit_hel" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('EL');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+
+    $('#submit_hel').click(function(){
+        if(helvalidation() == 0){
+            var name = $('#name_hel').val();var area = $('#area_hel').val();var ident = $('#ident_hel').val();var remark = $('#remark_hel').val();var amt = $('#amt_hel').val();
+
+            $.ajax({
+                url: 'accountsFile/cashtally/el/submitCHel.php',
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCHelDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+//to get input details of EL card Debit
+function getDHelDetails(){
+    var appendText = `<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_hel">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_hel" name="name_hel" class="form-control"></select>
+            <span id='name_helCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_hel">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_hel" name="area_hel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_hel">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_hel" name="ident_hel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_hel">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_hel" name="remark_hel" class="form-control" placeholder="Enter Remark">
+            <span id='remark_helCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_hel">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_hel" name="amt_hel" class="form-control" placeholder="Enter Amount">
+            <span id='amt_helCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_hel" name="submit_hel" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('EL');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+
+    $('#submit_hel').click(function(){
+        if(helvalidation() == 0){
+            var name = $('#name_hel').val();var area = $('#area_hel').val();var ident = $('#ident_hel').val();var remark = $('#remark_hel').val();var amt = $('#amt_hel').val();
+
+            $.ajax({
+                url: 'accountsFile/cashtally/el/submitDHel.php',
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDHelDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//validation for hand EL Credit //Same validation can be used for Cr/Db due to same inputs
+function helvalidation(){
+    var name = $('#name_hel').val();var remark = $('#remark_hel').val();var amt = $('#amt_hel').val();var response = 0;
+    if(name==''){event.preventDefault();$('#name_helCheck').show();response=1;}else{$('#name_helCheck').hide();}
+    if(remark==''){event.preventDefault();$('#remark_helCheck').show();response=1;}else{$('#remark_helCheck').hide();}
+    if(amt==''){event.preventDefault();$('#amt_helCheck').show();response=1;}else{$('#amt_helCheck').hide();}
+    return response;
+}
+
+
+//to get input details for bank Deposit card Credit
+function getCBelDetails(){
+    var appendText = `
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ref_code_bel">Ref ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ref_code_bel" name="ref_code_bel" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_bel">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_bel" name="name_bel" class="form-control"></select>
+            <span id='name_belCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_bel">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_bel" name="area_bel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_bel">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_bel" name="ident_bel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="trans_id_bel">Transaction ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="trans_id_bel" name="trans_id_bel" class="form-control" placeholder="Enter Transaction ID">
+            <span id='trans_id_belCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_bel">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_bel" name="remark_bel" class="form-control" placeholder="Enter Remark">
+            <span id='remark_belCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_bel">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_bel" name="amt_bel" class="form-control" placeholder="Enter Amount">
+            <span id='amt_belCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_bel" name="submit_bel" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('EL');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+    getBelRefcode();//to get the reference code for bank Deposit
+
+    $('#submit_bel').click(function(){
+        if(belvalidation() == 0){
+            var ref_code = $('#ref_code_bel').val();var name = $('#name_bel').val();var area = $('#area_bel').val();var ident = $('#ident_bel').val();
+            var trans_id = $('#trans_id_bel').val();var remark = $('#remark_bel').val();var amt = $('#amt_bel').val();
+            var bank_id =$('input[name=cash_type]:checked').val();    
+
+            $.ajax({
+                url: 'accountsFile/cashtally/el/submitCBel.php',
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCBelDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//to get input details for bank Deposit card Debit
+function getDBelDetails(){
+    var appendText = `
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ref_code_bel">Ref ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ref_code_bel" name="ref_code_bel" class="form-control" readonly>
+        </div>
+    </div>
+    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+        <div class="form-group">
+            <label for="name_bel">Name</label><span class="text-danger">&nbsp;*</span>
+            <select id="name_bel" name="name_bel" class="form-control"></select>
+            <span id='name_belCheck' class="text-danger" style="display:none">Please Select Name</span>
+        </div>
+    </div>
+    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+        <div class="form-group ">
+            <label style="visibility:hidden"></label><br>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="area_bel">Area</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="area_bel" name="area_bel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="ident_bel">Identification</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="ident_bel" name="ident_bel" class="form-control" readonly placeholder="Choose Name">
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="trans_id_bel">Transaction ID</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="trans_id_bel" name="trans_id_bel" class="form-control" placeholder="Enter Transaction ID">
+            <span id='trans_id_belCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="remark_bel">Remark</label><span class="text-danger">&nbsp;*</span>
+            <input type="text" id="remark_bel" name="remark_bel" class="form-control" placeholder="Enter Remark">
+            <span id='remark_belCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="form-group">
+            <label for="amt_bel">Amount</label><span class="text-danger">&nbsp;*</span>
+            <input type="number" id="amt_bel" name="amt_bel" class="form-control" placeholder="Enter Amount">
+            <span id='amt_belCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+        <div class="text-left">
+            <label style="visibility:hidden"></label><br>
+            <input type="button" id="submit_bel" name="submit_bel" class="btn btn-primary" value="Submit">
+        </div>
+    </div>`;
+
+    $('#invDiv').addClass('row', !$('#invDiv').hasClass('row'));
+    $('.inv_card_header').text('EL');
+    $('#invDiv').empty()
+    $('#invDiv').html(appendText);
+
+    resetNameDetailDropdown();// to get dropdown details of Name filed
+    getBelRefcode();// to get ref code
+
+    $('#submit_bel').click(function(){
+        if(belvalidation() == 0){
+            var ref_code = $('#ref_code_bel').val();var name = $('#name_bel').val();var area = $('#area_bel').val();var ident = $('#ident_bel').val();
+            var trans_id = $('#trans_id_bel').val();var remark = $('#remark_bel').val();var amt = $('#amt_bel').val();
+            var bank_id =$('input[name=cash_type]:checked').val();    
+
+            $.ajax({
+                url: 'accountsFile/cashtally/el/submitDBel.php',
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDBelDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//validation for Bank EL //Same validation can be used for Cr/Db due to same inputs
+function belvalidation(){
+    var name = $('#name_bel').val();var trans_id = $('#trans_id_bel').val();var remark = $('#remark_bel').val();var amt = $('#amt_bel').val();var response = 0;
+    if(name==''){event.preventDefault();$('#name_belCheck').show();response=1;}else{$('#name_belCheck').hide();}
+    if(trans_id==''){event.preventDefault();$('#trans_id_belCheck').show();response=1;}else{$('#trans_id_belCheck').hide();}
+    if(remark==''){event.preventDefault();$('#remark_belCheck').show();response=1;}else{$('#remark_belCheck').hide();}
+    if(amt==''){event.preventDefault();$('#amt_belCheck').show();response=1;}else{$('#amt_belCheck').hide();}
+    return response;
+}
+
+// to get ref code for bank EL
+function getBelRefcode(){
+    $.ajax({
+        url: 'accountsFile/cashtally/el/getBelRefcode.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_bel').val(response);
+        }
+    })
+}
+
+// //////////////////////////////////////////////////// EL End //////////////////////////////////////////////////////// //
+
+
+// //////////////////////////////////////////////////// Name Detail Adding Modal Start //////////////////////////////////////////////////////// //
+
+// Modal Box for Name Detail
+{
+$("#name_Check").hide();$("#area_Check").hide();$("#ident_Check").hide();
+$(document).on("click", "#submitNameDetailModal", function () {
+    var name_id=$("#name_id").val();
+    var name_=$("#name_").val();
+    var area_=$("#area_").val();
+    var ident_=$("#ident_").val();
+    if(name_!="" && area_!='' && ident_ != ''){
+        $.ajax({
+            url: 'accountsFile/cashtally/nameDetailModal/ajaxInsertNameDetail.php',
+            type: 'POST',
+            data: {"name":name_,"name_id":name_id,"area":area_,"ident":ident_},
+            cache: false,
+            success:function(response){
+                var insresult = response.includes("Exists");
+                var updresult = response.includes("Updated");
+                if(insresult){
+                    $('#nameInsertNotOk').show(); 
+                    setTimeout(function() {
+                        $('#nameInsertNotOk').fadeOut('fast');
+                    }, 2000);
+                }else if(updresult){
+                    $('#nameUpdateOk').show();  
+                    setTimeout(function() {
+                        $('#nameUpdateOk').fadeOut('fast');
+                    }, 2000);
+                    $("#coursecategoryTable").remove();
+                    resetNameDetailTable();
+                    $("#name_").val('');
+                    $("#area_").val('');
+                    $("#ident_").val('');
+                    $("#name_id").val('');
+                }
+                else{
+                    $('#nameInsertOk').show();  
+                    setTimeout(function() {
+                        $('#nameInsertOk').fadeOut('fast');
+                    }, 2000);
+                    $("#coursecategoryTable").remove();
+                    resetNameDetailTable();
+                    $("#name_").val('');
+                    $("#area_").val('');
+                    $("#ident_").val('');
+                    $("#name_id").val('');
+                }
+            }
+        });
+    }
+    else{
+    $("#name_Check").show();
+    $("#area_Check").show();
+    $("#ident_Check").show();
+    }
+});
+
+function resetNameDetailDropdown(){
+    $.ajax({
+        url: 'accountsFile/cashtally/nameDetailModal/resetNameDetailDropdown.php',
+        data: {},
+        dataType: 'json',
+        type: 'POST',
+        cache: false,
+        success:function(response){
+            $("#name_hinv,#name_binv,#name_hdep,#name_bdeposit,#name_hel,#name_bel").empty().append("<option value=''>Select Name</option>");
+
+            $.each(response, function(index, item) {
+                $("#name_hinv, #name_binv, #name_hdep, #name_bdeposit,#name_hel,#name_bel").append("<option value='" + item['name_id'] + "'>" + item['name'] + "</option>");
+            });
+
+            $('#name_hinv, #name_binv, #name_hdep, #name_bdeposit,#name_hel,#name_bel').change(function() {
+                var name = $(this).val();
+                var areaId = $(this).attr("id").replace("name_", "area_");
+                var identId = $(this).attr("id").replace("name_", "ident_");
+
+                if (name != '') {
+                    var selectedResponse = response.find(function(item) {
+                        return item['name_id'] == name;
+                    });
+
+                    if (selectedResponse) {
+                        $("#" + areaId).val(selectedResponse['area']);
+                        $("#" + identId).val(selectedResponse['ident']);
+                    }
+                } else {
+                    $("#" + areaId).val('');
+                    $("#" + identId).val('');
+                }
+            });
+
+        }
+    })
+    $('#name_hinv,#area_hinv,#ident_hinv,#remark_hinv,#amt_hinv').val('');
+    $('#name_binv,#area_binv,#ident_binv,#remark_binv,#amt_binv').val('');
+    $('#name_hdep,#area_hdep,#ident_hdep,#remark_hdep,#amt_hdep').val('');
+    $('#name_bdeposit,#area_bdeposit,#ident_bdeposit,#remark_bdeposit,#amt_bdeposit').val('');
+    $('#name_hel,#area_hel,#ident_hel,#remark_hel,#amt_hel').val('');
+    $('#name_bel,#area_bel,#ident_bel,#remark_bel,#amt_bel').val('');
+    $("#name_Check,#area_Check,#ident_Check").hide();
+}
+
+function resetNameDetailTable(){
+    $.ajax({
+        url: 'accountsFile/cashtally/nameDetailModal/ajaxResetNameDetailTable.php',
+        type: 'POST',
+        data: {},
+        cache: false,
+        success:function(html){
+            $("#updateNameDetailDiv").empty();
+            $("#updateNameDetailDiv").html(html);
+        }
+    })
+    $("#name_id").val('');$('#name_').val('');$('#area_').val('');$('#ident_').val('')
+    $("#name_Check").hide();$("#area_Check").hide();$("#ident_Check").hide();
+}
+
+$("#name_, #area_, #ident_").on('keyup',function() {
+    var CTval = $(this).val();
+    if (CTval.length == '') {
+        $("#" + this.id + "_Check").show();
+        return false;
+    } else {
+        $("#" + this.id + "_Check").hide();
+    }
+});
+
+
+$("body").on("click","#edit_name",function(){
+    var name_id=$(this).attr('value');
+    $("#name_id").val(name_id);
+    $.ajax({
+        url: 'accountsFile/cashtally/nameDetailModal/ajaxEditNameDetail.php',
+        data: {"name_id":name_id},
+        dataType: 'json',
+        type: 'POST',
+        cache: false,
+        success:function(response){
+            $("#name_").val(response['name']);
+            $("#area_").val(response['area']);
+            $("#ident_").val(response['ident']);
+        }
+    });
+});
+
+$("body").on("click","#delete_name", function(){
+    if(!confirm("Do you want delete Name Details?")){
+        return false;
+    }else{
+        var name_id=$(this).attr('value');
+        var c_obj = $(this).parents("tr");
+        $.ajax({
+            url: 'accountsFile/cashtally/nameDetailModal/ajaxDeleteNameDetail.php',
+            data: {"name_id":name_id},
+            type: 'POST',
+            cache: false,
+            success:function(response){
+                var delresult = response.includes("Rights");
+                if(delresult){
+                    $('#nameDeleteNotOk').show(); 
+                    setTimeout(function() {
+                        $('#nameDeleteNotOk').fadeOut('fast');
+                    }, 2000);
+                }
+                else{
+                    c_obj.remove();
+                    $('#nameDeleteOk').show();  
+                    setTimeout(function() {
+                        $('#nameDeleteOk').fadeOut('fast');
+                    }, 2000);
+                }
+            }
+        });
+    }
+});
+}
+// //////////////////////////////////////////////////// Name Detail Adding Modal End //////////////////////////////////////////////////////// //

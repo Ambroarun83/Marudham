@@ -5,25 +5,6 @@ if(isset($_SESSION['userid'])){
 }
 
 
-if(isset($_POST['submit_collection']) && $_POST['submit_collection'] != ''){
-	if(isset($_POST['id'])){$id = $_POST['id'];}
-
-	$addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
-	
-?>
-	<script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1&id=<?php echo $coll_id ?>';</script>
-<?php
-}
-
-$idupd=0;
-if(isset($_GET['upd']))
-{
-$idupd=$_GET['upd'];
-}
-if($idupd>0)
-{
-
-}
 $getuser = $userObj->getuser($mysqli,$userid);
 $bank_details = $getuser['bank_details'];
 $branch_id = $getuser['branch_id'];
@@ -300,7 +281,22 @@ input[type="radio"]{
 						</div>
 					</div>
 				</div>
-<!-- //////////////////////////////////////////////////////////// Other income Card ////////////////////////////////////////////////////////////////////////////-->
+<!-- //////////////////////////////////////////////////////////// Expense Card ////////////////////////////////////////////////////////////////////////////-->
+
+<!-- //////////////////////////////////////////////////////////// Investment/Deposit/EL Card ////////////////////////////////////////////////////////////////////////////-->
+				<div class="card inv_card" style='display:none'>
+					<div class="card-header inv_card_header" style='font-size:18px;font-weight:bold;'>Investment</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row modal-body" id="invDiv">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- //////////////////////////////////////////////////////////// Investment/Deposit/EL Card ////////////////////////////////////////////////////////////////////////////-->
 
 <!-- //////////////////////////////////////////////////////////// Closing Balance Card ////////////////////////////////////////////////////////////////////////////-->
 				<div class="card">
@@ -480,6 +476,26 @@ input[type="radio"]{
 								</div>
 							</div>
 						</div>
+						<div class="row" id="exp_typeDiv"  style="display:none" >
+							<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"></div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+								<div class="form-group">
+									<label for='exp_view_type'>View</label>
+									<select class="form-control" id='exp_view_type' name='exp_view_type' >
+										<option value=''>Select View type</option>
+										<option value='1'>Overall</option>
+										<option value='2'>Category wise</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12" id='exp_cat_typeDiv' style="display: none;">
+								<div class="form-group">
+									<label for='exp_cat_type'>Category</label>
+									<select class="form-control" id='exp_cat_type' name='exp_cat_type' >
+									</select>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -605,3 +621,98 @@ input[type="radio"]{
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Expense Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Inv/Dep/EL Name Creation modal END ////////////////////////////////////////////////////////////////////// -->
+
+<div class="modal fade add_nameDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Name Creation </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNameDetailDropdown()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+			<div class="modal-body">
+				<!-- alert messages -->
+                <div id="nameInsertNotOk" class="unsuccessalert">Name Already Exists, Please Enter a Different Name!
+                <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+
+                <div id="nameInsertOk" class="successalert">Name Detail Added Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+
+                <div id="nameUpdateOk" class="successalert">Name Detail Updated Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+
+                <div id="nameDeleteNotOk" class="unsuccessalert">You Don't Have Rights To Delete This Name Detail!
+                <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+
+                <div id="nameDeleteOk" class="successalert">Name Detail Has been Inactivated!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+                </div>
+
+                <br />
+                <div class="row">
+                    <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12"></div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                        <div class="form-group">
+                            <label class="label">Name</label><span class="text-danger">&nbsp;*</span>
+                            <input type="hidden" name="name_id" id="name_id">
+                            <input type="text" name="name_" id="name_" class="form-control" placeholder="Enter Name">
+                            <span class="text-danger" id="name_Check">Enter Name</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                        <div class="form-group">
+                            <label class="label">Area</label><span class="text-danger">&nbsp;*</span>
+                            <input type="text" name="area_" id="area_" class="form-control" placeholder="Enter Area">
+                            <span class="text-danger" id="area_Check">Enter Area Name</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+                        <div class="form-group">
+                            <label class="label">Identification</label><span class="text-danger">&nbsp;*</span>
+                            <input type="text" name="ident_" id="ident_" class="form-control" placeholder="Enter Identification">
+                            <span class="text-danger" id="ident_Check">Enter Identification</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
+						<label class="label" style="visibility: hidden;"></label><br>
+                        <button type="button" name="submitNameDetailModal" id="submitNameDetailModal" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+                <div id="updateNameDetailDiv"> 
+                    <table class="table custom-table" id="nameDetailTable"> 
+                        <thead>
+                            <tr>
+                                <th width="50">S.No</th>
+                                <th>Name</th>
+                                <th>Area</th>
+                                <th>Identification</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+								<a id="edit_name" value=""><span class="icon-border_color"></span></a> &nbsp;
+								<a id="delete_name" value=""><span class='icon-trash-2'></span></a>
+							</td>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+			<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id='' data-dismiss="modal" onclick="resetNameDetailDropdown()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Inv/Dep/EL Name Creation modal END ////////////////////////////////////////////////////////////////////// -->

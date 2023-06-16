@@ -6093,4 +6093,21 @@ function updateUser($mysqli,$id,$user_id){
 		}
 		return $detailrecords;
 	}
+	
+	// //Name Details Fetch for Cash tally investment
+	// public function getNameDetail($mysqli) {
+	// 	$qry = "SELECT * FROM name_detail_creation WHERE 1 ";
+	// 	$res = $mysqli->query($qry) or die("Error in Get All Records" . $mysqli->error);
+	// 	$i=0;$detailrecords = array();
+	// 	while($row = $res->fetch_object()) {
+	// 		$detailrecords[$i]	 = [
+	// 			'name_id'   => $row->name_id,
+	// 			'name'   => $row->name,
+	// 			'area'   => $row->area,
+	// 			'ident'   => $row->ident,
+	// 		];
+	// 		$i++;
+	// 	}
+	// 	return $detailrecords;
+	// }
 }//Class End

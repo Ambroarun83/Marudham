@@ -8,6 +8,11 @@ $bankqry = $con->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user
 $bank_id = $bankqry->fetch_assoc()['bank_details'];
 
 $sheet_type = $_POST['sheet_type'];
+if(isset($_POST['exp_cat_type'])){
+    $exp_cat_type = $_POST['exp_cat_type'];
+}else{
+    $exp_cat_type = '';
+}
 
 $tableHeaders = '';
 
@@ -158,7 +163,7 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     }
 
     $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td></tr>";
-}else if($sheet_type == 4){//4 Means Expense Balance Sheet
+}else if($sheet_type == 4 and $exp_cat_type==''){//4 Means Expense Balance Sheet
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Debit Amount</th>";
 
     $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
@@ -205,6 +210,64 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     }
 
     $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($debitSum)."</td></tr>";
+
+    
+}else if($sheet_type == 4 and $exp_cat_type !=''){//4 Means Expense Balance Sheet and exp_cat type if has values then show category wise
+    $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Debit Amount</th>";
+
+    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
+    FROM ct_db_hexpense 
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id' and cat = $exp_cat_type
+    
+    UNION ALL 
+    
+    SELECT created_date AS tdate, bank_id AS ctype, cat, amt AS Debit
+    FROM ct_db_bexpense 
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id') and cat = $exp_cat_type
+    
+    ORDER BY 1
+    ");
+
+    $i = 1;$creditSum = 0;$debitSum = 0;
+
+    if($qry->num_rows >0){ //check wheather query returning values or not
+        
+        $tabBody = '<tr>';
+
+        while($row = $qry->fetch_assoc()){
+            $tabBody .= "<td>$i</td>";
+            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+    
+            if($row['ctype'] != 'Hand Cash'){
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+                $bnamerun = $bnameqry->fetch_assoc();
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+    
+                $tabBody .= "<td>" . $bname . "</td>";
+            }else{
+                $tabBody .= "<td>" . $row['ctype'] . "</td>";
+            }
+            
+            $catqry = $con->query("SELECT category from expense_category where id = '".$row['cat']."' ");
+            $category = $catqry->fetch_assoc()['category'];
+            
+            $tabBody .= "<td>" . $category . "</td>";
+            $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
+            $tabBody .= '</tr>';
+    
+            //Store credit and debit for total
+            $debitSum = $debitSum + intVal($row['Debit']);
+            $i++;
+        }
+    
+        $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($debitSum)."</td></tr>";
+    }else{
+        //if query not returning any values, set table body and footer empty. by default its not working
+        $tabBody = '';
+        $tabBodyEnd = '';
+    }
+
+    
 }
 else{return '';}
 ?>
@@ -253,6 +316,8 @@ else{return '';}
             // }
         });
 
+
+
     });
 </script>
 
@@ -287,5 +352,14 @@ function moneyFormatIndia($num1) {
     }
 
     return $thecash;
+}
+
+
+if($sheet_type == 4){//4 Means Expense Balance Sheet so show/hide view types
+
+    echo "<script>$('#exp_typeDiv').show()</script>";
+
+}else{
+    echo "<script>$('#exp_typeDiv').hide()</script>";
 }
 ?>

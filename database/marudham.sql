@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 15, 2023 at 03:19 PM
+-- Generation Time: Jun 16, 2023 at 03:00 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1018,6 +1018,65 @@ INSERT INTO `ct_cr_bank_withdraw` (`id`, `db_ref_id`, `ref_code`, `trans_id`, `f
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ct_cr_bdeposit`
+--
+
+CREATE TABLE `ct_cr_bdeposit` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_bdeposit`
+--
+
+INSERT INTO `ct_cr_bdeposit` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(4, '3', 'DEP-100001', '798798', '5', 'Karur', 'karur', 'Heck', '7800', '28', NULL, '2023-06-16 17:20:14', '2023-06-16 17:20:14'),
+(5, '3', 'DEP-100003', '2432', '5', 'Karur', 'karur', 'Look', '9500', '28', NULL, '2023-06-16 17:21:53', '2023-06-16 17:21:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_bel`
+--
+
+CREATE TABLE `ct_cr_bel` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_bel`
+--
+
+INSERT INTO `ct_cr_bel` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(5, '3', 'EL-100001', '5665665', '6', 'Karur', 'palladam', 'Ckeskss', '1250', '28', NULL, '2023-06-16 18:18:06', '2023-06-16 18:18:06');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ct_cr_bexchange`
 --
 
@@ -1046,6 +1105,36 @@ INSERT INTO `ct_cr_bexchange` (`id`, `db_ref_id`, `from_bank_id`, `to_bank_id`, 
 (4, '5', '6', '3', '21', '28', 'EXC-100001', '123423', 'dsfgdfg', '45650', '28', NULL, '2023-06-12 19:01:00', '2023-06-12 19:01:00'),
 (5, '6', '6', '5', '21', '21', 'EXC-100002', '2432', 'asf', '65410', '21', NULL, '2023-06-12 19:01:48', '2023-06-12 19:01:48'),
 (6, '4', '5', '6', '21', '21', 'EXC-100003', '34457457', 'steryrty', '31354', '21', NULL, '2023-06-12 19:07:05', '2023-06-12 19:07:05');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_binvest`
+--
+
+CREATE TABLE `ct_cr_binvest` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_binvest`
+--
+
+INSERT INTO `ct_cr_binvest` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(2, '3', 'INV-100001', '984654', '6', 'Karur', 'palladam', 'Checkkkkk', '6000', '28', NULL, '2023-06-16 16:00:33', '2023-06-16 16:00:33'),
+(3, '3', 'INV-100003', '798987', '8', 'Pondicherry', 'pondy', 'poke', '3000', '28', NULL, '2023-06-16 16:50:53', '2023-06-16 16:50:53');
 
 -- --------------------------------------------------------
 
@@ -1108,6 +1197,58 @@ INSERT INTO `ct_cr_cash_deposit` (`id`, `db_ref_id`, `to_bank_id`, `location`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ct_cr_hdeposit`
+--
+
+CREATE TABLE `ct_cr_hdeposit` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_hdeposit`
+--
+
+INSERT INTO `ct_cr_hdeposit` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '6', 'Karur', 'palladam', 'Check', '2500', '28', NULL, '2023-06-16 16:53:33', '2023-06-16 16:53:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_hel`
+--
+
+CREATE TABLE `ct_cr_hel` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_hel`
+--
+
+INSERT INTO `ct_cr_hel` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '6', 'Karur', 'palladam', 'Cake', '6000', '28', NULL, '2023-06-16 17:41:43', '2023-06-16 17:41:43');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ct_cr_hexchange`
 --
 
@@ -1132,6 +1273,34 @@ INSERT INTO `ct_cr_hexchange` (`id`, `db_ref_id`, `to_user_id`, `from_user_id`, 
 (5, '5', '21', '28', 'asdfasdf', '75000', '21', '2023-06-12 19:01:35', '2023-06-12 19:01:35'),
 (9, '17', '29', '28', 'Final Remark', '234', '29', '2023-06-13 11:57:02', '2023-06-13 11:57:02'),
 (10, '18', '29', '28', 'Final Remark', '345', '29', '2023-06-13 11:57:35', '2023-06-13 11:57:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_hinvest`
+--
+
+CREATE TABLE `ct_cr_hinvest` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_hinvest`
+--
+
+INSERT INTO `ct_cr_hinvest` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(5, '9', 'Chennai', 'Chennai', 'Own money', '45000', '28', NULL, '2023-06-16 15:13:34', '2023-06-16 15:13:34'),
+(6, '8', 'Pondicherry', 'pondy', 'Check', '2000', '28', NULL, '2023-06-16 15:27:16', '2023-06-16 15:27:16'),
+(7, '5', 'Karur', 'karur', 'Poke', '4500', '28', NULL, '2023-06-16 16:49:55', '2023-06-16 16:49:55');
 
 -- --------------------------------------------------------
 
@@ -1187,6 +1356,64 @@ INSERT INTO `ct_db_bank_deposit` (`id`, `to_bank_id`, `location`, `remark`, `amo
 (11, '3', 'Coimbatore', 'daily deposit', '75000', 1, '28', NULL, '2023-06-09 10:29:56', '2023-06-08 10:29:56'),
 (12, '3', 'Pondicherry', 'collection amt', '46800', 1, '28', NULL, '2023-06-09 11:50:04', '2023-06-08 11:50:04'),
 (13, '3', 'Chennai', 'Perugulathur', '12000', 1, '28', NULL, '2023-06-09 12:07:27', '2023-06-09 12:07:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_bdeposit`
+--
+
+CREATE TABLE `ct_db_bdeposit` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_bdeposit`
+--
+
+INSERT INTO `ct_db_bdeposit` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(5, '3', 'DEP-100002', '64654', '8', 'Pondicherry', 'pondy', 'BEck', '7000', '28', NULL, '2023-06-16 17:21:32', '2023-06-16 17:21:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_bel`
+--
+
+CREATE TABLE `ct_db_bel` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_bel`
+--
+
+INSERT INTO `ct_db_bel` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(4, '3', 'EL-100002', '969696', '9', 'Chennai', 'Chennai', 'Look', '7800', '28', NULL, '2023-06-16 18:18:29', '2023-06-16 18:18:29');
 
 -- --------------------------------------------------------
 
@@ -1256,6 +1483,36 @@ INSERT INTO `ct_db_bexpense` (`id`, `username`, `usertype`, `ref_code`, `bank_id
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ct_db_binvest`
+--
+
+CREATE TABLE `ct_db_binvest` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_binvest`
+--
+
+INSERT INTO `ct_db_binvest` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '3', 'INV-100002', '651654', '9', 'Chennai', 'Chennai', 'Ckecks', '3000', '28', NULL, '2023-06-16 16:00:51', '2023-06-16 16:00:51'),
+(2, '3', 'INV-100004', '4654654', '8', 'Pondicherry', 'pondy', 'poke', '2000', '28', NULL, '2023-06-16 16:51:15', '2023-06-16 16:51:15');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ct_db_bissued`
 --
 
@@ -1306,6 +1563,58 @@ INSERT INTO `ct_db_cash_withdraw` (`id`, `ref_code`, `trans_id`, `from_bank_id`,
 (4, 'WD-100003', '3454', '3', '35456', 'Remark check', '65400', '1', '28', NULL, '2023-06-08 17:39:17', '2023-06-08 17:39:17'),
 (5, 'WD-100004', '36545675467', '6', '35672346234', 'bank id check', '45200', '0', '21', NULL, '2023-06-08 17:42:16', '2023-06-08 17:42:16'),
 (6, 'WD-100005', '632131354', '3', '78987898', 'Perungulathur', '12000', '1', '28', NULL, '2023-06-09 12:08:30', '2023-06-09 12:08:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_hdeposit`
+--
+
+CREATE TABLE `ct_db_hdeposit` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_hdeposit`
+--
+
+INSERT INTO `ct_db_hdeposit` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '9', 'Chennai', 'Chennai', 'Check', '15600', '28', NULL, '2023-06-16 16:58:28', '2023-06-16 16:58:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_hel`
+--
+
+CREATE TABLE `ct_db_hel` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_hel`
+--
+
+INSERT INTO `ct_db_hel` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '8', 'Pondicherry', 'pondy', 'Cake', '4000', '28', NULL, '2023-06-16 17:42:12', '2023-06-16 17:42:12');
 
 -- --------------------------------------------------------
 
@@ -1369,6 +1678,33 @@ INSERT INTO `ct_db_hexpense` (`id`, `username`, `usertype`, `cat`, `part`, `vou_
 (1, 'Chithambaram', 'Director', '1', 'Sambrani', '6464654', 'Dinesh', 'Day1', '100', '', '28', NULL, '2023-06-15 15:42:17', '2023-06-15 15:42:17'),
 (8, 'Chithambaram', 'Director', '4', 'Tally note', '65464', 'Logesh', 'note1', '550', '', '28', NULL, '2023-06-15 17:04:27', '2023-06-15 17:04:27'),
 (9, 'Chithambaram', 'Director', '13', 'Check', '335', 'Hari', 'check', '1500', '', '28', NULL, '2023-06-15 17:05:27', '2023-06-15 17:05:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_hinvest`
+--
+
+CREATE TABLE `ct_db_hinvest` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `name_id` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_hinvest`
+--
+
+INSERT INTO `ct_db_hinvest` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '6', 'Karur', 'palladam', 'taken', '15000', '28', NULL, '2023-06-16 15:26:16', '2023-06-16 15:26:16'),
+(2, '8', 'Pondicherry', 'pondy', 'Poke', '4000', '28', NULL, '2023-06-16 16:50:25', '2023-06-16 16:50:25');
 
 -- --------------------------------------------------------
 
@@ -2223,6 +2559,34 @@ CREATE TABLE `loan_summary_feedback` (
 INSERT INTO `loan_summary_feedback` (`id`, `req_id`, `cus_id`, `feedback_label`, `cus_feedback`, `feedback_remark`) VALUES
 (3, '18', '945454646565', 'Check Three', '5', 'Three 3'),
 (4, '18', '945454646565', 'Check Four', '1', 'Four 4');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `name_detail_creation`
+--
+
+CREATE TABLE `name_detail_creation` (
+  `name_id` int(11) NOT NULL COMMENT 'Primary Key',
+  `name` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `ident` varchar(255) DEFAULT NULL,
+  `status` varchar(10) NOT NULL DEFAULT '0',
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `name_detail_creation`
+--
+
+INSERT INTO `name_detail_creation` (`name_id`, `name`, `area`, `ident`, `status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(5, 'Kumar', 'Karur', 'karur', '0', '28', NULL, NULL, '2023-06-16 13:46:28'),
+(6, 'Dinesh', 'Karur', 'palladam', '0', '28', NULL, NULL, '2023-06-16 13:46:54'),
+(8, 'Arun', 'Pondicherry', 'pondy', '0', '28', NULL, NULL, '2023-06-16 14:42:57'),
+(9, 'Mani', 'Chennai', 'Chennai', '0', '28', NULL, NULL, '2023-06-16 14:43:25');
 
 -- --------------------------------------------------------
 
@@ -3272,9 +3636,27 @@ ALTER TABLE `ct_cr_bank_withdraw`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_cr_bdeposit`
+--
+ALTER TABLE `ct_cr_bdeposit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_cr_bel`
+--
+ALTER TABLE `ct_cr_bel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_cr_bexchange`
 --
 ALTER TABLE `ct_cr_bexchange`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_cr_binvest`
+--
+ALTER TABLE `ct_cr_binvest`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3290,9 +3672,27 @@ ALTER TABLE `ct_cr_cash_deposit`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_cr_hdeposit`
+--
+ALTER TABLE `ct_cr_hdeposit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_cr_hel`
+--
+ALTER TABLE `ct_cr_hel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_cr_hexchange`
 --
 ALTER TABLE `ct_cr_hexchange`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_cr_hinvest`
+--
+ALTER TABLE `ct_cr_hinvest`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3308,6 +3708,18 @@ ALTER TABLE `ct_db_bank_deposit`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_db_bdeposit`
+--
+ALTER TABLE `ct_db_bdeposit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_bel`
+--
+ALTER TABLE `ct_db_bel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_db_bexchange`
 --
 ALTER TABLE `ct_db_bexchange`
@@ -3317,6 +3729,12 @@ ALTER TABLE `ct_db_bexchange`
 -- Indexes for table `ct_db_bexpense`
 --
 ALTER TABLE `ct_db_bexpense`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_binvest`
+--
+ALTER TABLE `ct_db_binvest`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3332,6 +3750,18 @@ ALTER TABLE `ct_db_cash_withdraw`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_db_hdeposit`
+--
+ALTER TABLE `ct_db_hdeposit`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_hel`
+--
+ALTER TABLE `ct_db_hel`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_db_hexchange`
 --
 ALTER TABLE `ct_db_hexchange`
@@ -3341,6 +3771,12 @@ ALTER TABLE `ct_db_hexchange`
 -- Indexes for table `ct_db_hexpense`
 --
 ALTER TABLE `ct_db_hexpense`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_hinvest`
+--
+ALTER TABLE `ct_db_hinvest`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3462,6 +3898,12 @@ ALTER TABLE `loan_scheme`
 --
 ALTER TABLE `loan_summary_feedback`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `name_detail_creation`
+--
+ALTER TABLE `name_detail_creation`
+  ADD PRIMARY KEY (`name_id`);
 
 --
 -- Indexes for table `noc`
@@ -3727,10 +4169,28 @@ ALTER TABLE `ct_cr_bank_withdraw`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=12;
 
 --
+-- AUTO_INCREMENT for table `ct_cr_bdeposit`
+--
+ALTER TABLE `ct_cr_bdeposit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_bel`
+--
+ALTER TABLE `ct_cr_bel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `ct_cr_bexchange`
 --
 ALTER TABLE `ct_cr_bexchange`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_binvest`
+--
+ALTER TABLE `ct_cr_binvest`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_boti`
@@ -3745,10 +4205,28 @@ ALTER TABLE `ct_cr_cash_deposit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=18;
 
 --
+-- AUTO_INCREMENT for table `ct_cr_hdeposit`
+--
+ALTER TABLE `ct_cr_hdeposit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_hel`
+--
+ALTER TABLE `ct_cr_hel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `ct_cr_hexchange`
 --
 ALTER TABLE `ct_cr_hexchange`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_hinvest`
+--
+ALTER TABLE `ct_cr_hinvest`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hoti`
@@ -3763,6 +4241,18 @@ ALTER TABLE `ct_db_bank_deposit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
+-- AUTO_INCREMENT for table `ct_db_bdeposit`
+--
+ALTER TABLE `ct_db_bdeposit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `ct_db_bel`
+--
+ALTER TABLE `ct_db_bel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `ct_db_bexchange`
 --
 ALTER TABLE `ct_db_bexchange`
@@ -3773,6 +4263,12 @@ ALTER TABLE `ct_db_bexchange`
 --
 ALTER TABLE `ct_db_bexpense`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `ct_db_binvest`
+--
+ALTER TABLE `ct_db_binvest`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bissued`
@@ -3787,6 +4283,18 @@ ALTER TABLE `ct_db_cash_withdraw`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `ct_db_hdeposit`
+--
+ALTER TABLE `ct_db_hdeposit`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `ct_db_hel`
+--
+ALTER TABLE `ct_db_hel`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `ct_db_hexchange`
 --
 ALTER TABLE `ct_db_hexchange`
@@ -3797,6 +4305,12 @@ ALTER TABLE `ct_db_hexchange`
 --
 ALTER TABLE `ct_db_hexpense`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `ct_db_hinvest`
+--
+ALTER TABLE `ct_db_hinvest`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ct_db_hissued`
@@ -3911,6 +4425,12 @@ ALTER TABLE `loan_scheme`
 --
 ALTER TABLE `loan_summary_feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `name_detail_creation`
+--
+ALTER TABLE `name_detail_creation`
+  MODIFY `name_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `noc`
