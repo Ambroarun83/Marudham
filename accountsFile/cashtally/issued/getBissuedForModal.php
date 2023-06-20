@@ -5,7 +5,7 @@ include('../../../ajaxconfig.php');
 $user_id = $_POST['user_id'];
 $li_id = $_POST['li_id'];
 
-$qry = $con->query("SELECT id,cheque_no,cheque_value,transaction_id,transaction_value,issued_to,req_id,insert_login_id FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((cheque_value!= '' or transaction_value !='') or (cheque_value!= '' and transaction_value !='')) and id='$li_id' and insert_login_id = '$user_id' ");
+$qry = $con->query("SELECT id,cheque_no,cheque_value,transaction_id,transaction_value,issued_to,req_id,insert_login_id,li.bank_id FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((cheque_value!= '' or transaction_value !='') or (cheque_value!= '' and transaction_value !='')) and id='$li_id' and insert_login_id = '$user_id' ");
 $row = $qry->fetch_assoc();
 
 if($row['cheque_value'] != '' and $row['transaction_value'] == ''){
@@ -29,6 +29,7 @@ if($row['cheque_value'] != '' and $row['transaction_value'] == ''){
 $issued_to = $row['issued_to'];
 $req_id = $row['req_id'];
 $user_id = $row['insert_login_id'];
+$bank_id = $row['bank_id'];
 
 $qry1 = $con->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
 $row1 = $qry1->fetch_assoc();
@@ -64,6 +65,7 @@ else
                     <label for='ref_code'>Ref ID</label>
                     <input type="hidden" class="form-control" id= 'li_id' name='li_id' value='<?php echo $li_id;?>' readonly>
                     <input type="hidden" class="form-control" id= 'li_user_id' name='li_user_id' value='<?php echo $user_id;?>' readonly>
+                    <input type="hidden" class="form-control" id= 'li_bank_id' name='li_bank_id' value='<?php echo $bank_id;?>' readonly>
                     <input type="text" class="form-control" id= 'ref_code' name='ref_code' value='<?php echo $ref_code;?>' readonly>
                 </div>
             </div>

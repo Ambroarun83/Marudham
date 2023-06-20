@@ -92,6 +92,14 @@ $(document).ready(function(){
                 //11 Means EL and cash type Bank cash
                 $('.inv_card').show();
                 getCBelDetails();
+            }else if(credit_type == 8 && cash_type == 0){
+                //8 Means Agent and cash type Hand cash
+                $('.ag_card').show();
+                getCHagDetails();
+            }else if(credit_type == 8 && cash_type > 0){
+                //8 Means Agent and cash type Bank cash
+                $('.ag_card').show();
+                getCBagDetails();
             }
             
 
@@ -165,16 +173,31 @@ $(document).ready(function(){
                 //11 Means EL and cash type Bank cash
                 $('.inv_card').show();
                 getDBelDetails();
+            }else if(debit_type == 12 && cash_type > 0){
+                //12 Means Excess fund and cash type Bank cash
+                $('.exf_card').show();
+                getExfDetails();
+            }else if(debit_type == 8 && cash_type == 0){
+                //8 Means Agent and cash type Hand cash
+                $('.ag_card').show();
+                getDHagDetails();
+            }else if(debit_type == 8 && cash_type > 0){
+                //8 Means Agent and cash type Bank cash
+                $('.ag_card').show();
+                getDBagDetails();
             }
         }
     })
 
     $('#sheet_type').change(function(){
         var sheet_type = $(this).val();
+        
+        $('#exp_typeDiv').hide();$('#exp_view_type, #exp_cat_type').val('');//hide expense view option 
+        $('#IDE_Div').hide();$('#IDE_type, #IDE_view_type, #IDE_name_list').val('');//hide IDE view option and empty values
+        $('#ag_typeDiv').hide();$('#ag_view_type,#ag_namewise').val('');//hide Agent view option and empty values
 
-        if(sheet_type != '' && sheet_type != 4 ){ // blocking sheet type 4 beacause expense balsheet should showed after selecting view type
-            
-            $('#exp_typeDiv').hide();//hide expense view option 
+        if(sheet_type != '' && sheet_type != 4 && sheet_type != 5 && sheet_type != 7){ 
+            // blocking sheet type 4 beacause expense balsheet should showed after selecting view type and 5 because Inv/Dep/EL should be validated more
             
             $.ajax({
                 url: 'accountsFile/cashtally/contra/getBalanceSheet.php',
@@ -189,6 +212,39 @@ $(document).ready(function(){
         }else if(sheet_type == 4){
             $('#blncSheetDiv').empty()
             $('#exp_typeDiv').show()
+
+        }else if(sheet_type == 5){
+            $('#blncSheetDiv').empty()
+            $('#IDE_Div').show()
+
+            // to get name detail creation table 
+            $.ajax({
+                url:'accountsFile/cashtally/getNameBasedDetails.php',
+                data:{},
+                dataType: 'json',
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#IDE_name_list').empty();
+                    $('#IDE_name_list').append("<option value=''>Select Name</option>");
+                    $.each(response, function(index, item) {
+                        $("#IDE_name_list").append("<option value='" + item['name_id'] + "'>" + item['name'] + "</option>");
+                    });
+
+                    $('#IDE_name_list').change(function(){
+                        var name_id = $(this).val();// get the name table id
+                        $.each(response, function(index, item) {
+                            if(name_id == item['name_id']){
+                                $('#IDE_name_area').val(item['area']);
+                            }
+                        })
+                    })
+                }
+            })
+        }else if(sheet_type == 7){
+            $('#blncSheetDiv').empty()
+            $('#ag_typeDiv').show()
+
         }
     })
     
@@ -213,9 +269,194 @@ $(document).ready(function(){
             })
         }
     })
+
+    $('#IDE_type').change(function(){
+            $('#blncSheetDiv').empty();
+            $('.IDE_nameDiv').hide();
+            $('#IDE_view_type').val('');$('#IDE_name_list').val('');
+    })
+    $('#IDE_view_type').change(function(){
+        $('#blncSheetDiv').empty()
+
+        var view_type = $(this).val();//overall/Individual
+        var type = $('#IDE_type').val(); //investment/Deposit/EL
+
+        if(view_type == 1 && type != ''){
+            $('#IDE_name_list').val(''); //reset name value when using overall
+            $('.IDE_nameDiv').hide() // hide name list div
+            getIDEBalanceSheet();
+        }else if(view_type == 2 && type != ''){
+            $('.IDE_nameDiv').show()
+        }else{
+            $('.IDE_nameDiv').hide()
+        }
+    })
+
+    $('#IDE_name_list').change(function(){
+        var name_id = $(this).val();
+        if(name_id != ''){
+            getIDEBalanceSheet();
+        }
+    })
+
+    $('#ag_view_type').change(function(){
+        var view_type = $(this).val();
+        if(view_type == 1){
+            $('#ag_namewiseDiv').hide();
+            $('#ag_namewise').val('');
+            getAgBalancesheet();
+        }else if(view_type == 2){
+            $('#ag_namewiseDiv').show();
+            getAgentName('ag_namewise');
+        }else{
+            $('#ag_namewiseDiv').hide();
+            $('#ag_namewise').val('');
+        }
+    })
+
+    $('#ag_namewise').change(function(){
+        var ag_name = $(this).val();
+        if(ag_name != ''){
+            getAgBalancesheet();
+        }
+    })
+
 })//Document ready END
 
+$(function(){// auto call function for fetching Opening and closing balance
 
+    getOpeningDate(); // to get opening date
+    
+    
+
+    
+})
+
+function getOpeningDate(){
+    $.ajax({
+        url: 'accountsFile/cashtally/getOpeningDate.php',
+        data:{},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#op_date').text(response['opening_date']);
+            // $('#opening_balance').text(response['opening_bal']);
+            // $('#hand_opening').text(response['op_hand']);
+            // $('#bank_opening').text(response['op_bank']);
+            // $('#agent_opening').text(response['op_agent']);
+            // $('#closing_balance').text(response['closing_bal']);
+            // $('#hand_closing').text(response['cl_hand']);
+            // $('#bank_closing').text(response['cl_bank']);
+            // $('#agent_closing').text(response['cl_agent']);
+        }
+    }).then(function(){
+        getOpeningBalance();
+        
+    })
+}
+
+function getOpeningBalance(){
+    var op_date = $('#op_date').text();
+    var bank_detail = $('#user_bank_details').val();
+    $.ajax({
+        url: 'accountsFile/cashtally/getOpeningBalance.php',
+        data:{'op_date':op_date,'bank_detail':bank_detail},
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(response){
+            $('#opening_balance').text(response[0]['opening_balance'])
+            $('#hand_opening').text(response[0]['hand_opening'])
+            var i=0;
+            $.each(response,function(index,item){
+                $('#bank_opening'+i).text(item['bank_opening'])
+                i++;
+            })
+            $('#agent_opening').text(response[0]['agent_opening'])
+        }
+    }).then(function(){
+        getClosingBalance();
+    })
+}
+
+function getClosingBalance(){
+    var op_date = $('#op_date').text();
+    var opening_balance = $('#opening_balance').text()
+    var bank_detail = $('#user_bank_details').val();
+    $.ajax({
+        url: 'accountsFile/cashtally/getClosingBalance.php',
+        data:{'op_date':op_date,'bank_detail':bank_detail},
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(response){
+            var closing = parseInt(response[0]['closing_balance']) + parseInt(opening_balance);
+            $('#closing_balance').text(closing)
+            $('#hand_closing').text(response[0]['hand_closing'])
+            var i=0;
+            $.each(response,function(index,item){
+                $('#bank_closing'+i).text(item['bank_closing'])
+                i++;
+            })
+            $('#agent_closing').text(response[0]['agent_closing'])
+        }
+    }).then(function(){
+        submitCashTally();
+    })
+}
+
+function submitCashTally(){
+    var op_date = $('#op_date').text();
+    var currentDate = new Date();
+    var currentDateStr = currentDate.getDate() + "-0" +(currentDate.getMonth() + 1) + "-" + currentDate.getFullYear();
+    if(op_date != currentDateStr){
+        $('#submit_cash_tally').click(function(){
+            if(confirm('Are You sure to close this Day?')){
+
+                var op_date = $('#op_date').text();
+                var opening_bal =$('#opening_balance').text()
+                var hand_op =$('#hand_opening').text()
+                var bank_op =$('#bank_opening').text()
+                var agent_op =$('#agent_opening').text()
+                var closing_bal =$('#closing_balance').text()
+                var hand_cl =$('#hand_closing').text()
+                var bank_cl =$('#bank_closing').text()
+                var agent_cl =$('#agent_closing').text()
+                var formtosend = {op_date:op_date,opening_bal:opening_bal,hand_op:hand_op,bank_op:bank_op,agent_op:agent_op,closing_bal:closing_bal,hand_cl:hand_cl,bank_cl,agent_cl:agent_cl};
+                $.ajax({
+                    url: 'accountsFile/cashtally/submitCashTally.php',
+                    data: formtosend,
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response.includes('Successfully')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                            getOpeningDate();
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                    }
+                })
+            }else{
+                event.preventDefault();
+            }
+        })
+    }else{
+        $('#submit_cash_tally').off('click');
+        $('#submit_cash_tally').hide();
+    }
+}
 
 
 function appendHandCreditDropdown(){
@@ -381,6 +622,12 @@ function hideAllCardsfunction(){
     
     $('.inv_card').hide();
     $('#invDiv').empty();//empy the card 
+    
+    $('.exf_card').hide();
+    $('#exfDiv').empty();//empy the card 
+    
+    $('.ag_card').hide();
+    $('#agDiv').empty();//empy the card 
 }
 
 
@@ -1081,6 +1328,57 @@ function resetBlncSheet(){
     $('#exp_typeDiv').hide();
 }
 
+function getIDEBalanceSheet(){
+    var type = $('#IDE_type').val(); //investment/Deposit/EL
+    var view_type = $('#IDE_view_type').val();//overall/Individual
+    var IDE_name_id = $('#IDE_name_list').val();//show by name wise
+    var sheet_type = $('#sheet_type').val();
+
+    $.ajax({
+        url: 'accountsFile/cashtally/contra/getBalanceSheet.php',
+        data:{'sheet_type':sheet_type,'IDEview_type':view_type,'IDEtype':type,'IDE_name_id':IDE_name_id},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#blncSheetDiv').empty()
+            $('#blncSheetDiv').html(response)
+        }
+    })
+}
+
+function getAgBalancesheet(){
+    var view_type = $('#ag_view_type').val();//overall/Agent wise
+    var ag_name = $('#ag_namewise').val();//show by agent name wise
+    var sheet_type = $('#sheet_type').val();
+
+    $.ajax({
+        url: 'accountsFile/cashtally/contra/getBalanceSheet.php',
+        data:{'sheet_type':sheet_type,'ag_view_type':view_type,'ag_name':ag_name},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#blncSheetDiv').empty()
+            $('#blncSheetDiv').html(response)
+        }
+    })
+}
+
+function getAgentName(selectID){
+    $.ajax({
+        url: 'accountsFile/cashtally/agent/getAgentName.php',
+        data: {},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#'+selectID).empty();
+            $('#'+selectID).append("<option value=''>Select Agent Name</option>");
+            $.each(response,function(index,item){
+                $('#'+selectID).append("<option value='"+item['ag_id']+"'>"+item['ag_name']+"</option> ")
+            })
+        }
+    })
+}
 // //////////////////////////////////////////////////// Contra END //////////////////////////////////////////////////////// //
 
 // //////////////////////////////////////////////////// Exhange Start //////////////////////////////////////////////////////// //
@@ -3820,3 +4118,555 @@ $("body").on("click","#delete_name", function(){
 });
 }
 // //////////////////////////////////////////////////// Name Detail Adding Modal End //////////////////////////////////////////////////////// //
+
+
+
+/////////////////////////////////////////////////////// Excess Fund Start ///////////////////////////////////////////////////////////////////////
+
+
+//Bank expense modal btn click and submit btn click events
+function getExfDetails(){
+    var appendTxt = `<div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="usertype_exf">User Type</label>
+                            <input type='text' id="usertype_exf" name="usertype_exf" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="username_exf">User Name</label>
+                            <input type='hidden' id="user_id_exf" name="user_id_exf">
+                            <input type='text' id="username_exf" name="username_exf" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="ucl_ref_code_exf">Unclear Ref ID</label>
+                            <input type='text' id="ucl_ref_code_exf" name="ucl_ref_code_exf" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="ref_code_exf">Ref ID</label>
+                            <input type='text' id="ref_code_exf" name="ref_code_exf" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="ucl_trans_id_exf">Unclear Transaction ID</label><span class='text-danger'>&nbsp;*</span>
+                            <select id="ucl_trans_id_exf" name="ucl_trans_id_exf" class="form-control" >
+                            <option value=''>Select Transaction ID</option></select>
+                            <span id='ucl_trans_id_exfCheck' class="text-danger" style="display:none">Please Select Category</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="trans_id_exf">Transaction ID</label><span class='text-danger'>&nbsp;*</span>
+                            <input type="text" id="trans_id_exf" name="trans_id_exf" class="form-control" placeholder="Enter Transaction ID">
+                            <span id='trans_id_exfCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="remark_exf">Remark</label><span class='text-danger'>&nbsp;*</span>
+                            <input type="text" id="remark_exf" name="remark_exf" class="form-control" placeholder="Enter Remark">
+                            <span id='remark_exfCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
+                            <label for="amt_exf">Amount</label><span class='text-danger'>&nbsp;*</span>
+                            <input type="number" id="amt_exf" name="amt_exf" class="form-control" placeholder="Enter Amount">
+                            <span id='amt_exfCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                        <div class="text-left">
+                            <label style="visibility:hidden"></label><br>
+                            <input type="button" id="submit_exf" name="submit_exf" class="btn btn-primary" value="Submit">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>`;
+
+            $('#exfDiv').empty();
+            $('#exfDiv').html(appendTxt);
+            
+            
+            
+            $.ajax({//For fetching Ref code
+                url: 'accountsFile/cashtally/excessfund/getExfRefCode.php',
+                data: {},
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#ref_code_exf').val(response);
+                }
+            })
+            $.ajax({//For fetching Unclear Ref code
+                url: 'accountsFile/cashtally/excessfund/getExfUclRefCode.php',
+                data: {},
+                dataType: 'json',
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#user_id_exf').val(response['user_id']);
+                    $('#username_exf').val(response['user_name']);
+                    $('#usertype_exf').val(response['user_type']);
+                    $('#ucl_ref_code_exf').val(response['ref_code']);
+                }
+            })
+
+            $('#submit_exf').click(function(){
+                if(exfValidation() == 0){
+                    var ucl_ref_code_exf = $('#ucl_ref_code_exf').val();var ref_code_exf = $('#ref_code_exf').val();var ucl_trans_id_exf = $('#ucl_trans_id_exf').val();
+                    var trans_id_exf = $('#trans_id_exf').val();var remark_exf = $('#remark_exf').val();var amt_exf = $('#amt_exf').val();
+                    var username_exf = $('#username_exf').val();var usertype_exf = $('#usertype_exf').val();var bank_id =$('input[name=cash_type]:checked').val();    
+                    var formtosend = {bank_id:bank_id,username_exf:username_exf,usertype_exf:usertype_exf,ucl_ref_code_exf:ucl_ref_code_exf,ref_code_exf:ref_code_exf,ucl_trans_id_exf:ucl_trans_id_exf,trans_id_exf:trans_id_exf,remark_exf:remark_exf,amt_exf:amt_exf};
+                    $.ajax({
+                        url:'accountsFile/cashtally/excessfund/submitExf.php',
+                        data: formtosend,
+                        type: 'post',
+                        cache: false,
+                        success: function(response){
+                            if(response.includes('Successfully')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'success',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                })
+                                getExfDetails();
+                            }else if(response.includes('Error')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                            }
+                        }
+                    })
+                }
+            })
+
+}
+
+// Validation for Bank Excess Fund
+function exfValidation(){
+    var ucl_trans_id = $('#ucl_trans_id_exf').val();var trans_id = $('#trans_id_exf').val();var remark = $('#remark_exf').val();var amt = $('#amt_exf').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    // validateField(ucl_trans_id, '#ucl_trans_id_exfCheck');
+    validateField(trans_id, '#trans_id_exfCheck');
+    validateField(remark, '#remark_exfCheck');
+    validateField(amt, '#amt_exfCheck');
+    return response;
+}
+
+
+/////////////////////////////////////////////////////// Excess Fund End ///////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////// Agent Start ///////////////////////////////////////////////////////////////////////
+
+//to get agent Hand Credit input details
+function getCHagDetails(){
+    var appendTxt = `
+    <div class="col-12">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="ag_id">Agent Name</label><span class='text-danger'>&nbsp;*</span>
+                    <select id="ag_id" name="ag_id" class="form-control" ></select>
+                    <span id='ag_idCheck' class="text-danger" style="display:none">Please Enter Agent Name</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="remark_ag">Remark</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="remark_ag" name="remark_ag" class="form-control" placeholder="Enter Remark">
+                    <span id='remark_agCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="amt_ag">Amount</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount">
+                    <span id='amt_agCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                <div class="text-left">
+                    <label style="visibility:hidden"></label><br>
+                    <input type="button" id="submit_ag" name="submit_ag" class="btn btn-primary" value="Submit">
+                </div>
+            </div>
+        </div>
+    </div>`;
+
+    $('#agDiv').empty();
+    $('#agDiv').html(appendTxt);
+    
+    getAgentName('ag_id');
+
+    $('#submit_ag').off('click');
+    $('#submit_ag').click(function(){
+        if(agValidation() == 0){
+            var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();
+            var formtosend = {ag_id:ag_id,remark:remark_ag,amt:amt_ag};
+            $.ajax({
+                url:'accountsFile/cashtally/agent/submitCHag.php',
+                data: formtosend,
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCHagDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//to get agent Hand Debit input details
+function getDHagDetails(){
+    var appendTxt = `
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="ag_id">Agent Name</label><span class='text-danger'>&nbsp;*</span>
+                    <select id="ag_id" name="ag_id" class="form-control" ></select>
+                    <span id='ag_idCheck' class="text-danger" style="display:none">Please Enter Agent Name</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="remark_ag">Remark</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="remark_ag" name="remark_ag" class="form-control" placeholder="Enter Remark">
+                    <span id='remark_agCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="amt_ag">Amount</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount">
+                    <span id='amt_agCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                <div class="text-left">
+                    <label style="visibility:hidden"></label><br>
+                    <input type="button" id="submit_ag" name="submit_ag" class="btn btn-primary" value="Submit">
+                </div>
+            </div>
+        </div>
+    </div>`;
+
+    $('#agDiv').empty();
+    $('#agDiv').html(appendTxt);
+    
+    getAgentName('ag_id');
+
+
+    $('#submit_ag').off('click');
+    $('#submit_ag').click(function(){
+        if(agValidation() == 0){
+            var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();
+            var formtosend = {ag_id:ag_id,remark:remark_ag,amt:amt_ag};
+            $.ajax({
+                url:'accountsFile/cashtally/agent/submitDHag.php',
+                data: formtosend,
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDHagDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+// Validation for Hand Agent Credit
+function agValidation(){// same validation for both credit and debit
+    var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(ag_id, '#ag_idCheck');
+    validateField(remark_ag, '#remark_agCheck');
+    validateField(amt_ag, '#amt_agCheck');
+    return response;
+}
+
+
+//to get agent Bank Credit input details
+function getCBagDetails(){
+    var appendTxt = `
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="ag_id">Agent Name</label><span class='text-danger'>&nbsp;*</span>
+                    <select id="ag_id" name="ag_id" class="form-control" ></select>
+                    <span id='ag_idCheck' class="text-danger" style="display:none">Please Enter Agent Name</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="ref_code_ag">Ref ID</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="ref_code_ag" name="ref_code_ag" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="trans_id_ag">Transaction ID</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="trans_id_ag" name="trans_id_ag" class="form-control" placeholder="Enter Transaction ID">
+                    <span id='trans_id_agCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="remark_ag">Remark</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="remark_ag" name="remark_ag" class="form-control" placeholder="Enter Remark">
+                    <span id='remark_agCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="amt_ag">Amount</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount">
+                    <span id='amt_agCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                <div class="text-left">
+                    <label style="visibility:hidden"></label><br>
+                    <input type="button" id="submit_ag" name="submit_ag" class="btn btn-primary" value="Submit">
+                </div>
+            </div>
+        </div>
+    </div>`;
+
+    $('#agDiv').empty();
+    $('#agDiv').html(appendTxt);
+
+    getAgentName('ag_id');
+
+    $.ajax({//For fetching Ref code
+        url: 'accountsFile/cashtally/agent/getagRefCode.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_ag').val(response);
+        }
+    })
+
+    $('#submit_ag').off('click');
+    $('#submit_ag').click(function(){
+        if(agBValidation() == 0){
+            var ag_id = $('#ag_id').val();var ref_code_ag = $('#ref_code_ag').val();var trans_id_ag = $('#trans_id_ag').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var bank_id =$('input[name=cash_type]:checked').val(); 
+            var formtosend = {ag_id:ag_id,bank_id:bank_id,ref_code:ref_code_ag,trans_id:trans_id_ag,remark:remark_ag,amt:amt_ag};
+            $.ajax({
+                url:'accountsFile/cashtally/agent/submitCBag.php',
+                data: formtosend,
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getCBagDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+//to get agent input details
+function getDBagDetails(){
+    var appendTxt = `
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="ag_id">Agent Name</label><span class='text-danger'>&nbsp;*</span>
+                    <select id="ag_id" name="ag_id" class="form-control" ></select>
+                    <span id='ag_idCheck' class="text-danger" style="display:none">Please Enter Agent Name</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="ref_code_ag">Ref ID</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="ref_code_ag" name="ref_code_ag" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="trans_id_ag">Transaction ID</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="trans_id_ag" name="trans_id_ag" class="form-control" placeholder="Enter Transaction ID">
+                    <span id='trans_id_agCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="remark_ag">Remark</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="text" id="remark_ag" name="remark_ag" class="form-control" placeholder="Enter Remark">
+                    <span id='remark_agCheck' class="text-danger" style="display:none">Please Enter Remark</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                <div class="form-group">
+                    <label for="amt_ag">Amount</label><span class='text-danger'>&nbsp;*</span>
+                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount">
+                    <span id='amt_agCheck' class="text-danger" style="display:none">Please Enter Amount</span>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                <div class="text-left">
+                    <label style="visibility:hidden"></label><br>
+                    <input type="button" id="submit_ag" name="submit_ag" class="btn btn-primary" value="Submit">
+                </div>
+            </div>
+        </div>
+    </div>`;
+
+    $('#agDiv').empty();
+    $('#agDiv').html(appendTxt);
+    
+    getAgentName('ag_id');
+    
+    
+    $.ajax({//For fetching Ref code
+        url: 'accountsFile/cashtally/agent/getagRefCode.php',
+        data: {},
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#ref_code_ag').val(response);
+        }
+    })
+
+
+    $('#submit_ag').click(function(){
+        if(agBValidation() == 0){
+            var ag_id = $('#ag_id').val();var ref_code_ag = $('#ref_code_ag').val();var trans_id_ag = $('#trans_id_ag').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var bank_id =$('input[name=cash_type]:checked').val(); 
+            var formtosend = {ag_id:ag_id,bank_id:bank_id,ref_code:ref_code_ag,trans_id:trans_id_ag,remark:remark_ag,amt:amt_ag};
+            $.ajax({
+                url:'accountsFile/cashtally/agent/submitDBag.php',
+                data: formtosend,
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    if(response.includes('Successfully')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'success',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        })
+                        getDBagDetails();
+                    }else if(response.includes('Error')){
+                        Swal.fire({
+                            title: response,
+                            icon: 'error',
+                            showConfirmButton: true,
+                            confirmButtonColor: '#009688'
+                        });
+                    }
+                }
+            })
+        }
+    })
+}
+
+// Validation for Bank Agent 
+function agBValidation(){// same validation for both credit and debit
+    var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var trans_id_ag = $('#trans_id_ag').val();
+    var response = 0;
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = 1;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    validateField(ag_id, '#ag_idCheck');
+    validateField(trans_id_ag, '#trans_id_agCheck');
+    validateField(remark_ag, '#remark_agCheck');
+    validateField(amt_ag, '#amt_agCheck');
+    return response;
+}
+
+
+/////////////////////////////////////////////////////// Agent End ///////////////////////////////////////////////////////////////////////
