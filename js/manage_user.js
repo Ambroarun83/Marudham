@@ -513,6 +513,12 @@ function getAgentDetails(ag_id){
             $('#conditionalInfo').append(`<tbody><tr><td>`+response[0]['loan_category']+`</td><td>`+response[0]['sub_category']+`</td>
             <td>`+response[0]['scheme']+`</td><td>`+response[0]['loan_payment']+`</td><td>`+response[0]['responsible']+`</td><td>`+response[0]['collection_point']+`</td></tr></tbody>`);
 
+            if(response[0]['collection_point'] == 'Yes'){
+                $('.line_div').show()
+            }else{
+                $('.line_div').hide()
+            }
+
             $('#company_id').val(response[0]['company_id']);
             $('#company_name').val(response[0]['company_name']);
             
@@ -726,6 +732,7 @@ function getBankDetails(){
                 bankMultiselect.setChoices(items);
                 bankMultiselect.init();
             }
+            $('#bank_details1').trigger('change');// trigger change event for updating once again from temp select box to hidden input
         }
     })
 }

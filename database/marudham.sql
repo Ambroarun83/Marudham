@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 16, 2023 at 03:00 PM
+-- Generation Time: Jun 20, 2023 at 04:37 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -271,7 +271,7 @@ CREATE TABLE `acknowlegement_loan_calculation` (
 INSERT INTO `acknowlegement_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_loan`, `cus_name_loan`, `cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`, `update_login_id`, `create_date`, `update_date`) VALUES
 (10, '18', '945454646565', 'Praveen', 'New', '9844654654', 'wallpaperflare.com_wallpaper.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '15', '10', '45000', '40500', '4500', '45000', '450', '15', '10', '40475', '2023-05-05', '2023-06-05', '1', '12', '1', '1', '2023-04-20 17:19:26', '2023-04-21 09:48:19'),
 (11, '17', '646546546546', 'Rajesh', 'New', '9565565465', 'pexels-cesar-perez-733745.jpg', '5', 'Multi Things', '25000', '5000', '20000', '2', 'Monthly', '', '', '', '3', '', '8', '10', '22', '1500', '1500', '20000', '18000', '2000', '20000', '909.0909090909091', '1500', '1500', '15000', '2023-05-05', '2023-08-13', '2', '12', '28', '28', '2023-04-20 17:53:38', '2023-06-14 15:53:55'),
-(13, '15', '546546546465', 'Kuppusamy', 'Existing', '9646465546', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '94654', '7504', '87150', '1', 'Monthly', 'Interest', '', 'Monthly', '', '', '', '2', '2', '2', '2', '87150', '87150', '1745', '', '', '1743', '1743', '83664', '2023-06-15', '2023-08-15', '1', '12', '1', '28', '2023-04-28 16:36:56', '2023-06-14 10:15:06'),
+(13, '15', '546546546465', 'Kuppusamy', 'Existing', '9646465546', 'pexels-jakub-novacek-924824.jpg', '2', 'Business', '94654', '7504', '87150', '1', 'Monthly', 'Interest', '', 'Monthly', '', '', '', '2', '2', '2', '2', '87150', '87150', '1745', '', '', '1743', '1743', '83664', '2023-06-15', '2023-08-15', '1', '12', '1', '21', '2023-04-28 16:36:56', '2023-06-20 11:09:08'),
 (14, '10', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '5', 'Multi Things', '24864', '943', '23921', '2', '', '', '', '', '1', '', '4', '5', '9', '1000', '1242', '23921', '22725', '1200', '23921', '2657', '1000', '1242', '20483', '2023-05-06', '2024-01-05', '2', '12', '28', NULL, '2023-04-28 16:43:27', '2023-04-28 16:43:27'),
 (15, '11', '123456789101', 'Triple H', 'Existing', '9565654654', 'pexels-hansen-tang-13435926.jpg', '2', 'Business', '50000', '5000', '45000', '2', '', '', '', '', '3', '', '3', '10', '100', '20', '10', '45000', '40500', '4500', '45000', '450', '20', '10', '40470', '2023-05-06', '2023-08-13', '1', '12', '25', NULL, '2023-04-29 15:44:10', '2023-04-29 15:44:10'),
 (17, '20', '105806052023', 'Rakesh', 'New', '8783565696', 'rakesh.png', '5', 'Mobile', '23500', '3500', '20000', '2', '', '', '', '', '1', '', '11', '0.7', '10', '1500', '1500', '20000', '19860', '140', '20000', '2000', '1500', '1500', '16860', '2023-05-03', '2024-03-03', '1', '12', '21', NULL, '2023-05-06 11:20:14', '2023-05-06 11:20:14'),
@@ -306,13 +306,13 @@ INSERT INTO `agent_communication_details` (`comm_id`, `agent_reff_id`, `name`, `
 (79, '24', 'asdf', 'asdf', '24', '34'),
 (80, '15', 'Dinesh', 'Director', '9446665465', '9654654646'),
 (83, '29', 'Arun', 'Leader', '9446546546', '9486546546'),
-(84, '30', 'Suresh', 'TL', '9565465465', '9494654654'),
 (86, '31', 'Kumar', 'Hr', '9454654654', '9464654654'),
 (90, '32', '', '', '', ''),
 (91, '33', '', '', '', ''),
 (92, '34', '', '', '', ''),
-(93, '16', 'Thirugnana samanthar', 'Director', '96969695', '94518445'),
-(94, '28', 'Dinesh', 'Manager', '9964655665', '9465465645');
+(95, '28', 'Dinesh', 'Manager', '9964655665', '9465465645'),
+(96, '16', 'Thirugnana samanthar', 'Director', '96969695', '94518445'),
+(97, '30', 'Suresh', 'TL', '9565465465', '9494654654');
 
 -- --------------------------------------------------------
 
@@ -358,10 +358,10 @@ CREATE TABLE `agent_creation` (
 --
 
 INSERT INTO `agent_creation` (`ag_id`, `ag_code`, `ag_name`, `ag_group_id`, `company_id`, `branch_id`, `mail`, `state`, `district`, `taluk`, `place`, `pincode`, `loan_category`, `sub_category`, `scheme`, `loan_payment`, `responsible`, `collection_point`, `bank_name`, `bank_branch_name`, `acc_no`, `ifsc`, `holder_name`, `more_info`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(16, 'AG-103', 'Alangar', '15', '1', '', 'test1@email.com', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 'Vandavasi', '606566', '5', 'Multi Things', '4,8', '1', '1', '0', 'KVB', 'Vandavasi', '13213165465321', 'KVB123456', 'THIRUGNANA SAMANTHAR', 'More Info', 0, '1', '1', NULL, '2023-03-15 17:21:25', '2023-04-26 17:44:09'),
-(28, 'AG-104', 'Darling & Co', '24', '1', '', '', 'TamilNadu', 'Ariyalur', 'Andimadam', 'Ambatur', '606564', '2', 'Business', '3', '0', '0', '1', 'Indian Bank', 'Guindy', '64654654654654', 'IB1234654', 'DINESH', '', 0, '1', '28', NULL, '2023-03-29 15:18:14', '2023-06-13 16:35:11'),
+(16, 'AG-103', 'Alangar', '15', '1', '', 'test1@email.com', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 'Vandavasi', '606566', '5', 'Multi Things', '4,8', '1', '1', '1', 'KVB', 'Vandavasi', '13213165465321', 'KVB123456', 'THIRUGNANA SAMANTHAR', 'More Info', 0, '1', '28', NULL, '2023-03-15 17:21:25', '2023-06-20 11:51:39'),
+(28, 'AG-104', 'Darling & Co', '24', '1', '', '', 'TamilNadu', 'Ariyalur', 'Andimadam', 'Ambatur', '606564', '2', 'Business', '3', '0', '0', '0', 'Indian Bank', 'Guindy', '64654654654654', 'IB1234654', 'DINESH', '', 0, '1', '28', NULL, '2023-03-29 15:18:14', '2023-06-20 11:42:56'),
 (29, 'AG-105', 'Alangar & Co', '15', '1', '', '', 'TamilNadu', 'Chennai', 'Alandur', 'Vandavasi', '606546', '5', 'Laptops,Electronics', '6', '0', '1', '0', 'Indian Bank', 'Guindy', '545676856785', 'KVB123456', 'ARUN NATARAJAN', '', 0, '1', NULL, NULL, '2023-03-29 15:21:11', '2023-03-29 15:21:11'),
-(30, 'AG-106', 'Laksmi Electronics', '22', '1', '', '', 'TamilNadu', 'Chennai', 'Egmore', 'Guindy', '654654', '5', 'Laptops', '', '1', '0', '1', 'KVB', 'Ambatur', '56465464654', 'KVB123456', 'Suresh', '', 0, '1', NULL, NULL, '2023-03-29 15:22:50', '2023-03-29 15:22:50'),
+(30, 'AG-106', 'Laksmi Electronics', '22', '1', '', '', 'TamilNadu', 'Chennai', 'Egmore', 'Guindy', '654654', '5', 'Laptops', '', '1', '0', '1', 'KVB', 'Ambatur', '56465464654', 'KVB123456', 'Suresh', '', 0, '1', '28', NULL, '2023-03-29 15:22:50', '2023-06-20 11:51:47'),
 (31, 'AG-107', 'AS&co', '25', '4', '', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 'Birdhur', '609599', '2,5', 'Electronics,Business', '6', '0', '1', '0', 'Indian Bank', 'Guindy', '334534534535', 'KVB123456', 'Kumar', '', 0, '1', '28', NULL, '2023-04-17 12:27:14', '2023-04-21 11:19:03');
 
 -- --------------------------------------------------------
@@ -592,6 +592,36 @@ INSERT INTO `branch_creation` (`branch_id`, `branch_code`, `branch_name`, `compa
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `cash_tally`
+--
+
+CREATE TABLE `cash_tally` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `op_hand` varchar(255) DEFAULT NULL,
+  `op_date` varchar(10) NOT NULL,
+  `op_bank` varchar(255) DEFAULT NULL,
+  `op_agent` varchar(255) DEFAULT NULL,
+  `opening_bal` varchar(255) DEFAULT NULL,
+  `cl_hand` varchar(255) DEFAULT NULL,
+  `cl_bank` varchar(255) DEFAULT NULL,
+  `cl_agent` varchar(255) DEFAULT NULL,
+  `closing_bal` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `cash_tally`
+--
+
+INSERT INTO `cash_tally` (`id`, `op_hand`, `op_date`, `op_bank`, `op_agent`, `opening_bal`, `cl_hand`, `cl_bank`, `cl_agent`, `closing_bal`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '5000', '2023-06-19', '15000', '45000', '65000', '2000', '5000', '65000', '72000', '21', '', '2023-06-19 15:54:12', '2023-06-20 15:54:05');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `cash_tally_modes`
 --
 
@@ -814,7 +844,7 @@ INSERT INTO `collection` (`coll_id`, `coll_code`, `req_id`, `cus_id`, `cus_name`
 (36, 'COL-107', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '2250', '42750', '450', '6750', '7200', '207', '0', '3', '', '', '0000-00-00', '1', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '28', NULL, NULL, '2023-06-05 18:25:41', '2023-05-26 18:26:48'),
 (37, 'COL-108', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '2700', '42300', '450', '6300', '6750', '207', '0', '2', '', '', '0000-00-00', '2', '2023-05-26 00:00:00', '450', '', '', '450', '', '', '', '', '1', NULL, NULL, '2023-05-26 18:28:03', '2023-05-26 18:28:03'),
 (38, 'COL-109', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '3150', '41850', '450', '5850', '6300', '207', '0', '1', '', '', '0000-00-00', '1', '2023-05-26 00:00:00', '900', '', '', '900', '', '', '', '', '29', NULL, NULL, '2023-06-06 18:25:41', '2023-05-26 18:28:15'),
-(39, 'COL-110', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '4050', '40950', '450', '8900', '9350', '310', '0', '1', '', '', '0000-00-00', '3', '2023-06-06 00:00:00', '1000', '', '', '1000', '', '', '', '', '28', NULL, NULL, '2023-06-06 09:41:42', '2023-06-06 09:41:42'),
+(39, 'COL-110', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '4050', '40950', '450', '8900', '9350', '310', '0', '1', '', '', '0000-00-00', '3', '2023-06-06 00:00:00', '1000', '', '', '1000', '', '', '', '', '24', NULL, NULL, '2023-06-06 09:41:42', '2023-06-06 09:41:42'),
 (40, 'COL-111', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '5050', '39950', '450', '8000', '8450', '301', '0', '1', '', '', '0000-00-00', '1', '2023-06-06 00:00:00', '900', '', '', '900', '', '', '', '', '28', NULL, NULL, '2023-06-06 09:41:55', '2023-06-06 09:41:55'),
 (41, 'COL-112', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '5950', '39050', '450', '8450', '8900', '301', '0', '1', '', '', '0000-00-00', '1', '2023-06-07 00:00:00', '', '200', '', '200', '', '', '', '', '28', NULL, NULL, '2023-06-07 10:16:32', '2023-06-07 10:16:32'),
 (42, 'COL-113', '11', '123456789101', 'Triple H', '2', '1', '3', '2', '2', 'Business', 'Present', 'Pending', '45000', '5950', '39050', '450', '7750', '8200', '88', '0', '1', '', '', '0000-00-00', '2', '2023-06-07 00:00:00', '700', '', '', '700', '', '', '', '', '21', NULL, NULL, '2023-06-07 10:18:30', '2023-06-07 10:18:30'),
@@ -984,7 +1014,38 @@ CREATE TABLE `ct_bank_collection` (
 INSERT INTO `ct_bank_collection` (`id`, `bank_id`, `credited_amt`, `insert_login_id`, `created_date`, `updated_date`) VALUES
 (4, '3', '0', '28', '2023-06-06 15:06:31', '2023-06-06 15:06:31'),
 (5, '5', '124556', '21', '2023-06-06 15:13:09', '2023-06-06 15:13:09'),
-(6, '6', '23435', '21', '2023-06-06 15:13:18', '2023-06-06 15:13:18');
+(6, '6', '23435', '21', '2023-06-06 15:13:18', '2023-06-06 15:13:18'),
+(7, '3', '35000', '28', '2023-06-20 16:40:25', '2023-06-20 16:40:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_bag`
+--
+
+CREATE TABLE `ct_cr_bag` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `ag_id` varchar(10) NOT NULL,
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_bag`
+--
+
+INSERT INTO `ct_cr_bag` (`id`, `ag_id`, `bank_id`, `ref_code`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(4, '28', '6', 'AGE-100006', '654654', 'Check', '5000', '21', NULL, '2023-05-19 18:59:17', '2023-06-19 18:59:17'),
+(5, '29', '3', 'AGE-100009', '132321', 'asdfas', '7800', '28', NULL, '2023-06-20 09:40:39', '2023-06-20 09:40:39'),
+(6, '16', '6', 'AGE-100010', '65465', 'adfwerwe', '12000', '21', NULL, '2023-06-20 09:41:08', '2023-06-20 09:41:08'),
+(7, '28', '5', 'AGE-100012', '654654', 'Cadsfh', '13000', '21', NULL, '2023-06-20 11:28:48', '2023-06-20 11:28:48');
 
 -- --------------------------------------------------------
 
@@ -1043,7 +1104,8 @@ CREATE TABLE `ct_cr_bdeposit` (
 
 INSERT INTO `ct_cr_bdeposit` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
 (4, '3', 'DEP-100001', '798798', '5', 'Karur', 'karur', 'Heck', '7800', '28', NULL, '2023-06-16 17:20:14', '2023-06-16 17:20:14'),
-(5, '3', 'DEP-100003', '2432', '5', 'Karur', 'karur', 'Look', '9500', '28', NULL, '2023-06-16 17:21:53', '2023-06-16 17:21:53');
+(5, '3', 'DEP-100003', '2432', '5', 'Karur', 'karur', 'Look', '9500', '28', NULL, '2023-06-16 17:21:53', '2023-06-16 17:21:53'),
+(6, '5', 'DEP-100005', '5465', '8', 'Pondicherry', 'pondy', 'asgd', '500', '21', NULL, '2023-06-20 19:59:40', '2023-06-20 19:59:40');
 
 -- --------------------------------------------------------
 
@@ -1163,7 +1225,9 @@ CREATE TABLE `ct_cr_boti` (
 INSERT INTO `ct_cr_boti` (`id`, `ref_code`, `to_bank_id`, `category`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
 (3, 'OTI-100001', '3', 'Check1', '46544988', 'Check Remark', '7800', '28', NULL, '2023-06-13 14:46:07', '2023-06-13 14:46:07'),
 (4, 'OTI-100002', '5', 'CheckLVB', '498797', 'lvb check', '1500', '21', NULL, '2023-06-13 14:46:48', '2023-06-13 14:46:48'),
-(5, 'OTI-100003', '6', 'Check KVB', '13256546', 'kvb remark', '3501', '21', NULL, '2023-06-13 14:47:39', '2023-06-13 14:47:39');
+(5, 'OTI-100003', '6', 'Check KVB', '13256546', 'kvb remark', '3501', '21', NULL, '2023-06-13 14:47:39', '2023-06-13 14:47:39'),
+(6, 'OTI-100004', '3', 'sdgsdfg', '45345', 'sdgdsfg', '4500', '28', NULL, '2023-06-20 16:41:57', '2023-06-20 16:41:57'),
+(7, 'OTI-100005', '5', 'asdf', '234', 'asd', '234', '21', NULL, '2023-06-20 17:47:41', '2023-06-20 17:47:41');
 
 -- --------------------------------------------------------
 
@@ -1191,8 +1255,33 @@ CREATE TABLE `ct_cr_cash_deposit` (
 
 INSERT INTO `ct_cr_cash_deposit` (`id`, `db_ref_id`, `to_bank_id`, `location`, `amt`, `ref_code`, `trans_id`, `remark`, `insert_login_id`, `created_date`, `updated_date`) VALUES
 (15, '9', '5', 'Puducherry', '60000', 'DEP-100001', '523463465', 'Received on 0906 Check one', '21', '2023-06-09 16:25:33', '2023-06-09 16:25:33'),
-(16, '10', '6', 'Karur', '25000', 'DEP-100002', '2543456', 'Received on 0906 Check two', '21', '2023-06-09 16:25:44', '2023-06-09 16:25:44'),
+(16, '10', '6', 'Karur', '25000', 'DEP-100002', '2543456', 'Received on 0906 Check two', '21', '2023-06-19 16:25:44', '2023-06-09 16:25:44'),
 (17, '11', '3', 'Coimbatore', '75000', 'DEP-100003', '16465465465', 'Received on 09062023', '28', '2023-06-09 17:07:35', '2023-06-09 17:07:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_cr_hag`
+--
+
+CREATE TABLE `ct_cr_hag` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `ag_id` varchar(10) NOT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_cr_hag`
+--
+
+INSERT INTO `ct_cr_hag` (`id`, `ag_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(3, '16', 'Checkwerw', '6500', '28', NULL, '2023-06-19 18:56:20', '2023-06-19 18:56:20'),
+(4, '30', '6546', '45000', '28', NULL, '2023-06-20 09:40:07', '2023-06-20 09:40:07');
 
 -- --------------------------------------------------------
 
@@ -1218,7 +1307,7 @@ CREATE TABLE `ct_cr_hdeposit` (
 --
 
 INSERT INTO `ct_cr_hdeposit` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '6', 'Karur', 'palladam', 'Check', '2500', '28', NULL, '2023-06-16 16:53:33', '2023-06-16 16:53:33');
+(1, '6', 'Karur', 'palladam', 'Check', '2500', '28', NULL, '2023-05-16 16:53:33', '2023-06-16 16:53:33');
 
 -- --------------------------------------------------------
 
@@ -1244,7 +1333,8 @@ CREATE TABLE `ct_cr_hel` (
 --
 
 INSERT INTO `ct_cr_hel` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '6', 'Karur', 'palladam', 'Cake', '6000', '28', NULL, '2023-06-16 17:41:43', '2023-06-16 17:41:43');
+(1, '6', 'Karur', 'palladam', 'Cake', '6000', '28', NULL, '2023-06-16 17:41:43', '2023-06-16 17:41:43'),
+(2, '5', 'Karur', 'karur', 'asd', '2354', '28', NULL, '2023-06-20 17:46:02', '2023-06-20 17:46:02');
 
 -- --------------------------------------------------------
 
@@ -1300,7 +1390,9 @@ CREATE TABLE `ct_cr_hinvest` (
 INSERT INTO `ct_cr_hinvest` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
 (5, '9', 'Chennai', 'Chennai', 'Own money', '45000', '28', NULL, '2023-06-16 15:13:34', '2023-06-16 15:13:34'),
 (6, '8', 'Pondicherry', 'pondy', 'Check', '2000', '28', NULL, '2023-06-16 15:27:16', '2023-06-16 15:27:16'),
-(7, '5', 'Karur', 'karur', 'Poke', '4500', '28', NULL, '2023-06-16 16:49:55', '2023-06-16 16:49:55');
+(7, '5', 'Karur', 'karur', 'Poke', '4500', '28', NULL, '2023-06-16 16:49:55', '2023-06-16 16:49:55'),
+(8, '9', 'Chennai', 'Chennai', 'asdf', '2353', '28', NULL, '2023-06-20 17:46:25', '2023-06-20 17:46:25'),
+(9, '6', 'Karur', 'palladam', 'asdg', '2352', '28', NULL, '2023-06-20 18:11:47', '2023-06-20 18:11:47');
 
 -- --------------------------------------------------------
 
@@ -1330,6 +1422,36 @@ INSERT INTO `ct_cr_hoti` (`id`, `category`, `remark`, `amt`, `insert_login_id`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ct_db_bag`
+--
+
+CREATE TABLE `ct_db_bag` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `ag_id` varchar(10) NOT NULL,
+  `bank_id` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_bag`
+--
+
+INSERT INTO `ct_db_bag` (`id`, `ag_id`, `bank_id`, `ref_code`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(5, '29', '6', 'AGE-100007', '32132', 'Acsdj', '8400', '21', NULL, '2023-06-19 18:59:35', '2023-06-19 18:59:35'),
+(6, '29', '3', 'AGE-100008', '564654', 'sdfasd', '65000', '28', NULL, '2023-06-20 09:40:22', '2023-06-20 09:40:22'),
+(7, '16', '5', 'AGE-100011', '4564654', 'asfsdf', '32000', '21', NULL, '2023-06-20 09:41:24', '2023-06-20 09:41:24'),
+(8, '30', '3', 'AGE-100013', '34546', '23534', '5000', '28', NULL, '2023-06-20 19:00:28', '2023-06-20 19:00:28');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `ct_db_bank_deposit`
 --
 
@@ -1354,8 +1476,9 @@ INSERT INTO `ct_db_bank_deposit` (`id`, `to_bank_id`, `location`, `remark`, `amo
 (9, '5', 'Puducherry', 'check one', '60000', 1, '21', NULL, '2023-06-09 18:17:13', '2023-06-07 18:17:13'),
 (10, '6', 'Karur', 'check two', '25000', 1, '21', NULL, '2023-06-09 17:35:29', '2023-06-07 18:17:30'),
 (11, '3', 'Coimbatore', 'daily deposit', '75000', 1, '28', NULL, '2023-06-09 10:29:56', '2023-06-08 10:29:56'),
-(12, '3', 'Pondicherry', 'collection amt', '46800', 1, '28', NULL, '2023-06-09 11:50:04', '2023-06-08 11:50:04'),
-(13, '3', 'Chennai', 'Perugulathur', '12000', 1, '28', NULL, '2023-06-09 12:07:27', '2023-06-09 12:07:27');
+(12, '3', 'Pondicherry', 'collection amt', '46800', 1, '28', NULL, '2023-06-19 11:50:04', '2023-06-08 11:50:04'),
+(13, '3', 'Chennai', 'Perugulathur', '12000', 1, '28', NULL, '2023-06-09 12:07:27', '2023-06-09 12:07:27'),
+(14, '5', 'asdf', 'sadfasd', '2300', 1, '21', NULL, '2023-06-20 16:20:49', '2023-06-20 16:20:49');
 
 -- --------------------------------------------------------
 
@@ -1384,7 +1507,8 @@ CREATE TABLE `ct_db_bdeposit` (
 --
 
 INSERT INTO `ct_db_bdeposit` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(5, '3', 'DEP-100002', '64654', '8', 'Pondicherry', 'pondy', 'BEck', '7000', '28', NULL, '2023-06-16 17:21:32', '2023-06-16 17:21:32');
+(5, '3', 'DEP-100002', '64654', '8', 'Pondicherry', 'pondy', 'BEck', '7000', '28', NULL, '2023-06-16 17:21:32', '2023-06-16 17:21:32'),
+(6, '6', 'DEP-100004', '5654', '8', 'Pondicherry', 'pondy', 'asdf', '4500', '21', NULL, '2023-06-20 17:47:15', '2023-06-20 17:47:15');
 
 -- --------------------------------------------------------
 
@@ -1413,7 +1537,8 @@ CREATE TABLE `ct_db_bel` (
 --
 
 INSERT INTO `ct_db_bel` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(4, '3', 'EL-100002', '969696', '9', 'Chennai', 'Chennai', 'Look', '7800', '28', NULL, '2023-06-16 18:18:29', '2023-06-16 18:18:29');
+(4, '3', 'EL-100002', '969696', '9', 'Chennai', 'Chennai', 'Look', '7800', '28', NULL, '2023-06-16 18:18:29', '2023-06-16 18:18:29'),
+(5, '3', 'EL-100003', '235345', '8', 'Pondicherry', 'pondy', 'gdfgd', '2000', '28', NULL, '2023-06-20 18:16:44', '2023-06-20 18:16:44');
 
 -- --------------------------------------------------------
 
@@ -1521,6 +1646,7 @@ CREATE TABLE `ct_db_bissued` (
   `ref_code` varchar(255) DEFAULT NULL,
   `li_id` varchar(10) NOT NULL,
   `li_user_id` varchar(255) DEFAULT NULL,
+  `li_bank_id` varchar(10) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
   `usertype` varchar(255) DEFAULT NULL,
   `cheque_no` varchar(255) DEFAULT NULL,
@@ -1531,6 +1657,13 @@ CREATE TABLE `ct_db_bissued` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_bissued`
+--
+
+INSERT INTO `ct_db_bissued` (`id`, `ref_code`, `li_id`, `li_user_id`, `li_bank_id`, `username`, `usertype`, `cheque_no`, `trans_id`, `netcash`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(4, 'ISS-100001', '7', '1', '5', 'Super Admin', 'Director', '1234', '6564', '3647', '28', NULL, '2023-06-20 16:53:26', '2023-06-20 16:53:26');
 
 -- --------------------------------------------------------
 
@@ -1562,7 +1695,62 @@ INSERT INTO `ct_db_cash_withdraw` (`id`, `ref_code`, `trans_id`, `from_bank_id`,
 (2, 'WD-100002', '24235345', '5', '578679867', 'Check', '6842', '0', '21', NULL, '2023-06-08 17:36:09', '2023-06-08 17:36:09'),
 (4, 'WD-100003', '3454', '3', '35456', 'Remark check', '65400', '1', '28', NULL, '2023-06-08 17:39:17', '2023-06-08 17:39:17'),
 (5, 'WD-100004', '36545675467', '6', '35672346234', 'bank id check', '45200', '0', '21', NULL, '2023-06-08 17:42:16', '2023-06-08 17:42:16'),
-(6, 'WD-100005', '632131354', '3', '78987898', 'Perungulathur', '12000', '1', '28', NULL, '2023-06-09 12:08:30', '2023-06-09 12:08:30');
+(6, 'WD-100005', '632131354', '3', '78987898', 'Perungulathur', '12000', '1', '28', NULL, '2023-06-09 12:08:30', '2023-06-09 12:08:30'),
+(7, 'WD-100006', '3544', '3', '25435', 'asg', '7500', '1', '28', NULL, '2023-06-20 16:45:37', '2023-06-20 16:45:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_exf`
+--
+
+CREATE TABLE `ct_db_exf` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `username` varchar(255) DEFAULT NULL,
+  `usertype` varchar(255) DEFAULT NULL,
+  `bank_id` varchar(10) NOT NULL,
+  `ucl_ref_code` varchar(255) DEFAULT NULL,
+  `ref_code` varchar(255) DEFAULT NULL,
+  `ucl_trans_id` varchar(255) DEFAULT NULL,
+  `trans_id` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_exf`
+--
+
+INSERT INTO `ct_db_exf` (`id`, `username`, `usertype`, `bank_id`, `ucl_ref_code`, `ref_code`, `ucl_trans_id`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(4, 'Chithambaram', 'Director', '3', 'UCL-100002', 'EXS-100002', '', '123456789', 'Chekccc', '7800', '28', NULL, '2023-06-19 16:59:41', '2023-06-19 16:59:41');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ct_db_hag`
+--
+
+CREATE TABLE `ct_db_hag` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `ag_id` varchar(10) NOT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `amt` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_hag`
+--
+
+INSERT INTO `ct_db_hag` (`id`, `ag_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(3, '30', 'Cjeskjadf', '3400', '28', NULL, '2023-06-19 18:58:49', '2023-06-19 18:58:49');
 
 -- --------------------------------------------------------
 
@@ -1588,7 +1776,8 @@ CREATE TABLE `ct_db_hdeposit` (
 --
 
 INSERT INTO `ct_db_hdeposit` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '9', 'Chennai', 'Chennai', 'Check', '15600', '28', NULL, '2023-06-16 16:58:28', '2023-06-16 16:58:28');
+(1, '9', 'Chennai', 'Chennai', 'Check', '15600', '28', NULL, '2023-05-16 16:58:28', '2023-06-16 16:58:28'),
+(2, '5', 'Karur', 'karur', 'asdf', '9000', '21', NULL, '2023-06-20 16:21:23', '2023-06-20 16:21:23');
 
 -- --------------------------------------------------------
 
@@ -1704,7 +1893,7 @@ CREATE TABLE `ct_db_hinvest` (
 
 INSERT INTO `ct_db_hinvest` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
 (1, '6', 'Karur', 'palladam', 'taken', '15000', '28', NULL, '2023-06-16 15:26:16', '2023-06-16 15:26:16'),
-(2, '8', 'Pondicherry', 'pondy', 'Poke', '4000', '28', NULL, '2023-06-16 16:50:25', '2023-06-16 16:50:25');
+(2, '8', 'Pondicherry', 'pondy', 'Poke', '4000', '28', NULL, '2023-06-19 16:50:25', '2023-06-16 16:50:25');
 
 -- --------------------------------------------------------
 
@@ -1755,7 +1944,7 @@ INSERT INTO `ct_hand_collection` (`id`, `user_id`, `user_name`, `branch_id`, `li
 (10, '29', 'Gokul', '2', '3,4', '0', '1350', '1350', '700', '28', NULL, '2023-06-05 14:29:44', '2023-06-05 14:29:44'),
 (14, '28', 'Chithambaram', '2', '1,2,3,4,5', '1350', '900', '1350', '1350', '28', NULL, '2023-06-05 17:37:55', '2023-06-05 17:37:55'),
 (15, '29', 'Gokul', '2', '3,4', '650', '900', '650', '300', '28', NULL, '2023-06-06 10:28:01', '2023-06-06 10:28:01'),
-(16, '28', 'Chithambaram', '2', '1,2,3,4,5', '1,900', '1,900', '1,900', '500', '28', NULL, '2023-06-06 11:02:24', '2023-06-06 11:02:24');
+(16, '28', 'Chithambaram', '2', '1,2,3,4,5', '1,900', '1,900', '1,900', '500', '28', NULL, '2023-06-19 11:02:24', '2023-06-06 11:02:24');
 
 -- --------------------------------------------------------
 
@@ -2478,11 +2667,12 @@ CREATE TABLE `loan_issue` (
 INSERT INTO `loan_issue` (`id`, `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `bank_id`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `loan_amt`, `net_cash`, `cash_guarentor_name`, `relationship`, `status`, `insert_login_id`, `update_login_id`, `created_date`) VALUES
 (5, '11', '123456789101', 'Triple H', '', '0', '', '15007', '5', '6651', '2546', 'Nothing', '', '', '', '22917', '45000', '40470', '35', 'Brother', '0', '1', NULL, '2023-04-29 16:17:21'),
 (6, '11', '123456789101', 'Triple H', '', '1', '0', '22917', '5', '', '', '', '', '', '', '0', '45000', '40470', '35', 'Brother', '0', '1', NULL, '2023-04-29 16:22:25'),
-(7, '18', '945454646565', 'Praveen', '', '0', '', '4000', '3', '1234', '3647', 'IOB', '', '', '', '32828', NULL, '40475', '28', 'Son', '0', '1', NULL, '2023-05-01 09:45:17'),
+(7, '18', '945454646565', 'Praveen', '', '0', '', '4000', '5', '1234', '3647', 'IOB', '', '', '', '32828', NULL, '40475', '28', 'Son', '0', '1', NULL, '2023-06-19 09:45:17'),
 (8, '18', '945454646565', 'Praveen', '', '1', '1', '', '3', '321', '32828', '321', '', '', '', '0', '45000', '40475', '29', 'Brother', '0', '1', NULL, '2023-05-01 09:45:48'),
 (9, '10', '123456789101', 'Triple H', '', '1', '2', '', '6', '', '', '', '984984', '20483', 'IB', '0', '23921', '20483', '34', 'Father', '0', '1', NULL, '2023-05-01 11:05:19'),
 (10, '20', '105806052023', 'Rakesh', '', '1', '0', '16860', '7', '', '', '', '', '', '', '0', '20000', '16860', '38', 'Mother', '0', '21', NULL, '2023-05-06 11:27:41'),
-(15, '17', '646546546546', 'Rajesh', '', '1', '1', NULL, '5', '64654654', '15000', 'Check', NULL, '', '', '0', '20000', '15000', '', '', '0', '28', NULL, '2023-06-14 15:53:55');
+(15, '17', '646546546546', 'Rajesh', '', '1', '1', NULL, '5', '64654654', '15000', 'Check', NULL, '', '', '0', '20000', '15000', '', '', '0', '28', NULL, '2023-06-14 15:53:55'),
+(16, '15', '546546546465', 'Darling & Co', '28', '1', '0', '83664', '', '', '', '', '', '', '', '0', '87150', '83664', '', '', '0', '21', NULL, '2023-06-19 11:09:08');
 
 -- --------------------------------------------------------
 
@@ -2665,34 +2855,44 @@ INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`,
 ('18', '2023-05-23', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
 ('18', '2023-05-24', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
 ('11', NULL, NULL, '2023-06-07', '200', '', '2023-06-07 10:16:32', '2023-06-07 10:16:32'),
-('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-17', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-18', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-19', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-20', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-21', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-22', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-23', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-24', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-25', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-27', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-28', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-29', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-30', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-05-31', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-06-01', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-06-02', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-06-03', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-06-04', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-06-05', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53'),
-('11', '2023-06-08', '10.35', NULL, '0', '0', '2023-06-09 15:40:53', '2023-06-09 15:40:53');
+('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-17', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-18', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-19', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-20', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-21', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-22', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-23', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-24', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-25', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-27', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-28', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-29', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-30', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-05-31', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-01', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-02', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-03', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-04', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-05', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-08', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-10', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-11', '10.35', NULL, '0', '0', '2023-06-20 10:26:40', '2023-06-20 10:26:40'),
+('11', '2023-06-12', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41'),
+('11', '2023-06-13', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41'),
+('11', '2023-06-14', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41'),
+('11', '2023-06-15', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41'),
+('11', '2023-06-16', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41'),
+('11', '2023-06-17', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41'),
+('11', '2023-06-18', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41'),
+('11', '2023-06-19', '10.35', NULL, '0', '0', '2023-06-20 10:26:41', '2023-06-20 10:26:41');
 
 -- --------------------------------------------------------
 
@@ -3082,11 +3282,11 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `accountsmodule`, `cash_tally`, `bank_details`, `cash_tally_admin`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, '0', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
-(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '1', '0', '0', '5,6', '1', '0', '1', '28', NULL, '2023-03-21 12:23:50', '2023-06-07 14:55:46'),
-(24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '0', '1', '21', '1', '2023-03-21 15:12:31', '2023-06-13 16:35:58'),
+(21, NULL, NULL, 'Kumar', NULL, '', 'kumar@gmail.com', '123', '3', '3', '', '', '5', '1', '1,2', '28,29', '1,2,4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '0', '0', '0', '0', '0', '1', '0', '0', '5,6', '0', '0', '1', '28', NULL, '2023-03-21 12:23:50', '2023-06-20 11:15:23'),
+(24, NULL, NULL, 'Darling & Co', NULL, '', 'darling@gmail.com', '123', '2', '', '', '28', '', '1', '1', '', '1,3', '1,5', '0', '1', '1', '1', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '0', '1', '28', '1', '2023-03-21 15:12:31', '2023-06-20 11:52:53'),
 (25, NULL, NULL, 'Big show', NULL, '', 'bigshow@gmail.com', '123', '1', '12', '3', '', '', '1', '1,2', '', '1,2,3', '1,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '1', '0', '1', '25', NULL, '2023-03-31 12:03:21', '0000-00-00 00:00:00'),
-(27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '', '', '', '', NULL, NULL, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '1', '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
-(28, NULL, NULL, 'Chithambaram', NULL, '', 'director@gmail.com', '123', '1', '11', '1', '', '', '1', '1,2', '', '1,2,3,4,5', '1,5,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '3', '0', '0', '1', '28', NULL, '2023-04-13 16:49:09', '2023-05-26 10:15:24'),
+(27, NULL, NULL, 'Alangar', NULL, 'test1@email.com', 'test1@email.com', '123', '2', '', '', '16', '', '1', '2', '', '', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, '1', '0', '1', NULL, NULL, '2023-04-10 15:32:34', '2023-04-10 15:32:34'),
+(28, NULL, NULL, 'Chithambaram', NULL, '', 'director@gmail.com', '123', '1', '11', '1', '', '', '1', '1,2', '30', '1,2,3,4,5', '1,5,6', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '3', '0', '0', '1', '28', NULL, '2023-04-13 16:49:09', '2023-05-26 10:15:24'),
 (29, NULL, NULL, 'Gokul', NULL, '', 'goku', '123', '3', '5', '', '', '7', '1', '1,2', '30', '3,4', '6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '0', '1', '0', '1', '0', '0', '7', '1', '0', '1', '28', NULL, '2023-05-22 15:27:11', '2023-06-12 15:19:17');
 
 -- --------------------------------------------------------
@@ -3564,6 +3764,12 @@ ALTER TABLE `branch_creation`
   ADD PRIMARY KEY (`branch_id`);
 
 --
+-- Indexes for table `cash_tally`
+--
+ALTER TABLE `cash_tally`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `cash_tally_modes`
 --
 ALTER TABLE `cash_tally_modes`
@@ -3630,6 +3836,12 @@ ALTER TABLE `ct_bank_collection`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_cr_bag`
+--
+ALTER TABLE `ct_cr_bag`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_cr_bank_withdraw`
 --
 ALTER TABLE `ct_cr_bank_withdraw`
@@ -3672,6 +3884,12 @@ ALTER TABLE `ct_cr_cash_deposit`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `ct_cr_hag`
+--
+ALTER TABLE `ct_cr_hag`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_cr_hdeposit`
 --
 ALTER TABLE `ct_cr_hdeposit`
@@ -3699,6 +3917,12 @@ ALTER TABLE `ct_cr_hinvest`
 -- Indexes for table `ct_cr_hoti`
 --
 ALTER TABLE `ct_cr_hoti`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_bag`
+--
+ALTER TABLE `ct_db_bag`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3747,6 +3971,18 @@ ALTER TABLE `ct_db_bissued`
 -- Indexes for table `ct_db_cash_withdraw`
 --
 ALTER TABLE `ct_db_cash_withdraw`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_exf`
+--
+ALTER TABLE `ct_db_exf`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ct_db_hag`
+--
+ALTER TABLE `ct_db_hag`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -4046,7 +4282,7 @@ ALTER TABLE `acknowlegement_loan_calculation`
 -- AUTO_INCREMENT for table `agent_communication_details`
 --
 ALTER TABLE `agent_communication_details`
-  MODIFY `comm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `comm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
 
 --
 -- AUTO_INCREMENT for table `agent_creation`
@@ -4095,6 +4331,12 @@ ALTER TABLE `bank_creation`
 --
 ALTER TABLE `branch_creation`
   MODIFY `branch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `cash_tally`
+--
+ALTER TABLE `cash_tally`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cash_tally_modes`
@@ -4160,7 +4402,13 @@ ALTER TABLE `concern_subject`
 -- AUTO_INCREMENT for table `ct_bank_collection`
 --
 ALTER TABLE `ct_bank_collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_bag`
+--
+ALTER TABLE `ct_cr_bag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bank_withdraw`
@@ -4172,7 +4420,7 @@ ALTER TABLE `ct_cr_bank_withdraw`
 -- AUTO_INCREMENT for table `ct_cr_bdeposit`
 --
 ALTER TABLE `ct_cr_bdeposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bel`
@@ -4196,13 +4444,19 @@ ALTER TABLE `ct_cr_binvest`
 -- AUTO_INCREMENT for table `ct_cr_boti`
 --
 ALTER TABLE `ct_cr_boti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_cash_deposit`
 --
 ALTER TABLE `ct_cr_cash_deposit`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `ct_cr_hag`
+--
+ALTER TABLE `ct_cr_hag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hdeposit`
@@ -4214,7 +4468,7 @@ ALTER TABLE `ct_cr_hdeposit`
 -- AUTO_INCREMENT for table `ct_cr_hel`
 --
 ALTER TABLE `ct_cr_hel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hexchange`
@@ -4226,7 +4480,7 @@ ALTER TABLE `ct_cr_hexchange`
 -- AUTO_INCREMENT for table `ct_cr_hinvest`
 --
 ALTER TABLE `ct_cr_hinvest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hoti`
@@ -4235,22 +4489,28 @@ ALTER TABLE `ct_cr_hoti`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `ct_db_bag`
+--
+ALTER TABLE `ct_db_bag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `ct_db_bank_deposit`
 --
 ALTER TABLE `ct_db_bank_deposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bdeposit`
 --
 ALTER TABLE `ct_db_bdeposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bel`
 --
 ALTER TABLE `ct_db_bel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bexchange`
@@ -4274,19 +4534,31 @@ ALTER TABLE `ct_db_binvest`
 -- AUTO_INCREMENT for table `ct_db_bissued`
 --
 ALTER TABLE `ct_db_bissued`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `ct_db_cash_withdraw`
 --
 ALTER TABLE `ct_db_cash_withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `ct_db_exf`
+--
+ALTER TABLE `ct_db_exf`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `ct_db_hag`
+--
+ALTER TABLE `ct_db_hag`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ct_db_hdeposit`
 --
 ALTER TABLE `ct_db_hdeposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ct_db_hel`
@@ -4412,7 +4684,7 @@ ALTER TABLE `loan_category_ref`
 -- AUTO_INCREMENT for table `loan_issue`
 --
 ALTER TABLE `loan_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `loan_scheme`

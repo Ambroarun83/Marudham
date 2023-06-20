@@ -62,6 +62,7 @@ input[type="radio"]{
 	<!--form start-->
 	<form id="cash_tally" name="cash_tally" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" id='user_branch_id' name='user_branch_id' value='<?php if(isset($branch_id)) echo $branch_id;?>'>
+		<input type="hidden" id='user_bank_details' name='user_bank_details' value='<?php if(isset($bank_details)) echo $bank_details;?>'>
 		<!-- Row start -->
 		<div class="row gutters">
 			<!-- Request Info -->
@@ -87,7 +88,7 @@ input[type="radio"]{
 									</div>
 									<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
 										<div class="form-group">
-											<label class="lable-style" id='op_date'><?php echo date('d-m-Y');?></label><br>
+											<label class="lable-style" id='op_date'><?php //echo date('d-m-Y');?></label><br>
 										</div>
 									</div>
 								</div>
@@ -119,13 +120,13 @@ input[type="radio"]{
 									
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"  style="max-width: 150px;">
 										<div class="form-group">
-											<label class="lable-style" id=''>150000</label><br>
+											<label class="lable-style" id='hand_opening'>150000</label><br>
 											<?php if(isset($bank_name_arr)){
 												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
-													<label class="lable-style"><?php echo '0';?></label><br>
+													<label class="lable-style" id='bank_opening<?php echo $i;?>'></label><br>
 												<?php }}?>
-											<label class="lable-style" id=''>16510</label><br><br><hr>
-											<label class="lable-style" id=''>348010</label>
+											<label class="lable-style" id='agent_opening'>16510</label><br><br><hr>
+											<label class="lable-style" id='opening_balance'>348010</label>
 										</div>
 									</div>
 								</div>
@@ -298,6 +299,36 @@ input[type="radio"]{
 				</div>
 <!-- //////////////////////////////////////////////////////////// Investment/Deposit/EL Card ////////////////////////////////////////////////////////////////////////////-->
 
+<!-- //////////////////////////////////////////////////////////// Excess fund Card ////////////////////////////////////////////////////////////////////////////-->
+				<div class="card exf_card" style='display:none'>
+					<div class="card-header exf_card_header" style='font-size:18px;font-weight:bold;'>Excess Fund</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row modal-body" id="exfDiv">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- //////////////////////////////////////////////////////////// Excess fund Card ////////////////////////////////////////////////////////////////////////////-->
+
+<!-- //////////////////////////////////////////////////////////// Agent Card ////////////////////////////////////////////////////////////////////////////-->
+				<div class="card ag_card" style='display:none'>
+					<div class="card-header ag_card_header" style='font-size:18px;font-weight:bold;'>Agent</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row modal-body" id="agDiv">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<!-- //////////////////////////////////////////////////////////// Agent Card ////////////////////////////////////////////////////////////////////////////-->
+
 <!-- //////////////////////////////////////////////////////////// Closing Balance Card ////////////////////////////////////////////////////////////////////////////-->
 				<div class="card">
 					<!-- <div class="card-header">Cash Tally</div> -->
@@ -339,13 +370,13 @@ input[type="radio"]{
 									
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"  style="max-width: 150px;">
 										<div class="form-group">
-											<label class="lable-style" id=''>150000</label><br>
+											<label class="lable-style" id='hand_closing'></label><br>
 											<?php if(isset($bank_name_arr)){
 												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
-													<label class="lable-style"><?php echo '0';?></label><br>
+													<label class="lable-style" id='bank_closing<?php echo $i;?>'></label><br>
 												<?php }}?>
-											<label class="lable-style" id=''>16510</label><br><br><hr>
-											<label class="lable-style" id=''>348010</label>
+											<label class="lable-style" id='agent_closing'></label><br><br><hr>
+											<label class="lable-style" id='closing_balance'></label>
 										</div>
 									</div>
 								</div>
@@ -359,7 +390,7 @@ input[type="radio"]{
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_collection" id="submit_collection" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="submit" name="submit_cash_tally" id="submit_cash_tally" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
 						<!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
 					</div>
 				</div>
@@ -492,6 +523,63 @@ input[type="radio"]{
 								<div class="form-group">
 									<label for='exp_cat_type'>Category</label>
 									<select class="form-control" id='exp_cat_type' name='exp_cat_type' >
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row" id="IDE_Div"  style="display:none" >
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+								<div class="form-group">
+									<label for='IDE_type'>Sheet Sub type</label>
+									<select class="form-control" id='IDE_type' name='IDE_type' >
+										<option value=''>Select Sheet type</option>
+										<option value='1'>Investment</option>
+										<option value='2'>Deposit</option>
+										<option value='3'>EL</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12" >
+								<div class="form-group">
+									<label for='IDE_view_type'>View</label>
+									<select class="form-control" id='IDE_view_type' name='IDE_view_type' >
+										<option value=''>Select Sheet type</option>
+										<option value='1'>Overall</option>
+										<option value='2'>Individual</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 IDE_nameDiv" style="display:none">
+								<div class="form-group">
+									<label for='IDE_name_list'>Name</label>
+									<select class="form-control" id='IDE_name_list' name='IDE_name_list' >
+										<option value=''>Select Name</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 IDE_nameDiv" style="display:none">
+								<div class="form-group">
+									<label for='IDE_name_area'>Area</label>
+									<input type='text' class="form-control" id='IDE_name_area' name='IDE_name_area' readonly placeholder='Please Select Name'>
+								</div>
+							</div>
+						</div>
+						<div class="row" id="ag_typeDiv"  style="display:none" >
+							<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"></div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+								<div class="form-group">
+									<label for='ag_view_type'>View</label>
+									<select class="form-control" id='ag_view_type' name='ag_view_type' >
+										<option value=''>Select View type</option>
+										<option value='1'>Overall</option>
+										<option value='2'>Agent wise</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12" id='ag_namewiseDiv' style="display: none;">
+								<div class="form-group">
+									<label for='ag_namewise'>Category</label>
+									<select class="form-control" id='ag_namewise' name='ag_namewise' >
 									</select>
 								</div>
 							</div>
