@@ -63,6 +63,7 @@ input[type="radio"]{
 	<form id="cash_tally" name="cash_tally" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" id='user_branch_id' name='user_branch_id' value='<?php if(isset($branch_id)) echo $branch_id;?>'>
 		<input type="hidden" id='user_bank_details' name='user_bank_details' value='<?php if(isset($bank_details)) echo $bank_details;?>'>
+		<input type="hidden" id='oldclosingbal' name='oldclosingbal' value=''>
 		<!-- Row start -->
 		<div class="row gutters">
 			<!-- Request Info -->
@@ -120,13 +121,13 @@ input[type="radio"]{
 									
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"  style="max-width: 150px;">
 										<div class="form-group">
-											<label class="lable-style" id='hand_opening'>150000</label><br>
+											<label class="lable-style" id='hand_opening'></label><br>
 											<?php if(isset($bank_name_arr)){
 												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
 													<label class="lable-style" id='bank_opening<?php echo $i;?>'></label><br>
 												<?php }}?>
-											<label class="lable-style" id='agent_opening'>16510</label><br><br><hr>
-											<label class="lable-style" id='opening_balance'>348010</label>
+											<label class="lable-style" id='agent_opening'></label><br><br><hr>
+											<label class="lable-style" id='opening_balance'></label>
 										</div>
 									</div>
 								</div>
@@ -390,7 +391,7 @@ input[type="radio"]{
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_cash_tally" id="submit_cash_tally" class="btn btn-primary" value="Submit"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button name="submit_cash_tally" id="submit_cash_tally" class="btn btn-primary" value="Submit">Submit</button>
 						<!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
 					</div>
 				</div>

@@ -9,9 +9,11 @@ $username = $_POST['username'];
 $usertype = $_POST['usertype'];
 $amt = str_replace(',','',$_POST['amt']);
 $netcash = str_replace(',','',$_POST['netcash']);
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
 
 $qry = $con->query("INSERT INTO `ct_db_hissued`( `li_user_id`, `user_type`, `user_name`, `netcash`, `amt`, `insert_login_id`,`created_date`) 
-VALUES ('$li_user_id','$usertype','$username','$netcash','$amt','$user_id',now())");
+VALUES ('$li_user_id','$usertype','$username','$netcash','$amt','$user_id','$op_date' )");
 
 if($qry){
     $response = "Submitted Successfully";

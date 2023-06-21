@@ -6,7 +6,7 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 if($op_date == date('Y-m-d')){// check whether opening date is current date
     $closing_date = $op_date;
 }else{// only if opening date is less than today's date, increase one date
-    $closing_date = date('Y-m-d', strtotime($op_date . ' +1 day'));
+    $closing_date = date('Y-m-d', strtotime($op_date ));
 }
 
 $bank_detail = $_POST['bank_detail'];

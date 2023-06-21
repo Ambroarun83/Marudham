@@ -6,10 +6,11 @@ include('../../../ajaxconfig.php');
 
 
 $i=0;$records = array();
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
 
-$qry = $con->query("SELECT hexp.*,excat.category from ct_db_hexpense hexp JOIN expense_category excat ON hexp.cat = excat.id where date(hexp.created_date) = CURDATE() and hexp.insert_login_id = '$user_id' ");
+$qry = $con->query("SELECT hexp.*,excat.category from ct_db_hexpense hexp JOIN expense_category excat ON hexp.cat = excat.id where date(hexp.created_date) = '$op_date' and hexp.insert_login_id = '$user_id' ");
 //
 while($row = $qry->fetch_assoc()){
 

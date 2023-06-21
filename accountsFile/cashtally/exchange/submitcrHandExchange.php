@@ -9,6 +9,8 @@ $from_user_id = $_POST['from_user_id'];
 $to_user_id = $_POST['to_user_id'];
 $remark = $_POST['remark'];
 $amt = str_replace(",","",$_POST['amt']);
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
 
 $response = '';
 
@@ -17,7 +19,7 @@ $qry = $con->query("UPDATE ct_db_hexchange set received = 0 where id = '$hex_id'
 
 if($con->affected_rows > 0){
     $qry = $con->query("INSERT INTO `ct_cr_hexchange`(`db_ref_id`,`to_user_id`,`from_user_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
-        VALUES ('$hex_id','$to_user_id','$from_user_id','$remark','$amt','$user_id',now())");
+        VALUES ('$hex_id','$to_user_id','$from_user_id','$remark','$amt','$user_id','$op_date')");
 
     if($qry){
         $response = "Submitted Successfully";

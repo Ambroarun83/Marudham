@@ -12,6 +12,7 @@ $to_user_id = $_POST['user_id_bex'];
 $trans_id = $_POST['trans_id_bex'];
 $remark = $_POST['remark_bex'];
 $amt = $_POST['amt_bex'];
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
 //////////////////////// To get Exchange reference Code once again /////////////////////////
@@ -34,7 +35,7 @@ else
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 $qry = $con->query("INSERT INTO `ct_db_bexchange`(`ref_code`, `from_acc_id`, `to_bank_id`, `to_user_id`, `trans_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
-VALUES ('$ref_code','$from_acc_id','$to_bank_id','$to_user_id','$trans_id','$remark','$amt','$user_id',now())");
+VALUES ('$ref_code','$from_acc_id','$to_bank_id','$to_user_id','$trans_id','$remark','$amt','$user_id','$op_date')");
 
 if($qry){
     $response = "Submitted Successfully";
