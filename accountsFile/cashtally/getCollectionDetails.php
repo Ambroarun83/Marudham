@@ -5,13 +5,17 @@ include('../../ajaxconfig.php');
 if(isset($_POST['branch_id'])){
     $branch_id = explode(',',$_POST['branch_id']);
 }
-// $branch_id = [1,2];
+
+if(isset($_POST['op_date'])){
+    $op_date = date('Y-m-d',strtotime($_POST['op_date']));
+}
+
 
 $records = array();
 foreach($branch_id as $val){
     $i=0;
 // echo "SELECT sum(total_paid_track) as total_paid, insert_login_id from collection where branch = '$val' and date(created_date) = date(now()) and coll_mode = '1' GROUP BY insert_login_id";
-    $qry = $con->query("SELECT sum(total_paid_track) as total_paid, insert_login_id from collection where branch = '$val' and date(created_date) = date(now()) and coll_mode = '1' GROUP BY insert_login_id");
+    $qry = $con->query("SELECT sum(total_paid_track) as total_paid, insert_login_id from collection where branch = '$val' and date(created_date) = '$op_date' and coll_mode = '1' GROUP BY insert_login_id");
     while($row = $qry->fetch_assoc()){
         //get user id and total paid by user by cash
         $records[$i]['user_id'] = $row['insert_login_id'];
@@ -33,14 +37,14 @@ foreach($branch_id as $val){
             
             
             // To get total collection amount till yesterday
-            $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= date(now())");
+            $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= '$op_date' ");
             if($getcolltillys){
                 $row2 = $getcolltillys->fetch_assoc();
                 $total_collection_amt = $row2['coll_amt_ys'];
             }else{$total_collection_amt = 0;}
             
             //To get Total received amount till yesterday
-            $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= date(now()) ");
+            $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= '$op_date' ");
             if($getrectillys){
                 $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
             }else{$total_rec_amt = 0;}
@@ -49,14 +53,14 @@ foreach($branch_id as $val){
             
 
             // To get total collection amount till today
-            $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= date(now())");
+            $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= '$op_date' ");
             if($getcolltillys){
                 $row2 = $getcolltillys->fetch_assoc();
                 $total_collection_amt = $row2['coll_amt_ys'];
                 $records[$i]['overall_coll'] = $total_collection_amt;
             }else{$total_collection_amt = 0;$records[$i]['overall_coll'] = $total_collection_amt;}
             //To get Total received amount till today
-            $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= date(now()) ");
+            $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= '$op_date' ");
             if($getrectillys){
                 $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
                 $records[$i]['overall_rec'] = $total_rec_amt;

@@ -14,13 +14,15 @@ $ref_code = $_POST['ref_code_bwd'];
 $trans_id = $_POST['trans_id_bwd'];
 $amt = str_replace(",","",$_POST['amt_bwd']);
 $remark = $_POST['remark_bwd'];
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
 
 
 
 $qry = $con->query("UPDATE ct_db_cash_withdraw set received = 0 where id = '$bwd_id' ");
 
 $qry = $con->query("INSERT INTO `ct_cr_bank_withdraw`(`db_ref_id`,`ref_code`,`trans_id`,`from_bank_id`,`cheque_no`,`amt`, `remark`, `insert_login_id`, `created_date`) 
-VALUES ('$bwd_id','$ref_code','$trans_id','$bank_id','$cheque_no','$amt','$remark','".$user_id."',now())");
+VALUES ('$bwd_id','$ref_code','$trans_id','$bank_id','$cheque_no','$amt','$remark','".$user_id."','$op_date')");
 
 if($qry){
     $response = 'Submitted Successfully';

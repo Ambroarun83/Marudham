@@ -10,14 +10,6 @@ include('../../ajaxconfig.php');
 
 
 $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
-if($op_date == date('Y-m-d')){// check whether opening date is current date
-    
-    $records[0]['hand_opening'] = 0;
-    $records[0]['bank_opening'] = 0;
-    $records[0]['agent_opening'] = 0;
-    $records[0]['opening_balance'] = 0;
-    echo json_encode($records);
-}else{// only if opening date is less than today's date, increase one date
     
 
 
@@ -206,6 +198,6 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
     $records[0]['opening_balance'] = $records[0]['hand_opening'] + $bank_opening_all + $records[0]['agent_opening'];
 
     echo json_encode($records);
-}
+
 
 ?>

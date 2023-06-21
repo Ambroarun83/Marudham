@@ -7,13 +7,16 @@ include('../../../ajaxconfig.php');
 $i=0;$records = array();
 $netcash = 0;
 
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
+
 // $qry = $con->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
 // $row = $qry->fetch_assoc();
 // $role = $row['role'];if($role == 1){$usertype = 'Director';}else if($role==3){$usertype = 'Staff';}
 // $username = $row['fullname'];
 
 
-$qry = $con->query("SELECT req_id,sum(cash) as cash,issued_to,insert_login_id,created_date FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((issued_mode = 1 and payment_type = '0') or (issued_mode = 0 and cash != '')) and date(created_date) = CURDATE() GROUP BY insert_login_id ");
+$qry = $con->query("SELECT req_id,sum(cash) as cash,issued_to,insert_login_id,created_date FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((issued_mode = 1 and payment_type = '0') or (issued_mode = 0 and cash != '')) and date(created_date) = '$op_date' GROUP BY insert_login_id ");
 while($row = $qry->fetch_assoc()){
 
     $dbCheck = $con->query("SELECT * from ct_db_hissued where date(created_date) = '".date('Y-m-d',strtotime($row['created_date']))."' and li_user_id = '".$row['insert_login_id']."' ");

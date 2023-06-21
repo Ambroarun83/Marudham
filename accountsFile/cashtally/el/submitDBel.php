@@ -13,9 +13,11 @@ $area = $_POST['area'];
 $ident = $_POST['ident'];
 $remark = $_POST['remark'];
 $amt = $_POST['amt'];
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
 
 $qry = $con->query("INSERT INTO `ct_db_bel`(`bank_id`, `ref_code`,`trans_id`,`name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `created_date`) 
-VALUES ('$bank_id','$ref_code','$trans_id','$name_id','$area','$ident','$remark','$amt','$user_id',now())");
+VALUES ('$bank_id','$ref_code','$trans_id','$name_id','$area','$ident','$remark','$amt','$user_id','$op_date' )");
 
 if($qry){
     $response = "Submitted Successfully";

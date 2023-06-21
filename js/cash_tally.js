@@ -327,9 +327,6 @@ $(function(){// auto call function for fetching Opening and closing balance
 
     getOpeningDate(); // to get opening date
     
-    
-
-    
 })
 
 function getOpeningDate(){
@@ -345,7 +342,7 @@ function getOpeningDate(){
             // $('#hand_opening').text(response['op_hand']);
             // $('#bank_opening').text(response['op_bank']);
             // $('#agent_opening').text(response['op_agent']);
-            // $('#closing_balance').text(response['closing_bal']);
+            $('#oldclosingbal').val(response['closing_bal']);
             // $('#hand_closing').text(response['cl_hand']);
             // $('#bank_closing').text(response['cl_bank']);
             // $('#agent_closing').text(response['cl_agent']);
@@ -359,6 +356,8 @@ function getOpeningDate(){
 function getOpeningBalance(){
     var op_date = $('#op_date').text();
     var bank_detail = $('#user_bank_details').val();
+    var oldclosingbal = $('#oldclosingbal').val();
+    var bank_detail_arr = $('#user_bank_details').val().split(',');
     $.ajax({
         url: 'accountsFile/cashtally/getOpeningBalance.php',
         data:{'op_date':op_date,'bank_detail':bank_detail},
@@ -366,7 +365,12 @@ function getOpeningBalance(){
         dataType: 'json',
         cache: false,
         success: function(response){
-            $('#opening_balance').text(response[0]['opening_balance'])
+            
+            for(var j=0;j<bank_detail_arr.length;j++){ //reset bank opening balance to 0
+                $('#bank_opening'+j).text('0')
+            }
+            
+            $('#opening_balance').text(oldclosingbal)
             $('#hand_opening').text(response[0]['hand_opening'])
             var i=0;
             $.each(response,function(index,item){
@@ -400,64 +404,136 @@ function getClosingBalance(){
                 i++;
             })
             $('#agent_closing').text(response[0]['agent_closing'])
+            submitCashTally(i);
         }
-    }).then(function(){
-        submitCashTally();
     })
 }
 
-function submitCashTally(){
+function submitCashTally(i){
     var op_date = $('#op_date').text();
     var currentDate = new Date();
     var currentDateStr = currentDate.getDate() + "-0" +(currentDate.getMonth() + 1) + "-" + currentDate.getFullYear();
-    if(op_date != currentDateStr){
-        $('#submit_cash_tally').click(function(){
-            if(confirm('Are You sure to close this Day?')){
+    if(op_date <= currentDateStr){
+        $('#submit_cash_tally').click(function(){event.preventDefault();
+            if(getBankCollectionSubmit() == 0){
+                
+                if(confirm('Are You sure to close this Day?')){
 
-                var op_date = $('#op_date').text();
-                var opening_bal =$('#opening_balance').text()
-                var hand_op =$('#hand_opening').text()
-                var bank_op =$('#bank_opening').text()
-                var agent_op =$('#agent_opening').text()
-                var closing_bal =$('#closing_balance').text()
-                var hand_cl =$('#hand_closing').text()
-                var bank_cl =$('#bank_closing').text()
-                var agent_cl =$('#agent_closing').text()
-                var formtosend = {op_date:op_date,opening_bal:opening_bal,hand_op:hand_op,bank_op:bank_op,agent_op:agent_op,closing_bal:closing_bal,hand_cl:hand_cl,bank_cl,agent_cl:agent_cl};
-                $.ajax({
-                    url: 'accountsFile/cashtally/submitCashTally.php',
-                    data: formtosend,
-                    type: 'post',
-                    cache: false,
-                    success: function(response){
-                        if(response.includes('Successfully')){
-                            Swal.fire({
-                                title: response,
-                                icon: 'success',
-                                showConfirmButton: true,
-                                confirmButtonColor: '#009688'
-                            })
-                            getOpeningDate();
-                        }else if(response.includes('Error')){
-                            Swal.fire({
-                                title: response,
-                                icon: 'error',
-                                showConfirmButton: true,
-                                confirmButtonColor: '#009688'
-                            });
-                        }
+                    var op_date = $('#op_date').text();
+                    var opening_bal =$('#opening_balance').text()
+                    var hand_op =$('#hand_opening').text()
+                    var bank_op ='';
+                    for(var j=0;j<i;j++){
+                        bank_op += $('#bank_opening'+j).text() + ',';
                     }
-                })
+                    bank_op = bank_op.slice(0, -1);
+                    var agent_op =$('#agent_opening').text()
+                    var closing_bal =$('#closing_balance').text()
+                    var hand_cl =$('#hand_closing').text()
+                    var bank_cl ='';
+                    for(var j=0;j<i;j++){
+                        bank_cl += $('#bank_closing'+j).text() + ',';
+                    }
+                    bank_cl = bank_cl.slice(0, -1);
+                    var agent_cl =$('#agent_closing').text()
+                    var formtosend = {op_date:op_date,opening_bal:opening_bal,hand_op:hand_op,bank_op:bank_op,agent_op:agent_op,closing_bal:closing_bal,hand_cl:hand_cl,bank_cl,agent_cl:agent_cl};
+                    $.ajax({
+                        url: 'accountsFile/cashtally/submitCashTally.php',
+                        data: formtosend,
+                        type: 'post',
+                        cache: false,
+                        success: function(response){
+                            if(response.includes('Successfully')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'success',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                })
+                                getOpeningDate();
+                            }else if(response.includes('Error')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                            }
+                        }
+                    })
+                }else{
+                    event.preventDefault();
+                }
             }else{
-                event.preventDefault();
+                Swal.fire({
+                    title: 'Please Submit Bank Collection Before Closing',
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#009688'
+                });
+                
             }
         })
     }else{
         $('#submit_cash_tally').off('click');
         $('#submit_cash_tally').hide();
+
+        $('#hand_cash_radio , .bank_cash_radio').off('click')
+        $('#credit_type, #debit_type').off('change')
+
+        getFutureOpeningBalance();
     }
 }
 
+function getBankCollectionSubmit(){
+    var bank_id =$('#user_bank_details').val();
+    var op_date = $('#op_date').text();
+    var retval = 0;
+    $.ajax({
+        url: 'accountsFile/cashtally/getBankCollectionSubmit.php',
+        data: {'bank_id':bank_id,'op_date':op_date},
+        type: 'post',
+        cache: false,
+        async: false,  // Make the request synchronous
+        success: function(response){
+            if(response.includes('Already')){
+                retval = 0;
+            }else if(response.includes('Not')){
+                retval = 1;
+            }
+        }
+    }); 
+    return retval;
+}
+
+function getFutureOpeningBalance(){
+    var op_date = $('#op_date').text();
+    var bank_detail = $('#user_bank_details').val();
+    var oldclosingbal = $('#oldclosingbal').val();
+    var bank_detail_arr = $('#user_bank_details').val().split(',');
+    $.ajax({
+        url: 'accountsFile/cashtally/getFutureOpeningBalance.php',
+        data:{'op_date':op_date,'bank_detail':bank_detail},
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function(response){
+            
+            for(var j=0;j<bank_detail_arr.length;j++){ //reset bank opening balance to 0
+                $('#bank_opening'+j).text('0')
+            }
+
+            $('#opening_balance').text(oldclosingbal)
+            $('#hand_opening').text(response[0]['hand_opening'])
+            var i=0;
+            $.each(response,function(index,item){
+                $('#bank_opening'+i).text(item['bank_opening'])
+                i++;
+            })
+            $('#agent_opening').text(response[0]['agent_opening'])
+        }
+    })
+}
 
 function appendHandCreditDropdown(){
 
@@ -634,9 +710,10 @@ function hideAllCardsfunction(){
 // //////////////////////////////////////////////////// Hand Collection //////////////////////////////////////////////// //
 function getCollectionDetails(){
     var user_branch_id = $('#user_branch_id').val();
+    var op_date = $('#op_date').text();
     $.ajax({
         url:'accountsFile/cashtally/getCollectionDetails.php',
-        data: {'branch_id':user_branch_id},
+        data: {'branch_id':user_branch_id,'op_date':op_date},
         type: 'post',
         cache: false,
         success: function(response){
@@ -644,72 +721,15 @@ function getCollectionDetails(){
             $('#collectionTableDiv').html(response);
         }
     })
-    // .then(function(){
-        // $('.collect_btn').click(function(){
-        //     console.log('asdf')
-        //     var user_id = $(this).data('value');
-        //     $.ajax({
-        //         url:'accountsFile/cashtally/receiveAmtModal.php',
-        //         data: {'user_id':user_id},
-        //         type: 'post',
-        //         cache: false,
-        //         success: function(response){
-        //             $('#receiveAmtDiv').empty();
-        //             $('#receiveAmtDiv').html(response);
-        //         }
-        //     }).then(function(){
-        //         $('#submit_rec').click(function(){
-        //             var formData = $('#coll_rec_form').serialize(); // Serialize the form inputs to send all data
-        //             $.ajax({
-        //                 url: 'accountsFile/cashtally/submitReceivedCollection.php',
-        //                 data: formData,
-        //                 type: 'post',
-        //                 cache: false,
-        //                 success: function(response){
-        //                     if(response.includes('Successfully')){
-        //                         Swal.fire({
-        //                             title: response,
-        //                             icon: 'success',
-        //                             showConfirmButton: true,
-        //                             confirmButtonColor: '#009688'
-        //                         }).then(function(result){
-        //                             if(result.isConfirmed){
-        //                                 var user_id = $('#user_id_rec').val();
-        //                                 $.ajax({
-        //                                     url:'accountsFile/cashtally/receiveAmtModal.php',
-        //                                     data: {'user_id':user_id},
-        //                                     type: 'post',
-        //                                     cache: false,
-        //                                     success: function(response){
-        //                                         $('#receiveAmtDiv').empty();
-        //                                         $('#receiveAmtDiv').html(response);
-        //                                     }
-        //                                 })
-        //                             }
-        //                         })
-        //                     }else{
-        //                         Swal.fire({
-        //                             title: response,
-        //                             icon: 'error',
-        //                             showConfirmButton: true,
-        //                             confirmButtonColor: '#009688'
-        //                         });
-        //                     }
-        //                 }
-        //             })
-        //         })
-        //     })
-        // })
-    // })
-
 }
 
 function collectBtnClick(user_id){
     // $('.collect_btn').click(function(){
         var user_id = $(user_id).data('value');
+        var op_date = $('#op_date').text();
         $.ajax({
             url:'accountsFile/cashtally/receiveAmtModal.php',
-            data: {'user_id':user_id},
+            data: {'user_id':user_id,'op_date':op_date},
             type: 'post',
             cache: false,
             success: function(response){
@@ -718,8 +738,12 @@ function collectBtnClick(user_id){
             }
         }).then(function(){
             $('#submit_rec').click(function(){
-                var formData = $('#coll_rec_form').serialize(); // Serialize the form inputs to send all data
-                
+                var formData = $('#coll_rec_form').serializeArray(); // Serialize the form inputs to send all data
+                var op_date = $('#op_date').text();
+
+                // Append op_date to the formData array
+                formData.push({ name: 'op_date', value: op_date });
+
                 if($('#rec_amt').val() != ''){
                     $('#rec_amt_check').hide();
                     $.ajax({
@@ -737,9 +761,10 @@ function collectBtnClick(user_id){
                                 }).then(function(result){
                                     if(result.isConfirmed){
                                         var user_id = $('#user_id_rec').val();
+                                        var op_date = $('#op_date').text();
                                         $.ajax({
                                             url:'accountsFile/cashtally/receiveAmtModal.php',
-                                            data: {'user_id':user_id},
+                                            data: {'user_id':user_id,'op_date':op_date},
                                             type: 'post',
                                             cache: false,
                                             success: function(response){
@@ -757,6 +782,7 @@ function collectBtnClick(user_id){
                                     confirmButtonColor: '#009688'
                                 });
                             }
+                            getClosingBalance();
                         }
                     })
                 }else{
@@ -769,9 +795,10 @@ function collectBtnClick(user_id){
 
 function closeReceiveModal(){
     var user_branch_id = $('#user_branch_id').val();
+    var op_date = $('#op_date').text();
     $.ajax({
         url:'accountsFile/cashtally/getCollectionDetails.php',
-        data: {'branch_id':user_branch_id},
+        data: {'branch_id':user_branch_id,'op_date':op_date},
         type: 'post',
         cache: false,
         success: function(response){
@@ -801,11 +828,12 @@ function getBankCollectionDetails(bank_id){
     $('#submit_bank_credit').click(function(){
         var bank_id = $('#bank_id').val()
         var credited_amt = $('#bank_credit_amt').val();
+        var op_date = $('#op_date').text();
         if(credited_amt != ''){
             $('#bank_credit_check').hide();
             $.ajax({
                 url: 'accountsFile/cashtally/submitBankCredit.php',
-                data: {'bank_id':bank_id,'credited_amt':credited_amt},
+                data: {'bank_id':bank_id,'credited_amt':credited_amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -832,6 +860,7 @@ function getBankCollectionDetails(bank_id){
                         });
                     }
                     $('#bank_credit_amt').val('');
+                    getClosingBalance();
                 }
             })
         }else{
@@ -908,9 +937,10 @@ function getBankDepositDetails(){
                 var location_bdep = $('#location_bdep').val();
                 var remark_bdep = $('#remark_bdep').val();
                 var amt_bdep = $('#amt_bdep').val();
+                var op_date = $('#op_date').text();
                 $.ajax({
                     url: 'accountsFile/cashtally/contra/submitBankDeposit.php',
-                    data: {'to_bank_bdep':to_bank_bdep,'location_bdep':location_bdep,'remark_bdep':remark_bdep,'amt_bdep':amt_bdep},
+                    data: {'to_bank_bdep':to_bank_bdep,'location_bdep':location_bdep,'remark_bdep':remark_bdep,'amt_bdep':amt_bdep,'op_date':op_date},
                     type: 'post',
                     cache: false,
                     success: function(response){
@@ -933,6 +963,7 @@ function getBankDepositDetails(){
                         $('#location_bdep').val('');
                         $('#remark_bdep').val('');
                         $('#amt_bdep').val('');
+                        getClosingBalance();
                     }
                 });
             }
@@ -984,6 +1015,7 @@ function getCashDepositDetails(bank_id){
 //Open modal when receive button clicked
 function receivecdBtnClick(bdep_id1){
     var bdep_id = $(bdep_id1).data('value');
+    
     $.ajax({
         url:'accountsFile/cashtally/contra/receivecdAmtModal.php',
         data: {'bdep_id':bdep_id},
@@ -996,8 +1028,12 @@ function receivecdBtnClick(bdep_id1){
     }).then(function(){
         $('#submit_cd').off('click');
         $('#submit_cd').click(function(){
-            var formData = $('#cr_cd_form').serialize(); // Serialize the form inputs to send all data
-            console.log(cdValidation())
+            var formData = $('#cr_cd_form').serializeArray(); // Serialize the form inputs to send all data
+            var op_date = $('#op_date').text();
+
+            // Append op_date to the formData array
+            formData.push({ name: 'op_date', value: op_date });
+
             if(cdValidation() == 0){
                 $.ajax({
                     url: 'accountsFile/cashtally/contra/submitCashDeposit.php',
@@ -1029,7 +1065,7 @@ function receivecdBtnClick(bdep_id1){
                             });
                         }
                         $('#closeCdModal').trigger('click');
-                        
+                        getClosingBalance();
                     }
                 })
             }
@@ -1173,9 +1209,10 @@ function getCashWithdrawalDetails(){
                 var cheque_cwd = $('#cheque_cwd').val();
                 var remark_cwd = $('#remark_cwd').val();
                 var amt_cwd = $('#amt_cwd').val();
+                var op_date = $('#op_date').text();
                 $.ajax({
                     url: 'accountsFile/cashtally/contra/submitCashWithdrawal.php',
-                    data: {'ref_code':ref_code_cwd,'trans_id':trans_id_cwd,'from_bank':from_bank_cwd,'cheque':cheque_cwd,'remark':remark_cwd,'amt':amt_cwd},
+                    data: {'ref_code':ref_code_cwd,'trans_id':trans_id_cwd,'from_bank':from_bank_cwd,'cheque':cheque_cwd,'remark':remark_cwd,'amt':amt_cwd,'op_date':op_date},
                     type: 'post',
                     cache: false,
                     success: function(response){
@@ -1195,6 +1232,7 @@ function getCashWithdrawalDetails(){
                             });
                         }
                         getCashWithdrawalDetails();
+                        getClosingBalance();
                     }
                 });
             }
@@ -1260,8 +1298,12 @@ function receivebwdBtnClick(bwd_id1){
     }).then(function(){
         $('#submit_bwd').off('click');
         $('#submit_bwd').click(function(){
-            var formData = $('#cr_bwd_form').serialize(); // Serialize the form inputs to send all data
+            var formData = $('#cr_bwd_form').serializeArray(); // Serialize the form inputs to send all data
+            var op_date = $('#op_date').text();
 
+            // Append op_date to the formData array
+            formData.push({ name: 'op_date', value: op_date });
+            
             if(bwdValidation() == 0){
                 $.ajax({
                     url: 'accountsFile/cashtally/contra/submitBankWithdrawal.php',
@@ -1293,7 +1335,7 @@ function receivebwdBtnClick(bwd_id1){
                             });
                         }
                         $('#closebwdModal').trigger('click');
-                        
+                        getClosingBalance();
                     }
                 })
             }
@@ -1383,7 +1425,7 @@ function getAgentName(selectID){
 
 // //////////////////////////////////////////////////// Exhange Start //////////////////////////////////////////////////////// //
 
-// To get hand exchange inputs as html and submit action
+// To get hand exchange inputs as html and submit action Debit
 function getHandExchangeInputs(){
     var appendText = `<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
         <div class="form-group">
@@ -1459,6 +1501,7 @@ function getHandExchangeInputs(){
                                 confirmButtonColor: '#009688'
                             });
                         }
+                        getClosingBalance();
                     }
                 })
             }
@@ -1494,10 +1537,10 @@ function getHandExchangeInputs(){
     }).then(function(){
         $('#submit_hed').click(function(){
             if(handExchangeValidation() != 1){
-                var user_id = $('#user_id_hed').val(); var remark = $('#remark_hed').val(); var amt = $('#amt_hed').val();
+                var user_id = $('#user_id_hed').val(); var remark = $('#remark_hed').val(); var amt = $('#amt_hed').val();var op_date = $('#op_date').text();
                 $.ajax({
                     url: 'accountsFile/cashtally/exchange/submitdbHandExchange.php',
-                    data: {'user_id':user_id,'remark':remark,'amt':amt},
+                    data: {'user_id':user_id,'remark':remark,'amt':amt,'op_date':op_date},
                     type: 'post',
                     cache: false,
                     success:function(response){
@@ -1578,7 +1621,7 @@ function getCreditHexchangeDetails(){
     })
 }
 
-//To trigger modal and fetch details for hand exchange
+//To trigger modal and fetch details for hand exchange Credit
 function hexCollectBtnClick(hex_id1){
     var hex_id = $(hex_id1).data('value');
     $.ajax({
@@ -1592,7 +1635,12 @@ function hexCollectBtnClick(hex_id1){
         }
     }).then(function(){
         $('#submit_hex').click(function(){
-            var formdata = $('#cr_hex_form').serialize();
+            var formdata = $('#cr_hex_form').serializeArray();
+            var op_date = $('#op_date').text();
+
+            // Append op_date to the formData array
+            formdata.push({ name: 'op_date', value: op_date });
+            
             $.ajax({
                 url: 'accountsFile/cashtally/exchange/submitcrHandExchange.php',
                 data: formdata,
@@ -1623,6 +1671,7 @@ function hexCollectBtnClick(hex_id1){
                     }
                     $('#closeHexchangeModal').trigger('click');
                     getCreditHexchangeDetails();
+                    getClosingBalance();
                 }
             })
         })
@@ -1727,8 +1776,8 @@ function getBankExchangeInputs(){
         $('#submit_bex').click(function(){
             if(bankExchangeValidation() != 1){
                 var ref_code = $('#ref_code_bex').val();var from_acc_id_bex = $('#from_acc_id_bex').val();var from_acc_bex = $('#from_acc_bex').val();var to_bank_bex = $('#to_bank_bex').val();var trans_id_bex = $('#trans_id_bex').val();
-                var user_id_bex = $('#user_id_bex').val();var remark_bex = $('#remark_bex').val();var amt_bex = $('#amt_bex').val();
-                var formdata = {ref_code: ref_code,from_acc_id_bex:from_acc_id_bex,from_acc_bex: from_acc_bex,to_bank_bex: to_bank_bex,trans_id_bex: trans_id_bex,user_id_bex: user_id_bex,remark_bex: remark_bex,amt_bex: amt_bex};
+                var user_id_bex = $('#user_id_bex').val();var remark_bex = $('#remark_bex').val();var amt_bex = $('#amt_bex').val();var op_date = $('#op_date').text();
+                var formdata = {ref_code: ref_code,from_acc_id_bex:from_acc_id_bex,from_acc_bex: from_acc_bex,to_bank_bex: to_bank_bex,trans_id_bex: trans_id_bex,user_id_bex: user_id_bex,remark_bex: remark_bex,amt_bex: amt_bex,op_date:op_date};
                 $.ajax({
                     url: 'accountsFile/cashtally/exchange/submitdbBankExchange.php',
                     data: formdata,
@@ -1751,6 +1800,7 @@ function getBankExchangeInputs(){
                                 confirmButtonColor: '#009688'
                             });
                         }
+                        getClosingBalance();
                     }
                 })
             }
@@ -1811,7 +1861,12 @@ function bexCollectBtnClick(bex_id1){
     }).then(function(){
 
         $('#submit_bex').click(function(){
-            var formdata = $('#cr_bex_form').serialize();
+            var formdata = $('#cr_bex_form').serializeArray();
+            var op_date = $('#op_date').text();
+
+            // Append op_date to the formData array
+            formdata.push({ name: 'op_date', value: op_date });
+
             if(bexValidation() != 1){
                 $.ajax({
                     url: 'accountsFile/cashtally/exchange/submitcrBankExchange.php',
@@ -1835,6 +1890,7 @@ function bexCollectBtnClick(bex_id1){
                                 confirmButtonColor: '#009688'
                             });
                         }
+                        getClosingBalance();
                     }
                 })
             }
@@ -1902,10 +1958,10 @@ function getHotherincomeDetails(){
 
     $('#submit_hoti').click(function(){
         if(otiValidation() == 0){
-            var cat_info = $('#cat_info').val();var remark = $('#remark').val();var amt = $('#amt').val();
+            var cat_info = $('#cat_info').val();var remark = $('#remark').val();var amt = $('#amt').val();var op_date = $('#op_date').text();
             $.ajax({
                 url:'accountsFile/cashtally/otherincome/submitHotherincome.php',
-                data: {'cat_info':cat_info,'remark':remark,'amt':amt},
+                data: {'cat_info':cat_info,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success:function(response){
@@ -1925,6 +1981,7 @@ function getHotherincomeDetails(){
                         });
                     }
                     getHotherincomeDetails();
+                    getClosingBalance();
                 }
             })
         }
@@ -2013,10 +2070,10 @@ function getBotherincomeDetails(){
     $('#submit_boti').click(function(){
         if(botiValidation() == 0){
             var ref_code = $('#ref_code_boti').val();var cat_info = $('#cat_info').val();var trans_id = $('#trans_id').val();var remark = $('#remark').val();var amt = $('#amt').val();
-            var bank_id =$('input[name=cash_type]:checked').val();
+            var bank_id =$('input[name=cash_type]:checked').val();var op_date = $('#op_date').text();
             $.ajax({
                 url:'accountsFile/cashtally/otherincome/submitBotherincome.php',
-                data: {'bank_id':bank_id,'ref_code':ref_code,'cat_info':cat_info,'trans_id':trans_id,'remark':remark,'amt':amt},
+                data: {'bank_id':bank_id,'ref_code':ref_code,'cat_info':cat_info,'trans_id':trans_id,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success:function(response){
@@ -2036,6 +2093,7 @@ function getBotherincomeDetails(){
                         });
                     }
                     getBotherincomeDetails();
+                    getClosingBalance();
                 }
             })
         }
@@ -2070,9 +2128,11 @@ function botiValidation(){
 
 //get table Details for Hand issued from loan issue tables and submit button
 function getHissuedTable(){
+    var op_date = $('#op_date').text();
+
     $.ajax({
         url: 'accountsFile/cashtally/issued/getHissuedTable.php',
-        data: {},
+        data: {'op_date':op_date},
         type: 'post',
         cache: false,
         success: function(response){
@@ -2087,8 +2147,9 @@ function getHissuedTable(){
             var username = $(this).parent().prev().prev().prev().text();
             var usertype = $(this).parent().prev().prev().prev().prev().text();
             var user_id = $(this).data('value');
+            var op_date = $('#op_date').text();
             
-            var fomrdata = {amt:amt,netcash:netcash,username:username,usertype:usertype,user_id:user_id}
+            var fomrdata = {amt:amt,netcash:netcash,username:username,usertype:usertype,user_id:user_id,op_date:op_date}
             if(confirm("Are you sure to submit this?")){
 
                 $.ajax({
@@ -2113,6 +2174,7 @@ function getHissuedTable(){
                             });
                         }
                         getHissuedTable();
+                        getClosingBalance();
                     }
                 })
             }
@@ -2149,7 +2211,12 @@ function getBissuedTable(){
                 }
             }).then(function(){
                 $('#submit_bissued').click(function(){
-                    var formdata = $('#db_bissued_form').serialize();
+                    var formdata = $('#db_bissued_form').serializeArray();
+                    var op_date = $('#op_date').text();
+
+                    // Append op_date to the formData array
+                    formdata.push({ name: 'op_date', value: op_date });
+
                     $.ajax({
                         url:'accountsFile/cashtally/issued/submitBissued.php',
                         data: formdata,
@@ -2173,8 +2240,10 @@ function getBissuedTable(){
                             }
                             getBissuedTable();
                             $('#closeissuedModal').trigger('click');
+                            getClosingBalance();
                         }
                     })
+                    
                 })
             })
         })
@@ -2187,10 +2256,11 @@ function getBissuedTable(){
 
 //To get inputs Details for expense table 
 function getHexpenseTable(){
-    
+    var op_date = $('#op_date').text();
+
     $.ajax({
         url: 'accountsFile/cashtally/expense/getHexpenseTable.php',
-        data: {},
+        data: {'op_date':op_date},
         type: 'post',
         cache: false,
         success: function(response){
@@ -2228,8 +2298,10 @@ function getHexpenseTable(){
                             });
                         }
                         getHexpenseTable();
+                        getClosingBalance();
                     }
                 })
+                
             }
         })
     })
@@ -2345,7 +2417,7 @@ function hexpenseModalBtnClick(){
     
                         var user_id = $('#user_id_hexp').val();var username = $('#username_hexp').val();var usertype = $('#usertype_hexp').val();var cat_hexp = $('#cat_hexp').val();
                         var part_hexp = $('#part_hexp').val();var vou_id_hexp = $('#vou_id_hexp').val();var rec_per_hexp = $('#rec_per_hexp').val();var remark_hexp = $('#remark_hexp').val();
-                        var amt_hexp = $('#amt_hexp').val();var upd_hexp = $('#upd_hexp')[0].files[0];
+                        var amt_hexp = $('#amt_hexp').val();var upd_hexp = $('#upd_hexp')[0].files[0];var op_date = $('#op_date').text();
                         
                         var upload = $("#upd_hexp")[0];
                         var file = upload.files[0];
@@ -2361,6 +2433,7 @@ function hexpenseModalBtnClick(){
                         formData.append('rec_per', rec_per_hexp);
                         formData.append('remark', remark_hexp);
                         formData.append('amt', amt_hexp);
+                        formData.append('op_date', op_date);
     
     
                         $.ajax({
@@ -2388,6 +2461,7 @@ function hexpenseModalBtnClick(){
                                 }
                                 getHexpenseTable();
                                 $('#closehexpModal').trigger('click');
+                                getClosingBalance();
                             }
                         })
                     }
@@ -2427,9 +2501,10 @@ function hexpenseValidation(){
 function getBexpenseTable(){
     
     var bank_id =$('input[name=cash_type]:checked').val();    
+    var op_date = $('#op_date').text();
     $.ajax({
         url: 'accountsFile/cashtally/expense/getBexpenseTable.php',
-        data: {'bank_id':bank_id},
+        data: {'bank_id':bank_id,'op_date':op_date},
         type: 'post',
         cache: false,
         success: function(response){
@@ -2467,8 +2542,10 @@ function getBexpenseTable(){
                             });
                         }
                         getBexpenseTable();
+                        getClosingBalance();
                     }
                 })
+                
             }
         })
     })
@@ -2563,7 +2640,7 @@ function bexpenseModalBtnClick(){
             
             var bank_id =$('input[name=cash_type]:checked').val();    
             $('#bank_id_bexp').val(bank_id);
-            
+
             $.ajax({//For fetching Ref code
                 url: 'accountsFile/cashtally/expense/geBexpenseRefCode.php',
                 data: {},
@@ -2604,7 +2681,7 @@ function bexpenseModalBtnClick(){
     
                         var user_id = $('#user_id_bexp').val();var username = $('#username_bexp').val();var usertype = $('#usertype_bexp').val();var ref_code = $('#ref_code_bexp').val();var cat_bexp = $('#cat_bexp').val();
                         var bank_id = $('#bank_id_bexp').val();var part_bexp = $('#part_bexp').val();var vou_id_bexp = $('#vou_id_bexp').val();var rec_per_bexp = $('#rec_per_bexp').val();var remark_bexp = $('#remark_bexp').val();
-                        var amt_bexp = $('#amt_bexp').val();var upd_bexp = $('#upd_bexp')[0].files[0];
+                        var amt_bexp = $('#amt_bexp').val();var upd_bexp = $('#upd_bexp')[0].files[0];var op_date = $('#op_date').text();
                         
                         var upload = $("#upd_bexp")[0];
                         var file = upload.files[0];
@@ -2622,6 +2699,7 @@ function bexpenseModalBtnClick(){
                         formData.append('rec_per', rec_per_bexp);
                         formData.append('remark', remark_bexp);
                         formData.append('amt', amt_bexp);
+                        formData.append('op_date', op_date);
     
     
                         $.ajax({
@@ -2649,6 +2727,7 @@ function bexpenseModalBtnClick(){
                                 }
                                 getBexpenseTable();
                                 $('#closebexpModal').trigger('click');
+                                getClosingBalance();
                             }
                         })
                     }
@@ -2745,10 +2824,10 @@ function getCHinvDetails(){
     $('#submit_hinv').click(function(){
         if(hinvvalidation() == 0){
             var name = $('#name_hinv').val();var area = $('#area_hinv').val();var ident = $('#ident_hinv').val();var remark = $('#remark_hinv').val();var amt = $('#amt_hinv').val();
-
+            var op_date = $('#op_date').text();
             $.ajax({
                 url: 'accountsFile/cashtally/investment/submitCHinvestment.php',
-                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -2768,6 +2847,7 @@ function getCHinvDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -2832,10 +2912,10 @@ function getDHinvDetails(){
     $('#submit_hinv').click(function(){
         if(hinvvalidation() == 0){
             var name = $('#name_hinv').val();var area = $('#area_hinv').val();var ident = $('#ident_hinv').val();var remark = $('#remark_hinv').val();var amt = $('#amt_hinv').val();
-
+            var op_date = $('#op_date').text();
             $.ajax({
                 url: 'accountsFile/cashtally/investment/submitDHinvestment.php',
-                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -2855,6 +2935,7 @@ function getDHinvDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -2946,11 +3027,11 @@ function getCBinvDetails(){
         if(binvvalidation() == 0){
             var ref_code = $('#ref_code_binv').val();var name = $('#name_binv').val();var area = $('#area_binv').val();var ident = $('#ident_binv').val();
             var trans_id = $('#trans_id_binv').val();var remark = $('#remark_binv').val();var amt = $('#amt_binv').val();
-            var bank_id =$('input[name=cash_type]:checked').val();    
+            var bank_id =$('input[name=cash_type]:checked').val();var op_date = $('#op_date').text();
 
             $.ajax({
                 url: 'accountsFile/cashtally/investment/submitCBinvestment.php',
-                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -2970,6 +3051,7 @@ function getCBinvDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3050,11 +3132,11 @@ function getDBinvDetails(){
         if(binvvalidation() == 0){
             var ref_code = $('#ref_code_binv').val();var name = $('#name_binv').val();var area = $('#area_binv').val();var ident = $('#ident_binv').val();
             var trans_id = $('#trans_id_binv').val();var remark = $('#remark_binv').val();var amt = $('#amt_binv').val();
-            var bank_id =$('input[name=cash_type]:checked').val();    
+            var bank_id =$('input[name=cash_type]:checked').val(); var op_date = $('#op_date').text();
 
             $.ajax({
                 url: 'accountsFile/cashtally/investment/submitDBinvestment.php',
-                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3074,6 +3156,7 @@ function getDBinvDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3165,10 +3248,10 @@ function getCHdepDetails(){
     $('#submit_hdep').click(function(){
         if(hdepvalidation() == 0){
             var name = $('#name_hdep').val();var area = $('#area_hdep').val();var ident = $('#ident_hdep').val();var remark = $('#remark_hdep').val();var amt = $('#amt_hdep').val();
-
+            var op_date = $('#op_date').text();
             $.ajax({
                 url: 'accountsFile/cashtally/deposit/submitCHdeposit.php',
-                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3188,6 +3271,7 @@ function getCHdepDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3251,10 +3335,10 @@ function getDHdepDetails(){
     $('#submit_hdep').click(function(){
         if(hdepvalidation() == 0){
             var name = $('#name_hdep').val();var area = $('#area_hdep').val();var ident = $('#ident_hdep').val();var remark = $('#remark_hdep').val();var amt = $('#amt_hdep').val();
-
+            var op_date = $('#op_date').text();
             $.ajax({
                 url: 'accountsFile/cashtally/deposit/submitDHdeposit.php',
-                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3274,6 +3358,7 @@ function getDHdepDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3363,11 +3448,11 @@ function getCBDepDetails(){
         if(bdepositvalidation() == 0){
             var ref_code = $('#ref_code_bdeposit').val();var name = $('#name_bdeposit').val();var area = $('#area_bdeposit').val();var ident = $('#ident_bdeposit').val();
             var trans_id = $('#trans_id_bdeposit').val();var remark = $('#remark_bdeposit').val();var amt = $('#amt_bdeposit').val();
-            var bank_id =$('input[name=cash_type]:checked').val();    
+            var bank_id =$('input[name=cash_type]:checked').val();var op_date = $('#op_date').text();  
 
             $.ajax({
                 url: 'accountsFile/cashtally/deposit/submitCBdeposit.php',
-                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3387,6 +3472,7 @@ function getCBDepDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3467,11 +3553,11 @@ function getDBDepDetails(){
         if(bdepositvalidation() == 0){
             var ref_code = $('#ref_code_bdeposit').val();var name = $('#name_bdeposit').val();var area = $('#area_bdeposit').val();var ident = $('#ident_bdeposit').val();
             var trans_id = $('#trans_id_bdeposit').val();var remark = $('#remark_bdeposit').val();var amt = $('#amt_bdeposit').val();
-            var bank_id =$('input[name=cash_type]:checked').val();    
+            var bank_id =$('input[name=cash_type]:checked').val();var op_date = $('#op_date').text();
 
             $.ajax({
                 url: 'accountsFile/cashtally/deposit/submitDBdeposit.php',
-                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3491,6 +3577,7 @@ function getDBDepDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3581,10 +3668,10 @@ function getCHelDetails(){
     $('#submit_hel').click(function(){
         if(helvalidation() == 0){
             var name = $('#name_hel').val();var area = $('#area_hel').val();var ident = $('#ident_hel').val();var remark = $('#remark_hel').val();var amt = $('#amt_hel').val();
-
+            var op_date = $('#op_date').text();
             $.ajax({
                 url: 'accountsFile/cashtally/el/submitCHel.php',
-                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3604,6 +3691,7 @@ function getCHelDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3667,10 +3755,10 @@ function getDHelDetails(){
     $('#submit_hel').click(function(){
         if(helvalidation() == 0){
             var name = $('#name_hel').val();var area = $('#area_hel').val();var ident = $('#ident_hel').val();var remark = $('#remark_hel').val();var amt = $('#amt_hel').val();
-
+            var op_date = $('#op_date').text();
             $.ajax({
                 url: 'accountsFile/cashtally/el/submitDHel.php',
-                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3690,6 +3778,7 @@ function getDHelDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3780,11 +3869,11 @@ function getCBelDetails(){
         if(belvalidation() == 0){
             var ref_code = $('#ref_code_bel').val();var name = $('#name_bel').val();var area = $('#area_bel').val();var ident = $('#ident_bel').val();
             var trans_id = $('#trans_id_bel').val();var remark = $('#remark_bel').val();var amt = $('#amt_bel').val();
-            var bank_id =$('input[name=cash_type]:checked').val();    
+            var bank_id =$('input[name=cash_type]:checked').val(); var op_date = $('#op_date').text();
 
             $.ajax({
                 url: 'accountsFile/cashtally/el/submitCBel.php',
-                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3804,6 +3893,7 @@ function getCBelDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -3884,11 +3974,11 @@ function getDBelDetails(){
         if(belvalidation() == 0){
             var ref_code = $('#ref_code_bel').val();var name = $('#name_bel').val();var area = $('#area_bel').val();var ident = $('#ident_bel').val();
             var trans_id = $('#trans_id_bel').val();var remark = $('#remark_bel').val();var amt = $('#amt_bel').val();
-            var bank_id =$('input[name=cash_type]:checked').val();    
+            var bank_id =$('input[name=cash_type]:checked').val();var op_date = $('#op_date').text();
 
             $.ajax({
                 url: 'accountsFile/cashtally/el/submitDBel.php',
-                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt},
+                data: {'bank_id':bank_id,'ref_code':ref_code,'trans_id':trans_id,'name':name,'area':area,'ident':ident,'remark':remark,'amt':amt,'op_date':op_date},
                 type: 'post',
                 cache: false,
                 success: function(response){
@@ -3908,6 +3998,7 @@ function getDBelDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -4225,8 +4316,8 @@ function getExfDetails(){
                 if(exfValidation() == 0){
                     var ucl_ref_code_exf = $('#ucl_ref_code_exf').val();var ref_code_exf = $('#ref_code_exf').val();var ucl_trans_id_exf = $('#ucl_trans_id_exf').val();
                     var trans_id_exf = $('#trans_id_exf').val();var remark_exf = $('#remark_exf').val();var amt_exf = $('#amt_exf').val();
-                    var username_exf = $('#username_exf').val();var usertype_exf = $('#usertype_exf').val();var bank_id =$('input[name=cash_type]:checked').val();    
-                    var formtosend = {bank_id:bank_id,username_exf:username_exf,usertype_exf:usertype_exf,ucl_ref_code_exf:ucl_ref_code_exf,ref_code_exf:ref_code_exf,ucl_trans_id_exf:ucl_trans_id_exf,trans_id_exf:trans_id_exf,remark_exf:remark_exf,amt_exf:amt_exf};
+                    var username_exf = $('#username_exf').val();var usertype_exf = $('#usertype_exf').val();var bank_id =$('input[name=cash_type]:checked').val();var op_date = $('#op_date').text();
+                    var formtosend = {bank_id:bank_id,username_exf:username_exf,usertype_exf:usertype_exf,ucl_ref_code_exf:ucl_ref_code_exf,ref_code_exf:ref_code_exf,ucl_trans_id_exf:ucl_trans_id_exf,trans_id_exf:trans_id_exf,remark_exf:remark_exf,amt_exf:amt_exf,op_date:op_date};
                     $.ajax({
                         url:'accountsFile/cashtally/excessfund/submitExf.php',
                         data: formtosend,
@@ -4249,6 +4340,7 @@ function getExfDetails(){
                                     confirmButtonColor: '#009688'
                                 });
                             }
+                            getClosingBalance();
                         }
                     })
                 }
@@ -4327,8 +4419,8 @@ function getCHagDetails(){
     $('#submit_ag').off('click');
     $('#submit_ag').click(function(){
         if(agValidation() == 0){
-            var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();
-            var formtosend = {ag_id:ag_id,remark:remark_ag,amt:amt_ag};
+            var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var op_date = $('#op_date').text();
+            var formtosend = {ag_id:ag_id,remark:remark_ag,amt:amt_ag,op_date:op_date};
             $.ajax({
                 url:'accountsFile/cashtally/agent/submitCHag.php',
                 data: formtosend,
@@ -4351,6 +4443,7 @@ function getCHagDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -4401,8 +4494,8 @@ function getDHagDetails(){
     $('#submit_ag').off('click');
     $('#submit_ag').click(function(){
         if(agValidation() == 0){
-            var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();
-            var formtosend = {ag_id:ag_id,remark:remark_ag,amt:amt_ag};
+            var ag_id = $('#ag_id').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var op_date = $('#op_date').text();
+            var formtosend = {ag_id:ag_id,remark:remark_ag,amt:amt_ag,op_date:op_date};
             $.ajax({
                 url:'accountsFile/cashtally/agent/submitDHag.php',
                 data: formtosend,
@@ -4425,6 +4518,7 @@ function getDHagDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -4519,8 +4613,8 @@ function getCBagDetails(){
     $('#submit_ag').off('click');
     $('#submit_ag').click(function(){
         if(agBValidation() == 0){
-            var ag_id = $('#ag_id').val();var ref_code_ag = $('#ref_code_ag').val();var trans_id_ag = $('#trans_id_ag').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var bank_id =$('input[name=cash_type]:checked').val(); 
-            var formtosend = {ag_id:ag_id,bank_id:bank_id,ref_code:ref_code_ag,trans_id:trans_id_ag,remark:remark_ag,amt:amt_ag};
+            var ag_id = $('#ag_id').val();var ref_code_ag = $('#ref_code_ag').val();var trans_id_ag = $('#trans_id_ag').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var bank_id =$('input[name=cash_type]:checked').val(); var op_date = $('#op_date').text();
+            var formtosend = {ag_id:ag_id,bank_id:bank_id,ref_code:ref_code_ag,trans_id:trans_id_ag,remark:remark_ag,amt:amt_ag,op_date:op_date};
             $.ajax({
                 url:'accountsFile/cashtally/agent/submitCBag.php',
                 data: formtosend,
@@ -4543,6 +4637,7 @@ function getCBagDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }
@@ -4616,8 +4711,8 @@ function getDBagDetails(){
 
     $('#submit_ag').click(function(){
         if(agBValidation() == 0){
-            var ag_id = $('#ag_id').val();var ref_code_ag = $('#ref_code_ag').val();var trans_id_ag = $('#trans_id_ag').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var bank_id =$('input[name=cash_type]:checked').val(); 
-            var formtosend = {ag_id:ag_id,bank_id:bank_id,ref_code:ref_code_ag,trans_id:trans_id_ag,remark:remark_ag,amt:amt_ag};
+            var ag_id = $('#ag_id').val();var ref_code_ag = $('#ref_code_ag').val();var trans_id_ag = $('#trans_id_ag').val();var remark_ag = $('#remark_ag').val();var amt_ag = $('#amt_ag').val();var bank_id =$('input[name=cash_type]:checked').val(); var op_date = $('#op_date').text();
+            var formtosend = {ag_id:ag_id,bank_id:bank_id,ref_code:ref_code_ag,trans_id:trans_id_ag,remark:remark_ag,amt:amt_ag,op_date:op_date};
             $.ajax({
                 url:'accountsFile/cashtally/agent/submitDBag.php',
                 data: formtosend,
@@ -4640,6 +4735,7 @@ function getDBagDetails(){
                             confirmButtonColor: '#009688'
                         });
                     }
+                    getClosingBalance();
                 }
             })
         }

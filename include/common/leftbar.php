@@ -583,7 +583,7 @@ if (sizeof($getUser)>0) {
 				<?php if($accountsmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><object class="svg-icon" data="svg/accounts.svg" type="image/svg+xml"></object></i>
+							<i><object class="svg-icon" data="svg/acc.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Accounts</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='accounts') echo 'style="display:block" '; ?>>

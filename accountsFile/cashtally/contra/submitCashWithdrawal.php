@@ -11,6 +11,8 @@ $from_bank = $_POST['from_bank'];
 $cheque = $_POST['cheque'];
 $remark = $_POST['remark'];
 $amt = $_POST['amt'];
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
 
 
 //////////// Once again fetch code /////////////
@@ -33,7 +35,7 @@ else
 /////////////////////////////////////////////
 
 $qry = $con->query("INSERT INTO `ct_db_cash_withdraw`( `from_bank_id`, `ref_code`, `trans_id` , `cheque_no` , `remark`, `amt`, `insert_login_id`, `created_date`) 
-    VALUES ('".$from_bank."','".$ref_code."','".$trans_id."','".$cheque."','".$remark."','".$amt."','".$user_id."',now())");
+    VALUES ('".$from_bank."','".$ref_code."','".$trans_id."','".$cheque."','".$remark."','".$amt."','".$user_id."','$op_date' )");
 
 if($qry){
     $response = 'Submitted Successfully';

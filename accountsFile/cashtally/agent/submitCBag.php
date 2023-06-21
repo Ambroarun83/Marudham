@@ -11,10 +11,11 @@ $ref_code = $_POST['ref_code'];
 $trans_id = $_POST['trans_id'];
 $remark = $_POST['remark'];
 $amt = $_POST['amt'];
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
 $qry = $con->query("INSERT INTO `ct_cr_bag`(`ag_id`,`bank_id`,`ref_code`,`trans_id`,`remark`, `amt`, `insert_login_id`, `created_date`) 
-VALUES ('$ag_id','$bank_id','$ref_code','$trans_id','$remark','$amt','$user_id',now())");
+VALUES ('$ag_id','$bank_id','$ref_code','$trans_id','$remark','$amt','$user_id','$op_date')");
 
 if($qry){
     $response = "Submitted Successfully";

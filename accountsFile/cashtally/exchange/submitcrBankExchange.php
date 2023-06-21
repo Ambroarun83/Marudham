@@ -13,6 +13,7 @@ $ref_code = $_POST['ref_code'];
 $trans_id = $_POST['trans_id'];
 $remark = $_POST['remark'];
 $amt = str_replace(",","",$_POST['amt']);
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 $response = '';
 
@@ -21,7 +22,7 @@ $qry = $con->query("UPDATE ct_db_bexchange set received = 0 where id = '$bex_id'
 
 if($qry){
     $qry = $con->query("INSERT INTO `ct_cr_bexchange`( `db_ref_id`,`from_bank_id`, `to_bank_id`, `from_user_id`, `to_user_id`, `ref_code`, `trans_id`,`remark`, `amt`, `insert_login_id`, `created_date`) 
-        VALUES ('$bex_id','$from_bank_id', '$to_bank_id', '$from_user_id', '$to_user_id','$ref_code','$trans_id','$remark','$amt','$user_id',now() )");
+        VALUES ('$bex_id','$from_bank_id', '$to_bank_id', '$from_user_id', '$to_user_id','$ref_code','$trans_id','$remark','$amt','$user_id','$op_date' )");
     
     if($qry){
         $response = "Submitted Successfully";

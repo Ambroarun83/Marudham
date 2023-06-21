@@ -14,6 +14,8 @@ $vou_id = $_POST['vou_id'];
 $rec_per = $_POST['rec_per'];
 $remark = $_POST['remark'];
 $amt = $_POST['amt'];
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
 
 if(isset($_FILES['upd'])){
     $upd = $_FILES['upd']['name'];
@@ -35,7 +37,7 @@ if(isset($_FILES['upd'])){
 }
     
 $qry = $con->query("INSERT INTO `ct_db_hexpense`(`username`, `usertype`, `cat`, `part`, `vou_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `created_date`) 
-VALUES ('$username','$usertype','$cat','$part','$vou_id','$rec_per','$remark','$amt','$upd','$user_id',now())");
+VALUES ('$username','$usertype','$cat','$part','$vou_id','$rec_per','$remark','$amt','$upd','$user_id','$op_date')");
 
 
 if($qry){

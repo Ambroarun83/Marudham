@@ -14,12 +14,14 @@ $ucl_trans_id = $_POST['ucl_trans_id_exf'];
 $trans_id = $_POST['trans_id_exf'];
 $remark = $_POST['remark_exf'];
 $amt = $_POST['amt_exf'];
+$op_date = date('Y-m-d',strtotime($_POST['op_date']));
+
 
 $ref_code = refcodes($con);
 $ucl_ref_code = uclrefcode($con);
 
 $qry = $con->query("INSERT INTO `ct_db_exf`(`username`,`usertype`,`bank_id`,`ucl_ref_code`,`ref_code`,`ucl_trans_id`,`trans_id`,`remark`, `amt`, `insert_login_id`, `created_date`) 
-VALUES ('$username','$usertype','$bank_id','$ucl_ref_code','$ref_code','$ucl_trans_id','$trans_id','$remark','$amt','$user_id',now())");
+VALUES ('$username','$usertype','$bank_id','$ucl_ref_code','$ref_code','$ucl_trans_id','$trans_id','$remark','$amt','$user_id','$op_date')");
 
 if($qry){
     $response = "Submitted Successfully";
