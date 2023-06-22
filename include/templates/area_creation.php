@@ -194,8 +194,8 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div><br><br><br><br>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
-										<button type="button"  tabindex="9"  id="downloadarea" name="downloadarea" class="btn btn-primary"><span class="icon-download"></span>Download</button>
-										<button type="button" data-toggle="modal" data-target="#areaUploadModal" tabindex="10"  id="uploadArea" name="uploadArea"  class="btn btn-primary"><span class="icon-upload"></span>Upload</button>		
+										<button type="button"  tabindex="9"  id="downloadarea" name="downloadarea" class="btn btn-primary"><span class="icon-download"></span>&nbsp;Download</button>
+										<button type="button" data-toggle="modal" data-target="#areaUploadModal" tabindex="10"  id="uploadArea" name="uploadArea"  class="btn btn-primary"><span class="icon-upload"></span>&nbsp;Upload</button>		
 									</div>
 
 								</div>

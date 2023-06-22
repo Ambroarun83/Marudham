@@ -17,7 +17,7 @@ if(isset($_FILES["file"]["type"])){
 
         $Reader = new SpreadsheetReader($targetPath);
         $sheetCount = count($Reader->sheets()); 
-        print_r($sheetCount);die;
+        
         for($i=0;$i<$sheetCount;$i++)
         {
             $Reader->ChangeSheet($i);
@@ -101,7 +101,7 @@ if(isset($_FILES["file"]["type"])){
 }else{
     $message = 1;
 }
-    echo json_encode($message);
+    echo $message;
     ?>
 
     

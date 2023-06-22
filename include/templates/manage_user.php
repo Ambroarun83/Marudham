@@ -59,6 +59,7 @@ $accountsmodule = '';
 $cash_tally = '';
 $cash_tally_admin = '';
 $bank_details = '';
+$bank_clearance = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -158,6 +159,7 @@ if($idupd>0)
 			$cash_tally          		     = $getUser['cash_tally'];
 			$cash_tally_admin          		     = $getUser['cash_tally_admin'];
 			$bank_details          		     = $getUser['bank_details'];
+			$bank_clearance          		     = $getUser['bank_clearance'];
 		}
 	}
 }
@@ -745,6 +747,12 @@ if($idupd>0)
 									<option value="">Select Bank Account</option>
 								</select>
 								<span class='text-danger bankdetailsCheck' style="display:none">Please Select Bank Account</span>
+                            </div>
+                        </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($bank_clearance==0){ echo'checked'; }} ?> tabindex="44" class="accounts-checkbox" id="bank_clearance" name="bank_clearance" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="bank_clearance">Bank Clearance</label>
                             </div>
                         </div>
 					</div>

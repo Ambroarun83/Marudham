@@ -67,33 +67,33 @@ $(document).ready(function () {
             return false;
         }
         $.ajax({
-        url: 'areaCreation/ajaxAreaDetailsupload.php',
-        type: 'POST',
-        data: area,
-        dataType: 'json',
-        contentType: false,
-        cache: false,
-        processData:false,
-        beforeSend: function(){
-            $('#file').attr("disabled",  true);
-            $('#submitAreaUploadbtn').attr("disabled", true);
-        },
-        success: function(data){
-            console.log(data)
-            if(data == 0){
-                $("#notinsertsuccess").hide();
-                $("#insertsuccess").show();
-                $("#file").val('');
-            }else if(data == 1){
-                $("#insertsuccess").hide();
-                $("#notinsertsuccess").show();
-                $("#file").val('');
+            url: 'areaCreation/ajaxAreaDetailsupload.php',
+            type: 'POST',
+            data: area,
+            // dataType: 'json',
+            contentType: false,
+            cache: false,
+            processData:false,
+            beforeSend: function(){
+                $('#file').attr("disabled",  true);
+                $('#submitAreaUploadbtn').attr("disabled", true);
+            },
+            success: function(data){
+                console.log(data)
+                if(data == 0){
+                    $("#notinsertsuccess").hide();
+                    $("#insertsuccess").show();
+                    $("#file").val('');
+                }else if(data == 1){
+                    $("#insertsuccess").hide();
+                    $("#notinsertsuccess").show();
+                    $("#file").val('');
+                }
+            },
+            complete: function(){
+                $('#file').attr("disabled",  false);
+                $('#submitAreaUploadbtn').attr("disabled", false);         
             }
-        },
-        complete: function(){
-            $('#file').attr("disabled",  false);
-            $('#submitAreaUploadbtn').attr("disabled", false);         
-        }
         });
     });
 

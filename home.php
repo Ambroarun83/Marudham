@@ -342,6 +342,11 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'cash_tally') { ?>
 			<?php include "include/templates/cash_tally.php" ?>
 			<?php } ?>
+			
+			<!-- Bank Clearance -->
+			<?php if($current_page == 'bank_clearance') { ?>
+			<?php include "include/templates/bank_clearance.php" ?>
+			<?php } ?>
 
 		</div>
 		<!-- Page content end -->

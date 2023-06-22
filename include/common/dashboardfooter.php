@@ -1047,6 +1047,11 @@ if($current_page == 'update') { ?>
 if($current_page == 'cash_tally') { ?>
     <script src="js/cash_tally.js"></script>
     <?php }
+
+//Bank Clearance
+if($current_page == 'bank_clearance') { ?>
+    <script src="js/bank_clearance.js"></script>
+    <?php }
 ?>
 
 <script src="js/logincreation.js"></script>
