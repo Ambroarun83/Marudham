@@ -58,7 +58,7 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'concerncreation';
 
-}else if($current_page == 'cash_tally' ){
+}else if($current_page == 'cash_tally' || $current_page == 'bank_clearance'){
 
 	$current_module = 'accounts';
 
@@ -136,6 +136,7 @@ $concern_solution = '';
 $concern_feedback = '';
 $accountsmodule = '';
 $cash_tally = '';
+$bank_clearance = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -191,6 +192,7 @@ if (sizeof($getUser)>0) {
 		$concern_feedback          		     = $getUser['concern_feedback'];
 		$accountsmodule          		     = $getUser['accountsmodule'];
 		$cash_tally          		     = $getUser['cash_tally'];
+		$bank_clearance          		     = $getUser['bank_clearance'];
 	}
 }
 ?>
@@ -593,6 +595,11 @@ if (sizeof($getUser)>0) {
                                         <a href="cash_tally"><i><object class="svg-icon" data="svg/cash_tally.svg" type="image/svg+xml"></object></i>Cash Tally</a>
                                     </li>
                                 <?php  } ?>
+                                <?php  if($bank_clearance == 0){ ?>
+                                    <li>
+                                        <a href="bank_clearance"><i><object class="svg-icon" data="svg/bank_clearance.svg" type="image/svg+xml"></object></i>Bank Clearance</a>
+                                    </li>
+                                <?php  } ?>
                             </ul>
                         </div>
                     </li>
@@ -659,4 +666,5 @@ $concern_solution = '';
 $concern_feedback = '';
 $accountsmodule = '';
 $cash_tally = '';
+$bank_clearance = '';
 ?>
