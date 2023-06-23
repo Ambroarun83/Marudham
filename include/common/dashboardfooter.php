@@ -1052,6 +1052,10 @@ if($current_page == 'cash_tally') { ?>
 if($current_page == 'bank_clearance') { ?>
     <script src="js/bank_clearance.js"></script>
     <?php }
+
+if($current_page == 'edit_bank_clearance') { ?>
+    <script src="js/edit_bank_clearance.js"></script>
+    <?php }
 ?>
 
 <script src="js/logincreation.js"></script>

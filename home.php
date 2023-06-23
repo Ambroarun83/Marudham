@@ -347,6 +347,10 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'bank_clearance') { ?>
 			<?php include "include/templates/bank_clearance.php" ?>
 			<?php } ?>
+			
+			<?php if($current_page == 'edit_bank_clearance') { ?>
+			<?php include "include/templates/edit_bank_clearance.php" ?>
+			<?php } ?>
 
 		</div>
 		<!-- Page content end -->
