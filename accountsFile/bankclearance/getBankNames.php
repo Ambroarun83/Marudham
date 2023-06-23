@@ -7,7 +7,7 @@ include("../../ajaxconfig.php");
 $i=0;
 $records = array();
 
-$qry = $con->query("SELECT bank_details from `user` where `user_id` = $user_id ");
+$qry = $con->query("SELECT bank_details from `user` where `user_id` = '$user_id' ");
 $values = $qry->fetch_assoc()['bank_details'];
 
 if($values != ''){

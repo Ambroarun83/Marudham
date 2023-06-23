@@ -6,6 +6,8 @@ include("../../ajaxconfig.php");
 
 $bank_id = $_POST['bank_id']; // bank id selected in upload modal
 
+$message = '';
+
 require_once('../../vendor/csvreader/php-excel-reader/excel_reader2.php');
 require_once('../../vendor/csvreader/SpreadsheetReader.php');
 if(isset($_FILES["file"]["type"])){
@@ -41,7 +43,6 @@ if(isset($_FILES["file"]["type"])){
                         }
                     }
 
-
                     
                     $narration = "";
                     if(isset($Row[1])) {
@@ -68,23 +69,24 @@ if(isset($_FILES["file"]["type"])){
                         $balance = mysqli_real_escape_string($con,$Row[5]); 
                     }
                     
-                    
+    
                     if($i==0 && $trans_date != "" && $trans_id != "" )
                     { 
-                        $insert=$con->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
-                        VALUES ('$bank_id','$trans_date','$narration','$trans_id','$credit','$debit','$balance','$user_id',now() )");
+                        $qry=$con->query("SELECT trans_date from bank_stmt where bank_id = '$bank_id' and date(trans_date) = date('$trans_date') and insert_login_id = '$user_id' and created_date < now() ");
+                        
+                        if($qry->num_rows == 0 and $message != 1) {
+                            $message = 0; // if date not existing
+                        }
+                        else{
+                            $message = 1; // if transaction date already exist
+                        }
+                        
                     }
                     
                 }
             }
         }
 
-        if($con->affected_rows > 0) {
-            $message = 0; // if successfully inserted
-        }
-        else{
-            $message = 1; // if insert query not working
-        }
     }
 }else{
     $message = 2; //if file is not sent

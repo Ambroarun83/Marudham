@@ -40,8 +40,6 @@ if(isset($_FILES["file"]["type"])){
                             $trans_date = $date->format('Y-m-d');
                         }
                     }
-
-
                     
                     $narration = "";
                     if(isset($Row[1])) {
@@ -68,18 +66,30 @@ if(isset($_FILES["file"]["type"])){
                         $balance = mysqli_real_escape_string($con,$Row[5]); 
                     }
                     
-                    
+    
                     if($i==0 && $trans_date != "" && $trans_id != "" )
                     { 
+                        //insert row of new transactions
                         $insert=$con->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
                         VALUES ('$bank_id','$trans_date','$narration','$trans_id','$credit','$debit','$balance','$user_id',now() )");
+                        $rowaff = $con->affected_rows;// to get affected rows of insert query
+                        $last_id = $con->insert_id;// to get last inserted id of insert query
+                        
+                        $qry=$con->query("SELECT trans_date from bank_stmt where bank_id = '$bank_id' and trans_date = '$trans_date' and insert_login_id = '$user_id' and id != '$last_id' ");
+                        //checking whether the date is already inserted by this user and excluding the data which is inserted now thru excel file
+                        
+                        if($qry->num_rows > 0) {//delete row if transaction date is already exist
+                            $qry1 = $con->query("DELETE From bank_stmt where bank_id = '$bank_id' and trans_date = '$trans_date' and created_date < now() and insert_login_id = '$user_id' and id != '$last_id' ");
+                            // used less than created date because, have to delete only previous entires and omitting last inserted id to avoid conflicts
+                        }
+
                     }
                     
                 }
             }
         }
 
-        if($con->affected_rows > 0) {
+        if($rowaff > 0) {
             $message = 0; // if successfully inserted
         }
         else{

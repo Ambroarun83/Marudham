@@ -2599,6 +2599,13 @@ function bexpenseModalBtnClick(){
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
                         <div class="form-group">
+                            <label for="trans_id_bexp">Transaction ID</label><span class='text-danger'>&nbsp;*</span>
+                            <input type='number' id="trans_id_bexp" name="trans_id_bexp" class="form-control" placeholder="Enter Transaction ID">
+                            <span id='trans_id_bexpCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+                        <div class="form-group">
                             <label for="rec_per_bexp">Receive Person</label><span class='text-danger'>&nbsp;*</span>
                             <input type='text' id="rec_per_bexp" name="rec_per_bexp" class="form-control" placeholder="Enter Receive Person">
                             <span id='rec_per_bexpCheck' class="text-danger" style="display:none">Please Enter Receive Person</span>
@@ -2624,9 +2631,8 @@ function bexpenseModalBtnClick(){
                             <input type="file" id="upd_bexp" name="upd_bexp" class="form-control" >
                         </div>
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                        <div class="text-center">
+                        <div class="text-left">
                             <label style="visibility:hidden"></label><br>
                             <input type="button" id="submit_bexp" name="submit_bexp" class="btn btn-primary" value="Submit">
                         </div>
@@ -2680,7 +2686,7 @@ function bexpenseModalBtnClick(){
                     if(bexpenseValidation() == 0){
     
                         var user_id = $('#user_id_bexp').val();var username = $('#username_bexp').val();var usertype = $('#usertype_bexp').val();var ref_code = $('#ref_code_bexp').val();var cat_bexp = $('#cat_bexp').val();
-                        var bank_id = $('#bank_id_bexp').val();var part_bexp = $('#part_bexp').val();var vou_id_bexp = $('#vou_id_bexp').val();var rec_per_bexp = $('#rec_per_bexp').val();var remark_bexp = $('#remark_bexp').val();
+                        var bank_id = $('#bank_id_bexp').val();var part_bexp = $('#part_bexp').val();var vou_id_bexp = $('#vou_id_bexp').val();var trans_id_bexp = $('#trans_id_bexp').val();var rec_per_bexp = $('#rec_per_bexp').val();var remark_bexp = $('#remark_bexp').val();
                         var amt_bexp = $('#amt_bexp').val();var upd_bexp = $('#upd_bexp')[0].files[0];var op_date = $('#op_date').text();
                         
                         var upload = $("#upd_bexp")[0];
@@ -2696,6 +2702,7 @@ function bexpenseModalBtnClick(){
                         formData.append('cat', cat_bexp);
                         formData.append('part', part_bexp);
                         formData.append('vou_id', vou_id_bexp);
+                        formData.append('trans_id', trans_id_bexp);
                         formData.append('rec_per', rec_per_bexp);
                         formData.append('remark', remark_bexp);
                         formData.append('amt', amt_bexp);
@@ -2739,7 +2746,7 @@ function bexpenseModalBtnClick(){
 
 // Validation for bank expenses
 function bexpenseValidation(){
-    var cat_bexp = $('#cat_bexp').val();var part_bexp = $('#part_bexp').val();var vou_id_bexp = $('#vou_id_bexp').val();var rec_per_bexp = $('#rec_per_bexp').val();
+    var cat_bexp = $('#cat_bexp').val();var part_bexp = $('#part_bexp').val();var trans_id_bexp = $('#trans_id_bexp').val();var vou_id_bexp = $('#vou_id_bexp').val();var rec_per_bexp = $('#rec_per_bexp').val();
     var remark_bexp = $('#remark_bexp').val();var amt_bexp = $('#amt_bexp').val();
     var response = 0;
 
@@ -2756,6 +2763,7 @@ function bexpenseValidation(){
     validateField(cat_bexp, '#cat_bexpCheck');
     validateField(part_bexp, '#part_bexpCheck');
     validateField(vou_id_bexp, '#vou_id_bexpCheck');
+    validateField(trans_id_bexp, '#trans_id_bexpCheck');
     validateField(rec_per_bexp, '#rec_per_bexpCheck');
     validateField(remark_bexp, '#remark_bexpCheck');
     validateField(amt_bexp, '#amt_bexpCheck');

@@ -13,6 +13,7 @@ $bank_id = $_POST['bank_id'];
 $cat = $_POST['cat'];
 $part = $_POST['part'];
 $vou_id = $_POST['vou_id'];
+$trans_id = $_POST['trans_id'];
 $rec_per = $_POST['rec_per'];
 $remark = $_POST['remark'];
 $amt = $_POST['amt'];
@@ -63,8 +64,8 @@ else
 
 
 
-$qry = $con->query("INSERT INTO `ct_db_bexpense`(`username`, `usertype`,`ref_code`,`bank_id`, `cat`, `part`, `vou_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `created_date`) 
-VALUES ('$username','$usertype','$ref_code','$bank_id','$cat','$part','$vou_id','$rec_per','$remark','$amt','$upd','$user_id','$op_date')");
+$qry = $con->query("INSERT INTO `ct_db_bexpense`(`username`, `usertype`,`ref_code`,`bank_id`, `cat`, `part`, `vou_id`,`trans_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `created_date`) 
+VALUES ('$username','$usertype','$ref_code','$bank_id','$cat','$part','$vou_id','$trans_id','$rec_per','$remark','$amt','$upd','$user_id','$op_date')");
 
 
 if($qry){
