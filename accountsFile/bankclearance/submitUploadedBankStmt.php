@@ -26,21 +26,45 @@ if(isset($_FILES["file"]["type"])){
                 if($Row[0] != "Date"){
                     
 
+                    // $trans_date = "";
+                    // if (isset($Row[0])) {
+                    //     $excel_date = $Row[0];
+                    //     $date = date_create_from_format('!d/m/y', $excel_date);
+                    //     if ($date === false) {
+                    //         $date = date_create_from_format('!m/d/y', $excel_date);
+                    //     }
+                    //     if ($date === false) {
+                    //         $date = date_create_from_format('!m-d-y', $excel_date);
+                    //     }
+                    //     if ($date !== false) {
+                    //         $trans_date = $date->format('Y-m-d');
+                    //     }
+                    // }
                     $trans_date = "";
                     if (isset($Row[0])) {
                         $excel_date = $Row[0];
-                        $date = date_create_from_format('!d/m/y', $excel_date);
-                        if ($date === false) {
-                            $date = date_create_from_format('!m/d/y', $excel_date);
-                        }
-                        if ($date === false) {
-                            $date = date_create_from_format('!m-d-y', $excel_date);
-                        }
-                        if ($date !== false) {
-                            $trans_date = $date->format('Y-m-d');
+                        
+                        $date_formats = array(
+                            'Y-m-d',        // Year-Month-Day
+                            'd/m/Y',        // Day/Month/Year
+                            'm/d/Y',        // Month/Day/Year
+                            'd-m-Y',        // Day-Month-Year
+                            'm-d-Y',        // Month-Day-Year
+                            'Y/m/d',        // Year/Month/Day
+                            'd-m-y',        // Day-Month-Year (short year format)
+                            'm-d-y'         // Month-Day-Year (short year format)
+                        );
+
+                        foreach ($date_formats as $date_format) {
+                            $date = date_create_from_format($date_format, $excel_date);
+                            if ($date !== false) {
+                                $trans_date = $date->format('Y-m-d');
+                                break;
+                            }
                         }
                     }
 
+                        // echo $trans_date;
 
                     
                     $narration = "";

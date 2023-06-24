@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 23, 2023 at 03:10 PM
+-- Generation Time: Jun 24, 2023 at 12:42 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -570,6 +570,7 @@ CREATE TABLE `bank_stmt` (
   `credit` varchar(255) DEFAULT NULL,
   `debit` varchar(255) DEFAULT NULL,
   `balance` varchar(255) DEFAULT NULL,
+  `clr_status` varchar(10) NOT NULL DEFAULT '0' COMMENT '0 - unclear,1-cleared',
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
@@ -580,14 +581,56 @@ CREATE TABLE `bank_stmt` (
 -- Dumping data for table `bank_stmt`
 --
 
-INSERT INTO `bank_stmt` (`id`, `bank_id`, `trans_date`, `narration`, `trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(7, '5', '2023-06-13', 'UPI-RABI JEROME-RABIJEROME@YBL-KVBL0001645-316479469475-UPI', '316479469475', '', '26', '8340.22', '21', NULL, '2023-06-23 16:26:50', '2023-06-23 16:26:50'),
-(8, '5', '2023-06-13', 'UPI-LOURDS RICHARD JEEVI-8838819752@PAYTM-PYTM0123456-353048295712-NA', '353048295712', '', '17', '8323.22', '21', NULL, '2023-06-23 16:26:50', '2023-06-23 16:26:50'),
-(9, '5', '2023-06-14', 'UPI-LOURDS RICHARD JEEVI-8838819752@PAYTM-PYTM0123456-353144612550-NA', '353144612550', '28.66', '', '8351.88', '21', NULL, '2023-06-23 16:26:50', '2023-06-23 16:26:50'),
-(10, '5', '2023-06-16', 'UPI-IRCTC UTS-PAYTM-8796946@PAYTM-PYTM0123456-353339205430-OID806160394255456', '353339205430', '', '60', '8291.88', '21', NULL, '2023-06-23 16:26:50', '2023-06-23 16:26:50'),
-(11, '5', '2023-06-17', 'UPI-SUBRAMANI S-Q459460511@YBL-YESB0YBLUPI-316809561121-NA', '316809561121', '', '15', '8276.88', '21', NULL, '2023-06-23 16:26:50', '2023-06-23 16:26:50'),
-(12, '5', '2023-06-18', 'UPI-EURONETGPAY-EURONETGPAY.PAY@ICICI-ICIC0DC0099-316927310713-UPI', '316927310713', '', '269', '8007.88', '21', NULL, '2023-06-23 16:26:50', '2023-06-23 16:26:50'),
-(13, '3', '2023-06-23', 'Check', '98798654654', '100', '', '100', '28', NULL, '2023-06-23 16:34:11', '2023-06-23 16:34:11');
+INSERT INTO `bank_stmt` (`id`, `bank_id`, `trans_date`, `narration`, `trans_id`, `credit`, `debit`, `balance`, `clr_status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '5', '2022-04-01', 'Amount Debited\nTransaction ID : M576817', '2178104485', '', '2.66', '2.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(2, '5', '2022-04-01', 'Money Received using UPI\nReceived from: ANITHA\nVPA: sanitha489-2@okhdfcbank\nTransaction ID: S16511698\nReference Number: 209194580335', '209194580335', '102.66', ' ', '102.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(3, '5', '2022-04-01', 'Paid using your Bank Account\nPaid successfully at Add Money to Wallet\nFrom Account Number 918838819752\nTransaction ID : M7323877', '2180489040', '', '72.66', '72.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(4, '5', '2022-04-01', 'Paid using your Bank Account\nPaid successfully at Add Money to Wallet\nFrom Account Number 918838819752\nTransaction ID : M7377286', '2180514087', '', '32.66', '32.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(5, '5', '2022-04-02', 'Interest Received\nReceived for the period 01-03-2022 to 31-03-2022\nTransaction ID : M164450\nEarned on Savings account balance', '654651321', '34.66', ' ', '34.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(6, '5', '2022-04-02', 'Money Received using UPI\nReceived from: A ARUL  SELVARAJ\nVPA: 8075989903848@paytm\nTransaction ID: S20204699\nReference Number: 209206920317', '209206920317', '7034.66', ' ', '7034.66', '1', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(7, '5', '2022-04-02', 'Money Sent using UPI\nSent to: Whizdm Innovations Pvt Ltd\nVPA: whizdminnovationspvtltd.rzp@sbi\nTransaction ID: S20603859\nReference Number: 209207361785', '209207361785', '', '3035.66', '3035.66', '1', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(8, '5', '2022-04-02', 'Paid using your Bank Account\nPaid successfully at Paytm Financial Services\nFrom Account Number 918838819752\nTransaction ID : M1006834', '2180889738', '', '150.66', '150.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(9, '5', '2022-04-02', 'Paid using your Bank Account\nPaid successfully at Add Money to Wallet\nFrom Account Number 918838819752\nTransaction ID : M3859975', '2181765223', '', '123.66', '123.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(10, '5', '2022-04-02', 'Money Received using UPI\nReceived from: MS MARIA SELVA JEELIA\nVPA: jeeliag65943@okhdfcbank\nTransaction ID: S34911462\nReference Number: 209212036409', '209212036409', '473.66', ' ', '473.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(11, '5', '2022-04-02', 'Money Sent using UPI\nSent to: Sapphire Toys P Ltd\nVPA: SAPPHIRETOYSPLTD.28223695@hdfcbank\nTransaction ID: S35023127\nReference Number: 209266013362', '209266013362', '', '148.66', '148.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(12, '5', '2022-04-02', 'Money Sent using UPI\nSent to: Sapphire Toys P Ltd\nVPA: SAPPHIRETOYSPLTD.28223695@hdfcbank\nTransaction ID: S35040670\nReference Number: 209266084388', '209266084388', '', '143.66', '143.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(13, '5', '2022-04-02', 'Money Sent using UPI\nSent to: ANITHA S\nVPA: sanitha489-1@okicici\nTransaction ID: S35444734\nReference Number: 209233997070', '209233997070', '', '43.66', '43.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(14, '5', '2022-04-03', 'Paid using your Bank Account\nPaid successfully at Add Money to Wallet\nFrom Account Number 918838819752\nTransaction ID : M2959819', '2184285586', '', '13.66', '13.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(15, '5', '2022-04-03', 'Paid using your Bank Account\nPaid successfully at Sunitha\nFrom Account Number 918838819752\nTransaction ID : M2970033', '2184289649', '', '0.66', '0.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(16, '5', '2022-04-04', 'Money Received using UPI\nReceived from: MS MARIA SELVA JEELIA\nVPA: jeeliag65943@okhdfcbank\nTransaction ID: S69136903\nReference Number: 209446344493', '209446344493', '650.66', ' ', '650.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(17, '5', '2022-04-04', 'Money Sent using UPI\nSent to: Mr Devaraju M Mallegowda\nVPA: 9448209454@ybl\nTransaction ID: S70100138\nReference Number: 209457225159', '209457225159', '', '20.66', '20.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(18, '5', '2022-04-04', 'Paid using your Bank Account\nPaid successfully at GANPATH M\nFrom Account Number 918838819752\nTransaction ID : M6718237', '2188233956', '', '5.66', '5.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(19, '5', '2022-04-05', 'Money Received using UPI\nReceived from: MS MARIA SELVA JEELIA\nVPA: jeeliag65943@okhdfcbank\nTransaction ID: S92274716\nReference Number: 209569433948', '209569433948', '435.66', ' ', '435.66', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(20, '5', '2022-04-05', 'Money Sent using UPI\nSent to: Zomato Ltd\nVPA: zomato-order@paytm\nTransaction ID: S92305149\nReference Number: 209573064749', '209573064749', '', '11.53', '11.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(21, '5', '2022-04-05', 'Money Received using UPI\nReceived from: SYED MOHAMMED AZHAR\nVPA: 7373395467@paytm\nTransaction ID: S94366133\nReference Number: 209581586510', '209581586510', '61.53', ' ', '61.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(22, '5', '2022-04-05', 'Paid using your Bank Account\nPaid successfully at GANPATH M\nFrom Account Number 918838819752\nTransaction ID : M6767680', '2190827131', '', '31.53', '31.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(23, '5', '2022-04-06', 'Paid using your Bank Account\nPaid successfully at GANPATH M\nFrom Account Number 918838819752\nTransaction ID : M6094968', '2193250619', '', '30.53', '30.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(24, '5', '2022-04-06', 'Paid using your Bank Account\nPaid successfully at GANPATH M\nFrom Account Number 918838819752\nTransaction ID : M6101951', '2193253732', '', '16.53', '16.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(25, '5', '2022-04-06', 'Money Received using UPI\nReceived from: MS MARIA SELVA JEELIA\nVPA: jeeliag65943@okhdfcbank\nTransaction ID: S14451500\nReference Number: 209690151994', '209690151994', '56.53', ' ', '56.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(26, '5', '2022-04-06', 'Paid using your Bank Account\nPaid successfully at NAVAS C K\nFrom Account Number 918838819752\nTransaction ID : M6255340', '2193322419', '', '16.53', '16.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(27, '5', '2022-04-07', 'Paid using your Bank Account\nPaid successfully at Add Money to Wallet\nFrom Account Number 918838819752\nTransaction ID : M3541998', '2194841035', '', '1.53', '1.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(28, '5', '2022-04-07', 'Money Received using UPI\nReceived from: MS MARIA SELVA JEELIA\nVPA: jeeliag65943@okhdfcbank\nTransaction ID: S31976896\nReference Number: 209706263000', '209706263000', '51.53', ' ', '51.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(29, '5', '2022-04-07', 'Money Sent using UPI\nSent to: Roppen Transportation Service Pvt Ltd\nVPA: roppentransportationservicepvtltd.rzp@sbi\nTransaction ID: S32353713\nReference Number: 209760330257', '209760330257', '', '10.53', '10.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(30, '5', '2022-04-08', 'Paid using your Bank Account\nPaid successfully at Add Money to Wallet\nFrom Account Number 918838819752\nTransaction ID : M1589026', '2196742685', '', '0.53', '0.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(31, '5', '2022-04-08', 'Money Received using UPI\nReceived from: MS MARIA SELVA JEELIA\nVPA: jeeliag65943@okhdfcbank\nTransaction ID: S53248850\nReference Number: 209826819016', '209826819016', '600.53', ' ', '600.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(32, '5', '2022-04-08', 'Paid online using debit card\nPaid successfully at SWIGGY                 \nTransaction ID : S53502976\nReference No. : 209820092779\nPaid using Digital Debit Card', '209820092779', '', '598.53', '598.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(33, '5', '2022-04-08', 'Money Sent using UPI\nSent to: SWIGGY\nVPA: upiswiggy@icici\nTransaction ID: S54368113\nReference Number: 209844770490', '209844770490', '', '146.53', '146.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(34, '5', '2022-04-09', 'Paid using your Bank Account\nPaid successfully at Paytm Add Money\nFrom Account Number 918838819752\nTransaction ID : M3270322', '2200050988', '', '134.53', '134.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(35, '5', '2022-04-09', 'Paid using your Bank Account\nPaid successfully at Tej bhan pan shop\nFrom Account Number 918838819752\nTransaction ID : M3286245', '2200058043', '', '104.53', '104.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(36, '5', '2022-04-09', 'Refund for online payment\nTransaction ID : S70459735\nReference No : 209820092779\nMoney added back to your account as refund of debit card online transaction', '209820092779', '106.53', ' ', '106.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(37, '5', '2022-04-09', 'Paid using your Bank Account\nPaid successfully at Paytm Add Money\nFrom Account Number 918838819752\nTransaction ID : M6023047', '2201291527', '', '21.53', '21.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(38, '5', '2022-04-10', 'Paid using your Bank Account\nPaid successfully at Tej bhan pan shop\nFrom Account Number 918838819752\nTransaction ID : M6053787', '2203938803', '', '6.53', '6.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(39, '5', '2022-04-11', 'Money Received using UPI\nReceived from: MS MARIA SELVA JEELIA\nVPA: jeeliag65943@okhdfcbank\nTransaction ID: S99222924\nReference Number: 210170251355', '210170251355', '36.53', ' ', '36.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(40, '5', '2022-04-11', 'Money Sent using UPI\nSent to: Roppen Transportation Service Pvt Ltd\nVPA: roppen.razorpay@hdfcbank\nTransaction ID: S99245038\nReference Number: 210119659638', '210119659638', '', '6.53', '6.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(41, '5', '2022-04-11', 'Money Received using UPI\nReceived from: A ARUL  SELVARAJ\nVPA: 8075989903848@paytm\nTransaction ID: S6404868\nReference Number: 210146679678', '210146679678', '106.53', ' ', '106.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(42, '5', '2022-04-11', 'Paid using your Bank Account\nPaid successfully at Paytm Add Money\nFrom Account Number 918838819752\nTransaction ID : M4583136', '2205725635', '', '66.53', '66.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(43, '5', '2022-04-11', 'Paid using your Bank Account\nPaid successfully at Paytm Add Money\nFrom Account Number 918838819752\nTransaction ID : M4613183', '2205737680', '', '51.53', '51.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(44, '5', '2022-04-12', 'Paid using your Bank Account\nPaid successfully at Paytm Add Money\nFrom Account Number 918838819752\nTransaction ID : M2764133', '2207692142', '', '21.53', '21.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(45, '5', '2022-04-13', 'Paid using your Bank Account\nPaid successfully at Tej bhan pan shop\nFrom Account Number 918838819752\nTransaction ID : M2239818', '2210164482', '', '6.53', '6.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(46, '5', '2022-04-13', 'Money Received using UPI\nReceived from: ANITHA S\nVPA: sanitha489-1@okicici\nTransaction ID: S51407563\nReference Number: 210320338222', '210320338222', '356.53', ' ', '356.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(47, '5', '2022-04-13', 'Money Sent using UPI\nSent to: Xiaomi Communications and Logistics India Private Limited\nVPA: mi.payu@hdfcbank\nTransaction ID: S51478387\nReference Number: 210328683130', '210328683130', '', '7.53', '7.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(48, '5', '2022-04-14', 'Money Received using UPI\nReceived from: ANITHA S\nVPA: sanitha489-1@okicici\nTransaction ID: S55833615\nReference Number: 210484456091', '210484456091', '67.53', ' ', '67.53', '0', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03'),
+(49, '5', '2022-04-14', 'Paid using your Bank Account\nPaid successfully at NAVAS C K\nFrom Account Number 918838819752\nTransaction ID : M1073500', '2212436632', '', '15000', '15000', '1', '21', NULL, '2023-06-24 13:02:03', '2023-06-24 13:02:03');
 
 -- --------------------------------------------------------
 
@@ -669,13 +712,6 @@ CREATE TABLE `cash_tally` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `cash_tally`
---
-
-INSERT INTO `cash_tally` (`id`, `op_hand`, `op_date`, `op_bank`, `op_agent`, `opening_bal`, `cl_date`, `cl_hand`, `cl_bank`, `cl_agent`, `closing_bal`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '0', '2023-06-19', '0', '0', '0', '2023-06-19', '-4000', '0,25000', '-83664', '-62664', '21', '', '2023-06-20 15:54:12', '2023-06-20 15:54:05');
 
 -- --------------------------------------------------------
 
@@ -1071,9 +1107,7 @@ CREATE TABLE `ct_bank_collection` (
 --
 
 INSERT INTO `ct_bank_collection` (`id`, `bank_id`, `credited_amt`, `insert_login_id`, `created_date`, `updated_date`) VALUES
-(5, '5', '124556', '21', '2023-06-06 15:13:09', '2023-06-06 15:13:09'),
-(6, '6', '23435', '21', '2023-06-06 00:00:00', '2023-06-06 15:13:18'),
-(8, '5', '15000', '21', '2023-06-20 00:00:00', '2023-06-21 14:45:16');
+(10, '5', '102.66', '21', '2023-06-24 00:00:00', '2023-06-24 11:38:40');
 
 -- --------------------------------------------------------
 
@@ -1100,9 +1134,7 @@ CREATE TABLE `ct_cr_bag` (
 --
 
 INSERT INTO `ct_cr_bag` (`id`, `ag_id`, `bank_id`, `ref_code`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(4, '28', '6', 'AGE-100006', '654654', 'Check', '5000', '21', NULL, '2023-05-19 18:59:17', '2023-06-19 18:59:17'),
-(6, '16', '6', 'AGE-100010', '65465', 'adfwerwe', '12000', '21', NULL, '2023-06-20 09:41:08', '2023-06-20 09:41:08'),
-(7, '28', '5', 'AGE-100012', '654654', 'Cadsfh', '13000', '21', NULL, '2023-06-20 11:28:48', '2023-06-20 11:28:48');
+(1, '28', '5', 'AGE-100001', '209206920317', 'Money Received using UPI Received from: A ARUL  SELVARAJ ', '7034.66', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:38:08');
 
 -- --------------------------------------------------------
 
@@ -1124,15 +1156,6 @@ CREATE TABLE `ct_cr_bank_withdraw` (
   `created_date` datetime DEFAULT NULL,
   `updated_dae` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ct_cr_bank_withdraw`
---
-
-INSERT INTO `ct_cr_bank_withdraw` (`id`, `db_ref_id`, `ref_code`, `trans_id`, `from_bank_id`, `cheque_no`, `amt`, `remark`, `insert_login_id`, `update_login_id`, `created_date`, `updated_dae`) VALUES
-(10, '2', 'WD-100002', '24235345', '5', '578679867', '6842', 'Received on 0906', '21', NULL, '2023-06-09 16:25:05', '2023-06-09 16:25:05'),
-(11, '5', 'WD-100004', '36545675467', '6', '35672346234', '45200', 'Received on 0906', '21', NULL, '2023-06-09 16:25:08', '2023-06-09 16:25:08'),
-(12, '10', 'WD-100008', '56465', '5', '78979878', '1000', 'Got it', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 15:06:09');
 
 -- --------------------------------------------------------
 
@@ -1161,7 +1184,7 @@ CREATE TABLE `ct_cr_bdeposit` (
 --
 
 INSERT INTO `ct_cr_bdeposit` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(6, '5', 'DEP-100005', '353144612550', '8', 'Pondicherry', 'pondy', 'asgd', '500', '21', NULL, '2023-06-20 19:59:40', '2023-06-20 19:59:40');
+(1, '5', 'DEP-100001', '209194580335', '8', 'Pondicherry', 'pondy', 'Due Received from: ANITHA', '102.66', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:39:29');
 
 -- --------------------------------------------------------
 
@@ -1185,6 +1208,13 @@ CREATE TABLE `ct_cr_bel` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `ct_cr_bel`
+--
+
+INSERT INTO `ct_cr_bel` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '5', 'EL-100001', '209212036409', '5', 'Karur', 'karur', 'Received from: MS MARIA SELVA JEELIA', '473.66', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:40:07');
+
 -- --------------------------------------------------------
 
 --
@@ -1207,15 +1237,6 @@ CREATE TABLE `ct_cr_bexchange` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ct_cr_bexchange`
---
-
-INSERT INTO `ct_cr_bexchange` (`id`, `db_ref_id`, `from_bank_id`, `to_bank_id`, `from_user_id`, `to_user_id`, `ref_code`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(5, '6', '6', '5', '21', '21', 'EXC-100002', '2432', 'asf', '65410', '21', NULL, '2023-06-12 19:01:48', '2023-06-12 19:01:48'),
-(6, '4', '5', '6', '21', '21', 'EXC-100003', '34457457', 'steryrty', '31354', '21', NULL, '2023-06-12 19:07:05', '2023-06-12 19:07:05'),
-(7, '8', '6', '5', '21', '21', 'EXC-100004', '5454', 'Got it', '1000', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 15:33:02');
 
 -- --------------------------------------------------------
 
@@ -1244,9 +1265,7 @@ CREATE TABLE `ct_cr_binvest` (
 --
 
 INSERT INTO `ct_cr_binvest` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(2, '3', 'INV-100001', '98798654654', '6', 'Karur', 'palladam', 'Checkkkkk', '6000', '28', NULL, '2023-06-16 16:00:33', '2023-06-16 16:00:33'),
-(3, '6', 'INV-100003', '798987', '8', 'Pondicherry', 'pondy', 'poke', '3000', '21', NULL, '2023-06-16 16:50:53', '2023-06-16 16:50:53'),
-(4, '6', 'INV-100004', '234', '9', 'Chennai', 'Chennai', 'asdf', '5000', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 16:14:25');
+(1, '5', 'INV-100001', '210320338222', '9', 'Chennai', 'Chennai', 'Money Received using UPI VPA: sanitha489-1@okicici ', '356.53', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:40:38');
 
 -- --------------------------------------------------------
 
@@ -1273,10 +1292,8 @@ CREATE TABLE `ct_cr_boti` (
 --
 
 INSERT INTO `ct_cr_boti` (`id`, `ref_code`, `to_bank_id`, `category`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(4, 'OTI-100002', '5', 'CheckLVB', '498797', 'lvb check', '1500', '21', NULL, '2023-06-13 14:46:48', '2023-06-13 14:46:48'),
-(5, 'OTI-100003', '6', 'Check KVB', '13256546', 'kvb remark', '3501', '21', NULL, '2023-06-13 14:47:39', '2023-06-13 14:47:39'),
-(7, 'OTI-100005', '5', 'asdf', '234', 'asd', '234', '21', NULL, '2023-06-20 17:47:41', '2023-06-20 17:47:41'),
-(8, 'OTI-100006', '6', 'Date check', '1354654', 'Check', '500', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 15:40:32');
+(1, 'OTI-100001', '5', 'Old papers', '209826819016', 'Old papers', '600.53', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:41:06'),
+(2, 'OTI-100002', '5', 'news paper', '209690151994', 'news paper', '56.53', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:41:31');
 
 -- --------------------------------------------------------
 
@@ -1303,9 +1320,7 @@ CREATE TABLE `ct_cr_cash_deposit` (
 --
 
 INSERT INTO `ct_cr_cash_deposit` (`id`, `db_ref_id`, `to_bank_id`, `location`, `amt`, `ref_code`, `trans_id`, `remark`, `insert_login_id`, `created_date`, `updated_date`) VALUES
-(15, '9', '5', 'Puducherry', '60000', 'DEP-100001', '523463465', 'Received on 0906 Check one', '21', '2023-06-09 16:25:33', '2023-06-09 16:25:33'),
-(16, '10', '6', 'Karur', '25000', 'DEP-100002', '2543456', 'Received on 0906 Check two', '21', '2023-06-19 16:25:44', '2023-06-09 16:25:44'),
-(19, '16', '5', 'Karur', '1000', 'DEP-100003', '51651', 'got it', '21', '2023-06-20 00:00:00', '2023-06-21 14:59:55');
+(1, '2', '5', 'karur', '356.53', 'DEP-100001', '210320338222', 'got it', '21', '2023-06-24 00:00:00', '2023-06-24 11:50:27');
 
 -- --------------------------------------------------------
 
@@ -1323,13 +1338,6 @@ CREATE TABLE `ct_cr_hag` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ct_cr_hag`
---
-
-INSERT INTO `ct_cr_hag` (`id`, `ag_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(5, '30', 'jgj', '16000', '28', NULL, '2023-06-21 11:25:22', '2023-06-21 11:25:22');
 
 -- --------------------------------------------------------
 
@@ -1350,14 +1358,6 @@ CREATE TABLE `ct_cr_hdeposit` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `ct_cr_hdeposit`
---
-
-INSERT INTO `ct_cr_hdeposit` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(2, '9', 'Chennai', 'Chennai', 'adkfjh', '7000', '21', NULL, '2023-06-21 10:03:04', '2023-06-21 10:03:04'),
-(3, '8', 'Pondicherry', 'pondy', 'asdg', '500', '21', NULL, '2023-06-21 12:30:05', '2023-06-21 12:30:05');
-
 -- --------------------------------------------------------
 
 --
@@ -1377,13 +1377,6 @@ CREATE TABLE `ct_cr_hel` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `ct_cr_hel`
---
-
-INSERT INTO `ct_cr_hel` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '6', 'Karur', 'palladam', 'Cake', '6000', '21', NULL, '2023-06-16 17:41:43', '2023-06-16 17:41:43');
-
 -- --------------------------------------------------------
 
 --
@@ -1401,17 +1394,6 @@ CREATE TABLE `ct_cr_hexchange` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ct_cr_hexchange`
---
-
-INSERT INTO `ct_cr_hexchange` (`id`, `db_ref_id`, `to_user_id`, `from_user_id`, `remark`, `amt`, `insert_login_id`, `created_date`, `updated_date`) VALUES
-(4, '1', '21', '28', 'asdfasdf', '16543', '21', '2023-06-12 19:01:31', '2023-06-12 19:01:31'),
-(5, '5', '21', '28', 'asdfasdf', '75000', '21', '2023-06-12 19:01:35', '2023-06-12 19:01:35'),
-(9, '17', '29', '28', 'Final Remark', '234', '29', '2023-06-13 11:57:02', '2023-06-13 11:57:02'),
-(10, '18', '29', '28', 'Final Remark', '345', '29', '2023-06-13 11:57:35', '2023-06-13 11:57:35'),
-(11, '27', '21', '28', 'got it', '100', '21', '2023-06-20 00:00:00', '2023-06-21 15:25:22');
 
 -- --------------------------------------------------------
 
@@ -1432,18 +1414,6 @@ CREATE TABLE `ct_cr_hinvest` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `ct_cr_hinvest`
---
-
-INSERT INTO `ct_cr_hinvest` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(5, '9', 'Chennai', 'Chennai', 'Own money', '45000', '21', NULL, '2023-06-16 15:13:34', '2023-06-16 15:13:34'),
-(6, '8', 'Pondicherry', 'pondy', 'Check', '2000', '29', NULL, '2023-06-16 15:27:16', '2023-06-16 15:27:16'),
-(7, '5', 'Karur', 'karur', 'Poke', '4500', '21', NULL, '2023-06-16 16:49:55', '2023-06-16 16:49:55'),
-(8, '9', 'Chennai', 'Chennai', 'asdf', '2353', '29', NULL, '2023-06-20 17:46:25', '2023-06-20 17:46:25'),
-(9, '6', 'Karur', 'palladam', 'asdg', '2352', '21', NULL, '2023-06-20 18:11:47', '2023-06-20 18:11:47'),
-(10, '5', 'Karur', 'karur', 'sadf', '5000', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 16:11:11');
-
 -- --------------------------------------------------------
 
 --
@@ -1460,16 +1430,6 @@ CREATE TABLE `ct_cr_hoti` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ct_cr_hoti`
---
-
-INSERT INTO `ct_cr_hoti` (`id`, `category`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(2, 'dfg', 'dg', '345', '21', NULL, '2023-06-13 13:41:55', '2023-06-13 13:41:55'),
-(3, 'Check hand', 'hand remark', '5000', '21', NULL, '2023-06-13 14:47:08', '2023-06-13 14:47:08'),
-(4, 'Paper', 'old papers', '3000', '28', NULL, '2023-06-21 11:26:42', '2023-06-21 11:26:42'),
-(5, 'Date check', 'check', '1000', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 15:37:34');
 
 -- --------------------------------------------------------
 
@@ -1496,9 +1456,7 @@ CREATE TABLE `ct_db_bag` (
 --
 
 INSERT INTO `ct_db_bag` (`id`, `ag_id`, `bank_id`, `ref_code`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(5, '29', '6', 'AGE-100007', '316809561121', 'Acsdj', '8400', '21', NULL, '2023-06-19 18:59:35', '2023-06-19 18:59:35'),
-(7, '16', '5', 'AGE-100011', '316809561121', 'asfsdf', '32000', '21', NULL, '2023-06-20 09:41:24', '2023-06-20 09:41:24'),
-(9, '30', '3', 'AGE-100013', '8976546', 'Check', '5000', '28', NULL, '2023-06-21 00:00:00', '2023-06-21 16:34:38');
+(1, '28', '5', 'AGE-100002', '209207361785', 'Sent to: Whizdm Innovations Pvt Ltd ', '3035.66', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:42:54');
 
 -- --------------------------------------------------------
 
@@ -1524,10 +1482,7 @@ CREATE TABLE `ct_db_bank_deposit` (
 --
 
 INSERT INTO `ct_db_bank_deposit` (`id`, `to_bank_id`, `location`, `remark`, `amount`, `received`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(9, '5', 'Puducherry', 'check one', '60000', 1, '21', NULL, '2023-06-09 18:17:13', '2023-06-07 18:17:13'),
-(10, '6', 'Karur', 'check two', '25000', 1, '21', NULL, '2023-06-09 17:35:29', '2023-06-07 18:17:30'),
-(14, '5', 'asdf', 'sadfasd', '2300', 1, '21', NULL, '2023-06-20 16:20:49', '2023-06-20 16:20:49'),
-(16, '5', 'Karur', '1321', '1000', 1, '21', NULL, '2023-06-20 00:00:00', '2023-06-21 14:54:03');
+(2, '5', 'karur', 'check', '356.53', 1, '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:50:10');
 
 -- --------------------------------------------------------
 
@@ -1556,9 +1511,7 @@ CREATE TABLE `ct_db_bdeposit` (
 --
 
 INSERT INTO `ct_db_bdeposit` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(6, '6', 'DEP-100004', '5654', '8', 'Pondicherry', 'pondy', 'asdf', '4500', '21', NULL, '2023-06-20 17:47:15', '2023-06-20 17:47:15'),
-(7, '6', 'DEP-100006', '545', '5', 'Karur', 'karur', 'sd', '500', '21', NULL, '2023-06-21 11:11:41', '2023-06-21 11:11:41'),
-(8, '5', 'DEP-100007', '31321', '9', 'Chennai', 'Chennai', 'sfsdf', '500', '21', NULL, '2023-06-21 14:50:01', '2023-06-21 14:50:01');
+(1, '5', 'DEP-100002', '209266013362', '6', 'Karur', 'palladam', 'Sent to: Sapphire Toys P Ltd ', '148.66', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:44:49');
 
 -- --------------------------------------------------------
 
@@ -1587,8 +1540,7 @@ CREATE TABLE `ct_db_bel` (
 --
 
 INSERT INTO `ct_db_bel` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(4, '5', 'EL-100002', '969696', '9', 'Chennai', 'Chennai', 'Look', '7800', '21', NULL, '2023-06-16 18:18:29', '2023-06-16 18:18:29'),
-(5, '6', 'EL-100003', '235345', '8', 'Pondicherry', 'pondy', 'gdfgd', '2000', '21', NULL, '2023-06-20 18:16:44', '2023-06-20 18:16:44');
+(1, '5', 'EL-100002', '209266084388', '5', 'Karur', 'karur', 'Sent to: Sapphire Toys P Ltd', '143.66', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:45:24');
 
 -- --------------------------------------------------------
 
@@ -1617,10 +1569,7 @@ CREATE TABLE `ct_db_bexchange` (
 --
 
 INSERT INTO `ct_db_bexchange` (`id`, `ref_code`, `from_acc_id`, `to_bank_id`, `to_user_id`, `trans_id`, `remark`, `amt`, `received`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(4, 'EXD-100002', '5', '6', '21', '234345546', 'check for kvb', '31354', 0, '21', NULL, '2023-06-12 16:48:45', '2023-06-12 16:48:45'),
-(5, 'EXD-100003', '6', '3', '28', '24235345', 'Check to other Branch', '45650', 0, '21', NULL, '2023-06-12 16:49:28', '2023-06-12 16:49:28'),
-(6, 'EXD-100004', '6', '5', '21', '234235', 'lvb check', '65410', 0, '21', NULL, '2023-06-12 17:17:08', '2023-06-12 17:17:08'),
-(8, 'EXD-100005', '6', '5', '21', '1321321', 'Sending', '1000', 0, '21', NULL, '2023-06-20 00:00:00', '2023-06-21 15:27:38');
+(1, 'EXD-100001', '5', '6', '21', '2184285586', 'Paid using your Bank Account Paid successfully at Add Money to Wallet', '13.66', 1, '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:46:05');
 
 -- --------------------------------------------------------
 
@@ -1653,8 +1602,7 @@ CREATE TABLE `ct_db_bexpense` (
 --
 
 INSERT INTO `ct_db_bexpense` (`id`, `username`, `usertype`, `ref_code`, `bank_id`, `cat`, `part`, `vou_id`, `trans_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(5, 'Kumar', 'Staff', 'EXP-100004', '5', '1', 'Oil', '4654654631', '316927310713', 'kumari', 'nallennai', '269', '', '21', NULL, '2023-06-15 16:45:41', '2023-06-15 16:45:41'),
-(7, 'Kumar', 'Staff', 'EXP-100005', '5', '7', 'Arunai', '564654', '98798654', 'Kumar', 'check', '10000', '', '21', NULL, '2023-06-20 00:00:00', '2023-06-23 18:13:23');
+(1, 'Kumar', 'Staff', 'EXP-100001', '5', '15', 'common', '165464654', '2188233956', 'Kumar', 'Kumar', '5.66', '', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:46:31');
 
 -- --------------------------------------------------------
 
@@ -1683,7 +1631,7 @@ CREATE TABLE `ct_db_binvest` (
 --
 
 INSERT INTO `ct_db_binvest` (`id`, `bank_id`, `ref_code`, `trans_id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(3, '6', 'INV-100005', '235', '6', 'Karur', 'palladam', 'dfg', '100', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 16:15:14');
+(1, '5', 'INV-100002', '2203938803', '9', 'Chennai', 'Chennai', 'Paid successfully at Tej bhan ', '6.53', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:47:09');
 
 -- --------------------------------------------------------
 
@@ -1707,6 +1655,13 @@ CREATE TABLE `ct_db_bissued` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_bissued`
+--
+
+INSERT INTO `ct_db_bissued` (`id`, `ref_code`, `li_id`, `li_user_id`, `li_bank_id`, `username`, `usertype`, `cheque_no`, `trans_id`, `netcash`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'ISS-100001', '15', '28', '5', 'Chithambaram', 'Director', '64654654', '2212436632', '15000', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:48:01');
 
 -- --------------------------------------------------------
 
@@ -1734,10 +1689,7 @@ CREATE TABLE `ct_db_cash_withdraw` (
 --
 
 INSERT INTO `ct_db_cash_withdraw` (`id`, `ref_code`, `trans_id`, `from_bank_id`, `cheque_no`, `remark`, `amt`, `received`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(2, 'WD-100002', '24235345', '5', '578679867', 'Check', '6842', '0', '21', NULL, '2023-06-08 17:36:09', '2023-06-08 17:36:09'),
-(5, 'WD-100004', '36545675467', '6', '35672346234', 'bank id check', '45200', '0', '21', NULL, '2023-06-08 17:42:16', '2023-06-08 17:42:16'),
-(8, 'WD-100007', '65464', '5', '654654', 'askdfl', '5000', '1', '21', NULL, '2023-06-21 10:03:29', '2023-06-21 10:03:29'),
-(10, 'WD-100008', '56465', '5', '78979878', 'Sending', '1000', '0', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 15:03:46');
+(1, 'WD-100001', '209820092779', '5', '209820092779', 'Paid successfully at SIGGW', '598.53', '1', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 11:43:43');
 
 -- --------------------------------------------------------
 
@@ -1761,6 +1713,13 @@ CREATE TABLE `ct_db_exf` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `ct_db_exf`
+--
+
+INSERT INTO `ct_db_exf` (`id`, `username`, `usertype`, `bank_id`, `ucl_ref_code`, `ref_code`, `ucl_trans_id`, `trans_id`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Kumar', 'Staff', '5', 'UCL-100001', 'EXS-100001', '2', '2181765223', 'Check excess fund', '123.66', '21', NULL, '2023-06-24 00:00:00', '2023-06-24 16:03:33');
 
 -- --------------------------------------------------------
 
@@ -1798,14 +1757,6 @@ CREATE TABLE `ct_db_hdeposit` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
---
--- Dumping data for table `ct_db_hdeposit`
---
-
-INSERT INTO `ct_db_hdeposit` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(2, '5', 'Karur', 'karur', 'asdf', '9000', '21', NULL, '2023-06-20 16:21:23', '2023-06-20 16:21:23'),
-(3, '6', 'Karur', 'palladam', 'sfgsdf', '15000', '28', NULL, '2023-06-21 11:28:58', '2023-06-21 11:28:58');
-
 -- --------------------------------------------------------
 
 --
@@ -1841,15 +1792,6 @@ CREATE TABLE `ct_db_hexchange` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ct_db_hexchange`
---
-
-INSERT INTO `ct_db_hexchange` (`id`, `to_user_id`, `remark`, `amt`, `received`, `insert_login_id`, `created_date`, `updated_date`) VALUES
-(2, '28', 'director check', '73513', 1, '21', '2023-06-12 12:16:30', '2023-06-12 12:16:30'),
-(3, '28', 'director', '34655', 1, '21', '2023-06-12 12:17:03', '2023-06-12 12:17:03'),
-(4, '28', '123', '945464', 1, '21', '2023-06-12 12:45:10', '2023-06-12 12:45:10');
 
 -- --------------------------------------------------------
 
@@ -1892,15 +1834,6 @@ CREATE TABLE `ct_db_hinvest` (
   `created_date` datetime DEFAULT NULL,
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `ct_db_hinvest`
---
-
-INSERT INTO `ct_db_hinvest` (`id`, `name_id`, `area`, `ident`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '6', 'Karur', 'palladam', 'taken', '15000', '21', NULL, '2023-06-16 15:26:16', '2023-06-16 15:26:16'),
-(2, '8', 'Pondicherry', 'pondy', 'Poke', '4000', '21', NULL, '2023-06-19 16:50:25', '2023-06-16 16:50:25'),
-(3, '6', 'Karur', 'palladam', 'sdfgdfg', '100', '21', NULL, '2023-06-20 00:00:00', '2023-06-21 16:11:47');
 
 -- --------------------------------------------------------
 
@@ -2852,45 +2785,46 @@ INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`,
 ('18', '2023-05-23', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
 ('18', '2023-05-24', '10.35', NULL, '0', '0', '2023-05-25 14:47:50', '2023-05-25 14:47:50'),
 ('11', NULL, NULL, '2023-06-07', '200', '', '2023-06-07 10:16:32', '2023-06-07 10:16:32'),
-('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-17', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-18', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-19', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-20', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-21', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-22', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-23', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-24', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-25', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-27', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-28', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-29', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-30', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-05-31', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-01', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-02', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-03', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-04', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-05', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-08', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-10', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-11', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-12', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-13', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-14', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-15', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-16', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-17', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-18', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-19', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14'),
-('11', '2023-06-20', '10.35', NULL, '0', '0', '2023-06-21 14:23:14', '2023-06-21 14:23:14');
+('11', '2023-05-08', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-10', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-11', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-12', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-13', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-14', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-15', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-16', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-17', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-18', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-19', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-20', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-22', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-23', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-24', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-25', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-27', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-28', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-29', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-30', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-05-31', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-06-01', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-06-02', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-06-03', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-06-04', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-06-05', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-06-08', '10.35', NULL, '0', '0', '2023-06-24 15:15:47', '2023-06-24 15:15:47'),
+('11', '2023-06-10', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-11', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-12', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-13', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-14', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-15', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-16', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-17', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-18', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-19', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-20', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-22', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48'),
+('11', '2023-06-23', '10.35', NULL, '0', '0', '2023-06-24 15:15:48', '2023-06-24 15:15:48');
 
 -- --------------------------------------------------------
 
@@ -4349,7 +4283,7 @@ ALTER TABLE `bank_creation`
 -- AUTO_INCREMENT for table `bank_stmt`
 --
 ALTER TABLE `bank_stmt`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `bank_stmt_ref`
@@ -4433,199 +4367,199 @@ ALTER TABLE `concern_subject`
 -- AUTO_INCREMENT for table `ct_bank_collection`
 --
 ALTER TABLE `ct_bank_collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bag`
 --
 ALTER TABLE `ct_cr_bag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bank_withdraw`
 --
 ALTER TABLE `ct_cr_bank_withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bdeposit`
 --
 ALTER TABLE `ct_cr_bdeposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bel`
 --
 ALTER TABLE `ct_cr_bel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bexchange`
 --
 ALTER TABLE `ct_cr_bexchange`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_cr_binvest`
 --
 ALTER TABLE `ct_cr_binvest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_boti`
 --
 ALTER TABLE `ct_cr_boti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_cash_deposit`
 --
 ALTER TABLE `ct_cr_cash_deposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hag`
 --
 ALTER TABLE `ct_cr_hag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hdeposit`
 --
 ALTER TABLE `ct_cr_hdeposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hel`
 --
 ALTER TABLE `ct_cr_hel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hexchange`
 --
 ALTER TABLE `ct_cr_hexchange`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hinvest`
 --
 ALTER TABLE `ct_cr_hinvest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_cr_hoti`
 --
 ALTER TABLE `ct_cr_hoti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_db_bag`
 --
 ALTER TABLE `ct_db_bag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bank_deposit`
 --
 ALTER TABLE `ct_db_bank_deposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bdeposit`
 --
 ALTER TABLE `ct_db_bdeposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bel`
 --
 ALTER TABLE `ct_db_bel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bexchange`
 --
 ALTER TABLE `ct_db_bexchange`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bexpense`
 --
 ALTER TABLE `ct_db_bexpense`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_binvest`
 --
 ALTER TABLE `ct_db_binvest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bissued`
 --
 ALTER TABLE `ct_db_bissued`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_cash_withdraw`
 --
 ALTER TABLE `ct_db_cash_withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_exf`
 --
 ALTER TABLE `ct_db_exf`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `ct_db_hag`
 --
 ALTER TABLE `ct_db_hag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_db_hdeposit`
 --
 ALTER TABLE `ct_db_hdeposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_db_hel`
 --
 ALTER TABLE `ct_db_hel`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_db_hexchange`
 --
 ALTER TABLE `ct_db_hexchange`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_db_hexpense`
 --
 ALTER TABLE `ct_db_hexpense`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_db_hinvest`
 --
 ALTER TABLE `ct_db_hinvest`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_db_hissued`
 --
 ALTER TABLE `ct_db_hissued`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `ct_hand_collection`
 --
 ALTER TABLE `ct_hand_collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
 
 --
 -- AUTO_INCREMENT for table `customer_profile`

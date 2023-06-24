@@ -33,7 +33,7 @@ $(document).ready(function(){
                 type: 'post',
                 cache: false,
                 success: function(response){
-                    if(response.includes('Given')){
+                    if(response.includes('Given Date Has No Statements!')){
                         Swal.fire({
                             title: response,
                             text: 'Please Try Different Dates',
@@ -47,7 +47,8 @@ $(document).ready(function(){
                         $('#bank_clr_table').show();
                         $('#bank_clearance_list').empty();
                         $('#bank_clearance_list').html(response);
-                        initializeDT();
+                        // initializeDT();
+                        tablesorting();
                     }
                 }
             }).then(function(){
@@ -144,6 +145,45 @@ function initializeDT(){
 
 }
 
+function tablesorting(){ // for sorting table
+    var table = $("#bank_clearance_list");
+    var tbody = table.find("tbody");
+    var rows = tbody.find("tr").toArray();
+    var ascending = true;
+
+    table.on("click", "th", function() {
+        var column = $(this).index();
+
+        rows.sort(function(a, b) {
+        var aValue = $(a).find("td").eq(column).text().trim();
+        var bValue = $(b).find("td").eq(column).text().trim();
+
+        if (column === 0) {
+            aValue = parseInt(aValue);
+            bValue = parseInt(bValue);
+        }
+
+        if (ascending) {
+            if (aValue < bValue) return -1;
+            if (aValue > bValue) return 1;
+            return 0;
+        } else {
+            if (aValue > bValue) return -1;
+            if (aValue < bValue) return 1;
+            return 0;
+        }
+        });
+
+        tbody.empty().append(rows);
+
+        // Update serial numbers
+        tbody.find("tr").each(function(index) {
+        $(this).find("td:first").text(index + 1);
+        });
+
+        ascending = !ascending;
+    });
+}
 
 //function for click event when user clicks on a cash tally modes to get the ref codes
 function clrcatClickEvent(){    
@@ -152,11 +192,8 @@ function clrcatClickEvent(){
         var bank_id = $(this).prev().val();
         var crdb = $(this).next().val();
         var trans_id = $(this).parent().prev().prev().prev().prev().text();
-        var clr_cat_box = $(this);
         var ref_id_box = $(this).parent().next().children();//represents ref id select box
-        var span_box = $(this).parent().next().next().children();//represents span box
-        var clear_btn = $(this).parent().next().next().children().next();//represents clear btn box
-        console.log(clear_btn);
+        
         $.ajax({
             url: 'accountsFile/bankclearance/getRefCodetoClear.php',
             data: {'clr_cat':clr_cat,'bank_id':bank_id,'crdb':crdb,'trans_id':trans_id},
@@ -171,17 +208,48 @@ function clrcatClickEvent(){
                 })
                 
             }
-        }).then(function(){
-            $(ref_id_box).change(function(){
-                $(clear_btn).show()
-                $(span_box).hide()
-                $(span_box).text('Clear')
-                $(span_box).removeClass('text-danger')
-                $(span_box).addClass('text-success')
-
-                $(clr_cat_box).attr('disabled',true)
-                $(ref_id_box).attr('disabled',true)
-            })
         })
     })
+
+    $('.ref-id').change(function(){
+        if($(this).val() != ''){ // only true if ref id choosen
+
+            $(this).parent().next().children().hide();//hiding span uncleared text
+            $(this).parent().next().children().after('<input type="button" class="btn btn-primary clear_btn" value="Clear" id="" name="">')//adding new button after span
+            
+            $(this).parent().prev().children().attr('disabled',true)//disabling clear category dropdown
+            $(this).attr('disabled',true)//disabling ref_id dropdown
+
+            $('.clear_btn').off('click');//turning off existing click event
+            $('.clear_btn').click(function(){
+                var clear_btn = $(this)
+                var bank_stmt_id = $(this).parent().next().val();// to get bank statement table if which is stored inside hidden input
+                $.ajax({
+                    url: 'accountsFile/bankclearance/clearTransaction.php',
+                    data: {'bank_stmt_id':bank_stmt_id},
+                    type: 'post',
+                    cache: false,
+                    success: function(response){
+                        if(response == 0){
+                            clear_btn.prev().show();
+                            clear_btn.prev().text('Cleared');
+                            clear_btn.prev().addClass('text-success');
+                            clear_btn.prev().removeClass('text-danger');
+                            clear_btn.hide();
+                        }else{
+                            Swal.fire({
+                                title: 'Not Cleared',
+                                text: 'Error While Submitting',
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            })
+                        }
+                    }
+                })
+            })
+        }
+    })
+
 }
+

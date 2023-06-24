@@ -14,17 +14,17 @@ if(isset($_SESSION['userid'])){ //fetch if user has cash tally admin access or n
 $bank_id = $_POST['bank_id'];
 $from_date = $_POST['from_date'];
 $to_date = $_POST['to_date'];
-$response ='';$i=0;
+$response ='';$i=1;
 
 
-$qry = $con->query("SELECT * FROM bank_stmt WHERE insert_login_id = '$user_id' and bank_id = '$bank_id' and (trans_date >= '$from_date' and trans_date <= '$to_date' ) ");
+$qry = $con->query("SELECT * FROM bank_stmt WHERE insert_login_id = '$user_id' and bank_id = '$bank_id' and (trans_date >= '$from_date' and trans_date <= '$to_date' ) and clr_status = 0"); // clr status 0 means uncleared transactions
 if($qry->num_rows > 0){
     //if statements are present in that particular dates then show it in table view
     ?>
 
     <thead>
         <th width='50'>S.No</th>
-        <th>Date</th>
+        <th width='100'>Date</th>
         <th>Narration</th>
         <th>Tansaction ID</th>
         <th>Credit</th>
@@ -47,7 +47,8 @@ if($qry->num_rows > 0){
                 <td><?php echo $row['balance'];?></td>
                 <td><?php if($row['credit'] != ''){ echo runcreditCategories($con,$admin_access,$bank_id); }elseif($row['debit'] !=''){echo rundebitCategories($con,$admin_access,$bank_id); } ?></td>
                 <td><?php echo "<select class='form-control ref-id' ><option value=''>Select Ref ID</option></select>"; ?></td>
-                <td><?php echo "<span class='text-danger clr-status' ><b>Unclear</b></span><input type='button' class='btn btn-primary clear_btn' value='Clear' id='' name='' style='display:none'> "; ?></td>
+                <td><?php echo "<span class='text-danger clr-status' ><b>Unclear</b></span>"; ?></td>
+                <input type="hidden" class='bank_stmt_id' value='<?php echo $row['id'];?>' >
             </tr>
         <?php 
             $i++; 
