@@ -42,7 +42,7 @@ if($crdb == 'Credit' ){
     
 }else if($crdb == 'Debit'){
     if($clr_cat == 4){ // Exchange
-        $qry .= "ct_db_bexchange where insert_login_id = '$user_id' and trans_id = '$trans_id' and to_bank_id = '$bank_id' ";
+        $qry .= "ct_db_bexchange where insert_login_id = '$user_id' and trans_id = '$trans_id' and from_acc_id = '$bank_id' ";
 
     }elseif($clr_cat == 7){//Cash Withdrawal
         $qry .= "ct_db_cash_withdraw where insert_login_id = '$user_id' and trans_id = '$trans_id' and from_bank_id = '$bank_id'";

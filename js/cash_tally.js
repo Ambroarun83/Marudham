@@ -4294,7 +4294,7 @@ function getExfDetails(){
 
             $('#exfDiv').empty();
             $('#exfDiv').html(appendTxt);
-            
+            var bank_id =$('input[name=cash_type]:checked').val();
             
             
             $.ajax({//For fetching Ref code
@@ -4317,6 +4317,21 @@ function getExfDetails(){
                     $('#username_exf').val(response['user_name']);
                     $('#usertype_exf').val(response['user_type']);
                     $('#ucl_ref_code_exf').val(response['ref_code']);
+                }
+            })
+
+            $.ajax({ // to get the uncleared transacton id on this user's bank accounts
+                url: 'accountsFile/cashtally/excessfund/getUnclearTransactionID.php',
+                data: {'bank_id':bank_id},
+                dataType: 'json',
+                type: 'post',
+                cache: false,
+                success: function(response){
+                    $('#ucl_trans_id_exf').empty();
+                    $('#ucl_trans_id_exf').append("<option value=''>Select Unclear Transaction ID</option>");
+                    $.each(response,function(ind,val){
+                        $('#ucl_trans_id_exf').append("<option value='"+val['stmt_id']+"'>"+val['ucl_trans_id']+"</option>")
+                    })
                 }
             })
 
@@ -4371,7 +4386,7 @@ function exfValidation(){
         }
     }
     
-    // validateField(ucl_trans_id, '#ucl_trans_id_exfCheck');
+    validateField(ucl_trans_id, '#ucl_trans_id_exfCheck');
     validateField(trans_id, '#trans_id_exfCheck');
     validateField(remark, '#remark_exfCheck');
     validateField(amt, '#amt_exfCheck');
