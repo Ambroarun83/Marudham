@@ -14,7 +14,10 @@ if(isset($_SESSION['userid'])){ //fetch if user has cash tally admin access or n
 $bank_id = $_POST['bank_id'];
 $from_date = $_POST['from_date'];
 $to_date = $_POST['to_date'];
+
 $response ='';$i=1;
+$totalc = 0;
+$totald = 0;
 
 
 $qry = $con->query("SELECT * FROM bank_stmt WHERE insert_login_id = '$user_id' and bank_id = '$bank_id' and (trans_date >= '$from_date' and trans_date <= '$to_date' ) and clr_status = 0"); // clr status 0 means uncleared transactions
@@ -47,15 +50,29 @@ if($qry->num_rows > 0){
                 <td><?php echo $row['balance'];?></td>
                 <td><?php if($row['credit'] != ''){ echo runcreditCategories($con,$admin_access,$bank_id); }elseif($row['debit'] !=''){echo rundebitCategories($con,$admin_access,$bank_id); } ?></td>
                 <td><?php echo "<select class='form-control ref-id' ><option value=''>Select Ref ID</option></select>"; ?></td>
-                <td><?php echo "<span class='text-danger clr-status' ><b>Unclear</b></span>"; ?></td>
+                <td><?php echo "<span class='text-danger clr-status' style='font-weight:bold'>Unclear</span>"; ?></td>
                 <input type="hidden" class='bank_stmt_id' value='<?php echo $row['id'];?>' >
             </tr>
         <?php 
+            $totalc = $totalc + intVal($row['credit']);
+            $totald = $totald + intVal($row['debit']);
             $i++; 
         }
         ?>
+        <!-- <tr>
+            <td colspan="4"><b>Total</b></td>
+            <td><b><?php echo moneyFormatIndia($totalc); ?></b></td>
+            <td><b><?php echo moneyFormatIndia($totald); ?></b></td>
+        </tr> -->
+        
     </tbody>
-
+    <tfoot>
+        <tr>
+            <td colspan="4"><b>Unclear Total</b></td>
+            <td id='ucl_credit'></td>
+            <td id="ucl_debit"></td>
+        </tr>
+    </tfoot>
 <?php
     
 }else{
@@ -68,38 +85,70 @@ if($qry->num_rows > 0){
 
 function runcreditCategories($con,$admin_access,$bank_id){
 
-$catqry = "SELECT * from cash_tally_modes where bankcredit = 0  ";
-if($admin_access == '1'){
-    $catqry .= "and admin_access = 1 ";
-}
+    $catqry = "SELECT * from cash_tally_modes where bankcredit = 0  ";
+    if($admin_access == '1'){
+        $catqry .= "and admin_access = 1 ";
+    }
 
-$runqry = $con->query($catqry);
+    $runqry = $con->query($catqry);
 
-$selectTxt = "<input type='hidden' value='$bank_id'><select class='form-control clr_cat' ><option value=''>Select Category</option>";
-while($catrow = $runqry->fetch_assoc()){
-    $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
-}
-$selectTxt .= "</select><input type='hidden' value='Credit'>";
+    $selectTxt = "<input type='hidden' value='$bank_id'><select class='form-control clr_cat' ><option value=''>Select Category</option>";
+    while($catrow = $runqry->fetch_assoc()){
+        $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
+    }
+    $selectTxt .= "<option value='15'>Uncleared</option></select><input type='hidden' value='Credit'>";
 
-return $selectTxt;
+    return $selectTxt;
 }
 
 function rundebitCategories($con,$admin_access,$bank_id){
 
-$catqry = "SELECT * from cash_tally_modes where bankdebit = 0  ";
-if($admin_access == '1'){
-    $catqry .= "and admin_access = 1 ";
+    $catqry = "SELECT * from cash_tally_modes where bankdebit = 0  ";
+    if($admin_access == '1'){
+        $catqry .= "and admin_access = 1 ";
+    }
+
+    $runqry = $con->query($catqry);
+
+    $selectTxt = "<input type='hidden' value='$bank_id'><select class='form-control clr_cat' ><option value=''>Select Category</option>";
+    while($catrow = $runqry->fetch_assoc()){
+        $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
+    }
+    $selectTxt .= "</select><input type='hidden' value='Debit'>";
+
+    return $selectTxt;
 }
 
-$runqry = $con->query($catqry);
 
-$selectTxt = "<input type='hidden' value='$bank_id'><select class='form-control clr_cat' ><option value=''>Select Category</option>";
-while($catrow = $runqry->fetch_assoc()){
-    $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
+//Format number in Indian Format
+function moneyFormatIndia($num1) {
+    if($num1 < 0){
+        $num = str_replace("-","",$num1);
+    }else{
+        $num = $num1;
+    }
+    $explrestunits = "";
+    if (strlen($num) > 3) {
+        $lastthree = substr($num, strlen($num) - 3, strlen($num));
+        $restunits = substr($num, 0, strlen($num) - 3);
+        $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits;
+        $expunit = str_split($restunits, 2);
+        for ($i = 0; $i < sizeof($expunit); $i++) {
+            if ($i == 0) {
+                $explrestunits .= (int)$expunit[$i] . ",";
+            } else {
+                $explrestunits .= $expunit[$i] . ",";
+            }
+        }
+        $thecash = $explrestunits . $lastthree;
+    } else {
+        $thecash = $num;
+    }
+
+    if($num1 < 0 && $num1 != ''){
+        $thecash = "-" . $thecash;
+    }
+
+    return $thecash;
 }
-$selectTxt .= "</select><input type='hidden' value='Debit'>";
-
-return $selectTxt;
-}
-
 ?>

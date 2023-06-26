@@ -329,7 +329,7 @@ function removeAndSubmitUpload(){
     });
 }
 
-function getBankClearanceTable(){
+function getBankClearanceTable(){//not used
     $('#close_upd_modal').trigger('click');
     $('#bank_details_card').hide();
     $('#bank_clearance_card').show();

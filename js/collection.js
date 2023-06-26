@@ -2,6 +2,7 @@ $(document).ready(function(){
 
     $('#collection_mode').change(function(){
         var collection_mode = $(this).val();
+        getBankNames();
         if(collection_mode == '2'){
             //if Checque choosen, clear all othre
             $('#trans_id').val('')
@@ -95,64 +96,65 @@ $(document).ready(function(){
 
 
     //Collection Charge
-$('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
-$('#collChargeBtn').click(function () {
-    let req_id = $('#cc_req_id').val();
-    let customer_id = $('#cusidupd').val();
-    let colluserid = $('#colluserid').val();
-    let collectionCharge_date = $("#collectionCharge_date").val();
-    let collectionCharge_purpose = $("#collectionCharge_purpose").val();
-    let collectionCharge_Amnt = $("#collectionCharge_Amnt").val();
-    if (collectionCharge_date != "" && collectionCharge_purpose != "" && collectionCharge_Amnt != "" && req_id != "") {
-        $.ajax({
-            url: 'collectionFile/collection_charges_submit.php',
-            type: 'POST',
-            data: { "collDate": collectionCharge_date, "collPurpose": collectionCharge_purpose, "collAmnt": collectionCharge_Amnt, "reqId": req_id,"cust_id": customer_id,"userId": colluserid},
-            cache: false,
-            success: function (response) {
-                var insresult = response.includes("Inserted");
-                // var updresult = response.includes("Updated");
-                if (insresult) {
-                    $('#collChargeInsertOk').show();
-                    setTimeout(function () {
-                        $('#collChargeInsertOk').fadeOut('fast');
-                    }, 2000);
+    
+    $('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
+    $('#collChargeBtn').click(function () {
+        let req_id = $('#cc_req_id').val();
+        let customer_id = $('#cusidupd').val();
+        let colluserid = $('#colluserid').val();
+        let collectionCharge_date = $("#collectionCharge_date").val();
+        let collectionCharge_purpose = $("#collectionCharge_purpose").val();
+        let collectionCharge_Amnt = $("#collectionCharge_Amnt").val();
+        if (collectionCharge_date != "" && collectionCharge_purpose != "" && collectionCharge_Amnt != "" && req_id != "") {
+            $.ajax({
+                url: 'collectionFile/collection_charges_submit.php',
+                type: 'POST',
+                data: { "collDate": collectionCharge_date, "collPurpose": collectionCharge_purpose, "collAmnt": collectionCharge_Amnt, "reqId": req_id,"cust_id": customer_id,"userId": colluserid},
+                cache: false,
+                success: function (response) {
+                    var insresult = response.includes("Inserted");
+                    // var updresult = response.includes("Updated");
+                    if (insresult) {
+                        $('#collChargeInsertOk').show();
+                        setTimeout(function () {
+                            $('#collChargeInsertOk').fadeOut('fast');
+                        }, 2000);
+                    }
+                    // else if (updresult) {
+                    //     $('#bankUpdateok').show();
+                    //     setTimeout(function () {
+                    //         $('#bankUpdateok').fadeOut('fast');
+                    //     }, 2000);
+                    // }
+                    else {
+                        $('#collChargeNotOk').show();
+                        setTimeout(function () {
+                            $('#collChargeNotOk').fadeOut('fast');
+                        }, 2000);
+                    }
+                    resetcollCharges(req_id);
                 }
-                // else if (updresult) {
-                //     $('#bankUpdateok').show();
-                //     setTimeout(function () {
-                //         $('#bankUpdateok').fadeOut('fast');
-                //     }, 2000);
-                // }
-                else {
-                    $('#collChargeNotOk').show();
-                    setTimeout(function () {
-                        $('#collChargeNotOk').fadeOut('fast');
-                    }, 2000);
-                }
-                resetcollCharges(req_id);
+            });
+            $('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
+        }
+        else {
+            if (collectionCharge_date == "") {
+                $('#collectionChargeDateCheck').show();
+            } else {
+                $('#collectionChargeDateCheck').hide();
             }
-        });
-        $('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
-    }
-    else {
-        if (collectionCharge_date == "") {
-            $('#collectionChargeDateCheck').show();
-        } else {
-            $('#collectionChargeDateCheck').hide();
+            if (collectionCharge_purpose == "") {
+                $('#purposeCheck').show();
+            } else {
+                $('#purposeCheck').hide();
+            }
+            if (collectionCharge_Amnt == "") {
+                $('#amntCheck').show();
+            } else {
+                $('#amntCheck').hide();
+            }
         }
-        if (collectionCharge_purpose == "") {
-            $('#purposeCheck').show();
-        } else {
-            $('#purposeCheck').hide();
-        }
-        if (collectionCharge_Amnt == "") {
-            $('#amntCheck').show();
-        } else {
-            $('#amntCheck').hide();
-        }
-    }
-});
+    });
 
     $('#submit_collection').click(function(){ 
         validations();
@@ -566,9 +568,27 @@ function getChequeNoList(){
 
 }
 
+function getBankNames(){
+    $.ajax({
+        url: 'accountsFile/cashtally/contra/getBankDetails.php',
+        data: {},
+        dataType: 'json',
+        type: 'post',
+        cache :false,
+        success: function(response){
+            $('#bank_id').empty();
+            $('#bank_id').append('<option value="">Select Bank Name</option>');
+            $.each(response,function(ind,val){
+                $('#bank_id').append('<option value="'+val['bank_id']+'">'+val['bank_name']+'</option>');
+            })
+
+        }
+    })
+}
+
 function validations(){
     var collection_access = $('#collection_access').val();
-    var collection_mode = $('#collection_mode').val();var cheque_no = $('#cheque_no').val();var trans_id = $('#trans_id').val();var trans_date = $('#trans_date').val();
+    var collection_mode = $('#collection_mode').val();var bank_id = $('#bank_id').val();var cheque_no = $('#cheque_no').val();var trans_id = $('#trans_id').val();var trans_date = $('#trans_date').val();
     var collection_loc = $('#collection_loc').val();var due_amt_track = $('#due_amt_track').val();var penalty_track = $('#penalty_track').val();var coll_charge_track = $('#coll_charge_track').val();
     var pre_close_waiver = $('#pre_close_waiver').val();var penalty_waiver = $('#penalty_waiver').val();var coll_charge_waiver = $('#coll_charge_waiver').val()
     var total_paid_track = $('#total_paid_track').val();var total_waiver = $('#total_waiver').val();
@@ -582,6 +602,12 @@ function validations(){
 
         if(collection_mode == '2'){
             //if Cheque Chosen
+            if(bank_id == ''){
+                $('#bank_idCheck').show();
+                event.preventDefault();
+            }else{
+                $('#bank_idCheck').hide();
+            }
             if(cheque_no == ''){
                 $('#chequeCheck').show();
                 event.preventDefault();
@@ -603,6 +629,12 @@ function validations(){
             }
         }else if(collection_mode >= '3' && collection_mode <= '5'){ 
             //If other than cash and cheque
+            if(bank_id == ''){
+                $('#bank_idCheck').show();
+                event.preventDefault();
+            }else{
+                $('#bank_idCheck').hide();
+            }
             if(trans_id == ''){
                 $('#transidCheck').show();
                 event.preventDefault();

@@ -53,6 +53,7 @@ $(document).ready(function(){
                 }
             }).then(function(){
                 clrcatClickEvent();
+                getUnclearTotal();
             })
         }
     })
@@ -236,6 +237,7 @@ function clrcatClickEvent(){
                             clear_btn.prev().addClass('text-success');
                             clear_btn.prev().removeClass('text-danger');
                             clear_btn.hide();
+                            getUnclearTotal();// to reset unclear total amounts
                         }else{
                             Swal.fire({
                                 title: 'Not Cleared',
@@ -253,3 +255,18 @@ function clrcatClickEvent(){
 
 }
 
+function getUnclearTotal(){
+    var unclear_credit = 0;
+    var unclear_debit = 0;
+    $('.clr-status').each(function(){
+        var clr_status = $(this).text();
+        if(clr_status == 'Unclear'){
+            var credit = $(this).parent().prev().prev().prev().prev().prev().text(); // credit amount
+            var debit = $(this).parent().prev().prev().prev().prev().text(); // debit amount
+            unclear_credit += parseInt(credit) || 0;
+            unclear_debit += parseInt(debit) || 0;
+        }
+    })
+    $('#ucl_credit').text(unclear_credit).css('font-weight','bold');
+    $('#ucl_debit').text(unclear_debit).css('font-weight','bold');
+}
