@@ -383,7 +383,18 @@ if($idupd>0)
 											<span class="text-danger" id='collectionmodeCheck' style="display: none;">Please Select Collection Mode<span>
 										</div>
 									</div>
-									<div class="col-8 cash"></div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 cheque transaction" style="display:none">
+										<div class="form-group">
+											<label for="disabledInput">Bank Name</label>&nbsp;<span class="text-danger">*</span>
+											<select class='form-control' id='bank_id' name='bank_id'>
+												<option value=''>Select Bank Name</option>
+											</select>
+											<span class="text-danger" id='bank_idCheck' style="display: none;">Please Select Bank Name<span>
+										</div>
+									</div>
+								</div>
+									<!-- <div class="col-8 cash"></div> -->
+								<div class="row">
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 cheque" style="display:none">
 										<div class="form-group">
 											<label for="disabledInput">Cheque No</label>&nbsp;<span class="text-danger chequeSpan">*</span>

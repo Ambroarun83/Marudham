@@ -535,6 +535,8 @@ function getFutureOpeningBalance(){
     })
 }
 
+
+
 function appendHandCreditDropdown(){
 
     $.ajax({
@@ -812,18 +814,33 @@ function closeReceiveModal(){
 
 // ///////////////////////////////////////////////////// Bank Collection /////////////////////////////////////////////// //
 function getBankCollectionDetails(bank_id){
+    var op_date = $('#op_date').text();
     $('#collectionTableDiv').empty();// empty the card fileds when hiding
     var fieldsAppend = `<div class='col-md-12'><div class='row'>
     <div class='col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12'><div class='form-group'>
     <input type='hidden' id='bank_id' name='bank_id' value='`+bank_id+`'> 
     <label for='bank_credit_amt'> Bank Credit Amount</label>
-    <input type='number' id='bank_credit_amt' name='bank_credit_amt' class='form-control' Placeholder='Enter Credited Amount' title='Enter 0 if no Transaction'>
+    <input type='text' id='bank_credit_amt' name='bank_credit_amt' class='form-control' value ='1' title='Enter 0 if no Transaction' readonly>
     <span class='text-danger' id='bank_credit_check' style='display:none'>Please Enter Credited Amount</span></div></div>
     <div class='col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12'><div class='form-group'>
     <label for='' style='visibility:hidden'> Bank Credit Submit</label><br>
     <input type='button' id='submit_bank_credit' name='submit_bank_credit' value='Submit' class='btn btn-primary'></div></div>
     </div></div>`;
     $('#collectionTableDiv').html(fieldsAppend);
+
+    $.ajax({ // to get today's collection amount by bank
+        url: 'accountsFile/cashtally/getBankCollectionAmount.php',
+        data: {'bank_id':bank_id,'op_date':op_date},
+        type: 'post',
+        cache: false,
+        success:function(response){
+            if(response == ''){
+                $('#bank_credit_amt').val('0')
+            }else{
+                $('#bank_credit_amt').val(response)
+            }
+        }
+    })
 
     $('#submit_bank_credit').click(function(){
         var bank_id = $('#bank_id').val()
@@ -859,7 +876,8 @@ function getBankCollectionDetails(bank_id){
                             confirmButtonColor: '#009688'
                         });
                     }
-                    $('#bank_credit_amt').val('');
+                    // $('#bank_credit_amt').val('');
+                    getBankCollectionDetails(bank_id);
                     getClosingBalance();
                 }
             })
@@ -4330,7 +4348,7 @@ function getExfDetails(){
                     $('#ucl_trans_id_exf').empty();
                     $('#ucl_trans_id_exf').append("<option value=''>Select Unclear Transaction ID</option>");
                     $.each(response,function(ind,val){
-                        $('#ucl_trans_id_exf').append("<option value='"+val['stmt_id']+"'>"+val['ucl_trans_id']+"</option>")
+                        $('#ucl_trans_id_exf').append("<option value='"+val['ucl_trans_id']+"'>"+val['ucl_trans_id']+"</option>")
                     })
                 }
             })
