@@ -15,7 +15,7 @@ $qry = "SELECT ";
 
 if($crdb == 'Credit' ){
     if($clr_cat == 1){ // collection
-        $qry .= "ref_code from ct_bank_collection where insert_login_id = '$user_id' and trans_id = '$trans_id' and bank_id = '$bank_id' ";
+        $qry .= "coll_code as ref_code from collection where trans_id = '$trans_id' and bank_id = '$bank_id' ";
 
     }elseif($clr_cat == 3){//other income
         $qry .= "ref_code from ct_cr_boti where insert_login_id = '$user_id' and trans_id = '$trans_id' and to_bank_id = '$bank_id'";

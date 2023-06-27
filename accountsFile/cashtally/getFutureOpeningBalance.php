@@ -197,6 +197,14 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
 
     $records[0]['opening_balance'] = $records[0]['hand_opening'] + $bank_opening_all + $records[0]['agent_opening'];
 
+    
+    $qry = $con->query("SELECT bank_untrkd from cash_tally where date(created_date) = '$op_date' and insert_login_id = '$user_id' ");
+    if($qry->num_rows > 0){
+        $records[0]['bank_untrkd'] = $qry->fetch_assoc()['bank_untrkd'];
+    }else{
+        $records[0]['bank_untrkd'] = '';
+    }
+
     echo json_encode($records);
 
 
