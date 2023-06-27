@@ -35,38 +35,42 @@ foreach($branch_id as $val){
             $branchnameqry = $con->query("SELECT branch_name from branch_creation where branch_id = '".strip_tags($val)."' ");
             $records[$i]['branch_name'] = $branchnameqry->fetch_assoc()['branch_name'];
             
-            
-            // To get total collection amount till yesterday
-            $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= '$op_date' ");
-            if($getcolltillys){
-                $row2 = $getcolltillys->fetch_assoc();
-                $total_collection_amt = $row2['coll_amt_ys'];
-            }else{$total_collection_amt = 0;}
-            
-            //To get Total received amount till yesterday
-            $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= '$op_date' ");
-            if($getrectillys){
-                $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
-            }else{$total_rec_amt = 0;}
+            {
+                // To get total collection amount till yesterday
+                $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= '$op_date' ");
+                if($getcolltillys){
+                    $row2 = $getcolltillys->fetch_assoc();
+                    $total_collection_amt = $row2['coll_amt_ys'];
+                }else{$total_collection_amt = 0;}
+                
+                //To get Total received amount till yesterday
+                $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= '$op_date' ");
+                if($getrectillys){
+                    $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
+                }else{$total_rec_amt = 0;}
 
-            $records[$i]['pre_bal'] = $total_collection_amt - $total_rec_amt;
-            
+                $records[$i]['pre_bal'] = $total_collection_amt - $total_rec_amt;
+            }
 
-            // To get total collection amount till today
-            $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= '$op_date' ");
-            if($getcolltillys){
-                $row2 = $getcolltillys->fetch_assoc();
-                $total_collection_amt = $row2['coll_amt_ys'];
-                $records[$i]['overall_coll'] = $total_collection_amt;
-            }else{$total_collection_amt = 0;$records[$i]['overall_coll'] = $total_collection_amt;}
-            //To get Total received amount till today
-            $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= '$op_date' ");
-            if($getrectillys){
-                $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
-                $records[$i]['overall_rec'] = $total_rec_amt;
-            }else{$total_rec_amt = 0;$records[$i]['overall_rec'] = $total_rec_amt;}
+            {
+                // To get total collection amount till today
+                $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$row['insert_login_id']."' and coll_mode='1' and date(created_date) <= '$op_date' ");
+                if($getcolltillys){
+                    $row2 = $getcolltillys->fetch_assoc();
+                    $total_collection_amt = $row2['coll_amt_ys'];
+                    $records[$i]['overall_coll'] = $total_collection_amt;
+                }else{$total_collection_amt = 0;$records[$i]['overall_coll'] = $total_collection_amt;}
+                
+                //To get Total received amount till today
+                $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$row['insert_login_id']."' and date(created_date) <= '$op_date' ");
+                if($getrectillys){
+                    $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
+                    $records[$i]['overall_rec'] = $total_rec_amt;
+                }else{$total_rec_amt = 0;$records[$i]['overall_rec'] = $total_rec_amt;}
 
-            $records[$i]['tot_amt'] = $total_collection_amt - $total_rec_amt;
+                $records[$i]['tot_amt'] = $total_collection_amt - $total_rec_amt;
+            }
+
         }
         $i++;
     }

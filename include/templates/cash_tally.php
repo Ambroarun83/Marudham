@@ -122,9 +122,10 @@ input[type="radio"]{
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"  style="max-width: 150px;">
 										<div class="form-group">
 											<label class="lable-style" id='hand_opening'></label><br>
+											<input type='hidden' id='untrkd_ids_op' name='untrkd_ids_op' value='<?php $untrkd0='';if(isset($bank_name_arr)){for($i=0;$i<sizeof($bank_name_arr);$i++){$untrkd0 .= 'untrkd0'.$i.',';}}echo rtrim($untrkd0,',');?>' >
 											<?php if(isset($bank_name_arr)){
 												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
-													<label class="lable-style" id='bank_opening<?php echo $i;?>'></label><br>
+													<label class="lable-style" id='bank_opening<?php echo $i;?>'></label>&nbsp;<label class="lable-style untrkd_op" id='<?php echo 'untrkd0'.$i;?>'>(0)</label><br>
 												<?php }}?>
 											<label class="lable-style" id='agent_opening'></label><br><br><hr>
 											<label class="lable-style" id='opening_balance'></label>
@@ -342,6 +343,12 @@ input[type="radio"]{
 											<label style='font-size:18px;font-weight:bold;'>Closing Balance</label>
 										</div>
 									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8"></div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+										<div class="text-right">
+											<button type="button" data-toggle="modal" data-target=".addUntracked" id="addUntracked" name="addUntracked" class="btn btn-primary">Untracked</button>
+										</div>
+									</div>
 								</div>
 								
 								<div class="row">
@@ -371,10 +378,12 @@ input[type="radio"]{
 									
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12"  style="max-width: 150px;">
 										<div class="form-group">
+											
+											<input type='hidden' id='untrkd_ids' name='untrkd_ids' value='<?php if(isset($bank_name_arr)){for($i=0;$i<sizeof($bank_name_arr);$i++){echo 'untrkd'.$bank_id_arr[$i].',';}}?>' >
 											<label class="lable-style" id='hand_closing'></label><br>
 											<?php if(isset($bank_name_arr)){
 												for($i=0;$i<sizeof($bank_name_arr);$i++){?>
-													<label class="lable-style" id='bank_closing<?php echo $i;?>'></label><br>
+													<label class="lable-style" id='bank_closing<?php echo $i;?>'></label>&nbsp;<label class="lable-style untrkd" id='<?php echo 'untrkd'.$bank_id_arr[$i];?>'>(0)</label><br>
 												<?php }}?>
 											<label class="lable-style" id='agent_closing'></label><br><br><hr>
 											<label class="lable-style" id='closing_balance'></label>
@@ -805,3 +814,45 @@ input[type="radio"]{
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Inv/Dep/EL Name Creation modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Untracked modal start ////////////////////////////////////////////////////////////////////// -->
+
+<div class="modal fade addUntracked" id="" tabindex="-1" role="dialog" aria-labelledby="vCenterModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="vCenterModalTitle">Add Untracked</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="" method="post" enctype="multipart/form-data" name="untracked_form" id="untracked_form">
+					<div class="row">
+						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+							<div class="form-group">
+								<label class="label">Bank Name</label>
+								<select name="bank_id_untracked" id="bank_id_untracked" class="form-control"></select>
+								<span class="text-danger" style='display:none' id='bank_id_untrackedCheck'>Please Select Bank Name</span>
+							</div>
+						</div> 
+						<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+							<div class="form-group">
+								<label class="label">Untracked Amount</label>
+								<input type="number" name="untracked_amt" id="untracked_amt" class="form-control" placeholder="Enter Untracked Amount">
+								<span class="text-danger" style='display:none' id='untracked_amtCheck'>Please Select Amount</span>
+								<div id="insertsuccess" style="color: green; font-weight: bold; display:none">Untracked Amount Added Successfully</div>
+								<div id="updatesuccess" style="color: red; font-weight: bold;display:none">Untracked Updated Succesfully</div>
+							</div>
+						</div> 
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="submit_untracked" name="submit_untracked">Submit</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeUntracked" >Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Untracked modal END ////////////////////////////////////////////////////////////////////// -->

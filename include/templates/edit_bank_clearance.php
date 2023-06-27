@@ -64,41 +64,59 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" id='bank_clr_table' style="display:none">
-			<div class="table-container">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 bank_clr_table" style="display:none">
+			<div class="card">
+				<div class="card-header">
+					<div class="card-title"></div>
+				</div>
+				<div class="card-body">
+					<div class="row ">
+						<!-- <div class="col-9 "></div>
+						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 ">
+							<div class="form-group">
+								<label for='search_table'>Search</label>
+								<input type="search" class="form-control" id='search_table' name='search_table' >
+							</div>
+						</div> -->
+						<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+							<div class="table-container">
 
-				<div class="table-responsive">
-					<?php
-					$mscid=0;
-					if(isset($_GET['msc']))
-					{
-					$mscid=$_GET['msc'];
-					if($mscid==1)
-					{?>
-					<div class="alert alert-success" role="alert">
-						<div class="alert-text">Bank Clearance Added Successfully!</div>
-					</div> 
-					<?php
-					}
-					if($mscid==2)
-					{?>
-						<div class="alert alert-success" role="alert">
-						<div class="alert-text">Bank Clearance Updated Successfully!</div>
+								<div class="table-responsive">
+									<?php
+									$mscid=0;
+									if(isset($_GET['msc']))
+									{
+									$mscid=$_GET['msc'];
+									if($mscid==1)
+									{?>
+									<div class="alert alert-success" role="alert">
+										<div class="alert-text">Bank Clearance Added Successfully!</div>
+									</div> 
+									<?php
+									}
+									if($mscid==2)
+									{?>
+										<div class="alert alert-success" role="alert">
+										<div class="alert-text">Bank Clearance Updated Successfully!</div>
+									</div>
+									<?php
+									}
+									if($mscid==3)
+									{?>
+									<div class="alert alert-danger" role="alert">
+										<div class="alert-text">Bank Clearance Inactive Successfully!</div>
+									</div>
+									<?php
+									}
+									}
+									?>
+									<table id="bank_clearance_list" class="table custom-table">
+										
+									</table>
+								</div>
+							</div>
+						</div>
 					</div>
-					<?php
-					}
-					if($mscid==3)
-					{?>
-					<div class="alert alert-danger" role="alert">
-						<div class="alert-text">Bank Clearance Inactive Successfully!</div>
-					</div>
-					<?php
-					}
-					}
-					?>
-					<table id="bank_clearance_list" class="table custom-table">
-						
-					</table>
 				</div>
 			</div>
 		</div>

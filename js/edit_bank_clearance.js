@@ -41,14 +41,14 @@ $(document).ready(function(){
                             showConfirmButton: true,
                             confirmButtonColor: '#009688'
                         })
-                        $('#bank_clr_table').hide();
+                        $('.bank_clr_table').hide();
                         return false;
                     }else{
-                        $('#bank_clr_table').show();
+                        $('.bank_clr_table').show();
                         $('#bank_clearance_list').empty();
                         $('#bank_clearance_list').html(response);
                         // initializeDT();
-                        tablesorting();
+                        // tablesorting();
                     }
                 }
             }).then(function(){
@@ -58,7 +58,28 @@ $(document).ready(function(){
         }
     })
 
+            //Unbind or disable all other event listeners to avoid conflict
+            // $('#search').unbind('input');
+            // $('#search').unbind('keypress');
+            // $('#search').unbind('keyup');
+            // $('#search').unbind('search');
 
+            //new search on keyup event for search by display content
+            $('#search_table').keyup(function(){
+                // Retrieve the input field text and reset the count to zero
+                var filter = $(this).val(), count = 0;
+                // Loop through the comment list
+                $("table tbody tr").each(function(){
+                    // If the list item does not contain the text phrase fade it out
+                    if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                        $(this).fadeOut();
+                    // Show the list item if the phrase matches and increase the count by 1
+                    } else {
+                        $(this).show();
+                        count++;
+                    }
+                })
+            })
 
 
 
@@ -267,6 +288,8 @@ function getUnclearTotal(){
             unclear_debit += parseInt(debit) || 0;
         }
     })
+    unclear_credit = moneyFormatIndia(unclear_credit)
+    unclear_debit = moneyFormatIndia(unclear_debit)
     $('#ucl_credit').text(unclear_credit).css('font-weight','bold');
     $('#ucl_debit').text(unclear_debit).css('font-weight','bold');
 }
