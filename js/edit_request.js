@@ -1,7 +1,15 @@
 
 // Document is ready
 $(document).ready(function () {
-    setTimeout(() => {
+    callOnClickEvents();
+    
+    
+    
+    
+});//document ready end
+function callOnClickEvents(){
+
+    setTimeout(() => { console.log('Called on click events')
         $('.sub_verification').click(function(){
             var req_id = $(this).val();
             var cus_id = $(this).attr('data-value');
@@ -72,8 +80,4 @@ $(document).ready(function () {
         });
         
     }, 500);
-
-
-
-
-});//document ready end
+}

@@ -480,6 +480,7 @@ $(document).ready(function() {
             // } ]
             'drawCallback':function(){
                 searchFunction();
+                callOnClickEvents();
             }
         });
         
@@ -516,6 +517,7 @@ $(document).ready(function() {
             ],
             'drawCallback':function(){
                 searchFunction();
+                callOnClickEvents();
             }
         });
 
@@ -552,6 +554,7 @@ $(document).ready(function() {
             ],
             'drawCallback':function(){
                 searchFunction();
+                callOnClickEvents();
             }
         });
 
@@ -587,6 +590,7 @@ $(document).ready(function() {
             ],
             'drawCallback':function(){
                 searchFunction();
+                callOnClickEvents();
             }
         });
         
@@ -622,6 +626,7 @@ $(document).ready(function() {
             ],
             'drawCallback':function(){
                 searchFunction();
+                callOnClickEvents();
             }
         });
         // Collection List
