@@ -1,7 +1,13 @@
 
 // Document is ready
 $(document).ready(function () {
-    setTimeout(() => {
+    callOnClickEvents();
+    
+});//document ready end
+
+
+function callOnClickEvents(){
+    setTimeout(() => {console.log('Called on click function')
 
         $('a.customer-status').click(function(){
             var cus_id = $(this).data('value');
@@ -71,9 +77,4 @@ $(document).ready(function () {
         });
         
     }, 1000);
-
-
-
-});//document ready end
-
-
+}
