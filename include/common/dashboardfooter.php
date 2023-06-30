@@ -53,12 +53,6 @@ $(document).ready(function() {
 			
 			dom: 'lBfrtip', 
 			buttons: [	
-				// {
-				// 	extend: 'csv',
-				// 	exportOptions: {
-				// 		columns: [ 0, 1, 2 ,3, 4, 5, 6, 7, 8, 9 ]
-				// 	}
-				// },
 				{
 					extend: 'excel',
 					title: "Company List"
@@ -75,6 +69,7 @@ $(document).ready(function() {
 			],
             'drawCallback':function(){
                 searchFunction();
+                toggleAddButton();
             }
 		});
 

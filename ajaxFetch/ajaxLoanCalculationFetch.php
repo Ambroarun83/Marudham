@@ -15,7 +15,7 @@ $column = array(
     'due_type', 
     'profit_method',
     'calculate_method',
-    'loan_limit',
+    // 'loan_limit',
     'status'
 );
 
@@ -41,8 +41,7 @@ if($_POST['search']!="");
             OR due_method LIKE '%".$_POST['search']."%'
             OR due_type LIKE '%".$_POST['search']."%'
             OR profit_method LIKE '%".$_POST['search']."%'
-            OR calculate_method LIKE '%".$_POST['search']."%'
-            OR loan_limit LIKE '%".$_POST['search']."%' ";
+            OR calculate_method LIKE '%".$_POST['search']."%' ";
         }
     }
 }
@@ -97,7 +96,7 @@ foreach ($result as $row) {
 
     
     
-    $sub_array[] = moneyFormatIndia($row['loan_limit']);
+    // $sub_array[] = moneyFormatIndia($row['loan_limit']);
     
     $status      = $row['status'];
     if($status == 1)

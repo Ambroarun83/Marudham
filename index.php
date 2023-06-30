@@ -24,7 +24,7 @@ if(isset($_POST['lusername'])) {
 		$_SESSION['fullname']    = $result['fullname']; 
 		$_SESSION['request_list_access']    = $result['request_list_access']; 
 		?>
-		<script>location.href='<?php echo $HOSTPATH; ?>edit_company_creation';</script>  
+		<script>location.href='<?php echo $HOSTPATH; ?>dashboard';</script>  
 		<?php
 	}	
 	else

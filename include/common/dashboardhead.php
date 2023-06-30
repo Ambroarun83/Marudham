@@ -4,8 +4,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Meta -->
-	<meta name="description" content="Feather Rasi Project">
-	<meta name="author" content="Feather Rasi Project">
+	<meta name="description" content="Feather Marudham Project">
+	<meta name="author" content="Feather Marudham Project">
 	<link rel="shortcut icon" href="img/fav.png" />
 
 	<!-- Title -->

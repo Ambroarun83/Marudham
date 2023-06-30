@@ -1,19 +1,19 @@
 // Document is ready
 $(document).ready(function () {
 
-    {//To Order Company Alphabetically
-        var firstOption = $("#company_id option:first-child");
-        $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
-            return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-        }));
-        $("#company_id").prepend(firstOption);
-    }
+    // {//To Order Company Alphabetically
+    //     var firstOption = $("#company_id option:first-child");
+    //     $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
+    //         return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+    //     }));
+    //     $("#company_id").prepend(firstOption);
+    // }
     
 
-    $('#company_id').change(function(){
-        var companySelected = $('#company_id').val();
-        getBranchDropdown(companySelected);
-    })
+    // $('#company_id').change(function(){
+    //     var companySelected = $('#company_id').val();
+    //     getBranchDropdown(companySelected);
+    // })
 
     $("#dir_type").change(function(){
         var dir_type = $(this).val();
@@ -39,7 +39,7 @@ $(document).ready(function () {
     $('#submit_director_creation').click(function(){
         //Validation
         var company_id = $('#company_id').val();var branch_id = $('#branch_id').val();var dir_type = $('#dir_type').val();var dir_id = $('#dir_id').val();var dir_name = $('#dir_name').val(); var state = $('#state').val(); var district = $('#district1').val(); var taluk = $('#taluk1').val();var place = $('#place').val();var pincode = $('#pincode').val();
-        if (company_id === '' || dir_type === '' || dir_id === '' || dir_name === '' || state === '' || district === '' || taluk === '' || place === ''|| pincode === '') {
+        if (dir_type === '' || dir_id === '' || dir_name === '' || state === '' || district === '' || taluk === '' || place === ''|| pincode === '') {
             Swal.fire({
                 timerProgressBar: true,
                 timer: 2000,
@@ -60,7 +60,7 @@ $(function(){
         var company_id_upd = $('#company_id_upd').val();
         var state_upd = $('#state_upd').val();
         var district_upd = $('#district_upd').val();
-        getBranchDropdown(company_id_upd);
+        // getBranchDropdown(company_id_upd);
         getDistrictDropdown(state_upd);
         getTalukDropdown(district_upd);
     }

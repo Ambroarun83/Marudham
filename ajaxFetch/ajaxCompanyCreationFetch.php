@@ -98,8 +98,10 @@ foreach ($result as $row) {
     }
     $id          = $row['company_id'];
     
-    $action="<a href='company_creation&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>&nbsp;&nbsp; 
-    <a href='company_creation&del=$id' title='Edit details' class='delete_company'><span class='icon-trash-2'></span></a>";
+    // $action="<a href='company_creation&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>&nbsp;&nbsp; 
+    // <a href='company_creation&del=$id' title='Edit details' class='delete_company'><span class='icon-trash-2'></span></a>";
+    
+    $action="<a href='company_creation&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>";
 
     $sub_array[] = $action;
     $data[]      = $sub_array;

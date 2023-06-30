@@ -15,13 +15,13 @@ const schemeMultiselect = new Choices('#scheme1', {
 // Document is ready
 $(document).ready(function () {
 
-    {//To Order Company Alphabetically
-        var firstOption = $("#company_id option:first-child");
-        $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
-            return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-        }));
-        $("#company_id").prepend(firstOption);
-    }
+    // {//To Order Company Alphabetically
+    //     var firstOption = $("#company_id option:first-child");
+    //     $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
+    //         return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+    //     }));
+    //     $("#company_id").prepend(firstOption);
+    // }
     
     {//To Order ag_group Alphabetically
         var firstOption = $("#ag_group option:first-child");
@@ -32,10 +32,10 @@ $(document).ready(function () {
     }
     
 
-    $('#company_id').change(function(){
-        var companySelected = $('#company_id').val();
-        getBranchDropdown(companySelected);
-    })
+    // $('#company_id').change(function(){
+    //     var companySelected = $('#company_id').val();
+    //     getBranchDropdown(companySelected);
+    // })
 
     $("#state").change(function(){
         var StateSelected = $(this).val();
@@ -117,7 +117,7 @@ $(document).ready(function () {
         var name=$('#name').val();var designation=$('#designation').val();var mobile=$('#mobile').val();var whatsapp=$('#whatsapp').val();var loan_category=$('#loan_category').val();
         var subCat=subCatMultiselect.getValue();var loan_pay=$('input[name=loan_pay]:checked').val();var responsible=$('input[name=responsible]:checked').val();var coll_point=$('input[name=coll_point]:checked').val();var bank_name=$('#bank_name').val();
         var branch_name=$('#bank_branch_name').val();var acc_no=$('#acc_no').val();var ifsc=$('#ifsc').val();var holder_name=$('#holder_name').val();
-        if (ag_name === '' || ag_group == '' || company_id === '' ||  state === '' || district === '' || taluk === '' || place === ''|| pincode === '' || name === '' || 
+        if (ag_name === '' || ag_group == '' ||  state === '' || district === '' || taluk === '' || place === ''|| pincode === '' || name === '' || 
         designation === '' || mobile === '' || whatsapp === '' || loan_category === '' || subCat.length == 0 || loan_pay== undefined || responsible == undefined || 
         coll_point == undefined || bank_name === ''|| branch_name === '' || acc_no === '' || ifsc === ''|| holder_name === '') {
             Swal.fire({

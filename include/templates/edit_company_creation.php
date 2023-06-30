@@ -6,9 +6,8 @@
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
-    <a href="company_creation">
+    <a href="company_creation" id='addcompany'>
         <button type="button" class="btn btn-primary"><span class="icon-add"></span>&nbsp; Add Company Creation</button>
-    <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <!-- Page header end -->
@@ -145,12 +144,23 @@
 			[10, 25, 50, -1],
 			[10, 25, 50, "All"]
 			],
-			// "columnDefs": [ {
-			//     "targets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-			//     "orderable": false
-			// } ]
+			'drawCallback':function(){
+				toggleAddButton();
+			}
 
 		});
+	}
+
+	function toggleAddButton(){
+		if ($('#company_creation_table').DataTable().rows().count() === 0) {
+		// DataTable is empty
+		console.log('DataTable is empty');
+		$('#addcompany').show();
+		} else {
+		// DataTable has entries
+		console.log('DataTable has entries');
+		$('#addcompany').hide();
+		}
 	}
 
 </script>

@@ -9,10 +9,13 @@ const branchMultiselect = new Choices('#under_branch_dummy', {
 $(document).ready(function(){
 
 
-    $('#company').change(function(){
-        var companySelected = $(this).val();
-        getBranchDropdown(companySelected);
-    })
+    // $('#company').change(function(){
+    //     var companySelected = $(this).val();
+    //     getBranchDropdown(companySelected);
+    // })
+    
+    var companySelected = $('#company').val();
+    getBranchDropdown(companySelected);
 
     $('#submit_bank_creation').click(function(){
         
@@ -117,12 +120,12 @@ function validations(){
     }else{
         $('#branchCheck').hide();
     }
-    if(company == ''){
-        $('#companyCheck').show();
-        event.preventDefault();
-    }else{
-        $('#companyCheck').hide();
-    }
+    // if(company == ''){
+    //     $('#companyCheck').show();
+    //     event.preventDefault();
+    // }else{
+    //     $('#companyCheck').hide();
+    // }
     if(under_branch.length == 0){
         // $('.choices__inner').attr('style','border-color:red');
         $('#underbranchCheck').show();

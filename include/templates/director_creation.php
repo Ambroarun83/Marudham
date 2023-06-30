@@ -112,14 +112,16 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
-                                                <select tabindex="1" type="text" class="form-control" id="company_id" name="company_id"  >
+                                                <!-- <select tabindex="1" type="text" class="form-control" id="company_id" name="company_id"  >
                                                     <option value="">Select Company Name</option>   
                                                     <?php if (sizeof($companyName)>0) { 
                                                     for($j=0;$j<count($companyName);$j++) { ?>
                                                     <option <?php if(isset($company_id)) { if($companyName[$j]['company_id'] == $company_id)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
                                                     <?php echo $companyName[$j]['company_name'];?></option>
                                                     <?php }} ?>  
-                                                </select> 
+                                                </select>  -->
+												<input type="hidden" id='company_id' name="company_id" value='<?php echo $companyName[0]['company_id'] ?>' >
+                                            	<input type="text" class="form-control" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_name'] ?>' readonly>
                                         </div>
                                     </div>
 									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">

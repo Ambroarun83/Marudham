@@ -239,16 +239,19 @@ require 'PHPMailerAutoload.php';
 		if(isset($_POST['sub_category_name'])){
 			$sub_category_name = $_POST['sub_category_name'];
 		}
+		if(isset($_POST['loan_limit'])){
+			$loan_limit = $_POST['loan_limit'];
+		}
 		if(isset($_POST['loan_category_ref_name'])){
 			$loan_category_ref_name = $_POST['loan_category_ref_name'];
 		}
 
-		$insertQry="INSERT INTO loan_category(loan_category_name, sub_category_name, insert_user_id) 
-		VALUES('".strip_tags($loan_category_name)."','".strip_tags($sub_category_name)."', '".strip_tags($userid)."' )";
+		$insertQry="INSERT INTO loan_category(loan_category_name, sub_category_name,loan_limit, insert_user_id) 
+		VALUES('".strip_tags($loan_category_name)."','".strip_tags($sub_category_name)."','".strip_tags($loan_limit)."', '".strip_tags($userid)."' )";
 		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 		$loan_category_id = $mysqli->insert_id;
 		
-		for($i=0; $i<sizeof($loan_category_ref_name)-1; $i++){
+		for($i=0; $i<sizeof($loan_category_ref_name); $i++){
 			$qry = $mysqli->query("INSERT INTO loan_category_ref(loan_category_ref_name, loan_category_id) 
 			VALUES('".strip_tags($loan_category_ref_name[$i])."', '".strip_tags($loan_category_id)."') ");
 		}
@@ -268,6 +271,7 @@ require 'PHPMailerAutoload.php';
 			$detailrecords['loan_category_id']      = $row->loan_category_id; 
 			$detailrecords['loan_category_name']    = $row->loan_category_name;
 			$detailrecords['sub_category_name']    = $row->sub_category_name; 
+			$detailrecords['loan_limit']    = $row->loan_limit; 
 		}
 		
 		$loan_categoryRefId = 0;
@@ -305,11 +309,14 @@ require 'PHPMailerAutoload.php';
 		if(isset($_POST['sub_category_name'])){
 			$sub_category_name = $_POST['sub_category_name'];
 		}
+		if(isset($_POST['loan_limit'])){
+			$loan_limit = $_POST['loan_limit'];
+		}
 		if(isset($_POST['loan_category_ref_name'])){
 			$loan_category_ref_name = $_POST['loan_category_ref_name'];
 		}
 
-		$updateQry = 'UPDATE loan_category SET loan_category_name = "'.strip_tags($loan_category_name).'", sub_category_name = "'.strip_tags($sub_category_name).'", status = "0" WHERE loan_category_id = "'.mysqli_real_escape_string($mysqli, $id).'" ';
+		$updateQry = 'UPDATE loan_category SET loan_category_name = "'.strip_tags($loan_category_name).'", sub_category_name = "'.strip_tags($sub_category_name).'",loan_limit = "'.strip_tags($loan_limit).'", status = "0" WHERE loan_category_id = "'.mysqli_real_escape_string($mysqli, $id).'" ';
 		$res = $mysqli->query($updateQry) or die ("Error in in update Query!.".$mysqli->error); 
 
 		$DeleterrRef = $mysqli->query("DELETE FROM loan_category_ref WHERE loan_category_id = '".$id."' "); 
@@ -537,9 +544,9 @@ require 'PHPMailerAutoload.php';
 		if(isset($_POST['processing_fee_max'])){
 			$processing_fee_max = $_POST['processing_fee_max'];
 		}
-		if(isset($_POST['loan_limit'])){
-			$loan_limit = $_POST['loan_limit'];
-		}
+		// if(isset($_POST['loan_limit'])){
+		// 	$loan_limit = $_POST['loan_limit'];
+		// }
 		$due_date='';
 		if(isset($_POST['due_date'])){
 			$due_date = $_POST['due_date'];
@@ -562,11 +569,11 @@ require 'PHPMailerAutoload.php';
 			$userid = $_POST['userid'];
 		}
 		$loanInsert="INSERT INTO loan_calculation(loan_category, sub_category, due_method, due_type, profit_method, calculate_method, intrest_rate_min,
-		intrest_rate_max, due_period_min, due_period_max, document_charge_min, document_charge_max, processing_fee_min, processing_fee_max,loan_limit,
+		intrest_rate_max, due_period_min, due_period_max, document_charge_min, document_charge_max, processing_fee_min, processing_fee_max,
 		due_date, grace_period, penalty, overdue, collection_info, insert_login_id)
 		VALUES('".strip_tags($loan_category)."','".strip_tags($sub_category)."', '".strip_tags($due_method)."','".strip_tags($due_type)."', '".strip_tags($profit_method)."',
 		'".strip_tags($calculate_method)."', '".strip_tags($intrest_rate_min)."', '".strip_tags($intrest_rate_max)."',  '".strip_tags($due_period_min)."','".strip_tags($due_period_max)."', '".strip_tags($document_charge_min)."',
-		'".strip_tags($document_charge_max)."', '".strip_tags($processing_fee_min)."', '".strip_tags($processing_fee_max)."','".strip_tags($loan_limit)."',
+		'".strip_tags($document_charge_max)."', '".strip_tags($processing_fee_min)."', '".strip_tags($processing_fee_max)."',
 		'".strip_tags($due_date)."','".strip_tags($grace_period)."', '".strip_tags($penalty)."', '".strip_tags($overdue)."', '".strip_tags($collection_info)."', '".strip_tags($userid)."' )";
 		$insresult=$mysqli->query($loanInsert) or die("Error ".$mysqli->error);
 	}
@@ -593,7 +600,7 @@ require 'PHPMailerAutoload.php';
 			$detailrecords['document_charge_max']= $row->document_charge_max;
 			$detailrecords['processing_fee_min'] = $row->processing_fee_min;
 			$detailrecords['processing_fee_max'] = $row->processing_fee_max;
-			$detailrecords['loan_limit']           = $row->loan_limit;
+			// $detailrecords['loan_limit']           = $row->loan_limit;
 			$detailrecords['due_date']           = $row->due_date;
 			$detailrecords['grace_period']       = $row->grace_period;
 			$detailrecords['penalty']            = $row->penalty;
@@ -649,9 +656,9 @@ require 'PHPMailerAutoload.php';
 		if(isset($_POST['processing_fee_max'])){
 			$processing_fee_max = $_POST['processing_fee_max'];
 		}
-		if(isset($_POST['loan_limit'])){
-			$loan_limit = $_POST['loan_limit'];
-		}
+		// if(isset($_POST['loan_limit'])){
+		// 	$loan_limit = $_POST['loan_limit'];
+		// }
 		$due_date='';
 		if(isset($_POST['due_date'])){
 			$due_date = $_POST['due_date'];
@@ -678,7 +685,7 @@ require 'PHPMailerAutoload.php';
 	intrest_rate_min = '".strip_tags($intrest_rate_min)."', intrest_rate_max = '".strip_tags($intrest_rate_max)."',  due_period_min = '".strip_tags($due_period_min)."',
 	due_period_max = '".strip_tags($due_period_max)."', document_charge_min = '".strip_tags($document_charge_min)."',
 	document_charge_max = '".strip_tags($document_charge_max)."', processing_fee_min = '".strip_tags($processing_fee_min)."',
-	processing_fee_max = '".strip_tags($processing_fee_max)."',loan_limit = '".strip_tags($loan_limit)."', due_date = '".strip_tags($due_date)."',
+	processing_fee_max = '".strip_tags($processing_fee_max)."', due_date = '".strip_tags($due_date)."',
 	grace_period = '".strip_tags($grace_period)."', penalty = '".strip_tags($penalty)."', overdue = '".strip_tags($overdue)."', collection_info = '".strip_tags($collection_info)."',
 	update_login_id='".strip_tags($userid)."', status = '0' WHERE loan_cal_id= '".strip_tags($id)."' ";
 	$updresult = $mysqli->query($loanUpdaet )or die ("Error in in update Query!.".$mysqli->error);

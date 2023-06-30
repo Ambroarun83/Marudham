@@ -116,6 +116,10 @@ include('api/main.php'); // Database Connection File
 				</div>
 			</header>
 			<!-- Header end -->
+			
+			<?php if($current_page == 'dashboard') { ?>
+			<?php include "include/templates/dashboard.php" ?>
+			<?php } ?>
 
 			<!-- Master Module-->
 			<?php if($current_page == 'company_creation') { ?>
