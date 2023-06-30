@@ -317,6 +317,19 @@ if (sizeof($getUser)>0) {
 		<!-- sidebar menu start -->
 		<div class="sidebar-menu">
 			<ul>	
+				<li class="sidebar-submenu">
+					<a href="javascript:void(0)">
+						<!-- <span class="menu-text">Dashboard</span> -->
+						<a href="dashboard"><i><object class="svg-icon" data="svg/dashboard.svg" type="image/svg+xml"></object></i>Dashboard</a>
+					</a>
+					<!-- <div class="sidebar-submenu">
+						<ul>
+							<li>
+								<a href="dashboard"><i><object class="svg-icon" data="svg/dashboard.svg" type="image/svg+xml"></object></i>Dashboard</a>
+							</li>
+						</ul>
+					</div> -->
+				</li>
 				<?php if($mastermodule == 0){?>
 					<li class="sidebar-dropdown master">
 						<a href="javascript:void(0)">

@@ -154,14 +154,16 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="company">Under Company</label>&nbsp;<span class="text-danger">*</span>
-                                            <select class="form-control" id="company" name="company" tabindex='7'>
+                                            <!-- <select class="form-control" id="company" name="company" tabindex='7'>
 												<option value=''>Select Company name</option>
 												<?php if (sizeof($companyName)>0) { 
                                                 for($j=0;$j<count($companyName);$j++) { ?>
                                                 <option <?php if(isset($company)) { if($companyName[$j]['company_id'] == $company)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
                                                 <?php echo $companyName[$j]['company_name'];?></option>
                                                 <?php }} ?>  
-											</select>
+											</select> -->
+											<input type="hidden" id='company' name="company" value='<?php echo $companyName[0]['company_id'] ?>' >
+                                            <input type="text" class="form-control" id='company1' name="company1" value='<?php echo $companyName[0]['company_name'] ?>' readonly>
 											<span class='text-danger' id='companyCheck' style="display:none">Please Choose Company Name</span>
                                         </div>
                                     </div>

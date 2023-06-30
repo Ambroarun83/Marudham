@@ -59,7 +59,7 @@
 								<th>Due Type</th>
 								<th>Profit Method</th>
 								<th>Calculation Method</th>
-								<th>Loan Limit</th>
+								<!-- <th>Loan Limit</th> -->
 								<th>Status</th>
 								<th>Action</th>
 							</tr>

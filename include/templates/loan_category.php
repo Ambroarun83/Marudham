@@ -48,12 +48,13 @@ $status =0;
 if($idupd>0)
 {
 	$getLoanCategoryDetails = $userObj->getLoanCategoryDetails($mysqli,$idupd); 
-	
+	print_r($getLoanCategoryDetails);
 	if (sizeof($getLoanCategoryDetails)>0) {
         for($i=0;$i<sizeof($getLoanCategoryDetails);$i++)  {			
 			$loan_category_id                 	 = $getLoanCategoryDetails['loan_category_id'];
 			$loan_category_name          		     = $getLoanCategoryDetails['loan_category_name'];
 			$sub_category_name      			     = $getLoanCategoryDetails['sub_category_name'];
+			$loan_limit      			     = $getLoanCategoryDetails['loan_limit'];
 			$loan_category_ref_id       			 = $getLoanCategoryDetails['loan_category_ref_id'];
 			$loan_category_ref_name                	 = $getLoanCategoryDetails['loan_category_ref_name'];
 		}
@@ -99,32 +100,39 @@ if($idupd>0)
 							<!--Fields -->
 							<div class="col-md-12 "> 
 								<div class="row">
-								<div class="col-xl-3 col-lg-3 col-md-5 col-sm-5 col-12">
-									<div class="form-group">
-										<label for="disabledInput">Loan Category</label>&nbsp;<span class="required">*</span>
-										<select type="text" class="form-control" id="loan_category_name" name="loan_category_name" tabindex="1" >
-											<option value="">Select Loan Category</option>   
-											<?php if (sizeof($loanCategoryCreationList)>0) { 
-											for($j=0;$j<count($loanCategoryCreationList);$j++) { ?>
-											<option <?php if(isset($loan_category_name)) { if($loanCategoryCreationList[$j]['loan_category_creation_id'] == $loan_category_name )  echo 'selected'; }  ?> value="<?php echo $loanCategoryCreationList[$j]['loan_category_creation_id']; ?>">
-											<?php echo $loanCategoryCreationList[$j]['loan_category_creation_name'];?></option>
-											<?php }} ?>  
-										</select> 
-										<span id="loanCategoryCheck" class="text-danger" >Select Loan Category</span>
+									<div class="col-xl-3 col-lg-3 col-md-5 col-sm-5 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Loan Category</label>&nbsp;<span class="required">*</span>
+											<select type="text" class="form-control" id="loan_category_name" name="loan_category_name" tabindex="1" >
+												<option value="">Select Loan Category</option>   
+												<?php if (sizeof($loanCategoryCreationList)>0) { 
+												for($j=0;$j<count($loanCategoryCreationList);$j++) { ?>
+												<option <?php if(isset($loan_category_name)) { if($loanCategoryCreationList[$j]['loan_category_creation_id'] == $loan_category_name )  echo 'selected'; }  ?> value="<?php echo $loanCategoryCreationList[$j]['loan_category_creation_id']; ?>">
+												<?php echo $loanCategoryCreationList[$j]['loan_category_creation_name'];?></option>
+												<?php }} ?>  
+											</select> 
+											<span id="loanCategoryCheck" class="text-danger" style="display: none;">Select Loan Category</span>
+										</div>
 									</div>
-								</div>
-								<div class="col-xl-1 col-lg-1 col-md-6 col-sm-6 col-12" style="margin-top: 19px;">
-									<div class="form-group float-right">
-										<button type="button"  tabindex="2" class="btn btn-primary" id="add_loanCategoryDetails" name="add_loanCategoryDetails" data-toggle="modal" data-target=".addloanCategoryModal" style="padding: 5px 35px;"><span class="icon-add"></span></button>
+									<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12" style="margin-top: 19px;">
+										<div class="form-group float-right">
+											<button type="button"  tabindex="2" class="btn btn-primary" id="add_loanCategoryDetails" name="add_loanCategoryDetails" data-toggle="modal" data-target=".addloanCategoryModal" style="padding: 5px 35px;"><span class="icon-add"></span></button>
+										</div>
 									</div>
-								</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                        <div class="form-group">
-                                            <label for="disabledInput">Sub Category</label>&nbsp;<span class="required">*</span>
-                                            <input type="text" class="form-control" id="sub_category_name" name="sub_category_name" value="<?php if(isset($sub_category_name)) echo $sub_category_name; ?>" tabindex="3" >
-											<span id="subCategoryCheck" class="text-danger" >Enter Sub Category</span>
-                                        </div>
-                                    </div>
+										<div class="form-group">
+											<label for="disabledInput">Sub Category</label>&nbsp;<span class="required">*</span>
+											<input type="text" class="form-control" id="sub_category_name" name="sub_category_name" value="<?php if(isset($sub_category_name)) echo $sub_category_name; ?>" tabindex="3" placeholder="Enter Sub Category">
+											<span id="subCategoryCheck" class="text-danger" style="display: none;">Enter Sub Category</span>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Loan Limit</label><span class="required">&nbsp;*</span>
+											<input type="text" tabindex="15" id="loan_limit" name="loan_limit" class="form-control" placeholder="Enter Loan Limit" value="<?php if(isset($loan_limit)) echo $loan_limit; ?>">
+											<span id="loan_limitCheck" class="text-danger" style="display: none;">Enter Loan limit</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -132,7 +140,7 @@ if($idupd>0)
 				</div>
 				<div class="card">
 					<div class="card-header">
-						<div class="card-title">Category Info</div>
+						<div class="card-title">Category Info&nbsp;<span class="required">*</span></div>
 					</div>
 					<div class="card-body">
 						<div class="row ">

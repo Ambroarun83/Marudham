@@ -1,13 +1,13 @@
 // Document is ready
 $(document).ready(function () {
 
-    {//To Order company_id Alphabetically
-        var firstOption = $("#company_id option:first-child");
-        $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
-            return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-        }));
-        $("#company_id").prepend(firstOption);
-    }
+    // {//To Order company_id Alphabetically
+    //     var firstOption = $("#company_id option:first-child");
+    //     $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
+    //         return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+    //     }));
+    //     $("#company_id").prepend(firstOption);
+    // }
 
     $("#state").change(function(){
         var StateSelected = $(this).val();
@@ -29,7 +29,7 @@ $(document).ready(function () {
         //Validation
         var staff_name = $('#staff_name').val();var staff_type = $('#staff_type').val();var address = $('#address').val();var state = $('#state').val();
         var district = $('#district').val();var taluk = $('#taluk').val();var place = $('#place').val();var pincode = $('#pincode').val(); var company_id = $('#company_id').val();
-        if (staff_name === '' ||staff_type === '' || address === '' || state === '' || district === '' || taluk === '' || place === '' || pincode === '' || company_id === '' ) {
+        if (staff_name === '' ||staff_type === '' || address === '' || state === '' || district === '' || taluk === '' || place === '' || pincode === '' ) {
             Swal.fire({
                 timerProgressBar: true,
                 timer: 2000,

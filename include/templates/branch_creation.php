@@ -87,6 +87,7 @@ if($idupd>0)
 <!--------form start-->
 <form id = "branch_creation" name="branch_creation" action="" method="post" enctype="multipart/form-data"> 
     <input type="hidden" class="form-control" value="<?php if(isset($branch_id)) echo $branch_id; ?>"  id="id" name="id" aria-describedby="id" placeholder="Enter id">
+    <input type="hidden" class="form-control" value="<?php if(isset($company_name)) echo $company_name; ?>"  id="company_id_upd" name="company_id_upd" aria-describedby="id" placeholder="Enter id">
     <input type="hidden" class="form-control" value="<?php if(isset($state)) echo $state; ?>"  id="state_upd" name="state_upd" aria-describedby="id" placeholder="Enter id">
     <input type="hidden" class="form-control" value="<?php if(isset($district)) echo $district; ?>"  id="district_upd" name="district_upd" aria-describedby="id" placeholder="Enter id">
     <input type="hidden" class="form-control" value="<?php if(isset($taluk)) echo $taluk; ?>"  id="taluk_upd" name="taluk_upd" aria-describedby="id" placeholder="Enter id">
@@ -107,14 +108,17 @@ if($idupd>0)
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
-                                            <select tabindex="1" type="text" class="form-control" id="company_name" name="company_name" tabindex="1" required >
+                                            <!-- <select tabindex="1" type="text" class="form-control" id="company_name" name="company_name" tabindex="1" required >
                                                 <option value="">Select Company Name</option>   
                                                 <?php if (sizeof($companyName)>0) { 
                                                 for($j=0;$j<count($companyName);$j++) { ?>
                                                 <option <?php if(isset($company_name)) { if($companyName[$j]['company_id'] == $company_name)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
                                                 <?php echo $companyName[$j]['company_name'];?></option>
                                                 <?php }} ?>  
-                                            </select> 
+                                            </select>  -->
+
+                                            <input type="hidden" id='company_name' name="company_name" value='<?php echo $companyName[0]['company_id'] ?>' >
+                                            <input type="text" class="form-control" id='company_name1' name="company_name1" value='<?php echo $companyName[0]['company_name'] ?>' readonly>
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -213,7 +217,7 @@ if($idupd>0)
                             <div class="row">
                            <div class="col-md-12"> 
                               <div class="row">
-                              <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6 col-12">
+                              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="inputReadOnly">E-Mail Id</label>
                                             <input class="form-control" tabindex="9" id="email_id" name="email_id" type="text" value="<?php if(isset($email_id)) echo $email_id; ?>" placeholder="Enter Email Id">
@@ -221,16 +225,17 @@ if($idupd>0)
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Mobile Number</label>
-                                            <input tabindex="10" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="mobile_number" 
+                                            <input tabindex="10" type="number" onkeydown="javascript: return event.keyCode == 49 ? false : true" name="mobile_number" 
                                             id="mobile_number" class="form-control" placeholder="Enter Mobile Number" value="<?php if(isset($mobile_number )) 
                                             echo $mobile_number ; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;">
                                                 <!-- <span id="mobile_nocheck" class="text-danger" >Enter Mobile Number</span>  -->
                                         </div>
                                     </div>
-                                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">WhatsApp Number</label>
                                             <input tabindex="11" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="whatsapp_number" 
@@ -241,7 +246,7 @@ if($idupd>0)
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Landline Number</label>
                                             <input tabindex="12" type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="landline_number"

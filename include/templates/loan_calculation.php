@@ -67,7 +67,7 @@ if($idupd>0)
 			$document_charge_max    = $getLoanCalculation['document_charge_max'];
 			$processing_fee_min     = $getLoanCalculation['processing_fee_min'];
 			$processing_fee_max     = $getLoanCalculation['processing_fee_max'];
-			$loan_limit               = $getLoanCalculation['loan_limit'];
+			// $loan_limit               = $getLoanCalculation['loan_limit'];
 			$due_date               = $getLoanCalculation['due_date'];
 			$grace_period           = $getLoanCalculation['grace_period'];
 			$penalty                = $getLoanCalculation['penalty'];
@@ -182,7 +182,7 @@ if($idupd>0)
                         <div  id="intrest_method" <?php if(!$calcheck){?>style="display: none"<?php } ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="inputReadOnly">Calculate Method</label>
-                                     <input tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" value="Monthly" readonly>
+                                    <input tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" value="Monthly" readonly>
                                     <!-- <select tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" >
                                         <option value="">Select Calculate Method</option> 
                                         <option <?php  if(isset($calculate_method)) { if($calculate_method == "day") echo 'selected'; }?> value="day">Day</option> 
@@ -276,12 +276,12 @@ if($idupd>0)
                                 </div>
                         </div>
 
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                        <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="disabledInput">Loan Limit</label><span class="required">&nbsp;*</span>
                                 <input type="text" tabindex="15" id="loan_limit" name="loan_limit" class="form-control" placeholder="Enter Loan Limit" value="<?php if(isset($loan_limit)) echo $loan_limit; ?>" required>
                             </div>
-                        </div>
+                        </div> -->
                         <br><br><br><br><br><br>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">

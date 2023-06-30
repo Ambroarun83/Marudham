@@ -10,12 +10,13 @@ $column = array(
     'loan_category_id', 
     'loan_category_name',
     'sub_category_name', 
+    'loan_limit', 
     'status' 
 );
 
 $query = "SELECT * FROM loan_category ";
 
-if($_POST['search']!="");
+if($_POST['search']!="")
 {
     if (isset($_POST['search'])) {
 
@@ -31,6 +32,7 @@ if($_POST['search']!="");
         else{	
             $query .= "WHERE
             loan_category_name LIKE  '%".$_POST['search']."%'
+            loan_limit LIKE  '%".$_POST['search']."%'
             OR sub_category_name LIKE '%".$_POST['search']."%' ";
         }
     }
@@ -76,6 +78,7 @@ foreach ($result as $row) {
     
     $sub_array[] = $loan_category_creation_name;
     $sub_array[] = $row['sub_category_name']; 
+    $sub_array[] = moneyFormatIndia($row['loan_limit']); 
     $status      = $row['status'];
     if($status == 1)
 	{
@@ -111,4 +114,29 @@ $output = array(
 );
 
 echo json_encode($output);
+?>
+
+<?php
+function moneyFormatIndia($num) {
+    $explrestunits = "";
+    if (strlen($num) > 3) {
+        $lastthree = substr($num, strlen($num) - 3, strlen($num));
+        $restunits = substr($num, 0, strlen($num) - 3);
+        $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits;
+        $expunit = str_split($restunits, 2);
+        for ($i = 0; $i < sizeof($expunit); $i++) {
+            if ($i == 0) {
+                $explrestunits .= (int)$expunit[$i] . ",";
+            } else {
+                $explrestunits .= $expunit[$i] . ",";
+            }
+        }
+        $thecash = $explrestunits . $lastthree;
+    } else {
+        $thecash = $num;
+    }
+    return $thecash;
+}
+
+
 ?>

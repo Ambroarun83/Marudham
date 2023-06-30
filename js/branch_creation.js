@@ -1,6 +1,8 @@
 // Document is ready
 $(document).ready(function () {
 
+    getBranchCode();//get branch code at start, because company name is readonly
+
     $("#state").change(function(){
         var StateSelected = $(this).val();
         getDistrictDropdown(StateSelected);
@@ -30,20 +32,34 @@ $(function(){
 })
 
 //Get Branch Code
-$('#company_name').on('change',function(){
-    var company_name = $('#company_name :selected').val();
-$.ajax({
-    url: "branchCreationFile/ajaxgetbranchcode.php",
-    data: {'company_name': company_name},
-    cache: false,
-    type: "post",
-    dataType: "json",
-    success: function (data) {
-        $("#branch_code").val(data);
-    }
-    });
-});
+// $('#company_name').on('change',function(){
+//     var company_name = $('#company_name :selected').val();
+//     $.ajax({
+//         url: "branchCreationFile/ajaxgetbranchcode.php",
+//         data: {'company_name': company_name},
+//         cache: false,
+//         type: "post",
+//         dataType: "json",
+//         success: function (data) {
+//             $("#branch_code").val(data);
+//         }
+//     });
+// });
 
+//Get Branch Code
+function getBranchCode(){
+    var company_name = $('#company_name').val();
+    $.ajax({
+        url: "branchCreationFile/ajaxgetbranchcode.php",
+        data: {'company_name': company_name},
+        cache: false,
+        type: "post",
+        dataType: "json",
+        success: function (data) {
+            $("#branch_code").val(data);
+        }
+    });
+}
 //get district dropdown
 function getDistrictDropdown(StateSelected){
         

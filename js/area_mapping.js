@@ -50,20 +50,21 @@ $(document).ready(function () {
         $("#area1").prepend(firstOption);
     }
     
-    {//To Order Alphabetically
-        var firstOption = $("#company_id option:first-child");
-        $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
-            return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-        }));
-        $("#company_id").prepend(firstOption);
-    }
-    {//To Order Alphabetically
-        var firstOption = $("#company_id1 option:first-child");
-        $("#company_id1").html($("#company_id1 option:not(:first-child)").sort(function (a, b) {
-            return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-        }));
-        $("#company_id1").prepend(firstOption);
-    }
+//company id Changed to input box and readonly, so no need to order 
+    // {//To Order Alphabetically
+    //     var firstOption = $("#company_id option:first-child");
+    //     $("#company_id").html($("#company_id option:not(:first-child)").sort(function (a, b) {
+    //         return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+    //     }));
+    //     $("#company_id").prepend(firstOption);
+    // }
+    // {//To Order Alphabetically
+    //     var firstOption = $("#company_id1 option:first-child");
+    //     $("#company_id1").html($("#company_id1 option:not(:first-child)").sort(function (a, b) {
+    //         return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
+    //     }));
+    //     $("#company_id1").prepend(firstOption);
+    // }
 
     // ************************************************************** Line Mapping *************************************************************************************** 
 
@@ -87,11 +88,17 @@ $(document).ready(function () {
 
         getAreaBasedSubArea(areaselected);
     })
+    
+//commented because company changed to readonly input
+    // $('#company_id').on('change',function(){
+    //     var companySelected = $('#company_id').val();
+    //     getBranchDropdown(companySelected);
+    // })
 
-    $('#company_id').change(function(){
+    if($('#type').val() == 'line'){ // loan only if line
         var companySelected = $('#company_id').val();
         getBranchDropdown(companySelected);
-    })
+    }
 
     //on submit add sub area list to hidden input
     $('#submit_area_mapping_line').click(function(){
@@ -161,10 +168,12 @@ $(document).ready(function () {
         getAreaBasedSubArea1(areaselected);
     });
 
-    $('#company_id1').change(function(){
-        var companySelected = $('#company_id1').val();
-        getBranchDropdown1(companySelected);
-    })
+    // $('#company_id1').change(function(){
+        if($('#type').val() == 'group'){
+            var companySelected = $('#company_id1').val();
+            getBranchDropdown1(companySelected);
+        }
+    // })
     //on submit add sub area list to hidden input
     $('#submit_area_mapping_group').click(function(){
         var sub_area_list = intance1.getValue();
@@ -219,7 +228,7 @@ $(function(){
     getArea1();
     var map_id = $('#map_id').val();
     var type = $('#type').val();
-    if(map_id != 0){
+    if(map_id != 0 && map_id != undefined){
         if(type == 'line'){
             var area = $('#area_id_upd').val();
             var company_id_upd = $('#company_id_upd').val();

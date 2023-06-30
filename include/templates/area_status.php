@@ -97,3 +97,52 @@
 
 	
 
+<!-- <script>
+	sorting('');
+	function sorting(dT){
+
+		var sortOrder = 1; // 1 for ascending, -1 for descending
+		$('th').off('click');
+		document.querySelectorAll('th').forEach(function(th) {
+			th.addEventListener('click', function() {
+				var columnIndex = this.cellIndex;
+				document.querySelector('tbody').innerHTML = '';
+				// dT2();
+				if(dT != ''){
+					if(dT == 'dT1'){
+						dT1()
+					}else if(dT == 'dT2'){
+						dT2();
+					}
+				}
+				setTimeout(function() {
+					var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
+		
+					tableRows.sort(function(a, b) {
+						var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+						var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
+		
+						if (textA < textB) {
+							return -1 * sortOrder;
+						}
+						if (textA > textB) {
+							return 1 * sortOrder;
+						}
+						return 0;
+					});
+		
+					tableRows.forEach(function(row) {
+						document.querySelector('tbody').appendChild(row);
+					});
+		
+					sortOrder = -1 * sortOrder;
+		
+					// update the serial numbers
+					document.querySelectorAll('tbody tr').forEach(function(row, index) {
+						row.querySelectorAll('td')[0].textContent = index + 1;
+					});
+				}, 1000);
+			});
+		});
+	}
+</script> -->
