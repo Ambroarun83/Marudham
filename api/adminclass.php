@@ -2937,7 +2937,10 @@ function updateUser($mysqli,$id,$user_id){
 			$pic_temp = $_FILES['pic']['tmp_name'];
 			$picfolder="uploads/request/customer/".$pic ;
 			move_uploaded_file($pic_temp, $picfolder);
+		}else{
+			$pic = $_POST['img_exist'];
 		}
+		
 		if(isset($_POST['loan_category'])){
 			$loan_category = $_POST['loan_category'];
 		}

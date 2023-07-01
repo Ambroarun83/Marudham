@@ -12,6 +12,7 @@ $(document).ready(function () {
             dT1();
 
             // var sortOrder = 1; // 1 for ascending, -1 for descending
+            // $('th').off('click')
             // $('th').click(function() {
             //     var columnIndex = $(this).index();
             //     $('tbody').empty();
@@ -47,6 +48,7 @@ $(document).ready(function () {
             dT2();
 
             // var sortOrder = 1; // 1 for ascending, -1 for descending
+            // $('th').off('click')
             // $('th').click(function() {
             //     var columnIndex = $(this).index();
             //     $('tbody').empty();
@@ -127,8 +129,8 @@ function dT1(){
 
     $('#area_mapping_line_info').DataTable({
             
-        "order": [[ 0, "desc" ]],
-        "ordering": false,
+        "order": [[ 0, "asc" ]],
+        // "ordering": false,
         'processing': true,
         'serverSide': true,
         'serverMethod': 'post',
@@ -153,8 +155,13 @@ function dT1(){
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
-        ]
+        ],
+        "drawCallback":function(){
+            searchFunction();
+            // sortTableL();
+        }
     });
+
 }
 function dT2(){
     var table = $('#area_mapping_line_info').DataTable();
@@ -197,6 +204,18 @@ function dT2(){
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
-        ]
+        ],
+        "drawCallback":function(){
+            searchFunction();
+            // sortTableG()
+        }
     });
 }
+
+function sortTableL() {
+   
+}
+function sortTableG() {
+   
+}
+

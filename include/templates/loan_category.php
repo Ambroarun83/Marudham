@@ -48,7 +48,7 @@ $status =0;
 if($idupd>0)
 {
 	$getLoanCategoryDetails = $userObj->getLoanCategoryDetails($mysqli,$idupd); 
-	print_r($getLoanCategoryDetails);
+	// print_r($getLoanCategoryDetails);
 	if (sizeof($getLoanCategoryDetails)>0) {
         for($i=0;$i<sizeof($getLoanCategoryDetails);$i++)  {			
 			$loan_category_id                 	 = $getLoanCategoryDetails['loan_category_id'];

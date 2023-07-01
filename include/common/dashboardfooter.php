@@ -1330,6 +1330,19 @@ if($current_page == 'edit_bank_clearance') { ?>
                 }
             });
         });
+
+        $('.dropdown').click(function(event) {
+            // event.stopPropagation();
+            $('.dropdown').not(this).removeClass('active');
+            $(this).toggleClass('active');
+        });
+
+        $(document).click(function(event) {
+            var target = $(event.target);
+            if (!target.closest('.dropdown').length) {
+                $('.dropdown').removeClass('active');
+            }
+        });
     }
 
 
@@ -1377,6 +1390,8 @@ if($current_page == 'edit_bank_clearance') { ?>
             overlayDiv.remove();
         }
     }
+
+    
 
     // Function to remove the overlay
     // function hideOverlay() {

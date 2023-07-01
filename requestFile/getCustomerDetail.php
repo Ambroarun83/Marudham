@@ -3,7 +3,7 @@ include('../ajaxconfig.php');
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
 }
-// $cus_id='546546546465';
+$cus_id='100010001000';
 $records = array();
 
 $result=$con->query("SELECT * FROM customer_register where cus_id = '".strip_tags($cus_id)."' ");
@@ -28,6 +28,7 @@ if($result->num_rows>0){
     $records['spouse'] = $row['spouse'];
     $records['occupation_type'] = $row['occupation_type'];
     $records['occupation'] = $row['occupation'];
+    $records['loan_limit'] = $row['loan_limit'];
     $records['pic'] = $row['pic'];
 
     $records['message'] = "Existing";

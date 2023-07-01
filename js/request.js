@@ -24,8 +24,10 @@ $(document).ready(function () {
             
             
             if(idupd == undefined){
+                // if page loaded for update, then no need to customer details
                 getCustomerDetails(cus_id);
             }else if(cus_id_upd != undefined && cus_id_upd != cus_id){
+                // if user removed and entered the same customer id while update, then dont refresh contents, have same
                 getCustomerDetails(cus_id);
             }
             
@@ -207,6 +209,7 @@ $(function(){//For Update
 
         var pic = $('#pic_upd').val();
         $('#imgshow').attr('src',"uploads/request/customer/"+ pic+ " ");
+        $('#pic').hide();// hide pic input box on update, because user not gonna upload again
 
         var state_upd = $('#state_upd').val();
         getDistrictDropdown(state_upd);
@@ -346,7 +349,9 @@ function getCustomerDetails(cus_id){
                 $('#spouse_name').val(response['spouse']);
                 $('#occupation_type').val(response['occupation_type']);
                 $('#occupation').val(response['occupation']);
+                $('#img_exist').val(response['pic']);
                 $('#imgshow').attr('src',"uploads/request/customer/"+ response['pic']+ " ");
+                $('#pic').hide()// hide pic input box on exisiting cus, because user will not upload again
             }else if(response['message']=='New'){
                 var message = response['message'];
                 $('#cus_data').removeAttr('value');
@@ -374,6 +379,7 @@ function getCustomerDetails(cus_id){
                 $('#occupation_type').val('');
                 $('#occupation').val('');
                 $('#imgshow').attr('src',"img/avatar.png");
+                $('#pic').show()// show pic input box on edit again if new customer
             }
         }
     });
@@ -870,7 +876,7 @@ function getAgentBasedLoanCategory(ag_id){
 function getCategoryInfo(sub_cat){
     var idupd = $('#id').val();
     if(idupd > 0){
-        var getCategoryInfo = $('#getCategoryInfo_upd').val().split(',');console.log(getCategoryInfo.length)
+        var getCategoryInfo = $('#getCategoryInfo_upd').val().split(',');
     }else{var getCategoryInfo = undefined;}
     $.ajax({
         url:'requestFile/getCategoryInfo.php',
@@ -888,7 +894,7 @@ function getCategoryInfo(sub_cat){
                     //     category_info = getCategoryInfo[i];
                     // }
                     $('.category_info .card-body .row table tbody tr').append( `<td><label for="disabledInput">`+response[i]['loan_category_ref_name']+`</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
-                    value='`+category_info+`' tabindex='40' required placeholder='Enter `+response[i]['loan_category_ref_name']+`'></td>`);
+                    pattern="[A-Za-z0-9\s]*" value='`+category_info+`' tabindex='40' required placeholder='Enter `+response[i]['loan_category_ref_name']+`'></td>`);
                     $('.category_info').show();
                     
                 }
@@ -1012,7 +1018,7 @@ function validation(){
     }
     if(idupd == undefined){
 
-        if(pic == ''){
+        if(pic == '' && $('#pic').attr('style') != 'display: none;'){
             event.preventDefault();
             $('#picCheck').show();
         }else{
