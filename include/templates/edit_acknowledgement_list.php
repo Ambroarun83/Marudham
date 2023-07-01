@@ -1,42 +1,5 @@
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    .dropbtn {
-		color: white;
-		/* background-color: #009688; */
-		/* padding: 10px; */
-		font-size: 10px;
-		border: none;
-		cursor: pointer;
-	}
-	.dropdown {
-		position: relative;
-		display: inline-block;
-	}
-	.dropdown-content {
-		display: none;
-		position: absolute;
-		right: 0;
-		background-color: #F9F9F9;
-		min-width: 160px;
-		margin-top:-50px;
-		box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		z-index: 1;
-	}
-	.dropdown-content a {
-		color: black;
-		padding: 10px 10px;
-		text-decoration: none;
-		display: block;
-	}
-	.dropdown-content a:hover {background-color: #fafafa;}
-	.dropdown:hover .dropdown-content {
-		display: block;
-	}
-	.dropdown:hover .dropbtn {
-		background-color: #3E8E41;
-	}
-</style>
+
 
 <!-- Page header start -->
 <br><br>

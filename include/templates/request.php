@@ -487,6 +487,7 @@ if($idupd>0)
 								<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 									<div class="form-group" style="margin-left: 30px;">
 										<label for="pic"style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
+										<input type='hidden' id='img_exist' name='img_exist' value=''>
 										<img id='imgshow' src='img/avatar.png'/>
 										<input type="file" class="form-control" id="pic" name="pic" value='<?php if(isset($pic)) {echo $pic;} ?>' tabindex='30' >
 										<span class="text-danger" style='display:none' id='picCheck'>Please Choose Image</span>

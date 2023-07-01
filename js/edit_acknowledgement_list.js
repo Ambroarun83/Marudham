@@ -1,7 +1,7 @@
 
 // Document is ready
 $(document).ready(function () {
-    callOnClickEvents();
+    // callOnClickEvents();
     
 });//document ready end
 

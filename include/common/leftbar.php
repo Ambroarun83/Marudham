@@ -81,6 +81,9 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 				link.style.backgroundColor = '#646969d9';
 			}
 		});
+		if(currentPage == 'dashboard'){
+			$('.dashboard').css('backgroundColor','#646969d9')
+		}
 	}, 1000);
 </script>
 
@@ -317,7 +320,7 @@ if (sizeof($getUser)>0) {
 		<!-- sidebar menu start -->
 		<div class="sidebar-menu">
 			<ul>	
-				<li class="sidebar-submenu">
+				<li class="dashboard" >
 					<a href="javascript:void(0)">
 						<!-- <span class="menu-text">Dashboard</span> -->
 						<a href="dashboard"><i><object class="svg-icon" data="svg/dashboard.svg" type="image/svg+xml"></object></i>Dashboard</a>

@@ -73,7 +73,10 @@ function mothlyDT(){
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
-        ]
+        ],
+        "drawCallback":function(){
+            searchFunction();
+        }
     });
 } 
 // Loan Scheme datatable
@@ -116,7 +119,10 @@ function weeklyDT(){
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
-        ]
+        ],
+        "drawCallback":function(){
+            searchFunction();
+        }
     });
 }
 // Loan Scheme datatable
@@ -159,6 +165,9 @@ function dailyDT(){
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
-        ]
+        ],
+        "drawCallback":function(){
+            searchFunction();
+        }
     });
 }

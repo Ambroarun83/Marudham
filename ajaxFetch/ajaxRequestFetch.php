@@ -31,9 +31,9 @@ $column = array(
     'status'
 );
 
-$query = "SELECT * FROM request_creation where status= 0 and (cus_status != 8 and cus_status != 9 and cus_status < 14) and insert_login_id = $userid ";//hide if issued or revoked(after issued cus_status = 7 , request revoked = 8, verification revoked = 9)
+$query = "SELECT * FROM request_creation where status= 0 and (cus_status != 8 and cus_status != 9 and cus_status < 14) and insert_login_id = '$userid' ";//hide if issued or revoked(after issued cus_status = 7 , request revoked = 8, verification revoked = 9)
 if($userid == 1 or $request_list_access == 0){ //if request_list_access is granted to the current user
-    $query = 'SELECT * FROM request_creation where status =0 and (cus_status != 8 and cus_status != 9 and cus_status < 14)';
+    $query = 'SELECT * FROM request_creation where status =0 and (cus_status != 8 and cus_status != 9 and cus_status < 14) ';
 }
 if($_POST['search'] != "")
 {
@@ -198,7 +198,7 @@ foreach ($result as $row) {
     }
     if($user_type != 'Agent' or $userid == 1){
         $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
-        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='loan-summary' data-toggle='modal' data-target='.loansummary'>Loan Summary</a>";
+        // $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='loan-summary' data-toggle='modal' data-target='.loansummary'>Loan Summary</a>";
     }
     
     $action .= "</div></div>";

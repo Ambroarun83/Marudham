@@ -1,7 +1,7 @@
 
 // Document is ready
 $(document).ready(function () {
-    callOnClickEvents();
+    // callOnClickEvents();
     
     
     
@@ -10,6 +10,7 @@ $(document).ready(function () {
 function callOnClickEvents(){
 
     setTimeout(() => { console.log('Called on click events')
+        // $('.sub_verification').off('click');
         $('.sub_verification').click(function(){
             var req_id = $(this).val();
             var cus_id = $(this).attr('data-value');
@@ -38,8 +39,8 @@ function callOnClickEvents(){
                 })
             }
         });
-
-        $('a.customer-status').click(function(){
+        // $('a.customer-status').off('click');
+        $('a.customer-status').click(function(){event.preventDefault();
             var cus_id = $(this).data('value');
             var req_id = $(this).data('value1');
             $.ajax({
@@ -63,6 +64,7 @@ function callOnClickEvents(){
                 }
             })
         })
+        // $('a.loan-summary').off('click');
         $('a.loan-summary').click(function(){
             var cus_id = $(this).data('value');
             var req_id = $(this).data('value1');
