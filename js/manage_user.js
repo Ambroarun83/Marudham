@@ -7,6 +7,10 @@
         removeItemButton: true,
         noChoicesText: 'Select Agent Name',
         });
+    const loanCatMultiselect = new Choices('#loan_cat1', {
+        removeItemButton: true,
+        noChoicesText: 'Select Loan Category',
+        });
     const lineMultiselect = new Choices('#line1', {
         removeItemButton: true,
         noChoicesText: 'Select Line Name',
@@ -52,6 +56,7 @@ $(document).ready(function () {
         $('#company_id').val('');
         $('#company_name').val('');
         branchMultiselect.clearStore();
+        loanCatMultiselect.clearStore();
         lineMultiselect.clearStore();
         groupMultiselect.clearStore();
 
@@ -66,6 +71,7 @@ $(document).ready(function () {
         $('#company_id').val('');
         $('#company_name').val('');
         branchMultiselect.clearStore();
+        loanCatMultiselect.clearStore();
         lineMultiselect.clearStore();
         groupMultiselect.clearStore();
 
@@ -243,63 +249,7 @@ $(document).ready(function () {
 
     $('#submit_manage_user').click(function(){
         
-        var branch_id1 = branchMultiselect.getValue();
-        var branch_id = '';
-        for(var i = 0 ; i< branch_id1.length; i++){
-            if (i > 0) {
-                branch_id += ',';
-            }
-            branch_id += branch_id1[i].value;
-        }
-        var arr = branch_id.split(",");
-        arr.sort(function(a,b){return a-b});
-		var sortedStr = arr.join(",");
-        $('#branch_id').val(sortedStr);
-
-        var agent1 = agentMultiselect.getValue();
-        var agentforstaff = '';
-        for(var i = 0 ; i< agent1.length; i++){
-            if (i > 0) {
-                agentforstaff += ',';
-            }
-            agentforstaff += agent1[i].value;
-        }
-        var arr = agentforstaff.split(",");
-        arr.sort(function(a,b){return a-b});
-		var sortedStr = arr.join(",");
-
-        $('#agentforstaff').val(sortedStr);
-        
-        var line1 = lineMultiselect.getValue();
-        var line = '';
-        for(var i = 0 ; i< line1.length; i++){
-            if (i > 0) {
-                line += ',';
-            }
-            line += line1[i].value;
-        }
-        var arr = line.split(",");
-        arr.sort(function(a,b){return a-b});
-		var sortedStr = arr.join(",");
-        $('#line').val(sortedStr);
-        var line = $('#line').val();
-        var role = $('#role').val();
-        if(line == '' && role != '2'){event.preventDefault();$('#lineCheck').show();}else{$('#lineCheck').hide();}
-        
-        var group1 = groupMultiselect.getValue();
-        var group = '';
-        for(var i = 0 ; i< group1.length; i++){
-            if (i > 0) {
-                group += ',';
-            }
-            group += group1[i].value;
-        }
-        var arr = group.split(",");
-        arr.sort(function(a,b){return a-b});
-		var sortedStr = arr.join(",");
-        $('#group').val(sortedStr);
-        var group = $('#group').val();
-        if(group == ''){event.preventDefault();$('#groupCheck').show();}else{$('#groupCheck').hide();}
+        multiselectValue();// for taking selected values from multiselect to hidden input field. so that it can be passed as comma imploded string
 
         validation();
     })
@@ -559,6 +509,7 @@ function getStaffDetails(staff_id){
 
             getBranchDropdown(response[0]['company_id']);
             getAgentDropdown(response[0]['company_id']);
+            getLoanCatDropdown();
         }
     })
 }
@@ -598,7 +549,7 @@ function getBranchDropdown(company_id){
     })
 }
 
-//get Line Dropdown
+//get Agent Dropdown
 function getAgentDropdown(company_id){
     var agent_id_upd = $('#agentforstaff_upd').val().split(',');
     $.ajax({
@@ -631,6 +582,41 @@ function getAgentDropdown(company_id){
         }
     })
 }
+
+//get Loan category Dropdown
+function getLoanCatDropdown(){
+    var loan_cat_upd = $('#loan_cat_upd').val().split(',');
+    $.ajax({
+        url: 'manageUser/getLoanCatDropdown.php',
+        data: {},
+        dataType: 'json',
+        type:'post',
+        cache: false,
+        success: function(response){
+            loanCatMultiselect.clearStore();
+            for(var i=0;i<response.length;i++){
+                var loan_cat_id = response[i]['loan_cat_id'];
+                var loan_cat_name = response[i]['loan_cat_name'];
+                var selected = '';
+                if(loan_cat_upd != ''){
+                    for(var j=0;j<loan_cat_upd.length;j++){
+                        if(loan_cat_upd[j] == loan_cat_id){
+                            selected = 'selected';
+                        }
+                    }
+                }
+                var items = [{
+                    value : loan_cat_id,
+                    label : loan_cat_name,
+                    selected: selected
+                }]
+                loanCatMultiselect.setChoices(items);
+                loanCatMultiselect.init();
+            }
+        }
+    })
+}
+
 //get Line Dropdown
 function getLineDropdown(branch_id){
     var line_id_upd = $('#line_id_upd').val().split(',');
@@ -751,6 +737,86 @@ function checkbox(checkboxesToEnable,module){
     }
 }
 
+// for taking selected values from multiselect to hidden input field. so that it can be passed as comma imploded string
+function multiselectValue(){
+    var branch_id1 = branchMultiselect.getValue();
+        var branch_id = '';
+        for(var i = 0 ; i< branch_id1.length; i++){
+            if (i > 0) {
+                branch_id += ',';
+            }
+            branch_id += branch_id1[i].value;
+        }
+        var arr = branch_id.split(",");
+        arr.sort(function(a,b){return a-b});
+		var sortedStr = arr.join(",");
+        $('#branch_id').val(sortedStr);
+        //////////////////////////////////////////////////
+        var agent1 = agentMultiselect.getValue();
+        var agentforstaff = '';
+        for(var i = 0 ; i< agent1.length; i++){
+            if (i > 0) {
+                agentforstaff += ',';
+            }
+            agentforstaff += agent1[i].value;
+        }
+        var arr = agentforstaff.split(",");
+        arr.sort(function(a,b){return a-b});
+		var sortedStr = arr.join(",");
+        $('#agentforstaff').val(sortedStr);
+
+        //////////////////////////////////////////////////
+        
+        var loan_cat1 = loanCatMultiselect.getValue();
+        var loan_cat = '';
+        for(var i = 0 ; i< loan_cat1.length; i++){
+            if (i > 0) {
+                loan_cat += ',';
+            }
+            loan_cat += loan_cat1[i].value;
+        }
+        var arr = loan_cat.split(",");
+        arr.sort(function(a,b){return a-b});
+		var sortedStr = arr.join(",");
+        
+        $('#loan_cat').val(sortedStr);
+        var loan_cat = $('#loan_cat').val();
+        var role = $('#role').val();
+        if(loan_cat == '' && role == '3'){event.preventDefault();$('#loan_catCheck').show();}else{$('#loan_catCheck').hide();}
+        //////////////////////////////////////////////////
+        
+        var line1 = lineMultiselect.getValue();
+        var line = '';
+        for(var i = 0 ; i< line1.length; i++){
+            if (i > 0) {
+                line += ',';
+            }
+            line += line1[i].value;
+        }
+        var arr = line.split(",");
+        arr.sort(function(a,b){return a-b});
+		var sortedStr = arr.join(",");
+        $('#line').val(sortedStr);
+        var line = $('#line').val();
+        var role = $('#role').val();
+        if(line == '' && role != '2'){event.preventDefault();$('#lineCheck').show();}else{$('#lineCheck').hide();}
+        //////////////////////////////////////////////////
+        var group1 = groupMultiselect.getValue();
+        var group = '';
+        for(var i = 0 ; i< group1.length; i++){
+            if (i > 0) {
+                group += ',';
+            }
+            group += group1[i].value;
+        }
+        var arr = group.split(",");
+        arr.sort(function(a,b){return a-b});
+		var sortedStr = arr.join(",");
+        $('#group').val(sortedStr);
+        var group = $('#group').val();
+        if(group == ''){event.preventDefault();$('#groupCheck').show();}else{$('#groupCheck').hide();}
+        //////////////////////////////////////////////////
+}
 
 function validation(){
     var role = $('#role').val();
@@ -859,6 +925,7 @@ function getRoleBasedDetails(role){
         $('.agent').hide();
         $('.staff').hide();
         $('.director').hide();
+        $(".loancat_div").hide();
         $('.line_div').show();
         $('.agent_div').hide();
         $("#role_type").empty();
@@ -868,6 +935,7 @@ function getRoleBasedDetails(role){
     if(role == '2'){
         $('.agent').show();
         $(".role_type").hide();
+        $(".loancat_div").hide();
         $('.line_div').hide();
         $('.agent_div').hide();
         $('.staff').hide();
@@ -875,6 +943,7 @@ function getRoleBasedDetails(role){
     }else 
     if(role == '3'){
         $(".role_type").show();
+        $(".loancat_div").show();
         $('.line_div').show();
         $('.agent_div').show();
         $('.agent').hide();

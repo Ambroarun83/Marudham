@@ -10,6 +10,7 @@ if($userid != 1){
     $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
     while($rowuser = $userQry->fetch_assoc()){
         $group_id = $rowuser['group_id'];
+        $loan_cat = $rowuser['loan_cat'];
     }
     $group_id = explode(',',$group_id);
     $sub_area_list = array();
@@ -24,6 +25,10 @@ if($userid != 1){
     }
     $sub_area_list = array();
     $sub_area_list = implode(',',$sub_area_ids);
+
+    if($loan_cat == null){
+        $loan_cat = ''; 
+    }
 }
 
 
@@ -54,10 +59,15 @@ $column = array(
 
 
 if($userid == 1){
-    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status != 9 and cus_status < 14) '; // 9 means revoked in verification
+    $query = 'SELECT * FROM in_verification where status = 0 and (cus_status != 9 and cus_status < 14) '; // 9 means revoked in verification and < 14 means issued
 }else{
     $query = "SELECT * FROM in_verification where status = 0 and (cus_status != 9 and cus_status < 14) 
-    and sub_area IN ($sub_area_list) ";//show only moved to verification list and cancelled at verification
+    and sub_area IN ($sub_area_list) ";//show only moved to verification list and cancelled at verification 
+    
+    if($loan_cat != null and $loan_cat != ''){
+        $query .= "and loan_category IN ($loan_cat)";// show only user's loan cat allocation
+    }
+
 }
 // print_r($query);
 if($_POST['search'] != "")

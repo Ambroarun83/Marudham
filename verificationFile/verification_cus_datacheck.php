@@ -6,7 +6,7 @@ include '../ajaxconfig.php';
 <table class="table custom-table " id="cus_datacheck">
     <thead>
         <tr>
-            <th>S.No</th>
+            <th width='50'>S.No</th>
             <th>Customer ID</th>
             <th>Custommer Name</th>            
             <th>Mobile Number</th>

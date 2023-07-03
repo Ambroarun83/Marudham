@@ -3,7 +3,7 @@ include('../ajaxconfig.php');
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
 }
-$cus_id='100010001000';
+// $cus_id='100010001000';
 $records = array();
 
 $result=$con->query("SELECT * FROM customer_register where cus_id = '".strip_tags($cus_id)."' ");

@@ -115,6 +115,7 @@ if($idupd>0)
 			$staff_id          		     = $getUser['staff_id'];
 			$company_id          		     = $getUser['company_id'];
 			$branch_id          		     = $getUser['branch_id'];
+			$loan_cat          		     = $getUser['loan_cat'];
 			$agentforstaff          		     = $getUser['agentforstaff'];
 			$line_id          		     = $getUser['line_id'];
 			$group_id          		     = $getUser['group_id'];
@@ -197,6 +198,7 @@ if($idupd>0)
 		<input type="hidden" class="form-control" value="<?php if(isset($company_id)) echo $company_id; ?>"  id="company_id_upd" name="company_id_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($branch_id)) echo $branch_id; ?>"  id="branch_id_upd" name="branch_id_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($agentforstaff)) echo $agentforstaff; ?>"  id="agentforstaff_upd" name="agentforstaff_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if(isset($loan_cat)) echo $loan_cat; ?>"  id="loan_cat_upd" name="loan_cat_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($agent_id)) echo $agent_id; ?>"  id="agent_id_upd" name="agent_id_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($line_id)) echo $line_id; ?>"  id="line_id_upd" name="line_id_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if(isset($group_id)) echo $group_id; ?>"  id="group_id_upd" name="group_id_upd" aria-describedby="id" placeholder="Enter id">
@@ -389,6 +391,16 @@ if($idupd>0)
 												<option value="">Select Agent Name</option>
 											</select>
 											<span class="text-danger" style='display:none' id='AgentCheck'>Please select Agent Name</span>
+                                        </div>
+                                    </div>
+									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 loancat_div">
+                                        <div class="form-group">
+                                            <label for="disabledInput">Loan Category</label>&nbsp;<span class="text-danger">*</span>
+											<input type='hidden' class='form-control' id='loan_cat' name='loan_cat' >
+											<select tabindex="9" type="text" class="form-control" id="loan_cat1" name="loan_cat1" multiple>
+												<option value="">Select Loan Category</option>
+											</select>
+											<span class="text-danger" style='display:none' id='loan_catCheck'>Please select Loan Category</span>
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 line_div">

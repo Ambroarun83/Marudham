@@ -5,10 +5,12 @@ include '../ajaxconfig.php';
 <table class="table custom-table " id="group_datacheck">
     <thead>
         <tr>
-            <th>S.No</th>
+            <th width='100'>S.No</th>
             <th> Customer ID </th>
             <th> Name </th>
             <th> Mobile Number </th>
+            <th width='300'> Under Customer Name </th>
+            <th width='300'> Under Customer ID </th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +29,7 @@ include '../ajaxconfig.php';
             if($category == '2'){ $category = "group_mobile";}
             }
 
-        $cusInfo = $connect->query("SELECT `group_name`,`group_aadhar`,`group_mobile` FROM `verification_group_info` WHERE $category = '$name' &&  req_id != '$req_id' order by id desc");
+        $cusInfo = $connect->query("SELECT a.`group_name`,a.`group_aadhar`,a.`group_mobile`,a.cus_id,b.customer_name FROM `verification_group_info` a JOIN customer_register b ON a.req_id = b.req_ref_id WHERE a.$category = '$name' &&  a.req_id != '$req_id' order by a.id desc");
 
         $i = 1;
         while ($cus = $cusInfo->fetch()) {
@@ -37,6 +39,8 @@ include '../ajaxconfig.php';
                 <td> <?php echo $cus['group_aadhar']; ?></td>
                 <td> <?php echo $cus['group_name']; ?></td> 
                 <td> <?php echo $cus['group_mobile']; ?></td> 
+                <td> <?php echo $cus['customer_name']; ?></td>
+                <td> <?php echo $cus['cus_id']; ?></td>
             </tr>
         <?php
         }
