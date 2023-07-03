@@ -2261,7 +2261,6 @@ $('#proofof').change(function () {
         cache: false,
         success: function (response) {
 
-
             $('#proof_type option').prop('disabled', false);
 
             $.each(response, function (index, value) {
@@ -2270,6 +2269,26 @@ $('#proofof').change(function () {
 
         }
     });
+    if(proof == '2'){
+        $.ajax({
+            url: 'verificationFile/verification_proof_fam.php',
+            data: {"reqId": req_id},
+            dataType: 'json',
+            type: 'post',
+            cache: false,
+            success: function(response){
+                $('.fam_mem_div').show();
+                $('#fam_mem').empty();
+                $('#fam_mem').append(`<option value=""> Select Family Member </option>`);
+                $.each(response, function (index, value) {
+                    $('#fam_mem').append("<option value='"+value+"'>"+value+"</option>");
+                });
+            }
+            
+        })
+    }else{
+        $('.fam_memDiv').hide();
+    }
 
 })
 
@@ -2702,7 +2721,8 @@ function validation() {
     var district = $('#district1').val(); var taluk = $('#taluk1').val(); var area = $('#area').val(); var sub_area = $('#sub_area').val(); var pic = $('#pic').val(); var mobile1 = $('#mobile1').val();
     var guarentor_name = $('#guarentor_name').val();var guarentor_image = $('#guarentor_image').val(); var guarentorpic = $('#guarentorpic').val(); var area_cnfrm = $('#area_cnfrm').val(); var cus_res_type = $('#cus_res_type').val();
     var cus_res_details = $('#cus_res_details').val(); var cus_res_address = $('#cus_res_address').val(); var cus_res_native = $('#cus_res_native').val();
-    var cus_occ_type = $('#cus_occ_type').val(); var cus_occ_detail = $('#cus_occ_detail').val(); var cus_occ_income = $('#cus_occ_income').val(); var cus_occ_address = $('#cus_occ_address').val(); var cus_how_know = $('#cus_how_know').val(); var cus_monthly_income = $('#cus_monthly_income').val(); var cus_other_income = $('#cus_other_income').val(); var cus_support_income = $('#cus_support_income').val(); var cus_Commitment = $('#cus_Commitment').val(); var cus_monDue_capacity = $('#cus_monDue_capacity').val(); var cus_loan_limit = $('#cus_loan_limit').val();  var about_cus = $('#about_cus').val();
+    var cus_occ_type = $('#cus_occ_type').val(); var cus_occ_detail = $('#cus_occ_detail').val(); var cus_occ_income = $('#cus_occ_income').val(); var cus_occ_address = $('#cus_occ_address').val();var cus_occ_dow = $('#cus_occ_dow').val();var cus_occ_abt = $('#cus_occ_abt').val();
+    var cus_how_know = $('#cus_how_know').val(); var cus_monthly_income = $('#cus_monthly_income').val(); var cus_other_income = $('#cus_other_income').val(); var cus_support_income = $('#cus_support_income').val(); var cus_Commitment = $('#cus_Commitment').val(); var cus_monDue_capacity = $('#cus_monDue_capacity').val(); var cus_loan_limit = $('#cus_loan_limit').val();  var about_cus = $('#about_cus').val();
     var req_id = $('#req_id').val();
 
     // var cus_Character = $('#cus_Character').val(); var cus_Approach = $('#cus_Approach').val(); var cus_Relationship = $('#cus_Relationship').val(); var cus_Attitude = $('#cus_Attitude').val(); var cus_Behavior = $('#cus_Behavior').val(); var cus_Incidents_Remarks = $('#cus_Incidents_Remarks').val();
@@ -2775,7 +2795,7 @@ function validation() {
         }
     } else if (area_cnfrm == '1') {
         $('#areacnfrmCheck').hide();
-        if (cus_occ_type == '' || cus_occ_detail == '' || cus_occ_income == '' || cus_occ_address == '') {
+        if (cus_occ_type == '' || cus_occ_detail == '' || cus_occ_income == '' || cus_occ_address == '' || cus_occ_dow == '' || cus_occ_abt == '') {
             event.preventDefault();
             $('#res_infoCheck').hide();
             $('#occ_infoCheck').show();

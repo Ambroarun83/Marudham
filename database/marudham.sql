@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 30, 2023 at 02:50 PM
+-- Generation Time: Jul 03, 2023 at 03:18 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -231,6 +231,14 @@ CREATE TABLE `agent_communication_details` (
   `whatsapp` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `agent_communication_details`
+--
+
+INSERT INTO `agent_communication_details` (`comm_id`, `agent_reff_id`, `name`, `designation`, `mobile`, `whatsapp`) VALUES
+(2, '2', 'Suresh Kumar', 'MD', '9876546446', '9876546446'),
+(4, '1', 'Shanmugam', 'MD', '9845687321', '9845687321');
+
 -- --------------------------------------------------------
 
 --
@@ -269,6 +277,14 @@ CREATE TABLE `agent_creation` (
   `created_date` datetime DEFAULT current_timestamp(),
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `agent_creation`
+--
+
+INSERT INTO `agent_creation` (`ag_id`, `ag_code`, `ag_name`, `ag_group_id`, `company_id`, `branch_id`, `mail`, `state`, `district`, `taluk`, `place`, `pincode`, `loan_category`, `sub_category`, `scheme`, `loan_payment`, `responsible`, `collection_point`, `bank_name`, `bank_branch_name`, `acc_no`, `ifsc`, `holder_name`, `more_info`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'AG-101', 'Alaathi Mobiles and Furniture', '3', '1', '', 'alaathi@gmail.com', 'TamilNadu', 'Karur', 'Karur', 'Karur', '639006', '5,6', 'AC,Fridge,Mobile,TV', '11,15', '0', '0', '0', 'Karur Vaisiya Bank', 'Karur', '123456789', 'KVB16546', 'Shanmugam', '', 0, '1', '1', NULL, '2023-07-01 11:57:29', '2023-07-01 12:08:42'),
+(2, 'AG-102', 'Laxhmi Electronics', '1', '1', '', '', 'TamilNadu', 'Karur', 'Karur', 'vengamedu', '639006', '5', 'TV,Mobile,Fridge,AC', '11', '0', '1', '1', 'Lakshmi vilas bank', 'Karur', '3213546498', 'LVB654654', 'Suresh Kumar', '', 0, '1', NULL, NULL, '2023-07-01 11:59:41', '2023-07-01 11:59:41');
 
 -- --------------------------------------------------------
 
@@ -1511,6 +1527,8 @@ CREATE TABLE `customer_profile` (
   `occupation_details` varchar(255) DEFAULT NULL,
   `occupation_income` varchar(255) DEFAULT NULL,
   `occupation_address` varchar(255) DEFAULT NULL,
+  `dow` varchar(255) DEFAULT NULL,
+  `abt_occ` varchar(255) DEFAULT NULL,
   `area_confirm_type` varchar(50) DEFAULT NULL,
   `area_confirm_state` varchar(100) DEFAULT NULL,
   `area_confirm_district` varchar(100) DEFAULT NULL,
@@ -1592,6 +1610,17 @@ CREATE TABLE `customer_register` (
   `cus_status` varchar(255) DEFAULT '0',
   `create_time` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `customer_register`
+--
+
+INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `about_customer`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_info_occ_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `cus_status`, `create_time`) VALUES
+(1, '1', '010720232023', 'Bharath', '1990-02-03', '33', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-01 13:26:37'),
+(3, '2', '100010001000', 'Ganesan', '1996-06-01', '27', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '75000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-01 16:21:20'),
+(4, '6', '200020002000', 'Aravind', '1988-03-10', '35', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-03 12:25:41'),
+(5, '1', '010720232023', 'Bharath', '1990-02-03', '33', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-03 12:42:44'),
+(6, '7', '300030003000', 'Rakesh', '1992-06-09', '31', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-03 14:53:00');
 
 -- --------------------------------------------------------
 
@@ -1837,6 +1866,16 @@ CREATE TABLE `in_verification` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `in_verification`
+--
+
+INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Agent', 'Alaathi Mobiles and Furniture', '1', '0', '', 'New customer for us', 'REQ-101', '2023-07-01', '1', '010720232023', 'New', 'Bharath', '1990-02-03', '33', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '1', '3470', '', '1', '0', '3', '3', NULL, '2023-07-01 13:26:37', '0000-00-00 00:00:00'),
+(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '1', '0', '2', '2', NULL, '2023-07-01 13:36:34', '0000-00-00 00:00:00'),
+(6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '1', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
+(7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '1', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00');
+
 -- --------------------------------------------------------
 
 --
@@ -1922,37 +1961,35 @@ CREATE TABLE `loan_category` (
 --
 
 INSERT INTO `loan_category` (`loan_category_id`, `loan_category_name`, `sub_category_name`, `loan_limit`, `status`, `insert_user_id`, `update_user_id`, `delete_user_id`, `created_date`, `updated_date`) VALUES
-(38, '1', 'Education loan', '52351', 0, 1, NULL, 1, '2023-05-11 17:19:08', '2023-05-11 17:19:08'),
-(39, '4', 'Coin', '65230', 0, 1, NULL, NULL, '2023-05-11 17:22:20', '2023-05-11 17:22:20'),
-(40, '2', 'Bike', '79094', 0, 1, NULL, NULL, '2023-05-11 17:24:40', '2023-05-11 17:24:40'),
-(41, '2', 'Scooty', '64779', 0, 1, NULL, NULL, '2023-05-11 17:25:33', '2023-05-11 17:25:33'),
-(42, '4', 'Chain', '86615', 0, 1, NULL, NULL, '2023-05-11 17:28:02', '2023-05-11 17:28:02'),
-(43, '5', 'TV', '58737', 0, 1, NULL, NULL, '2023-05-11 18:40:07', '2023-05-11 18:40:07'),
-(44, '6', 'Mobiles', '78841', 0, 1, NULL, NULL, '2023-05-11 18:45:07', '2023-05-11 18:45:07'),
-(45, '6', 'Tab', '82993', 0, 1, NULL, NULL, '2023-05-11 18:45:33', '2023-05-11 18:45:33'),
-(46, '5', 'AC', '88442', 0, 1, NULL, NULL, '2023-05-11 18:47:54', '2023-05-11 18:47:54'),
-(47, '5', 'Mobile', '58231', 0, 1, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
-(48, '7', 'Small Business', '70829', 0, 1, NULL, NULL, '2023-05-12 15:01:54', '2023-05-12 15:01:54'),
-(49, '7', 'Medium Business', '89451', 0, 1, NULL, NULL, '2023-05-12 15:02:33', '2023-05-12 15:02:33'),
-(50, '7', 'Large Business', '54767', 0, 1, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
-(51, '8', 'Plot Purchase', '50485', 0, 1, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
-(52, '8', 'Construction Loan', '88124', 0, 1, NULL, NULL, '2023-05-12 15:08:00', '2023-05-12 15:08:00'),
-(53, '1', 'Educarion', '64162', 0, 1, NULL, NULL, '2023-05-12 15:51:50', '2023-05-12 15:51:50'),
-(54, '5', 'Fridge', '56438', 0, 1, NULL, NULL, '2023-05-13 16:02:40', '2023-05-13 16:02:40'),
-(55, '9', 'Education', '89708', 0, 1, NULL, NULL, '2023-05-14 12:27:16', '2023-05-14 12:27:16'),
-(56, '1', 'Personal', '54221', 0, 1, NULL, NULL, '2023-05-15 15:59:27', '2023-05-15 15:59:27'),
-(57, '10', 'Home loan', '46984', 0, 1, NULL, NULL, '2023-05-15 16:43:15', '2023-05-15 16:43:15'),
-(58, '7', 'SME Loan', '72256', 0, 1, NULL, NULL, '2023-06-08 11:35:08', '2023-06-08 11:35:08'),
-(59, '2', 'Car Loan', '85330', 0, 1, NULL, NULL, '2023-06-08 11:40:10', '2023-06-08 11:40:10'),
-(60, '8', 'Agri Land', '74879', 0, 1, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
-(61, '3', 'Construction Loan', '73406', 0, 1, NULL, NULL, '2023-06-08 11:43:49', '2023-06-08 11:43:49'),
-(62, '11', 'Personal loan R', '52392', 0, 1, NULL, NULL, '2023-06-13 11:11:33', '2023-06-13 11:11:33'),
-(63, '5', 'AC Pre R ', '86746', 0, 1, NULL, NULL, '2023-06-13 11:15:46', '2023-06-13 11:15:46'),
-(64, '5', 'TV After R', '51548', 0, 1, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
-(65, '4', 'Chain Pre aftr R', '87506', 0, 1, NULL, NULL, '2023-06-13 11:33:16', '2023-06-13 11:33:16'),
-(66, '11', 'Interest R', '57881', 0, 1, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
-(67, '9', 'asdfa', '71890', 0, 1, NULL, NULL, '2023-06-29 15:52:36', '2023-06-29 15:52:36'),
-(68, '1', 'Personal', '65509', 0, 1, NULL, NULL, '2023-06-30 17:08:42', '2023-06-30 17:08:42');
+(3, '4', 'Coin', '54136', 0, 1, NULL, NULL, '2023-05-11 17:22:20', '2023-05-11 17:22:20'),
+(4, '2', 'Bike', '69966', 0, 1, NULL, NULL, '2023-05-11 17:24:40', '2023-05-11 17:24:40'),
+(5, '2', 'Scooty', '52420', 0, 1, NULL, NULL, '2023-05-11 17:25:33', '2023-05-11 17:25:33'),
+(6, '4', 'Chain', '52204', 0, 1, NULL, NULL, '2023-05-11 17:28:02', '2023-05-11 17:28:02'),
+(7, '5', 'TV', '58761', 0, 1, NULL, NULL, '2023-05-11 18:40:07', '2023-05-11 18:40:07'),
+(8, '6', 'Mobiles', '47192', 0, 1, NULL, NULL, '2023-05-11 18:45:07', '2023-05-11 18:45:07'),
+(9, '6', 'Tab', '59679', 0, 1, NULL, NULL, '2023-05-11 18:45:33', '2023-05-11 18:45:33'),
+(10, '5', 'AC', '66820', 0, 1, NULL, NULL, '2023-05-11 18:47:54', '2023-05-11 18:47:54'),
+(11, '5', 'Mobile', '65061', 0, 1, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
+(12, '7', 'Small Business', '79844', 0, 1, NULL, NULL, '2023-05-12 15:01:54', '2023-05-12 15:01:54'),
+(13, '7', 'Medium Business', '69036', 0, 1, NULL, NULL, '2023-05-12 15:02:33', '2023-05-12 15:02:33'),
+(14, '7', 'Large Business', '60648', 0, 1, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
+(15, '8', 'Plot Purchase', '51132', 0, 1, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
+(16, '8', 'Construction Loan', '73720', 0, 1, NULL, NULL, '2023-05-12 15:08:00', '2023-05-12 15:08:00'),
+(17, '1', 'Educarion', '80200', 0, 1, NULL, NULL, '2023-05-12 15:51:50', '2023-05-12 15:51:50'),
+(18, '5', 'Fridge', '89841', 0, 1, NULL, NULL, '2023-05-13 16:02:40', '2023-05-13 16:02:40'),
+(19, '9', 'Education', '73604', 0, 1, NULL, NULL, '2023-05-14 12:27:16', '2023-05-14 12:27:16'),
+(20, '1', 'Personal', '53498', 0, 1, NULL, NULL, '2023-05-15 15:59:27', '2023-05-15 15:59:27'),
+(21, '10', 'Home loan', '46680', 0, 1, NULL, NULL, '2023-05-15 16:43:15', '2023-05-15 16:43:15'),
+(22, '7', 'SME Loan', '72906', 0, 1, NULL, NULL, '2023-06-08 11:35:08', '2023-06-08 11:35:08'),
+(23, '2', 'Car Loan', '89490', 0, 1, NULL, NULL, '2023-06-08 11:40:10', '2023-06-08 11:40:10'),
+(24, '8', 'Agri Land', '48727', 0, 1, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
+(25, '3', 'Construction Loan', '65171', 0, 1, NULL, NULL, '2023-06-08 11:43:49', '2023-06-08 11:43:49'),
+(26, '11', 'Personal loan R', '89673', 0, 1, NULL, NULL, '2023-06-13 11:11:33', '2023-06-13 11:11:33'),
+(27, '5', 'AC Pre R ', '72850', 0, 1, NULL, NULL, '2023-06-13 11:15:46', '2023-06-13 11:15:46'),
+(28, '5', 'TV After R', '50232', 0, 1, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
+(29, '4', 'Chain Pre aftr R', '77614', 0, 1, NULL, NULL, '2023-06-13 11:33:16', '2023-06-13 11:33:16'),
+(30, '11', 'Interest R', '57369', 0, 1, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
+(31, '9', 'asdfa', '54004', 0, 1, NULL, NULL, '2023-06-29 15:52:36', '2023-06-29 15:52:36');
 
 -- --------------------------------------------------------
 
@@ -2011,71 +2048,70 @@ CREATE TABLE `loan_category_ref` (
 --
 
 INSERT INTO `loan_category_ref` (`loan_category_ref_id`, `loan_category_ref_name`, `loan_category_id`, `status`, `insert_user_id`, `update_user_id`, `delete_user_id`, `created_date`, `updated_date`) VALUES
-(77, 'Company', '4', 0, NULL, NULL, NULL, '2023-05-11 17:24:40', '2023-05-11 17:24:40'),
-(78, 'Model', '4', 0, NULL, NULL, NULL, '2023-05-11 17:24:40', '2023-05-11 17:24:40'),
-(79, 'Gold Type', '3', 0, NULL, NULL, NULL, '2023-05-11 17:27:14', '2023-05-11 17:27:14'),
-(80, 'Gram / sovereign', '3', 0, NULL, NULL, NULL, '2023-05-11 17:27:14', '2023-05-11 17:27:14'),
-(81, 'Market value', '3', 0, NULL, NULL, NULL, '2023-05-11 17:27:14', '2023-05-11 17:27:14'),
-(82, 'Brand', '11', 0, NULL, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
-(83, 'Model', '11', 0, NULL, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
-(84, 'IMEI Number', '11', 0, NULL, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
-(85, 'Business type', '12', 0, NULL, NULL, NULL, '2023-05-12 15:01:54', '2023-05-12 15:01:54'),
-(86, 'Ownership', '12', 0, NULL, NULL, NULL, '2023-05-12 15:01:54', '2023-05-12 15:01:54'),
-(87, 'Business type', '13', 0, NULL, NULL, NULL, '2023-05-12 15:02:33', '2023-05-12 15:02:33'),
-(88, 'Ownership', '13', 0, NULL, NULL, NULL, '2023-05-12 15:02:33', '2023-05-12 15:02:33'),
-(89, 'CIN', '14', 0, NULL, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
-(90, 'Business Type', '14', 0, NULL, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
-(91, 'PAN', '14', 0, NULL, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
-(92, 'Plot Dimension', '15', 0, NULL, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
-(93, 'Sq ft', '15', 0, NULL, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
-(94, 'Plot Value', '15', 0, NULL, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
-(95, 'Total Value For Construction', '16', 0, NULL, NULL, NULL, '2023-05-12 15:08:00', '2023-05-12 15:08:00'),
-(96, 'Ownership Detail', '16', 0, NULL, NULL, NULL, '2023-05-12 15:08:00', '2023-05-12 15:08:00'),
-(97, 'Company', '5', 0, NULL, NULL, NULL, '2023-05-12 15:37:17', '2023-05-12 15:37:17'),
-(98, 'Model', '5', 0, NULL, NULL, NULL, '2023-05-12 15:37:17', '2023-05-12 15:37:17'),
-(99, 'Company', '10', 0, NULL, NULL, NULL, '2023-05-12 15:43:12', '2023-05-12 15:43:12'),
-(100, 'AC capacity', '10', 0, NULL, NULL, NULL, '2023-05-12 15:43:12', '2023-05-12 15:43:12'),
-(101, 'AC type', '10', 0, NULL, NULL, NULL, '2023-05-12 15:43:12', '2023-05-12 15:43:12'),
-(102, 'Brand', '9', 0, NULL, NULL, NULL, '2023-05-12 15:47:30', '2023-05-12 15:47:30'),
-(103, 'Screen size', '9', 0, NULL, NULL, NULL, '2023-05-12 15:47:30', '2023-05-12 15:47:30'),
-(104, 'Brand', '8', 0, NULL, NULL, NULL, '2023-05-12 15:48:00', '2023-05-12 15:48:00'),
-(105, 'Screen size', '8', 0, NULL, NULL, NULL, '2023-05-12 15:48:00', '2023-05-12 15:48:00'),
-(106, 'Passed out ', '17', 0, NULL, NULL, NULL, '2023-05-12 15:53:44', '2023-05-12 15:53:44'),
-(107, 'percentage', '17', 0, NULL, NULL, NULL, '2023-05-12 15:53:44', '2023-05-12 15:53:44'),
-(108, 'Brand ', '7', 0, NULL, NULL, NULL, '2023-05-13 15:15:44', '2023-05-13 15:15:44'),
-(109, 'Screen size', '7', 0, NULL, NULL, NULL, '2023-05-13 15:15:44', '2023-05-13 15:15:44'),
-(110, 'TV Type', '7', 0, NULL, NULL, NULL, '2023-05-13 15:15:44', '2023-05-13 15:15:44'),
-(111, 'Brand', '18', 0, NULL, NULL, NULL, '2023-05-13 16:23:16', '2023-05-13 16:23:16'),
-(112, 'Door', '18', 0, NULL, NULL, NULL, '2023-05-13 16:23:16', '2023-05-13 16:23:16'),
-(113, 'Institute', '19', 0, NULL, NULL, NULL, '2023-05-15 11:02:43', '2023-05-15 11:02:43'),
-(114, 'Class', '19', 0, NULL, NULL, NULL, '2023-05-15 11:02:43', '2023-05-15 11:02:43'),
-(115, 'Current salary', '20', 0, NULL, NULL, NULL, '2023-05-15 15:59:27', '2023-05-15 15:59:27'),
-(116, 'Business Type', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
-(117, 'Bussiness Value', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
-(118, 'Business Location', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
-(119, '', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
-(120, 'Brand', '23', 0, NULL, NULL, NULL, '2023-06-08 11:40:10', '2023-06-08 11:40:10'),
-(121, 'Model', '23', 0, NULL, NULL, NULL, '2023-06-08 11:40:10', '2023-06-08 11:40:10'),
-(122, 'Acre', '24', 0, NULL, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
-(123, 'Borewel type', '24', 0, NULL, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
-(124, 'Harvesting type', '24', 0, NULL, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
-(125, 'Quotation Value', '25', 0, NULL, NULL, NULL, '2023-06-08 11:43:49', '2023-06-08 11:43:49'),
-(126, 'Current Designation', '26', 0, NULL, NULL, NULL, '2023-06-13 11:12:10', '2023-06-13 11:12:10'),
-(127, 'No. of months working', '26', 0, NULL, NULL, NULL, '2023-06-13 11:12:10', '2023-06-13 11:12:10'),
-(128, 'Salary', '26', 0, NULL, NULL, NULL, '2023-06-13 11:12:10', '2023-06-13 11:12:10'),
-(129, 'Company', '27', 0, NULL, NULL, NULL, '2023-06-13 11:20:35', '2023-06-13 11:20:35'),
-(130, 'Model', '27', 0, NULL, NULL, NULL, '2023-06-13 11:20:35', '2023-06-13 11:20:35'),
-(131, 'Year', '27', 0, NULL, NULL, NULL, '2023-06-13 11:20:35', '2023-06-13 11:20:35'),
-(132, 'Company', '28', 0, NULL, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
-(133, 'Model', '28', 0, NULL, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
-(134, 'Year', '28', 0, NULL, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
-(135, 'Purity', '29', 0, NULL, NULL, NULL, '2023-06-13 11:33:16', '2023-06-13 11:33:16'),
-(136, 'Gram', '29', 0, NULL, NULL, NULL, '2023-06-13 11:33:16', '2023-06-13 11:33:16'),
-(137, 'Current designation', '30', 0, NULL, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
-(138, 'No. of months working', '30', 0, NULL, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
-(139, 'Salary', '30', 0, NULL, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
-(140, 'ertert', '31', 0, NULL, NULL, NULL, '2023-06-29 15:52:36', '2023-06-29 15:52:36'),
-(141, 'Operation', '68', 0, NULL, NULL, NULL, '2023-06-30 17:08:42', '2023-06-30 17:08:42');
+(9, 'Company', '4', 0, NULL, NULL, NULL, '2023-05-11 17:24:40', '2023-05-11 17:24:40'),
+(10, 'Model', '4', 0, NULL, NULL, NULL, '2023-05-11 17:24:40', '2023-05-11 17:24:40'),
+(11, 'Gold Type', '3', 0, NULL, NULL, NULL, '2023-05-11 17:27:14', '2023-05-11 17:27:14'),
+(12, 'Gram / sovereign', '3', 0, NULL, NULL, NULL, '2023-05-11 17:27:14', '2023-05-11 17:27:14'),
+(13, 'Market value', '3', 0, NULL, NULL, NULL, '2023-05-11 17:27:14', '2023-05-11 17:27:14'),
+(14, 'Brand', '11', 0, NULL, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
+(15, 'Model', '11', 0, NULL, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
+(16, 'IMEI Number', '11', 0, NULL, NULL, NULL, '2023-05-12 14:59:38', '2023-05-12 14:59:38'),
+(17, 'Business type', '12', 0, NULL, NULL, NULL, '2023-05-12 15:01:54', '2023-05-12 15:01:54'),
+(18, 'Ownership', '12', 0, NULL, NULL, NULL, '2023-05-12 15:01:54', '2023-05-12 15:01:54'),
+(19, 'Business type', '13', 0, NULL, NULL, NULL, '2023-05-12 15:02:33', '2023-05-12 15:02:33'),
+(20, 'Ownership', '13', 0, NULL, NULL, NULL, '2023-05-12 15:02:33', '2023-05-12 15:02:33'),
+(21, 'CIN', '14', 0, NULL, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
+(22, 'Business Type', '14', 0, NULL, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
+(23, 'PAN', '14', 0, NULL, NULL, NULL, '2023-05-12 15:03:20', '2023-05-12 15:03:20'),
+(24, 'Plot Dimension', '15', 0, NULL, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
+(25, 'Sq ft', '15', 0, NULL, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
+(26, 'Plot Value', '15', 0, NULL, NULL, NULL, '2023-05-12 15:05:48', '2023-05-12 15:05:48'),
+(27, 'Total Value For Construction', '16', 0, NULL, NULL, NULL, '2023-05-12 15:08:00', '2023-05-12 15:08:00'),
+(28, 'Ownership Detail', '16', 0, NULL, NULL, NULL, '2023-05-12 15:08:00', '2023-05-12 15:08:00'),
+(29, 'Company', '5', 0, NULL, NULL, NULL, '2023-05-12 15:37:17', '2023-05-12 15:37:17'),
+(30, 'Model', '5', 0, NULL, NULL, NULL, '2023-05-12 15:37:17', '2023-05-12 15:37:17'),
+(31, 'Company', '10', 0, NULL, NULL, NULL, '2023-05-12 15:43:12', '2023-05-12 15:43:12'),
+(32, 'AC capacity', '10', 0, NULL, NULL, NULL, '2023-05-12 15:43:12', '2023-05-12 15:43:12'),
+(33, 'AC type', '10', 0, NULL, NULL, NULL, '2023-05-12 15:43:12', '2023-05-12 15:43:12'),
+(34, 'Brand', '9', 0, NULL, NULL, NULL, '2023-05-12 15:47:30', '2023-05-12 15:47:30'),
+(35, 'Screen size', '9', 0, NULL, NULL, NULL, '2023-05-12 15:47:30', '2023-05-12 15:47:30'),
+(36, 'Brand', '8', 0, NULL, NULL, NULL, '2023-05-12 15:48:00', '2023-05-12 15:48:00'),
+(37, 'Screen size', '8', 0, NULL, NULL, NULL, '2023-05-12 15:48:00', '2023-05-12 15:48:00'),
+(38, 'Passed out ', '17', 0, NULL, NULL, NULL, '2023-05-12 15:53:44', '2023-05-12 15:53:44'),
+(39, 'percentage', '17', 0, NULL, NULL, NULL, '2023-05-12 15:53:44', '2023-05-12 15:53:44'),
+(40, 'Brand ', '7', 0, NULL, NULL, NULL, '2023-05-13 15:15:44', '2023-05-13 15:15:44'),
+(41, 'Screen size', '7', 0, NULL, NULL, NULL, '2023-05-13 15:15:44', '2023-05-13 15:15:44'),
+(42, 'TV Type', '7', 0, NULL, NULL, NULL, '2023-05-13 15:15:44', '2023-05-13 15:15:44'),
+(43, 'Brand', '18', 0, NULL, NULL, NULL, '2023-05-13 16:23:16', '2023-05-13 16:23:16'),
+(44, 'Door', '18', 0, NULL, NULL, NULL, '2023-05-13 16:23:16', '2023-05-13 16:23:16'),
+(45, 'Institute', '19', 0, NULL, NULL, NULL, '2023-05-15 11:02:43', '2023-05-15 11:02:43'),
+(46, 'Class', '19', 0, NULL, NULL, NULL, '2023-05-15 11:02:43', '2023-05-15 11:02:43'),
+(47, 'Current salary', '20', 0, NULL, NULL, NULL, '2023-05-15 15:59:27', '2023-05-15 15:59:27'),
+(48, 'Business Type', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
+(49, 'Bussiness Value', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
+(50, 'Business Location', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
+(51, '', '22', 0, NULL, NULL, NULL, '2023-06-08 11:35:52', '2023-06-08 11:35:52'),
+(52, 'Brand', '23', 0, NULL, NULL, NULL, '2023-06-08 11:40:10', '2023-06-08 11:40:10'),
+(53, 'Model', '23', 0, NULL, NULL, NULL, '2023-06-08 11:40:10', '2023-06-08 11:40:10'),
+(54, 'Acre', '24', 0, NULL, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
+(55, 'Borewel type', '24', 0, NULL, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
+(56, 'Harvesting type', '24', 0, NULL, NULL, NULL, '2023-06-08 11:42:16', '2023-06-08 11:42:16'),
+(57, 'Quotation Value', '25', 0, NULL, NULL, NULL, '2023-06-08 11:43:49', '2023-06-08 11:43:49'),
+(58, 'Current Designation', '26', 0, NULL, NULL, NULL, '2023-06-13 11:12:10', '2023-06-13 11:12:10'),
+(59, 'No. of months working', '26', 0, NULL, NULL, NULL, '2023-06-13 11:12:10', '2023-06-13 11:12:10'),
+(60, 'Salary', '26', 0, NULL, NULL, NULL, '2023-06-13 11:12:10', '2023-06-13 11:12:10'),
+(61, 'Company', '27', 0, NULL, NULL, NULL, '2023-06-13 11:20:35', '2023-06-13 11:20:35'),
+(62, 'Model', '27', 0, NULL, NULL, NULL, '2023-06-13 11:20:35', '2023-06-13 11:20:35'),
+(63, 'Year', '27', 0, NULL, NULL, NULL, '2023-06-13 11:20:35', '2023-06-13 11:20:35'),
+(64, 'Company', '28', 0, NULL, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
+(65, 'Model', '28', 0, NULL, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
+(66, 'Year', '28', 0, NULL, NULL, NULL, '2023-06-13 11:21:38', '2023-06-13 11:21:38'),
+(67, 'Purity', '29', 0, NULL, NULL, NULL, '2023-06-13 11:33:16', '2023-06-13 11:33:16'),
+(68, 'Gram', '29', 0, NULL, NULL, NULL, '2023-06-13 11:33:16', '2023-06-13 11:33:16'),
+(69, 'Current designation', '30', 0, NULL, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
+(70, 'No. of months working', '30', 0, NULL, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
+(71, 'Salary', '30', 0, NULL, NULL, NULL, '2023-06-13 11:34:58', '2023-06-13 11:34:58'),
+(72, 'ertert', '31', 0, NULL, NULL, NULL, '2023-06-29 15:52:36', '2023-06-29 15:52:36');
 
 -- --------------------------------------------------------
 
@@ -2145,6 +2181,35 @@ CREATE TABLE `loan_scheme` (
   `created_date` datetime DEFAULT current_timestamp(),
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `loan_scheme`
+--
+
+INSERT INTO `loan_scheme` (`scheme_id`, `scheme_name`, `short_name`, `loan_category`, `sub_category`, `due_method`, `profit_method`, `intrest_rate`, `total_due`, `advance_due`, `due_period`, `doc_charge_type`, `doc_charge_min`, `doc_charge_max`, `proc_fee_type`, `proc_fee_min`, `proc_fee_max`, `due_date`, `overdue`, `grace_period`, `penalty`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Scheme 1B', '1B', '1', 'Personal', 'monthly', 'pre_intrest', '8', '5', '1', '4', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, 1, NULL, '2023-05-11 17:46:49', '2023-05-15 17:27:53'),
+(2, 'Scheme 1A', '1A', '1', 'Education loan', 'monthly', 'pre_intrest', '7', '12', '2', '10', 'percentage', '0', '1', 'percentage', '0', '1', '', '1', '', '', 0, 1, NULL, NULL, '2023-05-11 17:48:27', '2023-05-11 17:48:27'),
+(3, 'Scheme 2A', '2A', '4', 'Coin', 'monthly', 'pre_intrest', '8', '7', '2', '5', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 1, 1, 1, '1', '2023-05-11 17:50:07', '2023-05-15 17:33:14'),
+(4, 'Scheme 2B', '2B', '4', 'Chain', 'monthly', 'pre_intrest', '9', '12', '1', '11', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, NULL, NULL, '2023-05-11 17:50:57', '2023-05-11 17:50:57'),
+(5, 'Scheme 3A', '3A', '2', 'Bike', 'monthly', 'pre_intrest', '10', '8', '2', '6', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, 1, NULL, '2023-05-11 17:52:22', '2023-05-15 17:29:43'),
+(6, 'Scheme 1A', '1A', '1', 'Personal', 'weekly', 'pre_intrest', '7', NULL, NULL, '22', '', '1', '2', 'percentage', '1', '2', '', '3', NULL, NULL, 0, 1, 1, NULL, '2023-05-11 17:53:34', '2023-05-15 17:41:22'),
+(7, 'scheme 2A', '2A', '4', 'Chain', 'weekly', 'pre_intrest', '8', NULL, NULL, '12', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', NULL, NULL, 1, 1, NULL, '1', '2023-05-11 17:54:50', '2023-05-11 17:54:50'),
+(8, 'Scheme 1A', '1A', '1', 'Personal', 'daily', 'pre_intrest', '7', NULL, NULL, '100', 'percentage', '1', '2', 'percentage', '1', '2', NULL, '3', NULL, NULL, 0, 1, 1, NULL, '2023-05-11 17:56:33', '2023-05-15 17:41:38'),
+(9, 'Scheme 2A', '2A', '1', 'Personal', 'daily', 'pre_intrest', '8', NULL, NULL, '150', 'percentage', '1', '2', 'percentage', '1', '2', NULL, '3', NULL, NULL, 0, 1, NULL, NULL, '2023-05-11 17:57:26', '2023-05-11 17:57:26'),
+(10, 'Scheme 3A', '3A', '5', 'TV', 'monthly', 'pre_intrest', '10', '10', '2', '8', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, NULL, NULL, '2023-05-12 09:51:01', '2023-05-12 09:51:01'),
+(11, 'Scheme 3A', '3A', '5', 'AC', 'monthly', 'pre_intrest', '10', '10', '2', '8', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, 1, NULL, '2023-05-12 09:51:58', '2023-05-13 15:17:15'),
+(12, 'SB Monthly', 'SB 5', '7', 'Small Business', 'monthly', 'pre_intrest', '12', '5', '', '5', 'amt', '0', '0', 'amt', '0', '0', '', '3', '', '', 0, 1, 1, NULL, '2023-05-12 15:44:11', '2023-05-12 15:46:35'),
+(13, 'SB Weekly', 'SB 10', '7', 'Small Business', 'weekly', 'pre_intrest', '12', NULL, NULL, '10', 'percentage', '0', '2', 'amt', '0', '1', '', '3', NULL, NULL, 0, 1, NULL, NULL, '2023-05-12 15:45:05', '2023-05-12 15:45:05'),
+(14, 'SB Daily', 'SB 100', '7', 'Small Business', 'daily', 'pre_intrest', '12', NULL, NULL, '100', 'percentage', '1', '2', 'amt', '0', '1', NULL, '3', NULL, NULL, 0, 1, 1, NULL, '2023-05-12 15:45:49', '2023-05-12 15:46:10'),
+(15, 'Scheme 4A', '4A', '5', 'fridge', 'monthly', 'pre_intrest', '10', '10', '3', '7', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, NULL, NULL, '2023-05-13 16:05:13', '2023-05-13 16:05:13'),
+(16, 'Education', 'Edu 10', '9', 'Education', 'monthly', 'pre_intrest', '11', '10', '0', '10', 'percentage', '5.5', '5.5', 'percentage', '5.5', '5.5', '', '3', '', '', 0, 1, NULL, NULL, '2023-05-14 12:29:16', '2023-05-14 12:29:16'),
+(17, 'Large 50', 'L 50', '7', 'Large Business', 'monthly', 'pre_intrest', '20', '20', '0', '20', 'percentage', '2', '2', 'percentage', '0', '2', '', '2', '', '', 0, 1, NULL, NULL, '2023-05-15 12:07:52', '2023-05-15 12:07:52'),
+(18, 'Scheme 4A', '4A', '10', 'Home loan', 'monthly', 'pre_intrest', '10', '10', '3', '7', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, 1, NULL, '2023-05-15 17:24:37', '2023-05-15 17:29:03'),
+(19, 'Scheme 2A', '2A', '4', 'Coin', 'monthly', 'pre_intrest', '8', '7', '2', '5', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 0, 1, NULL, '2023-05-15 17:32:05', '2023-05-15 17:34:31'),
+(20, 'SME 10', 'S10', '7', 'SME Loan', 'monthly', 'pre_intrest', '15', '10', '0', '10', 'percentage', '0', '2', 'percentage', '0', '2', '', '3', '', '', 0, 1, NULL, NULL, '2023-06-08 12:17:21', '2023-06-08 12:17:21'),
+(21, 'Scheme 10 R', '10 R', '5', 'AC Pre R ', 'monthly', 'pre_intrest', '2', '10', '3', '7', 'percentage', '0', '2', 'percentage', '0', '2', '', '2', '', '', 0, 1, 1, NULL, '2023-06-13 11:54:53', '2023-06-13 12:00:20'),
+(22, 'Scheme 5 R', '5 R', '11', 'Personal loan R', 'weekly', 'pre_intrest', '2', NULL, NULL, '5', '', '0', '2', 'percentage', '0', '2', '', '2', NULL, NULL, 0, 1, 1, NULL, '2023-06-13 11:56:37', '2023-06-13 12:00:33'),
+(23, 'Scheme 100 R', '100 R', '11', 'Personal loan R', 'daily', 'pre_intrest', '2', NULL, NULL, '100', 'percentage', '0', '2', 'percentage', '0', '2', NULL, '2', NULL, NULL, 0, 1, 1, NULL, '2023-06-13 11:59:57', '2023-06-13 12:00:45');
 
 -- --------------------------------------------------------
 
@@ -2234,6 +2299,24 @@ CREATE TABLE `request_category_info` (
   `category_info` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `request_category_info`
+--
+
+INSERT INTO `request_category_info` (`cat_info`, `req_ref_id`, `category_info`) VALUES
+(11, '5', 'Bajaj'),
+(12, '5', 'CBR'),
+(13, '2', 'Micromax'),
+(14, '2', '40'),
+(15, '2', 'LED'),
+(16, '6', 'Samsung'),
+(17, '6', '6inch'),
+(18, '1', 'Carrier'),
+(19, '1', '1ton'),
+(20, '1', 'Split'),
+(21, '7', 'ABC'),
+(22, '7', '1styear');
+
 -- --------------------------------------------------------
 
 --
@@ -2289,6 +2372,17 @@ CREATE TABLE `request_creation` (
   `created_date` datetime DEFAULT current_timestamp(),
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `request_creation`
+--
+
+INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Agent', 'Alaathi Mobiles and Furniture', '1', '0', '', 'New customer for us', 'REQ-101', '2023-07-01', '1', '010720232023', 'New', 'Bharath', '1990-02-03', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '1', '3470', '', '1', '0', '3', '3', NULL, '2023-07-01 13:26:37', '0000-00-00 00:00:00'),
+(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '1', '0', '2', '2', NULL, '2023-07-01 13:36:34', '0000-00-00 00:00:00'),
+(5, 'Staff', 'Arun', '', '', 'Old customer new prod', '', 'REQ-103', '2023-07-01', NULL, '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '65000', '5000', '7.7', '60000', '1', '4500', '', '0', '0', '2', NULL, NULL, '2023-07-01 16:10:08', '2023-07-01 16:10:08'),
+(6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '1', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
+(7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '1', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00');
 
 -- --------------------------------------------------------
 
@@ -2393,7 +2487,7 @@ INSERT INTO `staff_creation` (`staff_id`, `staff_code`, `staff_name`, `staff_typ
 (30, 'ST-125', 'Malik', '2', '27', 'SelectState', '', '', 'chetpet', '606801', '', '9655678448', '', '', '', '1', 'Collection', 'Pine apple 2', 'Executive', '0', '1', NULL, NULL, '2023-05-12 13:37:19', '2023-05-12 13:37:19'),
 (31, 'ST-126', 'Marudhu', '1', '25', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 'Vandavasi', '604408', '', '9597072411', '', '', '', '1', 'Collection', 'Banana1', 'TL', '0', '1', '1', NULL, '2023-05-26 10:10:06', '2023-05-26 10:10:49'),
 (32, 'ST-127', 'Vasanth', '2', '25', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 'Vandavasi', '604408', '', '9597072422', '', '', '', '1', 'Collection', 'Banana2', 'Executive', '0', '1', NULL, NULL, '2023-05-26 10:17:07', '2023-05-26 10:17:07'),
-(33, 'ST-128', 'Jagan', '3', '25', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 'Vandavasi', '604408', '', '9597072433', '', '', '', '1', 'Office assistant', 'Office', 'Accountant', '0', '1', '1', NULL, '2023-05-26 11:10:49', '2023-05-26 11:11:43'),
+(33, 'ST-128', 'Somesh', '3', '25', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 'Vandavasi', '604408', '', '9597072433', '', '', '', '1', 'Office assistant', 'Office', 'Accountant', '0', '1', '1', NULL, '2023-05-26 11:10:49', '2023-05-26 11:11:43'),
 (34, 'ST-129', 'Tester', '4', 'check address', 'TamilNadu', 'Coimbatore', 'Aanaimalai', 'cbe', '632132', '', '', '', '', '', '1', 'test', 'test', 'test', '0', '1', '1', NULL, '2023-06-29 17:17:09', '2023-06-29 17:18:03');
 
 -- --------------------------------------------------------
@@ -2487,6 +2581,7 @@ CREATE TABLE `user` (
   `staff_id` varchar(255) DEFAULT NULL,
   `company_id` varchar(255) DEFAULT NULL,
   `branch_id` varchar(255) DEFAULT NULL,
+  `loan_cat` varchar(255) DEFAULT NULL,
   `agentforstaff` varchar(255) DEFAULT NULL,
   `line_id` varchar(255) DEFAULT NULL,
   `group_id` varchar(255) DEFAULT NULL,
@@ -2545,8 +2640,12 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `accountsmodule`, `cash_tally`, `bank_details`, `cash_tally_admin`, `bank_clearance`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, '0', '0', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34');
+INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `loan_cat`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `accountsmodule`, `cash_tally`, `bank_details`, `cash_tally_admin`, `bank_clearance`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, '0', '0', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
+(2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '6', '1,2', '1,2,3,5,6', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2023-07-03 16:09:05'),
+(3, NULL, NULL, 'Alaathi Mobiles and Furniture', NULL, 'alaathi@gmail.com', 'alaathi', '123', '2', '', '', '1', '', '1', '3', '', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '', '1', '1', '0', '2', '2', NULL, '2023-07-01 12:12:04', '2023-07-03 12:42:16'),
+(4, NULL, NULL, 'Jafar', NULL, '', 'jafar', '123', '3', '1', '', '', '28', '1', '1', '5,7', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '0', '2', '2', NULL, '2023-07-03 11:59:48', '2023-07-03 12:01:41'),
+(5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '0', '2', '5', NULL, '2023-07-03 13:31:46', '2023-07-03 14:35:02');
 
 -- --------------------------------------------------------
 
@@ -2671,6 +2770,18 @@ CREATE TABLE `verification_family_info` (
   `status` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `verification_family_info`
+--
+
+INSERT INTO `verification_family_info` (`id`, `cus_id`, `req_id`, `famname`, `relationship`, `other_remark`, `other_address`, `relation_age`, `relation_aadhar`, `relation_Mobile`, `relation_Occupation`, `relation_Income`, `relation_Blood`, `status`) VALUES
+(1, '100010001000', 2, 'Guna', 'Father', '', ' ', 45, '100010002000', 9894966545, 'Retired', 0, 'O+', 0),
+(2, '100010001000', 2, 'Selvi', 'Mother', '', ' ', 43, '100010003000', 9894984954, 'House wife', 0, 'B+', 0),
+(3, '100010001000', 2, 'Aravindh', 'Brother', '', ' ', 35, '200020002000', 9794949494, 'Coconut shop', 15000, '', 0),
+(4, '200020002000', 6, 'Guna', 'Father', '', ' ', 45, '100010002000', 9894966545, 'Retired', 0, '', 0),
+(5, '200020002000', 6, 'Ganesan', 'Brother', '', ' ', 27, '100010001000', 6465465464, 'shop', 20000, '', 0),
+(6, '200020002000', 6, 'Selvi', 'Mother', '', ' ', 42, '100010003000', 9894984954, 'Housewife', 0, '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -2688,6 +2799,13 @@ CREATE TABLE `verification_group_info` (
   `group_gender` text NOT NULL,
   `group_designation` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `verification_group_info`
+--
+
+INSERT INTO `verification_group_info` (`id`, `cus_id`, `req_id`, `group_name`, `group_age`, `group_aadhar`, `group_mobile`, `group_gender`, `group_designation`) VALUES
+(1, '1000 1000 1000', 2, 'Selvi', 42, '100010003000', 9894984954, '2', 'Member');
 
 -- --------------------------------------------------------
 
@@ -2769,6 +2887,13 @@ CREATE TABLE `verification_property_info` (
   `property_value` varchar(50) NOT NULL,
   `property_holder` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `verification_property_info`
+--
+
+INSERT INTO `verification_property_info` (`id`, `cus_id`, `req_id`, `property_type`, `property_measurement`, `property_value`, `property_holder`) VALUES
+(1, '200020002000', 6, 'House', '1500*1000', '150000', 'Aravind');
 
 -- --------------------------------------------------------
 
@@ -3390,13 +3515,13 @@ ALTER TABLE `acknowlegement_loan_calculation`
 -- AUTO_INCREMENT for table `agent_communication_details`
 --
 ALTER TABLE `agent_communication_details`
-  MODIFY `comm_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `comm_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `agent_creation`
 --
 ALTER TABLE `agent_creation`
-  MODIFY `ag_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ag_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `agent_group_creation`
@@ -3720,7 +3845,7 @@ ALTER TABLE `customer_profile`
 -- AUTO_INCREMENT for table `customer_register`
 --
 ALTER TABLE `customer_register`
-  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
+  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `director_creation`
@@ -3780,7 +3905,7 @@ ALTER TABLE `loan_calculation`
 -- AUTO_INCREMENT for table `loan_category`
 --
 ALTER TABLE `loan_category`
-  MODIFY `loan_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `loan_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `loan_category_creation`
@@ -3792,7 +3917,7 @@ ALTER TABLE `loan_category_creation`
 -- AUTO_INCREMENT for table `loan_category_ref`
 --
 ALTER TABLE `loan_category_ref`
-  MODIFY `loan_category_ref_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+  MODIFY `loan_category_ref_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `loan_issue`
@@ -3804,7 +3929,7 @@ ALTER TABLE `loan_issue`
 -- AUTO_INCREMENT for table `loan_scheme`
 --
 ALTER TABLE `loan_scheme`
-  MODIFY `scheme_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `scheme_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `loan_summary_feedback`
@@ -3828,13 +3953,13 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `request_category_info`
 --
 ALTER TABLE `request_category_info`
-  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `request_creation`
 --
 ALTER TABLE `request_creation`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `signed_doc`
@@ -3870,7 +3995,7 @@ ALTER TABLE `sub_area_list_creation`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `verification_bank_info`
@@ -3894,13 +4019,13 @@ ALTER TABLE `verification_documentation`
 -- AUTO_INCREMENT for table `verification_family_info`
 --
 ALTER TABLE `verification_family_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `verification_group_info`
 --
 ALTER TABLE `verification_group_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `verification_kyc_info`
@@ -3918,7 +4043,7 @@ ALTER TABLE `verification_loan_calculation`
 -- AUTO_INCREMENT for table `verification_property_info`
 --
 ALTER TABLE `verification_property_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `verif_loan_cal_category`

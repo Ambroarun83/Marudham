@@ -10,5 +10,10 @@ while( $row = $result->fetch()){
     $Membername_arr[] = $row['famname'];
 }
 
+$result = $connect->query("SELECT customer_name FROM `customer_register` where cus_id = '$cus_id' ");
+
+$row = $result->fetch();
+$Membername_arr[] = $row['customer_name'];
+
 echo json_encode($Membername_arr);
 ?>

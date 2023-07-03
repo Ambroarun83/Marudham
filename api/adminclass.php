@@ -22,6 +22,7 @@ require 'PHPMailerAutoload.php';
                 $detailrecords['staff_id']              = strip_tags($row->staff_id);
                 $detailrecords['company_id']              = strip_tags($row->company_id);
                 $detailrecords['branch_id']              = strip_tags($row->branch_id);
+                $detailrecords['loan_cat']              = strip_tags($row->loan_cat);
                 $detailrecords['agentforstaff']              = strip_tags($row->agentforstaff);
                 $detailrecords['line_id']              = strip_tags($row->line_id);
                 $detailrecords['group_id']              = strip_tags($row->group_id);
@@ -2141,6 +2142,10 @@ require 'PHPMailerAutoload.php';
         if(isset($_POST['branch_id'])){
             $branch_id = $_POST['branch_id'];
         }
+        $loan_cat ='';
+        if(isset($_POST['loan_cat'])){
+            $loan_cat = $_POST['loan_cat'];
+        }
         $agentforstaff ='';
         if(isset($_POST['agentforstaff'])){
             $agentforstaff = $_POST['agentforstaff'];
@@ -2409,14 +2414,14 @@ require 'PHPMailerAutoload.php';
 			$bank_clearance=1;
 		}
         $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
-        `ag_id`, `staff_id`, `company_id`, `branch_id`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
+        `ag_id`, `staff_id`, `company_id`, `branch_id`,`loan_cat`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`bank_creation`,`requestmodule`,
         `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,
 		`collectionmodule`,`collection`,`collection_access`,`closedmodule`,`closed`,`nocmodule`,`noc`,`concernmodule`, `concern_creation`, `concern_solution`,`concern_feedback`,
 		`accountsmodule`,`cash_tally`,`cash_tally_admin`,`bank_details`,`bank_clearance`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
-        '".strip_tags($branch_id)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
+        '".strip_tags($branch_id)."','".strip_tags($loan_cat)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
         '".strip_tags($branch_creation)."','".strip_tags($loan_category)."','".strip_tags($loan_calculation)."','".strip_tags($loan_scheme)."','".strip_tags($area_creation)."',
         '".strip_tags($area_mapping)."','".strip_tags($area_approval)."','".strip_tags($adminmodule)."','".strip_tags($director_creation)."',
         '".strip_tags($agent_creation)."','".strip_tags($staff_creation)."','".strip_tags($manage_user)."','".strip_tags($doc_mapping)."','".strip_tags($bank_creation)."','".strip_tags($requestmodule)."','".strip_tags($request)."',
@@ -2465,6 +2470,10 @@ function updateUser($mysqli,$id,$user_id){
 	}
 	if(isset($_POST['branch_id'])){
 		$branch_id = $_POST['branch_id'];
+	}
+	$loan_cat ='';
+	if(isset($_POST['loan_cat'])){
+		$loan_cat = $_POST['loan_cat'];
 	}
 	$agentforstaff ='';
 	if(isset($_POST['agentforstaff'])){
@@ -2736,7 +2745,7 @@ function updateUser($mysqli,$id,$user_id){
 	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
 	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
 	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
-	agentforstaff='".strip_tags($agentforstaff)."',`line_id` = '".strip_tags($line)."',`group_id` = '".strip_tags($group)."',`mastermodule` = '".strip_tags($mastermodule)."',
+	`loan_cat` = '".strip_tags($loan_cat)."',agentforstaff='".strip_tags($agentforstaff)."',`line_id` = '".strip_tags($line)."',`group_id` = '".strip_tags($group)."',`mastermodule` = '".strip_tags($mastermodule)."',
 	`company_creation` = '".strip_tags($company_creation)."',`branch_creation` = '".strip_tags($branch_creation)."',`loan_category` = '".strip_tags($loan_category)."',
 	`loan_calculation` = '".strip_tags($loan_calculation)."',`loan_scheme` = '".strip_tags($loan_scheme)."',`area_creation` = '".strip_tags($area_creation)."',
 	`area_mapping` = '".strip_tags($area_mapping)."',`area_approval` = '".strip_tags($area_approval)."',`adminmodule` = '".strip_tags($adminmodule)."',
@@ -3427,6 +3436,12 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['cus_occ_address'])){
                 $cus_occ_address = $_POST['cus_occ_address'];
             }
+            if(isset($_POST['cus_occ_dow'])){
+                $cus_occ_dow = $_POST['cus_occ_dow'];
+            }
+            if(isset($_POST['cus_occ_abt'])){
+                $cus_occ_abt = $_POST['cus_occ_abt'];
+            }
             if(isset($_POST['area_cnfrm'])){
                 $area_cnfrm = $_POST['area_cnfrm'];
             }
@@ -3509,8 +3524,8 @@ function updateUser($mysqli,$id,$user_id){
             }
 
 			if($cus_Tableid == ''){
-            $insertQry="INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
-            '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($area_group)."','".strip_tags($area_line)."','".strip_tags($Communitcation_to_cus)."','".strip_tags($verify_audio)."','".strip_tags($verifyPerson)."','".strip_tags($verification_location)."','10','".$userid."' )";
+            $insertQry="INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
+            '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($cus_occ_dow)."','".strip_tags($cus_occ_abt)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($area_group)."','".strip_tags($area_line)."','".strip_tags($Communitcation_to_cus)."','".strip_tags($verify_audio)."','".strip_tags($verifyPerson)."','".strip_tags($verification_location)."','10','".$userid."' )";
             $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
 			$insertQry = "UPDATE request_creation set cus_status = 10 where req_id ='".strip_tags($req_id)."' ";
@@ -3522,7 +3537,7 @@ function updateUser($mysqli,$id,$user_id){
 
 			}else{
 
-				$cusUpd = "UPDATE `customer_profile` SET `req_id`='".strip_tags($req_id)."',`cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`whatsapp`='".strip_tags($whatsapp_no)."',`cus_pic`='".strip_tags($pic)."',`guarentor_name`='".strip_tags($guarentor_name)."',`guarentor_relation`='".strip_tags($guarentor_relationship)."',`guarentor_photo`='".strip_tags($guarentor)."',`cus_type`='".strip_tags($cus_type)."',`cus_exist_type`='".strip_tags($cus_exist_type)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($state)."',`area_confirm_district`='".strip_tags($district)."',`area_confirm_taluk`='".strip_tags($taluk)."',`area_confirm_area`='".strip_tags($area)."',`area_confirm_subarea`='".strip_tags($sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`communication`='".strip_tags($Communitcation_to_cus)."',`com_audio`='".strip_tags($verify_audio)."',`verification_person`='".strip_tags($verifyPerson)."',`verification_location`='".strip_tags($verification_location)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `id`='".strip_tags($cus_Tableid)."' ";
+				$cusUpd = "UPDATE `customer_profile` SET `req_id`='".strip_tags($req_id)."',`cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`whatsapp`='".strip_tags($whatsapp_no)."',`cus_pic`='".strip_tags($pic)."',`guarentor_name`='".strip_tags($guarentor_name)."',`guarentor_relation`='".strip_tags($guarentor_relationship)."',`guarentor_photo`='".strip_tags($guarentor)."',`cus_type`='".strip_tags($cus_type)."',`cus_exist_type`='".strip_tags($cus_exist_type)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($state)."',`area_confirm_district`='".strip_tags($district)."',`area_confirm_taluk`='".strip_tags($taluk)."',`area_confirm_area`='".strip_tags($area)."',`area_confirm_subarea`='".strip_tags($sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`communication`='".strip_tags($Communitcation_to_cus)."',`com_audio`='".strip_tags($verify_audio)."',`verification_person`='".strip_tags($verifyPerson)."',`verification_location`='".strip_tags($verification_location)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `id`='".strip_tags($cus_Tableid)."' ";
 
 				$updateCus = $mysqli->query($cusUpd) or die("Error ".$mysqli->error);
 
