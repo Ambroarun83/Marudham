@@ -367,12 +367,18 @@ $(document).ready(function () {
     $('#sign_type').change(function () { // Signed Type 
         let type = $(this).val();
 
-        if (type == '3') {
+        $('#guar_name_div').hide();
+        $('#relation_doc').hide();
+
+        if (type == '1') { // if guarentor , then show guarentor name
+            getGuarentorName();
+        }
+        if (type == '3' || type == '2') {// if type is combined or family member then show family members
+            //for combined, it will represents who is signed with customer in the same document.
             $('#relation_doc').show();
             signTypeRelation();
 
         } else {
-            $('#relation_doc').hide();
             $("#signType_relationship").empty();
         }
     })
@@ -394,7 +400,15 @@ $(document).ready(function () {
                 $("#doc_name").val(result['doc_name']);
                 $("#sign_type").val(result['sign_type']);
 
-                if (result['sign_type'] == '3') {
+                if (result['sign_type'] == '1') {//if guarentor
+                    $('#guar_name_div').show();
+                    $("#guar_name").val(result['guar_name']);
+
+                } else {
+                    $('#guar_name_div').hide();
+                }
+
+                if (result['sign_type'] == '3' || result['sign_type'] == '2') {
                     $('#relation_doc').show();
                     $("#signType_relationship").val(result['signType_relationship']);
 
@@ -1308,7 +1322,7 @@ function closeFamModal() {
             var len = response.length;
             $("#guarentor_name").empty();
             $("#guarentor_name").append("<option value=''>" + 'Select Guarantor' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) { // -1 because this ajax's response will contain customer value at the last of the response for verification person
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 var selected = '';
@@ -2058,13 +2072,13 @@ function resetbankinfoList() {
 ////////////////////////// KYC Info ////////////////////////////////////////////////
 
 
-$('#proofCheck').hide(); $('#proofTypeCheck').hide(); $('#proofnoCheck').hide(); $('#proofUploadCheck').hide();
 
 $(document).on("click", "#kycInfoBtn", function () {
 
     let req_id = $('#req_id').val();
     let cus_id = $('#cus_id').val();
     let proofof = $("#proofof").val();
+    let fam_mem = $("#fam_mem").val();
     let proof_type = $("#proof_type").val();
     let proof_number = $("#proof_number").val();
     let kyc_upload = $("#kyc_upload").val();
@@ -2076,6 +2090,7 @@ $(document).on("click", "#kycInfoBtn", function () {
     let formdata = new FormData();
     formdata.append('upload', file)
     formdata.append('proofof', proofof)
+    formdata.append('fam_mem', fam_mem)
     formdata.append('proof_type', proof_type)
     formdata.append('proof_number', proof_number)
     formdata.append('kycID', kycID)
@@ -2083,7 +2098,7 @@ $(document).on("click", "#kycInfoBtn", function () {
     formdata.append('reqId', req_id)
     formdata.append('cus_id', cus_id)
 
-    if (proofof != "" && proof_type != "" && proof_number != "" && req_id != "") {
+    if (validateKyc() == true) {
         $.ajax({
             url: 'verificationFile/verification_kyc_submit.php',
             type: 'POST',
@@ -2121,35 +2136,58 @@ $(document).on("click", "#kycInfoBtn", function () {
         $('#proofCheck').hide(); $('#proofTypeCheck').hide(); $('#proofnoCheck').hide(); $('#proofUploadCheck').hide();
 
     }
-    else {
-
-        if (proofof == "") {
-            $('#proofCheck').show();
-        } else {
-            $('#proofCheck').hide();
-        }
-
-        if (proof_type == "") {
-            $('#proofTypeCheck').show();
-        } else {
-            $('#proofTypeCheck').hide();
-        }
-
-        if (proof_number == "") {
-            $('#proofnoCheck').show();
-        } else {
-            $('#proofnoCheck').hide();
-        }
-
-        // if (file == undefined || file == '') {
-        //     $('#proofUploadCheck').show();
-        // } else {
-        //     $('#proofUploadCheck').hide();
-        // }
-
-    }
 
 });
+
+function validateKyc(){
+    let proofof = $("#proofof").val();
+    let fam_mem = $("#fam_mem").val();
+    let proof_type = $("#proof_type").val();
+    let proof_number = $("#proof_number").val();
+    let result = true;
+
+    if (proofof == "") {
+        $('#proofCheck').show();
+        event.preventDefault();
+        result = false;
+    } else {
+        $('#proofCheck').hide();
+    }
+    
+    if (proof_type == "") {
+        $('#proofTypeCheck').show();
+        event.preventDefault();
+        result = false;
+    } else {
+        $('#proofTypeCheck').hide();
+    }
+    
+    if (proofof == '2' && fam_mem == "") {
+        $('#fam_memCheck').show();
+        event.preventDefault();
+        result = false;
+    } else {
+        $('#fam_memCheck').hide();
+    }
+    
+    if (proof_number == "") {
+        $('#proofnoCheck').show();
+        event.preventDefault();
+        result = false;
+    } else {
+        $('#proofnoCheck').hide();
+    }
+
+    // if (file == undefined || file == '') {
+    //     $('#proofUploadCheck').show();
+    //     event.preventDefault();
+    //     result = false;
+    // } else {
+    //     $('#proofUploadCheck').hide();
+    // }
+    return result;
+
+}
 
 function resetkycInfo() {
     let cus_id = $('#cus_id').val();
@@ -2163,6 +2201,8 @@ function resetkycInfo() {
             $("#kycTable").html(html);
 
             $("#proofof").val('');
+            $(".fam_mem_div").hide();
+            $("#fam_mem").val('');
             $("#proof_type").val('');
             $("#proof_number").val('');
             $("#upload").val('');
@@ -2187,6 +2227,16 @@ $("body").on("click", "#verification_kyc_edit", function () {
 
             $("#kycID").val(result['id']);
             $("#proofof").val(result['proofOf']);
+            if(result['fam_mem'] != '' ){
+                getfamilyforKyc();
+                setTimeout(() => {
+                    $("#fam_mem").val(result['fam_mem']);
+                }, 700);
+                $('.fam_mem_div').show();
+            }else{
+                $("#fam_mem").val('');
+                $('.fam_mem_div').hide();
+            }
             $("#proof_type").val(result['proofType']);
             $("#proof_number").val(result['proofNo']);
             $("#kyc_upload").val(result['upload']);
@@ -2253,45 +2303,76 @@ $('#proofof').change(function () {
     let req_id = $('#req_id').val();
     let proof = $('#proofof').val();
 
-    $.ajax({
-        url: 'verificationFile/verification_proof_type.php',
-        type: 'POST',
-        data: { "reqId": req_id, "proof": proof },
-        dataType: 'json',
-        cache: false,
-        success: function (response) {
+    if(proof != '2' && proof != ''){ // if proof of is not family members then check for other's proofs entered already 
+        $('.fam_mem_div').hide();//hide fam div on other proof of selected
+        $('#fam_mem').val('');
 
-            $('#proof_type option').prop('disabled', false);
-
-            $.each(response, function (index, value) {
-                $('#proof_type option[value="' + value + '"]').prop('disabled', true);
-            });
-
-        }
-    });
-    if(proof == '2'){
         $.ajax({
-            url: 'verificationFile/verification_proof_fam.php',
-            data: {"reqId": req_id},
+            url: 'verificationFile/verification_proof_type.php',
+            type: 'POST',
+            data: { "reqId": req_id, "proof": proof },
             dataType: 'json',
-            type: 'post',
             cache: false,
-            success: function(response){
-                $('.fam_mem_div').show();
-                $('#fam_mem').empty();
-                $('#fam_mem').append(`<option value=""> Select Family Member </option>`);
+            success: function (response) {
+
+                $('#proof_type option').prop('disabled', false);
+                
                 $.each(response, function (index, value) {
-                    $('#fam_mem').append("<option value='"+value+"'>"+value+"</option>");
+                    $('#proof_type option[value="' + value + '"]').prop('disabled', true);
                 });
+                
             }
-            
-        })
+        });
+    }else if(proof == '2'){ // if proof of is family members then show family members dropdown 
+        getfamilyforKyc();
     }else{
-        $('.fam_memDiv').hide();
+        $('.fam_mem_div').hide();
+        $('#fam_mem').val('');
     }
 
 })
 
+function getfamilyforKyc(){
+    let req_id = $('#req_id').val();
+    $.ajax({
+        url: 'verificationFile/verification_proof_fam.php',
+        data: {"reqId": req_id},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('.fam_mem_div').show();
+            $('#fam_mem').empty();
+            $('#fam_mem').append(`<option value=""> Select Family Member </option>`);
+            $.each(response, function (index, value) {
+                $('#fam_mem').append("<option value='"+value+"'>"+value+"</option>");
+            });
+        }
+        
+    }).then(function(){
+        $('#fam_name').unbind('click');
+        $('#fam_mem').change(function(){
+            let req_id = $('#req_id').val();let proof = $('#proofof').val();let fam_name = $(this).val();
+            $.ajax({
+                url: 'verificationFile/verification_proof_type.php',
+                type: 'POST',
+                data: { "reqId": req_id, "proof": proof ,"fam_name":fam_name},
+                dataType: 'json',
+                cache: false,
+                success: function (response) {
+    
+                    $('#proof_type option').prop('disabled', false);
+                    
+                    $.each(response, function (index, value) {
+                        $('#proof_type option[value="' + value + '"]').prop('disabled', true);
+                    });
+                    
+                }
+            });
+        })
+    })
+}
+///////////////////////////////////////////////////////////////////////////
 
 //get district dropdown
 function getDistrictDropdown(StateSelected) {
@@ -2922,24 +3003,24 @@ function validation() {
         $('#aboutcusCheck').hide();
     }
 
-    if (Communitcation_to_cus == '') {
-        event.preventDefault();
-        $('#communicationCheck').show();
-    } else {
-        $('#communicationCheck').hide();
-    }
-    if (verification_person.length == 0 ) {
-        event.preventDefault();
-        $('#verificationPersonCheck').show();
-    } else {
-        $('#verificationPersonCheck').hide();
-    }
-    if (verification_location == '') {
-        event.preventDefault();
-        $('#verificationLocCheck').show();
-    } else {
-        $('#verificationLocCheck').hide();
-    }
+    // if (Communitcation_to_cus == '') {
+    //     event.preventDefault();
+    //     $('#communicationCheck').show();
+    // } else {
+    //     $('#communicationCheck').hide();
+    // }
+    // if (verification_person.length == 0 ) {
+    //     event.preventDefault();
+    //     $('#verificationPersonCheck').show();
+    // } else {
+    //     $('#verificationPersonCheck').hide();
+    // }
+    // if (verification_location == '') {
+    //     event.preventDefault();
+    //     $('#verificationLocCheck').show();
+    // } else {
+    //     $('#verificationLocCheck').hide();
+    // }
 
     $.ajax({
         url: 'verificationFile/validateModals.php',
@@ -3013,19 +3094,19 @@ function validation() {
     })
 
 
-    //Verification Person Multi select store
-    var person_list = personMultiselect.getValue();
-    var person = '';
-    for (var i = 0; i < person_list.length; i++) {
-        if (i > 0) {
-            person += ',';
-        }
-        person += person_list[i].value;
-    }
-    var arr = person.split(",");
-    arr.sort(function (a, b) { return a - b });
-    var sortedStr = arr.join(",");
-    $('#verifyPerson').val(sortedStr);
+    // //Verification Person Multi select store
+    // var person_list = personMultiselect.getValue();
+    // var person = '';
+    // for (var i = 0; i < person_list.length; i++) {
+    //     if (i > 0) {
+    //         person += ',';
+    //     }
+    //     person += person_list[i].value;
+    // }
+    // var arr = person.split(",");
+    // arr.sort(function (a, b) { return a - b });
+    // var sortedStr = arr.join(",");
+    // $('#verifyPerson').val(sortedStr);
 
 }
 
@@ -3235,6 +3316,9 @@ function resetsignInfo() {
 
             $("#doc_name").val('');
             $("#sign_type").val('');
+            $("#guar_name_div").hide();
+            $("#guar_name").val('');
+            $("#relation_doc").hide();
             $("#signType_relationship").val('');
             $("#doc_Count").val('');
             $("#signedID").val('');
@@ -3251,12 +3335,13 @@ function signTypeRelation() {
         type: 'post',
         data: { "cus_id": cus_id },
         dataType: 'json',
+        cache: false,
         success: function (response) {
 
             var len = response.length;
             $("#signType_relationship").empty();
             $("#signType_relationship").append("<option value=''>" + 'Select Relationship' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {//-1 because last name will be customer name
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 var relationship = response[i]['relationship'];
@@ -3274,6 +3359,20 @@ function signTypeRelation() {
     });
 }
 
+function getGuarentorName(){
+    let cus_id = $('#cus_id').val();
+    $.ajax({
+        url: 'verificationFile/getGuarentorName.php',
+        type: 'post',
+        data: { "cus_id": cus_id },
+        cache: false,
+        success: function (response) {
+            $('#guar_name_div').show();
+            $('#guar_name').val(response);
+        }
+    })
+}
+
 
 function resetsigninfoList() {
     let req_id = $('#req_id').val();
@@ -3288,7 +3387,10 @@ function resetsigninfoList() {
 
             $("#doc_name").val('');
             $("#sign_type").val('');
+            $("#guar_name").val('');
+            $("#guar_name_div").hide();
             $("#signType_relationship").val('');
+            $("#relation_doc").hide();
             $("#doc_Count").val('');
             $("#signedID").val('');
         }
@@ -3406,7 +3508,7 @@ function chequeHolderName() {
             var len = response.length;
             $("#holder_relationship_name").empty();
             $("#holder_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {//-1 because last one name will be customer name
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 $("#holder_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
@@ -4033,7 +4135,7 @@ function doc_submit_validation() {
 
 //////////////////////////////////////////////////////////////////// Loan Calculation Functions Start ///////////////////////////////////////////////////////////////////////////////
 function onLoadEditFunction(){//On load for Loan Calculation edit
-    
+    verificationPerson(); //To Select verification Person in Verification Info.////// 
 }
 
 $('#loan_category').change(function(){
@@ -4881,6 +4983,41 @@ function loan_calc_validation(){
     var proc_fee = $('#proc_fee').val();var loan_amt_cal = $('#loan_amt_cal').val(); var principal_amt_cal = $('#principal_amt_cal').val(); var int_amt_cal = $('#int_amt_cal').val();
     var tot_amt_cal = $('#tot_amt_cal').val(); var due_amt_cal = $('#due_amt_cal').val(); var doc_charge_cal = $('#doc_charge_cal').val();var proc_fee_cal =$('#proc_fee_cal').val();
     var net_cash_cal =$('#net_cash_cal').val();var due_start_from = $('#due_start_from').val(); var maturity_month =$('#maturity_month').val();var collection_method = $('#collection_method').val();
+    var Communitcation_to_cus = $('#Communitcation_to_cus').val();var verification_location = $('#verification_location').val();
+
+    //Verification Person Multi select store
+    var person_list = personMultiselect.getValue();
+    var person = '';
+    for (var i = 0; i < person_list.length; i++) {
+        if (i > 0) {
+            person += ',';
+        }
+        person += person_list[i].value;
+    }
+    var arr = person.split(",");
+    arr.sort(function (a, b) { return a - b });
+    var sortedStr = arr.join(",");
+    $('#verifyPerson').val(sortedStr);
+
+
+    if (Communitcation_to_cus == '') {
+        event.preventDefault();
+        $('#communicationCheck').show();
+    } else {
+        $('#communicationCheck').hide();
+    }
+    if (person_list.length == 0 ) {
+        event.preventDefault();
+        $('#verificationPersonCheck').show();
+    } else {
+        $('#verificationPersonCheck').hide();
+    }
+    if (verification_location == '') {
+        event.preventDefault();
+        $('#verificationLocCheck').show();
+    } else {
+        $('#verificationLocCheck').hide();
+    }
 
     if(cus_id_loan == ''){
         Swal.fire({
