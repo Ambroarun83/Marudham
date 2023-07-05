@@ -13,5 +13,9 @@ while( $row = $result->fetch()){
     $famList_arr[] = array("fam_id" => $fam_id, "fam_name" => $fam_name, "relationship" => $relationship);
 }
 
+$result = $connect->query("SELECT customer_name from customer_register where cus_id = '$cus_id' ");
+$cus_name = $result->fetch()['customer_name'];
+$famList_arr[] = array("fam_id" => $cus_id, "fam_name" => $cus_name, "relationship" => 'customer');
+
 echo json_encode($famList_arr);
 ?>

@@ -7,6 +7,7 @@ include '../ajaxconfig.php';
         <tr>
             <th width="20%"> S.No </th>
             <th> Proof of </th>
+            <!-- <th> Family Member </th> -->
             <th> Proof type </th>
             <th> Proof Number </th>
             <th> Upload </th>
@@ -24,6 +25,7 @@ include '../ajaxconfig.php';
             if($kyc['proofOf'] == '1'){$proof_Of = "Guarantor";}else
             if($kyc['proofOf'] == '2'){$proof_Of = "Family Members";}else
             if($kyc['proofOf'] == '3'){$proof_Of = "Group Members";}
+            // $fam_mem = $kyc['fam_mem'];
             
             if($kyc['proof_type'] == '1'){$proof_type = "Adhar";}else
             if($kyc['proof_type'] == '2'){$proof_type = "Smart Card";}else
@@ -40,6 +42,7 @@ include '../ajaxconfig.php';
             <tr>
                 <td> <?php echo $i++; ?></td>
                 <td> <?php echo $proof_Of; ?></td>
+                <!-- <td><?php echo $fam_mem; ?></td> -->
                 <td> <?php echo $proof_type; ?></td>
                 <td> <?php echo $kyc['proof_no']; ?></td>
                 <td> <a href="verificationFile/kycUploads/<?php echo $kyc['upload']; ?>" target="_blank" style="color: #4ba39b;"> <?php echo $kyc['upload']; ?> </a></td>

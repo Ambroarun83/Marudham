@@ -150,6 +150,8 @@ if (sizeof($getRequestData) > 0) {
 		$due_amt					= $getRequestData['due_amt'];
 		$due_period					= $getRequestData['due_period'];
 		$cus_status					= $getRequestData['cus_status'];
+		$area_nameforhead 					= $getRequestData['area_name'];
+		$sub_area_nameforhead 					= $getRequestData['sub_area_name'];
 	}
 }
 
@@ -248,6 +250,8 @@ if (sizeof($getCustomerProfile) > 0) {
 	// $behavior = $getCustomerProfile['behavior'] ;
 	// $incident_remark  = $getCustomerProfile['incident_remark'] ;
 	// $about_customer = $getCustomerProfile['about_customer'];
+	$dow 					= $getCustomerProfile['dow'];
+	$abt_occ 					= $getCustomerProfile['abt_occ'];
 }
 
 //////////////////////// Customer Profile Info END ///////////////////////////////
@@ -400,9 +404,9 @@ if (sizeof($getLoanCalculation) > 0) {
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
-		Customer Name - <?php if (isset($cus_name)) {
-							echo $cus_name;
-						} ?>
+		Customer Name - <?php if (isset($cus_name)) {echo $cus_name;} ?>
+		,&nbsp;&nbsp;Area - <?php if (isset($area_nameforhead)) {echo $area_nameforhead;} ?>
+		,&nbsp;&nbsp;Sub Area - <?php if (isset($sub_area_nameforhead)) {echo $sub_area_nameforhead;} ?>
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
@@ -950,7 +954,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="form-group">
 										<label for="cus_occ_abt"> About Occupation </label>
 										<input type="text" class="form-control" name="cus_occ_abt" id="cus_occ_abt" placeholder="Enter About Occupation" 
-										value="<?php if (isset($abt_occuption)) {echo $abt_occuption;} ?>" tabindex="35">
+										value="<?php if (isset($abt_occ)) {echo $abt_occ;} ?>" tabindex="35">
 									</div>
 								</div>
 
@@ -1373,7 +1377,7 @@ if (sizeof($getLoanCalculation) > 0) {
 
 
 					<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
-					<div class="card">
+					<!-- <div class="card">
 						<div class="card-header"> Verfication Info <span style="font-weight:bold" class=""></span></div>
 						<div class="card-body">
 							<div class="row">
@@ -1431,7 +1435,7 @@ if (sizeof($getLoanCalculation) > 0) {
 							</div>
 
 						</div>
-					</div>
+					</div> -->
 					<!-- ///////////////////////////////////////////////  Verification Info  END /////////////////////////////////////////////////////////// -->
 
 
@@ -1494,6 +1498,26 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="form-group">
 										<label for="Customer_name"> Customer Name </label> <span class="required"> * </span>
 										<input type="text" class="form-control" id="Customer_name" name="Customer_name" value='<?php if (isset($doc_cus_name)) echo $doc_cus_name; ?>' readonly tabindex="2">
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role == '3') { ?> style="display: none" <?php }} ?>>
+									<div class="form-group">
+										<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
+										<input type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {echo 'Yes';} else {echo 'No';} ?>" readonly tabindex="3">
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {if ($role != '3') { ?>style="display: none" <?php }} ?>>
+									<div class="form-group">
+										<label for="remarks">Remarks</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly tabindex="4">
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }} ?>>
+									<div class="form-group">
+										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly tabindex="7">
 									</div>
 								</div>
 
@@ -2177,22 +2201,14 @@ if (sizeof($getLoanCalculation) > 0) {
 									</div>
 								</div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {
-																										if ($role != '1') { ?> style="display: none" <?php }
-																																									} ?>>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role == '3') { ?> style="display: none" <?php }} ?>>
 									<div class="form-group">
 										<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
-										<input type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {
-																																echo 'Yes';
-																															} else {
-																																echo 'No';
-																															} ?>" readonly tabindex="3">
+										<input type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {echo 'Yes';} else {echo 'No';} ?>" readonly tabindex="3">
 									</div>
 								</div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {
-																									if ($role != '3') { ?>style="display: none" <?php }
-																																								} ?>>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {if ($role != '3') { ?>style="display: none" <?php }} ?>>
 									<div class="form-group">
 										<label for="remarks">Remarks</label><span class="required">&nbsp;*</span>
 										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly tabindex="4">
@@ -2213,9 +2229,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									</div>
 								</div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {
-																										if ($role == '3') { ?>style="display: none" <?php }
-																																									} ?>>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }} ?>>
 									<div class="form-group">
 										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
 										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly tabindex="7">
@@ -2242,7 +2256,7 @@ if (sizeof($getLoanCalculation) > 0) {
 						</div>
 					</div>
 					<!-- Personal info START -->
-					<div class="card">
+					<!-- <div class="card">
 						<div class="card-header">Personal Info <span style="font-weight:bold" class=""></span></div>
 						<div class="card-body">
 							<div class="row">
@@ -2302,7 +2316,7 @@ if (sizeof($getLoanCalculation) > 0) {
 																										} elseif (isset($cus_pic_lc)) {
 																											echo $cus_pic_lc;
 																										} ?>">
-											<!-- <img id='imgshow' class="img_show" src='img/avatar.png' /> -->
+											comment it <img id='imgshow' class="img_show" src='img/avatar.png' /> comment it
 											<img id='imgshow' class="img_show" src='<?php if (isset($pic_loan)) {
 																						echo 'uploads/request/customer/' . $pic_loan;
 																					} elseif (isset($cus_pic_lc)) {
@@ -2316,8 +2330,66 @@ if (sizeof($getLoanCalculation) > 0) {
 
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- Personal info END -->
+
+					<!--  Verification Info START -->
+					<div class="card">
+						<div class="card-header"> Verfication Info <span style="font-weight:bold" class=""></span></div>
+						<div class="card-body">
+							<div class="row">
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="Communitcation_to_cus"> Communitcation </label> <span class="required">*</span>
+										<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus" tabindex="56">
+											<option value=""> Select Communication </option>
+											<option value="0" <?php if (isset($communication) and $communication == '0') echo 'selected'; ?>> Phone </option>
+											<option value="1" <?php if (isset($communication) and $communication == '1') echo 'selected'; ?>> Direct </option>
+										</select>
+										<span class="text-danger" style='display:none' id='communicationCheck'>Please Select communication </span>
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" <?php if (isset($communication)) {if ($communication == '1') { ?> style="display: none;" <?php }} else { ?> style="display: none;" <?php } ?> id="verifyaudio">
+									<div class="form-group">
+										<label for="verification_audio_upd"> Audio </label>
+										<input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if (isset($com_audio)) {echo $com_audio;} ?>">
+										<input type="file" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="57">
+										<?php if (isset($communication)) {
+											if ($communication == '0') { ?>
+												<a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>
+										<?php }
+										} ?>
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="verification_person"> Verification person </label> <span class="required">*</span>
+										<input type="hidden" id="verifyPerson" name="verifyPerson">
+										<select type="text" class="form-control" name="verification_person" id="verification_person" multiple tabindex="58">
+											<option value=""> Select Verification Person </option>
+										</select>
+										<span class="text-danger" style='display:none' id='verificationPersonCheck'>Please Select Verification Person </span>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="verification_location"> Verification location </label> <span class="required">*</span>
+										<select type="text" class="form-control" name="verification_location" id="verification_location" tabindex="59">
+											<option value=""> Select Verification location </option>
+											<option value="0" <?php if (isset($verification_location) and $verification_location == '0') echo 'selected'; ?>> On Spot </option>
+											<option value="1" <?php if (isset($verification_location) and $verification_location == '1') echo 'selected'; ?>> Customer Spot </option>
+										</select>
+										<span class="text-danger" style='display:none' id='verificationLocCheck'>Please Select Verification Location </span>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+					<!--  Verification Info END -->
 					<!-- Loan Info Start -->
 					<div class="card">
 						<div class="card-header">Loan Info <span style="font-weight:bold" class=""></span></div>
@@ -3150,7 +3222,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<option value="2"> Family Members </option>
 								<option value="3"> Group Members </option>
 							</select>
-							<span class="text-danger" id="proofCheck"> Select Proof </span>
+							<span class="text-danger" id="proofCheck" style="display:none"> Select Proof </span>
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 fam_mem_div" style="display:none">
@@ -3180,7 +3252,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<option value="10"> EB Bill </option>
 								<option value="11"> Business Proof </option>
 							</select>
-							<span class="text-danger" id="proofTypeCheck"> Select Proof Type </span>
+							<span class="text-danger" id="proofTypeCheck" style="display:none"> Select Proof Type </span>
 						</div>
 					</div>
 
@@ -3188,15 +3260,15 @@ if (sizeof($getLoanCalculation) > 0) {
 						<div class="form-group">
 							<label for="proof_number"> Proof Number </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Number">
-							<span class="text-danger" id="proofnoCheck"> Enter Proof Number </span>
+							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Number </span>
 						</div>
 					</div>
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="upload"> Upload </label> <span class="required">&nbsp;*</span>
+							<label for="upload"> Upload </label>
 							<input type="file" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg">
-							<span class="text-danger" id="proofUploadCheck"> Upload </span>
+							<span class="text-danger" id="proofUploadCheck" style="display:none"> Upload </span>
 						</div>
 					</div>
 
@@ -3293,7 +3365,12 @@ if (sizeof($getLoanCalculation) > 0) {
 							<span class="text-danger" id="signTypeCheck"> Select Sign Type </span>
 						</div>
 					</div>
-
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="guar_name_div">
+						<div class="form-group">
+							<label for="guar_name"> Guarentor Name </label>
+							<input type="text" class="form-control" id="guar_name" name="guar_name" readonly>
+						</div>
+					</div>
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
 						<div class="form-group">
@@ -3546,11 +3623,11 @@ if (sizeof($getLoanCalculation) > 0) {
 							<label for="cus_feedback"> Feedback </label> <span class="required">&nbsp;*</span>
 							<select type="text" class="form-control" id="cus_feedback" name="cus_feedback">
 								<option value=""> Select Feedback </option>
-								<option value="1"> Bad </option>
-								<option value="2"> Poor </option>
-								<option value="3"> Average </option>
-								<option value="4"> Good </option>
 								<option value="5"> Excellent </option>
+								<option value="4"> Good </option>
+								<option value="3"> Average </option>
+								<option value="2"> Poor </option>
+								<option value="1"> Bad </option>
 							</select>
 							<span class="text-danger" id="feedbackCheck"> Select Feedback </span>
 						</div>

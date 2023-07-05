@@ -17,15 +17,15 @@ while($famName = $names->fetch()){
     $NameList[] = array("fam_name" => $famname, "aadhar" => $aadhar, "mobile" => $mobile);
 }
 
-$names = $connect->query("SELECT `group_name`,`group_aadhar`,`group_mobile` FROM `verification_group_info` WHERE  req_id = '$req_id' ");
+// $names = $connect->query("SELECT `group_name`,`group_aadhar`,`group_mobile` FROM `verification_group_info` WHERE  req_id = '$req_id' ");
 
-while($grpName = $names->fetch()){
-    $famname = $grpName['group_name'];
-    $aadhar = $grpName['group_aadhar'];
-    $mobile = $grpName['group_mobile'];
+// while($grpName = $names->fetch()){
+//     $famname = $grpName['group_name'];
+//     $aadhar = $grpName['group_aadhar'];
+//     $mobile = $grpName['group_mobile'];
 
-    $NameList[] = array("fam_name" => $famname, "aadhar" => $aadhar, "mobile" => $mobile);
-}
+//     $NameList[] = array("fam_name" => $famname, "aadhar" => $aadhar, "mobile" => $mobile);
+// }
 
 echo json_encode($NameList);
 ?>

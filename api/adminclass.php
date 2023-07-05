@@ -3342,6 +3342,13 @@ function updateUser($mysqli,$id,$user_id){
             $reqToverify['due_period'] = $row['due_period'];
             $reqToverify['cus_status'] = $row['cus_status'];
         }
+		
+		$areaQry = $mysqli->query("SELECT area_name from area_list_creation where area_id = '".$row['area']."' ");
+		$reqToverify['area_name'] = $areaQry->fetch_assoc()['area_name'];
+		
+		$subareaQry = $mysqli->query("SELECT sub_area_name from sub_area_list_creation where sub_area_id = '".$row['sub_area']."' ");
+		$reqToverify['sub_area_name'] = $subareaQry->fetch_assoc()['sub_area_name'];
+
         return $reqToverify;
     }
 
@@ -3500,32 +3507,32 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['about_cus'])){
                 $about_cus = $_POST['about_cus'];
             }
-            if(isset($_POST['Communitcation_to_cus'])){
-                $Communitcation_to_cus = $_POST['Communitcation_to_cus'];
-            }
+            // if(isset($_POST['Communitcation_to_cus'])){
+            //     $Communitcation_to_cus = $_POST['Communitcation_to_cus'];
+            // }
 
-			if(!empty($_FILES['verification_audio']['name']))
-            {
-                $verify_audio = $_FILES['verification_audio']['name'];
-                $audio_temp = $_FILES['verification_audio']['tmp_name'];
-                $audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
-                move_uploaded_file($audio_temp, $audiofolder);
-            }else{
-                $verify_audio = $_POST['verification_audio_upd'];
-            }
-            if(isset($_POST['verifyPerson'])){
-                $verifyPerson = $_POST['verifyPerson'];
-            }
-            if(isset($_POST['verification_location'])){
-                $verification_location = $_POST['verification_location'];
-            }
+			// if(!empty($_FILES['verification_audio']['name']))
+            // {
+            //     $verify_audio = $_FILES['verification_audio']['name'];
+            //     $audio_temp = $_FILES['verification_audio']['tmp_name'];
+            //     $audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
+            //     move_uploaded_file($audio_temp, $audiofolder);
+            // }else{
+            //     $verify_audio = $_POST['verification_audio_upd'];
+            // }
+            // if(isset($_POST['verifyPerson'])){
+            //     $verifyPerson = $_POST['verifyPerson'];
+            // }
+            // if(isset($_POST['verification_location'])){
+            //     $verification_location = $_POST['verification_location'];
+            // }
             if(isset($_POST['cus_Tableid'])){
                 $cus_Tableid = $_POST['cus_Tableid'];
             }
 
 			if($cus_Tableid == ''){
-            $insertQry="INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
-            '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($cus_occ_dow)."','".strip_tags($cus_occ_abt)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($area_group)."','".strip_tags($area_line)."','".strip_tags($Communitcation_to_cus)."','".strip_tags($verify_audio)."','".strip_tags($verifyPerson)."','".strip_tags($verification_location)."','10','".$userid."' )";
+            $insertQry="INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
+            '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($cus_occ_dow)."','".strip_tags($cus_occ_abt)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($area_group)."','".strip_tags($area_line)."','10','".$userid."' )";
             $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
 			$insertQry = "UPDATE request_creation set cus_status = 10 where req_id ='".strip_tags($req_id)."' ";
@@ -3537,7 +3544,7 @@ function updateUser($mysqli,$id,$user_id){
 
 			}else{
 
-				$cusUpd = "UPDATE `customer_profile` SET `req_id`='".strip_tags($req_id)."',`cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`whatsapp`='".strip_tags($whatsapp_no)."',`cus_pic`='".strip_tags($pic)."',`guarentor_name`='".strip_tags($guarentor_name)."',`guarentor_relation`='".strip_tags($guarentor_relationship)."',`guarentor_photo`='".strip_tags($guarentor)."',`cus_type`='".strip_tags($cus_type)."',`cus_exist_type`='".strip_tags($cus_exist_type)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($state)."',`area_confirm_district`='".strip_tags($district)."',`area_confirm_taluk`='".strip_tags($taluk)."',`area_confirm_area`='".strip_tags($area)."',`area_confirm_subarea`='".strip_tags($sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`communication`='".strip_tags($Communitcation_to_cus)."',`com_audio`='".strip_tags($verify_audio)."',`verification_person`='".strip_tags($verifyPerson)."',`verification_location`='".strip_tags($verification_location)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `id`='".strip_tags($cus_Tableid)."' ";
+				$cusUpd = "UPDATE `customer_profile` SET `req_id`='".strip_tags($req_id)."',`cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`whatsapp`='".strip_tags($whatsapp_no)."',`cus_pic`='".strip_tags($pic)."',`guarentor_name`='".strip_tags($guarentor_name)."',`guarentor_relation`='".strip_tags($guarentor_relationship)."',`guarentor_photo`='".strip_tags($guarentor)."',`cus_type`='".strip_tags($cus_type)."',`cus_exist_type`='".strip_tags($cus_exist_type)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($state)."',`area_confirm_district`='".strip_tags($district)."',`area_confirm_taluk`='".strip_tags($taluk)."',`area_confirm_area`='".strip_tags($area)."',`area_confirm_subarea`='".strip_tags($sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `id`='".strip_tags($cus_Tableid)."' ";
 
 				$updateCus = $mysqli->query($cusUpd) or die("Error ".$mysqli->error);
 
@@ -3607,6 +3614,8 @@ function updateUser($mysqli,$id,$user_id){
 						$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
 						$detailrecords['loan_limit'] = $row['loan_limit'];
 						$detailrecords['about_customer'] = $row['about_customer'];
+						$detailrecords['dow'] = $row['dow'];
+						$detailrecords['abt_occ'] = $row['abt_occ'];
 						$i++;
 					}
 				}
@@ -4056,6 +4065,25 @@ function updateUser($mysqli,$id,$user_id){
 		if(isset($_POST['loan_cal_id'])){//To check Whether it is for update 
 			$loan_cal_id = $_POST['loan_cal_id'];
 		}
+		if(isset($_POST['Communitcation_to_cus'])){
+			$Communitcation_to_cus = $_POST['Communitcation_to_cus'];
+		}
+
+		if(!empty($_FILES['verification_audio']['name']))
+		{
+			$verify_audio = $_FILES['verification_audio']['name'];
+			$audio_temp = $_FILES['verification_audio']['tmp_name'];
+			$audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
+			move_uploaded_file($audio_temp, $audiofolder);
+		}else{
+			$verify_audio = $_POST['verification_audio_upd'];
+		}
+		if(isset($_POST['verifyPerson'])){
+			$verifyPerson = $_POST['verifyPerson'];
+		}
+		if(isset($_POST['verification_location'])){
+			$verification_location = $_POST['verification_location'];
+		}
 
 		if($loan_cal_id > 0 or $loan_cal_id != ''){
 			$updateQry = $mysqli->query("UPDATE verification_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
@@ -4068,7 +4096,9 @@ function updateUser($mysqli,$id,$user_id){
 				loan_amt_cal = '".strip_tags($loan_amt_cal)."', principal_amt_cal = '".strip_tags($principal_amt_cal)."', int_amt_cal = '".strip_tags($int_amt_cal)."', 
 				tot_amt_cal = '".strip_tags($tot_amt_cal)."', due_amt_cal = '".strip_tags($due_amt_cal)."', doc_charge_cal = '".strip_tags($doc_charge_cal)."', 
 				proc_fee_cal = '".strip_tags($proc_fee_cal)."', net_cash_cal = '".strip_tags($net_cash_cal)."', due_start_from = '".strip_tags($due_start_from)."', 
-				maturity_month = '".strip_tags($maturity_month)."', collection_method = '".strip_tags($collection_method)."', cus_status = 12, update_login_id = $userid, 
+				maturity_month = '".strip_tags($maturity_month)."', collection_method = '".strip_tags($collection_method)."',
+				`communication`='".strip_tags($Communitcation_to_cus)."',`com_audio`='".strip_tags($verify_audio)."',`verification_person`='".strip_tags($verifyPerson)."',`verification_location`='".strip_tags($verification_location)."',
+				cus_status = 12, update_login_id = $userid, 
 				update_date = current_timestamp() WHERE req_id = $req_id ");
 
 			$deleteCat = $mysqli->query("DELETE FROM verif_loan_cal_category where req_id = '".strip_tags($req_id)."' and loan_cal_id='".strip_tags($loan_cal_id)."'");
@@ -4082,14 +4112,15 @@ function updateUser($mysqli,$id,$user_id){
 			$insertQry = $mysqli->query("INSERT INTO verification_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
 				`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
 				`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
-				`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('".strip_tags($req_id)."', '".strip_tags($cus_id_loan)."', 
+				`due_start_from`, `maturity_month`, `collection_method`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('".strip_tags($req_id)."', '".strip_tags($cus_id_loan)."', 
 				'".strip_tags($cus_name_loan)."', '".strip_tags($cus_data_loan)."','".strip_tags($mobile_loan)."', '".strip_tags($pic_loan)."', '".strip_tags($loan_category)."', 
 				'".strip_tags($sub_category)."', '".strip_tags($tot_value)."', '".strip_tags($ad_amt)."', '".strip_tags($loan_amt)."', '".strip_tags($profit_type)."', 
 				'".strip_tags($due_method_calc)."', '".strip_tags($due_type)."', '".strip_tags($profit_method)."', '".strip_tags($calc_method)."', '".strip_tags($due_method_scheme)."', 
 				'".strip_tags($day_scheme)."', '".strip_tags($scheme_name)."', '".strip_tags($int_rate)."', '".strip_tags($due_period)."', '".strip_tags($doc_charge)."', 
 				'".strip_tags($proc_fee)."', '".strip_tags($loan_amt_cal)."', '".strip_tags($principal_amt_cal)."', '".strip_tags($int_amt_cal)."', '".strip_tags($tot_amt_cal)."', 
 				'".strip_tags($due_amt_cal)."', '".strip_tags($doc_charge_cal)."', '".strip_tags($proc_fee_cal)."', '".strip_tags($net_cash_cal)."', '".strip_tags($due_start_from)."', 
-				'".strip_tags($maturity_month)."', '".strip_tags($collection_method)."', 12, $userid, current_timestamp()) ");
+				'".strip_tags($maturity_month)."', '".strip_tags($collection_method)."',
+				'".strip_tags($Communitcation_to_cus)."','".strip_tags($verify_audio)."','".strip_tags($verifyPerson)."','".strip_tags($verification_location)."', 12, $userid, current_timestamp()) ");
 			$loan_cal_id = $mysqli->insert_id;
 			
 			for($i=0;$i<sizeof($category_info);$i++){
