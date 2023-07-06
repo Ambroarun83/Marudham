@@ -2115,7 +2115,20 @@ if (sizeof($getLoanCalculation) > 0) {
 						</div>
 					</div>
 
-
+					<!-- Document History START -->
+					<div class="card">
+						<div class="card-header"> Documents History </div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="form-group" id="docHistoryDiv">
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Document History END -->
 					<div class="col-md-12 ">
 						<div class="text-right">
 							<button type="submit" name="submit_documentation" id="submit_documentation" class="btn btn-primary" value="Submit" tabindex="32"><span class="icon-check"></span>&nbsp;Submit</button>
@@ -2570,7 +2583,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<!-- Loan info End -->
 					<!-- Loan Calculation Start -->
 					<div class="card">
-						<div class="card-header">Loan Calculation <span style="font-weight:bold" class=""></span></div>
+						<div class="card-header">Loan Calculation <span style="font-weight:bold" class=""></span><input type="button" class="btn btn-outline-secondary text-right" id="refresh_cal" name="refresh_cal" value='Calculate' style="float:right"></div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -2601,7 +2614,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="due_amt_cal">Due Amount</label>&nbsp;<span class="text-danger">*</span>
+												<label for="due_amt_cal">Due Amount</label>&nbsp;<span class="text-danger due-diff">*</span>
 												<input type="text" class="form-control" readonly id="due_amt_cal" name="due_amt_cal" value='<?php if (isset($due_amt_cal)) echo $due_amt_cal; ?>'>
 											</div>
 										</div>
@@ -2626,7 +2639,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
 											<div class="text-right">
 												<label for="refresh_cal" style="visibility:hidden">Net Cash</label>
-												<input type="button" class="form-control btn btn-outline-secondary" id="refresh_cal" name="refresh_cal" value='Refresh'>
+												<!-- <input type="button" class="form-control btn btn-outline-secondary" id="refresh_cal" name="refresh_cal" value='Refresh'> -->
 											</div>
 										</div>
 									</div>
