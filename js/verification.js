@@ -1353,7 +1353,6 @@ function verificationPerson() {
     var verification_person_upd = $('#verification_person_upd').val();
     var values = verification_person_upd.split(',');
 
-
     $.ajax({
         url: 'verificationFile/verificationFam.php',
         type: 'post',
@@ -1366,7 +1365,7 @@ function verificationPerson() {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 var selected = '';
-                if(verification_person_upd != '' &&  values.includes(fam_id)){
+                if (verification_person_upd !== '' && values.includes(String(fam_id))) {
                     selected = 'selected';
                 }
                 var items = [
@@ -4992,6 +4991,27 @@ function getLoanWeekly(){
     $('.due-diff').text('* (Difference: +' + parseInt(roundDue - due_amt) + ')'); //To show the difference amount
     $('#due_amt_cal').val(parseInt(roundDue).toFixed(0));
     
+    ////////////////////recalculation of total, principal, interest///////////////////
+
+        var new_tot = parseInt(roundDue) * due_period;
+        $('#tot_amt_cal').val(new_tot)
+    
+        //to get new interest rate using round due amt 
+        let new_int = (roundDue * due_period) - princ_amt;
+        
+        var roundedInterest = Math.ceil(new_int / 5) * 5;
+        if (roundedInterest < new_int) {
+            roundedInterest += 5;
+        }
+    
+        $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+        $('#int_amt_cal').val(parseInt(roundedInterest));
+    
+        var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+        $('#principal_amt_cal').val(new_princ);
+
+     //////////////////////////////////////////////////////////////////////////////////
+
     var doc_type = $('.min-max-doc').text(); //Scheme may have document charge in rupees or percentage . so getting symbol from span
     if(doc_type.includes('₹')){ 
         var doc_charge = parseInt(doc_charge) ; //Get document charge from loan info and directly show the document charge provided because of it is in rupees
@@ -5043,6 +5063,27 @@ function getLoanDaily(){
     }
     $('.due-diff').text('* (Difference: +' + parseInt(roundDue - due_amt) + ')'); //To show the difference amount
     $('#due_amt_cal').val(parseInt(roundDue).toFixed(0));
+
+    ////////////////////recalculation of total, principal, interest///////////////////
+
+    var new_tot = parseInt(roundDue) * due_period;
+    $('#tot_amt_cal').val(new_tot)
+
+    //to get new interest rate using round due amt 
+    let new_int = (roundDue * due_period) - princ_amt;
+    
+    var roundedInterest = Math.ceil(new_int / 5) * 5;
+    if (roundedInterest < new_int) {
+        roundedInterest += 5;
+    }
+
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
+
+    var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    $('#principal_amt_cal').val(new_princ);
+
+ //////////////////////////////////////////////////////////////////////////////////
     
     var doc_type = $('.min-max-doc').text(); //Scheme may have document charge in rupees or percentage . so getting symbol from span
     if(doc_type.includes('₹')){ 

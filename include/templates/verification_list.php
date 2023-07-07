@@ -105,7 +105,7 @@
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel">Customer Status</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -143,7 +143,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeModal()">Close</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
 			</div>
 		</div>
 	</div>
@@ -155,7 +155,7 @@
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel">Loan Summary</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeLoanModal()">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -190,7 +190,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closeLoanModal()">Close</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
 			</div>
 		</div>
 	</div>

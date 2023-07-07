@@ -91,6 +91,8 @@ if (sizeof($getRequestData) > 0) {
 		$due_amt					= $getRequestData['due_amt'];
 		$due_period					= $getRequestData['due_period'];
 		$cus_status					= $getRequestData['cus_status'];
+		$area_nameforhead 					= $getRequestData['area_name'];
+		$sub_area_nameforhead 					= $getRequestData['sub_area_name'];
 	}
 }
 
@@ -154,6 +156,8 @@ if(sizeof($getCustomerProfile) > 0 ){
 	// $behavior = $getCustomerProfile['behavior'] ;
 	// $incident_remark  = $getCustomerProfile['incident_remark'] ;
 	$about_customer = $getCustomerProfile['about_customer']  ;
+	$dow 					= $getCustomerProfile['dow'];
+	$abt_occ 					= $getCustomerProfile['abt_occ'];
 
 }
 
@@ -291,6 +295,10 @@ if(sizeof($getLoanCalculation)>0){
 		$due_start_from = $getLoanCalculation['due_start_from'];
 		$maturity_month = $getLoanCalculation['maturity_month'];
 		$collection_method = $getLoanCalculation['collection_method'];
+		$communication = $getLoanCalculation['communication'];
+		$com_audio = $getLoanCalculation['com_audio'];
+		$verification_person = $getLoanCalculation['verification_person'];
+		$verification_location = $getLoanCalculation['verification_location'];
 		$cus_status_lc = $getLoanCalculation['cus_status'];
 }
 
@@ -387,7 +395,9 @@ input:checked + .slider:before {
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
-		Customer Name - <?php if (isset($cus_name)) {  echo $cus_name; } ?>
+	Customer Name - <?php if (isset($cus_name)) {echo $cus_name;} ?>
+		,&nbsp;&nbsp;Area - <?php if (isset($area_nameforhead)) {echo $area_nameforhead;} ?>
+		,&nbsp;&nbsp;Sub Area - <?php if (isset($sub_area_nameforhead)) {echo $sub_area_nameforhead;} ?>
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
@@ -446,7 +456,7 @@ input:checked + .slider:before {
 								</div>
 							</div>
 
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role != '1') { ?> style="display: none" <?php }} ?>>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role == '3') { ?> style="display: none" <?php }} ?>>
 								<div class="form-group">
 									<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
 									<input tabindex="3" type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {echo 'Yes';} else {echo 'No';} ?>" readonly>
@@ -806,7 +816,20 @@ input:checked + .slider:before {
 									value="<?php if (isset($occupation_address)) { echo $occupation_address; } ?>" tabindex="29">
 								</div>
 							</div>
-
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_occ_dow"> Duration of Working </label>
+									<input type="text" class="form-control" name="cus_occ_dow" id="cus_occ_dow" placeholder="Enter Duration of Working" 
+									value="<?php if (isset($dow)) {echo $dow;} ?>" tabindex="35">
+								</div>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_occ_abt"> About Occupation </label>
+									<input type="text" class="form-control" name="cus_occ_abt" id="cus_occ_abt" placeholder="Enter About Occupation" 
+									value="<?php if (isset($abt_occ)) {echo $abt_occ;} ?>" tabindex="35">
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -1081,8 +1104,8 @@ input:checked + .slider:before {
 
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
-									<label for="loanlimit"> Loan Limit </label> <span class="required">*</span>
-									<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit" value="<?php if (isset($loan_limit)) { echo $loan_limit; } ?>" tabindex="47">
+									<label for="loanlimit"> Customer Limit </label> <span class="required">*</span>
+									<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Customer Limit" value="<?php if (isset($loan_limit)) { echo $loan_limit; } ?>" tabindex="47">
 								</div>
 							</div>
 
@@ -1282,7 +1305,26 @@ input:checked + .slider:before {
                                         <input type="text" class="form-control" id="Customer_name" name="Customer_name" value='<?php if (isset($doc_cus_name)) echo $doc_cus_name; ?>' readonly tabindex="2">
                                     </div>
                                 </div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role == '3') { ?> style="display: none" <?php }} ?>>
+									<div class="form-group">
+										<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
+										<input tabindex="3" type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {echo 'Yes';} else {echo 'No';} ?>" readonly>
+									</div>
+								</div>
 
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {if ($role != '3') { ?>style="display: none" <?php }} ?>>
+									<div class="form-group">
+										<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='4' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }} ?>>
+									<div class="form-group">
+										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='5' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
+									</div>
+								</div>
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="DocArea"> Area </label> <span class="required"> * </span>
@@ -1657,6 +1699,18 @@ input:checked + .slider:before {
                                     </div>
                                 </div>
 
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="enKey"> Key </label> <span class="required">&nbsp;*</span>
+                                        <select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="36">
+                                            <option value=""> Select Key </option>
+                                            <option value="0" <?php if(isset($en_Key) and $en_Key == '0') echo 'selected'; ?>> YES </option>
+                                            <option value="1" <?php if(isset($en_Key) and $en_Key == '1') echo 'selected'; ?>> NO </option>
+                                        </select>
+                                        <span class="text-danger" id="enKeyCheck"> Select Key </span>
+                                    </div>
+                                </div>
+
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="RC"> RC </label> <span class="required">&nbsp;*</span>
@@ -1677,18 +1731,6 @@ input:checked + .slider:before {
 											<!-- <a href="<?php echo "uploads/verification/endorsement_doc/".$Rc_document_upd; ?>" target="_blank" > <?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>  </a> -->
                                             <span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
                                         </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="enKey"> Key </label> <span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="36">
-                                            <option value=""> Select Key </option>
-                                            <option value="0" <?php if(isset($en_Key) and $en_Key == '0') echo 'selected'; ?>> YES </option>
-                                            <option value="1" <?php if(isset($en_Key) and $en_Key == '1') echo 'selected'; ?>> NO </option>
-                                        </select>
-                                        <span class="text-danger" id="enKeyCheck"> Select Key </span>
-                                    </div>
                                 </div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -1908,21 +1950,27 @@ input:checked + .slider:before {
 									</div>
 								</div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role != '1') { ?> style="display: none" <?php }} ?>>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role == '3') { ?> style="display: none" <?php }} ?>>
 									<div class="form-group">
 										<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
-										<input type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {
-											echo 'Yes';} else {echo 'No';} ?>" readonly tabindex="3">
+										<input tabindex="3" type="text" class="form-control" id="responsible" name="responsible" value="<?php if (isset($responsible) and $responsible == '0') {echo 'Yes';} else {echo 'No';} ?>" readonly>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {if ($role != '3') { ?>style="display: none" <?php }} ?>>
 									<div class="form-group">
 										<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly tabindex="4">
+										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='4' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
 									</div>
 								</div>
-								
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }} ?>>
+									<div class="form-group">
+										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='5' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
+									</div>
+								</div>
+							
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="DocArea"> Area </label> <span class="required"> * </span>
@@ -1937,12 +1985,6 @@ input:checked + .slider:before {
                                     </div>
                                 </div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }} ?>>
-									<div class="form-group">
-										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly tabindex="7">
-									</div>
-								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
@@ -1960,7 +2002,7 @@ input:checked + .slider:before {
 						</div>
 					</div>
 					<!-- Personal info START -->
-					<div class="card">
+					<!-- <div class="card">
 						<div class="card-header">Personal Info <span style="font-weight:bold" class="" ></span></div>
 						<div class="card-body">
 							<div class="row">
@@ -1968,29 +2010,29 @@ input:checked + .slider:before {
 									<div class="row">
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="">Customer ID</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_id_loan" name="cus_id_loan" readonly value='<?php if(isset($cus_id_loan)){echo $cus_id_loan;}elseif (isset($cus_id_lc)) {echo $cus_id_lc;} ?>' tabindex="10">
-											</div>
+												<label for="">Customer ID</label><span class="required">&nbsp;*</span> -->
+												<input type="hidden" class="form-control" id="cus_id_loan" name="cus_id_loan" readonly value='<?php if(isset($cus_id_loan)){echo $cus_id_loan;}elseif (isset($cus_id_lc)) {echo $cus_id_lc;} ?>' tabindex="10">
+											<!--</div>
 										</div>
 
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="">Customer Name</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_name_loan" name="cus_name_loan" readonly value='<?php if (isset($cus_name_loan)) {echo $cus_name_loan;}elseif (isset($cus_name_lc)) {echo $cus_name_lc;} ?>' tabindex="11">
-											</div>
+												<label for="">Customer Name</label><span class="required">&nbsp;*</span> -->
+												<input type="hidden" class="form-control" id="cus_name_loan" name="cus_name_loan" readonly value='<?php if (isset($cus_name_loan)) {echo $cus_name_loan;}elseif (isset($cus_name_lc)) {echo $cus_name_lc;} ?>' tabindex="11">
+											<!--</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="">Customer Data</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_data_loan" name="cus_data_loan" readonly value='<?php if (isset($cus_data_loan)) {echo $cus_data_loan;}elseif (isset($cus_data_lc)) {echo $cus_data_lc;} ?>' tabindex="12">
-											</div>
+												<label for="">Customer Data</label><span class="required">&nbsp;*</span> -->
+												<input type="hidden" class="form-control" id="cus_data_loan" name="cus_data_loan" readonly value='<?php if (isset($cus_data_loan)) {echo $cus_data_loan;}elseif (isset($cus_data_lc)) {echo $cus_data_lc;} ?>' tabindex="12">
+											<!--</div>
 										</div>
 
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="">Mobile No</label><span class="required">&nbsp;*</span>
-												<input type="number" class="form-control" id="mobile_loan" name="mobile_loan"  readonly value='<?php if (isset($mobile_loan)) {echo $mobile_loan;}elseif (isset($mobile_lc)) {echo $mobile_lc;} ?>' tabindex="13">
-											</div>
+												<label for="">Mobile No</label><span class="required">&nbsp;*</span> -->
+												<input type="hidden" class="form-control" id="mobile_loan" name="mobile_loan"  readonly value='<?php if (isset($mobile_loan)) {echo $mobile_loan;}elseif (isset($mobile_lc)) {echo $mobile_lc;} ?>' tabindex="13">
+											<!--</div>
 										</div>
 									</div>
 								</div>
@@ -1998,17 +2040,17 @@ input:checked + .slider:before {
 								<div class="col-md-4">
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 										<div class="form-group" style="margin-left: 30px;margin-top:-20px;">
-											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
+											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br> -->
 											<input type="hidden" name="pic_loan" id="pic_loan" value="<?php if (isset($pic_loan)) {echo $pic_loan;}elseif (isset($cus_pic_lc)) {echo $cus_pic_lc;} ?>">
 											<!-- <img id='imgshow' class="img_show" src='img/avatar.png' /> -->
-											<img id='imgshow' class="img_show" src='<?php if (isset($pic_loan)) {echo 'uploads/request/customer/'.$pic_loan;}elseif (isset($cus_pic_lc)) {echo 'uploads/request/customer/'. $cus_pic_lc;}else{echo 'img/avatar.png';} ?>' />
+											<!-- <img id='imgshow' class="img_show" src='<?php if (isset($pic_loan)) {echo 'uploads/request/customer/'.$pic_loan;}elseif (isset($cus_pic_lc)) {echo 'uploads/request/customer/'. $cus_pic_lc;}else{echo 'img/avatar.png';} ?>' />
 										</div>
 									</div>
 								</div>
 
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- Personal info END -->
 
 				<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
@@ -2235,7 +2277,7 @@ input:checked + .slider:before {
 					<!-- Loan info End -->
 					<!-- Loan Calculation Start -->
 					<div class="card">
-						<div class="card-header">Loan Calculation <span style="font-weight:bold" class="" ></span></div>
+						<div class="card-header">Loan Calculation <span style="font-weight:bold" class="" ></span><!--<input type="button" class="btn btn-outline-secondary text-right" id="refresh_cal" name="refresh_cal" value='Calculate' style="float:right">--></div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -2266,7 +2308,7 @@ input:checked + .slider:before {
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger">*</span>
+												<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger due-diff">*</span>
 												<input type="text" class="form-control" readonly id="due_amt_cal" name="due_amt_cal" value='<?php if(isset($due_amt_cal)) echo $due_amt_cal;?>'>
 											</div>
 										</div>
@@ -2291,7 +2333,7 @@ input:checked + .slider:before {
 										<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
 											<div class="text-right">
 												<label for="disabledInput" style="visibility:hidden">Net Cash</label>
-												<input type="button" class="form-control btn btn-outline-secondary" id="refresh_cal" name="refresh_cal" value='Refresh'>
+												<!-- <input type="button" class="form-control btn btn-outline-secondary" id="refresh_cal" name="refresh_cal" value='Refresh'> -->
 											</div>
 										</div>
 									</div>
@@ -2323,15 +2365,15 @@ input:checked + .slider:before {
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="disabledInput">Collection Method</label>&nbsp;<span class="text-danger">*</span>
+												<label for="disabledInput">Collection Format</label>&nbsp;<span class="text-danger">*</span>
 												<select type="text" class="form-control" id="collection_method" name="collection_method" tabindex="33">
-													<option value="">Select Collection Method</option> 
+													<option value="">Select Collection Format</option> 
 													<option value="1" <?php if(isset($collection_method) and $collection_method == '1') echo 'selected';?>>BySelf</option> 
-													<option value="2" <?php if(isset($collection_method) and $collection_method == '2') echo 'selected';?>>Spot Collection</option> 
+													<option value="2" <?php if(isset($collection_method) and $collection_method == '2') echo 'selected';?>>On Spot</option> 
 													<option value="3" <?php if(isset($collection_method) and $collection_method == '3') echo 'selected';?>>Cheque Collection</option> 
 													<option value="4" <?php if(isset($collection_method) and $collection_method == '4') echo 'selected';?>>ECS</option> 
 												</select>
-												<span class="text-danger" style='display:none' id='collection_methodCheck'>Please Select Collection Method</span>
+												<span class="text-danger" style='display:none' id='collection_methodCheck'>Please Select Collection Format</span>
 											</div>
 										</div>
 									</div>
@@ -2419,7 +2461,12 @@ input:checked + .slider:before {
 						</div>
 					</div>
 
-
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="guar_name_div">
+						<div class="form-group">
+							<label for="guar_name"> Guarentor Name </label>
+							<input type="text" class="form-control" id="guar_name" name="guar_name" readonly>
+						</div>
+					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
 						<div class="form-group">
 							<label for="signRelationship"> Relationship </label>
