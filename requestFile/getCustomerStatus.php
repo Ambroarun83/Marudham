@@ -6,7 +6,7 @@ if(isset($_POST['cus_id'])){
 
 $records = array();
 
-$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and cus_status <= 9 ORDER BY created_date DESC ");
+$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and (cus_status <= 9 or cus_status = 12) ORDER BY created_date DESC ");
 
 if($result->num_rows>0){
     $i=0;
@@ -24,7 +24,7 @@ if($result->num_rows>0){
         $cus_status =$row['cus_status'];
         if($cus_status <= 8){
             if($cus_status == '0'){$records[$i]['status'] = 'Request'; $records[$i]['sub_status'] = 'Requested';}else
-            if($cus_status == '1'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'In Verification';}else
+            if($cus_status == '1' or $cus_status == '12'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'In Verification';}else
             if($cus_status == '2'){$records[$i]['status'] = 'Approval';$records[$i]['sub_status'] = 'In Approval';}else
             if($cus_status == '3'){$records[$i]['status'] = 'Acknowledgement';$records[$i]['sub_status'] = 'In Acknowledgement';}else
             if($cus_status == '4'){$records[$i]['status'] = 'Request';$records[$i]['sub_status'] = 'Cancelled';}else

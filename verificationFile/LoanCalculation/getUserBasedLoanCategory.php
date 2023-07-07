@@ -29,7 +29,15 @@ if($role == '2'){
         $i++;
     }
 }else{
-    $qry = $con->query("SELECT * From loan_category_creation where status = 0 ");
+    // below query will give the result of loan categories which are available in loan calculation or loan scheme. 
+    // if any one of the tables having the loan category, then that one will be returned in this query
+    // old - select * from loan_category_creation where status = 0
+    $qry = $con->query("SELECT lcc.loan_category_creation_id, lcc.loan_category_creation_name
+    FROM loan_category_creation lcc
+    INNER JOIN loan_calculation lc ON lc.loan_category = lcc.loan_category_creation_id
+    LEFT OUTER JOIN loan_scheme ls ON ls.loan_category = lcc.loan_category_creation_id
+    GROUP BY lc.loan_category  
+ORDER BY `lcc`.`loan_category_creation_name` ASC; ");
     $i=0;
     while($row = $qry->fetch_assoc()){
         $detailrecords[$i]['loan_category_id'] = $row['loan_category_creation_id'];

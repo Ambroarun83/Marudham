@@ -368,13 +368,16 @@ if (sizeof($getLoanCalculation) > 0) {
 		$due_start_from = $getLoanCalculation['due_start_from'];
 		$maturity_month = $getLoanCalculation['maturity_month'];
 		$collection_method = $getLoanCalculation['collection_method'];
+		$communication = $getLoanCalculation['communication'];
+		$com_audio = $getLoanCalculation['com_audio'];
+		$verification_person = $getLoanCalculation['verification_person'];
+		$verification_location = $getLoanCalculation['verification_location'];
 		$cus_status_lc = $getLoanCalculation['cus_status'];
 	}
 
 	//Get Loan calculation Category info for edit
 	if ($loan_cal_id > 0) {
 		$getLoanCalCategory = $userObj->getVerificationLoanCalCategory($mysqli, $loan_cal_id);
-		print_r($getLoanCalCategory);
 	}
 }
 
@@ -1259,10 +1262,10 @@ if (sizeof($getLoanCalculation) > 0) {
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
-										<label for="cus_loan_limit"> Loan Limit </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit" 
+										<label for="cus_loan_limit"> Customer Limit </label> <span class="required">*</span>
+										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Customer Limit" 
 										value="<?php if (isset($loan_limit)) {echo $loan_limit;} ?>" tabindex="53">
-										<span class="text-danger" style='display:none' id='loanLimitCheck'>Please Enter Loan Limit </span>
+										<span class="text-danger" style='display:none' id='loanLimitCheck'>Please Enter Customer Limit </span>
 									</div>
 								</div>
 
@@ -2277,45 +2280,45 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="row">
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="cus_id_loan">Customer ID</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_id_loan" name="cus_id_loan" readonly value='<?php if (isset($cus_id_loan)) {
+												<label for="cus_id_loan">Customer ID</label><span class="required">&nbsp;*</span>-->
+												<input type="hidden" class="form-control" id="cus_id_loan" name="cus_id_loan" readonly value='<?php if (isset($cus_id_loan)) {
 																																				echo $cus_id_loan;
 																																			} elseif (isset($cus_id_lc)) {
 																																				echo $cus_id_lc;
 																																			} ?>' tabindex="10">
-											</div>
+											<!--</div>
 										</div>
 
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="cus_name_loan">Customer Name</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_name_loan" name="cus_name_loan" readonly value='<?php if (isset($cus_name_loan)) {
+												<label for="cus_name_loan">Customer Name</label><span class="required">&nbsp;*</span>-->
+												<input type="hidden" class="form-control" id="cus_name_loan" name="cus_name_loan" readonly value='<?php if (isset($cus_name_loan)) {
 																																					echo $cus_name_loan;
 																																				} elseif (isset($cus_name_lc)) {
 																																					echo $cus_name_lc;
 																																				} ?>' tabindex="11">
-											</div>
+											<!--</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="cus_data_loan">Customer Data</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_data_loan" name="cus_data_loan" readonly value='<?php if (isset($cus_data_loan)) {
+												<label for="cus_data_loan">Customer Data</label><span class="required">&nbsp;*</span>-->
+												<input type="hidden" class="form-control" id="cus_data_loan" name="cus_data_loan" readonly value='<?php if (isset($cus_data_loan)) {
 																																					echo $cus_data_loan;
 																																				} elseif (isset($cus_data_lc)) {
 																																					echo $cus_data_lc;
 																																				} ?>' tabindex="12">
-											</div>
+											<!--</div>
 										</div>
 
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
-												<label for="mobile_loan">Mobile No</label><span class="required">&nbsp;*</span>
-												<input type="number" class="form-control" id="mobile_loan" name="mobile_loan" readonly value='<?php if (isset($mobile_loan)) {
+												<label for="mobile_loan">Mobile No</label><span class="required">&nbsp;*</span>-->
+												<input type="hidden" class="form-control" id="mobile_loan" name="mobile_loan" readonly value='<?php if (isset($mobile_loan)) {
 																																					echo $mobile_loan;
 																																				} elseif (isset($mobile_lc)) {
 																																					echo $mobile_lc;
 																																				} ?>' tabindex="13">
-											</div>
+											<!--</div>
 										</div>
 									</div>
 								</div>
@@ -2323,12 +2326,12 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-md-4">
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 										<div class="form-group" style="margin-left: 30px;margin-top:-20px;">
-											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
+											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>-->
 											<input type="hidden" name="pic_loan" id="pic_loan" value="<?php if (isset($pic_loan)) {
 																											echo $pic_loan;
 																										} elseif (isset($cus_pic_lc)) {
 																											echo $cus_pic_lc;
-																										} ?>">
+																										} ?>"><!--
 											comment it <img id='imgshow' class="img_show" src='img/avatar.png' /> comment it
 											<img id='imgshow' class="img_show" src='<?php if (isset($pic_loan)) {
 																						echo 'uploads/request/customer/' . $pic_loan;
@@ -2671,11 +2674,11 @@ if (sizeof($getLoanCalculation) > 0) {
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="collection_method">Collection Method</label>&nbsp;<span class="text-danger">*</span>
+												<label for="collection_method">Collection Format</label>&nbsp;<span class="text-danger">*</span>
 												<select type="text" class="form-control" id="collection_method" name="collection_method" tabindex="33">
-													<option value="">Select Collection Method</option>
+													<option value="">Select Collection Format</option>
 													<option value="1" <?php if (isset($collection_method) and $collection_method == '1') echo 'selected'; ?>>BySelf</option>
-													<option value="2" <?php if (isset($collection_method) and $collection_method == '2') echo 'selected'; ?>>Spot Collection</option>
+													<option value="2" <?php if (isset($collection_method) and $collection_method == '2') echo 'selected'; ?>>On Spot</option>
 													<option value="3" <?php if (isset($collection_method) and $collection_method == '3') echo 'selected'; ?>>Cheque Collection</option>
 													<option value="4" <?php if (isset($collection_method) and $collection_method == '4') echo 'selected'; ?>>ECS</option>
 												</select>

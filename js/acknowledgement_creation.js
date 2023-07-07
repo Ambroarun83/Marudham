@@ -4,6 +4,7 @@ const personMultiselect = new Choices('#verification_person', {
     placeholder: true,
     placeholderValue: 'Select Verification Person',
 });
+personMultiselect.disable();// to disable verficiation person dropdown
 
 $(document).ready(function () {
 
@@ -52,8 +53,14 @@ $(document).ready(function () {
 
     $('#sign_type').change(function () { // Signed Type 
         let type = $(this).val();
+        $('#guar_name_div').hide();
 
-        if (type == '3') {
+        if (type == '1') { // if guarentor , then show guarentor name
+            getGuarentorName();
+        }
+        if (type == '3' || type == '2') {
+            // if type is combined or family member then show family members
+            //for combined, it will represents who is signed with customer in the same document.
             $('#relation_doc').show();
             signTypeRelation();
 
@@ -78,7 +85,15 @@ $(document).ready(function () {
                 $("#doc_name").val(result['doc_name']);
                 $("#sign_type").val(result['sign_type']);
 
-                if (result['sign_type'] == '3') {
+                if (result['sign_type'] == '1') {//if guarentor
+                    $('#guar_name_div').show();
+                    $("#guar_name").val(result['guar_name']);
+
+                } else {
+                    $('#guar_name_div').hide();
+                }
+
+                if (result['sign_type'] == '3' || result['sign_type'] == '2') {
                     $('#relation_doc').show();
                     $("#signType_relationship").val(result['signType_relationship']);
 
@@ -963,7 +978,7 @@ function resetFamDetails() {
             var len = response.length;
             $("#guarentor_name").empty();
             $("#guarentor_name").append("<option value=''>" + 'Select Guarantor' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 var selected = '';
@@ -1004,7 +1019,7 @@ function verificationPerson() {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 var selected = '';
-                if (verification_person_upd != '' && values.includes(fam_id)) {
+                if (verification_person_upd != '' && values.includes(String(fam_id))) {
                     selected = 'selected';
                 }
                 var items = [
@@ -1394,7 +1409,7 @@ function feedbackList() {
 //////////////////////////////////////////////////// Documentation  Start////////////////////////////////////////
 function onLoadDocEditFunction() {//On load for Loan Calculation edit
 
-    $('select#mortgage_process').removeAttr('disabled');
+    // $('select#mortgage_process').removeAttr('disabled');
     $('select#Propertyholder_type').removeAttr('disabled');
     // $('input#Propertyholder_name').removeAttr('readonly');
     $('select#Propertyholder_relationship_name').removeAttr('disabled');
@@ -1415,7 +1430,7 @@ function onLoadDocEditFunction() {//On load for Loan Calculation edit
     $('#en_RC').removeAttr('disabled');
     $('#en_Key').removeAttr('disabled');
 
-    $('select#endorsement_process').removeAttr('disabled');
+    // $('select#endorsement_process').removeAttr('disabled');
     $('select#owner_type').removeAttr('disabled');
     // $('input#owner_name').removeAttr('readonly');
     $('select#ownername_relationship_name').removeAttr('disabled');
@@ -1463,7 +1478,7 @@ function endorseHolderName() {
             var len = response.length;
             $("#ownername_relationship_name").empty();
             $("#ownername_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 $("#ownername_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
@@ -1493,7 +1508,7 @@ function mortgageHolderName() {
             var len = response.length;
             $("#Propertyholder_relationship_name").empty();
             $("#Propertyholder_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 $("#Propertyholder_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
@@ -1523,7 +1538,7 @@ function docHolderName() {
             var len = response.length;
             $("#docholder_relationship_name").empty();
             $("#docholder_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 $("#docholder_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
@@ -1553,6 +1568,8 @@ function resetsignInfo() {
 
             $("#doc_name").val('');
             $("#sign_type").val('');
+            $("#guar_name_div").hide();
+            $("#guar_name").val('');
             $("#signType_relationship").val('');
             $("#doc_Count").val('');
             $("#signdoc_upd").val('');
@@ -1574,7 +1591,7 @@ function signTypeRelation() {
             var len = response.length;
             $("#signType_relationship").empty();
             $("#signType_relationship").append("<option value=''>" + 'Select Relationship' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 var relationship = response[i]['relationship'];
@@ -1592,6 +1609,20 @@ function signTypeRelation() {
     });
 }
 
+function getGuarentorName(){
+    let cus_id = $('#cus_id').val();
+    $.ajax({
+        url: 'verificationFile/getGuarentorName.php',
+        type: 'post',
+        data: { "cus_id": cus_id },
+        cache: false,
+        success: function (response) {
+            $('#guar_name_div').show();
+            $('#guar_name').val(response);
+        }
+    })
+}
+
 function resetsigninfoList() {
     let req_id = $('#req_id').val();
     $.ajax({
@@ -1605,6 +1636,8 @@ function resetsigninfoList() {
 
             $("#doc_name").val('');
             $("#sign_type").val('');
+            $("#guar_name").val('');
+            $("#guar_name_div").hide();
             $("#signType_relationship").val('');
             $("#doc_Count").val('');
             $("#signdoc_upd").val('');
@@ -1691,7 +1724,7 @@ function chequeHolderName() {
             var len = response.length;
             $("#holder_relationship_name").empty();
             $("#holder_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-            for (var i = 0; i < len; i++) {
+            for (var i = 0; i < len-1; i++) {
                 var fam_name = response[i]['fam_name'];
                 var fam_id = response[i]['fam_id'];
                 $("#holder_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
@@ -2359,28 +2392,28 @@ function doc_submit_validation() {
 //////////////////////////////////////////////////////////////////// Loan Calculation Functions Start ///////////////////////////////////////////////////////////////////////////////
 function onLoadEditFunction() {//On load for Loan Calculation edit
     // setTimeout(()=> {
-    $('select#loan_category').removeAttr('disabled');
-    $('select#sub_category').removeAttr('disabled');
-    $('input#tot_value').removeAttr('readonly');
-    $('input#ad_amt').removeAttr('readonly');
-    $('input#loan_amt').removeAttr('readonly');
-    $('select#profit_type').removeAttr('disabled');
-    // $('input#due_method_calc').removeAttr('readonly');
-    // $('input#due_type').removeAttr('readonly');
-    $('select#profit_method').removeAttr('disabled');
-    $('input#calc_method').removeAttr('readonly');
-    $('select#due_method_scheme').removeAttr('disabled');
-    $('select#day_scheme').removeAttr('disabled');
-    $('select#scheme_name').removeAttr('disabled');
-    // $('input#int_rate').removeAttr('readonly');
-    // $('input#due_period').removeAttr('readonly');
-    $('input#doc_charge').removeAttr('readonly');
-    $('input#proc_fee').removeAttr('readonly');
+    // $('select#loan_category').removeAttr('disabled');
+    // $('select#sub_category').removeAttr('disabled');
+    // $('input#tot_value').removeAttr('readonly');
+    // $('input#ad_amt').removeAttr('readonly');
+    // $('input#loan_amt').removeAttr('readonly');
+    // $('select#profit_type').removeAttr('disabled');
+    // // $('input#due_method_calc').removeAttr('readonly');
+    // // $('input#due_type').removeAttr('readonly');
+    // $('select#profit_method').removeAttr('disabled');
+    // $('input#calc_method').removeAttr('readonly');
+    // $('select#due_method_scheme').removeAttr('disabled');
+    // $('select#day_scheme').removeAttr('disabled');
+    // $('select#scheme_name').removeAttr('disabled');
+    // // $('input#int_rate').removeAttr('readonly');
+    // // $('input#due_period').removeAttr('readonly');
+    // $('input#doc_charge').removeAttr('readonly');
+    // $('input#proc_fee').removeAttr('readonly');
     $('input#due_start_from').removeAttr('readonly');
-    $('input#refresh_cal').removeAttr('readonly');
+    // $('input#refresh_cal').removeAttr('readonly');
     $('select#collection_method').removeAttr('disabled');
-    $('select#Communitcation_to_cus').removeAttr('disabled');
-    $('select#verification_location').removeAttr('disabled');
+    // $('select#Communitcation_to_cus').removeAttr('disabled');
+    // $('select#verification_location').removeAttr('disabled');
     // },100)
 }
 
@@ -2576,12 +2609,13 @@ function getCategoryInfo() {
                 var tb = 35;
                 for (var i = 0; i < response.length; i++) {
                     $('#moduleTable tbody tr').append(`<td><label for="disabledInput">` + response[i]['loan_category_ref_name'] + `</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
-                    value='`+ category_info + `' tabindex='` + tb + `' required placeholder='Enter ` + response[i]['loan_category_ref_name'] + `'></td>`);
+                    value='`+ category_info + `' tabindex='` + tb + `' required placeholder='Enter ` + response[i]['loan_category_ref_name'] + `'readonly ></td>`);
                     tb++;
                 }
                 $('#moduleTable tbody tr').append(`<td><button type="button" tabindex='` + tb + `' id="add_category_info[]" name="add_category_info" 
-                class="btn btn-primary add_category_info">Add</button> </td><td><span class='icon-trash-2 deleterow' id='deleterow' tabindex='`+ tb + `'></span></td>
+                class="btn btn-primary add_category_info" disabled>Add</button> </td><td><span class='icon-trash-2 ' id='' tabindex='`+ tb + `'></span></td>
                 </tr></tbody></table>`);
+                // $('#moduleTable tbody tr').append(`</tr></tbody></table>`);
 
                 var category_content = $('#moduleTable tbody tr').html(); //To get the appended category list
 
@@ -2982,7 +3016,7 @@ function schemeCalAjax(scheme_id) {
 }
 
 //To Get Loan Calculation for After Interest
-function getLoanAfterInterest() {
+function getLoanAfterInterest(){
     var loan_amt = $('#loan_amt').val();
     var int_rate = $('#int_rate').val();
     var due_period = $('#due_period').val();
@@ -2994,19 +3028,43 @@ function getLoanAfterInterest() {
 
     var interest_rate = (parseInt(loan_amt) * (parseFloat(int_rate)/100) * parseInt(due_period)).toFixed(0); //Calculate interest rate 
     
-    var roundedInterest = Math.ceil(interest_rate / 5) * 5; //to increase interest rate to nearest multiple of 5
-    if (roundedInterest < interest_rate) {
-        roundedInterest += 5;
-    }
-
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - interest_rate) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest));
+    // var roundedInterest = Math.ceil(interest_rate / 5) * 5; //to increase interest rate to nearest multiple of 5
+    // if (roundedInterest < interest_rate) {
+    //     roundedInterest += 5;
+    // }
+    
+    // $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - interest_rate) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(interest_rate));
 
     var tot_amt = parseInt(loan_amt) + parseFloat(interest_rate); //Calculate total amount from principal/loan amt and interest rate
     $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
 
     var due_amt = parseInt(tot_amt) / parseInt(due_period);//To calculate due amt by dividing total amount and due period given on loan info
-    $('#due_amt_cal').val(parseInt(due_amt).toFixed(0));
+    var roundDue = Math.ceil(due_amt / 5) * 5; //to increase Due Amt to nearest multiple of 5
+    if (roundDue < due_amt) {
+        roundDue += 5;
+    }
+    $('.due-diff').text('* (Difference: +' + parseInt(roundDue - due_amt) + ')'); //To show the difference amount
+    $('#due_amt_cal').val(parseInt(roundDue).toFixed(0));
+
+    ////////////////////recalculation of total, principal, interest///////////////////
+    var new_tot = parseInt(roundDue) * due_period;
+    $('#tot_amt_cal').val(new_tot)
+
+    //to get new interest rate using round due amt 
+    let new_int = (roundDue * due_period) - loan_amt;
+    var roundedInterest = Math.ceil(new_int / 5) * 5;
+    if (roundedInterest < new_int) {
+        roundedInterest += 5;
+    }
+
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
+
+    var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    $('#principal_amt_cal').val(new_princ);
+    
+    //////////////////////////////////////////////////////////////////////////////////
 
     var doc_charge = parseInt(loan_amt) * (parseFloat(doc_charge)/100) ; //Get document charge from loan info and multiply with loan amt to get actual doc charge
     $('#doc_charge_cal').val(parseInt(doc_charge).toFixed(0));
@@ -3019,31 +3077,52 @@ function getLoanAfterInterest() {
 }
 
 //To Get Loan Calculation for Pre Interest
-function getLoanPreInterest() {
+function getLoanPreInterest(){
     var loan_amt = $('#loan_amt').val();
     var int_rate = $('#int_rate').val();
     var due_period = $('#due_period').val();
     var doc_charge = $('#doc_charge').val();
     var proc_fee = $('#proc_fee').val();
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
-
-
+    
+    
     var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100) * parseInt(due_period)).toFixed(0); //Calculate interest rate 
-    var roundedInterest = Math.ceil(int_amt / 5) * 5;
-    if (roundedInterest < int_amt) {
-        roundedInterest += 5;
-    }
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest));
-
+    // $('#int_amt_cal').val(parseInt(int_amt));
+    
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
-    $('#principal_amt_cal').val(parseInt(princ_amt).toFixed(0)); 
+    // $('#principal_amt_cal').val(parseInt(princ_amt).toFixed(0)); 
 
     var tot_amt = parseInt(princ_amt) + parseFloat(int_amt); //Calculate total amount from principal/loan amt and interest rate
-    $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
+    // $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
 
     var due_amt = parseInt(tot_amt) / parseInt(due_period);//To calculate due amt by dividing total amount and due period given on loan info
-    $('#due_amt_cal').val(parseInt(due_amt).toFixed(0));
+    var roundDue = Math.ceil(due_amt / 5) * 5; //to increase Due Amt to nearest multiple of 5
+    if (roundDue < due_amt) {
+        roundDue += 5;
+    }
+    $('.due-diff').text('* (Difference: +' + parseInt(roundDue - due_amt) + ')'); //To show the difference amount
+    $('#due_amt_cal').val(parseInt(roundDue).toFixed(0));
+    
+    ////////////////////recalculation of total, principal, interest///////////////////
+
+    var new_tot = parseInt(roundDue) * due_period;
+    $('#tot_amt_cal').val(new_tot)
+
+    //to get new interest rate using round due amt 
+    let new_int = (roundDue * due_period) - princ_amt;
+    
+    var roundedInterest = Math.ceil(new_int / 5) * 5;
+    if (roundedInterest < new_int) {
+        roundedInterest += 5;
+    }
+
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
+
+    var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    $('#principal_amt_cal').val(new_princ);
+
+    //////////////////////////////////////////////////////////////////////////////////
 
     var doc_charge = parseInt(loan_amt) * (parseFloat(doc_charge)/100) ; //Get document charge from loan info and multiply with loan amt to get actual doc charge
     $('#doc_charge_cal').val(parseInt(doc_charge).toFixed(0));
@@ -3056,7 +3135,7 @@ function getLoanPreInterest() {
 }
 
 //To Get Loan Calculation for Interest due type
-function getLoanInterest() {
+function getLoanInterest(){
     var loan_amt = $('#loan_amt').val();
     var int_rate = $('#int_rate').val();
     var due_period = $('#due_period').val();
@@ -3065,7 +3144,7 @@ function getLoanInterest() {
 
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
     $('#principal_amt_cal').val(parseInt(loan_amt).toFixed(0)); 
-
+    
     $('#tot_amt_cal').val('');
     $('#due_amt_cal').val('');//Due period will be monthly by default so no need of due amt
     
@@ -3089,7 +3168,7 @@ function getLoanInterest() {
 }
 
 //To Get Loan Calculation for Monthly Scheme method
-function getLoanMonthly() {
+function getLoanMonthly(){ 
     var loan_amt = $('#loan_amt').val();
     var int_rate = $('#int_rate').val();
     var due_period = $('#due_period').val();
@@ -3097,23 +3176,44 @@ function getLoanMonthly() {
     var proc_fee = $('#proc_fee').val();
 
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
-
+    
     var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100)).toFixed(0) ; //Calculate interest rate 
-    var roundedInterest = Math.ceil(int_amt / 5) * 5;
-    if (roundedInterest < int_amt) {
-        roundedInterest += 5;
-    }
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest));
-
+    // $('#int_amt_cal').val(parseInt(int_amt));
+    
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
-    $('#principal_amt_cal').val(princ_amt);
+    // $('#principal_amt_cal').val(princ_amt); 
 
     var tot_amt = parseInt(princ_amt) + parseFloat(int_amt); //Calculate total amount from principal/loan amt and interest rate
-    $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
+    // $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
 
     var due_amt = parseInt(tot_amt) / parseInt(due_period);//To calculate due amt by dividing total amount and due period given on loan info
-    $('#due_amt_cal').val(parseInt(due_amt).toFixed(0));
+    var roundDue = Math.ceil(due_amt / 5) * 5; //to increase Due Amt to nearest multiple of 5
+    if (roundDue < due_amt) {
+        roundDue += 5;
+    }
+    $('.due-diff').text('* (Difference: +' + parseInt(roundDue - due_amt) + ')'); //To show the difference amount
+    $('#due_amt_cal').val(parseInt(roundDue).toFixed(0));
+
+    ////////////////////recalculation of total, principal, interest///////////////////
+
+    var new_tot = parseInt(roundDue) * due_period;
+    $('#tot_amt_cal').val(new_tot)
+
+    //to get new interest rate using round due amt 
+    let new_int = (roundDue * due_period) - princ_amt;
+    
+    var roundedInterest = Math.ceil(new_int / 5) * 5;
+    if (roundedInterest < new_int) {
+        roundedInterest += 5;
+    }
+
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
+
+    var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    $('#principal_amt_cal').val(new_princ);
+
+    //////////////////////////////////////////////////////////////////////////////////
 
     var doc_type = $('.min-max-doc').text(); //Scheme may have document charge in rupees or percentage . so getting symbol from span
     if(doc_type.includes('₹')){
@@ -3136,7 +3236,7 @@ function getLoanMonthly() {
 }
 
 //To Get Loan Calculation for Weekly Scheme method
-function getLoanWeekly() {
+function getLoanWeekly(){ 
     var loan_amt = $('#loan_amt').val();
     var int_rate = $('#int_rate').val();
     var due_period = $('#due_period').val();
@@ -3144,14 +3244,14 @@ function getLoanWeekly() {
     var proc_fee = $('#proc_fee').val();
 
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
-
+    
     var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100)).toFixed(0) ; //Calculate interest rate 
-    var roundedInterest = Math.ceil(int_amt / 5) * 5;
-    if (roundedInterest < int_amt) {
-        roundedInterest += 5;
-    }
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest));
+    // var roundedInterest = Math.ceil(int_amt / 5) * 5;
+    // if (roundedInterest < int_amt) {
+    //     roundedInterest += 5;
+    // }
+    // $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
+    // $('#int_amt_cal').val(parseInt(int_amt));
 
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
     $('#principal_amt_cal').val(parseInt(princ_amt).toFixed(0)); 
@@ -3160,7 +3260,33 @@ function getLoanWeekly() {
     $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
 
     var due_amt = parseInt(tot_amt) / parseInt(due_period);//To calculate due amt by dividing total amount and due period given on loan info
-    $('#due_amt_cal').val(parseInt(due_amt).toFixed(0));
+    var roundDue = Math.ceil(due_amt / 5) * 5; //to increase Due Amt to nearest multiple of 5
+    if (roundDue < due_amt) {
+        roundDue += 5;
+    }
+    $('.due-diff').text('* (Difference: +' + parseInt(roundDue - due_amt) + ')'); //To show the difference amount
+    $('#due_amt_cal').val(parseInt(roundDue).toFixed(0));
+    
+    ////////////////////recalculation of total, principal, interest///////////////////
+
+        var new_tot = parseInt(roundDue) * due_period;
+        $('#tot_amt_cal').val(new_tot)
+    
+        //to get new interest rate using round due amt 
+        let new_int = (roundDue * due_period) - princ_amt;
+        
+        var roundedInterest = Math.ceil(new_int / 5) * 5;
+        if (roundedInterest < new_int) {
+            roundedInterest += 5;
+        }
+    
+        $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+        $('#int_amt_cal').val(parseInt(roundedInterest));
+    
+        var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+        $('#principal_amt_cal').val(new_princ);
+
+     //////////////////////////////////////////////////////////////////////////////////
 
     var doc_type = $('.min-max-doc').text(); //Scheme may have document charge in rupees or percentage . so getting symbol from span
     if(doc_type.includes('₹')){ 
@@ -3183,7 +3309,7 @@ function getLoanWeekly() {
 }
 
 //To Get Loan Calculation for Daily Scheme method
-function getLoanDaily() {
+function getLoanDaily(){ 
     var loan_amt = $('#loan_amt').val();
     var int_rate = $('#int_rate').val();
     var due_period = $('#due_period').val();
@@ -3191,14 +3317,14 @@ function getLoanDaily() {
     var proc_fee = $('#proc_fee').val();
 
     $('#loan_amt_cal').val(parseInt(loan_amt).toFixed(0)); //get loan amt from loan info card
-
+    
     var int_amt = (parseInt(loan_amt) * (parseFloat(int_rate)/100)).toFixed(0) ; //Calculate interest rate 
-    var roundedInterest = Math.ceil(int_amt / 5) * 5;
-    if (roundedInterest < int_amt) {
-        roundedInterest += 5;
-    }
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
-    $('#int_amt_cal').val(parseInt(roundedInterest));
+    // var roundedInterest = Math.ceil(int_amt / 5) * 5;
+    // if (roundedInterest < int_amt) {
+    //     roundedInterest += 5;
+    // }
+    // $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(int_amt));
 
     var princ_amt = parseInt(loan_amt) - parseInt(int_amt); // Calculate principal amt by subracting interest amt from loan amt
     $('#principal_amt_cal').val(parseInt(princ_amt).toFixed(0)); 
@@ -3207,8 +3333,34 @@ function getLoanDaily() {
     $('#tot_amt_cal').val(parseInt(tot_amt).toFixed(0));
 
     var due_amt = parseInt(tot_amt) / parseInt(due_period);//To calculate due amt by dividing total amount and due period given on loan info
-    $('#due_amt_cal').val(parseInt(due_amt).toFixed(0));
+    var roundDue = Math.ceil(due_amt / 5) * 5; //to increase Due Amt to nearest multiple of 5
+    if (roundDue < due_amt) {
+        roundDue += 5;
+    }
+    $('.due-diff').text('* (Difference: +' + parseInt(roundDue - due_amt) + ')'); //To show the difference amount
+    $('#due_amt_cal').val(parseInt(roundDue).toFixed(0));
 
+    ////////////////////recalculation of total, principal, interest///////////////////
+
+    var new_tot = parseInt(roundDue) * due_period;
+    $('#tot_amt_cal').val(new_tot)
+
+    //to get new interest rate using round due amt 
+    let new_int = (roundDue * due_period) - princ_amt;
+    
+    var roundedInterest = Math.ceil(new_int / 5) * 5;
+    if (roundedInterest < new_int) {
+        roundedInterest += 5;
+    }
+
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('#int_amt_cal').val(parseInt(roundedInterest));
+
+    var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    $('#principal_amt_cal').val(new_princ);
+
+ //////////////////////////////////////////////////////////////////////////////////
+    
     var doc_type = $('.min-max-doc').text(); //Scheme may have document charge in rupees or percentage . so getting symbol from span
     if(doc_type.includes('₹')){ 
         var doc_charge = parseInt(doc_charge) ; //Get document charge from loan info and directly show the document charge provided because of it is in rupees
@@ -3228,6 +3380,7 @@ function getLoanDaily() {
     var net_cash = parseInt(princ_amt) - parseInt(doc_charge) - parseInt(proc_fee) ; //Net cash will be calculated by subracting other charges
     $('#net_cash_cal').val(parseInt(net_cash).toFixed(0));
 }
+
 
 //Validation for Loan calculation
 function loan_calc_validation() {

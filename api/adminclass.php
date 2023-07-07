@@ -4175,6 +4175,10 @@ function updateUser($mysqli,$id,$user_id){
 				$detailrecords['due_start_from'] = $row['due_start_from'];
 				$detailrecords['maturity_month'] = $row['maturity_month'];
 				$detailrecords['collection_method'] = $row['collection_method'];
+				$detailrecords['communication'] = $row['communication'];
+				$detailrecords['com_audio'] = $row['com_audio'];
+				$detailrecords['verification_person'] = $row['verification_person'];
+				$detailrecords['verification_location'] = $row['verification_location'];
 				$detailrecords['cus_status'] = $row['cus_status'];
 			}
 		}
@@ -4256,6 +4260,8 @@ function updateUser($mysqli,$id,$user_id){
 						$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
 						$detailrecords['loan_limit'] = $row['loan_limit'];
 						$detailrecords['about_customer'] = $row['about_customer'];
+						$detailrecords['dow'] = $row['dow'];
+						$detailrecords['abt_occ'] = $row['abt_occ'];
 						$i++;
 					}
 				}
@@ -4882,6 +4888,10 @@ function updateUser($mysqli,$id,$user_id){
 					$detailrecords['due_start_from'] = $row['due_start_from'];
 					$detailrecords['maturity_month'] = $row['maturity_month'];
 					$detailrecords['collection_method'] = $row['collection_method'];
+					$detailrecords['communication'] = $row['communication'];
+					$detailrecords['com_audio'] = $row['com_audio'];
+					$detailrecords['verification_person'] = $row['verification_person'];
+					$detailrecords['verification_location'] = $row['verification_location'];
 					$detailrecords['cus_status'] = $row['cus_status'];
 				}
 			}
