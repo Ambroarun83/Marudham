@@ -1430,6 +1430,7 @@ input:checked + .slider:before {
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="MortgageProcess"> Mortgage Process</label> <span class="required">&nbsp;*</span>
+                                        <input type="hidden" class="form-control" id="mortgage_process_post" name="mortgage_process_post" value="<?php echo $mortgage_process;?>" >
                                         <select type="text" class="form-control" id="mortgage_process" name="mortgage_process" tabindex="8">
                                             <option value=""> Select Mortgage Process </option>
                                             <option value="0" <?php if(isset($mortgage_process) and $mortgage_process == '0') echo 'selected'; ?>> YES </option>
@@ -1598,6 +1599,7 @@ input:checked + .slider:before {
                                 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="EndorsementProcess"> Endorsement Process</label> <span class="required">&nbsp;*</span>
+                                        <input type="hidden" class="form-control" id="endorsement_process_post" name="endorsement_process_post" value="<?php echo $endorsement_process;?>" >
                                         <select type="text" class="form-control" id="endorsement_process" name="endorsement_process" tabindex="24">
                                             <option value=""> Select Endorsement Process </option>
                                             <option value="0" <?php if(isset($endorsement_process) and $endorsement_process == '0') echo 'selected'; ?>> YES </option>
@@ -1702,7 +1704,7 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="enKey"> Key </label> <span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="36">
+                                        <select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="34">
                                             <option value=""> Select Key </option>
                                             <option value="0" <?php if(isset($en_Key) and $en_Key == '0') echo 'selected'; ?>> YES </option>
                                             <option value="1" <?php if(isset($en_Key) and $en_Key == '1') echo 'selected'; ?>> NO </option>
@@ -1714,7 +1716,7 @@ input:checked + .slider:before {
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="RC"> RC </label> <span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="en_RC" name="en_RC" tabindex="34">
+                                        <select type="text" class="form-control" id="en_RC" name="en_RC" tabindex="35">
                                             <option value=""> Select RC </option>
                                             <option value="0" <?php if(isset($en_RC) and $en_RC == '0') echo 'selected'; ?>> YES </option>
                                             <option value="1" <?php if(isset($en_RC) and $en_RC == '1') echo 'selected'; ?>> NO </option>
@@ -1726,7 +1728,7 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="RCdocUpd" style="display: none;">
                                         <div class="form-group">
                                             <label for="RCDocumentUpd"> RC Uploads </label> <span class="required">&nbsp;*</span>
-                                            <input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="35">
+                                            <input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="36">
 											<input type="hidden" id="rc_doc_upd" name="rc_doc_upd"  value="<?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>">
 											<!-- <a href="<?php echo "uploads/verification/endorsement_doc/".$Rc_document_upd; ?>" target="_blank" > <?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>  </a> -->
                                             <span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
@@ -2062,6 +2064,7 @@ input:checked + .slider:before {
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="Communitcation"> Communitcation </label> <span class="required">*</span>
+									<input type="hidden" class="form-control" id="Communitcation_to_cus_ack" name="Communitcation_to_cus_ack" value="<?php if(isset($communication)){ echo $communication; }?>">
 									<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus">
 										<option value=""> Select Communication </option>
 										<option value="0" <?php if(isset($communication) and $communication == '0') echo 'selected'; ?>> Phone </option>
@@ -2094,6 +2097,7 @@ input:checked + .slider:before {
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="Verificationlocation"> Verification location </label> <span class="required">*</span>
+									<input type="hidden" class="form-control" id="verification_location_ack" name="verification_location_ack" value="<?php if(isset($verification_location)){ echo $verification_location; }?>">
 									<select type="text" class="form-control" name="verification_location" id="verification_location">
 										<option value=""> Select Verification location </option>
 										<option value="0" <?php if(isset($verification_location) and $verification_location == '0') echo 'selected'; ?>> On Spot </option>
@@ -2119,6 +2123,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
 											<div class="form-group">
 												<label class="label">Loan Category</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="loan_category_ack" name="loan_category_ack" >
 												<select tabindex="14" type="text" class="form-control" id="loan_category" name="loan_category">
 													<option value="">Select Loan Category</option> 
 												</select> 
@@ -2128,6 +2133,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Sub Category</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="sub_category_ack" name="sub_category_ack" >
 												<select tabindex="15" type="text" class="form-control" id="sub_category" name="sub_category" >
 													<option value="">Select Sub Category</option> 
 												</select> 
@@ -2169,6 +2175,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Profit Type</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="profit_type_ack" name="profit_type_ack" value="<?php echo $profit_type_lc;?>" >
 												<select tabindex="19" type="text" class="form-control" id="profit_type" name="profit_type" >
 													<option value="">Select Profit Type</option> 
 													<option value="1" <?php if(isset($profit_type_lc) and $profit_type_lc == '1') echo 'selected';?>>Calculation</option> 
@@ -2192,6 +2199,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 emi-calculation" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Profit Method</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="profit_method_ack" name="profit_method_ack" >
 												<select tabindex="22" type="text" class="form-control" id="profit_method" name="profit_method" >
 													<option value="">Select Profit Method</option> 
 												</select>
@@ -2333,7 +2341,7 @@ input:checked + .slider:before {
 										<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
 											<div class="text-right">
 												<label for="disabledInput" style="visibility:hidden">Net Cash</label>
-												<!-- <input type="button" class="form-control btn btn-outline-secondary" id="refresh_cal" name="refresh_cal" value='Refresh'> -->
+												<input type="hidden" class="form-control btn btn-outline-secondary" id="refresh_cal" name="refresh_cal" value='Refresh'>
 											</div>
 										</div>
 									</div>

@@ -44,50 +44,20 @@ $column = array(
 if($userid == 1){
     $query = 'SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and ii.cus_status = 14 GROUP BY ii.cus_id '; // Only Issued and all lines not relying on sub area
+    where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) GROUP BY ii.cus_id '; // Only Issued and all lines not relying on sub area// 14 and 17 means collection entries, 17 removed from issue list
 }else{
     if($role != '2'){
         $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
         acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-        where ii.status = 0 and ii.cus_status = 14 and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. 
+        where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. // 14 and 17 means collection entries, 17 removed from issue list
     }else{// if agent then check the possibilities
         $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
         acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN request_creation rc ON ii.req_id = rc.req_id 
-        where ii.status = 0 and ii.cus_status = 14 and (rc.user_type = 'Agent' or (rc.agent_id != '' and rc.agent_id != null)  or rc.insert_login_id = '$userid' ) ";
+        where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) and (rc.user_type = 'Agent' or (rc.agent_id != '' and rc.agent_id != null)  or rc.insert_login_id = '$userid' ) ";// 14 and 17 means collection entries, 17 removed from issue list
     }
 }
 // echo $query;
 
-// if($_POST['search'] != "")
-// {
-//     if (isset($_POST['search'])) {
-
-//         $query .= "
-//             and (req_id LIKE '%".$_POST['search']."%'
-//             OR dor LIKE '%".$_POST['search']."%'
-//             OR cus_id LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR area LIKE '%".$_POST['search']."%'
-//             OR sub_area LIKE '%".$_POST['search']."%'
-//             OR loan_category LIKE '%".$_POST['search']."%'
-//             OR sub_category LIKE '%".$_POST['search']."%'
-//             OR loan_amt LIKE '%".$_POST['search']."%'
-//             OR user_type LIKE '%".$_POST['search']."%'
-//             OR user_name LIKE '%".$_POST['search']."%'
-//             OR agent_id LIKE '%".$_POST['search']."%'
-//             OR responsible LIKE '%".$_POST['search']."%'
-//             OR cus_data LIKE '%".$_POST['search']."%'
-//             OR cus_status LIKE '%".$_POST['search']."%' ) ";
-//     }
-// }
-// if (isset($_POST['order'])) {
-//     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
-// } else {
-//     $query .= ' ';
-// }
 
 $query1 = '';
 
@@ -159,7 +129,7 @@ function count_all_data($connect)
 {
     $query     = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and ii.cus_status = 14 GROUP BY ii.cus_id ";
+    where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) GROUP BY ii.cus_id ";
     $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();

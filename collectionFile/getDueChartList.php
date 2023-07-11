@@ -6,8 +6,7 @@ if (isset($_SESSION["userid"])) {
     $user_id = $_SESSION["userid"];
 }
 
-function moneyFormatIndia($num)
-{
+function moneyFormatIndia($num){
     $explrestunits = "";
     if (strlen($num) > 3) {
         $lastthree = substr($num, strlen($num) - 3, strlen($num));
@@ -121,7 +120,7 @@ function moneyFormatIndia($num)
 
         }else{
             // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
-            $issueDate = $connect->query("SELECT alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by alc.loan_cal_id desc limit 1 ");
+            $issueDate = $connect->query("SELECT alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and (ii.cus_status = 14 or ii.cus_status = 17) order by alc.loan_cal_id desc limit 1 ");
         }
         $loanIssue = $issueDate->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
@@ -275,12 +274,10 @@ function moneyFormatIndia($num)
             if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
                 //Query for Monthly.
                 $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
-            } else
-        if ($loanFrom['due_method_scheme'] == '2') {
+            } elseif ($loanFrom['due_method_scheme'] == '2') {
                 //Query For Weekly.
                 $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((WEEK(coll_date)= WEEK('$cusDueMonth') || WEEK(trans_date)= WEEK('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
-            } else
-        if ($loanFrom['due_method_scheme'] == '3') {
+            } elseif ($loanFrom['due_method_scheme'] == '3') {
                 //Query For Day.
                 $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((DAY(coll_date)= DAY('$cusDueMonth') || DAY(trans_date)= DAY('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
             }
@@ -481,7 +478,7 @@ function moneyFormatIndia($num)
     </tbody>
 </table>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(function() {
         $('#dueChartListTable').DataTable({
             'processing': true,
@@ -500,4 +497,4 @@ function moneyFormatIndia($num)
             // },
         });
     });
-</script>
+</script> -->

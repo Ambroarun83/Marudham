@@ -4782,10 +4782,11 @@ function getLoanAfterInterest(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - interest_rate) + ')'); //To show the difference amount from old to new
     $('#int_amt_cal').val(parseInt(roundedInterest));
-
+    
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    // $('.princ-diff').text('* (Difference: +' + parseInt(loan_amt - new_princ) + ')'); //To show the difference amount from old to new
     $('#principal_amt_cal').val(new_princ);
     
     //////////////////////////////////////////////////////////////////////////////////
@@ -4840,10 +4841,11 @@ function getLoanPreInterest(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
     $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    // $('.princ-diff').text('* (Difference: +' + parseInt(princ_amt - new_princ) + ')'); //To show the difference amount from old to new
     $('#principal_amt_cal').val(new_princ);
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -4885,6 +4887,7 @@ function getLoanInterest(){
     $('#doc_charge_cal').val(parseInt(doc_charge).toFixed(0));
 
     var proc_fee = parseInt(loan_amt) * (parseFloat(proc_fee)/100);//Get processing fee from loan info and multiply with loan amt to get actual proc fee
+    // $('.princ-diff').text('* (Difference: +' + parseInt(loan_amt - new_princ) + ')'); //To show the difference amount from old to new
     $('#proc_fee_cal').val(parseInt(proc_fee).toFixed(0));
 
     var net_cash = parseInt(loan_amt) - parseInt(doc_charge) - parseInt(proc_fee) ; //Net cash will be calculated by subracting other charges
@@ -4931,10 +4934,11 @@ function getLoanMonthly(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
     $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    // $('.princ-diff').text('* (Difference: ' + parseInt(new_princ - princ_amt) + ')'); //To show the difference amount from old to new
     $('#principal_amt_cal').val(new_princ);
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -5004,10 +5008,11 @@ function getLoanWeekly(){
             roundedInterest += 5;
         }
     
-        $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+        $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
         $('#int_amt_cal').val(parseInt(roundedInterest));
     
         var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+        // $('.princ-diff').text('* (Difference: +' + parseInt(princ_amt - new_princ) + ')'); //To show the difference amount from old to new
         $('#principal_amt_cal').val(new_princ);
 
      //////////////////////////////////////////////////////////////////////////////////
@@ -5077,10 +5082,11 @@ function getLoanDaily(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - int_amt) + ')'); //To show the difference amount
     $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
+    // $('.princ-diff').text('* (Difference: +' + parseInt(princ_amt - new_princ) + ')'); //To show the difference amount from old to new
     $('#principal_amt_cal').val(new_princ);
 
  //////////////////////////////////////////////////////////////////////////////////

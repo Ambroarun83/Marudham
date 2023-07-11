@@ -6,7 +6,7 @@ $(document).ready(function () {
     // Issue Mode
     $('#issued_mode').change(function () {
         var mode = $(this).val();
-        $('#cashAck').hide();
+        // $('#cashAck').hide();
         
         $('#cash').removeAttr('readonly');
         $('#chequeValue').removeAttr('readonly');
@@ -159,7 +159,7 @@ $(document).ready(function () {
                     var hand = "Finger Print Not Registered";
                     $('.scanBtn').attr('disabled',true);
                 }
-                $("#hand_type").text(hand);
+                $("#hand_type").text(hand).attr('class','text-danger');
     
             }
         });
@@ -219,6 +219,7 @@ $(document).ready(function () {
                             confirmButtonColor: '#009688'
                         });
                         $('#fingerValidation').val('1'); 
+                        $("#hand_type").text('Done').attr('class','text-success');
                     }else{
                         if (res.data.ErrorCode != "0") {
                             alert(res.data.ErrorDescription);
@@ -483,14 +484,16 @@ function getAgentDetails() {
             if (agent_id != '' && lp == '0') {
                 $('#agent').val(ag_name);
                 $('#issue_to').val(ag_name);
+                $('.issued_to_type').text('* (Agent)');
                 $('#agent_id').val(agent_id);
-
+                
                 $('#cashAck').hide(); //hide cash acknowledgement if agent is the payer/ loan issue person
-
+                
             } else {
                 var cus_name = $('#cus_name').val();
                 // $('#agent').val(cus_name);
                 $('#issue_to').val(cus_name);
+                $('.issued_to_type').text('* (Customer)');
                 
                 $('#cashAck').show();
             }

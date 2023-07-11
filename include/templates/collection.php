@@ -8,11 +8,11 @@ if(isset($_SESSION['userid'])){
 if(isset($_POST['submit_collection']) && $_POST['submit_collection'] != ''){
 	if(isset($_POST['req_id'])){$req_id = $_POST['req_id'];}
 	if(isset($_POST['collection_id'])){$coll_id = $_POST['collection_id'];}
-
 	$addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
 	
-?>
-	<script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1&id=<?php echo $coll_id ?>';</script>
+	?>
+	<!-- <script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1&id=<?php echo $coll_id ?>';</script> -->
+	<script>location.href='<?php echo $HOSTPATH; ?>collection&upd=<?php echo $_GET['upd'];?>&cusidupd=<?php echo $_GET['cusidupd'];?>';</script>
 <?php
 }
 
@@ -223,13 +223,12 @@ if($idupd>0)
 				<!-- Loan List End -->
 				
 				<!-- Collection window Start -->
-				<div class="card collection_card">
+				<!-- <div class="card collection_card">
 					<div class="card-header">
 						<div class="card-title">Personal Info</div>
 					</div>
 					<div class="card-body">
 						<div class="row ">
-							<!--Fields -->
 							<div class="col-md-12 ">
 								<div class="row">
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
@@ -278,35 +277,35 @@ if($idupd>0)
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
 										<div class="form-group">
-											<label for="loan_category"> Loan Category </label>
+											<label for="loan_category"> Loan Category </label>-->
 											<input type="hidden" class="form-control" name="loan_category_id" id="loan_category_id" value="<?php if (isset($loan_category_id)) { echo $loan_category_id; } ?>">
-											<input type="text" class="form-control" name="loan_category" id="loan_category" value="<?php if (isset($loan_category)) { echo $loan_category; } ?>" readonly>
+											<!--<input type="text" class="form-control" name="loan_category" id="loan_category" value="<?php if (isset($loan_category)) { echo $loan_category; } ?>" readonly>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
 										<div class="form-group">
-											<label for="sub_category"> Sub Category </label>
+											<label for="sub_category"> Sub Category </label>-->
 											<input type="hidden" class="form-control" name="sub_category_id" id="sub_category_id" value="<?php if (isset($sub_category_id)) { echo $sub_category_id; } ?>">
-											<input type="text" class="form-control" name="sub_category" id="sub_category" value="<?php if (isset($sub_category)) { echo $sub_category; } ?>" readonly>
+											<!--<input type="text" class="form-control" name="sub_category" id="sub_category" value="<?php if (isset($sub_category)) { echo $sub_category; } ?>" readonly>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
 										<div class="form-group">
-											<label for="status"> Status</label>
-											<input type="text" class="form-control" name="status" id="status" value="<?php if (isset($status)) { echo $status; } ?>" readonly>
-										</div>
+											<label for="status"> Status</label>-->
+											<input type="hidden" class="form-control" name="status" id="status" value="<?php if (isset($status)) { echo $status; } ?>" readonly>
+										<!--</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
 										<div class="form-group">
-											<label for="sub_status"> Sub Status</label>
-											<input type="text" class="form-control" name="sub_status" id="sub_status" value="<?php if (isset($sub_status)) { echo $sub_status; } ?>" readonly>
-										</div>
+											<label for="sub_status"> Sub Status</label>-->
+											<input type="hidden" class="form-control" name="sub_status" id="sub_status" value="<?php if (isset($sub_status)) { echo $sub_status; } ?>" readonly>
+										<!--</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<!-- Collection Info -->
 				<div class="card collection_card">
 					<div class="card-header">
@@ -363,12 +362,111 @@ if($idupd>0)
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Collection Charges</label>&nbsp;<span class="text-danger ">*</span>
+											<label for="disabledInput">Fine</label>&nbsp;<span class="text-danger ">*</span>
 											<input type="text" class="form-control" readonly id="coll_charge" name="coll_charge" value=''>
 										</div>
 									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Collection Track -->
+				<div class="card collection_card">
+					<div class="card-header">
+						<div class="card-title">Collection Track</div>
+					</div>
+					<div class="card-body">
+						<div class="row ">
+							<!--Fields -->
+							<div class="col-md-12 ">
+								<div class="row">
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger">*</span>
+											<input type="text" class="form-control" id="due_amt_track" name="due_amt_track" value='' placeholder='Enter Due Amount'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger">*</span>
+											<input type="text" class="form-control" id="penalty_track" name="penalty_track" value='' placeholder='Enter Penalty Amount'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Fine</label>&nbsp;<span class="text-danger">*</span>
+											<input type="text" class="form-control" id="coll_charge_track" name="coll_charge_track" value='' placeholder='Enter Fine'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Total Paid</label>
+											<input type="text" readonly class="form-control" id="total_paid_track" name="total_paid_track" value=''>
+										</div>
+									</div>
+
+									<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12"></div>
+
+									<!-- Only if user has collection access can have the waiver details -->
+									<?php if(isset($collection_access) && $collection_access =='0'){?>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Pre Closure</label>
+												<input type="text" class="form-control" id="pre_close_waiver" name="pre_close_waiver" value='' placeholder='Enter Pre Closure Amount'>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Penalty Waiver</label>
+												<input type="text" class="form-control" id="penalty_waiver" name="penalty_waiver" value='' placeholder='Enter Penalty Waiver'>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Fine Waiver</label>
+												<input type="text" class="form-control" id="coll_charge_waiver" name="coll_charge_waiver" value='' placeholder='Enter Fine Waiver'>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+											<div class="form-group">
+												<label for="disabledInput">Total Waiver</label>
+												<input type="text" readonly class="form-control" id="total_waiver" name="total_waiver" value=''>
+											</div>
+										</div>
+										<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12"></div>
+									<?php }?>
+									
 									<div class="col-12"><hr></div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Collection Method</label>&nbsp;<span class="text-danger">*</span>
+											<select class='form-control' id='collection_loc' name='collection_loc'>
+												<option value=''>Select Collection Method</option>
+												<!-- <option value='1'>Office</option> -->
+												<option value='1'>By Self</option>
+												<option value='2'>On Spot</option>
+												<!-- <option value='3'>Bank Transaction</option> -->
+											</select>
+											<span class="text-danger" id='collectionlocCheck' style="display: none;">Please Select Collection Method<span>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Collection Date</label>&nbsp;<span class="text-danger">*</span>
+											<input type="text" readonly class="form-control" id="collection_date" name="collection_date" value='<?php echo date('d-m-Y'); ?>'>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Collection ID</label>&nbsp;<span class="text-danger">*</span>
+											<input type="text" readonly class="form-control" id="collection_id" name="collection_id" value=''>
+										</div>
+									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Collection Mode</label>&nbsp;<span class="text-danger">*</span>
@@ -419,102 +517,7 @@ if($idupd>0)
 										</div>
 									</div>
 									<div class="col-4 other" style="display:none"></div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Collection Location</label>&nbsp;<span class="text-danger">*</span>
-											<select class='form-control' id='collection_loc' name='collection_loc'>
-												<option value=''>Select Collection Location</option>
-												<option value='1'>Office</option>
-												<option value='2'>On Spot</option>
-												<option value='3'>Bank Transaction</option>
-											</select>
-											<span class="text-danger" id='collectionlocCheck' style="display: none;">Please Select Collection Location<span>
-										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Collection Date</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" readonly class="form-control" id="collection_date" name="collection_date" value='<?php echo date('d-m-Y'); ?>'>
-										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Collection ID</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" readonly class="form-control" id="collection_id" name="collection_id" value=''>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Collection Track -->
-				<div class="card collection_card">
-					<div class="card-header">
-						<div class="card-title">Collection Track</div>
-					</div>
-					<div class="card-body">
-						<div class="row ">
-							<!--Fields -->
-							<div class="col-md-12 ">
-								<div class="row">
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" class="form-control" id="due_amt_track" name="due_amt_track" value='' placeholder='Enter Due Amount'>
-											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
-										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" class="form-control" id="penalty_track" name="penalty_track" value='' placeholder='Enter Penalty Amount'>
-											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
-										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Collection Charges</label>&nbsp;<span class="text-danger">*</span>
-											<input type="text" class="form-control" id="coll_charge_track" name="coll_charge_track" value='' placeholder='Enter Collection Charges'>
-											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
-										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Total Paid</label>
-											<input type="text" readonly class="form-control" id="total_paid_track" name="total_paid_track" value=''>
-										</div>
-									</div>
-
-									<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12"></div>
-
-									<!-- Only if user has collection access can have the waiver details -->
-									<?php if(isset($collection_access) && $collection_access =='0'){?>
-										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="disabledInput">Pre Closure</label>
-												<input type="text" class="form-control" id="pre_close_waiver" name="pre_close_waiver" value='' placeholder='Enter Pre Closure Amount'>
-											</div>
-										</div>
-										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="disabledInput">Penalty Waiver</label>
-												<input type="text" class="form-control" id="penalty_waiver" name="penalty_waiver" value='' placeholder='Enter Penalty Waiver'>
-											</div>
-										</div>
-										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="disabledInput">Collection Charges</label>
-												<input type="text" class="form-control" id="coll_charge_waiver" name="coll_charge_waiver" value='' placeholder='Enter Collection Charges'>
-											</div>
-										</div>
-										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-											<div class="form-group">
-												<label for="disabledInput">Total Waiver</label>
-												<input type="text" readonly class="form-control" id="total_waiver" name="total_waiver" value=''>
-											</div>
-										</div>
-									<?php }?>
+									
 								</div>
 							</div>
 						</div>
@@ -618,13 +621,13 @@ if($idupd>0)
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Penalty Chart Modal END ////////////////////////////////////////////////////////////////////// -->
-<!-- /////////////////////////////////////////////////////////////////// Collection Charges Chart Modal START ////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Fine Chart Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade collectionChargeChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <input type="hidden" name="req_id" id="req_id" value="<?php if(isset($idupd)){echo $idupd;} ?>" >
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel"> Collection Charge Chart </h5>
+                <h5 class="modal-title" id="myLargeModalLabel"> Fine Chart </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -636,7 +639,7 @@ if($idupd>0)
                             <tr>
                                 <th> S.No </th>
                                 <th> Date </th>
-                                <th> Collection Charges  </th>
+                                <th> Fine  </th>
                                 <th> Purpose </th>
                                 <th> Paid Date </th>
                                 <th> Paid  </th>
@@ -655,20 +658,20 @@ if($idupd>0)
         </div>
     </div>
 </div>
-<!-- /////////////////////////////////////////////////////////////////// Collection Charges Chart Modal END ////////////////////////////////////////////////////////////////////// -->
-<!-- /////////////////////////////////////////////////////////////////// Collection Charges Add Modal START ////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Fine Chart Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Fine Add Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade collectionCharges" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Collection charges</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Fine</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetcollCharges()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <!-- alert messages -->
-                <div id="collChargeInsertOk" class="successalert"> Collection Charges Added Successfully
+                <div id="collChargeInsertOk" class="successalert"> Fine Added Successfully
                     <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
                 </div>
                 <!-- <div id="bankUpdateok" class="successalert"> Bank Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
@@ -732,4 +735,4 @@ if($idupd>0)
         </div>
     </div>
 </div>
-<!-- /////////////////////////////////////////////////////////////////// Collection Charges Add Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Fine Add Modal END ////////////////////////////////////////////////////////////////////// -->

@@ -431,11 +431,11 @@ function OnLoadFunctions(req_id,cus_id){
                 })
                 $('.coll-charge-chart').click(function(){
                     var req_id = $(this).attr('value');
-                    collectionChargeChartList(req_id) //To Show Collection Charges Chart List
+                    collectionChargeChartList(req_id) //To Show Fine Chart List
                 })
                 $('.coll-charge').click(function(){
                     var req_id = $(this).attr('value');console.log(req_id)
-                    resetcollCharges(req_id);  //Collection Charges
+                    resetcollCharges(req_id);  //Fine
                 })
                 $('.move-error').click(function(){
                     if(confirm("Are you Sure To move this Loan to Error?")){
@@ -713,7 +713,7 @@ function collectionChargeChartList(req_id){
         }
     });//Ajax End.
 }
-//Collection Charges
+//Fine
 function resetcollCharges(req_id) {
     $.ajax({
         url: 'collectionFile/collection_charges_reset.php',

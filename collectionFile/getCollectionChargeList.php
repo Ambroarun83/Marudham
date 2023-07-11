@@ -33,7 +33,7 @@ function moneyFormatIndia($num)
         <tr>
             <th width='50'> S.No </th>
             <th> Date </th>
-            <th> Collection Charges </th>
+            <th> Fine </th>
             <th> Purpose </th>
             <th> Paid Date </th>
             <th> Paid Amount</th>
