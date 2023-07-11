@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 05, 2023 at 02:32 PM
+-- Generation Time: Jul 11, 2023 at 03:05 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -33,6 +33,17 @@ CREATE TABLE `acknowledgement_loan_cal_category` (
   `loan_cal_id` varchar(255) DEFAULT NULL,
   `category` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `acknowledgement_loan_cal_category`
+--
+
+INSERT INTO `acknowledgement_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_id`, `category`) VALUES
+(4, '2', '8', 'Micromax'),
+(5, '2', '8', '40'),
+(6, '2', '8', 'LED'),
+(17, '6', '10', 'Samsung'),
+(18, '6', '10', '6inch');
 
 -- --------------------------------------------------------
 
@@ -66,6 +77,8 @@ CREATE TABLE `acknowlegement_customer_profile` (
   `occupation_details` varchar(255) DEFAULT NULL,
   `occupation_income` varchar(255) DEFAULT NULL,
   `occupation_address` varchar(255) DEFAULT NULL,
+  `dow` varchar(255) DEFAULT NULL,
+  `abt_occ` varchar(255) DEFAULT NULL,
   `area_confirm_type` varchar(50) DEFAULT NULL,
   `area_confirm_state` varchar(100) DEFAULT NULL,
   `area_confirm_district` varchar(100) DEFAULT NULL,
@@ -86,6 +99,14 @@ CREATE TABLE `acknowlegement_customer_profile` (
   `created_date` datetime DEFAULT current_timestamp(),
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `acknowlegement_customer_profile`
+--
+
+INSERT INTO `acknowlegement_customer_profile` (`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, '2', '100010001000', 'Ganesan', '1', '1996-06-01', '27', '', '6465465464', '', '', 'monkey1.avif', '2', 'Mother', 'download.jpg', 'New', '', 'Select Residential Type', '', '', '', '7', 'Coconut shop', '40000', 'Pondy', '2 years', 'Coconut shop', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Mango', 'Pine apple 2', NULL, NULL, NULL, NULL, '10', NULL, '5', NULL, NULL, '2023-07-05 13:27:03', '2023-07-05 13:27:03'),
+(3, '6', '200020002000', 'Aravind', '1', '1988-03-10', '35', '', '9794949494', '', '', 'pexels-pixabay-220453.jpg', '5', 'Brother', 'person_sample_4.jpg', 'New', '', '1', 'Chennai', 'Triplicane', 'Vandavasi', '', '', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', 'GA 1', 'LA1', '1', '', '5', '1', '10', NULL, '2', '2', NULL, '2023-07-10 13:17:06', '2023-07-10 18:26:49');
 
 -- --------------------------------------------------------
 
@@ -167,6 +188,14 @@ CREATE TABLE `acknowlegement_documentation` (
   `updated_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `acknowlegement_documentation`
+--
+
+INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `mortgage_process_noc`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_noc`, `mortgage_document_used`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `endorsement_process_noc`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `en_RC_noc`, `en_RC_used`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `en_Key_noc`, `en_Key_used`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `doc_info_upload`, `doc_info_upload_noc`, `doc_info_upload_used`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `submitted`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, '2', '100010001000', 'Ganesan', '1', 'DOC-101', '', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '5', '5', NULL, '2023-07-06 10:14:58', '2023-07-06 10:14:58'),
+(2, '6', '200020002000', 'Aravind', '3', 'DOC-102', '1', '0', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', '0', '', 'YES', '0', '0', '0', 'Aravind', '', 'NIL', '0', '0', 'TVS', '100', 'TN47AB1005', 'Endore', '1', '0', '0', '', 'YES', '0', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-07-10 13:17:40', '2023-07-10 13:17:40');
+
 -- --------------------------------------------------------
 
 --
@@ -209,12 +238,24 @@ CREATE TABLE `acknowlegement_loan_calculation` (
   `due_start_from` varchar(255) DEFAULT NULL,
   `maturity_month` varchar(255) DEFAULT NULL,
   `collection_method` varchar(255) DEFAULT NULL,
+  `communication` varchar(50) DEFAULT NULL,
+  `com_audio` varchar(255) DEFAULT NULL,
+  `verification_person` varchar(255) DEFAULT NULL,
+  `verification_location` varchar(255) DEFAULT NULL,
   `cus_status` varchar(255) DEFAULT NULL,
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
   `create_date` datetime DEFAULT current_timestamp(),
   `update_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `acknowlegement_loan_calculation`
+--
+
+INSERT INTO `acknowlegement_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_loan`, `cus_name_loan`, `cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`, `update_login_id`, `create_date`, `update_date`) VALUES
+(8, '2', '100010001000', 'Ganesan', 'New', '6465465464', 'monkey1.avif', '5', 'TV', '43800', '2000', '41800', '2', '', '', '', '', '1', '', '10', '10', '8', '1', '1', '41800', '37620', '4180', '41800', '5225', '418', '418', '36784', '2023-07-10', '2024-03-10', '2', '1', '', '100010001000', '1', '12', '5', '5', '2023-07-07 15:26:11', '2023-07-07 15:47:13'),
+(10, '6', '200020002000', 'Aravind', 'New', '9794949494', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '50000', '1', 'Monthly', 'EMI', 'pre_intrest', '', '', '', '', '1.6', '6', '1.2', '2', '50000', '45200', '4810', '50010', '8335', '600', '1000', '43600', '2023-06-12', '2024-01-12', '1', '1', '', '5', '1', '12', '2', '2', '2023-06-10 16:33:24', '2023-06-11 10:02:26');
 
 -- --------------------------------------------------------
 
@@ -705,6 +746,15 @@ CREATE TABLE `collection` (
   `updated_date` datetime DEFAULT current_timestamp() COMMENT 'Update Time'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `collection`
+--
+
+INSERT INTO `collection` (`coll_id`, `coll_code`, `req_id`, `cus_id`, `cus_name`, `branch`, `area`, `sub_area`, `line`, `loan_category`, `sub_category`, `coll_status`, `coll_sub_status`, `tot_amt`, `paid_amt`, `bal_amt`, `due_amt`, `pending_amt`, `payable_amt`, `penalty`, `coll_charge`, `coll_mode`, `bank_id`, `cheque_no`, `trans_id`, `trans_date`, `coll_location`, `coll_date`, `due_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, `total_waiver`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'COL-101', '6', '200020002000', 'Aravind', '3', '8', '23', '6', '6', 'Mobiles', 'Present', 'Pending', '50010', '0', '50010', '8335', '0', '8335', '0', '0', '1', '', '', '', '0000-00-00', '1', '2023-06-12 00:00:00', '8335', '', '', '8335', '', '', '', '', '2', NULL, NULL, '2023-06-12 15:49:11', '2023-06-12 15:49:11'),
+(2, 'COL-102', '6', '200020002000', 'Aravind', '3', '8', '23', '6', '6', 'Mobiles', 'Present', 'Current', '50010', '8335', '41675', '8335', '0', '8335', '0', '0', '5', '1', '', '700700700', '2023-07-11', '1', '2023-07-11 00:00:00', '16670', '', '', '16670', '', '', '', '', '2', NULL, NULL, '2023-07-11 15:54:51', '2023-07-11 15:54:51'),
+(3, 'COL-103', '6', '200020002000', 'Aravind', '3', '8', '23', '6', '6', 'Mobiles', 'Present', 'Current', '50010', '25005', '25005', '8335', '0', '0', '0', '450', '1', '', '', '', '0000-00-00', '1', '2023-07-11 00:00:00', '', '', '', '', '', '', '450', '450', '2', NULL, NULL, '2023-07-11 16:07:48', '2023-07-11 16:07:48');
+
 -- --------------------------------------------------------
 
 --
@@ -727,6 +777,14 @@ CREATE TABLE `collection_charges` (
   `created_date` datetime DEFAULT NULL COMMENT 'Create Time',
   `updated_date` datetime DEFAULT current_timestamp() COMMENT 'Update Time'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `collection_charges`
+--
+
+INSERT INTO `collection_charges` (`id`, `req_id`, `cus_id`, `coll_date`, `coll_purpose`, `coll_charge`, `paid_date`, `paid_amnt`, `waiver_amnt`, `status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '6', '200020002000', '2023-07-11', 'Chumma', '450', NULL, '0', '0', 0, '2', NULL, '2023-07-11 16:05:44', '2023-07-11 16:05:44'),
+(2, '6', NULL, NULL, NULL, '0', '2023-07-11', '', '450', NULL, NULL, NULL, NULL, '2023-07-11 16:07:48');
 
 -- --------------------------------------------------------
 
@@ -1555,7 +1613,9 @@ CREATE TABLE `customer_profile` (
 --
 
 INSERT INTO `customer_profile` (`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, '2', '100010001000', 'Ganesan', '1', '1996-06-01', '27', '', '6465465464', '', '', 'monkey1.avif', '2', 'Mother', 'download.jpg', 'New', '', 'Select Residential Type', '', '', '', '7', 'Coconut shop', '40000', 'Pondy', '2 years', 'Coconut shop', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Mango', 'Pine apple 2', NULL, NULL, NULL, NULL, '10', NULL, '5', NULL, NULL, '2023-07-05 13:27:03', '2023-07-05 13:27:03');
+(1, '2', '100010001000', 'Ganesan', '1', '1996-06-01', '27', '', '6465465464', '', '', 'monkey1.avif', '2', 'Mother', 'download.jpg', 'New', '', 'Select Residential Type', '', '', '', '7', 'Coconut shop', '40000', 'Pondy', '2 years', 'Coconut shop', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Mango', 'Pine apple 2', NULL, NULL, NULL, NULL, '10', NULL, '5', NULL, NULL, '2023-07-05 13:27:03', '2023-07-05 13:27:03'),
+(2, '7', '300030003000', 'Rakesh', '1', '1992-06-09', '31', '', '9664565132', '', '', 'person_sample_4.jpg', '7', 'Father', 'depositphotos_330369456-stock-photo-smart-middle-aged-grayed-man.jpg', 'New', '', '0', 'MG road', 'MG road', 'MG road', '', '', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', 'Mango', 'Pine apple 1', NULL, NULL, NULL, NULL, '10', NULL, '5', NULL, NULL, '2023-07-10 12:01:17', '2023-07-10 12:01:17'),
+(3, '6', '200020002000', 'Aravind', '1', '1988-03-10', '35', '', '9794949494', '', '', 'pexels-pixabay-220453.jpg', '5', 'Brother', 'person_sample_4.jpg', 'New', '', '1', 'Chennai', 'Triplicane', 'Vandavasi', '', '', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2023-07-10 13:17:06', '2023-07-10 13:17:06');
 
 -- --------------------------------------------------------
 
@@ -1624,10 +1684,10 @@ CREATE TABLE `customer_register` (
 
 INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `about_customer`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_info_occ_type`, `occupation_details`, `occupation_income`, `occupation_address`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `cus_status`, `create_time`) VALUES
 (1, '1', '010720232023', 'Bharath', '1990-02-03', '33', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-01 13:26:37'),
-(3, '2', '100010001000', 'Ganesan', '1996-06-01', '27', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '0', '0', '', '', '35000', '0', '0', '5000', '10000', '75000', 'Checked till home', 'Select Res', '', '', '', '7', 'Coconut shop', '40000', 'Pondy', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Mango', 'Pine apple 2', '1', '2023-07-01 16:21:20'),
-(4, '6', '200020002000', 'Aravind', '1988-03-10', '35', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-03 12:25:41'),
+(3, '2', '100010001000', 'Ganesan', '1996-06-01', '27', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '0', '0', '', '', '35000', '0', '0', '5000', '10000', '75000', 'Checked till home', 'Select Res', '', '', '', '7', 'Coconut shop', '40000', 'Pondy', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Mango', 'Pine apple 2', '17', '2023-07-01 16:21:20'),
+(4, '6', '200020002000', 'Aravind', '1988-03-10', '35', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '1', '0', '', '', '46000', '0', '0', '0', '6500', '80000', 'Good', '1', 'Chennai', 'Triplicane', 'Vandavasi', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', 'GA 1', 'LA1', '14', '2023-07-03 12:25:41'),
 (5, '1', '010720232023', 'Bharath', '1990-02-03', '33', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-03 12:42:44'),
-(6, '7', '300030003000', 'Rakesh', '1992-06-09', '31', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-07-03 14:53:00');
+(6, '7', '300030003000', 'Rakesh', '1992-06-09', '31', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '1', '0', '', '', '45000', '0', '0', '0', '5000', '75000', 'GG', '0', 'MG road', 'MG road', 'MG road', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', 'Mango', 'Pine apple 1', '1', '2023-07-03 14:53:00');
 
 -- --------------------------------------------------------
 
@@ -1694,6 +1754,16 @@ CREATE TABLE `document_info` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `document_info`
+--
+
+INSERT INTO `document_info` (`id`, `cus_id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `doc_upload`, `doc_info_upload_noc`, `doc_info_upload_used`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, '100010001000', '2', 'House Document', 'House Document', '0', '0', 'Ganesan', '', 'NIL', 'Text Formatting.docx', 0, 0, '5', '5', NULL, '2023-07-06 10:14:00', '2023-07-06 10:14:00'),
+(2, '100010001000', '2', 'Ration card', 'Ration card', '1', '2', '', '1', 'Father', 'welcome1.docx', 0, 0, '5', '5', NULL, '2023-07-06 10:14:35', '2023-07-06 10:14:35'),
+(3, '300030003000', '7', 'DL', 'License', '1', '2', '', '7', 'Father', NULL, 0, 0, '5', NULL, NULL, '2023-07-10 12:02:13', '2023-07-10 12:02:13'),
+(4, '300030003000', '7', 'PAN', '123', '0', '0', 'Rakesh', '', 'NIL', NULL, 0, 0, '5', NULL, NULL, '2023-07-10 12:03:15', '2023-07-10 12:03:15');
+
 -- --------------------------------------------------------
 
 --
@@ -1743,6 +1813,14 @@ CREATE TABLE `fingerprints` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `fingerprints`
+--
+
+INSERT INTO `fingerprints` (`id`, `adhar_num`, `name`, `hand`, `ansi_template`, `bitmap_data`, `insert_user_id`, `update_user_id`, `created_date`, `updated_date`) VALUES
+(2, '100010001000', 'Ganesan', '1', 'Rk1SACAyMAAA8gA1AA0AAAE8AWIAxQDFAQAAACgjgIoA6gEAQJsAz2IAQJABDKsAQE0AvnAAQDwBCXMAQHgAjw4AQCsA63AAgOIAsKcAQNEAmFQAgPQA86IAQLgAdgEAQP8A2EwAgIoAyQMAQHEBAA4AQJMAomcAQKsAnLIAQDYA1BYAQLwBJp0AQOEBBp8AQGYAgGUAQFoAfgsAQJAAbw8AQCgBJ3gAQFoBVRYAQHMA8W4AQGAA3REAQF8ArxEAQNkAzacAgG8BMQIAQI8BOqAAQKoBP5oAQGwBRW8AQDoBKRkAQM4Ah6wAQG8BU7MAAAA=', NULL, '5', '5', '2023-07-10 12:19:32', '2023-07-10 12:23:59'),
+(3, '200020002000', 'Aravind', '1', 'Rk1SACAyMAAA7AA1AA0AAAE8AWIAxQDFAQAAACgiQIEAyGYAQL0AuqwAQIcAjwEAQF0A/Q8AQM8A8qQAgN0A26kAQOIAvVIAQGcAYxMAQKMBNp8AgGcBQWkAQJEAMQgAQOoBUJwAgGwAxAYAQHAAmmoAQH4BBrAAQEUA1xIAQEIApBIAQK4BGKMAQC8Atm0AQIYBNKMAQDUAcw0AgHkBTJ8AQNcBSpsAgHMA5AQAQF4A62wAgL0Am64AQKwAhVkAQFUAhxEAQKIAdLEAQI8AZQYAQEQAdGgAQOIAdFQAQGcBTa4AQMAANlgAAAA=', NULL, '2', '2', '2023-07-10 16:35:55', '2023-07-10 18:30:31');
+
 -- --------------------------------------------------------
 
 --
@@ -1781,6 +1859,14 @@ CREATE TABLE `in_acknowledgement` (
   `created_on` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `in_acknowledgement`
+--
+
+INSERT INTO `in_acknowledgement` (`id`, `req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_on`) VALUES
+(3, '2', '100010001000', '17', '0', '5', '2', NULL, '2023-07-07 16:26:28'),
+(5, '6', '200020002000', '14', '0', '2', '2', NULL, '2023-07-10 16:45:52');
+
 -- --------------------------------------------------------
 
 --
@@ -1797,6 +1883,14 @@ CREATE TABLE `in_approval` (
   `delete_login_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `in_approval`
+--
+
+INSERT INTO `in_approval` (`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`) VALUES
+('2', '100010001000', '17', '0', '5', '2', NULL),
+('6', '200020002000', '14', '0', '2', '2', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -1805,6 +1899,7 @@ CREATE TABLE `in_approval` (
 
 CREATE TABLE `in_issue` (
   `id` int(11) NOT NULL,
+  `loan_id` varchar(255) DEFAULT NULL,
   `req_id` varchar(255) DEFAULT NULL,
   `cus_id` varchar(255) DEFAULT NULL,
   `cus_status` varchar(50) DEFAULT NULL,
@@ -1815,6 +1910,14 @@ CREATE TABLE `in_issue` (
   `created_date` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `in_issue`
+--
+
+INSERT INTO `in_issue` (`id`, `loan_id`, `req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, 'LID-101', '2', '100010001000', '17', '0', '5', '2', NULL, '2023-07-10 12:25:26', '2023-07-11 10:15:42'),
+(2, 'LID-102', '6', '200020002000', '14', '0', '2', '2', NULL, '2023-07-10 18:30:57', '2023-07-11 10:19:24');
 
 -- --------------------------------------------------------
 
@@ -1879,9 +1982,9 @@ CREATE TABLE `in_verification` (
 
 INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, 'Agent', 'Alaathi Mobiles and Furniture', '1', '0', '', 'New customer for us', 'REQ-101', '2023-07-01', '1', '010720232023', 'New', 'Bharath', '1990-02-03', '33', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '1', '3470', '', '12', '0', '3', '3', NULL, '2023-07-01 13:26:37', '0000-00-00 00:00:00'),
-(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '10', '0', '2', '2', NULL, '2023-07-01 13:36:34', '0000-00-00 00:00:00'),
-(6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '1', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
-(7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '1', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00');
+(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '17', '0', '2', '2', NULL, '2023-07-01 13:36:34', '0000-00-00 00:00:00'),
+(6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '14', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
+(7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '10', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00');
 
 -- --------------------------------------------------------
 
@@ -2153,6 +2256,13 @@ CREATE TABLE `loan_issue` (
   `created_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `loan_issue`
+--
+
+INSERT INTO `loan_issue` (`id`, `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`, `bank_id`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`, `loan_amt`, `net_cash`, `cash_guarentor_name`, `relationship`, `status`, `insert_login_id`, `update_login_id`, `created_date`) VALUES
+(1, '6', '200020002000', 'Aravind', '', '1', '0', '43600', '', '', '', '', '', '', '', '0', '50000', '43600', '200020002000', 'Customer', '0', '2', NULL, '2023-07-11 10:02:25');
+
 -- --------------------------------------------------------
 
 --
@@ -2199,7 +2309,7 @@ INSERT INTO `loan_scheme` (`scheme_id`, `scheme_name`, `short_name`, `loan_categ
 (3, 'Scheme 2A', '2A', '4', 'Coin', 'monthly', 'pre_intrest', '8', '7', '2', '5', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 1, 1, 1, '1', '2023-05-11 17:50:07', '2023-05-15 17:33:14'),
 (4, 'Scheme 2B', '2B', '4', 'Chain', 'monthly', 'pre_intrest', '9', '12', '1', '11', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, NULL, NULL, '2023-05-11 17:50:57', '2023-05-11 17:50:57'),
 (5, 'Scheme 3A', '3A', '2', 'Bike', 'monthly', 'pre_intrest', '10', '8', '2', '6', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 1, 1, NULL, '2023-05-11 17:52:22', '2023-05-15 17:29:43'),
-(6, 'Scheme 1A', '1A', '1', 'Personal', 'weekly', 'pre_intrest', '7', NULL, NULL, '22', '', '1', '2', 'percentage', '1', '2', '', '3', NULL, NULL, 0, 1, 1, NULL, '2023-05-11 17:53:34', '2023-05-15 17:41:22'),
+(6, 'Scheme 1A', '1A', '1', 'Personal', 'weekly', 'pre_intrest', '7', NULL, NULL, '22', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', NULL, NULL, 0, 1, 1, NULL, '2023-05-11 17:53:34', '2023-05-15 17:41:22'),
 (7, 'scheme 2A', '2A', '4', 'Chain', 'weekly', 'pre_intrest', '8', NULL, NULL, '12', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', NULL, NULL, 1, 1, NULL, '1', '2023-05-11 17:54:50', '2023-05-11 17:54:50'),
 (8, 'Scheme 1A', '1A', '1', 'Personal', 'daily', 'pre_intrest', '7', NULL, NULL, '100', 'percentage', '1', '2', 'percentage', '1', '2', NULL, '3', NULL, NULL, 0, 1, 1, NULL, '2023-05-11 17:56:33', '2023-05-15 17:41:38'),
 (9, 'Scheme 2A', '2A', '1', 'Personal', 'daily', 'pre_intrest', '8', NULL, NULL, '150', 'percentage', '1', '2', 'percentage', '1', '2', NULL, '3', NULL, NULL, 0, 1, NULL, NULL, '2023-05-11 17:57:26', '2023-05-11 17:57:26'),
@@ -2215,7 +2325,7 @@ INSERT INTO `loan_scheme` (`scheme_id`, `scheme_name`, `short_name`, `loan_categ
 (19, 'Scheme 2A', '2A', '4', 'Coin', 'monthly', 'pre_intrest', '8', '7', '2', '5', 'percentage', '1', '2', 'percentage', '1', '2', '', '3', '', '', 0, 0, 1, NULL, '2023-05-15 17:32:05', '2023-05-15 17:34:31'),
 (20, 'SME 10', 'S10', '7', 'SME Loan', 'monthly', 'pre_intrest', '15', '10', '0', '10', 'percentage', '0', '2', 'percentage', '0', '2', '', '3', '', '', 0, 1, NULL, NULL, '2023-06-08 12:17:21', '2023-06-08 12:17:21'),
 (21, 'Scheme 10 R', '10 R', '5', 'AC Pre R ', 'monthly', 'pre_intrest', '2', '10', '3', '7', 'percentage', '0', '2', 'percentage', '0', '2', '', '2', '', '', 0, 1, 1, NULL, '2023-06-13 11:54:53', '2023-06-13 12:00:20'),
-(22, 'Scheme 5 R', '5 R', '11', 'Personal loan R', 'weekly', 'pre_intrest', '2', NULL, NULL, '5', '', '0', '2', 'percentage', '0', '2', '', '2', NULL, NULL, 0, 1, 1, NULL, '2023-06-13 11:56:37', '2023-06-13 12:00:33'),
+(22, 'Scheme 5 R', '5 R', '11', 'Personal loan R', 'weekly', 'pre_intrest', '2', NULL, NULL, '5', 'percentage', '0', '2', 'percentage', '0', '2', '', '2', NULL, NULL, 0, 1, 1, NULL, '2023-06-13 11:56:37', '2023-06-13 12:00:33'),
 (23, 'Scheme 100 R', '100 R', '11', 'Personal loan R', 'daily', 'pre_intrest', '2', NULL, NULL, '100', 'percentage', '0', '2', 'percentage', '0', '2', NULL, '2', NULL, NULL, 0, 1, 1, NULL, '2023-06-13 11:59:57', '2023-06-13 12:00:45');
 
 -- --------------------------------------------------------
@@ -2386,10 +2496,10 @@ CREATE TABLE `request_creation` (
 
 INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, 'Agent', 'Alaathi Mobiles and Furniture', '1', '0', '', 'New customer for us', 'REQ-101', '2023-07-01', '1', '010720232023', 'New', 'Bharath', '1990-02-03', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '1', '3470', '', '12', '0', '3', '3', NULL, '2023-07-01 13:26:37', '0000-00-00 00:00:00'),
-(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '10', '0', '2', '2', NULL, '2023-07-01 13:36:34', '0000-00-00 00:00:00'),
+(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '17', '0', '2', '2', NULL, '2023-07-01 13:36:34', '0000-00-00 00:00:00'),
 (5, 'Staff', 'Arun', '', '', 'Old customer new prod', '', 'REQ-103', '2023-07-01', NULL, '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '65000', '5000', '7.7', '60000', '1', '4500', '', '0', '0', '2', NULL, NULL, '2023-07-01 16:10:08', '2023-07-01 16:10:08'),
-(6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '1', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
-(7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '1', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00');
+(6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '14', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
+(7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '10', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00');
 
 -- --------------------------------------------------------
 
@@ -2406,6 +2516,16 @@ CREATE TABLE `signed_doc` (
   `noc_given` varchar(10) NOT NULL DEFAULT '0',
   `used_status` varchar(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `signed_doc`
+--
+
+INSERT INTO `signed_doc` (`id`, `cus_id`, `req_id`, `signed_doc_id`, `upload_doc_name`, `noc_given`, `used_status`) VALUES
+(1, '100010001000', '2', '8', 'Order_ID_4479904631.pdf', '0', '0'),
+(2, '100010001000', '2', '7', 'Invoice_4479904631.pdf', '0', '0'),
+(3, '100010001000', '2', '5', 'Mantra_RD_Service_Manual_Windows.pdf', '0', '0'),
+(4, '100010001000', '2', '1', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -2662,7 +2782,7 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `em
 (2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '6', '1,2', '1,2,3,5,6', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2023-07-03 16:09:05'),
 (3, NULL, NULL, 'Alaathi Mobiles and Furniture', NULL, 'alaathi@gmail.com', 'alaathi', '123', '2', '', '', '1', '', '1', '3', '', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '', '1', '1', '0', '2', '2', NULL, '2023-07-01 12:12:04', '2023-07-03 12:42:16'),
 (4, NULL, NULL, 'Jafar', NULL, '', 'jafar', '123', '3', '1', '', '', '28', '1', '1', '5,7', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '0', '2', '2', NULL, '2023-07-03 11:59:48', '2023-07-03 12:01:41'),
-(5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '0', '2', '5', NULL, '2023-07-03 13:31:46', '2023-07-03 14:35:02');
+(5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '0', '2', '5', NULL, '2023-07-03 13:31:46', '2023-07-07 16:14:59');
 
 -- --------------------------------------------------------
 
@@ -2695,6 +2815,14 @@ CREATE TABLE `verification_cus_feedback` (
   `cus_feedback` varchar(255) DEFAULT NULL,
   `feedback_remark` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `verification_cus_feedback`
+--
+
+INSERT INTO `verification_cus_feedback` (`id`, `cus_id`, `req_id`, `feedback_label`, `cus_feedback`, `feedback_remark`) VALUES
+(1, '300030003000', '7', 'GG', '4', ''),
+(2, '2000 2000 2000', '6', 'Good', '4', '');
 
 -- --------------------------------------------------------
 
@@ -2764,6 +2892,15 @@ CREATE TABLE `verification_documentation` (
   `updated_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `verification_documentation`
+--
+
+INSERT INTO `verification_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, '2', '100010001000', 'Ganesan', '1', 'DOC-101', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '5', NULL, NULL, '2023-07-06 10:14:58', '2023-07-06 10:14:58'),
+(2, '6', '200020002000', 'Aravind', '3', 'DOC-102', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 'Aravind', '', 'NIL', '0', '0', 'TVS', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', NULL, NULL, '2023-07-10 13:17:40', '2023-07-10 13:17:40'),
+(3, '6', '200020002000', 'Aravind', '3', 'DOC-102', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', 'Aravind', '', 'NIL', '0', '0', 'TVS', '100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', NULL, NULL, '2023-07-10 13:23:39', '2023-07-10 13:23:39');
+
 -- --------------------------------------------------------
 
 --
@@ -2797,7 +2934,8 @@ INSERT INTO `verification_family_info` (`id`, `cus_id`, `req_id`, `famname`, `re
 (3, '100010001000', 2, 'Aravindh', 'Brother', '', ' ', 35, '200020002000', 9794949494, 'Coconut shop', 15000, '', 0),
 (4, '200020002000', 6, 'Guna', 'Father', '', ' ', 45, '100010002000', 9894966545, 'Retired', 0, '', 0),
 (5, '200020002000', 6, 'Ganesan', 'Brother', '', ' ', 27, '100010001000', 6465465464, 'shop', 20000, '', 0),
-(6, '200020002000', 6, 'Selvi', 'Mother', '', ' ', 42, '100010003000', 9894984954, 'Housewife', 0, '', 0);
+(6, '200020002000', 6, 'Selvi', 'Mother', '', ' ', 42, '100010003000', 9894984954, 'Housewife', 0, '', 0),
+(7, '300030003000', 7, 'Vivek', 'Father', '', ' ', 57, '165489798798', 9844654213, 'VIP', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -2816,6 +2954,13 @@ CREATE TABLE `verification_group_info` (
   `group_gender` text NOT NULL,
   `group_designation` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `verification_group_info`
+--
+
+INSERT INTO `verification_group_info` (`id`, `cus_id`, `req_id`, `group_name`, `group_age`, `group_aadhar`, `group_mobile`, `group_gender`, `group_designation`) VALUES
+(3, '2000 2000 2000', 6, 'Aravindh', 35, '200020002000', 9794949494, '1', 'Member');
 
 -- --------------------------------------------------------
 
@@ -2841,7 +2986,9 @@ CREATE TABLE `verification_kyc_info` (
 INSERT INTO `verification_kyc_info` (`id`, `cus_id`, `req_id`, `proofOf`, `fam_mem`, `proof_type`, `proof_no`, `upload`) VALUES
 (9, '100010001000', 2, '0', '', '3', '325356', ''),
 (10, '100010001000', 2, '2', 'Guna', '2', '255456', ''),
-(11, '100010001000', 2, '1', '', '1', '2525345345', '');
+(11, '100010001000', 2, '1', '', '1', '2525345345', ''),
+(12, '300030003000', 7, '0', '', '2', '12345647987', ''),
+(13, '2000 2000 2000', 6, '0', '', '10', '64654654', '');
 
 -- --------------------------------------------------------
 
@@ -2896,6 +3043,14 @@ CREATE TABLE `verification_loan_calculation` (
   `update_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `verification_loan_calculation`
+--
+
+INSERT INTO `verification_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_loan`, `cus_name_loan`, `cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`, `update_login_id`, `create_date`, `update_date`) VALUES
+(8, '2', '100010001000', 'Ganesan', 'New', '6465465464', 'monkey1.avif', '5', 'TV', '43800', '2000', '41800', '2', '', '', '', '', '1', '', '10', '10', '8', '1', '1', '41800', '37620', '4180', '41800', '5225', '418', '418', '36784', '2023-07-10', '2024-03-10', '2', '1', '', '100010001000', '1', '12', '5', '5', '2023-07-07 15:26:11', '2023-07-07 15:47:13'),
+(10, '6', '200020002000', 'Aravind', 'New', '9794949494', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '50000', '1', 'Monthly', 'EMI', 'pre_intrest', '', '', '', '', '1.6', '6', '1.2', '2', '50000', '45200', '4810', '50010', '8335', '600', '1000', '43600', '2023-07-15', '2024-01-15', '1', '1', '', '5', '1', '12', '2', NULL, '2023-07-10 16:33:24', '2023-07-10 16:33:24');
+
 -- --------------------------------------------------------
 
 --
@@ -2937,15 +3092,11 @@ CREATE TABLE `verif_loan_cal_category` (
 --
 
 INSERT INTO `verif_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_id`, `category`) VALUES
-(1, '1', '1', 'Carrier'),
-(2, '1', '1', '1ton'),
-(3, '1', '1', 'Split'),
-(4, '1', '2', 'Carrier'),
-(5, '1', '2', '1ton'),
-(6, '1', '2', 'Split'),
-(7, '1', '3', 'Carrier'),
-(8, '1', '3', '1ton'),
-(9, '1', '3', 'Split');
+(34, '2', '8', 'Micromax'),
+(35, '2', '8', '40'),
+(36, '2', '8', 'LED'),
+(37, '6', '10', 'Samsung'),
+(38, '6', '10', '6inch');
 
 --
 -- Indexes for dumped tables
@@ -3530,25 +3681,25 @@ ALTER TABLE `verif_loan_cal_category`
 -- AUTO_INCREMENT for table `acknowledgement_loan_cal_category`
 --
 ALTER TABLE `acknowledgement_loan_cal_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `acknowlegement_customer_profile`
 --
 ALTER TABLE `acknowlegement_customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `acknowlegement_documentation`
 --
 ALTER TABLE `acknowlegement_documentation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `acknowlegement_loan_calculation`
 --
 ALTER TABLE `acknowlegement_loan_calculation`
-  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `agent_communication_details`
@@ -3650,13 +3801,13 @@ ALTER TABLE `closed_status`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
+  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `collection_charges`
 --
 ALTER TABLE `collection_charges`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `company_creation`
@@ -3878,7 +4029,7 @@ ALTER TABLE `ct_hand_collection`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customer_register`
@@ -3896,7 +4047,7 @@ ALTER TABLE `director_creation`
 -- AUTO_INCREMENT for table `document_info`
 --
 ALTER TABLE `document_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `doc_mapping`
@@ -3914,7 +4065,7 @@ ALTER TABLE `expense_category`
 -- AUTO_INCREMENT for table `fingerprints`
 --
 ALTER TABLE `fingerprints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `gold_info`
@@ -3926,13 +4077,13 @@ ALTER TABLE `gold_info`
 -- AUTO_INCREMENT for table `in_acknowledgement`
 --
 ALTER TABLE `in_acknowledgement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `in_issue`
 --
 ALTER TABLE `in_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `loan_calculation`
@@ -3962,13 +4113,13 @@ ALTER TABLE `loan_category_ref`
 -- AUTO_INCREMENT for table `loan_issue`
 --
 ALTER TABLE `loan_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `loan_scheme`
 --
 ALTER TABLE `loan_scheme`
-  MODIFY `scheme_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `scheme_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `loan_summary_feedback`
@@ -4004,7 +4155,7 @@ ALTER TABLE `request_creation`
 -- AUTO_INCREMENT for table `signed_doc`
 --
 ALTER TABLE `signed_doc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `signed_doc_info`
@@ -4046,37 +4197,37 @@ ALTER TABLE `verification_bank_info`
 -- AUTO_INCREMENT for table `verification_cus_feedback`
 --
 ALTER TABLE `verification_cus_feedback`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `verification_documentation`
 --
 ALTER TABLE `verification_documentation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `verification_family_info`
 --
 ALTER TABLE `verification_family_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `verification_group_info`
 --
 ALTER TABLE `verification_group_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `verification_kyc_info`
 --
 ALTER TABLE `verification_kyc_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `verification_loan_calculation`
 --
 ALTER TABLE `verification_loan_calculation`
-  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `verification_property_info`
@@ -4088,7 +4239,7 @@ ALTER TABLE `verification_property_info`
 -- AUTO_INCREMENT for table `verif_loan_cal_category`
 --
 ALTER TABLE `verif_loan_cal_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

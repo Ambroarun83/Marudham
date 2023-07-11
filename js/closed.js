@@ -236,12 +236,12 @@ function OnLoadFunctions(req_id,cus_id){
 
                 $('.coll-charge-chart').click(function(){
                     var noc_req_id = $('#noc_req_id').val();
-                    collectionChargeChartList(noc_req_id) //To Show Collection Charges Chart List
+                    collectionChargeChartList(noc_req_id) //To Show Fine Chart List
                 })
 
                 $('.coll-charge').click(function(){
                     var noc_req_id = $('#noc_req_id').val();
-                    resetcollCharges(noc_req_id);  //Collection Charges
+                    resetcollCharges(noc_req_id);  //Fine
                 })
            }
     })

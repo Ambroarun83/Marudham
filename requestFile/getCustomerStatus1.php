@@ -33,6 +33,8 @@ if($result->num_rows>0){
         }
         $i++;
     }
+}else{
+    $response = 'New';
 }
 
 echo $response;

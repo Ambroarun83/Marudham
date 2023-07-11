@@ -6,7 +6,7 @@ if(isset($_POST['cus_id'])){
 
 $records = array();
 
-$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and (cus_status <= 9 or cus_status = 12) ORDER BY created_date DESC ");
+$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and (cus_status <= 17 and cus_status != 10 and cus_status != 11 and cus_status != 12 and cus_status != 15) ORDER BY created_date DESC ");
 
 if($result->num_rows>0){
     $i=0;
@@ -21,8 +21,8 @@ if($result->num_rows>0){
         
         $records[$i]['sub_category'] = $row['sub_category'];
         $records[$i]['loan_amt'] = $row['loan_amt'];
-        $cus_status =$row['cus_status'];
-        if($cus_status <= 8){
+        $cus_status = $row['cus_status']; 
+        if($cus_status != '10' and $cus_status != '11' and $cus_status != '12'){
             if($cus_status == '0'){$records[$i]['status'] = 'Request'; $records[$i]['sub_status'] = 'Requested';}else
             if($cus_status == '1' or $cus_status == '12'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'In Verification';}else
             if($cus_status == '2'){$records[$i]['status'] = 'Approval';$records[$i]['sub_status'] = 'In Approval';}else
@@ -33,6 +33,8 @@ if($result->num_rows>0){
             if($cus_status == '7'){$records[$i]['status'] = 'Issue';$records[$i]['sub_status'] = 'Issued';}else
             if($cus_status == '8'){$records[$i]['status'] = 'Request';$records[$i]['sub_status'] = 'Revoked';}
             if($cus_status == '9'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'Revoked';}
+            if($cus_status == '13'){$records[$i]['status'] = 'Loan Issue';$records[$i]['sub_status'] = 'In Issue';}
+            if($cus_status == '14' or $cus_status == '17'){$records[$i]['status'] = 'Collection';$records[$i]['sub_status'] = 'Collection';}
         }
         
         $i++;

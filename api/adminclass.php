@@ -4286,8 +4286,8 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['doc_id'])){
                 $doc_id =  $_POST['doc_id'];
             }
-            if(isset($_POST['mortgage_process'])){
-                $mortgage_process = $_POST['mortgage_process'];
+            if(isset($_POST['mortgage_process_post'])){
+                $mortgage_process = $_POST['mortgage_process_post'];
             }
             if(isset($_POST['Propertyholder_type'])){
                 $Propertyholder_type = $_POST['Propertyholder_type'];
@@ -4347,8 +4347,8 @@ function updateUser($mysqli,$id,$user_id){
 				$pendingchk = $_POST['pendingchk'];
 				$mortgage_document_upd = '';
 			} 
-            if(isset($_POST['endorsement_process'])){
-                $endorsement_process = $_POST['endorsement_process'];
+            if(isset($_POST['endorsement_process_post'])){
+                $endorsement_process = $_POST['endorsement_process_post'];
             }
             if(isset($_POST['owner_type'])){
                 $owner_type = $_POST['owner_type'];
@@ -4655,11 +4655,11 @@ function updateUser($mysqli,$id,$user_id){
 				if(isset($_POST['pic_loan'])){
 					$pic_loan = $_POST['pic_loan'];
 				}
-				if(isset($_POST['loan_category'])){
-					$loan_category = $_POST['loan_category'];
+				if(isset($_POST['loan_category_ack'])){
+					$loan_category = $_POST['loan_category_ack'];
 				}
-				if(isset($_POST['sub_category'])){
-					$sub_category = $_POST['sub_category'];
+				if(isset($_POST['sub_category_ack'])){
+					$sub_category = $_POST['sub_category_ack'];
 				}
 				if(isset($_POST['category_info'])){
 					$category_info = $_POST['category_info'];
@@ -4675,8 +4675,8 @@ function updateUser($mysqli,$id,$user_id){
 				if(isset($_POST['loan_amt'])){
 					$loan_amt = $_POST['loan_amt'];
 				}
-				if(isset($_POST['profit_type'])){
-					$profit_type = $_POST['profit_type'];
+				if(isset($_POST['profit_type_ack'])){
+					$profit_type = $_POST['profit_type_ack'];
 				}
 				$due_method_calc = '';
 				if(isset($_POST['due_method_calc'])){
@@ -4693,8 +4693,8 @@ function updateUser($mysqli,$id,$user_id){
 					}
 				}
 				$profit_method='';
-				if(isset($_POST['profit_method'])){
-					$profit_method = $_POST['profit_method'];
+				if(isset($_POST['profit_method_ack'])){
+					$profit_method = $_POST['profit_method_ack'];
 					if($profit_type=='2'){
 						$profit_method='';
 					}
@@ -4778,8 +4778,8 @@ function updateUser($mysqli,$id,$user_id){
 					$loan_cal_id = $_POST['loan_cal_id'];
 				}
 
-				if(isset($_POST['Communitcation_to_cus'])){
-					$Communitcation_to_cus = $_POST['Communitcation_to_cus'];
+				if(isset($_POST['Communitcation_to_cus_ack'])){
+					$Communitcation_to_cus = $_POST['Communitcation_to_cus_ack'];
 				}
 	
 				if(!empty($_FILES['verification_audio']['name']))
@@ -4794,8 +4794,8 @@ function updateUser($mysqli,$id,$user_id){
 				if(isset($_POST['verifyPerson'])){
 					$verifyPerson = $_POST['verifyPerson'];
 				}
-				if(isset($_POST['verification_location'])){
-					$verification_location = $_POST['verification_location'];
+				if(isset($_POST['verification_location_ack'])){
+					$verification_location = $_POST['verification_location_ack'];
 				}
 				if(isset($_POST['cus_profile_id'])){
 					$cus_profile_id = $_POST['cus_profile_id'];

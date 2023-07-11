@@ -2599,7 +2599,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="principal_amt_cal">Principal Amount</label>&nbsp;<span class="text-danger">*</span>
+												<label for="principal_amt_cal">Principal Amount</label>&nbsp;<span class="text-danger princ-diff">*</span>
 												<input type="text" class="form-control" readonly id="principal_amt_cal" name="principal_amt_cal" value='<?php if (isset($principal_amt_cal)) echo $principal_amt_cal; ?>'>
 											</div>
 										</div>

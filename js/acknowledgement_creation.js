@@ -2544,11 +2544,13 @@ function getUserBasedLoanCategory() {
                 if (loan_category_upd == '' || loan_category_upd == undefined) { //if update is not available, then only use on load value of loan category
                     if (loan_category != undefined && loan_category != '' && loan_category == response[i]['loan_category_id']) {
                         selected = 'selected';
+                        $('#loan_category_ack').val(response[i]['loan_category_id']);
                         getSubCategory(response[i]['loan_category_id']);
                     }
                 } else {
                     if (loan_category_upd != undefined && loan_category_upd != '' && loan_category_upd == response[i]['loan_category_id']) {
                         selected = 'selected';
+                        $('#loan_category_ack').val(response[i]['loan_category_id']);
                         getSubCategory(response[i]['loan_category_id']);
                     }
                 }
@@ -2579,10 +2581,12 @@ function getSubCategory(loan_cat) {
                 if (sub_categoryu_upd == '' || sub_categoryu_upd == undefined) { //if update is not available, then only use on load value of loan category
                     if (sub_category != undefined && sub_category != '' && sub_category == response[i]['sub_category_name']) {
                         selected = 'selected';
+                        $('#sub_category_ack').val(response[i]['sub_category_name']);
                     }
                 } else {
                     if (sub_categoryu_upd != undefined && sub_categoryu_upd != '' && sub_categoryu_upd == response[i]['sub_category_name']) {
                         selected = 'selected';
+                        $('#sub_category_ack').val(response[i]['sub_category_name']);
                     }
                 }
                 $('#sub_category').append("<option value='" + response[i]['sub_category_name'] + "' " + selected + ">" + response[i]['sub_category_name'] + " </option>");
@@ -2609,7 +2613,7 @@ function getCategoryInfo() {
                 var tb = 35;
                 for (var i = 0; i < response.length; i++) {
                     $('#moduleTable tbody tr').append(`<td><label for="disabledInput">` + response[i]['loan_category_ref_name'] + `</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
-                    value='`+ category_info + `' tabindex='` + tb + `' required placeholder='Enter ` + response[i]['loan_category_ref_name'] + `'readonly ></td>`);
+                    value='`+ category_info + `' tabindex='` + tb + `' placeholder='Enter ` + response[i]['loan_category_ref_name'] + `'readonly ></td>`);
                     tb++;
                 }
                 $('#moduleTable tbody tr').append(`<td><button type="button" tabindex='` + tb + `' id="add_category_info[]" name="add_category_info" 
@@ -2757,7 +2761,7 @@ function getLoaninfo(sub_cat_id) {
 
             } else {
                 $('.advance_yes').hide();
-                $('#loan_amt').removeAttr('readonly');
+                // $('#loan_amt').removeAttr('readonly');
                 $('#loan_amt').unbind('blur').blur(function () {// to calculate loan amount ant advance percentage
                     var loan_amt = $(this).val();
 
@@ -2880,6 +2884,7 @@ function profitCalAjax(profit_type, sub_cat) {
                         var selected = '';
                         if (profit_method_upd != '' && profit_method_upd != undefined && profit_method_upd == profit_method[i]) {
                             selected = 'selected';
+                            $('#profit_method_ack').val(profit_method[i]);
                         }
                         $('#profit_method').append(`<option value='` + profit_method[i] + `' ` + selected + `>` + valuee + `</option>`);
                     }
@@ -2935,6 +2940,8 @@ function profitCalAjax(profit_type, sub_cat) {
                     $('#proc_fee').val(proc_fee_upd);
                 }
             }
+        }).then(function(){
+            $('#refresh_cal').trigger('click')
         })
     } else if (profit_type == '2') { //if Scheme selected
         $('.calculation').hide(); // to hide calculation inputs
@@ -3001,6 +3008,8 @@ function schemeCalAjax(scheme_id) {
                                     if( parseInt($(this).val()) < '`+ response['proc_fee_min'] + `' && parseInt($(this).val()) != '' ){ alert("Enter Higher Value"); $(this).val(""); } `); //To check value between rage
                 $('#proc_fee').val(doc_charge_upd);
             }
+        }).then(function(){
+            $('#refresh_cal').trigger('click')
         })
     } else {
         $('#int_rate').val(''); $('#int_rate').attr('readonly', false);
@@ -3058,7 +3067,7 @@ function getLoanAfterInterest(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(new_int - interest_rate) + ')'); //To show the difference amount
     $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
@@ -3116,7 +3125,7 @@ function getLoanPreInterest(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(new_int - int_amt) + ')'); //To show the difference amount
     $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
@@ -3207,7 +3216,7 @@ function getLoanMonthly(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(new_int - int_amt) + ')'); //To show the difference amount
     $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
@@ -3280,7 +3289,7 @@ function getLoanWeekly(){
             roundedInterest += 5;
         }
     
-        $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+        $('.int-diff').text('* (Difference: +' + parseInt(new_int - int_amt) + ')'); //To show the difference amount
         $('#int_amt_cal').val(parseInt(roundedInterest));
     
         var new_princ = parseInt(new_tot) - parseInt(roundedInterest);
@@ -3353,7 +3362,7 @@ function getLoanDaily(){
         roundedInterest += 5;
     }
 
-    $('.int-diff').text('* (Difference: +' + parseInt(roundedInterest - new_int) + ')'); //To show the difference amount
+    $('.int-diff').text('* (Difference: +' + parseInt(new_int - int_amt) + ')'); //To show the difference amount
     $('#int_amt_cal').val(parseInt(roundedInterest));
 
     var new_princ = parseInt(new_tot) - parseInt(roundedInterest);

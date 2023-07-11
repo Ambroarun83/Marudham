@@ -266,7 +266,7 @@ if($idupd>0)
 
                             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
 								<div class="form-group">
-									<button type="button" class="btn btn-primary coll-charge-chart" id="collection_charge_chart" name="collection_charge_chart" data-toggle="modal" data-target=".collectionChargeChart" style="padding: 10px 35px;width: 100%;"> Collection Charges Chart </button>
+									<button type="button" class="btn btn-primary coll-charge-chart" id="collection_charge_chart" name="collection_charge_chart" data-toggle="modal" data-target=".collectionChargeChart" style="padding: 10px 35px;width: 100%;"> Fine Chart </button>
 								</div>
 							</div>
 
@@ -440,13 +440,13 @@ if($idupd>0)
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Penalty Chart Modal END ////////////////////////////////////////////////////////////////////// -->
-<!-- /////////////////////////////////////////////////////////////////// Collection Charges Chart Modal START ////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Fine Chart Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade collectionChargeChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <input type="hidden" name="req_id" id="req_id" value="<?php if(isset($idupd)){echo $idupd;} ?>" >
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel"> Collection Charge Chart </h5>
+                <h5 class="modal-title" id="myLargeModalLabel"> Fine Chart </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -458,7 +458,7 @@ if($idupd>0)
                             <tr>
                                 <th> S.No </th>
                                 <th> Date </th>
-                                <th> Collection Charges  </th>
+                                <th> Fine  </th>
                                 <th> Purpose </th>
                                 <th> Paid Date </th>
                                 <th> Paid  </th>
@@ -477,7 +477,7 @@ if($idupd>0)
         </div>
     </div>
 </div>
-<!-- /////////////////////////////////////////////////////////////////// Collection Charges Chart Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Fine Chart Modal END ////////////////////////////////////////////////////////////////////// -->
 <!-- Add Loan Summary Modal START -->
 <div class="modal fade addloansummary" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">

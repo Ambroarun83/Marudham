@@ -22,7 +22,7 @@ $insert_qry = $connect ->query("INSERT INTO `collection_charges`( `req_id`, `cus
 // }
 
 if($insert_qry){
-    $result = "Collection Charges Inserted Successfully.";
+    $result = "Fine Inserted Successfully.";
 }
 // elseif($update){
 //     $result = "Bank Info Updated Successfully.";

@@ -742,7 +742,7 @@ input:checked + .slider:before {
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
-												<label for="disabledInput">Issued to </label>&nbsp;<span class="text-danger">*</span>
+												<label for="disabledInput">Issued to </label>&nbsp;<span class="text-danger issued_to_type">*</span>
 												<input type="text" class="form-control" id="issue_to" name="issue_to" readonly>
 												<input type="hidden" class="form-control" id="agent_id" name="agent_id">
 											</div>
@@ -873,7 +873,7 @@ input:checked + .slider:before {
 					<!-- Issued Info End -->
 
 					 <!-- Cash Acknowledgement  Start -->
-					 <div class="card" id="cashAck">
+					 <div class="card" id="cashAck" style="display:none">
 						<div class="card-header">Cash Acknowledgement <span style="font-weight:bold" class="" ></span></div>
 						<span class="text-danger" style="display: none;" id="finger_check"> Please Scan your Finger Print </span>
 						<div class="card-body">

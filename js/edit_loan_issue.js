@@ -76,6 +76,44 @@ function callOnClickEvents(){
                 })
             }
         });
+
+        $('.iss-remove').click(function(){
+            event.preventDefault();
+            let req_id = $(this).data('value');
+            if(confirm('Do you want to Remove this Issue From the List?')){
+                $.ajax({
+                    url: 'loanIssueFile/removeIssue.php',
+                    dataType: 'json',
+                    type: 'post',
+                    data:{'req_id':req_id},
+                    cache:false,
+                    success:function(response){
+                        if(response.includes('Removed')){
+                            Swal.fire({
+                                timerProgressBar: true,
+                                timer: 2000,
+                                title: response,
+                                icon: 'success',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                            setTimeout(function(){
+                                window.location= 'edit_loan_issue';
+                            },2000)
+                        }else if(response.includes('Error')){
+                            Swal.fire({
+                                timerProgressBar: true,
+                                timer: 2000,
+                                title: response,
+                                icon: 'error',
+                                showConfirmButton: true,
+                                confirmButtonColor: '#009688'
+                            });
+                        }
+                    }
+                })
+            }
+        })
         
     }, 1000);
 }

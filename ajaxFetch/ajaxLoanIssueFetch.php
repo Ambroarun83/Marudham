@@ -188,20 +188,29 @@ foreach ($result as $row) {
     $cus_status = $row['cus_status'];
     $loan_issued = $mysqli->query("SELECT balance_amount FROM `loan_issue` WHERE req_id='$id' order by id desc LIMIT 1 ");
     $loan_issued_db =  $loan_issued->fetch_assoc();
-    if($cus_status == '13'){
 
-        if(isset($loan_issued_db['balance_amount']) && $loan_issued_db['balance_amount'] =='0'){
-            $sub_array[] = "<button class='btn btn-outline-secondary complete_issue' value='$id'><span class = 'icon-arrow_forward'></span></button>";
-        }else{
+    if(empty($ag_id)){// only check balance amount if request is not on agent
 
-            $sub_array[] = 'In Issue';
+        if($cus_status == '13'){
+            
+            if(isset($loan_issued_db['balance_amount']) && $loan_issued_db['balance_amount'] =='0'){
+                $sub_array[] = "<button class='btn btn-outline-secondary complete_issue' value='$id'><span class = 'icon-arrow_forward'></span></button>";
+            }else{
+                $sub_array[] = 'In Issue';
+            }
+            
+        }else if($cus_status == '14'){
+            $sub_array[] = 'Issued';
         }
-     }
-     if($cus_status == '14'){
+    }else{//else directly show move button to collection, then it will be taken care by cash tally screen
+        if($cus_status == '14'){
+            $sub_array[] = 'Issued';
+        }else{
+            $sub_array[] = "<button class='btn btn-outline-secondary complete_issue' value='$id'><span class = 'icon-arrow_forward'></span></button>";
+        }
+    }
 
-        $sub_array[] = 'Issued';
 
-     }
 
     $id          = $row['req_id'];
     $user_type = $row['user_type'];
@@ -211,11 +220,11 @@ foreach ($result as $row) {
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
 
-    if($cus_status == '13') {
+    if($cus_status == '13' and empty($ag_id)) { // check whether agent id is empty, if yes then show edit button, so that only 'issued to customer' entries only can edit
         $action .= "<a href='loan_issue&upd=$id' class='customer_profile' value='$id' > Edit Loan Issue </a>";
         // $action .= "<a href='loan_issue&can=$id' class='ack-cancel' value='$id' > Cancel </a>";
-    }else if($cus_status == '7') {
-        $action .= "<a href='loan_issue&rem=$id&pge=1' class='ack-remove' value='$id' > Remove </a>";
+    }else if($cus_status == '14') {
+        $action .= "<a href=''class='iss-remove' data-value='$id' > Remove </a>";
     }
 
     if($user_type != 'Agent' or $userid == 1){

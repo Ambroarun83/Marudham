@@ -24,10 +24,10 @@ if(isset($_POST["bal_amt"])){
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-    .dropbtn {
+    /* .dropbtn {
 		color: white;
-		/* background-color: #009688; */
-		/* padding: 10px; */
+		background-color: #009688;
+		padding: 10px;
 		font-size: 10px;
 		border: none;
 		cursor: pointer;
@@ -58,7 +58,7 @@ if(isset($_POST["bal_amt"])){
 	}
 	.dropdown:hover .dropbtn {
 		background-color: #3E8E41;
-	}
+	} */
     .btn-outline-secondary {
         color: #383737;
         border-color: #383737;
@@ -111,7 +111,7 @@ function moneyFormatIndia($num) {
         <?php
         $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
-        $run = $connect->query("SELECT lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.req_id,ii.updated_date,ii.cus_status,
+        $run = $connect->query("SELECT lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
         rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
         from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
@@ -121,7 +121,7 @@ function moneyFormatIndia($num) {
         while ($row = $run->fetch()) {
         ?>
             <tr>
-                <td><?php echo $i; ?></td>
+                <td><?php echo $row['loan_id']; ?></td>
                 <td><?php echo $row["loan_catrgory_name"]; ?></td>
                 <td><?php echo $row["sub_category"]; ?></td>
                 <td>
@@ -184,7 +184,7 @@ function moneyFormatIndia($num) {
                         $action .="><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
                         $action .= "<a><span data-toggle='modal' data-target='.DueChart' class='due-chart' value='".$row['req_id']."' > Due Chart</span></a>
                         <a><span data-toggle='modal' data-target='.PenaltyChart' class='penalty-chart' value='".$row['req_id']."' > Penalty Chart</span></a>
-                        <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='".$row['req_id']."' > Collection Charge Chart</span></a>";
+                        <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='".$row['req_id']."' > Fine Chart</span></a>";
                         $action .= "</div></div>";
                         echo $action;
                     ?>
@@ -196,7 +196,7 @@ function moneyFormatIndia($num) {
                             $action .= "<a href='' class='move-error' value='".$row['req_id']."' > Move To Error</a>
                             <a href='' class='move-legal' value='".$row['req_id']."' > Move To Legal</a>
                             <a href='' class='return-sub' value='".$row['req_id']."' > Return Sub Status</a>
-                            <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='".$row['req_id']."' > Collection Charges </span></a>";
+                            <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='".$row['req_id']."' > Fine </span></a>";
                             //if balance is eqauls to zero, then that loan must be able to moved as closed
                             // if($closed_sts[$i-1] == 'true'){
                             //     $action .= "<a href='' class='move-closed' value='".$row['req_id']."' > Move To Closed</a>";
@@ -221,14 +221,27 @@ function moneyFormatIndia($num) {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
+            // "createdRow": function(row, data, dataIndex) {
+            //     $(row).find('td:first').html(dataIndex + 1);
+            // },
+            // "drawCallback": function(settings) {
+            //     this.api().column(0).nodes().each(function(cell, i) {
+            //         cell.innerHTML = i + 1;
+            //     });
+            // },
         });
     });
+    $('.dropdown').click(function(event) {
+        event.preventDefault();
+        $('.dropdown').not(this).removeClass('active');
+        $(this).toggleClass('active');
+    });
+
+    $(document).click(function(event) {
+        var target = $(event.target);
+        if (!target.closest('.dropdown').length) {
+            $('.dropdown').removeClass('active');
+        }
+    });
+    $('.due-chart, .penalty-chart, .coll-charge-chart, .coll-charge').css('color','black');
 </script>
