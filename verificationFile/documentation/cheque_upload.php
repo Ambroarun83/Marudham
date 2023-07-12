@@ -2,7 +2,7 @@
 require '../../ajaxconfig.php';
 
 $req_id                = $_POST['cheque_req_id'];
-$cus_id                = $_POST['cus_id'];
+$cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
 $chequeID              = $_POST['chequeID'];
 $filesArr3             = $_FILES['cheque_upd'];
 $cheque_upd_no         = explode(',',$_POST['cheque_upd_no']);

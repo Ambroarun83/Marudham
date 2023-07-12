@@ -2,7 +2,7 @@
 include '../ajaxconfig.php';
 ?>
 
-<table class="table custom-table" id="feedback_table">
+<table class="table custom-table" id="feedback_table1">
     <thead>
     <tr>
 		<th width="20%"> S.No </th>
@@ -33,7 +33,7 @@ include '../ajaxconfig.php';
 
 <script type="text/javascript">
     $(function() {
-        $('#feedback_table').DataTable({
+        $('#feedback_table1').DataTable({
             'processing': true,
             'iDisplayLength': 5,
             "lengthMenu": [

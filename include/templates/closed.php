@@ -219,7 +219,7 @@ if($idupd>0)
 				<!-- Loan List End -->
 
                 <!-- Data Checking START -->
-				<div class="card datachecking_card">
+				<!-- <div class="card datachecking_card">
 					<div class="card-header"> Data Checking <span style="font-weight:bold" class=""></span></div>
 					<div class="card-body">
 						<div id="guarentor_checkDiv"> 
@@ -239,9 +239,141 @@ if($idupd>0)
 						</table>
                         </div></br>
 					</div>
-				</div>
+				</div> -->
 				<!-- Data Checking END -->
 			
+				<!-- ///////////////////////////////////////////////// Customer Summary START ///////////////////////////////////////////////////////////// -->
+
+				<div class="card customersummary_card">
+					<div class="card-header"> Customer Summary <span style="font-weight:bold" class=""></span></div>
+					<div class="card-body">
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_how_know"> How to Know </label>
+									<input type="text" class="form-control" name="cus_how_know" id="cus_how_know" readonly <?php if (isset($how_to_know)) echo $how_to_know; ?>>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_loan_count"> Loan Counts </label>
+									<input type="text" class="form-control" name="cus_loan_count" id="cus_loan_count" 
+									value="<?php if (isset($loan_count)) {echo $loan_count;} ?>" readonly >
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_frst_loanDate"> First Loan Date </label>
+									<input type="text" class="form-control" name="cus_frst_loanDate" id="cus_frst_loanDate" 
+									value="<?php if (isset($first_loan_date)) {echo $first_loan_date;} ?>" readonly >
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_travel_cmpy"> Travel with Company </label>
+									<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" 
+									value="<?php if (isset($travel_with_company)) {echo $travel_with_company;} ?>" readonly >
+								</div>
+							</div>
+
+						</div>
+
+						<hr>
+
+						<div class="row">
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_monthly_income"> Monthly Income </label> 
+									<input type="text" class="form-control" name="cus_monthly_income" id="cus_monthly_income"
+									value="<?php if (isset($monthly_income)) {echo $monthly_income;} ?>" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_other_income"> Other Income </label> 
+									<input type="text" class="form-control" name="cus_other_income" id="cus_other_income" 
+									value="<?php if (isset($other_income)) {echo $other_income;} ?>" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_support_income"> Support Income </label> 
+									<input type="text" class="form-control" name="cus_support_income" id="cus_support_income" 
+									value="<?php if (isset($support_income)) {echo $support_income;} ?>" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_Commitment"> Commitment </label> 
+									<input type="text" class="form-control" name="cus_Commitment" id="cus_Commitment" 
+									value="<?php if (isset($commitment)) {echo $commitment;} ?>" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_monDue_capacity"> Monthly Due Capacity </label> 
+									<input type="text" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity" 
+									value="<?php if (isset($monthly_due_capacity)) {echo $monthly_due_capacity;} ?>" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_loan_limit"> Customer Limit </label> 
+									<input type="text" class="form-control" name="cus_loan_limit" id="cus_loan_limit" 
+									value="<?php if (isset($loan_limit)) {echo $loan_limit;} ?>" readonly>
+								</div>
+							</div>
+
+						</div>
+
+						<hr>
+
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="OldFeedbackTable">
+									<table class="table custom-table modalTable">
+										<thead>
+											<tr>
+												<th width="50"> S.No </th>
+												<th> Feedback Label </th>
+												<th> Feedback </th>
+												<th> Remarks </th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<hr>
+
+						<div class="row">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="about_cus"> About Customer </label>
+									<textarea class="form-control" name="about_cus" id="about_cus" readonly><?php if (isset($about_customer)) {echo $about_customer;} ?></textarea>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+				<!-- ///////////////////////////////////////////////// Customer Summary END ///////////////////////////////////////////////////////////// -->
+
 
 				<!-- NOC Window START -->
 				<div class="card noc_window">
@@ -305,20 +437,20 @@ if($idupd>0)
 
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                             <div class="form-group">
-								<label for="branch"> Closed Status  </label>
+								<label for="branch"> Closed Status </label> <span class="required">*</span>
 								<select type="text" class="form-control" name="closed_Sts" id="closed_Sts" >
 									<option value=""> Select Closed Status </option> 
 									<option value="1"> Consider </option> 
 									<option value="2"> Waiting List </option> 
 									<option value="3"> Block List </option> 
 								</select>
-								<span class="text-danger" id="closedStatusCheck" style="display:none;"> Select Closed Status </span>
+								<span class="text-danger" id="closedStatusCheck" style="display:none;">Please Select Closed Status </span>
 							</div>
 						</div>
 
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="considerlevel">
                             <div class="form-group">
-								<label for="branch"> Consider Level </label>
+								<label for="branch"> Consider Level </label> <span class="required">*</span>
 								<select type="text" class="form-control" name="closed_Sts_consider" id="closed_Sts_consider" >
 									<option value=""> Select Consider Level </option> 
 									<option value="1"> Bronze </option> 
@@ -327,15 +459,15 @@ if($idupd>0)
 									<option value="4"> Platinum </option> 
 									<option value="5"> Diamond </option> 
 								</select>
-								<span class="text-danger" id="considerLevelCheck" style="display:none;"> Select Consider Level </span>
+								<span class="text-danger" id="considerLevelCheck" style="display:none;">Please Select Consider Level </span>
 							</div>
 						</div>
 
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                             <div class="form-group">
-								<label for="remark"> Remark  </label>
+								<label for="remark"> Remark  </label> <span class="required">*</span>
 								<textarea type="text" class="form-control" name="closed_Sts_remark" id="closed_Sts_remark" ></textarea>
-								<span class="text-danger" id="remarkCheck" style="display:none;"> Enter Remark </span>
+								<span class="text-danger" id="remarkCheck" style="display:none;"> Please Enter Remark </span>
 							</div>
 						</div>
 

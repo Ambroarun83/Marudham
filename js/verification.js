@@ -65,11 +65,12 @@ $(document).ready(function () {
     function famNameList() {  // To show family name for Data Check.
         let req_id = $('#req_id').val();
         var cus_name = $('#cus_name').val();
+        var cus_id = $('#cus_id').val();//customer id
 
         $.ajax({
             url: 'verificationFile/verification_datacheck_name.php',
             type: 'POST',
-            data: { "reqId": req_id },
+            data: { "cus_id": cus_id },
             dataType: 'json',
             cache: false,
             success: function (response) {
@@ -89,11 +90,12 @@ $(document).ready(function () {
     function mobileList() { // To show Mobile No for Data Checking.
         let req_id = $('#req_id').val();
         var mobile1 = $('#mobile1').val();
+        var cus_id = $('#cus_id').val();//customer id
 
         $.ajax({
             url: 'verificationFile/verification_datacheck_name.php',
             type: 'POST',
-            data: { "reqId": req_id },
+            data: { "cus_id": cus_id },
             dataType: 'json',
             cache: false,
             success: function (response) {
@@ -114,12 +116,12 @@ $(document).ready(function () {
     function aadharList() {   // To show Aadhar No for Data Checking.
         let req_id = $('#req_id').val();
         var cus_name = $('#cus_name').val();//Customer name for display
-        var cus_id = $('#cus_id').val();//customer adhar for validate
+        var cus_id = $('#cus_id').val();//customer adhar for 
 
         $.ajax({
             url: 'verificationFile/verification_datacheck_name.php',
             type: 'POST',
-            data: { "reqId": req_id },
+            data: { "cus_id": cus_id },
             dataType: 'json',
             cache: false,
             success: function (response) {
@@ -2190,10 +2192,11 @@ function validateKyc(){
 
 function resetkycInfo() {
     let cus_id = $('#cus_id').val();
+    let req_id = $('#req_id').val();
     $.ajax({
         url: 'verificationFile/verification_kyc_reset.php',
         type: 'POST',
-        data: { "cus_id": cus_id },
+        data: { "req_id": req_id },
         cache: false,
         success: function (html) {
             $("#kycTable").empty();
@@ -2283,11 +2286,12 @@ $("body").on("click", "#verification_kyc_delete", function () {
 
 function resetkycinfoList() {
     let cus_id = $('#cus_id').val();
+    let req_id = $('#req_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "cus_id": cus_id },
+        data: { "req_id": req_id },
         cache: false,
         success: function (html) {
             $("#kycListTable").empty();

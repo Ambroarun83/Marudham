@@ -1,7 +1,7 @@
 <?php
 require '../ajaxconfig.php';
 
-$cus_id                = $_POST['cus_id'];
+$cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
 $gold_sts        = $_POST['gold_sts'];
 $gold_type              = $_POST['gold_type'];
 $Purity             = $_POST['Purity'];
