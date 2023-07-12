@@ -44,16 +44,16 @@ $column = array(
 if($userid == 1){
     $query = 'SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) GROUP BY ii.cus_id '; // Only Issued and all lines not relying on sub area// 14 and 17 means collection entries, 17 removed from issue list
+    where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) GROUP BY ii.cus_id '; // Only Issued and all lines not relying on sub area// 14 and 17 means collection entries, 17 removed from issue list
 }else{
     if($role != '2'){
         $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
         acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-        where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. // 14 and 17 means collection entries, 17 removed from issue list
+        where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. // 14 and 17 means collection entries, 17 removed from issue list
     }else{// if agent then check the possibilities
         $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
         acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN request_creation rc ON ii.req_id = rc.req_id 
-        where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) and (rc.user_type = 'Agent' or (rc.agent_id != '' and rc.agent_id != null)  or rc.insert_login_id = '$userid' ) ";// 14 and 17 means collection entries, 17 removed from issue list
+        where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and (rc.user_type = 'Agent' or (rc.agent_id != '' and rc.agent_id != null)  or rc.insert_login_id = '$userid' ) ";// 14 and 17 means collection entries, 17 removed from issue list
     }
 }
 // echo $query;
@@ -129,7 +129,7 @@ function count_all_data($connect)
 {
     $query     = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and (ii.cus_status = 14 or ii.cus_status = 17) GROUP BY ii.cus_id ";
+    where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) GROUP BY ii.cus_id ";
     $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();

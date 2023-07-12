@@ -16,8 +16,8 @@ include '../ajaxconfig.php';
     <tbody>
 
         <?php
-        $cus_id = $_POST['cus_id'];
-        $KYCInfo = $connect->query("SELECT * FROM `verification_kyc_info` where cus_id = '$cus_id' order by id desc");
+        $req_id = $_POST['req_id'];
+        $KYCInfo = $connect->query("SELECT * FROM `verification_kyc_info` where req_id = '$req_id' order by id desc");
 
         $i = 1;
         while ($kyc = $KYCInfo->fetch()) {

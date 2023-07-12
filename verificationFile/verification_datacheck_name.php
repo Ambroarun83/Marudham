@@ -1,13 +1,13 @@
 <?php
 require '../ajaxconfig.php';
 
-if(isset($_POST['reqId'])){
-    $req_id = $_POST['reqId'];
+if(isset($_POST['cus_id'])){
+    $cus_id = $_POST['cus_id'];
 }
 
 $NameList = array();
 
-$names = $connect->query("SELECT `famname`,`relation_aadhar`,`relation_Mobile` FROM `verification_family_info` WHERE  req_id = '$req_id' ");
+$names = $connect->query("SELECT `famname`,`relation_aadhar`,`relation_Mobile` FROM `verification_family_info` WHERE  cus_id = '$cus_id' ");
 
 while($famName = $names->fetch()){
     $famname = $famName['famname'];

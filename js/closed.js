@@ -146,6 +146,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('.noc-window').click(function(){
                     $('.loanlist_card').hide();
                     $('.datachecking_card').hide();
+                    $('.customersummary_card').hide();
                     $('.back-button').hide();
                     $('.noc_window').show();
                     $('#close_noc_card').show();
@@ -161,6 +162,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('#close_noc_card').click(function(){
                     $('.loanlist_card').show();
                     $('.datachecking_card').show();
+                    $('.customersummary_card').show();
                     $('.back-button').show();
                     $('.noc_window').hide();
                     $('#close_noc_card').hide();
@@ -244,26 +246,75 @@ function OnLoadFunctions(req_id,cus_id){
                     resetcollCharges(noc_req_id);  //Fine
                 })
            }
-    })
+        })
 
 
-    $.ajax({
-        // To Check Customer Guarentor History.
-        url: 'closedFile/getGuarentorData.php',
-        data: {'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts},
-        type:'post',
-        cache: false,
-        success: function(response){
-            $('#guarentor_checkDiv').empty()
-            $('#guarentor_checkDiv').html(response);
+        $.ajax({
+            // To Check Customer Guarentor History.
+            url: 'closedFile/getGuarentorData.php',
+            data: {'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts},
+            type:'post',
+            cache: false,
+            success: function(response){
+                $('#guarentor_checkDiv').empty()
+                $('#guarentor_checkDiv').html(response);
+                }
+        })
             
-            }
-        });
-    
-},2000)
-   
+        getCustomerLoanCounts(); // to get customer summary details
+    },2000)
+
 }//Auto Load function END
 
+function getCustomerLoanCounts(){
+    let cus_id = $('#cusidupd').val()
+    $.ajax({
+        url: 'verificationFile/getCustomerLoanCounts.php',
+        data: {'cus_id':cus_id},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#cus_loan_count').val(response['loan_count'])
+            $('#cus_frst_loanDate').val(response['first_loan'])
+            $('#cus_travel_cmpy').val(response['travel'])
+            $('#cus_exist_type').val(response['existing_type'])
+        }
+    })
+    getCustomerSummary();//to get income details
+}
+function getCustomerSummary(){console.log('asdasdf')
+    let cus_id = $('#cusidupd').val()
+    $.ajax({
+        url: 'closedFile/getCustomerSummary.php',
+        data: {'cus_id':cus_id},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function(response){
+            $('#cus_how_know').val(response['how_to_know'])
+            $('#cus_monthly_income').val(response['monthly_income'])
+            $('#cus_other_income').val(response['other_income'])
+            $('#cus_support_income').val(response['support_income'])
+            $('#cus_Commitment').val(response['commitment'])
+            $('#cus_monDue_capacity').val(response['monthly_due_capacity'])
+            $('#cus_loan_limit').val(response['loan_limit'])
+            $('#about_cus').val(response['about_customer'])
+        }
+    }).then(function(){
+
+        $.ajax({
+            url: 'verificationFile/customer_feedback_list.php',
+            type: 'POST',
+            data: { "cus_id": cus_id },
+            cache: false,
+            success: function (html) {
+                $("#OldFeedbackTable").empty();
+                $("#OldFeedbackTable").html(html);
+            }
+        })
+    });
+}
 
 function validations(){
     var closed_Sts = $('#closed_Sts').val(); var closed_Sts_consider = $('#closed_Sts_consider').val(); var closed_Sts_remark = $('#closed_Sts_remark').val();

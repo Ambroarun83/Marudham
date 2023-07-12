@@ -2,7 +2,7 @@
 require '../ajaxconfig.php';
 
 $req_id                = $_POST['reqId'];
-$cus_id                = $_POST['cus_id'];
+$cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
 $feedback_label        = $_POST['feedback_label'];
 $cus_feedback              = $_POST['cus_feedback'];
 $feedback_remark              = $_POST['feedback_remark'];

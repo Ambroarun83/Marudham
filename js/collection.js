@@ -193,25 +193,26 @@ function OnLoadFunctions(req_id,cus_id){
         type:'post',
         cache: false,
         success: function(response){
-            
-            for(var i=0;i< response['pending_customer'].length;i++){
-                pending_arr[i] = response['pending_customer'][i]
-                od_arr[i] = response['od_customer'][i]
-                due_nil_arr[i] = response['due_nil_customer'][i]
-                closed_arr[i] = response['closed_customer'][i]
-                balAmnt[i] = response['balAmnt'][i]
+            if(response.length != 0){
+
+                for(var i=0;i< response['pending_customer'].length;i++){
+                    pending_arr[i] = response['pending_customer'][i]
+                    od_arr[i] = response['od_customer'][i]
+                    due_nil_arr[i] = response['due_nil_customer'][i]
+                    closed_arr[i] = response['closed_customer'][i]
+                    balAmnt[i] = response['balAmnt'][i]
+                }
+                var pending_sts = pending_arr.join(',');
+                $('#pending_sts').val(pending_sts);
+                var od_sts = od_arr.join(',');
+                $('#od_sts').val(od_sts);
+                var due_nil_sts = due_nil_arr.join(',');
+                $('#due_nil_sts').val(due_nil_sts);
+                var closed_sts = closed_arr.join(',');
+                $('#closed_sts').val(closed_sts);
+                balAmnt = balAmnt.join(',');
+                // $('#balAmnt').val(balAmnt);
             }
-            var pending_sts = pending_arr.join(',');
-            $('#pending_sts').val(pending_sts);
-            var od_sts = od_arr.join(',');
-            $('#od_sts').val(od_sts);
-            var due_nil_sts = due_nil_arr.join(',');
-            $('#due_nil_sts').val(due_nil_sts);
-            var closed_sts = closed_arr.join(',');
-            $('#closed_sts').val(closed_sts);
-            balAmnt = balAmnt.join(',');
-            // $('#balAmnt').val(balAmnt);
-            
         }
     }); 
     $('<div/>', {class: 'overlay'}).appendTo('.loanlist_card').html('<div class="loader"></div><span class="overlay-text">Please Wait</span>');
@@ -439,7 +440,7 @@ function OnLoadFunctions(req_id,cus_id){
                 })
                 $('.move-error').click(function(){
                     if(confirm("Are you Sure To move this Loan to Error?")){
-                        
+                        let getidupd = $('#idupd').val();let getcusidupd = $('#cusidupd').val();
                         var req_id = $(this).attr('value');
                         var cus_status = '15';
                         $.ajax({
@@ -449,17 +450,28 @@ function OnLoadFunctions(req_id,cus_id){
                             type: 'post',
                             cache: false,
                             success:function(response){
-                                Swal.fire({
-                                    timerProgressBar: true,
-                                    timer: 3000,
-                                    title: 'Moved To Error!',
-                                    icon: 'succes',
-                                    showConfirmButton: true,
-                                    confirmButtonColor: '#009688'
-                                });
-                                setTimeout(function(){
-                                    window.location= 'edit_collection';
-                                },2000)
+                                if(response.includes('Success')){
+                                    Swal.fire({
+                                        timerProgressBar: true,
+                                        timer: 2000,
+                                        title: 'Moved To Error!',
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        // confirmButtonColor: '#009688'
+                                    });
+                                    setTimeout(function(){
+                                        window.location= 'collection&upd='+getidupd+'&cusidupd='+getcusidupd;
+                                    },2000)
+                                }else{
+                                    Swal.fire({
+                                        timerProgressBar: true,
+                                        timer: 2000,
+                                        title: 'Error While Moving!',
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        // confirmButtonColor: '#009688'
+                                    });
+                                }
                             }
                         })
                     }else{
@@ -469,6 +481,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('.move-legal').click(function(){
                     if(confirm("Are you Sure To move this Loan to Legal?")){
                         
+                        let getidupd = $('#idupd').val();let getcusidupd = $('#cusidupd').val();
                         var req_id = $(this).attr('value');
                         var cus_status = '16';
                         $.ajax({
@@ -478,17 +491,28 @@ function OnLoadFunctions(req_id,cus_id){
                             type: 'post',
                             cache: false,
                             success:function(response){
-                                Swal.fire({
-                                    timerProgressBar: true,
-                                    timer: 3000,
-                                    title: 'Moved To Legal!',
-                                    icon: 'succes',
-                                    showConfirmButton: true,
-                                    confirmButtonColor: '#009688'
-                                });
-                                setTimeout(function(){
-                                    window.location= 'edit_collection';
-                                },2000)
+                                if(response.includes('Success')){
+                                    Swal.fire({
+                                        timerProgressBar: true,
+                                        timer: 2000,
+                                        title: 'Moved To Legal!',
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        // confirmButtonColor: '#009688'
+                                    });
+                                    setTimeout(function(){
+                                        window.location= 'collection&upd='+getidupd+'&cusidupd='+getcusidupd;
+                                    },2000)
+                                }else{
+                                    Swal.fire({
+                                        timerProgressBar: true,
+                                        timer: 2000,
+                                        title: 'Error While Moving!',
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        // confirmButtonColor: '#009688'
+                                    });
+                                }
                             }
                         })
                     }else{
@@ -498,6 +522,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('.return-sub').click(function(){
                     if(confirm("Are you Sure To move this Loan to Sub Status?")){
                         
+                        let getidupd = $('#idupd').val();let getcusidupd = $('#cusidupd').val();
                         var req_id = $(this).attr('value');
                         var cus_status = '14';
                         $.ajax({
@@ -507,17 +532,28 @@ function OnLoadFunctions(req_id,cus_id){
                             type: 'post',
                             cache: false,
                             success:function(response){
-                                Swal.fire({
-                                    timerProgressBar: true,
-                                    timer: 3000,
-                                    title: 'Moved To Sub Status!',
-                                    icon: 'succes',
-                                    showConfirmButton: true,
-                                    confirmButtonColor: '#009688'
-                                });
-                                setTimeout(function(){
-                                    window.location= 'edit_collection';
-                                },2000)
+                                if(response.includes('Success')){
+                                    Swal.fire({
+                                        timerProgressBar: true,
+                                        timer: 2000,
+                                        title: 'Moved To Sub Status!',
+                                        icon: 'success',
+                                        showConfirmButton: false,
+                                        // confirmButtonColor: '#009688'
+                                    });
+                                    setTimeout(function(){
+                                        window.location= 'collection&upd='+getidupd+'&cusidupd='+getcusidupd;
+                                    },2000)
+                                }else{
+                                    Swal.fire({
+                                        timerProgressBar: true,
+                                        timer: 2000,
+                                        title: 'Error While Moving!',
+                                        icon: 'error',
+                                        showConfirmButton: false,
+                                        // confirmButtonColor: '#009688'
+                                    });
+                                }
                             }
                         })
                     }else{
@@ -527,6 +563,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('.move-closed').click(function(){
                     if(confirm("Are you Sure To move this Loan to Closed?")){
                         
+                        let getidupd = $('#idupd').val();let getcusidupd = $('#cusidupd').val();
                         var req_id = $(this).attr('value');
                         var cus_status = '20';
                         $.ajax({
@@ -538,14 +575,14 @@ function OnLoadFunctions(req_id,cus_id){
                             success:function(response){
                                 Swal.fire({
                                     timerProgressBar: true,
-                                    timer: 3000,
+                                    timer: 2000,
                                     title: 'Moved To Closed!',
                                     icon: 'succes',
-                                    showConfirmButton: true,
-                                    confirmButtonColor: '#009688'
+                                    showConfirmButton: false,
+                                    // confirmButtonColor: '#009688'
                                 });
                                 setTimeout(function(){
-                                    window.location= 'edit_collection';
+                                    window.location= 'collection&upd='+getidupd+'&cusidupd='+getcusidupd;
                                 },2000)
                             }
                         })
