@@ -30,8 +30,8 @@ function moneyFormatIndia($num){
 <table class="table custom-table" id='dueChartListTable'>
     <thead>
         <tr>
-            <th width="15"> S.No </th>
-            <th width="50"> Due Month </th>
+            <th width="15"> Due No </th>
+            <th width="8%"> Due Month </th>
             <th> Month </th>
             <th> Due Amount </th>
             <th> Pending </th>
@@ -41,7 +41,7 @@ function moneyFormatIndia($num){
             <th> Balance Amount </th>
             <th> Pre Closure </th>
             <th> Role </th>
-            <th> User ID </th>
+            <th width="8%"> User ID </th>
             <th> Collection Location </th>
             <th> ACTION </th>
         </tr>
@@ -120,7 +120,7 @@ function moneyFormatIndia($num){
 
         }else{
             // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
-            $issueDate = $connect->query("SELECT alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and (ii.cus_status = 14 or ii.cus_status = 17) order by alc.loan_cal_id desc limit 1 ");
+            $issueDate = $connect->query("SELECT alc.due_amt_cal,alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and (ii.cus_status = 14 or ii.cus_status = 17) order by alc.loan_cal_id desc limit 1 ");
         }
         $loanIssue = $issueDate->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
@@ -131,7 +131,7 @@ function moneyFormatIndia($num){
             $loan_amt = intVal($loanIssue['tot_amt_cal']);
         }
 
-        // $loan_amt = $loanIssue['loan_amt'];
+        $due_amt_1 = $loanIssue['due_amt_cal'];
         $issue_date = $loanIssue['updated_date'];
         ?>
         <tr>
@@ -145,7 +145,7 @@ function moneyFormatIndia($num){
                     echo date('d-m-Y', strtotime($issue_date));
                 } ?></td>
             <td><?php echo date('M', strtotime($issue_date)); ?></td>
-            <td> </td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
@@ -205,6 +205,7 @@ function moneyFormatIndia($num){
             ) ");
         }
 
+        //For showing data before due start date
         if ($run->rowCount() > 0) {
             $due_amt_track = 0;
             $waiver = 0;
@@ -228,10 +229,10 @@ function moneyFormatIndia($num){
                         ?></td>
                     <td><?php echo date('M', strtotime($row['coll_date'])); ?></td>
                     <td><?php echo $row['due_amt']; ?></td>
-                    <td><?php $pendingMinusCollection = ( intVal($row['pending_amt']) - $collectionAmnt );
-                        if($pendingMinusCollection > 0 ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
-                    <td><?php $payableMinusCollection = ( intVal($row['payable_amt']) - $collectionAmnt );
-                        if($payableMinusCollection > 0){ echo $payableMinusCollection;}else{echo 0;} ?></td>
+                    <td><?php $pendingMinusCollection = ( intVal($row['pending_amt']));
+                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}//else{echo 0;} ?></td>
+                    <td><?php $payableMinusCollection = ( intVal($row['payable_amt']));
+                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}//else{echo 0;} ?></td>
                     <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
                     <td><?php if ($row['due_amt_track'] > 0) {
                             echo $row['due_amt_track'];
@@ -267,9 +268,11 @@ function moneyFormatIndia($num){
             } 
         }
 
+        //For showing collection after due date
         $due_amt_track = 0;
         $waiver = 0;
         $bal_amt = 0;
+        $lastCusdueMonth = '1970-00-00';
         foreach ($dueMonth as $cusDueMonth) {
             if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
                 //Query for Monthly.
@@ -293,22 +296,31 @@ function moneyFormatIndia($num){
 
         ?>
                     <tr>
-                        <td><?php echo $i; ?></td>
-                        <td><?php
-                            if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
-                                //For Monthly.
-                                echo date('m-Y', strtotime($cusDueMonth));
-                            } else {
-                                //For Weekly && Day.
-                                echo date('d-m-Y', strtotime($cusDueMonth));
-                            }
-                            ?></td>
-                        <td><?php echo date('M', strtotime($cusDueMonth)); ?></td>
-                        <td><?php echo $row['due_amt']; ?></td>
-                        <td><?php $pendingMinusCollection = ( intVal($row['pending_amt']) - $due_amt_track );
-                        if($pendingMinusCollection > 0 ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
-                        <td><?php $payableMinusCollection = ( intVal($row['payable_amt']) - $due_amt_track );
-                        if($payableMinusCollection > 0){ echo $payableMinusCollection;}else{echo 0;} ?></td>
+                        <?php // this condition is to check whether the same month has collection again. if yes the no need to show month name and due amount and serial number
+                        if( date('m',strtotime($lastCusdueMonth)) != date('m',strtotime($row['coll_date'])) ) { ?>
+                            <td><?php echo $i; $i++;?></td>
+                            <td><?php
+                                if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                                    //For Monthly.
+                                    echo date('m-Y', strtotime($cusDueMonth));
+                                } else {
+                                    //For Weekly && Day.
+                                    echo date('d-m-Y', strtotime($cusDueMonth));
+                                }
+                                ?></td>
+                            <td><?php echo date('M', strtotime($cusDueMonth)); ?></td>
+                            <td><?php echo $row['due_amt']; ?></td>
+                        <?php }else{?>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        <?php } ?>
+                        
+                        <td><?php $pendingMinusCollection = ( intVal($row['pending_amt'])  );
+                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}//else{echo 0;} ?></td>
+                        <td><?php $payableMinusCollection = ( intVal($row['payable_amt']));
+                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}//else{echo 0;} ?></td>
                         <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
                         <td><?php if ($row['due_amt_track'] > 0) {
                                 echo $row['due_amt_track'];
@@ -340,7 +352,7 @@ function moneyFormatIndia($num){
                         <td> <a class='print_due_coll' id="" value="<?php echo $row['coll_code']; ?>"> <i class="fa fa-print" aria-hidden="true"></i> </a> </td>
                     </tr>
 
-                <?php $i++;
+                <?php $lastCusdueMonth = date('d-m-Y', strtotime($cusDueMonth));//assign this cusDueMonth to check if coll date is already showed before
                 }
             } else {
                 ?>
@@ -355,7 +367,7 @@ function moneyFormatIndia($num){
                             echo date('d-m-Y', strtotime($cusDueMonth));
                         } ?></td>
                     <td><?php echo date('M', strtotime($cusDueMonth)); ?></td>
-                    <td> </td>
+                    <td><?php echo $due_amt_1;?></td>
                     <td></td>
                     <td></td>
                     <td></td>
@@ -371,6 +383,7 @@ function moneyFormatIndia($num){
         <?php
                 $i++;
             }
+            
         } 
         
         $currentMonth = date('Y-m-d');
@@ -435,10 +448,10 @@ function moneyFormatIndia($num){
                         ?></td>
                     <td><?php echo date('M', strtotime($issue_date)); ?></td>
                     <td><?php echo $row['due_amt']; ?></td>
-                    <td><?php $pendingMinusCollection = ( intVal($row['pending_amt']) - $collectionAmnt );
-                        if($pendingMinusCollection > 0 ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
-                        <td><?php $payableMinusCollection = ( intVal($row['payable_amt']) - $collectionAmnt );
-                        if($payableMinusCollection > 0){ echo $payableMinusCollection;}else{echo 0;} ?></td>
+                    <td><?php $pendingMinusCollection = ( intVal($row['pending_amt'])  );
+                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
+                        <td><?php $payableMinusCollection = ( intVal($row['payable_amt'])  );
+                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}else{echo 0;} ?></td>
                     <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
                     <td><?php if ($row['due_amt_track'] > 0) {
                             echo $row['due_amt_track'];

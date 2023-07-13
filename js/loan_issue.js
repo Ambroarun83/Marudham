@@ -557,7 +557,7 @@ function cashAckName() {
     $.ajax({
         url: 'loanIssueFile/famnameForloanIssue.php',
         type: 'post',
-        data: { "reqId": req_id },
+        data: { "reqId": req_id, "cus_id":cus_id },
         dataType: 'json',
         success: function (response) {
 

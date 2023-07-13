@@ -3552,7 +3552,7 @@ function updateUser($mysqli,$id,$user_id){
 				$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			}
 
-			$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_info_occ_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($state)."',`area_confirm_district`='".strip_tags($district)."',`area_confirm_taluk`='".strip_tags($taluk)."',`area_confirm_area`='".strip_tags($area)."',`area_confirm_subarea`='".strip_tags($sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
+			$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_info_occ_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($state)."',`area_confirm_district`='".strip_tags($district)."',`area_confirm_taluk`='".strip_tags($taluk)."',`area_confirm_area`='".strip_tags($area)."',`area_confirm_subarea`='".strip_tags($sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
             $insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
 
         }
@@ -4707,22 +4707,22 @@ function updateUser($mysqli,$id,$user_id){
 					}
 				}
 				$due_method_scheme='';
-				if(isset($_POST['due_method_scheme'])){
-					$due_method_scheme = $_POST['due_method_scheme'];
+				if(isset($_POST['due_method_scheme_ack'])){
+					$due_method_scheme = $_POST['due_method_scheme_ack'];
 					if($profit_type=='1'){
 						$due_method_scheme='';
 					}
 				}
 				$day_scheme='';
-				if(isset($_POST['day_scheme'])){
-					$day_scheme = $_POST['day_scheme'];
+				if(isset($_POST['day_scheme_ack'])){
+					$day_scheme = $_POST['day_scheme_ack'];
 					if($profit_type=='1'){
 						$day_scheme='';
 					}
 				}
 				$scheme_name='';
-				if(isset($_POST['scheme_name'])){
-					$scheme_name = $_POST['scheme_name'];
+				if(isset($_POST['scheme_name_ack'])){
+					$scheme_name = $_POST['scheme_name_ack'];
 					if($profit_type=='1'){
 						$scheme_name='';
 					}
@@ -5643,6 +5643,8 @@ function updateUser($mysqli,$id,$user_id){
 					$detailrecords['monthly_due_capacity'] = $row['monthly_due_capacity'];
 					$detailrecords['loan_limit'] = $row['loan_limit'];
 					$detailrecords['about_customer'] = $row['about_customer'];
+					$detailrecords['dow'] = $row['dow'];
+					$detailrecords['abt_occ'] = $row['abt_occ'];
 					// $detailrecords['cus_type'] = $row['cus_type'];
 					// $detailrecords['cus_exist_type'] = $row['cus_exist_type'];
 					$detailrecords['residential_type'] = $row['residential_type'];

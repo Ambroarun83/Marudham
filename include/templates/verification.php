@@ -179,6 +179,8 @@ if (sizeof($getCustomerReg) > 0) {
 		$occupation_details 		= $getCustomerReg['occupation_details'];
 		$occupation_income 			= $getCustomerReg['occupation_income'];
 		$occupation_address 		= $getCustomerReg['occupation_address'];
+		$dow 		= $getCustomerReg['dow'];
+		$abt_occ 		= $getCustomerReg['abt_occ'];
 		$area_confirm_type 			= $getCustomerReg['area_confirm_type'];
 		$area_confirm_state 		= $getCustomerReg['area_confirm_state'];
 		$area_confirm_district 		= $getCustomerReg['area_confirm_district'];

@@ -1055,10 +1055,14 @@ $(function () {
 
 function getImage() { // Cus img show onload.
     let imgName = $('#cus_image').val();
-    $('#imgshow').attr('src', "uploads/request/customer/" + imgName + " ");
+    if(imgName != ''){
+        $('#imgshow').attr('src', "uploads/request/customer/" + imgName + " ");
+    }
 
     var  guarentorimg = $('#guarentor_image').val();
-    $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
+    if(guarentorimg != ''){
+        $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
+    }
 }
 
 function getCustomerLoanCounts(){
@@ -3363,11 +3367,12 @@ function signTypeRelation() {
 }
 
 function getGuarentorName(){
+    let req_id = $('#req_id').val();
     let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/getGuarentorName.php',
         type: 'post',
-        data: { "cus_id": cus_id },
+        data: { "req_id": req_id, "cus_id":cus_id},
         cache: false,
         success: function (response) {
             $('#guar_name_div').show();

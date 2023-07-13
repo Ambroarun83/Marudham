@@ -45,7 +45,7 @@ function moneyFormatIndia($num)
         <?php
         $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
-        $run = $connect->query("SELECT * FROM `penalty_charges` WHERE `req_id`= '$req_id' order BY created_date desc");
+        $run = $connect->query("SELECT * FROM `penalty_charges` WHERE `req_id`= '$req_id' ");
 
         $i = 1;
         $penalt = 0;
