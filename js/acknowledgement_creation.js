@@ -861,10 +861,14 @@ $(function () {
 
 function getImage() { // Cus img show onload.
     let imgName = $('#cus_image').val();
-    $('#imgshow').attr('src', "uploads/request/customer/" + imgName + " ");
+    if(imgName != ''){
+        $('#imgshow').attr('src', "uploads/request/customer/" + imgName + " ");
+    }
 
     var guarentorimg = $('#guarentor_image').val();
-    $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
+    if(guarentorimg != ''){
+        $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
+    }
 }
 
 function getCustomerLoanCounts(){
@@ -1083,11 +1087,13 @@ function resetbankinfoList() {
 ////////////////////////// KYC Info ////////////////////////////////////////////////
 function resetkycinfoList() {
     let cus_id = $('#cus_id').val();
+    let req_id = $('#req_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "cus_id": cus_id },
+        data: { "req_id": req_id },
+        // data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#kycListTable").empty();
@@ -1610,11 +1616,12 @@ function signTypeRelation() {
 }
 
 function getGuarentorName(){
+    let req_id = $('#req_id').val();
     let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/getGuarentorName.php',
         type: 'post',
-        data: { "cus_id": cus_id },
+        data: { "req_id": req_id,"cus_id": cus_id },
         cache: false,
         success: function (response) {
             $('#guar_name_div').show();
@@ -2968,6 +2975,7 @@ function schemeAjax(due_method, sub_cat) {
                 var selected = '';
                 if (scheme_upd != '' && scheme_upd != undefined && scheme_upd == response[i]['scheme_id']) {
                     selected = 'selected';
+                    $('#scheme_name_ack').val(response[i]['scheme_id']);
                 }
                 $('#scheme_name').append(`<option value='` + response[i]['scheme_id'] + `' ` + selected + `>` + response[i]['scheme_name'] + `</option>`);
             }
@@ -3482,6 +3490,7 @@ function loan_calc_validation() {
         event.preventDefault();
     } else {
         $('#scheme_nameCheck').hide();
+        // $('#scheme_name_ack').val(scheme_name);
     }
 
     if (int_rate == '') {

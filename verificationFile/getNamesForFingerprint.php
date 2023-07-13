@@ -35,7 +35,7 @@ $cus_id = $_POST['cus_id'];
 
         <?php
         
-        $qry = $connect->query("SELECT * FROM `verification_family_info` WHERE `req_id`='$req_id' ");
+        $qry = $connect->query("SELECT * FROM `verification_family_info` WHERE `cus_id`='$cus_id' ");
 
         $i = 2;
         while ($row = $qry->fetch()) {

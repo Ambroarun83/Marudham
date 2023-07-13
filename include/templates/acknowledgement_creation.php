@@ -2215,6 +2215,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 scheme" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Due Method</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="due_method_scheme_ack" name="due_method_scheme_ack" value="<?php echo $due_method_scheme_lc;?>" >
 												<select tabindex="24" type="text" class="form-control" id="due_method_scheme" name="due_method_scheme" >
 													<option value="">Select Due Method</option> 
 													<option value="1" <?php if(isset($due_method_scheme_lc) and $due_method_scheme_lc == '1') echo 'selected';?>>Monthly</option> 
@@ -2227,6 +2228,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 day_scheme" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Day</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="day_scheme_ack" name="day_scheme_ack" value="<?php echo $day_scheme_lc;?>" >
 												<select tabindex="25" type="text" class="form-control" id="day_scheme" name="day_scheme" >
 													<option value="">Select a Day</option> 
 													<option value="1"<?php if(isset($day_scheme_lc) and $day_scheme_lc == '1') echo 'selected';?>>Monday</option> 
@@ -2243,6 +2245,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 scheme" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Scheme Name</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="scheme_name_ack" name="scheme_name_ack" value="<?php echo $scheme_name_lc;?>" >
 												<select tabindex="26" type="text" class="form-control" id="scheme_name" name="scheme_name" >
 													<option value="">Select Scheme Name</option> 
 												</select>
