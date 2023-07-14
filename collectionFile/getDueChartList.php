@@ -57,11 +57,18 @@ function moneyFormatIndia($num){
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
         $due_start_from = $loanFrom['due_start_from'];
         $maturity_month = $loanFrom['maturity_month'];
-
-
+        
 
         if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
             //If Due method is Monthly, Calculate penalty by checking the month has ended or not
+
+            // Create a DateTime object from the given date
+            $maturity_month = new DateTime($maturity_month);
+            // Subtract one month from the date
+            $maturity_month->modify('-1 month');
+            // Format the date as a string
+            $maturity_month = $maturity_month->format('Y-m-d');
+
             $due_start_from = date('Y-m-d', strtotime($due_start_from));
             $maturity_month = date('Y-m-d', strtotime($maturity_month));
             $current_date = date('Y-m-d');
@@ -116,7 +123,7 @@ function moneyFormatIndia($num){
         }
         if($closed == 'true'){
             // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by li.id desc limit 1 ");
-            $issueDate = $connect->query("SELECT alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by alc.loan_cal_id desc limit 1 ");
+            $issueDate = $connect->query("SELECT alc.due_amt_cal,alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by alc.loan_cal_id desc limit 1 ");
 
         }else{
             // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
@@ -431,12 +438,12 @@ function moneyFormatIndia($num){
             while ($row = $run->fetch()) {
                 $role = $row['role'];
                 $collectionAmnt = intVal($row['due_amt_track']);
-                $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
-                $waiver = $waiver + intVal($row['pre_close_waiver']);
-                $bal_amt = $loan_amt - $due_amt_track - $waiver;
+                $due_amt_track = intVal($row['due_amt_track']);
+                $waiver = intVal($row['pre_close_waiver']);
+                $bal_amt = $bal_amt - $due_amt_track - $waiver;
                 ?>
                 <tr>
-                    <td> <?php echo $i;?></td>
+                    <!-- <td> <?php echo $i;?></td>
                     <td><?php
                         if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
                             //For Monthly.
@@ -447,11 +454,15 @@ function moneyFormatIndia($num){
                         }
                         ?></td>
                     <td><?php echo date('M', strtotime($issue_date)); ?></td>
-                    <td><?php echo $row['due_amt']; ?></td>
+                    <td><?php echo $row['due_amt']; ?></td> -->
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td><?php $pendingMinusCollection = ( intVal($row['pending_amt'])  );
-                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
+                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}//else{echo 0;} ?></td>
                         <td><?php $payableMinusCollection = ( intVal($row['payable_amt'])  );
-                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}else{echo 0;} ?></td>
+                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}//else{echo 0;} ?></td>
                     <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
                     <td><?php if ($row['due_amt_track'] > 0) {
                             echo $row['due_amt_track'];

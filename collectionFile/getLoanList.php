@@ -84,6 +84,8 @@ function moneyFormatIndia($num) {
 
         $i = 1;
         while ($row = $run->fetch()) {
+            // if($bal_amt[$i-1] != '0'){
+
         ?>
             <tr>
                 <td><?php echo $row['loan_id']; ?></td>
@@ -110,7 +112,7 @@ function moneyFormatIndia($num) {
                             }else{
                                 echo 'Pending';
                             }
-                        }else if($od_sts[$i-1] == 'true'){
+                        }else if($od_sts[$i-1] == 'true' && $due_nil_sts[$i-1] =='false'){
                             if($row['cus_status'] == '15'){
                                 echo 'Error';
                             }elseif($row['cus_status']== '16'){

@@ -197,9 +197,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
 
         //To check whether due has been nil with other charges
             
-        $qry = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(pc.penalty) as penalty, SUM(pc.paid_amnt) as paid_amntpc,SUM(pc.waiver_amnt) as waiver_amntpc,
-        SUM(cc.coll_charge) as coll_charge,SUM(cc.paid_amnt) as paid_amntcc,SUM(cc.waiver_amnt) as waiver_amntcc FROM collection c JOIN penalty_charges pc ON c.req_id = pc.req_id 
-        JOIN collection_charges cc ON c.req_id=cc.req_id where c.req_id =  $req_id");
+        $qry = $con->query("SELECT c.due_amt_track,pc.penalty,pc.paid_amnt AS paid_amntpc,pc.waiver_amnt AS waiver_amntpc,cc.coll_charge,cc.paid_amnt AS paid_amntcc,cc.waiver_amnt AS waiver_amntcc FROM ( SELECT req_id, SUM(due_amt_track) AS due_amt_track FROM collection WHERE req_id = '$req_id' ) c LEFT JOIN ( SELECT req_id, SUM(penalty) AS penalty, SUM(paid_amnt) AS paid_amnt, SUM(waiver_amnt) AS waiver_amnt FROM penalty_charges WHERE req_id = '$req_id' GROUP BY req_id ) pc ON c.req_id = pc.req_id LEFT JOIN ( SELECT req_id, SUM(coll_charge) AS coll_charge, SUM(paid_amnt) AS paid_amnt, SUM(waiver_amnt) AS waiver_amnt FROM collection_charges WHERE req_id = '$req_id' GROUP BY req_id ) cc ON c.req_id = cc.req_id ");
         $row = $qry->fetch_assoc();
         
         $due_amt_track = $row['due_amt_track'];

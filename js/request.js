@@ -36,6 +36,7 @@ $(document).ready(function () {
 
     $('#agent').change(function(){
         var agent_id = $('#agent').val();
+        $('#loan_category, #sub_category').val('');
         getAgentBasedLoanCategory(agent_id);
     })
 
@@ -721,9 +722,10 @@ function getSubCategory(loan_cat){
 
 //Fetch loan Details based on category select
 function getLoaninfo(sub_cat_id){
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url:'requestFile/getLoanInfo.php',
-        data: {'sub_cat_id':sub_cat_id},
+        data: {'sub_cat_id':sub_cat_id,"cus_id":cus_id},
         dataType:'json',
         type:'post',
         cache:false,
@@ -771,6 +773,17 @@ function getLoaninfo(sub_cat_id){
                 $('.loan_amt').show();
                 $('#loan_amt').val('');
                 $('#loan_amt').removeAttr('readonly');
+                
+                $('#loan_amt').unbind('blur').blur(function(){// to check loan amount not exceed loan limit
+                    let loan_amt = $(this).val();
+                    if(parseInt(loan_amt) <= parseInt(response['loan_limit'])){
+                        $('#loan_amt').val(loan_amt.toFixed(0));
+                    }else{
+                        alert('Please Enter Lesser amount!');
+                        $('#loan_amt').val('');
+                    }
+                })
+
             }else{
                 $('.advance_yes').hide();
                 $('#tot_value').val('');

@@ -311,6 +311,7 @@ function getCustomerSummary(){console.log('asdasdf')
             success: function (html) {
                 $("#OldFeedbackTable").empty();
                 $("#OldFeedbackTable").html(html);
+                $('#feedback_table').DataTable().destroy();
             }
         })
     });
