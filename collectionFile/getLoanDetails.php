@@ -118,6 +118,13 @@ function calculateOthers($loan_arr,$response,$con){
         $due_start_from = date('Y-m',strtotime($due_start_from));
         $maturity_month = date('Y-m',strtotime($maturity_month));
 
+        // Create a DateTime object from the given date
+        $maturity_month = new DateTime($maturity_month);
+        // Subtract one month from the date
+        $maturity_month->modify('-1 month');
+        // Format the date as a string
+        $maturity_month = $maturity_month->format('Y-m');
+
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
         $current_date = date('Y-m');
         
@@ -141,7 +148,7 @@ function calculateOthers($loan_arr,$response,$con){
                 $loandate_tillnow += 1;
                 $toPaytilldate = intval($loandate_tillnow) * intval($dueCharge);
             }
-
+            
             while($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj){ // To find loan date count till now from start date.
                 $penalty_checking_date  = $start_date_obj->format('Y-m-d'); // This format is for query.. month , year function accept only if (Y-m-d).
                 $penalty_date  = $start_date_obj->format('Y-m');
@@ -183,6 +190,7 @@ function calculateOthers($loan_arr,$response,$con){
             $row = $result->fetch_assoc();
             $penalty_per = number_format($row['overdue'] * $countForPenalty); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
 
+            // to get overall penalty paid till now to show pending penalty amount
             $result=$con->query("SELECT SUM(penalty_track) as penalty,SUM(penalty_waiver) as penalty_waiver FROM `collection` WHERE req_id = '".$req_id."' ");
             $row = $result->fetch_assoc();
             if($row['penalty'] == null){
@@ -191,7 +199,16 @@ function calculateOthers($loan_arr,$response,$con){
             if($row['penalty_waiver'] == null){
                 $row['penalty_waiver'] = 0;
             }
-            $penalty = intval((($response['due_amt'] * $penalty_per) / 100));
+            //to get overall penalty raised till now for this req id
+            $result1=$con->query("SELECT SUM(penalty) as penalty FROM `penalty_charges` WHERE req_id = '".$req_id."' ");
+            $row1 = $result1->fetch_assoc();
+            if($row1['penalty'] == null){
+                $penalty = 0;
+            }else{
+                $penalty = $row1['penalty'];
+            }
+
+            // $penalty = intval((($response['due_amt'] * $penalty_per) / 100));
             // echo $penalty;
             $response['penalty'] = $penalty - $row['penalty'] - $row['penalty_waiver'];
 
@@ -258,7 +275,7 @@ function calculateOthers($loan_arr,$response,$con){
                         $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
                     }
                     $countForPenalty++;
-                 } 
+                } 
             }
            //condition END
 
@@ -276,6 +293,7 @@ function calculateOthers($loan_arr,$response,$con){
             $row = $result->fetch_assoc();
             $penalty_per = number_format($row['overdue'] * $countForPenalty); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
 
+            // to get overall penalty paid till now to show pending penalty amount
             $result=$con->query("SELECT SUM(penalty_track) as penalty,SUM(penalty_waiver) as penalty_waiver FROM `collection` WHERE req_id = '".$req_id."' ");
             $row = $result->fetch_assoc();
             if($row['penalty'] == null){
@@ -284,7 +302,16 @@ function calculateOthers($loan_arr,$response,$con){
             if($row['penalty_waiver'] == null){
                 $row['penalty_waiver'] = 0;
             }
-            $penalty = intval((($response['due_amt'] * $penalty_per) / 100));
+            //to get overall penalty raised till now for this req id
+            $result1=$con->query("SELECT SUM(penalty) as penalty FROM `penalty_charges` WHERE req_id = '".$req_id."' ");
+            $row1 = $result1->fetch_assoc();
+            if($row1['penalty'] == null){
+                $penalty = 0;
+            }else{
+                $penalty = $row1['penalty'];
+            }
+
+            // $penalty = intval((($response['due_amt'] * $penalty_per) / 100));
 
             $response['penalty'] = $penalty - $row['penalty'] - $row['penalty_waiver'];
 
@@ -366,6 +393,7 @@ function calculateOthers($loan_arr,$response,$con){
             $row = $result->fetch_assoc();
             $penalty_per = number_format($row['overdue'] * $countForPenalty); //Count represents how many months are exceeded//Number format if percentage exeeded decimals then pernalty may increase
             
+            // to get overall penalty paid till now to show pending penalty amount
             $result=$con->query("SELECT SUM(penalty_track) as penalty,SUM(penalty_waiver) as penalty_waiver FROM `collection` WHERE req_id = '".$req_id."' ");
             $row = $result->fetch_assoc();
             if($row['penalty'] == null){
@@ -374,7 +402,16 @@ function calculateOthers($loan_arr,$response,$con){
             if($row['penalty_waiver'] == null){
                 $row['penalty_waiver'] = 0;
             }
-            $penalty = intval((($response['due_amt'] * $penalty_per) / 100));
+            //to get overall penalty raised till now for this req id
+            $result1=$con->query("SELECT SUM(penalty) as penalty FROM `penalty_charges` WHERE req_id = '".$req_id."' ");
+            $row1 = $result1->fetch_assoc();
+            if($row1['penalty'] == null){
+                $penalty = 0;
+            }else{
+                $penalty = $row1['penalty'];
+            }
+
+            // $penalty = intval((($response['due_amt'] * $penalty_per) / 100));
             
             $response['penalty'] = $penalty - $row['penalty'] - $row['penalty_waiver'];
 

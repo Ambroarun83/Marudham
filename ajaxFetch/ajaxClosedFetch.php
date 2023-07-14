@@ -146,8 +146,9 @@ foreach ($result as $row) {
     $closed_sts_count = $mysqli->query("SELECT * FROM `closed_status` WHERE `cus_sts` ='20' && `cus_id`='".$ii_cus_id."'");
     $close_cnt = mysqli_num_rows($closed_sts_count);
 
-    if($ii_cnt == $close_cnt){
-        $action="<button class='btn btn-outline-secondary Move_to_noc' value='$ii_cus_id'><span class = 'icon-arrow_forward'></span></button>";
+    // if($ii_cnt == $close_cnt){// if all request present in closed loan list are closed, then only it will allow to move that customer to closed
+    if($close_cnt > 0){ //if any one of the request got closed then that can be moved to noc straight
+        $action="<button class='btn btn-outline-secondary Move_to_noc' data-value='$ii_cus_id' data-id='$id'><span class = 'icon-arrow_forward'></span></button>";
     }else{
         $action="<a href='closed&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>Close </button></a>";
     }
