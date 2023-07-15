@@ -106,7 +106,10 @@ $(document).ready(function(){
     }
 
     $('#submit_noc').click(function(){
-        validations();
+        if(validations() == true){
+            event.preventDefault();
+            updateCheckedDetails();
+        }
     })
 
 })//Document Ready End
@@ -169,16 +172,61 @@ function OnLoadFunctions(req_id,cus_id){
                     $('.sign_check').click(function(){
                         if(this.checked){
                             sign_check.push($(this).attr('data-value'));
+                            
+                            // put current date in date of noc when checked
+                            let d = new Date();
+                            let currDate = d.getDate() +  "-" + (d.getMonth()+1) + "-" + d.getFullYear();
+                            $(this).parent().prev().prev().prev().children().text(currDate);
+                            
+                            //show person type choosing dropdown
+                            $(this).parent().prev().prev().children().show();
+
                         }else{
                             let indexToRemove = sign_check.indexOf($(this).attr('data-value'));
                             if (indexToRemove !== -1) {
                                 sign_check.splice(indexToRemove, 1);
                             }
+                            //remove date in span element
+                            $(this).parent().prev().prev().prev().children().text('');
+                            //hide person type choosing dropdown
+                            $(this).parent().prev().prev().children().hide();
+                            $(this).parent().prev().prev().children().val(''); // empty type dropdown
+                            //empty name td
+                            $(this).parent().prev().empty();
                         }
+
                         sign_check.sort(function(a, b) {
                             return a - b;
                         });
+                        //store checked data
                         $('#sign_checklist').val(sign_check.join(','));
+                    })
+                    $('.sign_noc_per').change(function(){
+                        let sign_noc_per = $(this).val();let noc_name = $(this).parent().next();
+                        if(sign_noc_per != ''){
+                            if(sign_noc_per == 1){
+                                noc_name.html(`<input type='text' class='form-control' value='`+cus_name+`' readonly>`)
+                                // noc_name.html(`<input type='hidden' class='sign_noc_name' value='`+cus_id+`'><input type='text' class='form-control' value='`+cus_name+`' readonly>`)
+                            }else if(sign_noc_per == 2){
+                                $.ajax({
+                                    url: 'nocFile/getFamDetails.php',
+                                    data: {'cus_id':cus_id,'req_id':req_id},
+                                    type: 'post',
+                                    dataType: 'json',
+                                    cache: false,
+                                    success: function(response){
+                                        let element = `<select id='sign_noc_name' name='sign_noc_name' class="form-control sign_noc_name"><option value=''>Select Type</option>`;
+                                        $.each(response,function(index,value){
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                        })
+                                        element += `</select>`;
+                                        noc_name.html(element);
+                                    }
+                                })
+                            }
+                        }else{
+                            noc_name.empty();// empty td of name
+                        }
                     })
                 })
 
@@ -435,6 +483,7 @@ function OnLoadFunctions(req_id,cus_id){
 
 
 function validations(){
+    var res = true;
     var noc_member = $('#noc_member').val(); var mem_relation_name = $('#mem_relation_name').val(); var fingerprint = $('.scanBtn').attr('disabled');
     var sign_checklist = $('#sign_checklist').val(); var cheque_checklist = $('#cheque_checklist').val(); var gold_checklist = $('#gold_checklist').val();
     var mort_checklist = $('#mort_checklist').val(); var endorse_checklist = $('#endorse_checklist').val(); var doc_checklist = $('#doc_checklist').val();
@@ -451,6 +500,7 @@ function validations(){
     if(noc_member == ''){
         $('.noc_memberCheck').show()
         event.preventDefault();
+        res = false;
     }else{
         $('.noc_memberCheck').hide()
     }
@@ -458,6 +508,7 @@ function validations(){
     if(noc_member = '3' && mem_relation_name == ''){
         $('.mem_relation_nameCheck').show()
         event.preventDefault();
+        res = false;
     }else{
         $('.mem_relation_nameCheck').hide()
     }
@@ -465,6 +516,7 @@ function validations(){
     if(fingerprint != 'disabled'){
         $('.scanBtnCheck').show()
         event.preventDefault();
+        res = false;
     }else{
         $('.scanBtnCheck').hide()
     }
@@ -473,6 +525,7 @@ function validations(){
         if(sign_checkDisabled != true){
             $('.sign_checklistCheck').show()
             event.preventDefault();
+            res = false;
         }else{
             $('.sign_checklistCheck').hide()
         }
@@ -480,6 +533,7 @@ function validations(){
         if(cheque_checkDisabled != true){
             $('.cheque_checklistCheck').show()
             event.preventDefault();
+            res = false;
         }else{
             $('.cheque_checklistCheck').hide()
         }
@@ -487,6 +541,7 @@ function validations(){
         if(gold_checkDisabled != true){
             $('.gold_checklistCheck').show()
             event.preventDefault();
+            res = false;
         }else{
             $('.gold_checklistCheck').hide()
         }
@@ -494,6 +549,7 @@ function validations(){
         if(mort_checkDisabled != true){
             $('.mort_checklistCheck').show()
             event.preventDefault();
+            res = false;
         }else{
             $('.mort_checklistCheck').hide()
         }
@@ -501,6 +557,7 @@ function validations(){
         if(endorse_checkDisabled != true){
             $('.endorse_checklistCheck').show()
             event.preventDefault();
+            res = false;
         }else{
             $('.endorse_checklistCheck').hide()
         }
@@ -508,6 +565,7 @@ function validations(){
         if(doc_checkDisabled != true){
             $('.endorse_checklistCheck').show()
             event.preventDefault();
+            res = false;
         }else{
             $('.doc_checklistCheck').hide()
         }
@@ -515,5 +573,46 @@ function validations(){
     }else{
         
     }
+return res;
+}
+
+// function to update checked document's noc person and name and date to respective tables
+function updateCheckedDetails(){
+    var sign_check = [];
+    var i = 0;
+    
+    var sign_deffer = $.Deferred(); // Create a deferred object
+    
+    $('.sign_check').each(function() {
+        if (this.checked && !this.disabled ) {
+            var innerArray = [];
+            innerArray.push($(this).attr('data-value')); // sign_doc_id
+            innerArray.push($(this).parent().prev().prev().children().val()); // person type
+            innerArray.push($(this).parent().prev().children().val()); // person name
+            sign_check.push(innerArray);
+            i++;
+        }
+    });
+        
+    // Resolve the deferred object after the each loop is completed
+    sign_deffer.resolve();
+        
+    // Perform AJAX request when the deferred object is resolved
+    sign_deffer.done(function() {
+        $.ajax({
+            url: 'nocFile/updateSignDocNoc.php',
+            data: {'noc_details':sign_check,'table_name':'signed_doc'},
+            type: 'post',
+            cache: false,
+            success: function(response){
+                // Handle the AJAX response
+                if(response == "Success"){
+
+                }else{
+                    event.preventDefault();
+                }
+            }
+        });
+    });
 
 }

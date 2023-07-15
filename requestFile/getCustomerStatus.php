@@ -6,7 +6,7 @@ if(isset($_POST['cus_id'])){
 
 $records = array();
 
-$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and (cus_status <= 17 and cus_status != 10 and cus_status != 11 and cus_status != 12 and cus_status != 15) ORDER BY created_date DESC ");
+$result=$con->query("SELECT * FROM request_creation where cus_id = '".strip_tags($cus_id)."' and (cus_status <= 21 and cus_status != 10 and cus_status != 11) ORDER BY created_date DESC ");
 
 if($result->num_rows>0){
     $i=0;
@@ -15,6 +15,7 @@ if($result->num_rows>0){
         $records[$i]['dor'] = date('d-m-Y',strtotime($row['dor']));
         
         $loan_category = $row['loan_category'];
+        $req_id = $row['req_id'];
         $qry = $con->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
         $row1 = $qry->fetch_assoc();
         $records[$i]['loan_category'] = $row1['loan_category_creation_name'];
@@ -22,7 +23,7 @@ if($result->num_rows>0){
         $records[$i]['sub_category'] = $row['sub_category'];
         $records[$i]['loan_amt'] = $row['loan_amt'];
         $cus_status = $row['cus_status']; 
-        if($cus_status != '10' and $cus_status != '11' and $cus_status != '12'){
+        if($cus_status != '10' and $cus_status != '11'){
             if($cus_status == '0'){$records[$i]['status'] = 'Request'; $records[$i]['sub_status'] = 'Requested';}else
             if($cus_status == '1' or $cus_status == '12'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'In Verification';}else
             if($cus_status == '2'){$records[$i]['status'] = 'Approval';$records[$i]['sub_status'] = 'In Approval';}else
@@ -35,6 +36,15 @@ if($result->num_rows>0){
             if($cus_status == '9'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'Revoked';}
             if($cus_status == '13'){$records[$i]['status'] = 'Loan Issue';$records[$i]['sub_status'] = 'In Issue';}
             if($cus_status == '14' or $cus_status == '17'){$records[$i]['status'] = 'Collection';$records[$i]['sub_status'] = 'Collection';}
+            if($cus_status == '20'){$records[$i]['status'] = 'Closed';$records[$i]['sub_status'] = 'In Closed';}
+            if($cus_status == '21'){//21 means in NOC
+                // if moved from Closed, then sub status will be consider level of closed window
+                $records[$i]['status'] = 'Closed';
+                
+                $Qry = $con->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '".$req_id."' ");
+                $closed_status = ['','Consider','Waiting List', 'Block List'];// first one is empty because select value of consider sts is starting at 1
+                $records[$i]['sub_status'] = $closed_status[ $Qry->fetch_assoc()['closed_sts'] ];
+            }
         }
         
         $i++;

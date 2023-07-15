@@ -3911,6 +3911,60 @@ function docHistoryTable(){
     })
 }
 
+function getDocumentHistory(){
+    let cus_id = $('#cus_id_doc').val();let req_id = $('#req_id').val();
+    //To get loan sub Status
+    var pending_arr = [];
+    var od_arr = [];
+    var due_nil_arr = [];
+    var closed_arr = [];
+    var balAmnt = [];
+    $.ajax({
+        url: 'closedFile/resetCustomerStsForClosed.php',
+        data: {'cus_id':cus_id},
+        dataType:'json',
+        type:'post',
+        cache: false,
+        success: function(response){
+            
+            for(var i=0;i< response['pending_customer'].length;i++){
+                pending_arr[i] = response['pending_customer'][i]
+                od_arr[i] = response['od_customer'][i]
+                due_nil_arr[i] = response['due_nil_customer'][i]
+                closed_arr[i] = response['closed_customer'][i]
+                balAmnt[i] = response['balAmnt'][i]
+            }
+            var pending_sts = pending_arr.join(',');
+            $('#pending_sts').val(pending_sts);
+            var od_sts = od_arr.join(',');
+            $('#od_sts').val(od_sts);
+            var due_nil_sts = due_nil_arr.join(',');
+            $('#due_nil_sts').val(due_nil_sts);
+            var closed_sts = closed_arr.join(',');
+            $('#closed_sts').val(closed_sts);
+            balAmnt = balAmnt.join(',');
+            
+        }
+    }).then(function(){
+        var pending_sts = $('#pending_sts').val()
+        var od_sts = $('#od_sts').val()
+        var due_nil_sts = $('#due_nil_sts').val()
+        var closed_sts = $('#closed_sts').val()
+        var bal_amt = balAmnt;
+        $.ajax({
+            //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
+            url: 'verificationFile/documentation/getDocumentHistory.php',
+            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
+            type:'post',
+            cache: false,
+            success: function(response){
+                $('#docHistoryDiv').empty()
+                $('#docHistoryDiv').html(response);
+            }
+        })
+    })
+
+}
 
 //Documentation Submit Validation
 $('#submit_documentation').click(function () {
