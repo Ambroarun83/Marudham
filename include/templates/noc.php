@@ -244,7 +244,7 @@ if(sizeof($documentationInfo)>0){
 				<!-- Loan List End -->
 				<!-- NOC window -->
 				<div class="card noc-card" >
-					<div class="card-header">NOC Window</div>
+					<div class="card-header">NOC Summary</div>
 					<div class="card-body">
 						<!-- Signed Document start -->
 						<div class="row">
@@ -290,7 +290,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="MortgageProcess"> Mortgage Process</label>
-											<select type="text" class="form-control" id="mortgage_process" name="mortgage_process" readonly>
+											<select type="text" class="form-control" id="mortgage_process" name="mortgage_process" disabled>
 												<option value=""> Select Mortgage Process </option>
 												<option value="0" <?php if(isset($mortgage_process) and $mortgage_process == '0') echo 'selected'; ?>> YES </option>
 												<option value="1" <?php if(isset($mortgage_process) and $mortgage_process == '1') echo 'selected'; ?>> NO </option>
@@ -300,7 +300,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mort_proc">
 										<div class="form-group">
 											<label for="PropertyHoldertype "> Property Holder type </label>
-											<select type="text" class="form-control" id="Propertyholder_type" name="Propertyholder_type"readonly>
+											<select type="text" class="form-control" id="Propertyholder_type" name="Propertyholder_type" disabled>
 												<option value=""> Select Holder type </option>
 												<option value="0" <?php if(isset($Propertyholder_type) and $Propertyholder_type == '0') echo 'selected'; ?> > Customer </option>
 												<option value="1" <?php if(isset($Propertyholder_type) and $Propertyholder_type == '1') echo 'selected'; ?> > Guarantor </option>
@@ -313,7 +313,7 @@ if(sizeof($documentationInfo)>0){
                                         <div class="form-group">
                                             <label for="PropertyHolderName "> Property Holder Name </label>
                                             <input type="text" class="form-control" id="Propertyholder_name" name="Propertyholder_name"  value="<?php if(isset($Propertyholder_name)) echo $Propertyholder_name; ?>" readonly>
-                                            <select type="text" class="form-control" id="Propertyholder_relationship_name" name="Propertyholder_relationship_name" style="display: none;" readonly>
+                                            <select type="text" class="form-control" id="Propertyholder_relationship_name" name="Propertyholder_relationship_name" style="display: none;" disabled>
                                                 <option value=""> Select Relationship </option>
                                             </select>
                                         </div>
@@ -394,7 +394,7 @@ if(sizeof($documentationInfo)>0){
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mort_proc">
                                         <div class="form-group">
                                             <label for="MortgageDocument"> Mortgage Document </label> 
-                                            <select type="text" class="form-control" id="mortgage_document" name="mortgage_document" readonly>
+                                            <select type="text" class="form-control" id="mortgage_document" name="mortgage_document" disabled>
                                                 <option value=""> Select Mortgage Document </option>
                                                 <option value="0" <?php if(isset($mortgage_document) and $mortgage_document == '0') echo 'selected'; ?>> YES </option>
                                                 <option value="1" <?php if(isset($mortgage_document) and $mortgage_document == '1' or $mortgage_document == null) echo 'selected'; ?>> NO </option>
@@ -431,7 +431,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="EndorsementProcess"> Endorsement Process</label> 
-											<select type="text" class="form-control" id="endorsement_process" name="endorsement_process" readonly>
+											<select type="text" class="form-control" id="endorsement_process" name="endorsement_process" disabled>
 												<option value=""> Select Endorsement Process </option>
 												<option value="0" <?php if(isset($endorsement_process) and $endorsement_process == '0') echo 'selected'; ?>> YES </option>
 												<option value="1" <?php if(isset($endorsement_process) and $endorsement_process == '1') echo 'selected'; ?>> NO </option>
@@ -441,7 +441,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 endor_proc">
 										<div class="form-group">
 											<label for="OwnerType "> Owner Type </label> 
-											<select type="text" class="form-control" id="owner_type" name="owner_type" readonly>
+											<select type="text" class="form-control" id="owner_type" name="owner_type" disabled>
 												<option value=""> Select Holder type </option>
 												<option value="0" <?php if(isset($owner_type) and $owner_type == '0') echo 'selected'; ?>> Customer </option>
 												<option value="1" <?php if(isset($owner_type) and $owner_type == '1') echo 'selected'; ?>> Guarantor </option>
@@ -454,7 +454,7 @@ if(sizeof($documentationInfo)>0){
 										<div class="form-group">
 											<label for="OwnerName "> Owner Name </label>
 											<input type="text" class="form-control" id="owner_name" name="owner_name" value="<?php if(isset($owner_name)) echo $owner_name; ?>"  readonly>
-											<select type="text" class="form-control" id="ownername_relationship_name" name="ownername_relationship_name" style="display: none;" readonly>
+											<select type="text" class="form-control" id="ownername_relationship_name" name="ownername_relationship_name" style="display: none;" disabled>
 												<option value=""> Select Relationship </option>
 											</select>
 										</div>
@@ -469,7 +469,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 endor_proc">
 										<div class="form-group">
 											<label for="Vehicletype"> Vehicle type </label> 
-											<select type="text" class="form-control" id="vehicle_type" name="vehicle_type" readonly>
+											<select type="text" class="form-control" id="vehicle_type" name="vehicle_type" disabled>
 												<option value=""> Select Vehicle type </option>
 												<option value="0" <?php if(isset($vehicle_type) and $vehicle_type == '0') echo 'selected'; ?>> 2 Wheeler </option>
 												<option value="1" <?php if(isset($vehicle_type) and $vehicle_type == '1') echo 'selected'; ?>> 4 Wheeler </option>
@@ -480,7 +480,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 endor_proc">
 										<div class="form-group">
 											<label for="VehicleProcess"> Vehicle Process </label>
-											<select type="text" class="form-control" id="vehicle_process" name="vehicle_process" readonly>
+											<select type="text" class="form-control" id="vehicle_process" name="vehicle_process" disabled>
 												<option value=""> Select Vehicle Process </option>
 												<option value="0" <?php if(isset($vehicle_process) and $vehicle_process == '0') echo 'selected'; ?>> New </option>
 												<option value="1" <?php if(isset($vehicle_process) and $vehicle_process == '1') echo 'selected'; ?>> Old </option>
@@ -519,7 +519,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 endor_proc">
 										<div class="form-group">
 											<label for="RC"> RC </label> 
-											<select type="text" class="form-control" id="en_RC" name="en_RC" readonly>
+											<select type="text" class="form-control" id="en_RC" name="en_RC" disabled>
 												<option value=""> Select RC </option>
 												<option value="0" <?php if(isset($en_RC) and $en_RC == '0') echo 'selected'; ?>> YES </option>
 												<option value="1" <?php if(isset($en_RC) and $en_RC == '1' or $en_RC == null) echo 'selected'; ?>> NO </option>
@@ -529,7 +529,7 @@ if(sizeof($documentationInfo)>0){
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 endor_proc">
 										<div class="form-group">
 											<label for="enKey"> Key </label> 
-											<select type="text" class="form-control" id="en_Key" name="en_Key" readonly>
+											<select type="text" class="form-control" id="en_Key" name="en_Key" disabled>
 												<option value=""> Select Key </option>
 												<option value="0" <?php if(isset($en_Key) and $en_Key == '0') echo 'selected'; ?>> YES </option>
 												<option value="1" <?php if(isset($en_Key) and $en_Key == '1' or $en_Key == null) echo 'selected'; ?>> NO </option>

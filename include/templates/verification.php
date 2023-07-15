@@ -1481,6 +1481,10 @@ if (sizeof($getLoanCalculation) > 0) {
 			<input type="hidden" name="docrelation_name" id="docrelation_name" value="<?php if (isset($docholder_relationship_name)) {
 																							echo $docholder_relationship_name;
 																						} ?>">
+			<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+			<input type="hidden" name="od_sts" id="od_sts" value="" />
+			<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+			<input type="hidden" name="closed_sts" id="closed_sts" value="" />
 
 			<!-- Row start -->
 			<div class="row gutters">
@@ -2127,7 +2131,26 @@ if (sizeof($getLoanCalculation) > 0) {
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 									<div class="form-group" id="docHistoryDiv">
-										
+										<table class="table custom-table" id='loanListTable'>
+											<thead>
+												<tr>
+													<th width="50">Loan ID</th>
+													<th>Loan Category</th>
+													<th>Sub Category</th>
+													<th>Agent</th>
+													<th>Loan date</th>
+													<th>Loan Amount</th>
+													<th>Banlance Amount</th>
+													<!-- <th>Collection Method</th> -->
+													<th>Status</th>
+													<th>Sub Status</th>
+													<th>Document Status</th>
+													<!-- <th>Charts</th> -->
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody></tbody>
+										</table>
 									</div>
 								</div>
 							</div>
