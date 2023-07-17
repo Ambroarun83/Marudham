@@ -49,38 +49,7 @@ if($userid == 1){
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
     where ii.status = 0 and ii.cus_status = 21 and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. 
 }
-// echo $query;
 
-// if($_POST['search'] != "")
-// {
-//     if (isset($_POST['search'])) {
-
-//         $query .= "
-//             and (req_id LIKE '%".$_POST['search']."%'
-//             OR dor LIKE '%".$_POST['search']."%'
-//             OR cus_id LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR area LIKE '%".$_POST['search']."%'
-//             OR sub_area LIKE '%".$_POST['search']."%'
-//             OR loan_category LIKE '%".$_POST['search']."%'
-//             OR sub_category LIKE '%".$_POST['search']."%'
-//             OR loan_amt LIKE '%".$_POST['search']."%'
-//             OR user_type LIKE '%".$_POST['search']."%'
-//             OR user_name LIKE '%".$_POST['search']."%'
-//             OR agent_id LIKE '%".$_POST['search']."%'
-//             OR responsible LIKE '%".$_POST['search']."%'
-//             OR cus_data LIKE '%".$_POST['search']."%'
-//             OR cus_status LIKE '%".$_POST['search']."%' ) ";
-//     }
-// }
-// if (isset($_POST['order'])) {
-//     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
-// } else {
-//     $query .= ' ';
-// }
 
 $query1 = '';
 
@@ -138,10 +107,15 @@ foreach ($result as $row) {
     
     $cus_id = $row['cp_cus_id'];
     $id          = $row['req_id'];
-
-    $action="<a href='noc&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>NOC 
-    <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
     
+    $action ="<div class='dropdown'>
+    <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
+    <div class='dropdown-content'>";
+
+        $action .="<a href='noc&upd=$id&cusidupd=$cus_id' title='Edit details' >NOC</a>";
+        $action .="<a href='' title='Remove details' class='remove-noc' data-reqid='$id' data-cusid='$cus_id' >Remove</a>";
+    
+    $action .= "</div></div>";
 
     $sub_array[] = $action;
     $data[]      = $sub_array;

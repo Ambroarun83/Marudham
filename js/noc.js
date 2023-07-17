@@ -106,8 +106,9 @@ $(document).ready(function(){
     }
 
     $('#submit_noc').click(function(){
+
+
         if(validations() == true){
-            event.preventDefault();
             updateCheckedDetails();
         }
     })
@@ -175,11 +176,12 @@ function OnLoadFunctions(req_id,cus_id){
                             
                             // put current date in date of noc when checked
                             let d = new Date();
-                            let currDate = d.getDate() +  "-" + (d.getMonth()+1) + "-" + d.getFullYear();
+                            let currDate = d.getDate() +  "-" + (d.getMonth()+1).toString().padStart(2, "0") + "-" + d.getFullYear();
                             $(this).parent().prev().prev().prev().children().text(currDate);
                             
                             //show person type choosing dropdown
                             $(this).parent().prev().prev().children().show();
+                            $(this).parent().prev().prev().children().attr('required');
 
                         }else{
                             let indexToRemove = sign_check.indexOf($(this).attr('data-value'));
@@ -191,6 +193,7 @@ function OnLoadFunctions(req_id,cus_id){
                             //hide person type choosing dropdown
                             $(this).parent().prev().prev().children().hide();
                             $(this).parent().prev().prev().children().val(''); // empty type dropdown
+                            $(this).parent().prev().prev().children().removeAttr('required');//remove required attribute
                             //empty name td
                             $(this).parent().prev().empty();
                         }
@@ -215,7 +218,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     dataType: 'json',
                                     cache: false,
                                     success: function(response){
-                                        let element = `<select id='sign_noc_name' name='sign_noc_name' class="form-control sign_noc_name"><option value=''>Select Type</option>`;
+                                        let element = `<select id='sign_noc_name' name='sign_noc_name' class="form-control sign_noc_name" required><option value=''>Select Type</option>`;
                                         $.each(response,function(index,value){
                                             element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
                                         })
@@ -245,16 +248,60 @@ function OnLoadFunctions(req_id,cus_id){
                     $('.cheque_check').click(function(){
                         if(this.checked){
                             cheque_check.push($(this).attr('data-value'));
+
+                            // put current date in date of noc when checked
+                            let d = new Date();
+                            let currDate = d.getDate() +  "-" + (d.getMonth()+1).toString().padStart(2, "0") + "-" + d.getFullYear();
+                            $(this).parent().prev().prev().prev().children().text(currDate);
+                            
+                            //show person type choosing dropdown
+                            $(this).parent().prev().prev().children().show();
+
                         }else{
                             let indexToRemove = cheque_check.indexOf($(this).attr('data-value'));
                             if (indexToRemove !== -1) {
                                 cheque_check.splice(indexToRemove, 1);
                             }
+
+                            //remove date in span element
+                            $(this).parent().prev().prev().prev().children().text('');
+                            //hide person type choosing dropdown
+                            $(this).parent().prev().prev().children().hide();
+                            $(this).parent().prev().prev().children().val(''); // empty type dropdown
+                            //empty name td
+                            $(this).parent().prev().empty();
                         }
                         cheque_check.sort(function(a, b) {
                             return a - b;
                         });
                         $('#cheque_checklist').val(cheque_check.join(','));
+                    });
+
+                    $('.cheque_noc_per').change(function(){
+                        let cheque_noc_per = $(this).val();let noc_name = $(this).parent().next();
+                        if(cheque_noc_per != ''){
+                            if(cheque_noc_per == 1){
+                                noc_name.html(`<input type='text' class='form-control' value='`+cus_name+`' readonly>`)
+                            }else if(cheque_noc_per == 2){
+                                $.ajax({
+                                    url: 'nocFile/getFamDetails.php',
+                                    data: {'cus_id':cus_id,'req_id':req_id},
+                                    type: 'post',
+                                    dataType: 'json',
+                                    cache: false,
+                                    success: function(response){
+                                        let element = `<select id='cheque_noc_name' name='cheque_noc_name' class="form-control cheque_noc_name"><option value=''>Select Type</option>`;
+                                        $.each(response,function(index,value){
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                        })
+                                        element += `</select>`;
+                                        noc_name.html(element);
+                                    }
+                                })
+                            }
+                        }else{
+                            noc_name.empty();// empty td of name
+                        }
                     })
                 })
 
@@ -271,14 +318,30 @@ function OnLoadFunctions(req_id,cus_id){
                 }).then(function(){
                     var mort_check =[];
                     $('.mort_check').click(function(){
-                        var val = $(this).parent().prev().text();
+                        var val = $(this).parent().prev().prev().prev().prev().text();
                         if(this.checked){
                             mort_check.push(checkvalues(val));
+
+                            // put current date in date of noc when checked
+                            let d = new Date();
+                            let currDate = d.getDate() +  "-" + (d.getMonth()+1).toString().padStart(2, "0") + "-" + d.getFullYear();
+                            $(this).parent().prev().prev().prev().children().text(currDate);
+                            
+                            //show person type choosing dropdown
+                            $(this).parent().prev().prev().children().show();
                         }else{
                             let indexToRemove = mort_check.indexOf(checkvalues(val));
                             if (indexToRemove !== -1) {
                                 mort_check.splice(indexToRemove, 1);
                             }
+                            
+                            //remove date in span element
+                            $(this).parent().prev().prev().prev().children().text('');
+                            //hide person type choosing dropdown
+                            $(this).parent().prev().prev().children().hide();
+                            $(this).parent().prev().prev().children().val(''); // empty type dropdown
+                            //empty name td
+                            $(this).parent().prev().empty();
                         }
                         function checkvalues(val){
                             if(val == 'Mortgage Process'){
@@ -289,6 +352,32 @@ function OnLoadFunctions(req_id,cus_id){
                             return noc;
                         }
                         $('#mort_checklist').val(mort_check.join(','));
+                    });
+                    $('.mort_noc_per').change(function(){
+                        let mort_noc_per = $(this).val();let noc_name = $(this).parent().next();
+                        if(mort_noc_per != ''){
+                            if(mort_noc_per == 1){
+                                noc_name.html(`<input type='text' class='form-control' value='`+cus_name+`' readonly>`)
+                            }else if(mort_noc_per == 2){
+                                $.ajax({
+                                    url: 'nocFile/getFamDetails.php',
+                                    data: {'cus_id':cus_id,'req_id':req_id},
+                                    type: 'post',
+                                    dataType: 'json',
+                                    cache: false,
+                                    success: function(response){
+                                        let element = `<select id='mort_noc_name' name='mort_noc_name' class="form-control mort_noc_name"><option value=''>Select Type</option>`;
+                                        $.each(response,function(index,value){
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                        })
+                                        element += `</select>`;
+                                        noc_name.html(element);
+                                    }
+                                })
+                            }
+                        }else{
+                            noc_name.empty();// empty td of name
+                        }
                     })
                 })
 
@@ -305,14 +394,30 @@ function OnLoadFunctions(req_id,cus_id){
                 }).then(function(){
                     var endorse_check =[];
                     $('.endorse_check').click(function(){
-                        var val = $(this).parent().prev().text();
+                        var val = $(this).parent().prev().prev().prev().prev().text();
                         if(this.checked){
                             endorse_check.push(checkvalues(val));
+
+                            // put current date in date of noc when checked
+                            let d = new Date();
+                            let currDate = d.getDate() +  "-" + (d.getMonth()+1).toString().padStart(2, "0") + "-" + d.getFullYear();
+                            $(this).parent().prev().prev().prev().children().text(currDate);
+                            
+                            //show person type choosing dropdown
+                            $(this).parent().prev().prev().children().show();
                         }else{
                             let indexToRemove = endorse_check.indexOf(checkvalues(val));
                             if (indexToRemove !== -1) {
                                 endorse_check.splice(indexToRemove, 1);
                             }
+                            
+                            //remove date in span element
+                            $(this).parent().prev().prev().prev().children().text('');
+                            //hide person type choosing dropdown
+                            $(this).parent().prev().prev().children().hide();
+                            $(this).parent().prev().prev().children().val(''); // empty type dropdown
+                            //empty name td
+                            $(this).parent().prev().empty();
                         }
                         function checkvalues(val){
                             if(val == 'Endorsement Process'){
@@ -325,6 +430,32 @@ function OnLoadFunctions(req_id,cus_id){
                             return noc;
                         }
                         $('#endorse_checklist').val(endorse_check.join(','));
+                    });
+                    $('.endorse_noc_per').change(function(){
+                        let endorse_noc_per = $(this).val();let noc_name = $(this).parent().next();
+                        if(endorse_noc_per != ''){
+                            if(endorse_noc_per == 1){
+                                noc_name.html(`<input type='text' class='form-control' value='`+cus_name+`' readonly>`)
+                            }else if(endorse_noc_per == 2){
+                                $.ajax({
+                                    url: 'nocFile/getFamDetails.php',
+                                    data: {'cus_id':cus_id,'req_id':req_id},
+                                    type: 'post',
+                                    dataType: 'json',
+                                    cache: false,
+                                    success: function(response){
+                                        let element = `<select id='endorse_noc_name' name='endorse_noc_name' class="form-control endorse_noc_name"><option value=''>Select Type</option>`;
+                                        $.each(response,function(index,value){
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                        })
+                                        element += `</select>`;
+                                        noc_name.html(element);
+                                    }
+                                })
+                            }
+                        }else{
+                            noc_name.empty();// empty td of name
+                        }
                     })
                 })
                 // To get the Gold List on Checklist
@@ -342,16 +473,58 @@ function OnLoadFunctions(req_id,cus_id){
                     $('.gold_check').click(function(){
                         if(this.checked){
                             gold_check.push($(this).attr('data-value'));
+
+                            // put current date in date of noc when checked
+                            let d = new Date();
+                            let currDate = d.getDate() +  "-" + (d.getMonth()+1).toString().padStart(2, "0") + "-" + d.getFullYear();
+                            $(this).parent().prev().prev().prev().children().text(currDate);
+                            
+                            //show person type choosing dropdown
+                            $(this).parent().prev().prev().children().show();
+
                         }else{
                             let indexToRemove = gold_check.indexOf($(this).attr('data-value'));
                             if (indexToRemove !== -1) {
                                 gold_check.splice(indexToRemove, 1);
                             }
+                            //remove date in span element
+                            $(this).parent().prev().prev().prev().children().text('');
+                            //hide person type choosing dropdown
+                            $(this).parent().prev().prev().children().hide();
+                            $(this).parent().prev().prev().children().val(''); // empty type dropdown
+                            //empty name td
+                            $(this).parent().prev().empty();
                         }
                         gold_check.sort(function(a, b) {
                             return a - b;
                         });
                         $('#gold_checklist').val(gold_check.join(','));
+                    });
+                    $('.gold_noc_per').change(function(){
+                        let gold_noc_per = $(this).val();let noc_name = $(this).parent().next();
+                        if(gold_noc_per != ''){
+                            if(gold_noc_per == 1){
+                                noc_name.html(`<input type='text' class='form-control' value='`+cus_name+`' readonly>`)
+                            }else if(gold_noc_per == 2){
+                                $.ajax({
+                                    url: 'nocFile/getFamDetails.php',
+                                    data: {'cus_id':cus_id,'req_id':req_id},
+                                    type: 'post',
+                                    dataType: 'json',
+                                    cache: false,
+                                    success: function(response){
+                                        let element = `<select id='gold_noc_name' name='gold_noc_name' class="form-control gold_noc_name"><option value=''>Select Type</option>`;
+                                        $.each(response,function(index,value){
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                        })
+                                        element += `</select>`;
+                                        noc_name.html(element);
+                                    }
+                                })
+                            }
+                        }else{
+                            noc_name.empty();// empty td of name
+                        }
                     })
                 })
                 // To get the Document List on Checklist
@@ -369,16 +542,58 @@ function OnLoadFunctions(req_id,cus_id){
                     $('.doc_check').click(function(){
                         if(this.checked){
                             doc_check.push($(this).attr('data-value'));
+
+                            // put current date in date of noc when checked
+                            let d = new Date();
+                            let currDate = d.getDate() +  "-" + (d.getMonth()+1).toString().padStart(2, "0") + "-" + d.getFullYear();
+                            $(this).parent().prev().prev().prev().children().text(currDate);
+                            
+                            //show person type choosing dropdown
+                            $(this).parent().prev().prev().children().show();
+
                         }else{
                             let indexToRemove = doc_check.indexOf($(this).attr('data-value'));
                             if (indexToRemove !== -1) {
                                 doc_check.splice(indexToRemove, 1);
                             }
+                            //remove date in span element
+                            $(this).parent().prev().prev().prev().children().text('');
+                            //hide person type choosing dropdown
+                            $(this).parent().prev().prev().children().hide();
+                            $(this).parent().prev().prev().children().val(''); // empty type dropdown
+                            //empty name td
+                            $(this).parent().prev().empty();
                         }
                         doc_check.sort(function(a, b) {
                             return a - b;
                         });
                         $('#doc_checklist').val(doc_check.join(','));
+                    });
+                    $('.doc_noc_per').change(function(){
+                        let doc_noc_per = $(this).val();let noc_name = $(this).parent().next();
+                        if(doc_noc_per != ''){
+                            if(doc_noc_per == 1){
+                                noc_name.html(`<input type='text' class='form-control' value='`+cus_name+`' readonly>`)
+                            }else if(doc_noc_per == 2){
+                                $.ajax({
+                                    url: 'nocFile/getFamDetails.php',
+                                    data: {'cus_id':cus_id,'req_id':req_id},
+                                    type: 'post',
+                                    dataType: 'json',
+                                    cache: false,
+                                    success: function(response){
+                                        let element = `<select id='doc_noc_name' name='doc_noc_name' class="form-control doc_noc_name"><option value=''>Select Type</option>`;
+                                        $.each(response,function(index,value){
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                        })
+                                        element += `</select>`;
+                                        noc_name.html(element);
+                                    }
+                                })
+                            }
+                        }else{
+                            noc_name.empty();// empty td of name
+                        }
                     })
                 })
 
@@ -571,13 +786,98 @@ function validations(){
         }
 
     }else{
-        
+        $('.sign_check').each(function() {
+            if (this.checked && !this.disabled ) {
+                let person_type = $(this).parent().prev().prev().children().val();
+                let person_name = $(this).parent().prev().children().val();
+                if(person_type == '' || person_name == ''){
+                    event.preventDefault();res = false;
+                    $(this).parent().prev().prev().children().css('border-color','red')
+                    $(this).parent().prev().children().css('border-color','red')
+                }else{
+                    $(this).parent().prev().prev().children().css('border-color','')
+                    $(this).parent().prev().children().css('border-color','')
+                }
+            }
+        })
+        $('.cheque_check').each(function() {
+            if (this.checked && !this.disabled ) {
+                let person_type = $(this).parent().prev().prev().children().val();
+                let person_name = $(this).parent().prev().children().val();
+                if(person_type == '' || person_name == ''){
+                    event.preventDefault();res = false;
+                    $(this).parent().prev().prev().children().css('border-color','red')
+                    $(this).parent().prev().children().css('border-color','red')
+                }else{
+                    $(this).parent().prev().prev().children().css('border-color','')
+                    $(this).parent().prev().children().css('border-color','')
+                }
+            }
+        })
+        $('.gold_check').each(function() {
+            if (this.checked && !this.disabled ) {
+                let person_type = $(this).parent().prev().prev().children().val();
+                let person_name = $(this).parent().prev().children().val();
+                if(person_type == '' || person_name == ''){
+                    event.preventDefault();res = false;
+                    $(this).parent().prev().prev().children().css('border-color','red')
+                    $(this).parent().prev().children().css('border-color','red')
+                }else{
+                    $(this).parent().prev().prev().children().css('border-color','')
+                    $(this).parent().prev().children().css('border-color','')
+                }
+            }
+        })
+        $('.doc_check').each(function() {
+            if (this.checked && !this.disabled ) {
+                let person_type = $(this).parent().prev().prev().children().val();
+                let person_name = $(this).parent().prev().children().val();
+                if(person_type == '' || person_name == ''){
+                    event.preventDefault();res = false;
+                    $(this).parent().prev().prev().children().css('border-color','red')
+                    $(this).parent().prev().children().css('border-color','red')
+                }else{
+                    $(this).parent().prev().prev().children().css('border-color','')
+                    $(this).parent().prev().children().css('border-color','')
+                }
+            }
+        })
+        $('.mort_check').each(function() {
+            if (this.checked && !this.disabled ) {
+                let person_type = $(this).parent().prev().prev().children().val();
+                let person_name = $(this).parent().prev().children().val();
+                if(person_type == '' || person_name == ''){
+                    event.preventDefault();res = false;
+                    $(this).parent().prev().prev().children().css('border-color','red')
+                    $(this).parent().prev().children().css('border-color','red')
+                }else{
+                    $(this).parent().prev().prev().children().css('border-color','')
+                    $(this).parent().prev().children().css('border-color','')
+                }
+            }
+        })
+        $('.endorse_check').each(function() {
+            if (this.checked && !this.disabled ) {
+                let person_type = $(this).parent().prev().prev().children().val();
+                let person_name = $(this).parent().prev().children().val();
+                if(person_type == '' || person_name == ''){
+                    event.preventDefault();res = false;
+                    $(this).parent().prev().prev().children().css('border-color','red')
+                    $(this).parent().prev().children().css('border-color','red')
+                }else{
+                    $(this).parent().prev().prev().children().css('border-color','')
+                    $(this).parent().prev().children().css('border-color','')
+                }
+            }
+        })
     }
 return res;
 }
 
 // function to update checked document's noc person and name and date to respective tables
 function updateCheckedDetails(){
+    
+    ////////////////////////// For Signed Doc list
     var sign_check = [];
     var i = 0;
     
@@ -602,6 +902,197 @@ function updateCheckedDetails(){
         $.ajax({
             url: 'nocFile/updateSignDocNoc.php',
             data: {'noc_details':sign_check,'table_name':'signed_doc'},
+            type: 'post',
+            cache: false,
+            success: function(response){
+                // Handle the AJAX response
+                if(response == "Success"){
+
+                }else{
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+
+    ////////////////////////// For Cheque Doc list
+    var cheque_check = [];
+    var i = 0;
+    
+    var cheque_deffer = $.Deferred(); // Create a deferred object
+    
+    $('.cheque_check').each(function() {
+        if (this.checked && !this.disabled ) {
+            var innerArray = [];
+            innerArray.push($(this).attr('data-value')); // cheque_doc_id
+            innerArray.push($(this).parent().prev().prev().children().val()); // person type
+            innerArray.push($(this).parent().prev().children().val()); // person name
+            cheque_check.push(innerArray);
+            i++;
+        }
+    });
+        
+    // Resolve the deferred object after the each loop is completed
+    cheque_deffer.resolve();
+        
+    // Perform AJAX request when the deferred object is resolved
+    cheque_deffer.done(function() {
+        $.ajax({
+            url: 'nocFile/updateSignDocNoc.php',
+            data: {'noc_details':cheque_check,'table_name':'cheque_no_list'},
+            type: 'post',
+            cache: false,
+            success: function(response){
+                // Handle the AJAX response
+                if(response == "Success"){
+
+                }else{
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+
+    ////////////////////////// For Mortgage Doc list
+    var mort_check = [];
+    var i = 0;
+    
+    var mort_deffer = $.Deferred(); // Create a deferred object
+    
+    $('.mort_check').each(function() {
+        if (this.checked && !this.disabled ) {
+            var innerArray = [];
+            innerArray.push($(this).attr('data-value')); // mort_doc_id
+            innerArray.push($(this).attr('data-thing')); // Mot process or document
+            innerArray.push($(this).parent().prev().prev().children().val()); // person type
+            innerArray.push($(this).parent().prev().children().val()); // person name
+            mort_check.push(innerArray);
+            i++;
+        }
+    });
+        
+    // Resolve the deferred object after the each loop is completed
+    mort_deffer.resolve();
+        
+    // Perform AJAX request when the deferred object is resolved
+    mort_deffer.done(function() {
+        $.ajax({
+            url: 'nocFile/updateSignDocNoc.php',
+            data: {'noc_details':mort_check,'table_name':'acknowlegement_documentation'},
+            type: 'post',
+            cache: false,
+            success: function(response){
+                // Handle the AJAX response
+                if(response == "Success"){
+
+                }else{
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+
+    ////////////////////////// For Endorsement Doc list
+    var endorse_check = [];
+    var i = 0;
+    
+    var endorse_deffer = $.Deferred(); // Create a deferred object
+    
+    $('.endorse_check').each(function() {
+        if (this.checked && !this.disabled ) {
+            var innerArray = [];
+            innerArray.push($(this).attr('data-value')); // endorse_doc_id
+            innerArray.push($(this).attr('data-thing')); // Mot process or document
+            innerArray.push($(this).parent().prev().prev().children().val()); // person type
+            innerArray.push($(this).parent().prev().children().val()); // person name
+            endorse_check.push(innerArray);
+            i++;
+        }
+    });
+        
+    // Resolve the deferred object after the each loop is completed
+    endorse_deffer.resolve();
+        
+    // Perform AJAX request when the deferred object is resolved
+    endorse_deffer.done(function() {
+        $.ajax({
+            url: 'nocFile/updateSignDocNoc.php',
+            data: {'noc_details':endorse_check,'table_name':'acknowlegement_documentation'},
+            type: 'post',
+            cache: false,
+            success: function(response){
+                // Handle the AJAX response
+                if(response == "Success"){
+
+                }else{
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+    ////////////////////////// For Gold Doc list
+    var gold_check = [];
+    var i = 0;
+    
+    var gold_deffer = $.Deferred(); // Create a deferred object
+    
+    $('.gold_check').each(function() {
+        if (this.checked && !this.disabled ) {
+            var innerArray = [];
+            innerArray.push($(this).attr('data-value')); // gold_doc_id
+            innerArray.push($(this).parent().prev().prev().children().val()); // person type
+            innerArray.push($(this).parent().prev().children().val()); // person name
+            gold_check.push(innerArray);
+            i++;
+        }
+    });
+        
+    // Resolve the deferred object after the each loop is completed
+    gold_deffer.resolve();
+        
+    // Perform AJAX request when the deferred object is resolved
+    gold_deffer.done(function() {
+        $.ajax({
+            url: 'nocFile/updateSignDocNoc.php',
+            data: {'noc_details':gold_check,'table_name':'gold_info'},
+            type: 'post',
+            cache: false,
+            success: function(response){
+                // Handle the AJAX response
+                if(response == "Success"){
+
+                }else{
+                    event.preventDefault();
+                }
+            }
+        });
+    });
+
+    ////////////////////////// For Document list
+    var doc_check = [];
+    var i = 0;
+    
+    var doc_deffer = $.Deferred(); // Create a deferred object
+    
+    $('.doc_check').each(function() {
+        if (this.checked && !this.disabled ) {
+            var innerArray = [];
+            innerArray.push($(this).attr('data-value')); // doc_doc_id
+            innerArray.push($(this).parent().prev().prev().children().val()); // person type
+            innerArray.push($(this).parent().prev().children().val()); // person name
+            doc_check.push(innerArray);
+            i++;
+        }
+    });
+        
+    // Resolve the deferred object after the each loop is completed
+    doc_deffer.resolve();
+        
+    // Perform AJAX request when the deferred object is resolved
+    doc_deffer.done(function() {
+        $.ajax({
+            url: 'nocFile/updateSignDocNoc.php',
+            data: {'noc_details':doc_check,'table_name':'document_info'},
             type: 'post',
             cache: false,
             success: function(response){

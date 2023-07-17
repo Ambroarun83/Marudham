@@ -51,10 +51,11 @@ function moneyFormatIndia($num) {
             <th>Agent</th>
             <th>Loan date</th>
             <th>Loan Amount</th>
-            <th>Banlance Amount</th>
+            <!-- <th>Banlance Amount</th> -->
             <th>Status</th>
             <th>Sub Status</th>
             <th>Document Status</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -66,7 +67,7 @@ function moneyFormatIndia($num) {
         rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
         from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
-        WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status <= 21)"); //Customer status greater than or equal to 14 because, after issued data only we need  
+        WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status <= 22)"); //Customer status greater than or equal to 14 because, after issued data only we need  
 
         $i = 1;
         while ($row = $run->fetch()) {
@@ -82,67 +83,196 @@ function moneyFormatIndia($num) {
             <td><?php echo $row["sub_category"]; ?></td> <!-- Loan Sub Cat -->
             <td>
                 <?php 
-                        if($row["agent_id"] != '' || $row["agent_id"] != NULL){
-                            $run1 = $connect->query('SELECT ag_name from agent_creation where ag_id = "'.$row['agent_id'].'" ');
-                            echo $run1->fetch()['ag_name'];
-                        } 
-                        ?>
+                    if($row["agent_id"] != '' || $row["agent_id"] != NULL){
+                        $run1 = $connect->query('SELECT ag_name from agent_creation where ag_id = "'.$row['agent_id'].'" ');
+                        echo $run1->fetch()['ag_name'];
+                    } 
+                ?>
             </td> <!-- Agent -->
             <td><?php echo date('d-m-Y',strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
             <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td> <!-- Loan Amount -->
-            <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td> <!-- Balance Amount -->
+            <!-- <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td>--> <!-- Balance Amount -->
             <td><?php if($row['cus_status'] < 20){echo 'Present';}else if($row['cus_status'] >= 20){ echo 'Closed';} ?>
             </td> <!-- Status -->
-            <td><?php if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'Pending';
-                            }
-                        }else if($od_sts[$i-1] == 'true'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'OD';
-                            }
-                        }elseif($due_nil_sts[$i-1] == 'true'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'Due Nil';
-                            }
-                        }elseif($pending_sts[$i-1] == 'false'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                if($closed_sts[$i-1] == 'true'){
-                                    echo "Closed";
-                                }else{
-                                    echo 'Current';
-                                }
-                            }
-                        } ?></td> <!-- Sub status -->
             <td>
-                <?php
-                    if($closed_cnt== '0'){
-                    if($row['cus_status'] == '20'){ // 20 is collection completed.
-                        echo  $action="<div class='dropdown'><span class='btn btn-primary noc-window'  data-value='".$row['req_id']."'>  NOC </span></div>";
-                    }
-                }else{
-                    
+                <?php 
+                if($row['cus_status'] <= 20){
+                    if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
+                        if($row['cus_status'] == '15'){
+                            echo 'Error';
+                        }elseif($row['cus_status']== '16'){
+                            echo 'Legal';
+                        }else{
+                            echo 'Pending';
+                        }
+                    }else if($od_sts[$i-1] == 'true'){
+                        if($row['cus_status'] == '15'){
+                            echo 'Error';
+                        }elseif($row['cus_status']== '16'){
+                            echo 'Legal';
+                        }else{
+                            echo 'OD';
+                        }
+                    }elseif($due_nil_sts[$i-1] == 'true'){
+                        if($row['cus_status'] == '15'){
+                            echo 'Error';
+                        }elseif($row['cus_status']== '16'){
+                            echo 'Legal';
+                        }else{
+                            echo 'Due Nil';
+                        }
+                    }elseif($pending_sts[$i-1] == 'false'){
+                        if($row['cus_status'] == '15'){
+                            echo 'Error';
+                        }elseif($row['cus_status']== '16'){
+                            echo 'Legal';
+                        }else{
+                            if($closed_sts[$i-1] == 'true'){
+                                echo "Closed";
+                            }else{
+                                echo 'Current';
+                            }
+                        }
+                    } 
+                }else if($row['cus_status'] > 20){// if status is closed(21) or more than that(22), then show closed status
+                    $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
+                    $rclosed = $closedSts->fetch_assoc()['closed_sts'];
+                    if($rclosed == '1'){echo 'Consider';}
+                    if($rclosed == '2'){echo 'Waiting List';}
+                    if($rclosed == '3'){echo 'Block List';}
                 }
+                ?>
+            </td> <!-- Sub status -->
+            <td><!-- Document status -->
+                <?php
+                    if($row['cus_status'] <= 20){//show for present contents and closed customer but not submitted in closed
+                        if(getDocumentStatus($con,$ii_req_id,$cus_id) == false){
+                            echo 'Document Pending';
+                        }else{
+                            echo 'Document Completed';
+                        }
+                    }else if($row['cus_status'] > 20 and $row['cus_status'] < 22){ // show for closed(which are submitted in closed) and noc contents 
+                        if(getNOCDocDetails($con,$ii_req_id,$cus_id) == 'completed'){ // this function will be true when user started to give NOC to customer, then that will be in noc pending
+                            echo 'NOC Completed';
+                        }else{
+                            echo 'NOC Pending';
+                        }
+                    }else if($row['cus_status'] == 22){
+                        echo 'NOC Completed';
+                    }
                     ?>
+            </td>
+            <td> <!-- Action -->
+                <?php
+                    $action ="<div class='dropdown'>
+                        <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
+                        <div class='dropdown-content'>";
+                    if($row['cus_status'] > 20) { //if request goes to NOC then noc summary can be fetched
+                        $action .= "<a href='' data-reqid='$ii_req_id' data-cusid='$cus_id' >NOC Summary</a>";
+                    }
+                    $action .= "</div></div>";
+                    echo $action;
+                ?>
             </td> <!-- Action -->
         </tr>
 
         <?php  $i++;} ?>
     </tbody>
 </table>
+
+<?php
+function getNOCDocDetails($con,$req_id,$cus_id){
+
+    $response = 'completed';
+
+    $qry = $con->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then signed doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM cheque_no_list where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then Cheque doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' and (mortgage_process_noc = 0 or mortgage_document_noc = 0 or endorsement_process_noc = 0 or en_RC_noc = 0 or en_Key_noc = 0 ) ");
+    if($qry->num_rows > 0){ // if condition true, then acknowlegement documentation any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM gold_info where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then Gold doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' and doc_info_upload_noc = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then Document doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    return $response;
+}
+
+function getNOCSubmitted($con,$req_id,$cus_id){
+    // should check whether all documents have been given to customer but not removed from list
+}
+
+function getDocumentStatus($con,$req_id,$cus_id){
+    $response = false;
+
+    $qry = $con->query("SELECT id,doc_Count FROM signed_doc_info where req_id ='$req_id' and cus_id = '$cus_id' ");
+    while($row=$qry->fetch_assoc()){
+        
+        $qry = $con->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and signed_doc_id='".$row['id']."' ");
+        if($qry->num_rows == $row['doc_Count']){ // check whether mentioned count of signed document has been collected from customer or not
+            $response = true;// if condition true then all documents are collected
+        }
+    }
+    
+    $qry = $con->query("SELECT id,cheque_count FROM cheque_info where req_id ='$req_id' and cus_id = '$cus_id' ");
+    while($row=$qry->fetch_assoc()){
+        
+        $qry = $con->query("SELECT * FROM cheque_upd where req_id ='$req_id' and cus_id = '$cus_id' and cheque_table_id='".$row['id']."' ");
+        if($qry->num_rows == $row['cheque_count']){ // check whether mentioned count of Cheque has been collected from customer or not
+            $response = true;// if condition true then all documents are collected
+        }
+    }
+
+    $qry = $con->query("SELECT mortgage_document_pending,Rc_document_pending FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' ");
+    while($row=$qry->fetch_assoc()){ //check any one of document for mortgage or endorsement is pending then response will be pending
+        
+        if($row['mortgage_document_pending'] == 'YES' || $row['Rc_document_pending'] == 'YES'){
+
+        }else{
+            $response = true;// if condition false then all documents are collected
+        }
+    }
+    
+    $qry = $con->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' ");
+    while($row=$qry->fetch_assoc()){
+        if($row['doc_upload'] == '' || $row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
+            $response = false;
+        }else if($response != false){ // in this stage current row of doc has been submitted but need to check the response is pending. if yes it should not changed to completed
+            $response = true;
+        }
+    }
+
+    return $response;
+}
+?>
+
+<script>
+    $('.dropdown').unbind('click');
+    $('.dropdown').click(function(event) {
+        event.preventDefault();
+        $('.dropdown').not(this).removeClass('active');
+        $(this).toggleClass('active');
+    });
+    
+    $(document).click(function(event) {
+        var target = $(event.target);
+        if (!target.closest('.dropdown').length) {
+            $('.dropdown').removeClass('active');
+        }
+    });
+</script>

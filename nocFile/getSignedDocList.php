@@ -17,10 +17,7 @@ function getGuarentorName($con,$req_id){
     $run=$qry1->fetch_assoc();
     return $run['famname'];
 }
-function getFamMemName($con,$fam_id){
-    $qry = $con->query("SELECT * from verification_family_info where id = '".$fam_id."' ");
-    return $qry->fetch_assoc()['famname'];
-}
+
 ?>
 <table class="table custom-table" id='signDocTable'>
     <thead>
@@ -61,7 +58,7 @@ function getFamMemName($con,$fam_id){
                 </td>
                 <td>
                     <?php if(isset($row['noc_name']) && $row['noc_name'] != null){?>
-                        <input type="text" class="form-control" value='<?php if(!is_numeric($row['noc_name'])){echo $row['noc_name'];}else{echo getFamMemName($con, $row['noc_name']);}?>' readonly>
+                        <input type="text" class="form-control" value='<?php if(!is_numeric($row['noc_name'])){echo $row['noc_name'];}else{echo getfamName($con, $row['noc_name']);}?>' readonly>
                     <?php } ?>
                 </td>
 

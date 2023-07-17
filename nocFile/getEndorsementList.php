@@ -6,20 +6,27 @@ if(isset($_POST['req_id'])){
 if(isset($_POST['cus_name'])){
     $cus_name = $_POST['cus_name'];
 }
-
+function getfamName($con,$rel_id){
+    $qry1=$con->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
+    $run=$qry1->fetch_assoc();
+    return $run['famname'];
+}
 ?>
 <table class="table custom-table" id='endorsementTable'>
     <thead>
         <tr>
             <th>S.No</th>
             <th>Details</th> <!-- Endorsement Process and Rc and Key will be placed if exist in td -->
+            <th>Date Of NOC</th>
+            <th>NOC Person</th>
+            <th>Name</th>
             <th>Checklist</th>
         </tr>
     </thead>
     <tbody>
 
         <?php
-        $qry = $con->query("SELECT id,endorsement_process,endorsement_process_noc,en_RC,en_RC_noc,en_RC_used,Rc_document_pending,en_Key,en_Key_noc,en_Key_used from acknowlegement_documentation  where req_id=$req_id");
+        $qry = $con->query("SELECT * from acknowlegement_documentation  where req_id=$req_id");
         $row = $qry->fetch_assoc();
         ?>
                 <?php if($row['endorsement_process'] == '0'){
@@ -27,7 +34,22 @@ if(isset($_POST['cus_name'])){
                 <tr>
                     <td></td>
                     <td>Endorsement Process</td>
-                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['endorsement_process_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>'></td>
+
+                    <td><span id='endorse_noc_date' name='endorse_noc_date' class="endorse_noc_date"><?php if($row['endor_noc_date'] != ''){echo date('d-m-Y',strtotime($row['endor_noc_date']));}?></span></td>
+                    <td>
+                        <select id='endorse_noc_per' name='endorse_noc_per' class="form-control endorse_noc_per" <?php if($row['endor_noc_person'] != '' && $row['endor_noc_person'] != null){echo 'disabled';}else{?>style="display:none" <?php }?>>
+                            <option value=''>Select Type</option>
+                            <option value='1' <?php if(isset($row['endor_noc_person']) && $row['endor_noc_person'] == 1){echo 'selected';}?>>Customer</option>
+                            <option value='2' <?php if(isset($row['endor_noc_person']) && $row['endor_noc_person'] == 2){echo 'selected';}?>>Family Member</option>
+                        </select>
+                    </td>
+                    <td>
+                        <?php if(isset($row['endor_noc_name']) && $row['endor_noc_name'] != null){?>
+                            <input type="text" class="form-control" value='<?php if(!is_numeric($row['endor_noc_name'])){echo $row['endor_noc_name'];}else{echo getfamName($con, $row['endor_noc_name']);}?>' readonly>
+                        <?php } ?>
+                    </td>
+
+                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['endorsement_process_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_process'></td>
                 </tr>
                     <?php
                 }?>
@@ -36,7 +58,22 @@ if(isset($_POST['cus_name'])){
                 <tr>
                     <td></td>
                     <td>RC</td>
-                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_RC_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>'></td>
+
+                    <td><span id='endorse_noc_date' name='endorse_noc_date' class="endorse_noc_date"><?php if($row['en_rc_noc_date'] != ''){echo date('d-m-Y',strtotime($row['en_rc_noc_date']));}?></span></td>
+                    <td>
+                        <select id='endorse_noc_per' name='endorse_noc_per' class="form-control endorse_noc_per" <?php if($row['en_rc_noc_person'] != '' && $row['en_rc_noc_person'] != null){echo 'disabled';}else{?>style="display:none" <?php }?>>
+                            <option value=''>Select Type</option>
+                            <option value='1' <?php if(isset($row['en_rc_noc_person']) && $row['en_rc_noc_person'] == 1){echo 'selected';}?>>Customer</option>
+                            <option value='2' <?php if(isset($row['en_rc_noc_person']) && $row['en_rc_noc_person'] == 2){echo 'selected';}?>>Family Member</option>
+                        </select>
+                    </td>
+                    <td>
+                        <?php if(isset($row['en_rc_noc_name']) && $row['en_rc_noc_name'] != null){?>
+                            <input type="text" class="form-control" value='<?php if(!is_numeric($row['en_rc_noc_name'])){echo $row['en_rc_noc_name'];}else{echo getfamName($con, $row['en_rc_noc_name']);}?>' readonly>
+                        <?php } ?>
+                    </td>
+
+                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_RC_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_rc'></td>
                 </tr>
                     <?php
                 }?>
@@ -45,7 +82,22 @@ if(isset($_POST['cus_name'])){
                 <tr>
                     <td></td>
                     <td>Key</td>
-                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_Key_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>'></td>
+
+                    <td><span id='endorse_noc_date' name='endorse_noc_date' class="endorse_noc_date"><?php if($row['en_key_noc_date'] != ''){echo date('d-m-Y',strtotime($row['en_key_noc_date']));}?></span></td>
+                    <td>
+                        <select id='endorse_noc_per' name='endorse_noc_per' class="form-control endorse_noc_per" <?php if($row['en_key_noc_person'] != '' && $row['en_key_noc_person'] != null){echo 'disabled';}else{?>style="display:none" <?php }?>>
+                            <option value=''>Select Type</option>
+                            <option value='1' <?php if(isset($row['en_key_noc_person']) && $row['en_key_noc_person'] == 1){echo 'selected';}?>>Customer</option>
+                            <option value='2' <?php if(isset($row['en_key_noc_person']) && $row['en_key_noc_person'] == 2){echo 'selected';}?>>Family Member</option>
+                        </select>
+                    </td>
+                    <td>
+                        <?php if(isset($row['en_key_noc_name']) && $row['en_key_noc_name'] != null){?>
+                            <input type="text" class="form-control" value='<?php if(!is_numeric($row['en_key_noc_name'])){echo $row['en_key_noc_name'];}else{echo getfamName($con, $row['en_key_noc_name']);}?>' readonly>
+                        <?php } ?>
+                    </td>
+
+                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_Key_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_key'></td>
                 </tr>
                     <?php
                 }?>
