@@ -5250,45 +5250,45 @@ function updateUser($mysqli,$id,$user_id){
 				}
 			}
 
-			// $qry = $mysqli->query("INSERT INTO `noc`(`req_id`, `cus_id`, `sign_checklist`, `cheque_checklist`, `gold_checklist`, `mort_checklist`, `endorse_checklist`, 
-			// `doc_checklist`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."',
-			// '".strip_tags($sign_checklist)."','".strip_tags($cheque_checklist)."','".strip_tags($gold_checklist)."','".strip_tags($mort_checklist)."','".strip_tags($endorse_checklist)."',
-			// '".strip_tags($doc_checklist)."','".strip_tags($noc_date)."','".strip_tags($noc_member)."','".strip_tags($mem_name)."','21',$userid,now()) ");
+			$qry = $mysqli->query("INSERT INTO `noc`(`req_id`, `cus_id`, `sign_checklist`, `cheque_checklist`, `gold_checklist`, `mort_checklist`, `endorse_checklist`, 
+			`doc_checklist`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."',
+			'".strip_tags($sign_checklist)."','".strip_tags($cheque_checklist)."','".strip_tags($gold_checklist)."','".strip_tags($mort_checklist)."','".strip_tags($endorse_checklist)."',
+			'".strip_tags($doc_checklist)."','".strip_tags($noc_date)."','".strip_tags($noc_member)."','".strip_tags($mem_name)."','21',$userid,now()) ");
 
-			// for($i=0;$i<sizeof($sign_checklist_arr);$i++){
-			// 	$qry = $mysqli->query("UPDATE `signed_doc` SET `noc_given`='1' WHERE id = '".$sign_checklist_arr[$i]."' and req_id = $req_id ");
-			// }
+			for($i=0;$i<sizeof($sign_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `signed_doc` SET `noc_given`='1' WHERE id = '".$sign_checklist_arr[$i]."' and req_id = $req_id ");
+			}
 			
-			// for($i=0;$i<sizeof($cheque_checklist_arr);$i++){
-			// 	$qry = $mysqli->query("UPDATE `cheque_no_list` SET `noc_given`='1' WHERE id = '".$cheque_checklist_arr[$i]."' and req_id = $req_id ");
-			// }
+			for($i=0;$i<sizeof($cheque_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `cheque_no_list` SET `noc_given`='1' WHERE id = '".$cheque_checklist_arr[$i]."' and req_id = $req_id ");
+			}
 			
-			// for($i=0;$i<sizeof($gold_checklist_arr);$i++){
-			// 	$qry = $mysqli->query("UPDATE `gold_info` SET `noc_given`='1' WHERE id = '".$gold_checklist_arr[$i]."' and req_id = $req_id ");
-			// }
+			for($i=0;$i<sizeof($gold_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `gold_info` SET `noc_given`='1' WHERE id = '".$gold_checklist_arr[$i]."' and req_id = $req_id ");
+			}
 			
-			// for($i=0;$i<sizeof($mort_checklist_arr);$i++){
+			for($i=0;$i<sizeof($mort_checklist_arr);$i++){
 
-			// 	if($mort_checklist_arr[$i] == 'Mortgage Process noc'){
-			// 		$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_process_noc`='1' WHERE req_id = '".$req_id."' ");
-			// 	}elseif($mort_checklist_arr[$i] == 'Mortgage Document noc'){
-			// 		$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_document_noc`='1' WHERE req_id = '".$req_id."' ");
-			// 	}
-			// }
+				if($mort_checklist_arr[$i] == 'Mortgage Process noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_process_noc`='1' WHERE req_id = '".$req_id."' ");
+				}elseif($mort_checklist_arr[$i] == 'Mortgage Document noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_document_noc`='1' WHERE req_id = '".$req_id."' ");
+				}
+			}
 
-			// for($i=0;$i<sizeof($endorse_checklist_arr);$i++){
-			// 	if($endorse_checklist_arr[$i] == 'Endorsement Process noc'){
-			// 		$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `endorsement_process_noc`='1' WHERE req_id = '".$req_id."' ");
-			// 	}elseif($endorse_checklist_arr[$i] == 'RC noc'){
-			// 		$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_RC_noc`='1' WHERE req_id = '".$req_id."' ");
-			// 	}elseif($endorse_checklist_arr[$i] == 'Key noc'){
-			// 		$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_Key_noc`='1' WHERE req_id = '".$req_id."' ");
-			// 	}
-			// }
+			for($i=0;$i<sizeof($endorse_checklist_arr);$i++){
+				if($endorse_checklist_arr[$i] == 'Endorsement Process noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `endorsement_process_noc`='1' WHERE req_id = '".$req_id."' ");
+				}elseif($endorse_checklist_arr[$i] == 'RC noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_RC_noc`='1' WHERE req_id = '".$req_id."' ");
+				}elseif($endorse_checklist_arr[$i] == 'Key noc'){
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_Key_noc`='1' WHERE req_id = '".$req_id."' ");
+				}
+			}
 			
-			// for($i=0;$i<sizeof($doc_checklist_arr);$i++){
-			// 	$qry = $mysqli->query("UPDATE `document_info` SET `doc_info_upload_noc`='1' WHERE id= '".$doc_checklist_arr[$i]."' and  req_id = '".$req_id."' ");
-			// }
+			for($i=0;$i<sizeof($doc_checklist_arr);$i++){
+				$qry = $mysqli->query("UPDATE `document_info` SET `doc_info_upload_noc`='1' WHERE id= '".$doc_checklist_arr[$i]."' and  req_id = '".$req_id."' ");
+			}
 
 		}
     

@@ -27,6 +27,11 @@ function moneyFormatIndia($num)
     }
     return $thecash;
 }
+function getfamName($con,$rel_id){
+    $qry1=$con->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
+    $run=$qry1->fetch_assoc();
+    return $run['famname'];
+}
 ?>
 <table class="table custom-table" id='goldTable'>
     <thead>
@@ -37,6 +42,9 @@ function moneyFormatIndia($num)
             <th>Count</th>
             <th>Weight</th>
             <th>Value</th>
+            <th>Date Of NOC</th>
+            <th>NOC Person</th>
+            <th>Name</th>
             <th>Checklist</th>
         </tr>
     </thead>
@@ -58,6 +66,21 @@ function moneyFormatIndia($num)
                 <td><?php echo $row['gold_Count'];?></td>
                 <td><?php echo $row['gold_Weight'];?></td>
                 <td><?php echo moneyFormatIndia($row['gold_Value']);?></td>
+
+                <td><span id='gold_noc_date' name='gold_noc_date' class="gold_noc_date"><?php if($row['noc_date'] != ''){echo date('d-m-Y',strtotime($row['noc_date']));}?></span></td>
+                <td>
+                    <select id='gold_noc_per' name='gold_noc_per' class="form-control gold_noc_per" <?php if($row['noc_person'] != '' && $row['noc_person'] != null){echo 'disabled';}else{?>style="display:none" <?php }?>>
+                        <option value=''>Select Type</option>
+                        <option value='1' <?php if(isset($row['noc_person']) && $row['noc_person'] == 1){echo 'selected';}?>>Customer</option>
+                        <option value='2' <?php if(isset($row['noc_person']) && $row['noc_person'] == 2){echo 'selected';}?>>Family Member</option>
+                    </select>
+                </td>
+                <td>
+                    <?php if(isset($row['noc_name']) && $row['noc_name'] != null){?>
+                        <input type="text" class="form-control" value='<?php if(!is_numeric($row['noc_name'])){echo $row['noc_name'];}else{echo getfamName($con, $row['noc_name']);}?>' readonly>
+                    <?php } ?>
+                </td>
+
                 <td><input type='checkbox' id='gold_check' name='gold_check' class="form-control gold_check"  <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'></td>
             </tr>
         <?php

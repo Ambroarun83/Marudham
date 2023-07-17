@@ -203,7 +203,7 @@ foreach ($result as $row) {
     $user_type = $row['user_type'];
     $cus_id = $row['cus_id'];
     
-    $action="<div class='dropdown' style='float:right;'>
+    $action="<div class='dropdown'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
     if($cus_status == '3') {

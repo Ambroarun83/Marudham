@@ -329,6 +329,7 @@ $(document).ready(function () {
         }
         if (verify == 'documentation') {
             $('#customer_profile').hide(); $('#cus_document').show(); $('#customer_loan_calc').hide();
+            getDocumentHistory();
 
         }
         if (verify == 'loan_calc') {

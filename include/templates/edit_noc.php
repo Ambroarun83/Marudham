@@ -145,4 +145,50 @@
 		});
 	}
 	
+	setTimeout(() => {
+		
+		$('.remove-noc').click(function(){
+			event.preventDefault();
+			let req_id = $(this).data('reqid');
+			let cus_id = $(this).data('cusid');
+			Swal.fire({
+				title: 'Are your sure to remove this NOC?',
+				text: 'This action cannot be reverted!',
+				icon: 'question',
+				showConfirmButton: true,
+				showCancelButton: true,
+				confirmButtonColor: '#009688',
+				cancelButtonColor: '#cc4444',
+				cancelButtonText: 'No',
+				confirmButtonText: 'Yes'
+			}).then(function(result){
+				if(result.isConfirmed) {
+					removeNOCFromList(req_id,cus_id);
+				}
+			})
+		})
+		function removeNOCFromList(req_id,cus_id){
+			$.ajax({
+				url:'nocFile/removeNOCFromList.php',
+				data: {'req_id':req_id,'cus_id':cus_id},
+				dataType: 'json',
+				type: 'post',
+				cache: false,
+				success:function(response){
+					if(response.includes('Successfully')){
+						Swal.fire({
+							title: 'Removed Successfully!',
+							icon: 'success',
+							showConfirmButton: false,
+							timer: 2000,
+							timerProgressBar: true,
+						})
+						setTimeout(() => {
+							window.location = 'edit_noc'
+						}, 2000);
+					}
+				}
+			})
+		}
+	}, 1500);
 </script>
