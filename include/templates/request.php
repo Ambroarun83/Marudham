@@ -305,7 +305,7 @@ if($idupd>0)
 					</div>
 				</div>
 				<div class="card">
-                    <div class="card-header">General Info</div>
+                    <div class="card-header">General Info <!--<input type="button" class="btn btn-outline-secondary text-right" id="cus_status" name="cus_status" value="Customer Status" style="float:right">--></div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col-md-8">
@@ -317,6 +317,14 @@ if($idupd>0)
 											<span class="text-danger" style='display:none' id='cusidCheck'>Please Enter Customer ID</span>
 										</div>
 									</div>
+									<?php if($role != '2'){//customer status not for agents?>
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+										<div class="form-group">
+											<br>
+											<input type="button" class="btn btn-outline-secondary text-right" id="cus_status" name="cus_status" value="Customer Status" >
+										</div>
+									</div>
+									<?php } ?>
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_data">Customer Data</label><span class="required">&nbsp;*</span>
@@ -665,3 +673,27 @@ if($idupd>0)
 	</form>
 </div>
 
+
+<!-- Customer Status Modal -->
+<div class="modal fade customerstatus" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Customer Status</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div id="updatedcusHistoryTable"> 
+					<table class="table custom-table" id="cusHistoryTable"> 
+						
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

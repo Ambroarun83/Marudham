@@ -1,7 +1,7 @@
 <?php 
 include('../ajaxconfig.php');
 if(isset($_POST['cus_id'])){
-    $cus_id = $_POST['cus_id'];
+    $cus_id = preg_replace('/\D/', '',$_POST['cus_id']);
 }
 
 $records = array();

@@ -146,24 +146,26 @@ function moneyFormatIndia($num) {
                 echo " ' data-value='".$row['req_id']."''>$</span>"; ?></td>
                 <td>
                     <?php 
-                        $action="<div class='dropdown' ><button class='btn btn-outline-secondary' ";
+                        $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary' ";
                         
                         $action .="><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
                         $action .= "<a><span data-toggle='modal' data-target='.DueChart' class='due-chart' value='".$row['req_id']."' > Due Chart</span></a>
                         <a><span data-toggle='modal' data-target='.PenaltyChart' class='penalty-chart' value='".$row['req_id']."' > Penalty Chart</span></a>
-                        <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='".$row['req_id']."' > Fine Chart</span></a>";
+                        <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='".$row['req_id']."' > Fine Chart</span></a>
+                        <a><span data-toggle='modal' data-target='.addcommitmentChart' class='add-commitment-chart' value='".$row['req_id']."' > Commitment Chart </span></a>";
                         $action .= "</div></div>";
                         echo $action;
                     ?>
                 </td>
                 <td>
                     <?php
-                        $action="<div class='dropdown' ><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
+                        $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
                         if($row['collection_access'] == '0'){
                             $action .= "<a href='' class='move-error' value='".$row['req_id']."' > Move To Error</a>
                             <a href='' class='move-legal' value='".$row['req_id']."' > Move To Legal</a>
                             <a href='' class='return-sub' value='".$row['req_id']."' > Return Sub Status</a>
-                            <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='".$row['req_id']."' > Fine </span></a>";
+                            <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='".$row['req_id']."' > Fine </span></a>
+                            <a><span data-toggle='modal' data-target='.commitmentChart' class='commitment-chart' value='".$row['req_id']."' > Add Commitment </span></a>";
                             //if balance is eqauls to zero, then that loan must be able to moved as closed
                             // if($closed_sts[$i-1] == 'true'){
                             //     $action .= "<a href='' class='move-closed' value='".$row['req_id']."' > Move To Closed</a>";
@@ -210,5 +212,5 @@ function moneyFormatIndia($num) {
             $('.dropdown').removeClass('active');
         }
     });
-    $('.due-chart, .penalty-chart, .coll-charge-chart, .coll-charge').css('color','black');
+    $('.due-chart, .penalty-chart, .coll-charge-chart, .coll-charge, .add-commitment-chart, .commitment-chart').css('color','black');
 </script>

@@ -40,6 +40,16 @@ if($idupd>0)
 			$mobile1					= $getLoanList['mobile1'];
 			$cus_pic					= $getLoanList['cus_pic'];
 	}
+	
+	$getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
+	if (sizeof($getRequestData) > 0) {
+		$user_type = $getRequestData['user_type'];
+		if ($user_type == 'Director') { $role = '1'; } else if ($user_type == 'Agent') { $role = '2'; } else if ($user_type == 'Staff') { $role = '3'; }
+		$user_name = $getRequestData['user_name'];
+		$responsible = $getRequestData['responsible'];
+		$declaration = $getRequestData['declaration'];
+		$remarks = $getRequestData['remarks'];
+	}
 
 	$getuser = $userObj->getuser($mysqli,$userid);
 	$collection_access = $getuser['collection_access'];
@@ -306,6 +316,51 @@ if($idupd>0)
 						</div>
 					</div>
 				</div> -->
+				<!-- Request Info Start -->
+					<div class="card">
+						<div class="card-header">Request Info <span style="font-weight:bold" class=""></span></div>
+						<div class="card-body">
+							<div class="row">
+								
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {if ($role == '3') {//hide if staff raised req ?> style="display: none" <?php }} //staff dont have responsible?>>
+									<div class="form-group">
+										<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
+										<input tabindex="3" type="text" class="form-control" id="responsible" name="responsible" 
+										value="<?php if (isset($responsible) and $responsible == '0') {echo 'Yes';} else {echo 'No';} ?>" readonly>
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<div class="form-group">
+										<label for="user_type">User type</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="user_type" name="user_type" readonly value='<?php if (isset($user_type)) echo $user_type; ?>' tabindex="1">
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="user">User Name</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="user" name="user" readonly value='<?php if (isset($user_name)) echo $user_name; ?>' tabindex='2'>
+									</div>
+								</div>
+
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {if ($role != '3') { ?>style="display: none" <?php }} //staff only have remarks?>>
+									<div class="form-group">
+										<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="remarks" name="remarks" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='4' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+" readonly>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {if ($role == '3') { ?>style="display: none" <?php }/*staff dont have declaration*/} ?>>
+									<div class="form-group">
+										<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='5' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+" readonly>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				<!-- Request Info ENd-->
 				<!-- Collection Info -->
 				<div class="card collection_card">
 					<div class="card-header">
@@ -664,7 +719,7 @@ if($idupd>0)
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel">Fine</h5>
+                <h5 class="modal-title" id="myLargeModalLabel">Add Fine</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetcollCharges()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -674,15 +729,8 @@ if($idupd>0)
                 <div id="collChargeInsertOk" class="successalert"> Fine Added Successfully
                     <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
                 </div>
-                <!-- <div id="bankUpdateok" class="successalert"> Bank Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-                </div> -->
                 <div id="collChargeNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
                 </div>
-                <!-- <div id="bankDeleteOk" class="unsuccessalert"> Bank Info Deleted
-                    <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-                </div>
-                <div id="bankDeleteNotOk" class="unsuccessalert"> Bank Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-                </div> -->
                 <br />
                 <div class="row">
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -736,3 +784,74 @@ if($idupd>0)
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Fine Add Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Commitment Add Modal Start ////////////////////////////////////////////////////////////////////// -->
+<!-- <div class="modal fade collectionCharges" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Add Commitment</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetCommitment()">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				
+				<div id="collChargeInsertOk" class="successalert">Commitment Added Successfully
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+				<div id="collChargeNotOk" class="unsuccessalert">Something Went Wrong!
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="collectionCharge_date">Date</label> <span class="required">&nbsp;*</span>
+							<input type="hidden" class="form-control" id="cc_req_id" name="cc_req_id">
+							<input type="date" class="form-control" id="collectionCharge_date" name="collectionCharge_date">
+							<span class="text-danger" id="collectionChargeDateCheck">Select Date</span>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="collectionCharge_purpose">Purpose</label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="collectionCharge_purpose" name="collectionCharge_purpose" placeholder="Enter Purpose" onkeydown="return /[a-z ]/i.test(event.key)">
+							<span class="text-danger" id="purposeCheck">Enter Purpose</span>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="collectionCharge_Amnt">Amount</label> <span class="required">&nbsp;*</span>
+							<input type="number" class="form-control" id="collectionCharge_Amnt" name="collectionCharge_Amnt" placeholder="Enter Amount">
+							<span class="text-danger" id="amntCheck">Enter Amount</span>
+						</div>
+					</div>
+					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+						<button type="button" tabindex="2" name="collChargeBtn" id="collChargeBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+					</div>
+				</div>
+				<br />
+				<div id="collChargeTableDiv">
+					<table class="table custom-table modalTable">
+						<thead>
+							<tr>
+								<th width="15%">S.No</th>
+								<th>Date</th>
+								<th>Purpose</th>
+								<th>Amount</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetCommitment()">Close</button>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<!-- /////////////////////////////////////////////////////////////////// Commitment Add Modal END ////////////////////////////////////////////////////////////////////// -->

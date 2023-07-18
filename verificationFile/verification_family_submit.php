@@ -2,7 +2,7 @@
 require '../ajaxconfig.php';
 
 $reqId                   = $_POST['reqId'];
-$cus_id                   = $_POST['cus_id'];
+$cus_id                   = preg_replace('/\D/', '',$_POST['cus_id']);
 $famname                 = $_POST['famname'];
 $realtionship            = $_POST['realtionship'];
 
