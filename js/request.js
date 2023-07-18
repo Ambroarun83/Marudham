@@ -40,9 +40,26 @@ $(document).ready(function () {
         getAgentBasedLoanCategory(agent_id);
     })
 
-    // $('#cus_id').blur(function(){
-        
-    // })
+    $('#cus_status').click(function(){
+        let cus_id = $('#cus_id').val();
+        if(cus_id == ''){
+            alert('Please Enter Customer ID!');
+            $(this).removeAttr('data-toggle').removeAttr('data-target')
+        }else{
+            $(this).attr('data-toggle','modal').attr('data-target','.customerstatus')
+            $.ajax({
+                url:'requestFile/getCustomerStatus.php',
+                data: {"cus_id":cus_id},
+                // dataType: 'json',
+                type:'post',
+                cachec: false,
+                success: function(response){
+                    $('#cusHistoryTable').empty();
+                    $('#cusHistoryTable').html(response);
+                }
+            })
+        }
+    })
 
     $('#dob').change(function(){//Age Calculation
         var myDate = new Date($("#dob").val()),

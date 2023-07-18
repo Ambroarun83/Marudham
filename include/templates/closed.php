@@ -384,24 +384,29 @@ if($idupd>0)
 					<div class="card-body">
                         <div class="row">
 
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-center">
 								<div class="form-group">
 									<button type="button" class="btn btn-primary due-chart" id="due_chart" name="due_chart" data-toggle="modal" data-target=".DueChart" style="padding: 10px 35px;width: 100%;"> Due Chart </button>
 								</div>
 							</div>
 
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-center">
 								<div class="form-group">
 									<button type="button" class="btn btn-primary penalty-chart" id="penalty_chart" name="penalty_chart" data-toggle="modal" data-target=".PenaltyChart" style="padding: 10px 35px;width: 100%;"> Penalty Chart </button>
 								</div>
 							</div>
 
-                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 text-center">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-center">
 								<div class="form-group">
 									<button type="button" class="btn btn-primary coll-charge-chart" id="collection_charge_chart" name="collection_charge_chart" data-toggle="modal" data-target=".collectionChargeChart" style="padding: 10px 35px;width: 100%;"> Fine Chart </button>
 								</div>
 							</div>
 
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-center">
+								<div class="form-group">
+									<button type="button" class="btn btn-primary commitment-chart" id="commitment_chart" name="commitment_chart" data-toggle="modal" data-target=".commitmentChart" style="padding: 10px 35px;width: 100%;"> Commitment Chart </button>
+								</div>
+							</div>
 						</div>
 
 						<hr>

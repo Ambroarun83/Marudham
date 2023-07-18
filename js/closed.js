@@ -283,7 +283,7 @@ function getCustomerLoanCounts(){
     })
     getCustomerSummary();//to get income details
 }
-function getCustomerSummary(){console.log('asdasdf')
+function getCustomerSummary(){
     let cus_id = $('#cusidupd').val()
     $.ajax({
         url: 'closedFile/getCustomerSummary.php',

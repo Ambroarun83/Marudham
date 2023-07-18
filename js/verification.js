@@ -3927,24 +3927,26 @@ function getDocumentHistory(){
         type:'post',
         cache: false,
         success: function(response){
+            // if(response.DESCRIPTION != null ){//check json response is not empty
+
             
-            for(var i=0;i< response['pending_customer'].length;i++){
-                pending_arr[i] = response['pending_customer'][i]
-                od_arr[i] = response['od_customer'][i]
-                due_nil_arr[i] = response['due_nil_customer'][i]
-                closed_arr[i] = response['closed_customer'][i]
-                balAmnt[i] = response['balAmnt'][i]
-            }
-            var pending_sts = pending_arr.join(',');
-            $('#pending_sts').val(pending_sts);
-            var od_sts = od_arr.join(',');
-            $('#od_sts').val(od_sts);
-            var due_nil_sts = due_nil_arr.join(',');
-            $('#due_nil_sts').val(due_nil_sts);
-            var closed_sts = closed_arr.join(',');
-            $('#closed_sts').val(closed_sts);
-            balAmnt = balAmnt.join(',');
-            
+                for(var i=0;i< response['pending_customer'].length;i++){
+                    pending_arr[i] = response['pending_customer'][i]
+                    od_arr[i] = response['od_customer'][i]
+                    due_nil_arr[i] = response['due_nil_customer'][i]
+                    closed_arr[i] = response['closed_customer'][i]
+                    balAmnt[i] = response['balAmnt'][i]
+                }
+                var pending_sts = pending_arr.join(',');
+                $('#pending_sts').val(pending_sts);
+                var od_sts = od_arr.join(',');
+                $('#od_sts').val(od_sts);
+                var due_nil_sts = due_nil_arr.join(',');
+                $('#due_nil_sts').val(due_nil_sts);
+                var closed_sts = closed_arr.join(',');
+                $('#closed_sts').val(closed_sts);
+                balAmnt = balAmnt.join(',');
+            // }
         }
     }).then(function(){
         var pending_sts = $('#pending_sts').val()
@@ -4213,6 +4215,7 @@ function doc_submit_validation() {
 //////////////////////////////////////////////////////////////////// Loan Calculation Functions Start ///////////////////////////////////////////////////////////////////////////////
 function onLoadEditFunction(){//On load for Loan Calculation edit
     verificationPerson(); //To Select verification Person in Verification Info.////// 
+    getVerificationHistory();//to get loan history, as same as document history but here action buttons are changing
 }
 
 $('#loan_category').change(function(){
@@ -4560,6 +4563,183 @@ function getLoaninfo(sub_cat_id){
         }
     })
 }
+
+//////////////////////// Verification history
+
+//loan history table contents get from closed file loan lists
+function getVerificationHistory(){
+    let cus_id = $('#cus_id_loan').val();let req_id = $('#req_id').val();
+    //To get loan sub Status
+    var pending_arr = [];
+    var od_arr = [];
+    var due_nil_arr = [];
+    var closed_arr = [];
+    var balAmnt = [];
+    $.ajax({
+        url: 'closedFile/resetCustomerStsForClosed.php',
+        data: {'cus_id':cus_id},
+        dataType:'json',
+        type:'post',
+        cache: false,
+        success: function(response){
+            // if(response.DESCRIPTION != null ){//check json response is not empty
+                for(var i=0;i< response['pending_customer'].length;i++){
+                    pending_arr[i] = response['pending_customer'][i]
+                    od_arr[i] = response['od_customer'][i]
+                    due_nil_arr[i] = response['due_nil_customer'][i]
+                    closed_arr[i] = response['closed_customer'][i]
+                    balAmnt[i] = response['balAmnt'][i]
+                }
+                var pending_sts = pending_arr.join(',');
+                $('#pending_sts').val(pending_sts);
+                var od_sts = od_arr.join(',');
+                $('#od_sts').val(od_sts);
+                var due_nil_sts = due_nil_arr.join(',');
+                $('#due_nil_sts').val(due_nil_sts);
+                var closed_sts = closed_arr.join(',');
+                $('#closed_sts').val(closed_sts);
+                balAmnt = balAmnt.join(',');
+            // }
+        }
+    }).then(function(){
+        var pending_sts = $('#pending_sts').val()
+        var od_sts = $('#od_sts').val()
+        var due_nil_sts = $('#due_nil_sts').val()
+        var closed_sts = $('#closed_sts').val()
+        var bal_amt = balAmnt;
+        $.ajax({
+            //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
+            url: 'verificationFile/LoanCalculation/getVerificationHistory.php',
+            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
+            type:'post',
+            cache: false,
+            success: function(response){
+                $('#verificationHistoryDiv').empty()
+                $('#verificationHistoryDiv').html(response);
+            }
+        }).then(function(){
+            $('.due-chart').click(function(){
+                var req_id = $(this).data('reqid');var cus_id = $(this).data('cusid');
+                dueChartList(req_id,cus_id);
+            });
+            $('.penalty-chart').click(function(){
+                var req_id = $(this).data('reqid');var cus_id = $(this).data('cusid');
+                penaltyChartList(req_id,cus_id);
+            })
+            $('.collcharge-chart').click(function(){
+                var req_id = $(this).data('reqid');
+                collectionChargeChartList(req_id);
+            })
+            $('.loansummary-chart').click(function(){
+                var req_id = $(this).data('reqid');var cus_id = $(this).data('cusid');
+                loanSummaryList(req_id,cus_id);
+            })
+        })
+    })
+
+}
+//Due Chart List
+function dueChartList(req_id,cus_id){
+    $.ajax({
+        url: 'collectionFile/getDueChartList.php',
+        data: {'req_id':req_id,'cus_id':cus_id},
+        type:'post',
+        cache: false,
+        success: function(response){
+            $('#dueChartTableDiv').empty()
+            $('#dueChartTableDiv').html(response)
+        }
+    }).then(function(){// print function
+        $('.print_due_coll').off('click');
+        $('.print_due_coll').click(function(){
+            var id = $(this).attr('value');
+            Swal.fire({
+                title: 'Print',
+                text: 'Do you want to print this collection?',
+                // icon: 'question',
+                // showConfirmButton: true,
+                // confirmButtonColor: '#009688',
+                imageUrl: 'img/printer.png',
+                imageWidth: 300,
+                imageHeight: 210,
+                imageAlt: 'Custom image',
+                showCancelButton: true,
+                confirmButtonColor: '#009688',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'No',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url:'collectionFile/print_collection.php',
+                        data:{'coll_id':id},
+                        type:'post',
+                        cache:false,
+                        success:function(html){
+                            $('#printcollection').html(html)
+                            // Get the content of the div element
+                            var content = $("#printcollection").html();
+
+                            // Create a new window
+                            var w = window.open();
+
+                            // Write the content to the new window
+                            $(w.document.body).html(content);
+
+                            // Print the new window
+                            w.print();
+
+                            // Close the new window
+                            w.close();
+                        }
+                    })
+                }
+            })
+        })
+    })
+}
+//Penalty Chart List
+function penaltyChartList(req_id,cus_id){
+    $.ajax({
+        url: 'collectionFile/getPenaltyChartList.php',
+        data: {'req_id':req_id,'cus_id':cus_id},
+        type:'post',
+        cache: false,
+        success: function(response){
+            $('#penaltyChartTableDiv').empty()
+            $('#penaltyChartTableDiv').html(response)
+        }
+    });//Ajax End.
+}
+//Collection Charge Chart List
+function collectionChargeChartList(req_id){
+    $.ajax({
+        url: 'collectionFile/getCollectionChargeList.php',
+        data: {'req_id':req_id},
+        type:'post',
+        cache: false,
+        success: function(response){
+            $('#collectionChargeDiv').empty()
+            $('#collectionChargeDiv').html(response)
+        }
+    });//Ajax End.
+}
+//Loan Summary Chart List
+function loanSummaryList(req_id,cus_id) {
+    $.ajax({
+        url: 'closedFile/loan_summary_list.php',
+        type: 'POST',
+        data: { "reqId": req_id },
+        cache: false,
+        success: function (html) {
+            $("#loanSummaryDiv").empty();
+            $("#loanSummaryDiv").html(html);
+            // $('#feedback_table1').DataTable().destroy();
+        }
+    });
+}
+
+//////////////////////// Verification history END
 
 //to fetch Calculation based inputs
 function profitCalculationInfo(){

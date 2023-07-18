@@ -31,7 +31,7 @@ function moneyFormatIndia($num)
 <table class="table custom-table" id='collectionChargeListTable'>
     <thead>
         <tr>
-            <th width='50'> S.No </th>
+            <th width='5'> S.No </th>
             <th> Date </th>
             <th> Fine </th>
             <th> Purpose </th>
@@ -62,11 +62,11 @@ function moneyFormatIndia($num)
             $bal_amnt = $charge - $paid - $waiver;
         ?>
             <tr>
-                <td width='15'><?php echo $i; ?></td>
-                <td><?php echo $row['coll_date']; ?></td>
+                <td><?php echo $i; ?></td>
+                <td><?php if(isset($row['coll_date'])) echo date('d-m-Y',strtotime($row['coll_date'])); ?></td>
                 <td><?php echo $collCharges; ?></td>
                 <td><?php echo $row['coll_purpose']; ?></td>
-                <td><?php echo $row['paid_date']; ?></td>
+                <td><?php if(isset($row['paid_date'])) echo date('d-m-Y',strtotime($row['paid_date'])); ?></td>
                 <td><?php echo $paidAmount; ?></td>
                 <td><?php echo $bal_amnt; ?></td>
                 <td><?php echo $waiverAmount; ?></td>

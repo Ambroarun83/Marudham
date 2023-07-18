@@ -36,6 +36,12 @@ else
     $selectIC = $con->query("UPDATE `in_acknowledgement` SET `cus_status`= 14,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
     $insertIssue = $con->query("UPDATE `in_issue` SET `loan_id` = '$loan_id',`cus_status`= 14,`updated_date`=current_timestamp,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
 
+    $qry = $con->query("SELECT ag_id FROM in_verification where req_id = $req_id ");
+    $ag_id = $qry->fetch_assoc()['ag_id'];
+    if($ag_id > 0 and $ag_id != '' and $ag_id != null){//if agent id is mentioned for this request, then this request is directly moving to collection without issuing cash
+        //insert query need to be places here and in cash tally issued should be edited as per this agent id. if agent id mentioned then no need to take that issued debit
+    }
+
     $response = 'Loan Issue Completed';
     echo json_encode($response);
 ?>
