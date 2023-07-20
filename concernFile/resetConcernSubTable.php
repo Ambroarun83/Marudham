@@ -5,9 +5,9 @@ include '../ajaxconfig.php';
 <table class="table custom-table" id="concernsubjectTable"> 
     <thead>
         <tr>
-            <th width="25">S. NO</th>
-            <th>LOAN CATEGORY</th>
-            <th>ACTION</th>
+            <th width="25">S.No</th>
+            <th>Subject</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>

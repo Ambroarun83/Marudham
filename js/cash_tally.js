@@ -1462,6 +1462,14 @@ function resetBlncSheet(){
     $('#exp_cat_type').val('');
     $('#exp_cat_typeDiv').hide();
     $('#exp_typeDiv').hide();
+    $('#IDE_type').val('');
+    $('#IDE_view_type').val('');
+    $('#IDE_name_list').val('');
+    $('#IDE_name_area').val('');
+    $('#IDE_Div').hide();
+    $('#ag_view_type').val('');
+    $('#ag_namewiseDiv').val('');
+    $('#ag_typeDiv').hide();
 }
 
 function getIDEBalanceSheet(){

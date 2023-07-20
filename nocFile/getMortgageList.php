@@ -27,13 +27,14 @@ function getfamName($con,$rel_id){
     <tbody>
 
         <?php
+        $i=1;
         $qry = $con->query("SELECT * from acknowlegement_documentation where req_id=$req_id ");
         $row = $qry->fetch_assoc();
         ?>
                 <?php if($row['mortgage_process'] == '0'){
                     ?>
                 <tr>
-                    <td></td>
+                    <td><?php echo $i;$i++;?></td>
                     <td>Mortgage Process</td>
 
                     <td><span id='mort_noc_date' name='mort_noc_date' class="mort_noc_date"><?php if($row['mort_noc_date'] != ''){echo date('d-m-Y',strtotime($row['mort_noc_date']));}?></span></td>
@@ -85,22 +86,22 @@ function getfamName($con,$rel_id){
 
 <script type='text/javascript'>
     $(function() {
-        $('#mortgageTable').DataTable({
-            "title":"Signed Document List",
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
+        // $('#mortgageTable').DataTable({
+        //     "title":"Signed Document List",
+        //     'processing': true,
+        //     'iDisplayLength': 5,
+        //     "lengthMenu": [
+        //         [10, 25, 50, -1],
+        //         [10, 25, 50, "All"]
+        //     ],
+        //     "createdRow": function(row, data, dataIndex) {
+        //         $(row).find('td:first').html(dataIndex + 1);
+        //     },
+        //     "drawCallback": function(settings) {
+        //         this.api().column(0).nodes().each(function(cell, i) {
+        //             cell.innerHTML = i + 1;
+        //         });
+        //     },
+        // });
     });
 </script>

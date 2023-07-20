@@ -30,6 +30,7 @@ function getfamName($con,$rel_id){
     </thead>
     <tbody>
         <?php
+        $i=1;
         $qry = $con->query("SELECT a.id,a.cheque_holder_type,a.cheque_holder_name,a.cheque_no,a.noc_given,a.noc_date,a.noc_person,a.noc_name,b.cheque_relation,b.chequebank_name from `cheque_no_list` a JOIN cheque_info b on a.cheque_table_id = b.id where a.req_id = $req_id && a.used_status != '1' ");
         while($row = $qry->fetch_assoc()){
 
@@ -41,7 +42,7 @@ function getfamName($con,$rel_id){
 
         ?>
             <tr>
-                <td></td>
+                <td><?php echo $i;$i++;?></td>
                 <td><?php if($row['cheque_holder_type'] == '0'){echo 'Customer';}elseif($row['cheque_holder_type'] == '1'){echo 'Guarentor';}elseif($row['cheque_holder_type'] == '2'){echo 'Family Member';}else ?></td>
                 <td><?php echo $holder_name;?></td>
                 <td><?php echo $row['cheque_relation'];?></td>
@@ -73,22 +74,22 @@ function getfamName($con,$rel_id){
 
 <script type='text/javascript'>
     $(function() {
-        $('#chequeTable').DataTable({
-            "title":"Signed Document List",
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
+        // $('#chequeTable').DataTable({
+        //     "title":"Cheque Document List",
+        //     'processing': true,
+        //     'iDisplayLength': 5,
+        //     "lengthMenu": [
+        //         [10, 25, 50, -1],
+        //         [10, 25, 50, "All"]
+        //     ],
+        //     "createdRow": function(row, data, dataIndex) {
+        //         $(row).find('td:first').html(dataIndex + 1);
+        //     },
+        //     "drawCallback": function(settings) {
+        //         this.api().column(0).nodes().each(function(cell, i) {
+        //             cell.innerHTML = i + 1;
+        //         });
+        //     },
+        // });
     });
 </script>

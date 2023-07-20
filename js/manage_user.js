@@ -222,6 +222,12 @@ $(document).ready(function () {
         checkbox(checkboxesToEnable,nocmodule);
     });
 
+    $("#updatemodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.update-checkbox");
+        var updatemodule = document.querySelector('#updatemodule');
+        checkbox(checkboxesToEnable,updatemodule);
+    });
+
     $("#concernmodule").on("change", function() {
         const checkboxesToEnable = document.querySelectorAll("input.concern-checkbox");
         var concernmodule = document.querySelector('#concernmodule');
@@ -297,6 +303,7 @@ $(function(){
         var collectionmodule = document.getElementById('collectionmodule');
         var closedmodule = document.getElementById('closedmodule');
         var nocmodule = document.getElementById('nocmodule');
+        var updatemodule = document.getElementById('updatemodule');
         var concernmodule = document.getElementById('concernmodule');
         var accountsmodule = document.getElementById('accountsmodule');
         if(mastermodule.checked){const checkboxesToEnable = document.querySelectorAll("input.master-checkbox");var mastermodule = document.querySelector('#mastermodule');checkbox(checkboxesToEnable,mastermodule);}
@@ -309,6 +316,7 @@ $(function(){
         if(collectionmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.collection-checkbox");var collectionmodule = document.querySelector('#collectionmodule');checkbox(checkboxesToEnable,collectionmodule);}
         if(closedmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.closed-checkbox");var closedmodule = document.querySelector('#closedmodule');checkbox(checkboxesToEnable,closedmodule);}
         if(nocmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.noc-checkbox");var nocmodule = document.querySelector('#nocmodule');checkbox(checkboxesToEnable,nocmodule);}
+        if(updatemodule.checked){const checkboxesToEnable = document.querySelectorAll("input.update-checkbox");var updatemodule = document.querySelector('#updatemodule');checkbox(checkboxesToEnable,updatemodule);}
         if(concernmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.concern-checkbox");var concernmodule = document.querySelector('#concernmodule');checkbox(checkboxesToEnable,concernmodule);}
         if(accountsmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.accounts-checkbox");var accountsmodule = document.querySelector('#accountsmodule');checkbox(checkboxesToEnable,accountsmodule);}
     }else{

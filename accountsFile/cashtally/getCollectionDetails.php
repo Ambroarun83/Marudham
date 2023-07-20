@@ -24,7 +24,7 @@ foreach($branch_id as $val){
         //get username by user id to shortlist
         $usernameqry = $con->query("SELECT us.fullname,us.role,us.line_id,lm.line_name from user us JOIN area_line_mapping lm ON us.line_id = lm.map_id where us.user_id = '".strip_tags($row['insert_login_id'])."' ");
         $row1 = $usernameqry->fetch_assoc();
-        if($row1['role'] != '2'){
+        if($row1['role'] != '2'){ // check if inserted person is not agent here by checking role 
 
             $records[$i]['user_name'] = $row1['fullname'];
             $records[$i]['user_type'] = $row1['role'];
@@ -99,7 +99,7 @@ foreach($branch_id as $val){
         <?php
             $pre_bal = 0;
             for($i=0;$i<sizeof($records);$i++){
-                if($records[$i]['pre_bal'] != '0'){
+                if(isset($records[$i]['pre_bal']) and $records[$i]['pre_bal'] != '0'){
         ?>
             <tr>
                 <td></td>

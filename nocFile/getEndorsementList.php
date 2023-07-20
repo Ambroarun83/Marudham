@@ -26,13 +26,14 @@ function getfamName($con,$rel_id){
     <tbody>
 
         <?php
+        $i=1;
         $qry = $con->query("SELECT * from acknowlegement_documentation  where req_id=$req_id");
         $row = $qry->fetch_assoc();
         ?>
                 <?php if($row['endorsement_process'] == '0'){
                     ?>
                 <tr>
-                    <td></td>
+                    <td><?php echo $i;$i++;?></td>
                     <td>Endorsement Process</td>
 
                     <td><span id='endorse_noc_date' name='endorse_noc_date' class="endorse_noc_date"><?php if($row['endor_noc_date'] != ''){echo date('d-m-Y',strtotime($row['endor_noc_date']));}?></span></td>
@@ -56,7 +57,7 @@ function getfamName($con,$rel_id){
                 <?php if($row['en_RC'] == '0' && $row['Rc_document_pending'] != 'YES' && $row['en_RC_used'] != '1'){
                     ?>
                 <tr>
-                    <td></td>
+                    <td><?php echo $i;$i++;?></td>
                     <td>RC</td>
 
                     <td><span id='endorse_noc_date' name='endorse_noc_date' class="endorse_noc_date"><?php if($row['en_rc_noc_date'] != ''){echo date('d-m-Y',strtotime($row['en_rc_noc_date']));}?></span></td>
@@ -80,7 +81,7 @@ function getfamName($con,$rel_id){
                 <?php if($row['en_Key'] == '0' && $row['en_Key_used'] != '1'){
                     ?>
                 <tr>
-                    <td></td>
+                    <td><?php echo $i;$i++;?></td>
                     <td>Key</td>
 
                     <td><span id='endorse_noc_date' name='endorse_noc_date' class="endorse_noc_date"><?php if($row['en_key_noc_date'] != ''){echo date('d-m-Y',strtotime($row['en_key_noc_date']));}?></span></td>
@@ -107,22 +108,22 @@ function getfamName($con,$rel_id){
 
 <script type='text/javascript'>
     $(function() {
-        $('#endorsementTable').DataTable({
-            "title":"Endorsement List",
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
+        // $('#endorsementTable').DataTable({
+        //     "title":"Endorsement List",
+        //     'processing': true,
+        //     'iDisplayLength': 5,
+        //     "lengthMenu": [
+        //         [10, 25, 50, -1],
+        //         [10, 25, 50, "All"]
+        //     ],
+        //     "createdRow": function(row, data, dataIndex) {
+        //         $(row).find('td:first').html(dataIndex + 1);
+        //     },
+        //     "drawCallback": function(settings) {
+        //         this.api().column(0).nodes().each(function(cell, i) {
+        //             cell.innerHTML = i + 1;
+        //         });
+        //     },
+        // });
     });
 </script>

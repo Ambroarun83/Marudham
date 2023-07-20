@@ -36,10 +36,18 @@ else
     $selectIC = $con->query("UPDATE `in_acknowledgement` SET `cus_status`= 14,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
     $insertIssue = $con->query("UPDATE `in_issue` SET `loan_id` = '$loan_id',`cus_status`= 14,`updated_date`=current_timestamp,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
 
-    $qry = $con->query("SELECT ag_id FROM in_verification where req_id = $req_id ");
-    $ag_id = $qry->fetch_assoc()['ag_id'];
+    $qry = $con->query("SELECT agent_id FROM in_verification where req_id = $req_id ");
+    $ag_id = $qry->fetch_assoc()['agent_id'];
     if($ag_id > 0 and $ag_id != '' and $ag_id != null){//if agent id is mentioned for this request, then this request is directly moving to collection without issuing cash
+        $qry = $con->query("SELECT cus_id_loan,loan_amt_cal, net_cash_cal from acknowlegement_loan_calculation where req_id = $req_id ");
+        $row = $qry->fetch_assoc();
+        $cus_id = $row['cus_id_loan'];
+        $loan_amt = $row['loan_amt_cal'];
+        $net_cash = $row['net_cash_cal'];
+
         //insert query need to be places here and in cash tally issued should be edited as per this agent id. if agent id mentioned then no need to take that issued debit
+        $qry = $con->query("INSERT INTO `loan_issue` (`req_id`, `cus_id`, `issued_to`, `agent_id`, `cash`, `balance_amount`, `loan_amt`, `net_cash`, `insert_login_id`,`created_date`) 
+        VALUES ('$req_id', '$cus_id', 'Agent', '$ag_id', '$net_cash', '0', '$loan_amt', '$net_cash', '$userid', now()) ");
     }
 
     $response = 'Loan Issue Completed';
