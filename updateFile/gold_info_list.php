@@ -27,7 +27,7 @@ function moneyFormatIndia($num)
 <table class="table custom-table" id="gold_table">
     <thead>
     <tr>
-            <th width="15%"> S.No </th>
+            <th width="50"> S.No </th>
             <th> Gold Status </th>
             <th> Gold Type </th>
             <th> Purity </th>
@@ -39,8 +39,9 @@ function moneyFormatIndia($num)
     <tbody>
 
         <?php
+        $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
-        $goldInfo = $connect->query("SELECT * FROM `gold_info` where cus_id = '$cus_id' order by id desc");
+        $goldInfo = $connect->query("SELECT * FROM `gold_info` where req_id = '$req_id' order by id desc");
 
         $i = 1;
         while ($gold = $goldInfo->fetch()) {
@@ -62,7 +63,7 @@ function moneyFormatIndia($num)
 
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(function() {
         $('#gold_table').DataTable({
             'processing': true,
@@ -81,4 +82,4 @@ function moneyFormatIndia($num)
             },
         });
     });
-</script>
+</script> -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2023 at 03:18 PM
+-- Generation Time: Jul 20, 2023 at 03:31 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -220,9 +220,9 @@ CREATE TABLE `acknowlegement_documentation` (
 --
 
 INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `mortgage_process_noc`, `mort_noc_date`, `mort_noc_person`, `mort_noc_name`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_noc`, `mort_doc_noc_date`, `mort_doc_noc_person`, `mort_doc_noc_name`, `mortgage_document_used`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `endorsement_process_noc`, `endor_noc_date`, `endor_noc_person`, `endor_noc_name`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `en_RC_noc`, `en_rc_noc_date`, `en_rc_noc_person`, `en_rc_noc_name`, `en_RC_used`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `en_Key_noc`, `en_key_noc_date`, `en_key_noc_person`, `en_key_noc_name`, `en_Key_used`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `doc_info_upload`, `doc_info_upload_noc`, `doc_info_upload_used`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `submitted`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, '2', '100010001000', 'Ganesan', '1', 'DOC-101', '0', '1', '2023-07-17', '1', 'Ganesan', '0', 'Ganesan', '', 'NIL', 'House', '20*10', 'Chennai', '45000', 'Aksha', 'Emp', '123465', 'Chennai', '40000', '', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '1', 'Aravindh', '', 'Brother', '0', '0', 'TVS', 'RTR', 'TN47AB1007', 'Aravindh', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, '', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '5', '5', NULL, '2023-07-06 10:14:58', '2023-07-06 10:14:58'),
+(1, '2', '100010001000', 'Ganesan', '1', 'DOC-101', '0', '1', '2023-07-17', '1', 'Ganesan', '0', 'Ganesan', '', 'NIL', 'House', '20*10', 'Chennai', '45000', 'Aksha', 'Emp', '123465', 'Chennai', '40000', '', '0', NULL, NULL, NULL, '0', '', 'NO', '0', '0', NULL, NULL, NULL, '1', 'Aravindh', '', 'Brother', '0', '0', 'TVS', 'RTR', 'TN47AB1007', 'Aravindh', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, '', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '5', '5', NULL, '2023-07-06 10:14:58', '2023-07-06 10:14:58'),
 (2, '6', '200020002000', 'Aravind', '3', 'DOC-102', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '0', 'Aravind', '', 'NIL', '0', '0', 'TVS', '100', 'TN47AB1005', 'Endore', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-07-10 13:17:40', '2023-07-10 13:17:40'),
-(4, '5', '100010001000', 'Ganesan', '4', 'DOC-103', '1', '0', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '1', 'Aravindh', '', 'Brother', '0', '0', 'TVS', 'RTR', 'TN47AB1006', 'Aravindh', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-01-13 10:21:06', '2023-01-13 10:21:06'),
+(4, '5', '100010001000', 'Ganesan', '4', 'DOC-103', '1', '0', NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '0', NULL, NULL, NULL, '0', '', 'NO', '0', '0', NULL, NULL, NULL, '1', 'Aravindh', '', 'Brother', '0', '0', 'TVS', 'RTR', 'TN47AB1006', 'Aravindh', '1', '0', NULL, NULL, NULL, '0', '', 'NO', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-01-13 10:21:06', '2023-01-13 10:21:06'),
 (5, '7', '300030003000', 'Rakesh', '2', 'DOC-104', '0', '0', NULL, NULL, NULL, '0', 'Rakesh', '', 'NIL', 'House', '10*10', 'Vilupuram', '67800', 'Jeevan Shuraksha', 'Manager', '123456', 'Vilupuram', '67800', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '5', '5', NULL, '2023-07-13 13:31:36', '2023-07-13 13:31:36'),
 (6, '8', '200020002000', 'Aravind', '5', 'DOC-105', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-01-01 16:17:35', '2023-01-01 16:17:35'),
 (7, '1', '010720232023', 'Bharath', '7', 'DOC-106', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '3', '3', NULL, '2023-07-18 18:33:48', '2023-07-18 18:33:48');
@@ -754,6 +754,13 @@ CREATE TABLE `cheque_upd` (
   `cheque_table_id` varchar(255) DEFAULT NULL,
   `upload_cheque_name` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cheque_upd`
+--
+
+INSERT INTO `cheque_upd` (`id`, `cus_id`, `req_id`, `cheque_table_id`, `upload_cheque_name`) VALUES
+(1, '100010001000', '2', '1', 'asdf.pdf');
 
 -- --------------------------------------------------------
 
@@ -2785,7 +2792,8 @@ INSERT INTO `signed_doc` (`id`, `cus_id`, `req_id`, `signed_doc_id`, `upload_doc
 (1, '100010001000', '2', '8', 'Order_ID_4479904631.pdf', '1', '2023-07-15', '2', '2', '0'),
 (2, '100010001000', '2', '7', 'Invoice_4479904631.pdf', '0', NULL, NULL, NULL, '0'),
 (3, '100010001000', '2', '5', 'Mantra_RD_Service_Manual_Windows.pdf', '0', NULL, NULL, NULL, '0'),
-(4, '100010001000', '2', '1', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '1', '2023-07-17', '1', 'Ganesan', '0');
+(4, '100010001000', '2', '1', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '1', '2023-07-17', '1', 'Ganesan', '0'),
+(6, '100010001000', '5', '9', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '0', '', '', '', '0');
 
 -- --------------------------------------------------------
 
@@ -4074,7 +4082,7 @@ ALTER TABLE `cheque_no_list`
 -- AUTO_INCREMENT for table `cheque_upd`
 --
 ALTER TABLE `cheque_upd`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `closed_status`
@@ -4440,7 +4448,7 @@ ALTER TABLE `request_creation`
 -- AUTO_INCREMENT for table `signed_doc`
 --
 ALTER TABLE `signed_doc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `signed_doc_info`

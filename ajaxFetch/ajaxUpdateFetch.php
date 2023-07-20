@@ -31,11 +31,12 @@ if($userid == 1){
 }else{
     $query = "SELECT * FROM customer_register  WHERE cus_status >= 13 && sub_area IN ($sub_area_list)";
 }
+$query .= " GROUP BY cus_id ";
 
 $query1 = '';
 
 if ($_POST['length'] != -1) {
-    $query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+    $query1 = ' LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
 
 $statement = $connect->prepare($query);
@@ -56,8 +57,30 @@ foreach ($result as $row) {
     $sub_array   = array();
 
     $sub_array[] = $sno;
-    $sub_array[] = $row['cus_id'];
+    $cus_id = $row['cus_id'];
+    $sub_array[] = $cus_id;
     $sub_array[] = $row['customer_name'];
+    
+    $areaqry = $con->query("SELECT area_name FROM area_list_creation where area_id = '".$row['area']."' ");
+    $sub_array[] = $areaqry->fetch_assoc()['area_name'];
+    
+    // $subareaqry = $con->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$row['sub_area']."' ");
+    // $sub_array[] = $subareaqry->fetch_assoc()['sub_area_name'];
+    
+    $branchqry = $con->query("SELECT bc.branch_name FROM area_group_mapping agm JOIN branch_creation bc ON agm.branch_id = bc.branch_id where  FIND_IN_SET('".$row['area']."' , agm.area_id) ");
+    $sub_array[] = $branchqry->fetch_assoc()['branch_name'];
+    
+    $lineqry = $con->query("SELECT line_name FROM area_line_mapping where  FIND_IN_SET('".$row['area']."' , area_id) ");
+    $sub_array[] = $lineqry->fetch_assoc()['line_name'];
+    
+    $grpqry = $con->query("SELECT group_name FROM area_group_mapping where FIND_IN_SET('".$row['area']."' , area_id) ");
+    $sub_array[] = $grpqry->fetch_assoc()['group_name'];
+
+    if(getDocumentStatus($con,$cus_id) == false){
+        $sub_array[] = 'Document Pending';
+    }else{
+        $sub_array[] = 'Document Completed';
+    }
 
     $id          = $row['cus_id'];
     $cus_id      = $row['cus_id'];
@@ -71,7 +94,7 @@ foreach ($result as $row) {
 
 function count_all_data($connect)
 {
-    $query     = "SELECT * FROM in_verification";
+    $query     = "SELECT * FROM customer_register";
     $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();
@@ -86,4 +109,86 @@ $output = array(
 
 echo json_encode($output);
 
+?>
+
+<?php
+
+function getDocumentStatus($con,$cus_id){
+    
+    $response1 = false;
+
+    $sts_qry = $con->query("SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' ");//echo "SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' "; 
+    if($sts_qry->num_rows > 0){
+        while($sts_row=$sts_qry->fetch_assoc()){
+            
+            $sts_qry1 = $con->query("SELECT * FROM signed_doc where cus_id = '$cus_id' and signed_doc_id='".$sts_row['id']."' "); //echo ' $sts_qry1->num_rows:',$sts_qry1->num_rows,' docCount:',$sts_row['doc_Count'],'---';
+            if($sts_qry1->num_rows == $sts_row['doc_Count'] ){ // check whether mentioned count of signed document has been collected from customer or not
+                $response1 = true;// if condition true then all documents are collected
+            }
+        }
+    }else{
+        $response1 = true;//if there is no cheque then direclty it will be considered as completed
+    }
+    
+
+
+    $response2 = false;
+    $sts_qry = $con->query("SELECT id,cheque_count FROM cheque_info where cus_id = '$cus_id' ");
+    if($sts_qry->num_rows > 0){
+
+        while($sts_row=$sts_qry->fetch_assoc()){
+            
+            $sts_qry1 = $con->query("SELECT * FROM cheque_upd where cus_id = '$cus_id' and cheque_table_id='".$sts_row['id']."' ");
+            if($sts_qry1->num_rows == $sts_row['cheque_count']){ // check whether mentioned count of Cheque has been collected from customer or not
+                $response2 = true;// if condition true then all documents are collected
+            }
+        }
+    }else{
+        $response2 = true;//if there is no cheque then direclty it will be considered as completed
+    }
+    
+
+    $response3 = false;
+    $sts_qry = $con->query("SELECT mortgage_document_pending,Rc_document_pending FROM acknowlegement_documentation where cus_id_doc = '$cus_id' ");
+
+    if($sts_qry->num_rows > 0){
+        while($sts_row=$sts_qry->fetch_assoc()){ //check any one of document for mortgage or endorsement is pending then response will be pending
+        
+            if($sts_row['mortgage_document_pending'] == 'YES' || $sts_row['Rc_document_pending'] == 'YES'){
+
+            }else{
+                $response3 = true;// if condition false then all documents are collected
+            }
+        }
+    }else{
+        $response3 = true;//if there is no cheque then direclty it will be considered as completed
+    }
+    
+
+    $response4 = true;
+    $sts_qry = $con->query("SELECT * FROM document_info where cus_id = '$cus_id' ");
+
+    if($sts_qry->num_rows > 0){
+        while($sts_row = $sts_qry->fetch_assoc()){
+
+            if($sts_row['doc_upload'] == '' || $sts_row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
+                $response4 = false;
+            }else if($response4 != false){ // in this stage current row of doc has been submitted but need to check the response is pending. if yes it should not changed to completed
+                $response4 = true;
+            }
+        }
+    }else{
+        $response4 = true;//if there is no cheque then direclty it will be considered as completed
+    }
+    
+    // var_dump($response4);
+
+    if($response1 == true and $response2 == true and $response3 == true and $response4 == true){
+        $response = true;
+    }else{
+        $response = false;
+    }
+    
+    return $response;
+}
 ?>

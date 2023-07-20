@@ -64,6 +64,12 @@
 								<th width="50">S.No.</th>
 								<th>Customer ID</th>
 								<th>Customer Name</th>
+								<th>Area</th>
+								<!-- <th>Sub Area</th> -->
+								<th>Branch</th>
+								<th>Line</th>
+								<th>Group</th>
+								<th>Document Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>

@@ -53,7 +53,9 @@ include '../ajaxconfig.php';
                 <td><?php echo $signed["doc_Count"]; ?></td>
                 <td><?php echo $doc_upd_name; ?></td>
                 <td>
-                    <a id="signed_doc_edit" value="<?php echo $signed['id']; ?>" style="text-decoration: underline;"> Upload </a> &nbsp
+                    <?php if($doc_upd_name == ''){?>
+                        <a id="signed_doc_edit" value="<?php echo $signed['id']; ?>" style="text-decoration: underline;"> Upload </a> &nbsp;
+                    <?php }?>
                 </td>
             </tr>
 
