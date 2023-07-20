@@ -35,13 +35,14 @@ function getGuarentorName($con,$req_id){
     </thead>
     <tbody>
         <?php
+        $i=1;
         $qry = $con->query("SELECT a.doc_name,a.sign_type,a.signType_relationship,b.id,b.upload_doc_name,b.noc_given,b.noc_date,b.noc_person,b.noc_name FROM `signed_doc_info` a join signed_doc b on a.id = b.signed_doc_id  where b.req_id = $req_id and b.used_status != '1' ");
         while($row = $qry->fetch_assoc()){
             $rel_id = $row['signType_relationship'];
             $name ='';
         ?>
             <tr>
-                <td></td>
+                <td><?php echo $i;$i++;?></td>
                 <td><?php if($row['doc_name'] == '0'){echo 'Promissory Note';}elseif($row['doc_name'] == '1'){echo 'Stamp Paper';}elseif($row['doc_name'] == '2'){echo 'P Additional';}elseif($row['doc_name'] == '3'){echo 'S Additional';}?></td>
                 <td><?php if($row['sign_type'] == '0'){echo 'Customer'; $name=$cus_name;}elseif($row['sign_type'] == '1'){echo 'Guarentor';$name = getGuarentorName($con,$req_id);}
                             elseif($row['sign_type'] == '2'){echo 'Combined';}elseif($row['sign_type'] == '3'){echo 'Family Member'; $name = getfamName($con,$rel_id);} ?></td>
@@ -74,22 +75,22 @@ function getGuarentorName($con,$req_id){
 
 <script type='text/javascript'>
     $(function() {
-        $('#signDocTable').DataTable({
-            "title":"Signed Document List",
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
+        // $('#signDocTable').DataTable({
+        //     "title":"Signed Document List",
+        //     'processing': true,
+        //     'iDisplayLength': 5,
+        //     "lengthMenu": [
+        //         [10, 25, 50, -1],
+        //         [10, 25, 50, "All"]
+        //     ],
+        //     "createdRow": function(row, data, dataIndex) {
+        //         $(row).find('td:first').html(dataIndex + 1);
+        //     },
+        //     "drawCallback": function(settings) {
+        //         this.api().column(0).nodes().each(function(cell, i) {
+        //             cell.innerHTML = i + 1;
+        //         });
+        //     },
+        // });
     });
 </script>

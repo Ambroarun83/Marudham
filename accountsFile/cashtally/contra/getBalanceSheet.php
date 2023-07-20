@@ -1371,128 +1371,6 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
         ");
         $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
         
-        // $closing_qry = $con->query("SELECT
-        //     IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
-        //     FROM (SELECT cl.total_paid_track as Credit, '' AS Debit
-        //         FROM collection cl JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(cl.insert_login_id,us.agentforstaff)
-        //         WHERE
-        //             cl.created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-                
-        //         UNION ALL
-
-        //         SELECT '' AS Credit, li.cash + li.cheque_value + li.transaction_value AS Debit  
-        //         FROM loan_issue li JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
-        //         WHERE
-        //             li.created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-                
-        //         UNION ALL
-
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_hag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_hag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-                
-        //         UNION ALL
-                
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_bag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_bag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT cl.total_paid_track as Credit, '' AS Debit
-        //         FROM collection cl JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(cl.insert_login_id,us.agentforstaff)
-        //         WHERE
-        //             MONTH(cl.created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(cl.created_date) = YEAR(CURRENT_DATE())
-        //             AND cl.insert_login_id = '$user_id'
-                
-        //         UNION ALL
-    
-        //         SELECT '' AS Credit, li.cash + li.cheque_value + li.transaction_value AS Debit  
-        //         FROM loan_issue li JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
-        //         WHERE
-        //             MONTH(li.created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(li.created_date) = YEAR(CURRENT_DATE())
-        //             AND li.insert_login_id = '$user_id'
-
-        //         UNION ALL
-
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_hag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_hag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-                
-        //         UNION ALL
-    
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_bag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_bag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-        //     ) AS closing
-        // ");
-        // $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
     }
 
 
@@ -1500,16 +1378,16 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     $qry = $con->query("SELECT cl.insert_login_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
     FROM collection cl JOIN user us 
     ON us.user_id = '$user_id' and FIND_IN_SET(cl.insert_login_id,us.agentforstaff)
-    WHERE MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE())
+    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE())
     
     UNION ALL
 
-    SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
-    FROM loan_issue li JOIN user us 
-    ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
-    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE())
+    -- SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
+    -- FROM loan_issue li JOIN user us 
+    -- ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
+    -- WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE())
 
-    UNION ALL
+    -- UNION ALL --issued amount should not be taken from loan issue for agent, coz agant transaction are separate
 
     SELECT ag_id, created_date AS tdate, '' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_hag 
@@ -1644,128 +1522,7 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
         ");
         $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
         
-        // $closing_qry = $con->query("SELECT
-        //     IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
-        //     FROM (SELECT cl.total_paid_track as Credit, '' AS Debit
-        //         FROM collection cl JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(cl.insert_login_id,us.agentforstaff)
-        //         WHERE
-        //             cl.created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-                
-        //         UNION ALL
-
-        //         SELECT '' AS Credit, li.cash + li.cheque_value + li.transaction_value AS Debit  
-        //         FROM loan_issue li JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
-        //         WHERE
-        //             li.created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-                
-        //         UNION ALL
-
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_hag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_hag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-                
-        //         UNION ALL
-                
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_bag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_bag
-        //         WHERE
-        //             created_date <= LAST_DAY(DATE_SUB(CURRENT_DATE(), INTERVAL 1 MONTH))
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT cl.total_paid_track as Credit, '' AS Debit
-        //         FROM collection cl JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(cl.insert_login_id,us.agentforstaff)
-        //         WHERE
-        //             MONTH(cl.created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(cl.created_date) = YEAR(CURRENT_DATE())
-        //             AND cl.insert_login_id = '$user_id'
-                
-        //         UNION ALL
-    
-        //         SELECT '' AS Credit, li.cash + li.cheque_value + li.transaction_value AS Debit  
-        //         FROM loan_issue li JOIN user us 
-        //         ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
-        //         WHERE
-        //             MONTH(li.created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(li.created_date) = YEAR(CURRENT_DATE())
-        //             AND li.insert_login_id = '$user_id'
-
-        //         UNION ALL
-
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_hag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_hag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-                
-        //         UNION ALL
-    
-        //         SELECT
-        //             '' AS Credit,
-        //             amt AS Debit
-        //         FROM ct_db_bag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-    
-        //         UNION ALL
-    
-        //         SELECT
-        //             amt AS Credit,
-        //             '' AS Debit
-        //         FROM ct_cr_bag
-        //         WHERE
-        //             MONTH(created_date) = MONTH(CURRENT_DATE())
-        //             AND YEAR(created_date) = YEAR(CURRENT_DATE())
-        //             AND insert_login_id = '$user_id'
-        //     ) AS closing
-        // ");
-        // $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
+        
     }
 
 
@@ -1773,16 +1530,16 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     $qry = $con->query("SELECT cl.insert_login_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
     FROM collection cl JOIN user us 
     ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
-    WHERE MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and cl.insert_login_id = '$ag_name'
+    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and cl.insert_login_id = '$ag_name'
     
     UNION ALL
 
-    SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
-    FROM loan_issue li JOIN user us 
-    ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
-    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE()) and li.agent_id = '$ag_name'
+    -- SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
+    -- FROM loan_issue li JOIN user us 
+    -- ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
+    -- WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE()) and li.agent_id = '$ag_name'
 
-    UNION ALL
+    -- UNION ALL --issued amount should not be taken from loan issue for agent, coz agant transaction are separate
 
     SELECT ag_id, created_date AS tdate, '' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_hag 

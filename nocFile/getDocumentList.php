@@ -49,6 +49,7 @@ function getfamName($con,$rel_id){
     </thead>
     <tbody>
         <?php
+        $k=1;
             // $qry = $con->query("SELECT ac.id,ac.document_name,ac.document_type,ac.doc_info_upload,ac.document_holder,ac.docholder_name,ac.docholder_relationship_name,ac.doc_info_upload_noc,fam.famname from acknowlegement_documentation ac Left JOIN verification_family_info fam ON ac.docholder_relationship_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_used != '1' ");
             $qry = $con->query("SELECT ac.id as doc_id,ac.doc_name,ac.doc_type,ac.doc_upload,ac.doc_holder,ac.holder_name,ac.`relation_name`,ac.`doc_info_upload_noc`,ac.noc_date,ac.noc_person,ac.noc_name,fam.famname,fam.id
             from document_info ac Left JOIN verification_family_info fam ON ac.relation_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_used != '1' AND ac.doc_upload !=''");
@@ -58,7 +59,7 @@ function getfamName($con,$rel_id){
                 for($i=0;$i<sizeof($upd_arr);$i++){
                     ?>
                     <tr>
-                        <td></td>
+                        <td><?php echo $k;$k++;?></td>
                         <td><?php echo $row['doc_name'];?></td>
                         <td><?php if($row['doc_type'] == '0'){echo 'Original';}elseif($row['doc_type'] == '1'){echo 'Xerox';};?></td>
                         <td><?php if($row['doc_holder'] != '2'){echo $row['holder_name'];}else{echo $row['famname'];}?></td>
@@ -90,22 +91,22 @@ function getfamName($con,$rel_id){
 
 <script type='text/javascript'>
     $(function() {
-        $('#documentTable').DataTable({
-            "title":"Document List",
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
+        // $('#documentTable').DataTable({
+        //     "title":"Document List",
+        //     'processing': true,
+        //     'iDisplayLength': 5,
+        //     "lengthMenu": [
+        //         [10, 25, 50, -1],
+        //         [10, 25, 50, "All"]
+        //     ],
+        //     "createdRow": function(row, data, dataIndex) {
+        //         $(row).find('td:first').html(dataIndex + 1);
+        //     },
+        //     "drawCallback": function(settings) {
+        //         this.api().column(0).nodes().each(function(cell, i) {
+        //             cell.innerHTML = i + 1;
+        //         });
+        //     },
+        // });
     });
 </script>

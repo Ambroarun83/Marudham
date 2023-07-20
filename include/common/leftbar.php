@@ -54,6 +54,10 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'noc';
 
+}else if($current_page == 'edit_update' || $current_page == 'update' ){
+
+	$current_module = 'update';
+
 }else if($current_page == 'edit_concern_creation' || $current_page == 'edit_concern_solution' || $current_page == 'concern_creation' || $current_page == 'concern_solution' || $current_page == 'concern_solution_view' || $current_page == 'edit_concern_feedback' || $current_page == 'concern_feedback'){
 
 	$current_module = 'concerncreation';
@@ -133,6 +137,8 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$updatemodule = '';
+$update_screen = '' ;
 $concernmodule = '';
 $concern_creation = '';
 $concern_solution = '';
@@ -189,6 +195,8 @@ if (sizeof($getUser)>0) {
 		$closed          		     = $getUser['closed'];
 		$nocmodule          		     = $getUser['nocmodule'];
 		$noc          		     = $getUser['noc'];
+		$updatemodule          		     = $getUser['updatemodule'];
+		$update_screen          		     = $getUser['update_screen'];
 		$concernmodule          		     = $getUser['concernmodule'];
 		$concern_creation          		     = $getUser['concern_creation'];
 		$concern_solution          		     = $getUser['concern_solution'];
@@ -554,15 +562,15 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
-				<?php if($concernmodule == 0){ ?>
+				<?php if($updatemodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
 							<i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Update</span>
                         </a>
-                        <div class="sidebar-submenu" <?php if($current_module=='concerncreation') echo 'style="display:block" '; ?>>
+                        <div class="sidebar-submenu" <?php if($current_module=='update') echo 'style="display:block" '; ?>>
                             <ul>
-                                <?php  if($concern_creation == 0){ ?>
+                                <?php  if($update_screen == 0){ ?>
                                     <li>
                                         <a href="edit_update"><i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>Update</a>
                                     </li>
@@ -613,7 +621,7 @@ if (sizeof($getUser)>0) {
                                 <?php  } ?>
                                 <?php  if($bank_clearance == 0){ ?>
                                     <li>
-                                        <a href="bank_clearance"><i><object class="svg-icon" data="svg/bank_clearance.svg" type="image/svg+xml"></object></i>Bank Clearance</a>
+                                        <a href="edit_bank_clearance"><i><object class="svg-icon" data="svg/bank_clearance.svg" type="image/svg+xml"></object></i>Bank Clearance</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -676,6 +684,8 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$updatemodule = '';
+$update_screen = '';
 $concernmodule = '';
 $concern_creation = '';
 $concern_solution = '';

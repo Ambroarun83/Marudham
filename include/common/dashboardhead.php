@@ -109,8 +109,15 @@
 				filter: FlipH;
 				-ms-filter: "FlipH";
 		}
- </style>	
- <style>/* style for dropdown in list windows */
+		/* to show modal in correct size */
+		.modal {
+			width: 100% !important;
+		}
+		.modal-lg {
+			max-width: 70% !important;
+		}
+		
+	/* style for dropdown in list windows */
     .dropbtn {
 		color: white;
 		/* background-color: #009688; */

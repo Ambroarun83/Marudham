@@ -402,9 +402,9 @@ if(isset($_POST['submit_concern']) && $_POST['submit_concern'] != ''){
                     <table class="table custom-table" id="coursecategoryTable"> 
                         <thead>
                             <tr>
-                                <th width="15px">S. No</th>
-                                <th>SUBJECT</th>
-                                <th>ACTION</th>
+                                <th width="25">S.No</th>
+                                <th>Subject</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>

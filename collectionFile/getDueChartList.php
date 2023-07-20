@@ -188,14 +188,22 @@ function moneyFormatIndia($num){
             LEFT JOIN user u ON c.insert_login_id = u.user_id
             WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
             AND (
-                (MONTH(c.coll_date) = MONTH('$issued') AND YEAR(c.coll_date) = YEAR('$issued')) OR
-                (MONTH(c.trans_date) = MONTH('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
+                (MONTH(DATE(c.coll_date)) = MONTH('$issued') AND YEAR(DATE(c.coll_date)) = YEAR('$issued')) OR
+                (MONTH(DATE(c.trans_date)) = MONTH('$issued') AND YEAR(DATE(c.trans_date)) = YEAR('$issued'))
             )
             AND (
-                (c.coll_date >= MONTH($issued) AND c.coll_date < MONTH($due_start_from) ) OR
-                (c.trans_date >= MONTH($issued) AND c.coll_date < MONTH($due_start_from) )
+                (MONTH(DATE(c.coll_date)) >= MONTH('$issued') AND MONTH(DATE(c.coll_date)) < MONTH('$due_start_from') ) OR
+                (MONTH(DATE(c.trans_date)) >= MONTH('$issued') AND MONTH(DATE(c.trans_date)) < MONTH('$due_start_from') )
             )");
-            
+            // $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            // FROM `collection` c
+            // LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
+            // LEFT JOIN user u ON c.insert_login_id = u.user_id
+            // WHERE c.`req_id` = '1' AND (c.due_amt_track != '' or c.pre_close_waiver!='') AND (
+            //     MONTH(DATE(c.coll_date)) = MONTH('$issued') OR
+            //     MONTH(DATE(c.trans_date)) = MONTH('$issued') AND MONTH(DATE(c.coll_date)) < MONTH($due_start_from)
+            // )");
+            // echo $run->queryString;
         } else
         if ($loanFrom['due_method_scheme'] == '2') {
             //Query For Weekly.
@@ -210,7 +218,7 @@ function moneyFormatIndia($num){
             )
             AND (
                 (c.coll_date >= WEEK('$issued') AND c.coll_date < WEEK('$due_start_from') ) OR
-                (c.trans_date >= WEEK('$issued') AND c.coll_date < WEEK('$due_start_from') )
+                (c.trans_date >= WEEK('$issued') AND c.trans_date < WEEK('$due_start_from') )
             ) ");
         } else
         if ($loanFrom['due_method_scheme'] == '3') {
@@ -222,10 +230,10 @@ function moneyFormatIndia($num){
             WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
             AND (
                 (c.coll_date >= '$issued' AND c.coll_date < '$due_start_from' ) OR
-                (c.trans_date >= '$issued' AND c.coll_date < '$due_start_from' )
+                (c.trans_date >= '$issued' AND c.trans_date < '$due_start_from' )
             ) ");
         }
-
+       
         //For showing data before due start date
         if ($run->rowCount() > 0) {
             $due_amt_track = 0;

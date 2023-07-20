@@ -438,36 +438,17 @@ if (sizeof($getLoanCalculation) > 0) {
 	<!-- Customer Profile form start-->
 	<div id="customer_profile" style="display: none;">
 		<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {
-																		echo $req_id;
-																	} ?>" />
-			<input type="hidden" name="loan_sub_cat" id="loan_sub_cat" value="<?php if (isset($sub_category)) {
-																					echo $sub_category;
-																				} ?>" />
-			<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) {
-																								echo $guarentor_name;
-																							} ?>" />
-			<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($area_confirm_state)) {
-																			echo $area_confirm_state;
-																		} ?>" />
-			<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($area_confirm_district)) {
-																					echo $area_confirm_district;
-																				} ?>" />
-			<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($area_confirm_taluk)) {
-																			echo $area_confirm_taluk;
-																		} ?>" />
-			<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area_confirm_area)) {
-																			echo $area_confirm_area;
-																		} ?>" />
-			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($area_confirm_subarea)) {
-																					echo $area_confirm_subarea;
-																				} ?>" />
-			<input type="hidden" name="verification_person_upd" id="verification_person_upd" value="<?php if (isset($verification_person)) {
-																										echo $verification_person;
-																									} ?>" />
-			<input type="hidden" name="cus_Tableid" id="cus_Tableid" value="<?php if (isset($cus_Tableid)) {
-																				echo $cus_Tableid;
-																			} ?>" />
+			<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) { echo $req_id; } ?>" />
+			<input type="hidden" name="cus_id_load" id="cus_id_load" value="<?php if (isset($cus_id)) { echo $cus_id; } ?>" />
+			<input type="hidden" name="loan_sub_cat" id="loan_sub_cat" value="<?php if (isset($sub_category)) { echo $sub_category; } ?>" />
+			<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) { echo $guarentor_name; } ?>" />
+			<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($area_confirm_state)) { echo $area_confirm_state; } ?>" />
+			<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($area_confirm_district)) { echo $area_confirm_district; } ?>" />
+			<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($area_confirm_taluk)) { echo $area_confirm_taluk; } ?>" />
+			<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area_confirm_area)) { echo $area_confirm_area; } ?>" />
+			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($area_confirm_subarea)) { echo $area_confirm_subarea; } ?>" />
+			<input type="hidden" name="verification_person_upd" id="verification_person_upd" value="<?php if (isset($verification_person)) { echo $verification_person; } ?>" />
+			<input type="hidden" name="cus_Tableid" id="cus_Tableid" value="<?php if (isset($cus_Tableid)) { echo $cus_Tableid; } ?>" />
 
 			<!-- Row start -->
 			<div class="row gutters">
@@ -1554,6 +1535,22 @@ if (sizeof($getLoanCalculation) > 0) {
 						</div>
 					</div>
 					<!-- Documentations Info  End-->
+					
+					<!-- Document History START -->
+					<div class="card">
+						<div class="card-header"> Documents History </div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="form-group" id="docHistoryDiv">
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Document History END -->
+
 
 					<!-- Signed Doc Info START -->
 					<div class="card">
@@ -2124,20 +2121,6 @@ if (sizeof($getLoanCalculation) > 0) {
 						</div>
 					</div>
 
-					<!-- Document History START -->
-					<div class="card">
-						<div class="card-header"> Documents History </div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="docHistoryDiv">
-										
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Document History END -->
 					<div class="col-md-12 ">
 						<div class="text-right">
 							<button type="submit" name="submit_documentation" id="submit_documentation" class="btn btn-primary" value="Submit" tabindex="32"><span class="icon-check"></span>&nbsp;Submit</button>
@@ -2412,20 +2395,20 @@ if (sizeof($getLoanCalculation) > 0) {
 						</div>
 					</div>
 					<!--  Verification Info END -->
-					<!-- Verification History START -->
+					<!-- Loan History START -->
 					<div class="card">
-						<div class="card-header"> Verification History </div>
+						<div class="card-header"> Loan History </div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="verificationHistoryDiv">
+									<div class="form-group" id="loanHistoryDiv">
 										
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- Verification History END -->
+					<!-- Loan History END -->
 					<!-- Loan Info Start -->
 					<div class="card">
 						<div class="card-header">Loan Info <span style="font-weight:bold" class=""></span></div>
@@ -3961,7 +3944,7 @@ if (sizeof($getLoanCalculation) > 0) {
 
 <!-- /////////////////////////////////////////////////////////////////// Penalty Char Modal START ////////////////////////////////////////////////////////////////////// -->
 <div class="modal fade PenaltyChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel"> Penalty Chart</h5>
@@ -3983,7 +3966,7 @@ if (sizeof($getLoanCalculation) > 0) {
 <!-- /////////////////////////////////////////////////////////////////// Penalty Chart Modal END ////////////////////////////////////////////////////////////////////// -->
 <!-- /////////////////////////////////////////////////////////////////// Fine Chart Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade collectionChargeChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel"> Fine Chart </h5>
@@ -4006,7 +3989,7 @@ if (sizeof($getLoanCalculation) > 0) {
 
 <!-- /////////////////////////////////////////////////////////////////// Due Chart Modal START ////////////////////////////////////////////////////////////////////// -->
 <div class="modal fade DueChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" >
-    <div class="modal-dialog modal-dialog-centered modal-lg" >
+    <div class="modal-dialog modal-lg" >
         <div class="modal-content" style="background-color: white;">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel"> Due Chart Icon</h5>
@@ -4028,7 +4011,7 @@ if (sizeof($getLoanCalculation) > 0) {
 <!-- /////////////////////////////////////////////////////////////////// Due Chart Modal END ////////////////////////////////////////////////////////////////////// -->
 <!-- /////////////////////////////////////////////////////////////////// Loan Summary Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade loansummarychart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel"> Loan Summary </h5>
@@ -4048,29 +4031,26 @@ if (sizeof($getLoanCalculation) > 0) {
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Loan Summary Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal START ////////////////////////////////////////////////////////////// -->
+<div class="modal fade noc-summary-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> NOC Summary </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="nocsummaryModal">
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal END ////////////////////////////////////////////////////////////////////// -->
 
-<style>
-	/* Keyframes for modal responsiveness */
-	@keyframes modalResize {
-		0% {
-			width: 100%;
-		}	
-		100% {
-			width: 200vw;
-		}
-	}
-	/* Styling for the modal */
-	.DueChart .modal-dialog .modal-content {
-		animation: modalResize 0.3s;
-		overflow-x: auto;
-		max-width: 100%;
-	}
-
-	/* Style the table container div */
-	#dueChartTableDiv {
-		width: 1125px; /* Adjust this value as per your requirements */
-	}
-	.DueChart .modal-dialog .modal-content .modal-header, .DueChart .modal-dialog .modal-content .modal-footer {
-		width: 1140px; /* Adjust this value as per your requirements */
-	}
-</style>

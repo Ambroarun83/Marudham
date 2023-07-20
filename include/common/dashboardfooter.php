@@ -1,3 +1,76 @@
+<!-- Scroll to Top button -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<a href="#" id="scrollToTopButton" class="scroll-to-top-button">
+    <i class="fas fa-arrow-up"></i>
+  </a> -->
+
+<style>
+   /* Scroll to Top button styles */
+    .scroll-to-top-button {
+        position: fixed;
+        right: 30px;
+        top: 100px; 
+        width: 50px;
+        height: 50px;
+        background-color: #009688;
+        color: white;
+        border-radius: 50%;
+        font-size: 24px;
+        text-align: center;
+        line-height: 50px;
+        cursor: pointer;
+        display: none;
+        z-index: 99999;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .scroll-to-top-button:hover {
+        background-color: #009968;
+    }   
+
+</style>
+<script>
+$(document).ready(function () {
+    // Show/hide the Scroll to Top button based on the user's scroll position
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+        $('#scrollToTopButton').fadeIn();
+        } else {
+        $('#scrollToTopButton').fadeOut();
+        }
+    });
+
+    // Smooth scroll to the top when the button is clicked
+    $('#scrollToTopButton').click(function () {
+        $('html, body').animate({ scrollTop: 0 }, 800);
+        return false;
+    });
+
+    // Event listener to hide the "Scroll to Top" button when any element with data-toggle='modal' is clicked
+    $(document).on('click', '[data-toggle="modal"]', function () {
+        hideScrollToTopButton();
+    });
+    // Function to hide the "Scroll to Top" button
+    function hideScrollToTopButton() {
+        $('#scrollToTopButton').fadeOut();
+    }
+    
+    // Event listener to Show the "Scroll to Top" button when any element with data-dismiss='modal' is clicked
+    $(document).on('click', '[data-dismiss="modal"]', function () {
+        showScrollToTopButton();
+    });
+    // Function to show the "Scroll to Top" button if not visible
+    function showScrollToTopButton() {
+        $('#scrollToTopButton').fadeIn();
+    }
+
+
+});
+
+
+
+
+</script>
 <?php $current_page = isset($_GET['page']) ? $_GET['page'] : null; ?>
 
 <!-- Required jQuery first, then Bootstrap Bundle JS -->

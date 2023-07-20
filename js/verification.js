@@ -3913,7 +3913,7 @@ function docHistoryTable(){
 }
 
 function getDocumentHistory(){
-    let cus_id = $('#cus_id_doc').val();let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id_load').val();let req_id = $('#req_id').val();
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -4215,7 +4215,7 @@ function doc_submit_validation() {
 //////////////////////////////////////////////////////////////////// Loan Calculation Functions Start ///////////////////////////////////////////////////////////////////////////////
 function onLoadEditFunction(){//On load for Loan Calculation edit
     verificationPerson(); //To Select verification Person in Verification Info.////// 
-    getVerificationHistory();//to get loan history, as same as document history but here action buttons are changing
+    getLoanHistory();//to get loan history, as same as document history but here action buttons are changing
 }
 
 $('#loan_category').change(function(){
@@ -4567,8 +4567,8 @@ function getLoaninfo(sub_cat_id){
 //////////////////////// Verification history
 
 //loan history table contents get from closed file loan lists
-function getVerificationHistory(){
-    let cus_id = $('#cus_id_loan').val();let req_id = $('#req_id').val();
+function getLoanHistory(){
+    let cus_id = $('#cus_id_load').val();let req_id = $('#req_id').val();
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -4609,13 +4609,13 @@ function getVerificationHistory(){
         var bal_amt = balAmnt;
         $.ajax({
             //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
-            url: 'verificationFile/LoanCalculation/getVerificationHistory.php',
+            url: 'verificationFile/LoanCalculation/getLoanHistory.php',
             data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
             type:'post',
             cache: false,
             success: function(response){
-                $('#verificationHistoryDiv').empty()
-                $('#verificationHistoryDiv').html(response);
+                $('#loanHistoryDiv').empty()
+                $('#loanHistoryDiv').html(response);
             }
         }).then(function(){
             $('.due-chart').click(function(){

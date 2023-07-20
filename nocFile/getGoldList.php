@@ -50,6 +50,7 @@ function getfamName($con,$rel_id){
     </thead>
     <tbody>
         <?php
+        $i=1;
         $qry = $con->query("SELECT * FROM `gold_info` where req_id = $req_id and used_status != '1' ");
         $cnt = 0;
         $weight = 0;
@@ -60,7 +61,7 @@ function getfamName($con,$rel_id){
             $goldVal = $goldVal + intval($row["gold_Value"]);
         ?>
             <tr>
-                <td></td>
+                <td><?php echo $i;$i++;?></td>
                 <td><?php echo $row['gold_type'];?></td>
                 <td><?php echo $row['Purity'];?></td>
                 <td><?php echo $row['gold_Count'];?></td>
@@ -100,22 +101,22 @@ function getfamName($con,$rel_id){
 
 <script type='text/javascript'>
     $(function() {
-        $('#goldTable').DataTable({
-            "title":"Gold List",
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
+        // $('#goldTable').DataTable({
+        //     "title":"Gold List",
+        //     'processing': true,
+        //     'iDisplayLength': 5,
+        //     "lengthMenu": [
+        //         [10, 25, 50, -1],
+        //         [10, 25, 50, "All"]
+        //     ],
+        //     "createdRow": function(row, data, dataIndex) {
+        //         $(row).find('td:first').html(dataIndex + 1);
+        //     },
+        //     "drawCallback": function(settings) {
+        //         this.api().column(0).nodes().each(function(cell, i) {
+        //             cell.innerHTML = i + 1;
+        //         });
+        //     },
+        // });
     });
 </script>

@@ -65,12 +65,7 @@ if($idupd>0)
 		object-fit: cover;
 		background-color: white;
 }
-.modal {
-    width: 100% !important;
-}
-.modal-lg {
-    max-width: 70% !important;
-}
+
 </style>
 
 <!-- Page header start -->
@@ -317,7 +312,7 @@ if($idupd>0)
 					</div>
 				</div> -->
 				<!-- Request Info Start -->
-					<div class="card">
+					<div class="card collection_card">
 						<div class="card-header">Request Info <span style="font-weight:bold" class=""></span></div>
 						<div class="card-body">
 							<div class="row">

@@ -51,6 +51,8 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$updatemodule = '';
+$update_screen = '';
 $concernmodule = '';
 $concern_creation = '';
 $concern_solution = '';
@@ -152,10 +154,13 @@ if($idupd>0)
 			$closedmodule          		     = $getUser['closedmodule'];
 			$closed          		     = $getUser['closed'];
 			$nocmodule          		     = $getUser['nocmodule'];
-			$noc          		     = $getUser['noc'];
+			$noc          		     	= $getUser['noc'];
+			$updatemodule 				= $getUser['updatemodule'];
+			$update_screen 				= $getUser['update_screen'];
 			$concernmodule          		     = $getUser['concernmodule'];
 			$concern_creation          		     = $getUser['concern_creation'];
 			$concern_solution          		     = $getUser['concern_solution'];
+			$concern_feedback          		     = $getUser['concern_feedback'];
 			$accountsmodule          		     = $getUser['accountsmodule'];
 			$cash_tally          		     = $getUser['cash_tally'];
 			$cash_tally_admin          		     = $getUser['cash_tally_admin'];
@@ -692,6 +697,24 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($noc==0){ echo'checked'; }} ?> tabindex="42" class="noc-checkbox" id="noc" name="noc" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="noc">NOC</label>
+                            </div>
+                        </div>
+					</div>
+					
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($updatemodule==0){ echo'checked'; }} ?> tabindex="25" class="" id="updatemodule" name="updatemodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="updatemodule">
+							<h5>Update</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($update_screen==0){ echo'checked'; }} ?> tabindex="26" class="update-checkbox" id="update" name="update" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="update">Update</label>
                             </div>
                         </div>
 					</div>
