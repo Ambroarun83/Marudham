@@ -4,6 +4,9 @@ include '../ajaxconfig.php';
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
 }
+if(isset($_POST['req_id'])){
+    $req_id = $_POST['req_id'];
+}
 
 ?>
 
@@ -23,7 +26,7 @@ if(isset($_POST['cus_id'])){
     <tbody>
 
         <?php
-        $qry = $connect->query("SELECT * FROM `document_info` where cus_id = '$cus_id' order by id desc");
+        $qry = $connect->query("SELECT * FROM `document_info` where req_id = '$req_id' order by id desc");
 
         $i = 1;
         while ($row = $qry->fetch()) {
@@ -44,11 +47,11 @@ if(isset($_POST['cus_id'])){
                 <td><?php if($row["doc_holder"] == '0'){ echo 'Customer';}else if($row["doc_holder"] == '1'){echo 'Guarentor'; }elseif($row["doc_holder"] == '2'){echo 'Family Member';} ?></td>
                 <td><?php echo $holder_name; ?></td>
                 <td><?php echo $row["relation"]; ?></td>
-                <td><?php foreach($docUpd as $upd){
-                    if($upd != null){
-                        echo '<a href="uploads/verification/doc_info/'.$upd.'" target="_blank" title="View Document"> ' .$upd.  ',</a>';
-                    }
-                } ?></td>
+                <td><?php $text='';
+                foreach($docUpd as $upd){
+                    $text .= '<a href="uploads/verification/doc_info/'.$upd.'" target="_blank" title="View Document" > ' .$upd.  '</a>, ';
+                }
+                echo rtrim($text,', ');// to trim the comma at end ?></td>
             </tr>
 
         <?php  } ?>
@@ -57,7 +60,7 @@ if(isset($_POST['cus_id'])){
 
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     $(function() {
         $('#document_table').DataTable({
             'processing': true,
@@ -76,4 +79,5 @@ if(isset($_POST['cus_id'])){
             },
         });
     });
-</script>
+</script> -->
+

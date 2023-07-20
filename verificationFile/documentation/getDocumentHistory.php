@@ -5,6 +5,9 @@ include '../../ajaxconfig.php';
 if(isset($_SESSION["userid"])){
     $user_id = $_SESSION["userid"];
 }
+if(isset($_POST["screen"])){
+    $screen = $_POST["screen"];
+}
 if(isset($_POST["pending_sts"])){
     $pending_sts = explode(',',$_POST["pending_sts"]);
 }
@@ -153,10 +156,13 @@ function moneyFormatIndia($num) {
             </td> <!-- Sub status -->
             <td><!-- Document status -->
                 <?php
+                    $doc_status='';
                     if($row['cus_status'] <= 20){//show for present contents and closed customer but not submitted in closed
                         if(getDocumentStatus($con,$ii_req_id,$cus_id) == false){
+                            $doc_status =  'Document Pending';
                             echo 'Document Pending';
                         }else{
+                            $doc_status = 'Document Completed';
                             echo 'Document Completed';
                         }
                     }else if($row['cus_status'] > 20 and $row['cus_status'] < 22){ // show for closed(which are submitted in closed) and noc contents 
@@ -177,6 +183,9 @@ function moneyFormatIndia($num) {
                         <div class='dropdown-content'>";
                     if($row['cus_status'] > 20) { //if request goes to NOC then noc summary can be fetched
                         $action .= "<a href='' class='noc-summary' data-reqid='$ii_req_id' data-cusid='$cus_id' data-cusname='$cus_name' data-toggle='modal' data-target='.noc-summary-modal' >NOC Summary</a>";
+                    }
+                    if($screen == 'update' ){
+                        $action .= "<a href='' class='edit-doc' data-reqid='$ii_req_id' data-cusid='$cus_id' data-cusname='$cus_name'>Edit Documents</a>";
                     }
                     $action .= "</div></div>";
                     echo $action;
@@ -226,45 +235,73 @@ function getNOCSubmitted($con,$req_id,$cus_id){
 }
 
 function getDocumentStatus($con,$req_id,$cus_id){
-    $response = false;
-
+    
+    $response1 = false;
     $qry = $con->query("SELECT id,doc_Count FROM signed_doc_info where req_id ='$req_id' and cus_id = '$cus_id' ");
-    while($row=$qry->fetch_assoc()){
-        
-        $qry = $con->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and signed_doc_id='".$row['id']."' ");
-        if($qry->num_rows == $row['doc_Count']){ // check whether mentioned count of signed document has been collected from customer or not
-            $response = true;// if condition true then all documents are collected
+    if($qry->num_rows > 0){
+        while($row=$qry->fetch_assoc()){
+            
+            $qry1 = $con->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and signed_doc_id='".$row['id']."' ");
+            if($qry1->num_rows == $row['doc_Count']){ // check whether mentioned count of signed document has been collected from customer or not
+                $response1 = true;// if condition true then all documents are collected
+            }
         }
+    }else{
+        $response1 = true;//if there is no cheque then direclty it will be considered as completed
     }
-    
+
+
+    $response2 = false;
     $qry = $con->query("SELECT id,cheque_count FROM cheque_info where req_id ='$req_id' and cus_id = '$cus_id' ");
-    while($row=$qry->fetch_assoc()){
-        
-        $qry = $con->query("SELECT * FROM cheque_upd where req_id ='$req_id' and cus_id = '$cus_id' and cheque_table_id='".$row['id']."' ");
-        if($qry->num_rows == $row['cheque_count']){ // check whether mentioned count of Cheque has been collected from customer or not
-            $response = true;// if condition true then all documents are collected
+    if($qry->num_rows > 0){
+        while($row=$qry->fetch_assoc()){
+            
+            $qry1 = $con->query("SELECT * FROM cheque_upd where req_id ='$req_id' and cus_id = '$cus_id' and cheque_table_id='".$row['id']."' ");
+            if($qry1->num_rows == $row['cheque_count']){ // check whether mentioned count of Cheque has been collected from customer or not
+                $response2 = true;// if condition true then all documents are collected
+            }
         }
+    }else{
+        $response2 = true;//if there is no cheque then direclty it will be considered as completed
     }
 
+    $response3 = false;
     $qry = $con->query("SELECT mortgage_document_pending,Rc_document_pending FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' ");
-    while($row=$qry->fetch_assoc()){ //check any one of document for mortgage or endorsement is pending then response will be pending
-        
-        if($row['mortgage_document_pending'] == 'YES' || $row['Rc_document_pending'] == 'YES'){
+    if($qry->num_rows > 0){
+        while($row=$qry->fetch_assoc()){ //check any one of document for mortgage or endorsement is pending then response will be pending
+            
+            if($row['mortgage_document_pending'] == 'YES' || $row['Rc_document_pending'] == 'YES'){
 
-        }else{
-            $response = true;// if condition false then all documents are collected
+            }else{
+                $response3 = true;// if condition false then all documents are collected
+            }
         }
+    }else{
+        $response3 = true;//if there is no cheque then direclty it will be considered as completed
+    }
+
+    $response4 = false;
+    $qry = $con->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' ");
+    if($qry->num_rows > 0){
+        while($row=$qry->fetch_assoc()){
+            if($row['doc_upload'] == '' || $row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
+                $response4 = false;
+            }else if($response4 != false){ // in this stage current row of doc has been submitted but need to check the response is pending. if yes it should not changed to completed
+                $response4 = true;
+            }
+        }
+    }else{
+        $response4 = true;//if there is no cheque then direclty it will be considered as completed
+    }
+
+
+
+    if($response1 == true and $response2 == true and $response3 == true and $response4 == true){// return true only if all responses are true/completed
+        $response = true;
+    }else{
+        $response = false;
     }
     
-    $qry = $con->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' ");
-    while($row=$qry->fetch_assoc()){
-        if($row['doc_upload'] == '' || $row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
-            $response = false;
-        }else if($response != false){ // in this stage current row of doc has been submitted but need to check the response is pending. if yes it should not changed to completed
-            $response = true;
-        }
-    }
-
     return $response;
 }
 ?>

@@ -5,19 +5,21 @@ include '../ajaxconfig.php';
 <table class="table custom-table" id="signed_table">
     <thead>
         <tr>
-        <th width="15%"> S.No </th>
+        <th width="50"> S.No </th>
 		<th> Doc Name </th>
 		<th> Sign Type </th>
 		<th> Relationship </th>
 		<th> Count </th>
 		<th> Uploads </th>
+		<!-- <th> NOC Status </th> -->
         </tr>
     </thead>
     <tbody>
 
         <?php
+        $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
-        $signInfo = $connect->query("SELECT * FROM `signed_doc_info` where cus_id = '$cus_id' order by id desc");
+        $signInfo = $connect->query("SELECT * FROM `signed_doc_info` where req_id = '$req_id'");
 
         $i = 1;
         while ($signedDoc = $signInfo->fetch()) {
@@ -34,7 +36,7 @@ include '../ajaxconfig.php';
                 $doc_upd_name .= "<a href=uploads/verification/signed_doc/";
                 $doc_upd_name .= $docName ;
                 $doc_upd_name .= " target='_blank'>";
-                $doc_upd_name .=  $a. ' ' ;
+                $doc_upd_name .=  $docName. ' ' ;
                 $doc_upd_name .= "</a>" ;
                 $a++;
             }
@@ -50,6 +52,7 @@ include '../ajaxconfig.php';
                 
                 <td> <?php echo $signedDoc['doc_Count']; ?></td>
                 <td><?php echo $doc_upd_name; ?></td>
+                <!-- <td><?php if($signedDoc['noc_given'] == '1'){echo 'NOC Given';}else{echo '';} ?></td> -->
             </tr>
 
         <?php  } ?>
@@ -57,7 +60,7 @@ include '../ajaxconfig.php';
 </table>
 
 
-
+<!-- 
 <script type="text/javascript">
     $(function() {
         $('#signed_table').DataTable({
@@ -67,14 +70,14 @@ include '../ajaxconfig.php';
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
+            // "createdRow": function(row, data, dataIndex) {
+            //     $(row).find('td:first').html(dataIndex + 1);
+            // },
+            // "drawCallback": function(settings) {
+            //     this.api().column(0).nodes().each(function(cell, i) {
+            //         cell.innerHTML = i + 1;
+            //     });
+            // },
         });
     });
-</script>
+</script> -->

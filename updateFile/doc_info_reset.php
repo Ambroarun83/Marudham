@@ -34,6 +34,8 @@ if(isset($_POST['pages'])){
             }else{
                 $holder_name = $row["holder_name"];
             }
+
+            $docUpd = explode(',',$row["doc_upload"]);
         ?>
 
             <tr>
@@ -49,9 +51,10 @@ if(isset($_POST['pages'])){
                     <?php if($pages == 1){  // Verification screen only delete option. ?>
                         <a id="doc_info_edit" value="<?php echo $row['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp;
                         <a id="doc_info_delete" value="<?php echo $row['id']; ?>"> <span class='icon-trash-2'></span> </a>
-                    <?php  }elseif($pages == 2){?>
-                        <a id="doc_info_edit" value="<?php echo $row['id']; ?>" style="text-decoration: underline;"> Upload</a> &nbsp;
-                    <?php } ?>
+                    <?php  }elseif($pages == 2){
+                                if(empty($docUpd)){?>
+                                    <a id="doc_info_edit" value="<?php echo $row['id']; ?>" style="text-decoration: underline;"> Upload</a> &nbsp;
+                    <?php   }   }?>
                 </td>
 
             </tr>

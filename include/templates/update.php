@@ -86,34 +86,36 @@ if (sizeof($getCustomerReg) > 0) {
 $documentationInfo = $userObj->getDocumentDetails($mysqli, $idupd);
 
 if (sizeof($documentationInfo) > 0) {
-	$document_table_id = $documentationInfo['doc_Tableid'];
-	$document_sts = $documentationInfo['cus_status'];
-	$doc_id = $documentationInfo['doc_id'];
-	$mortgage_process = $documentationInfo['mortgage_process'];
-	$Propertyholder_type = $documentationInfo['Propertyholder_type'];
-	$Propertyholder_name = $documentationInfo['Propertyholder_name'];
-	$Propertyholder_relationship_name = $documentationInfo['Propertyholder_relationship_name'];
-	$doc_property_relation = $documentationInfo['doc_property_relation'];
-	$doc_property_type = $documentationInfo['doc_property_type'];
-	$doc_property_measurement = $documentationInfo['doc_property_measurement'];
-	$doc_property_location = $documentationInfo['doc_property_location'];
-	$doc_property_value = $documentationInfo['doc_property_value'];
-	$endorsement_process = $documentationInfo['endorsement_process'];
-	$owner_type = $documentationInfo['owner_type'];
-	$owner_name = $documentationInfo['owner_name'];
-	$ownername_relationship_name = $documentationInfo['ownername_relationship_name'];
-	$en_relation = $documentationInfo['en_relation'];
-	$vehicle_type = $documentationInfo['vehicle_type'];
-	$vehicle_process = $documentationInfo['vehicle_process'];
-	$en_Company = $documentationInfo['en_Company'];
-	$en_Model = $documentationInfo['en_Model'];
-	$document_name = $documentationInfo['document_name'];
-	$document_details = $documentationInfo['document_details'];
-	$document_type = $documentationInfo['document_type'];
-	$document_holder = $documentationInfo['document_holder'];
-	$docholder_name = $documentationInfo['docholder_name'];
-	$docholder_relationship_name = $documentationInfo['docholder_relationship_name'];
-	$doc_relation = $documentationInfo['doc_relation'];
+	for($i=0;$i<sizeof($documentationInfo);$i++){
+		$document_table_id[$i] = $documentationInfo[$i]['doc_Tableid'];
+		$document_sts[$i] = $documentationInfo[$i]['cus_status'];
+		$doc_id[$i] = $documentationInfo[$i]['doc_id'];
+		$mortgage_process[$i] = $documentationInfo[$i]['mortgage_process'];
+		$Propertyholder_type[$i] = $documentationInfo[$i]['Propertyholder_type'];
+		$Propertyholder_name[$i] = $documentationInfo[$i]['Propertyholder_name'];
+		$Propertyholder_relationship_name[$i] = $documentationInfo[$i]['Propertyholder_relationship_name'];
+		$doc_property_relation[$i] = $documentationInfo[$i]['doc_property_relation'];
+		$doc_property_type[$i] = $documentationInfo[$i]['doc_property_type'];
+		$doc_property_measurement[$i] = $documentationInfo[$i]['doc_property_measurement'];
+		$doc_property_location[$i] = $documentationInfo[$i]['doc_property_location'];
+		$doc_property_value[$i] = $documentationInfo[$i]['doc_property_value'];
+		$endorsement_process[$i] = $documentationInfo[$i]['endorsement_process'];
+		$owner_type[$i] = $documentationInfo[$i]['owner_type'];
+		$owner_name[$i] = $documentationInfo[$i]['owner_name'];
+		$ownername_relationship_name[$i] = $documentationInfo[$i]['ownername_relationship_name'];
+		$en_relation[$i] = $documentationInfo[$i]['en_relation'];
+		$vehicle_type[$i] = $documentationInfo[$i]['vehicle_type'];
+		$vehicle_process[$i] = $documentationInfo[$i]['vehicle_process'];
+		$en_Company[$i] = $documentationInfo[$i]['en_Company'];
+		$en_Model[$i] = $documentationInfo[$i]['en_Model'];
+		$document_name[$i] = $documentationInfo[$i]['document_name'];
+		$document_details[$i] = $documentationInfo[$i]['document_details'];
+		$document_type[$i] = $documentationInfo[$i]['document_type'];
+		$document_holder[$i] = $documentationInfo[$i]['document_holder'];
+		$docholder_name[$i] = $documentationInfo[$i]['docholder_name'];
+		$docholder_relationship_name[$i] = $documentationInfo[$i]['docholder_relationship_name'];
+		$doc_relation[$i] = $documentationInfo[$i]['doc_relation'];
+	}
 }
 ////////   Documentation End ////////////
 ?>
@@ -200,6 +202,8 @@ input:checked + .slider:before {
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
 		Customer Name - <?php if (isset($cus_name)) {echo $cus_name;} ?>
+		,&nbsp;&nbsp;Area - <?php if (isset($area_name)) {echo $area_name;} ?>
+		,&nbsp;&nbsp;Sub Area - <?php if (isset($sub_area_name)) {echo $sub_area_name;} ?>
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
@@ -224,6 +228,7 @@ input:checked + .slider:before {
 	<!-- Customer Profile form start-->
 	<div id="customer_profile" style="display: none;">
 		<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="cus_id_load" id="cus_id_load" value="<?php if (isset($idupd)) {echo $idupd;} ?>" />
 			<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
 			<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($state)) {echo $state;} ?>" />
 			<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($district)) {echo $district;} ?>" />
@@ -236,6 +241,7 @@ input:checked + .slider:before {
 			<input type="hidden" name="area_taluk_upd" id="area_taluk_upd" value="<?php if (isset($area_confirm_taluk)) {echo $area_confirm_taluk;} ?>" />
 			<input type="hidden" name="area_confirm_area" id="area_confirm_area" value="<?php if (isset($area_confirm_area)) {echo $area_confirm_area;} ?>" />
 			<input type="hidden" name="sub_area_confirm" id="sub_area_confirm" value="<?php if (isset($area_confirm_subarea)) {echo $area_confirm_subarea;} ?>" />
+
 
 			<!-- Row start -->
 			<div class="row gutters">
@@ -909,18 +915,23 @@ input:checked + .slider:before {
 	<div id="cus_document" style="display: none;">
 		<form id="cus_doc" name="cus_doc" action="" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="req_id_doc" id="req_id_doc" value="<?php if (isset($req_id)) {echo $req_id;} ?>">
-			<input type="hidden" name="doc_table_id" id="doc_table_id" value="<?php if (isset($document_table_id)) {echo $document_table_id;} ?>">
+			<!-- <input type="hidden" name="doc_table_id" id="doc_table_id" value="<?php if (isset($document_table_id)) {echo $document_table_id;} ?>">
 			<input type="hidden" name="doc_id" id="doc_id" value="<?php if (isset($doc_id)) {echo $doc_id;} ?>">
 			<input type="hidden" name="en_relation_name" id="en_relation_name" value="<?php if (isset($ownername_relationship_name)) {echo $ownername_relationship_name;} ?>">
 			<input type="hidden" name="mortgage_relation_name" id="mortgage_relation_name"	value="<?php if (isset($Propertyholder_relationship_name)) {echo $Propertyholder_relationship_name;} ?>">
 			<input type="hidden" name="docrelation_name" id="docrelation_name" value="<?php if (isset($docholder_relationship_name)) {echo $docholder_relationship_name;} ?>">
-			<input type="hidden" name="submitted" id="submitted" value="<?php if (isset($submitted)) {echo $submitted;} ?>">
+			<input type="hidden" name="submitted" id="submitted" value="<?php if (isset($submitted)) {echo $submitted;} ?>"> -->
+
+			<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+			<input type="hidden" name="od_sts" id="od_sts" value="" />
+			<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+			<input type="hidden" name="closed_sts" id="closed_sts" value="" />
 
 			<!-- Row start -->
 			<div class="row gutters">
 				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
-					<div class="card">
+					<div class="card documentation-card">
 						<div class="card-header">Documentation Info</div>
 						<div class="card-body">
 							<div class="row">
@@ -958,11 +969,26 @@ input:checked + .slider:before {
 						</div>
 					</div>
 					<!-- Documentations Info  End-->
+					
+					<!-- Document History START -->
+					<div class="card documentation-card">
+						<div class="card-header"> Documents History </div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="form-group" id="docHistoryDiv">
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Document History END -->
 
 					<!-- Signed Doc Info START -->
-					<div class="card">
+					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Signed Doc Info
-							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6" onclick="resetsignInfo()"><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='signed_infoCheck'>Please Fill Signed Doc Info </span>
 						<div class="card-body">
@@ -970,20 +996,8 @@ input:checked + .slider:before {
 							<div class="row">
 
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="signDocResetTable">
-										<table class="table custom-table">
-											<thead>
-												<tr>
-													<th width="50"> S.No </th>
-													<th> Doc Name </th>
-													<th> Sign Type </th>
-													<th> Count </th>
-												</tr>
-											</thead>
-											<tbody>
-
-											</tbody>
-										</table>
+									<div class="form-group" id="signDocResetDiv">
+										
 									</div>
 								</div>
 
@@ -994,9 +1008,9 @@ input:checked + .slider:before {
 					<!-- Signed Doc Info END -->
 
 					<!-- Cheque Info START -->
-					<div class="card">
+					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Cheque Info
-							<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7" onclick="resetchequeInfo()"><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='Cheque_infoCheck'>Please Fill Cheque Info </span>
 						<div class="card-body">
@@ -1004,22 +1018,8 @@ input:checked + .slider:before {
 							<div class="row">
 
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="ChequeResetTable">
-										<table class="table custom-table">
-											<thead>
-												<tr>
-													<th width="50"> S.No </th>
-													<th> Holder type </th>
-													<th> Holder Name </th>
-													<th> Relationship </th>
-													<th> Bank Name </th>
-													<th> Cheque No </th>
-												</tr>
-											</thead>
-											<tbody>
-
-											</tbody>
-										</table>
+									<div class="form-group" id="chequeResetDiv">
+										
 									</div>
 								</div>
 
@@ -1031,7 +1031,7 @@ input:checked + .slider:before {
 
 					<!-- Mortgage Info START-->
 
-					<div class="card">
+					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Mortgage Info </div>
 						<div class="card-body">
 							<div class="row">
@@ -1041,33 +1041,33 @@ input:checked + .slider:before {
 										<label for="mortgage_process"> Mortgage Process</label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="mortgage_process" name="mortgage_process" tabindex="8">
 											<option value=""> Select Mortgage Process </option>
-											<option value="0" <?php if (isset($mortgage_process) and $mortgage_process == '0') echo 'selected'; ?>> YES </option>
-											<option value="1" <?php if (isset($mortgage_process) and $mortgage_process == '1') echo 'selected'; ?>> NO </option>
+											<option value="0"> YES </option>
+											<option value="1"> NO </option>
 										</select>
-										<span class="text-danger" id="mortgageprocessCheck"> Select Mortgage Process </span>
+										<span class="text-danger" id="mortgageprocessCheck" style='display:none'> Select Mortgage Process </span>
 									</div>
 								</div>
 							</div>
 
-							<div id="Mortgageprocess" <?php if (isset($mortgage_process)) {if ($mortgage_process != '0') { ?> style="display: none;" <?php }} else { ?> style="display: none;" <?php } ?>>
+							<div id="Mortgageprocess" >
 								<div class="row">
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label > Property Holder type </label> <span class="required">&nbsp;*</span>
 											<select type="text" class="form-control" id="Propertyholder_type" name="Propertyholder_type" tabindex="9">
 												<option value=""> Select Holder type </option>
-												<option value="0" <?php if (isset($Propertyholder_type) and $Propertyholder_type == '0') echo 'selected'; ?>> Customer </option>
-												<option value="1" <?php if (isset($Propertyholder_type) and $Propertyholder_type == '1') echo 'selected'; ?>> Guarantor </option>
-												<option value="2" <?php if (isset($Propertyholder_type) and $Propertyholder_type == '2') echo 'selected'; ?>> Family Members </option>
+												<option value="0" > Customer </option>
+												<option value="1" > Guarantor </option>
+												<option value="2" > Family Members </option>
 											</select>
-											<span class="text-danger" id="propertyholdertypeCheck"> Select Property Holder type </span>
+											<span class="text-danger" id="propertyholdertypeCheck" style='display:none'> Select Property Holder type </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label > Property Holder Name </label>
-											<input type="text" class="form-control" id="Propertyholder_name" name="Propertyholder_name" value="<?php if (isset($Propertyholder_name)) echo $Propertyholder_name; ?>" readonly tabindex="10">
+											<input type="text" class="form-control" id="Propertyholder_name" name="Propertyholder_name" value="" readonly tabindex="10">
 
 											<select type="text" class="form-control" id="Propertyholder_relationship_name" name="Propertyholder_relationship_name" style="display: none;">
 												<option value=""> Select Relationship </option>
@@ -1079,38 +1079,38 @@ input:checked + .slider:before {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="doc_property_relation"> Relationship </label>
-											<input type="text" class="form-control" id="doc_property_relation" name="doc_property_relation" value="<?php if (isset($doc_property_relation)) echo $doc_property_relation; ?>" readonly tabindex="11">
+											<input type="text" class="form-control" id="doc_property_relation" name="doc_property_relation" value="" readonly tabindex="11">
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="doc_property_pype"> Property Type </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_pype" name="doc_property_pype" placeholder="Enter Property Type" value="<?php if (isset($doc_property_type)) echo $doc_property_type; ?>" tabindex="12">
-											<span class="text-danger" id="docpropertytypeCheck"> Enter Property Type </span>
+											<input type="text" class="form-control" id="doc_property_pype" name="doc_property_pype" placeholder="Enter Property Type" value="" tabindex="12">
+											<span class="text-danger" id="docpropertytypeCheck" style='display:none'> Enter Property Type </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="doc_property_measurement"> Property Measurement </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_measurement" name="doc_property_measurement" placeholder="Enter Property Measurement" value="<?php if (isset($doc_property_measurement)) echo $doc_property_measurement; ?>" tabindex="13">
-											<span class="text-danger" id="docpropertymeasureCheck"> Enter Property Measurement </span>
+											<input type="text" class="form-control" id="doc_property_measurement" name="doc_property_measurement" placeholder="Enter Property Measurement" value="" tabindex="13">
+											<span class="text-danger" id="docpropertymeasureCheck" style='display:none'> Enter Property Measurement </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="doc_property_location"> Property Location </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_location" name="doc_property_location" placeholder="Enter Property Location" value="<?php if (isset($doc_property_location)) echo $doc_property_location; ?>" tabindex="14">
-											<span class="text-danger" id="docpropertylocCheck"> Enter Property Location </span>
+											<input type="text" class="form-control" id="doc_property_location" name="doc_property_location" placeholder="Enter Property Location" value="" tabindex="14">
+											<span class="text-danger" id="docpropertylocCheck" style='display:none'> Enter Property Location </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="doc_property_value"> Property Value </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="doc_property_value" name="doc_property_value" placeholder="Enter Property Value" value="<?php if (isset($doc_property_value)) echo $doc_property_value; ?>" tabindex="15">
+											<input type="text" class="form-control" id="doc_property_value" name="doc_property_value" placeholder="Enter Property Value" value="" tabindex="15">
 										</div>
 									</div>
 								</div>
@@ -1119,40 +1119,40 @@ input:checked + .slider:before {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="mortgage_name"> Mortgage Name </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="mortgage_name" name="mortgage_name" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Mortgage Name" value="<?php if (isset($mortgage_name)) echo $mortgage_name; ?>" tabindex="16">
-											<span class="text-danger" id="mortgagenameCheck"> Enter Mortgage Name </span>
+											<input type="text" class="form-control" id="mortgage_name" name="mortgage_name" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Mortgage Name" value="" tabindex="16">
+											<span class="text-danger" id="mortgagenameCheck" style='display:none'> Enter Mortgage Name </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="mortgage_dsgn"> Designation </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="mortgage_dsgn" name="mortgage_dsgn" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Designation" value="<?php if (isset($mortgage_dsgn)) echo $mortgage_dsgn; ?>" tabindex="17">
-											<span class="text-danger" id="mortgagedsgnCheck"> Enter Designation </span>
+											<input type="text" class="form-control" id="mortgage_dsgn" name="mortgage_dsgn" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Designation" value="" tabindex="17">
+											<span class="text-danger" id="mortgagedsgnCheck" style='display:none'> Enter Designation </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="mortgage_nuumber"> Mortgage Number </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="mortgage_nuumber" name="mortgage_nuumber" placeholder="Enter Mortgage Number" value="<?php if (isset($mortgage_nuumber)) echo $mortgage_nuumber; ?>" tabindex="18">
-											<span class="text-danger" id="mortgagenumCheck"> Enter Mortgage Number </span>
+											<input type="text" class="form-control" id="mortgage_nuumber" name="mortgage_nuumber" placeholder="Enter Mortgage Number" value="" tabindex="18">
+											<span class="text-danger" id="mortgagenumCheck" style='display:none'> Enter Mortgage Number </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="reg_office"> Reg Office </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="reg_office" name="reg_office" placeholder="Enter Reg Office" value="<?php if (isset($reg_office)) echo $reg_office; ?>" tabindex="19">
-											<span class="text-danger" id="regofficeCheck"> Enter Reg Office </span>
+											<input type="text" class="form-control" id="reg_office" name="reg_office" placeholder="Enter Reg Office" value="" tabindex="19">
+											<span class="text-danger" id="regofficeCheck" style='display:none'> Enter Reg Office </span>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="mortgage_value"> Mortgage Value </label> <span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="mortgage_value" name="mortgage_value" placeholder="Enter Mortgage Value" value="<?php if (isset($mortgage_value)) echo $mortgage_value; ?>" tabindex="20">
-											<span class="text-danger" id="mortgagevalueCheck"> Enter Mortgage Value </span>
+											<input type="text" class="form-control" id="mortgage_value" name="mortgage_value" placeholder="Enter Mortgage Value" value="" tabindex="20">
+											<span class="text-danger" id="mortgagevalueCheck" style='display:none'> Enter Mortgage Value </span>
 										</div>
 									</div>
 
@@ -1161,10 +1161,10 @@ input:checked + .slider:before {
 											<label for="mortgage_document"> Mortgage Document </label> <span class="required">&nbsp;*</span>
 											<select type="text" class="form-control" id="mortgage_document" name="mortgage_document" tabindex="21">
 												<option value=""> Select Mortgage Document </option>
-												<option value="0" <?php if (isset($mortgage_document) and $mortgage_document == '0') echo 'selected'; ?>> YES </option>
-												<option value="1" <?php if (isset($mortgage_document) and $mortgage_document == '1') echo 'selected'; ?>> NO </option>
+												<option value="0"> YES </option>
+												<option value="1"> NO </option>
 											</select>
-											<span class="text-danger" id="mortgagedocCheck"> Select Mortgage Document </span>
+											<span class="text-danger" id="mortgagedocCheck" style='display:none'> Select Mortgage Document </span>
 										</div>
 									</div>
 
@@ -1172,9 +1172,8 @@ input:checked + .slider:before {
 										<div class="form-group">
 											<label for="mortgage_document_upd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
 											<input type="file" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
-											<input type="hidden" id="mortgage_doc_upd" name="mortgage_doc_upd" value="<?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?>">
-											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/" . $mortgage_document_upd; ?>" target="_blank" >  <?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?> </a> -->
-											<span class="text-danger" id="mortgagedocUpdCheck"> Upload Mortgage Document </span>
+											<input type="hidden" id="mortgage_doc_upd" name="mortgage_doc_upd" value="">
+											<span class="text-danger" id="mortgagedocUpdCheck" style='display:none'> Upload Mortgage Document </span>
 										</div>
 									</div>
 
@@ -1199,7 +1198,7 @@ input:checked + .slider:before {
 
 					<!-- Endorsement Info START-->
 
-					<div class="card">
+					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Endorsement Info </div>
 						<div class="card-body">
 							<div class="row">
@@ -1209,35 +1208,33 @@ input:checked + .slider:before {
 										<label for="endorsement_process"> Endorsement Process</label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="endorsement_process" name="endorsement_process" tabindex="24">
 											<option value=""> Select Endorsement Process </option>
-											<option value="0" <?php if (isset($endorsement_process) and $endorsement_process == '0') echo 'selected'; ?>> YES </option>
-											<option value="1" <?php if (isset($endorsement_process) and $endorsement_process == '1') echo 'selected'; ?>> NO </option>
+											<option value="0" > YES </option>
+											<option value="1" > NO </option>
 										</select>
-										<span class="text-danger" id="endorsementprocessCheck"> Select Endorsement Process </span>
+										<span class="text-danger" id="endorsementprocessCheck" style='display:none'> Select Endorsement Process </span>
 									</div>
 								</div>
 							</div>
 
-							<div class="row" id="endorsementprocess" <?php if (isset($endorsement_process)) {
-																			if ($endorsement_process != '0') { ?> style="display: none;" <?php }
-																																	} else { ?> style="display: none;" <?php } ?>>
+							<div class="row" id="endorsementprocess">
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label > Owner Type </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="owner_type" name="owner_type" tabindex="25">
 											<option value=""> Select Holder type </option>
-											<option value="0" <?php if (isset($owner_type) and $owner_type == '0') echo 'selected'; ?>> Customer </option>
-											<option value="1" <?php if (isset($owner_type) and $owner_type == '1') echo 'selected'; ?>> Guarantor </option>
-											<option value="2" <?php if (isset($owner_type) and $owner_type == '2') echo 'selected'; ?>> Family Members </option>
+											<option value="0" > Customer </option>
+											<option value="1" > Guarantor </option>
+											<option value="2" > Family Members </option>
 										</select>
-										<span class="text-danger" id="ownertypeCheck"> Select Owner type </span>
+										<span class="text-danger" id="ownertypeCheck" style='display:none'> Select Owner type </span>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label> Owner Name </label>
-										<input type="text" class="form-control" id="owner_name" name="owner_name" value="<?php if (isset($owner_name)) echo $owner_name; ?>" readonly>
+										<input type="text" class="form-control" id="owner_name" name="owner_name" value="" readonly>
 
 										<select type="text" class="form-control" id="ownername_relationship_name" name="ownername_relationship_name" style="display: none;" tabindex="26">
 											<option value=""> Select Relationship </option>
@@ -1249,7 +1246,7 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="en_relation"> Relationship </label>
-										<input type="text" class="form-control" id="en_relation" name="en_relation" value="<?php if (isset($en_relation)) echo $en_relation; ?>" readonly tabindex="27">
+										<input type="text" class="form-control" id="en_relation" name="en_relation" value="" readonly tabindex="27">
 									</div>
 								</div>
 
@@ -1258,10 +1255,10 @@ input:checked + .slider:before {
 										<label for="vehicle_type"> Vehicle type </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="vehicle_type" name="vehicle_type" tabindex="28">
 											<option value=""> Select Vehicle type </option>
-											<option value="0" <?php if (isset($vehicle_type) and $vehicle_type == '0') echo 'selected'; ?>> 2 Wheeler </option>
-											<option value="1" <?php if (isset($vehicle_type) and $vehicle_type == '1') echo 'selected'; ?>> 4 Wheeler </option>
+											<option value="0"> 2 Wheeler </option>
+											<option value="1"> 4 Wheeler </option>
 										</select>
-										<span class="text-danger" id="vehicletypeCheck"> Enter Vehicle Type </span>
+										<span class="text-danger" id="vehicletypeCheck" style='display:none'> Enter Vehicle Type </span>
 									</div>
 								</div>
 
@@ -1270,42 +1267,42 @@ input:checked + .slider:before {
 										<label for="vehicle_process"> Vehicle Process </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="vehicle_process" name="vehicle_process" tabindex="29">
 											<option value=""> Select Vehicle Process </option>
-											<option value="0" <?php if (isset($vehicle_process) and $vehicle_process == '0') echo 'selected'; ?>> New </option>
-											<option value="1" <?php if (isset($vehicle_process) and $vehicle_process == '1') echo 'selected'; ?>> Old </option>
+											<option value="0"> New </option>
+											<option value="1"> Old </option>
 										</select>
-										<span class="text-danger" id="vehicleprocessCheck"> Enter Vehicle Process </span>
+										<span class="text-danger" id="vehicleprocessCheck" style='display:none'> Enter Vehicle Process </span>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="en_Company"> Company </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="en_Company" name="en_Company" placeholder="Enter Company" value="<?php if (isset($en_Company)) echo $en_Company; ?>" tabindex="30">
-										<span class="text-danger" id="enCompanyCheck"> Enter Company </span>
+										<input type="text" class="form-control" id="en_Company" name="en_Company" placeholder="Enter Company" value="" tabindex="30">
+										<span class="text-danger" id="enCompanyCheck" style='display:none'> Enter Company </span>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="en_Model"> Model </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="en_Model" name="en_Model" placeholder="Enter Model" value="<?php if (isset($en_Model)) echo $en_Model; ?>" tabindex="31">
-										<span class="text-danger" id="enModelCheck"> Enter Model </span>
+										<input type="text" class="form-control" id="en_Model" name="en_Model" placeholder="Enter Model" value="" tabindex="31">
+										<span class="text-danger" id="enModelCheck" style='display:none'> Enter Model </span>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="vehicle_reg_no"> Vehicle Reg No. </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="vehicle_reg_no" name="vehicle_reg_no" placeholder="Enter Vehicle No" value="<?php if (isset($vehicle_reg_no)) echo $vehicle_reg_no; ?>" tabindex="32">
-										<span class="text-danger" id="vehicle_reg_noCheck"> Enter Vehicle No </span>
+										<input type="text" class="form-control" id="vehicle_reg_no" name="vehicle_reg_no" placeholder="Enter Vehicle No" value="" tabindex="32">
+										<span class="text-danger" id="vehicle_reg_noCheck" style='display:none'> Enter Vehicle No </span>
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="endorsement_name"> Endorsement name </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="endorsement_name" name="endorsement_name" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Endorsement Name" value="<?php if (isset($endorsement_name)) echo $endorsement_name; ?>" tabindex="33">
-										<span class="text-danger" id="endorsementnameCheck"> Enter Endorsement Name</span>
+										<input type="text" class="form-control" id="endorsement_name" name="endorsement_name" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Endorsement Name" value="" tabindex="33">
+										<span class="text-danger" id="endorsementnameCheck" style='display:none'> Enter Endorsement Name</span>
 									</div>
 								</div>
 
@@ -1314,10 +1311,10 @@ input:checked + .slider:before {
 										<label for="en_RC"> RC </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="en_RC" name="en_RC" tabindex="34">
 											<option value=""> Select RC </option>
-											<option value="0" <?php if (isset($en_RC) and $en_RC == '0') echo 'selected'; ?>> YES </option>
-											<option value="1" <?php if (isset($en_RC) and $en_RC == '1') echo 'selected'; ?>> NO </option>
+											<option value="0" > YES </option>
+											<option value="1" > NO </option>
 										</select>
-										<span class="text-danger" id="enRCCheck"> Select RC </span>
+										<span class="text-danger" id="enRCCheck" style='display:none'> Select RC </span>
 									</div>
 								</div>
 
@@ -1325,9 +1322,8 @@ input:checked + .slider:before {
 									<div class="form-group">
 										<label for="RC_document_upd"> RC Uploads </label> <span class="required">&nbsp;*</span>
 										<input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="35">
-										<input type="hidden" id="rc_doc_upd" name="rc_doc_upd" value="<?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>">
-										<!-- <a href="<?php echo "uploads/verification/endorsement_doc/" . $Rc_document_upd; ?>" target="_blank" > <?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>  </a> -->
-										<span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
+										<input type="hidden" id="rc_doc_upd" name="rc_doc_upd" value="">
+										<span class="text-danger" id="rcdocUpdCheck" style='display:none'> Upload RC </span>
 									</div>
 								</div>
 
@@ -1336,10 +1332,10 @@ input:checked + .slider:before {
 										<label for="en_Key"> Key </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="36">
 											<option value=""> Select Key </option>
-											<option value="0" <?php if (isset($en_Key) and $en_Key == '0') echo 'selected'; ?>> YES </option>
-											<option value="1" <?php if (isset($en_Key) and $en_Key == '1') echo 'selected'; ?>> NO </option>
+											<option value="0" > YES </option>
+											<option value="1" > NO </option>
 										</select>
-										<span class="text-danger" id="enKeyCheck"> Select Key </span>
+										<span class="text-danger" id="enKeyCheck" style='display:none'> Select Key </span>
 									</div>
 								</div>
 
@@ -1358,29 +1354,16 @@ input:checked + .slider:before {
 					</div>
 					<!-- Endorsement Info  End-->
 					<!-- Gold Info Start -->
-					<div class="card">
+					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Gold Info
-							<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;" onclick="resetgoldInfo()"><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="GoldResetTableDiv">
-										<table class="table custom-table">
-											<thead>
-												<tr>
-													<th width="50"> S.No </th>
-													<th> Gold type </th>
-													<th> Purity </th>
-													<th> Count </th>
-													<th> Weight </th>
-													<th> Value </th>
-												</tr>
-											</thead>
-											<tbody>
-											</tbody>
-										</table>
+									<div class="form-group" id="goldResetDiv">
+										
 									</div>
 								</div>
 							</div>
@@ -1389,30 +1372,15 @@ input:checked + .slider:before {
 					<!-- Gold Info End -->
 					<!-- Documents Info START-->
 
-					<div class="card">
+					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Documents Info
-							<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25" onclick="resetdocInfo()"><span class="icon-add"></span></button>
 						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="DocResetTableDiv">
-										<table class="table custom-table">
-											<thead>
-												<tr>
-													<th width="50"> S.No </th>
-													<th> Document Name </th>
-													<th> Document Details</th>
-													<th> Document Type </th>
-													<th> Document Holder</th>
-													<th> Holder Name</th>
-													<th> Relationship</th>
-												</tr>
-											</thead>
-											<tbody>
-
-											</tbody>
-										</table>
+									<div class="form-group" id="documentResetDiv">
+										
 									</div>
 								</div>
 							</div>
@@ -1478,7 +1446,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label class="label"> Name </label>&nbsp;<span class="text-danger">*</span>
 							<input type="text" class="form-control" name="famname" id="famname" onkeydown="return /[a-z ]/i.test(event.key)">
-							<span class="text-danger" id="famnameCheck">Enter Name</span>
+							<span class="text-danger" id="famnameCheck" style='display:none'>Enter Name</span>
 						</div>
 					</div>
 
@@ -1496,7 +1464,7 @@ input:checked + .slider:before {
 								<option value="Sister"> Sister </option>
 								<option value="Other"> Other </option>
 							</select>
-							<span class="text-danger" id="famrelationCheck">Select Relationship</span>
+							<span class="text-danger" id="famrelationCheck" style='display:none'>Select Relationship</span>
 						</div>
 					</div>
 
@@ -1504,7 +1472,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="other_remark"> Remark</label>
 							<input type="text" class="form-control" name="other_remark" id="other_remark">
-							<span class="text-danger" id="famremarkCheck">Enter Remark</span>
+							<span class="text-danger" id="famremarkCheck" style='display:none'>Enter Remark</span>
 						</div>
 					</div>
 
@@ -1512,7 +1480,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="other_address"> Address </label>
 							<input type="text" class="form-control" name="other_address" id="other_address">
-							<span class="text-danger" id="famaddressCheck">Enter Address</span>
+							<span class="text-danger" id="famaddressCheck" style='display:none'>Enter Address</span>
 						</div>
 					</div>
 
@@ -1520,7 +1488,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label class="label"> Age </label>&nbsp;<span class="text-danger">*</span>
 							<input type="number" class="form-control" name="relation_age" id="relation_age">
-							<span class="text-danger" id="famageCheck">Enter Age</span>
+							<span class="text-danger" id="famageCheck" style='display:none'>Enter Age</span>
 						</div>
 					</div>
 
@@ -1528,7 +1496,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label class="label"> Aadhar No </label>&nbsp;<span class="text-danger">*</span>
 							<input type="text" class="form-control" name="relation_aadhar" id="relation_aadhar" data-type="adhaar-number" maxlength="14">
-							<span class="text-danger" id="famaadharCheck">Enter Aadhar Number</span>
+							<span class="text-danger" id="famaadharCheck" style='display:none'>Enter Aadhar Number</span>
 						</div>
 					</div>
 
@@ -1536,7 +1504,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label class="label"> Mobile No </label>&nbsp;<span class="text-danger">*</span>
 							<input type="number" class="form-control" name="relation_Mobile" id="relation_Mobile" maxlength="10" onkeypress="if(this.value.length==10) return false;">
-							<span class="text-danger" id="fammobileCheck">Enter Mobile Number</span>
+							<span class="text-danger" id="fammobileCheck" style='display:none'>Enter Mobile Number</span>
 						</div>
 					</div>
 
@@ -1544,7 +1512,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label class="label"> Occupation </label>&nbsp;<span class="text-danger">*</span>
 							<input type="text" class="form-control" name="relation_Occupation" id="relation_Occupation" onkeydown="return /[a-z ]/i.test(event.key)">
-							<span class="text-danger" id="famoccCheck">Enter Occupation</span>
+							<span class="text-danger" id="famoccCheck" style='display:none'>Enter Occupation</span>
 						</div>
 					</div>
 
@@ -1552,7 +1520,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label class="label"> Income </label>&nbsp;<span class="text-danger">*</span>
 							<input type="number" class="form-control" name="relation_Income" id="relation_Income">
-							<span class="text-danger" id="famincomeCheck">Enter Income</span>
+							<span class="text-danger" id="famincomeCheck" style='display:none'>Enter Income</span>
 						</div>
 					</div>
 
@@ -1633,7 +1601,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label> Property Type </label><span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="property_typ" name="property_typ" placeholder="Enter Property Type" onkeydown="return /[a-z ]/i.test(event.key)">
-							<span class="text-danger" id="prtytypeCheck">Enter Property Type</span>
+							<span class="text-danger" id="prtytypeCheck" style='display:none'>Enter Property Type</span>
 						</div>
 					</div>
 
@@ -1641,7 +1609,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="property_measurement"> Property Measurement </label><span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="property_measurement" name="property_measurement" placeholder="Enter Property Measurement">
-							<span class="text-danger" id="prtymeasureCheck">Enter Property Measurement</span>
+							<span class="text-danger" id="prtymeasureCheck" style='display:none'>Enter Property Measurement</span>
 						</div>
 					</div>
 
@@ -1649,7 +1617,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="property_value"> Property Value </label><span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="property_value" name="property_value" placeholder="Enter Property Value">
-							<span class="text-danger" id="prtyvalCheck">Enter Property Value</span>
+							<span class="text-danger" id="prtyvalCheck" style='display:none'>Enter Property Value</span>
 						</div>
 					</div>
 
@@ -1659,7 +1627,7 @@ input:checked + .slider:before {
 							<select type="number" class="form-control" id="property_holder" name="property_holder">
 								<option> Select Property Holder </option>
 							</select>
-							<span class="text-danger" id="prtyholdCheck">Select Property Holder </span>
+							<span class="text-danger" id="prtyholdCheck" style='display:none'>Select Property Holder </span>
 						</div>
 					</div>
 
@@ -1734,7 +1702,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="bank_name"> Bank Name </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="bank_name" name="bank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)">
-							<span class="text-danger" id="bankNameCheck"> Enter Bank Name </span>
+							<span class="text-danger" id="bankNameCheck" style='display:none'> Enter Bank Name </span>
 						</div>
 					</div>
 
@@ -1742,7 +1710,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="branch_name"> Branch Name </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="branch_name" name="branch_name" placeholder="Enter Branch Name" onkeydown="return /[a-z ]/i.test(event.key)">
-							<span class="text-danger" id="branchCheck"> Enter Branch Name </span>
+							<span class="text-danger" id="branchCheck" style='display:none'> Enter Branch Name </span>
 						</div>
 					</div>
 
@@ -1750,7 +1718,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="account_holder_name"> Account Holder Name </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="account_holder_name" name="account_holder_name" placeholder="Enter Account Holder Name" onkeydown="return /[a-z ]/i.test(event.key)">
-							<span class="text-danger" id="accholdCheck"> Enter Account Holder Name </span>
+							<span class="text-danger" id="accholdCheck" style='display:none'> Enter Account Holder Name </span>
 						</div>
 					</div>
 
@@ -1758,7 +1726,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="account_number"> Account Number </label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="account_number" name="account_number" placeholder="Enter Account Number">
-							<span class="text-danger" id="accnoCheck"> Enter Account Number </span>
+							<span class="text-danger" id="accnoCheck" style='display:none'> Enter Account Number </span>
 						</div>
 					</div>
 
@@ -1766,7 +1734,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="Ifsc_code"> IFSC Code </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="Ifsc_code" name="Ifsc_code" placeholder="Enter IFSC Code">
-							<span class="text-danger" id="ifscCheck"> Enter IFSC Code </span>
+							<span class="text-danger" id="ifscCheck" style='display:none'> Enter IFSC Code </span>
 						</div>
 					</div>
 
@@ -1851,7 +1819,7 @@ input:checked + .slider:before {
 								<option value="2"> P Additional </option>
 								<option value="3"> S Additional </option>
 							</select>
-							<span class="text-danger" id="docNameCheck"> Select Doc Name </span>
+							<span class="text-danger" id="docNameCheck" style='display:none'> Select Doc Name </span>
 						</div>
 					</div>
 
@@ -1865,7 +1833,7 @@ input:checked + .slider:before {
 								<option value="2"> Combined </option>
 								<option value="3"> Family Members </option>
 							</select>
-							<span class="text-danger" id="signTypeCheck"> Select Sign Type </span>
+							<span class="text-danger" id="signTypeCheck" style='display:none'> Select Sign Type </span>
 						</div>
 					</div>
 
@@ -1883,7 +1851,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count" readonly>
-							<span class="text-danger" id="docCountCheck"> Enter Count </span>
+							<span class="text-danger" id="docCountCheck" style='display:none'> Enter Count </span>
 						</div>
 					</div>
 
@@ -1974,7 +1942,7 @@ input:checked + .slider:before {
 								<option value="1"> Guarantor </option>
 								<option value="2"> Family Members </option>
 							</select>
-							<span class="text-danger" id="holdertypeCheck"> Select Holder type </span>
+							<span class="text-danger" id="holdertypeCheck" style='display:none'> Select Holder type </span>
 						</div>
 					</div>
 
@@ -2002,7 +1970,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="BankName"> Bank Name </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)" readonly>
-							<span class="text-danger" id="chequebankCheck"> Enter Bank Name </span>
+							<span class="text-danger" id="chequebankCheck" style='display:none'> Enter Bank Name </span>
 						</div>
 					</div>
 
@@ -2010,7 +1978,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="chequeNo"> Cheque Count </label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count" readonly>
-							<span class="text-danger" id="chequeCountCheck"> Enter Cheque Count </span>
+							<span class="text-danger" id="chequeCountCheck" style='display:none'> Enter Cheque Count </span>
 						</div>
 					</div>
 
@@ -2018,7 +1986,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="upd"> Uploads </label>
 							<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple  onchange="chequefilesCount()">
-							<span class="text-danger" id="chequeupdCheck"> Upload Cheque </span>
+							<span class="text-danger" id="chequeupdCheck" style='display:none'> Upload Cheque </span>
 						</div>
 					</div>
 				</div>
@@ -2099,7 +2067,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="feedback_label"> Feedback Label </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="feedback_label" name="feedback_label" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Feedback Label">
-							<span class="text-danger" id="feedbacklabelCheck"> Enter Feedback Label </span>
+							<span class="text-danger" id="feedbacklabelCheck" style='display:none'> Enter Feedback Label </span>
 						</div>
 					</div>
 
@@ -2114,7 +2082,7 @@ input:checked + .slider:before {
 								<option value="4"> Good </option>
 								<option value="5"> Excellent </option>
 							</select>
-							<span class="text-danger" id="feedbackCheck"> Select Feedback </span>
+							<span class="text-danger" id="feedbackCheck" style='display:none'> Select Feedback </span>
 						</div>
 					</div>
 
@@ -2200,7 +2168,7 @@ input:checked + .slider:before {
 								<option value="0"> Old </option>
 								<option value="1"> New </option>
 							</select>
-							<span class="text-danger" id="GoldstatusCheck"> Select Gold Status </span>
+							<span class="text-danger" id="GoldstatusCheck" style='display:none'> Select Gold Status </span>
 						</div>
 					</div>
 
@@ -2208,7 +2176,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="gold_type"> Gold Type </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type">
-							<span class="text-danger" id="GoldtypeCheck"> Enter Gold Type </span>
+							<span class="text-danger" id="GoldtypeCheck" style='display:none'> Enter Gold Type </span>
 						</div>
 					</div>
 
@@ -2217,7 +2185,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="Purity"> Purity </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity">
-							<span class="text-danger" id="purityCheck"> Enter Purity </span>
+							<span class="text-danger" id="purityCheck" style='display:none'> Enter Purity </span>
 						</div>
 					</div>
 
@@ -2225,7 +2193,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="gold_Count"> Count </label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="gold_Count" name="gold_Count" placeholder="Enter Count">
-							<span class="text-danger" id="goldCountCheck"> Enter Count </span>
+							<span class="text-danger" id="goldCountCheck" style='display:none'> Enter Count </span>
 						</div>
 					</div>
 
@@ -2233,7 +2201,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="gold_Weight"> Weight </label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight in Grams">
-							<span class="text-danger" id="goldWeightCheck"> Enter Weight </span>
+							<span class="text-danger" id="goldWeightCheck" style='display:none'> Enter Weight </span>
 						</div>
 					</div>
 
@@ -2241,7 +2209,7 @@ input:checked + .slider:before {
 						<div class="form-group">
 							<label for="gold_Value"> Value </label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value">
-							<span class="text-danger" id="goldValueCheck"> Enter Value </span>
+							<span class="text-danger" id="goldValueCheck" style='display:none'> Enter Value </span>
 						</div>
 					</div>
 
@@ -2317,7 +2285,7 @@ input:checked + .slider:before {
 					<div class="form-group">
 						<label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
 						<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="" tabindex="1" readonly />
-						<span class="text-danger" id="documentnameCheck"> Enter Document name </span>
+						<span class="text-danger" id="documentnameCheck" style='display:none'> Enter Document name </span>
 					</div>
 				</div>
 
@@ -2325,7 +2293,7 @@ input:checked + .slider:before {
 					<div class="form-group">
 						<label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
 						<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="" tabindex="2" readonly />
-						<span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
+						<span class="text-danger" id="documentdetailsCheck" style='display:none'> Enter Document Details </span>
 					</div>
 				</div>
 
@@ -2337,7 +2305,7 @@ input:checked + .slider:before {
 							<option value='0' > Original </option>
 							<option value='1' > Xerox </option>
 						</select>
-						<span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
+						<span class="text-danger" id="documentTypeCheck" style='display:none'> Select Document Type </span>
 					</div>
 				</div>
 
@@ -2350,7 +2318,7 @@ input:checked + .slider:before {
 							<option value="1" > Guarantor </option>
 							<option value="2" > Family Members </option>
 						</select>
-						<span class="text-danger" id="docholderCheck"> Select Document Holder </span>
+						<span class="text-danger" id="docholderCheck" style='display:none'> Select Document Holder </span>
 					</div>
 				</div>
 
@@ -2415,3 +2383,25 @@ input:checked + .slider:before {
 </form>
 </div>
 <!-- END  Add Document Info Modal -->
+<!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal START ////////////////////////////////////////////////////////////// -->
+<div class="modal fade noc-summary-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> NOC Summary </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="nocsummaryModal">
+                    
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal END ////////////////////////////////////////////////////////////////////// -->
