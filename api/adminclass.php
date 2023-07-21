@@ -4360,20 +4360,27 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['mortgage_document'])){
                 $mortgage_document = $_POST['mortgage_document'];    
             }
-			$pendingchk = '';
+			$pendingchk = 'NO';
 			if(!empty($_FILES['mortgage_document_upd']['name']))
             {
                 $mortgage_document_upd = $_FILES['mortgage_document_upd']['name'];
                 $upd_temp = $_FILES['mortgage_document_upd']['tmp_name'];
                 $folder="uploads/verification/mortgage_doc/".$mortgage_document_upd ;
                 move_uploaded_file($upd_temp, $folder);
-            }else{
+            }else if(isset($_POST['mortgage_doc_upd']) and $_POST['mortgage_doc_upd'] != ''){
 				$mortgage_document_upd = $_POST['mortgage_doc_upd']; 
+			}else{
+				if(isset($_POST['pendingchk'])){
+					$pendingchk = $_POST['pendingchk'];
+					$mortgage_document_upd = '';
+				}
 			}
-			if(isset($_POST['pendingchk'])){
-				$pendingchk = $_POST['pendingchk'];
-				$mortgage_document_upd = '';
-			} 
+
+			
+			// if(isset($_POST['pendingchk'])){
+			// 	$pendingchk = $_POST['pendingchk'];
+			// 	$mortgage_document_upd = '';
+			// } 
             if(isset($_POST['endorsement_process_post'])){
                 $endorsement_process = $_POST['endorsement_process_post'];
             }
@@ -4413,88 +4420,24 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['en_RC'])){
                 $en_RC = $_POST['en_RC'];
             }
-			$endorsependingchk ='';
+			$endorsependingchk ='NO';
 			if(!empty($_FILES['Rc_document_upd']['name']))
             {
                 $Rc_document_upd = $_FILES['Rc_document_upd']['name'];
                 $upd_temp = $_FILES['Rc_document_upd']['tmp_name'];
                 $folder="uploads/verification/endorsement_doc/".$Rc_document_upd ;
                 move_uploaded_file($upd_temp, $folder);
-            }else{
+            }else if(isset($_POST['rc_doc_upd']) and $_POST['rc_doc_upd'] != ''){
 				$Rc_document_upd = $_POST['rc_doc_upd']; 
+			}else{
+				if(isset($_POST['endorsependingchk'])){
+					$endorsependingchk = $_POST['endorsependingchk']; 
+					$Rc_document_upd = '';
+				}
 			}
-			if(isset($_POST['endorsependingchk'])){
-                $endorsependingchk = $_POST['endorsependingchk']; 
-				$Rc_document_upd = '';
-            }
             if(isset($_POST['en_Key'])){
                 $en_Key = $_POST['en_Key'];
             }
-            // if(isset($_POST['gold_info'])){
-            //     $gold_info = $_POST['gold_info'];
-            // }
-            // if(isset($_POST['gold_sts'])){
-            //     $gold_sts = $_POST['gold_sts'];
-            // }
-            // if(isset($_POST['gold_type'])){
-            //     $gold_type = $_POST['gold_type'];
-            // }
-            // if(isset($_POST['Purity'])){
-            //     $Purity = $_POST['Purity'];
-            // }
-            // if(isset($_POST['gold_Count'])){
-            //     $gold_Count = $_POST['gold_Count'];
-            // }
-            // if(isset($_POST['gold_Weight'])){
-            //     $gold_Weight = $_POST['gold_Weight'];
-            // }
-            // if(isset($_POST['gold_Value'])){
-            //     $gold_Value = $_POST['gold_Value'];
-            // }
-
-
-            // if(isset($_POST['document_name'])){
-            //     $document_name = $_POST['document_name'];
-            // }
-            // if(isset($_POST['document_details'])){
-            //     $document_details = $_POST['document_details'];
-            // }
-            // if(isset($_POST['document_type'])){
-            //     $document_type = $_POST['document_type'];
-            // }   
-			// if(isset($_FILES['document_info_upd']))
-            // {
-            //     $document = $_FILES['document_info_upd'];
-			// 	$cnt = count($document['name']);
-			// 	$document_info_upd ='';
-			// 	for($i=0; $i<$cnt; $i++){
-
-			// 		$document_upd = $document['name'][$i];
-
-			// 		$upd_temp = $_FILES['document_info_upd']['tmp_name'][$i];
-			// 		$folder="uploads/verification/doc_info/".$document_upd;
-			// 		move_uploaded_file($upd_temp, $folder);
-
-			// 		$document_info_upd .= $document_upd.',';
-			// 	}
-			// 	$document_info_upd = rtrim($document_info_upd,',');
-            // }else{
-			// 	$document_info_upd = $_POST['doc_info_upd']; 
-			// }
-            // if(isset($_POST['document_holder'])){
-            //     $document_holder = $_POST['document_holder'];
-            // }
-			// $docholder_name='';
-            // if(isset($_POST['docholder_name'])){
-            //     $docholder_name = $_POST['docholder_name'];
-            // }
-			// $docholder_relationship_name='';
-            // if(isset($_POST['docholder_relationship_name'])){
-            //     $docholder_relationship_name = $_POST['docholder_relationship_name'];
-            // }
-            // if(isset($_POST['doc_relation'])){
-            //     $doc_relation = $_POST['doc_relation'];
-            // }
 
             if(isset($_POST['adhar_print'])){
 				$adhar_print = $_POST['adhar_print'];

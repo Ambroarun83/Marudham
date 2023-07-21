@@ -1049,7 +1049,7 @@ input:checked + .slider:before {
 								</div>
 							</div>
 
-							<div id="Mortgageprocess" >
+							<div id="mortgage_div" style="display:none">
 								<div class="row">
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
@@ -1168,7 +1168,7 @@ input:checked + .slider:before {
 										</div>
 									</div>
 
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="docUpd" style="display: none;">
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="mort_doc_upd" style="display: none;">
 										<div class="form-group">
 											<label for="mortgage_document_upd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
 											<input type="file" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
@@ -1187,11 +1187,16 @@ input:checked + .slider:before {
 											</label>
 										</div>
 									</div>
-
-
 								</div>
 
 							</div>
+							
+							<div class="col-md-12 ">
+								<div class="text-right">
+									<button type="button" name="update_mortgage" id="update_mortgage" class="btn btn-primary" value="Submit" tabindex="23"><span class="icon-check"></span>&nbsp;Submit</button>
+								</div>
+							</div>
+							
 						</div>
 					</div>
 					<!-- Mortgage Info  End-->
@@ -1216,7 +1221,7 @@ input:checked + .slider:before {
 								</div>
 							</div>
 
-							<div class="row" id="endorsementprocess">
+							<div class="row" id="end_process_div" style='display:none'>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
@@ -1308,6 +1313,18 @@ input:checked + .slider:before {
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
+										<label for="en_Key"> Key </label> <span class="required">&nbsp;*</span>
+										<select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="36">
+											<option value=""> Select Key </option>
+											<option value="0" > YES </option>
+											<option value="1" > NO </option>
+										</select>
+										<span class="text-danger" id="enKeyCheck" style='display:none'> Select Key </span>
+									</div>
+								</div>
+
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
 										<label for="en_RC"> RC </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="en_RC" name="en_RC" tabindex="34">
 											<option value=""> Select RC </option>
@@ -1318,24 +1335,12 @@ input:checked + .slider:before {
 									</div>
 								</div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="RCdocUpd" style="display: none;">
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="end_doc_upd" style="display: none;">
 									<div class="form-group">
 										<label for="RC_document_upd"> RC Uploads </label> <span class="required">&nbsp;*</span>
 										<input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="35">
 										<input type="hidden" id="rc_doc_upd" name="rc_doc_upd" value="">
 										<span class="text-danger" id="rcdocUpdCheck" style='display:none'> Upload RC </span>
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="en_Key"> Key </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="36">
-											<option value=""> Select Key </option>
-											<option value="0" > YES </option>
-											<option value="1" > NO </option>
-										</select>
-										<span class="text-danger" id="enKeyCheck" style='display:none'> Select Key </span>
 									</div>
 								</div>
 
@@ -1350,6 +1355,14 @@ input:checked + .slider:before {
 								</div>
 
 							</div>
+
+							<div class="col-md-12 ">
+								<div class="text-right">
+									<button type="button" name="update_endorsement" id="update_endorsement" class="btn btn-primary" value="Submit" tabindex="46"><span class="icon-check"></span>&nbsp;Submit</button>
+								</div>
+							</div>
+
+							
 						</div>
 					</div>
 					<!-- Endorsement Info  End-->
@@ -1388,12 +1401,6 @@ input:checked + .slider:before {
 					</div>
 					<!-- Document Info End -->
 
-					<div class="col-md-12 ">
-						<div class="text-right">
-							<button type="submit" name="update_documentation" id="update_documentation" class="btn btn-primary" value="Submit" tabindex="46"><span class="icon-check"></span>&nbsp;Submit</button>
-							<button type="reset" class="btn btn-outline-secondary" tabindex="47">Clear</button>
-						</div>
-					</div>
 
 				</div>
 			</div> <!-- Row End -->

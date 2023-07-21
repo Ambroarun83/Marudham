@@ -2118,7 +2118,9 @@ function doc_submit_validation() {
     
     // var document_name = $('#document_name').val(); var document_details = $('#document_details').val(); var document_type = $('#document_type').val(); var document_holder = $('#document_holder').val();
 
-    var req_id = $('#req_id').val(); $('#mortgage_document_upd').val(); $('#RC_document_upd').val();
+    
+    var mortgage_document_upd = $('#mortgage_document_upd').val();var mortgage_old_doc_upd = $('#mortgage_doc_upd').val(); 
+    var RC_document_upd = $('#RC_document_upd').val();var RC_old_document_upd = $('#rc_doc_upd').val();
 
     var mortgage_name = $('#mortgage_name').val(); var mortgage_dsgn = $('#mortgage_dsgn').val(); var mortgage_nuumber = $('#mortgage_nuumber').val(); var reg_office = $('#reg_office').val(); var mortgage_value = $('#mortgage_value').val(); var mortgage_document = $('#mortgage_document').val();
 
@@ -2207,10 +2209,16 @@ function doc_submit_validation() {
         } else {
             $('#mortgagevalueCheck').hide();
         }
-        if (mortgage_document == '') {
+        if (mortgage_document == '') {// check if document dropdown selected or not
             event.preventDefault();
             $('#mortgagedocCheck').show();
-        } else {
+        } else {//if selected then check if document dropdown is YES(0) then check for document uploaded now or already
+            if(mortgage_document == '0' && (mortgage_old_doc_upd == '' && mortgage_document_upd =='') ){ //if yes, then check both document upload are not empty
+                event.preventDefault();
+                $('#mortgagedocUpdCheck').show();
+            }else{
+                $('#mortgagedocUpdCheck').hide();
+            }
             $('#mortgagedocCheck').hide();
         }
     }
@@ -2266,17 +2274,23 @@ function doc_submit_validation() {
         } else {
             $('#endorsementnameCheck').hide();
         }
-        if (en_RC == '') {
-            event.preventDefault();
-            $('#enRCCheck').show();
-        } else {
-            $('#enRCCheck').hide();
-        }
         if (en_Key == '') {
             event.preventDefault();
             $('#enKeyCheck').show();
         } else {
             $('#enKeyCheck').hide();
+        }
+        if (en_RC == '') { // check if document dropdown selected or not
+            event.preventDefault();
+            $('#enRCCheck').show();
+        } else { //if selected then check if document dropdown is YES(0) then check for document uploaded now or already
+            if(en_RC == '0' && (RC_old_document_upd == '' && RC_document_upd =='') ){ //if yes, then check both document upload are not empty
+                event.preventDefault();
+                $('#rcdocUpdCheck').show();
+            }else{
+                $('#rcdocUpdCheck').hide();
+            }
+            $('#enRCCheck').hide();
         }
     }
 

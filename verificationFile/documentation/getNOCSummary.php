@@ -10,7 +10,7 @@ if(isset($_POST['cus_id'])){
 
 ?>
 <style>
-    hr{
+    .hr-line{
         position: relative;
         top: 20px;
         border: none;
@@ -42,7 +42,7 @@ if(isset($_POST['cus_id'])){
                 </div>
             </div>
             <!-- Signed Document End -->
-            <hr>
+            <hr class='hr-line'>
             <!-- Cheque List Start -->
             <div class="row">
                 <div class="col-md-12 ">
@@ -62,7 +62,7 @@ if(isset($_POST['cus_id'])){
                 </div>
             </div>
                 <!-- Cheque List End -->
-                <hr>
+                <hr class='hr-line'>
                 <!-- Mortgage List Start -->
             <div class="row">
                 <div class="col-md-12 ">
@@ -83,7 +83,7 @@ if(isset($_POST['cus_id'])){
                 </div>
             </div>
                 <!-- Mortgage List End -->
-                <hr>
+                <hr class='hr-line'>
                 <!-- Endorsement List Start -->
             <div class="row">
                 <div class="col-md-12 ">
@@ -104,7 +104,7 @@ if(isset($_POST['cus_id'])){
                 </div>
             </div>
                 <!-- Endorsement List End -->
-                <hr>
+                <hr class='hr-line'>
                 <!-- Gold List Start -->
             <div class="row">
                 <div class="col-md-12 ">
@@ -124,7 +124,7 @@ if(isset($_POST['cus_id'])){
                 </div>
             </div>
                 <!-- Gold List End -->
-                <hr>
+                <hr class='hr-line'>
                 <!-- Document Info Start -->
             <div class="row">
                 <div class="col-md-12 ">

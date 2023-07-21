@@ -760,15 +760,11 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_type"> Customer Type </label>
-										<input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_data)) {
-																															echo $cus_data;
-																														} ?>" readonly tabindex="26">
+										<input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_data)) {echo $cus_data;} ?>" readonly tabindex="26">
 									</div>
 								</div>
 
-								<div id="exist_type" <?php if (isset($cus_data)) {
-															if ($cus_data != 'Existing') { ?> style="display: none" <?php }
-																																		} ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div id="exist_type" <?php if (isset($cus_data)) {if ($cus_data != 'Existing') { ?> style="display: none" <?php }} ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="cus_exist_type"> Exist Type </label>
 										<input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" value="<?php if (isset($cus_exist_type)) {echo $cus_exist_type;} ?>" readonly tabindex="27">

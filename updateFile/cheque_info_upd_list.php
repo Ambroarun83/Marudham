@@ -13,7 +13,7 @@ include '../ajaxconfig.php';
             <th> Cheque Count </th>
             <th> Cheque No </th>
             <th> Uploads </th>
-            <th> NOC Status </th>
+            
         </tr>
     </thead>
     <tbody>
@@ -72,7 +72,7 @@ include '../ajaxconfig.php';
                 <td><?php echo $cheque["cheque_count"]; ?></td>
                 <td><?php echo rtrim($cheque_no,', '); // to trim the comma at end?></td>
                 <td><?php echo rtrim($doc_upd_name,', ');// to trim the comma at end ?></td>
-                <td><?php if($cheque['noc_given'] == '1'){echo 'NOC Given';}else{echo '';} ?></td>
+                
 
             </tr>
 
