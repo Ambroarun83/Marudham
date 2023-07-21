@@ -611,25 +611,7 @@ $(document).ready(function () {
     // // Mortgage Info
     // $('#mortgageprocessCheck').hide(); $('#propertyholdertypeCheck').hide(); $('#docpropertytypeCheck').hide(); $('#docpropertymeasureCheck').hide(); $('#docpropertylocCheck').hide(); $('#docpropertyvalueCheck').hide();
     // $('#mortgagenameCheck').hide(); $('#mortgagedsgnCheck').hide(); $('#mortgagenumCheck').hide(); $('#regofficeCheck').hide(); $('#mortgagevalueCheck').hide(); $('#mortgagedocCheck').hide(); $('#mortgagedocUpdCheck').hide();
-    // $('#mortgage_process').change(function () {
-
-    //     let process = $(this).val();
-
-    //     if (process == '0') {
-    //         $('#Mortgageprocess').show();
-    //     } else {
-    //         $('#Mortgageprocess').hide();
-
-    //         $('#Propertyholder_type').val('');
-    //         $('#Propertyholder_name').val('');
-    //         $('#Propertyholder_relationship_name').val('');
-    //         $('#doc_property_relation').val('');
-    //         $('#doc_property_pype').val('');
-    //         $('#doc_property_measurement').val('');
-    //         $('#doc_property_location').val('');
-    //         $('#doc_property_value').val('');
-    //     }
-    // })
+    
 
     // $('#Propertyholder_type').change(function () {
     //     let type = $(this).val();
@@ -700,56 +682,56 @@ $(document).ready(function () {
     //     });
     // });
 
-    // //Mortgage Document upload show/hide based on select YES/NO.
-    // var pend = document.querySelector('#pendingchk');
-    // $('#mortgage_document').change(function () {
-    //     var docupd = $(this).val();
+    //Mortgage Document upload show/hide based on select YES/NO.
+    $('#mortgage_document').change(function () {
+        var docupd = $(this).val();
 
-    //     if (docupd == '0') {
-    //         $('#docUpd').show();
-    //         $('#pendingchk').removeAttr('checked')
+        if (docupd == '0') {
+            $('#mort_doc_upd').show();
+            $('#pendingchk').removeAttr('checked')
+            
+        } else {
+            $('#mortgage_document_upd').val('');//remove selected file from file input box
+            $('#mort_doc_upd').hide();
+            $('#pendingchk').prop('checked',true);
+        }
+    })
 
-    //     } else {
-    //         $('#mortgage_document_upd').val('');
-    //         $('#docUpd').hide();
-    //         pend.checked = true;
-    //     }
-    // })
+    //when Mortgage Document pending is Checked then document will empty and Doc is NO////
+    $('#pendingchk').click(function () {
 
-    // //when Mortgage Document pending is Checked then document will empty and Doc is NO////
-    // $('#pendingchk').click(function () {
+        if (this.checked == true) {
+            $('#mortgage_document_upd').val('');
+            $('#mortgage_document').val('1');
+            $('#mort_doc_upd').hide();
+        } else {
+            $('#mortgage_document').val('0');
+            $('#mort_doc_upd').show();
+        }
+    })
 
-    //     if (pend.checked == true) {
-    //         $('#mortgage_document_upd').val('');
-    //         $('#mortgage_document').val('1');
-    //         $('#docUpd').hide();
-    //     } else {
-    //         $('#mortgage_document').val('0');
-    //         $('#docUpd').show();
-    //     }
-    // })
+    $('#mortgage_process').change(function () {
+
+        let process = $(this).val();
+
+        if (process == '0') {
+            $('#mortgage_div').show();
+        } else {
+            $('#mortgage_div').hide();
+
+            $('#Propertyholder_type').val('');
+            $('#Propertyholder_name').val('');
+            $('#Propertyholder_relationship_name').val('');
+            $('#doc_property_relation').val('');
+            $('#doc_property_pype').val('');
+            $('#doc_property_measurement').val('');
+            $('#doc_property_location').val('');
+            $('#doc_property_value').val('');
+        }
+    })
 
     // //Endrosement Info 
     // $('#endorsementprocessCheck').hide(); $('#ownertypeCheck').hide(); $('#vehicletypeCheck').hide(); $('#vehicleprocessCheck').hide(); $('#enCompanyCheck').hide(); $('#enModelCheck').hide(); $('#vehicle_reg_noCheck').hide(); $('#endorsementnameCheck').hide(); $('#enRCCheck').hide(); $('#enKeyCheck').hide(); $('#rcdocUpdCheck').hide();
-    // $('#endorsement_process').change(function () {
-
-    //     let process = $(this).val();
-
-    //     if (process == '0') {
-    //         $('#endorsementprocess').show();
-    //     } else {
-    //         $('#endorsementprocess').hide();
-
-    //         $('#owner_type').val('');
-    //         $('#owner_name').val('');
-    //         $('#ownername_relationship_name').val('');
-    //         $('#en_relation').val('');
-    //         $('#vehicle_type').val('');
-    //         $('#vehicle_process').val('');
-    //         $('#en_Company').val('');
-    //         $('#en_Model').val('');
-    //     }
-    // })
 
     // $('#owner_type').change(function () {
     //     let type = $(this).val();
@@ -817,33 +799,51 @@ $(document).ready(function () {
     //         }
     //     });
     // });
+    
+    $('#en_RC').change(function () {
+        var rcupd = $(this).val();
 
-    // var enpend = document.querySelector('#endorsependingchk');
-    // $('#endorsependingchk').click(function () {
+        if (rcupd == '0') {
+            $('#end_doc_upd').show();
+            $('#endorsependingchk').removeAttr('checked');
+        } else {
+            $('#RC_document_upd').val('');
+            $('#end_doc_upd').hide();
+            $('#endorsependingchk').prop('checked',true);
+        }
+    });
 
-    //     if (enpend.checked == true) {
-    //         $('#RC_document_upd').val('');
-    //         $('#en_RC').val('1');
-    //         $('#RCdocUpd').hide();
-    //     } else {
-    //         $('#en_RC').val('0');
-    //         $('#RCdocUpd').show();
-    //     }
-    // })
+    $('#endorsependingchk').click(function () {
 
-    // $('#en_RC').change(function () {
-    //     var rcupd = $(this).val();
+        if (this.checked == true) {
+            $('#RC_document_upd').val('');
+            $('#en_RC').val('1');
+            $('#end_doc_upd').hide();
+        } else {
+            $('#en_RC').val('0');
+            $('#end_doc_upd').show();
+        }
+    })
 
-    //     if (rcupd == '0') {
-    //         $('#RCdocUpd').show();
-    //         enpend.checked = false;
+    $('#endorsement_process').change(function () {
 
-    //     } else {
-    //         $('#RC_document_upd').val('');
-    //         $('#RCdocUpd').hide();
-    //         enpend.checked = true;
-    //     }
-    // })
+        let process = $(this).val();
+
+        if (process == '0') {
+            $('#end_process_div').show();
+        } else {
+            $('#end_process_div').hide();
+
+            $('#owner_type').val('');
+            $('#owner_name').val('');
+            $('#ownername_relationship_name').val('');
+            $('#en_relation').val('');
+            $('#vehicle_type').val('');
+            $('#vehicle_process').val('');
+            $('#en_Company').val('');
+            $('#en_Model').val('');
+        }
+    })
 
     // $('#document_holder').change(function () {
     //     let type = $(this).val();
@@ -1086,7 +1086,7 @@ function getCustomerLoanCounts(){
     })
 }
 // Modal Box for Agent Group
-$('#famnameCheck').hide(); $('#famrelationCheck').hide(); $('#famremarkCheck').hide(); $('#famaddressCheck').hide(); $('#famageCheck').hide(); $('#famaadharCheck').hide(); $('#fammobileCheck').hide(); $('#famoccCheck').hide(); $('#famincomeCheck').hide();
+
 $(document).on("click", "#submitFamInfoBtn", function () {
     let cus_id = $('#cus_id').val();
     let famname = $("#famname").val();
@@ -1350,7 +1350,7 @@ function propertyHolder() {
     });
 }
 
-$('#prtytypeCheck').hide(); $('#prtymeasureCheck').hide(); $('#prtyvalCheck').hide(); $('#prtyholdCheck').hide();
+
 
 $(document).on("click", "#propertyInfoBtn", function () {
     let cus_id = $('#cus_id').val();
@@ -1527,7 +1527,7 @@ function resetPropertyinfoList() {
 
 ////////////////////////////// Bank Info ///////////////////////////////////////////////////////
 
-$('#bankNameCheck').hide(); $('#branchCheck').hide(); $('#accholdCheck').hide(); $('#accnoCheck').hide(); $('#ifscCheck').hide();
+
 
 $(document).on("click", "#bankInfoBtn", function () {
 
@@ -1708,7 +1708,6 @@ function resetbankinfoList() {
 ////////////////////////// KYC Info ////////////////////////////////////////////////
 
 
-$('#proofCheck').hide(); $('#proofTypeCheck').hide(); $('#proofnoCheck').hide(); $('#proofUploadCheck').hide();
 
 $(document).on("click", "#kycInfoBtn", function () {
 
@@ -2701,7 +2700,14 @@ function getDocumentDetails(req_id,cus_id,cus_name){
     resetChequeList(req_id,cus_id);// to reset signed document list non-modal
     resetGoldList(req_id,cus_id);// to reset signed document list non-modal
     resetDocmentList(req_id,cus_id);// to reset signed document list non-modal
+    getFamilyList();//to get family , it may used in mort and endorse processes
+    getMortgageInfo(req_id,cus_id); // to get mortgage details
+    getEndorsementInfo(req_id,cus_id); // to get mortgage details
 
+    $('#update_mortgage, #update_endorsement').click(function(){
+        let id = $(this).attr('id');
+        
+    })
 }
 
 //Signed Doc List non-modal
@@ -2802,6 +2808,31 @@ function resetGoldList(req_id,cus_id) {
     })
 }
 
+//to get Family names
+function getFamilyList(){
+
+    let cus_id = $('#cus_id_load').val();
+
+    $.ajax({
+        url: 'verificationFile/verificationFam.php',
+        type: 'post',
+        data: { "cus_id": cus_id },
+        dataType: 'json',
+        success: function (response) {
+
+            var len = response.length;
+            $("#ownername_relationship_name, #Propertyholder_relationship_name").empty();
+            $("#ownername_relationship_name, #Propertyholder_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
+            for (var i = 0; i < len-1; i++) {
+                var fam_name = response[i]['fam_name'];
+                var fam_id = response[i]['fam_id'];
+                $("#ownername_relationship_name, #Propertyholder_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
+            }
+
+        }
+    });
+}
+
 //Document Info List non-modal
 function resetDocmentList(req_id,cus_id) {
     
@@ -2835,36 +2866,128 @@ function resetDocmentList(req_id,cus_id) {
     })
 }
 
-// function endorseHolderName(){
+//Motrgage info
+function getMortgageInfo(req_id,cus_id){
+    $.ajax({
+        url: 'updateFile/getMortgageInfo.php',
+        data: { "req_id":req_id,"cus_id": cus_id },
+        type: 'POST',
+        dataType: 'json',
+        cache: false,
+        success: function(response){
+            $('#mortgage_process').val(response['mort_process']);
+            // $('#mortgage_process').attr('disabled',true)
+            if(response['mort_process'] == '0'){
+                $('#mortgage_div').show();
+                
+                $('#Propertyholder_type').val(response['prop_holder_type']);
 
-//     let cus_id = $('#cus_id').val();
+                if(response['prop_holder_type'] != '2'){
+                    
+                    $('#Propertyholder_name').show();
+                    $('#Propertyholder_name').val(response['prop_holder_name']);
+                    $('#Propertyholder_relationship_name').hide();
 
-//     $.ajax({
-//         url: 'verificationFile/verificationFam.php',
-//         type: 'post',
-//         data: { "cus_id": cus_id },
-//         dataType: 'json',
-//         success: function (response) {
+                }else if(response['prop_holder_type'] == '2'){
+                    
+                    $('#Propertyholder_relationship_name').show();
+                    $('#Propertyholder_relationship_name').val(response['prop_holder_rel']);
+                    $('#Propertyholder_name').hide();
+                }
 
-//             var len = response.length;
-//             $("#ownername_relationship_name").empty();
-//             $("#ownername_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-//             for (var i = 0; i < len; i++) {
-//                 var fam_name = response[i]['fam_name'];
-//                 var fam_id = response[i]['fam_id'];
-//                 $("#ownername_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
-//             }
-//             {//To Order ag_group Alphabetically
-//                 var firstOption = $("#ownername_relationship_name option:first-child");
-//                 $("#ownername_relationship_name").html($("#ownername_relationship_name option:not(:first-child)").sort(function (a, b) {
-//                     return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-//                 }));
-//                 $("#ownername_relationship_name").prepend(firstOption);
-//             }
+                $('#doc_property_relation').val(response['doc_prop_rel']);
+                $('#doc_property_pype').val(response['doc_prop_type']);
+                $('#doc_property_measurement').val(response['doc_prop_meas']);
+                $('#doc_property_location').val(response['doc_prop_loc']);
+                $('#doc_property_value').val(response['doc_prop_val']);
+                
+                $('#mortgage_name').val(response['mort_name']);
+                $('#mortgage_dsgn').val(response['mort_des']);
+                $('#mortgage_nuumber').val(response['mort_num']);
+                $('#reg_office').val(response['reg_office']);
+                $('#mortgage_value').val(response['mort_value']);
+                $('#mortgage_document').val(response['mort_doc']);
+                
+                if(response['mort_doc'] == '0'){//show file input button if document already uploaded. so then user also can upload again with updated file
+                    $('#mort_doc_upd').show()
+                    $('#pendingchk').removeAttr('checked');
+                }else{
+                    $('#mort_doc_upd').hide()
+                    $('#pendingchk').prop('checked',true);
+                }
 
-//         }
-//     });
-// }
+                $('#mortgage_doc_upd').val(response['mort_doc_upd']);//store file name inside hidden input if already uploaded
+
+            }else{
+                $('#mortgage_div').hide();
+            }
+        }
+    })
+}
+
+//Endorsement info
+function getEndorsementInfo(req_id,cus_id){
+    $.ajax({
+        url: 'updateFile/getEndorsementInfo.php',
+        data: { "req_id":req_id,"cus_id": cus_id },
+        type: 'POST',
+        dataType: 'json',
+        cache: false,
+        success: function(response){
+            $('#endorsement_process').val(response['end_process']);
+            
+            if(response['end_process'] == '0'){
+                $('#end_process_div').show();
+                
+                $('#owner_type').val(response['owner_type']);//like customer, garentor
+                
+                if(response['owner_type'] != '2'){
+                    
+                    $('#owner_name').show();
+                    $('#owner_name').val(response['owner_name']);
+                    $('#ownername_relationship_name').hide();
+
+                }else if(response['owner_type'] == '2'){
+                    
+                    $('#ownername_relationship_name').show();
+                    $('#ownername_relationship_name').val(response['owner_rel_name']);//fam id
+                    $('#owner_name').hide();
+                }
+                // $('#owner_name').val(response['owner_name']);
+                // $('#ownername_relationship_name').val(response['owner_rel_name']);//fam id
+
+
+                $('#en_relation').val(response['owner_relation']);//like father, brother
+
+                $('#vehicle_type').val(response['vehicle_type']);//new or old
+                $('#vehicle_process').val(response['vehicle_process']);
+                $('#en_Company').val(response['vehicle_comp']);
+                $('#en_Model').val(response['vehicle_mod']);
+                $('#vehicle_reg_no').val(response['vehicle_reg_no']);
+                
+                $('#endorsement_name').val(response['end_name']);
+                $('#en_RC').val(response['end_rc']);
+                $('#en_Key').val(response['end_key']);
+
+                if(response['end_rc'] == '0'){//show file input button if document already uploaded. so then user also can upload again with updated file
+                    $('#end_doc_upd').show()
+                    $('#endorsependingchk').removeAttr('checked');
+                }else{
+                    $('#end_doc_upd').hide()
+                    $('#endorsependingchk').prop('checked',true);
+                }
+
+                $('#rc_doc_upd').val(response['end_rc_doc_upd']);//store file name inside hidden input if already uploaded
+
+            }else{
+                $('#end_process_div').hide();
+            }
+        }
+    })
+}
+
+
+
 
 // function mortgageHolderName(){
 //     let cus_id = $('#cus_id').val();

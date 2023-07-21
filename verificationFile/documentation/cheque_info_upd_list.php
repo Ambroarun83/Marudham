@@ -36,7 +36,7 @@ include '../../ajaxconfig.php';
                 $doc_upd_name .= "<a href=uploads/verification/cheque_upd/";
                 $doc_upd_name .= $docName ;
                 $doc_upd_name .= " target='_blank'>";
-                $doc_upd_name .=  $a. ' ' ;
+                $doc_upd_name .=  $docName. ' ' ;
                 $doc_upd_name .= "</a>" ;
                 $a++;
             }

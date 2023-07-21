@@ -47,7 +47,7 @@ if(isset($_POST['req_id'])){
                 <td><?php $ii=0;foreach($docUpd as $upd){
                     if($ii > 0) {echo ',';}
                     if($upd != null){
-                        echo '<a href="uploads/verification/doc_info/'.$upd.'" target="_blank" title="View Document"> '.$upd.'';
+                        echo '<a href="uploads/verification/doc_info/'.$upd.'" target="_blank" title="View Document"> '.$upd.'</a>';
                     }
                     $ii++;
                 } ?></td>

@@ -3913,7 +3913,7 @@ function docHistoryTable(){
 }
 
 function getDocumentHistory(){
-    let cus_id = $('#cus_id_load').val();let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id_load').val();let req_id = $('#req_id').val();let cus_type=$('#cus_type').val();
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -3929,7 +3929,8 @@ function getDocumentHistory(){
         success: function(response){
             // if(response.DESCRIPTION != null ){//check json response is not empty
 
-            
+            if(cus_type =='Existing'){
+                
                 for(var i=0;i< response['pending_customer'].length;i++){
                     pending_arr[i] = response['pending_customer'][i]
                     od_arr[i] = response['od_customer'][i]
@@ -3946,7 +3947,7 @@ function getDocumentHistory(){
                 var closed_sts = closed_arr.join(',');
                 $('#closed_sts').val(closed_sts);
                 balAmnt = balAmnt.join(',');
-            // }
+            }
         }
     }).then(function(){
         var pending_sts = $('#pending_sts').val()
@@ -4568,7 +4569,7 @@ function getLoaninfo(sub_cat_id){
 
 //loan history table contents get from closed file loan lists
 function getLoanHistory(){
-    let cus_id = $('#cus_id_load').val();let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id_load').val();let req_id = $('#req_id').val();let cus_type = $('#cus_type').val();
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -4583,6 +4584,7 @@ function getLoanHistory(){
         cache: false,
         success: function(response){
             // if(response.DESCRIPTION != null ){//check json response is not empty
+            if(cus_type =='Existing'){
                 for(var i=0;i< response['pending_customer'].length;i++){
                     pending_arr[i] = response['pending_customer'][i]
                     od_arr[i] = response['od_customer'][i]
@@ -4599,7 +4601,7 @@ function getLoanHistory(){
                 var closed_sts = closed_arr.join(',');
                 $('#closed_sts').val(closed_sts);
                 balAmnt = balAmnt.join(',');
-            // }
+            }
         }
     }).then(function(){
         var pending_sts = $('#pending_sts').val()
