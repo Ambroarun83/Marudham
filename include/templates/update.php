@@ -4,23 +4,19 @@ if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd']; //Customer ID.
 }
 
-if (isset($_POST['submit_update_cus_profile']) && $_POST['submit_update_cus_profile'] != '') {
 
-	$addUpdateCustomerProfile = $userObj->addUpdateCustomerProfile($mysqli, $userid);
+// if(isset($_POST['update_mortgage'])){
+
+// 	$userObj->updateMortEndorse($mysqli, $userid,'mort');
 ?>
-	<script>
-		alert('Customer Profile Updated');
-	</script>
-	<?php
-}
-
-if(isset($_POST['update_documentation']) && $_POST['update_documentation'] != ''){
-
-	$updateDoc = $userObj->addUpdateDocumentation($mysqli, $userid);
-?>
-	<script> alert('Documentation Details Updated'); </script>
+	<script> //alert('Documentation Details Updated'); </script>
 <?php
-}
+// }elseif(isset($_POST['update_mortgage'])){
+// 	$userObj->updateMortEndorse($mysqli, $userid,'endor');
+	?>
+		<script> //alert('Documentation Details Updated'); </script>
+	<?php
+// }
 
 //////////////////////// Customer Profile Info ///////////////////////////////
 $getCustomerReg = $userObj->getCustomerRegister($mysqli, $idupd);
@@ -913,15 +909,8 @@ input:checked + .slider:before {
 
 	<!--  ///////////////////////////////////////////////////////////////// Documentation  start ////////////////////////////////////////////////////////// -->
 	<div id="cus_document" style="display: none;">
-		<form id="cus_doc" name="cus_doc" action="" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="req_id_doc" id="req_id_doc" value="<?php if (isset($req_id)) {echo $req_id;} ?>">
-			<!-- <input type="hidden" name="doc_table_id" id="doc_table_id" value="<?php if (isset($document_table_id)) {echo $document_table_id;} ?>">
-			<input type="hidden" name="doc_id" id="doc_id" value="<?php if (isset($doc_id)) {echo $doc_id;} ?>">
-			<input type="hidden" name="en_relation_name" id="en_relation_name" value="<?php if (isset($ownername_relationship_name)) {echo $ownername_relationship_name;} ?>">
-			<input type="hidden" name="mortgage_relation_name" id="mortgage_relation_name"	value="<?php if (isset($Propertyholder_relationship_name)) {echo $Propertyholder_relationship_name;} ?>">
-			<input type="hidden" name="docrelation_name" id="docrelation_name" value="<?php if (isset($docholder_relationship_name)) {echo $docholder_relationship_name;} ?>">
-			<input type="hidden" name="submitted" id="submitted" value="<?php if (isset($submitted)) {echo $submitted;} ?>"> -->
-
+		<!-- <form id="cus_doc" name="cus_doc" action="" method="post" enctype="multipart/form-data"> -->
+			<input type="hidden" name="req_id_doc" id="req_id_doc" value="">
 			<input type="hidden" name="pending_sts" id="pending_sts" value="" />
 			<input type="hidden" name="od_sts" id="od_sts" value="" />
 			<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
@@ -1030,10 +1019,10 @@ input:checked + .slider:before {
 					<!-- Cheque Info END -->
 
 					<!-- Mortgage Info START-->
-
+				<form id="mort_form" name="mort_form" action="" method="post" enctype="multipart/form-data">
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Mortgage Info </div>
-						<div class="card-body">
+						<div class="card-body" id="mortdivform">
 							<div class="row">
 
 								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -1072,6 +1061,7 @@ input:checked + .slider:before {
 											<select type="text" class="form-control" id="Propertyholder_relationship_name" name="Propertyholder_relationship_name" style="display: none;">
 												<option value=""> Select Relationship </option>
 											</select>
+											<span class="text-danger" id="propertyholdernameCheck" style='display:none'> Select Property Holder Name </span>
 										</div>
 									</div>
 
@@ -1080,6 +1070,7 @@ input:checked + .slider:before {
 										<div class="form-group">
 											<label for="doc_property_relation"> Relationship </label>
 											<input type="text" class="form-control" id="doc_property_relation" name="doc_property_relation" value="" readonly tabindex="11">
+											<span class="text-danger" id="docproprelationCheck" style='display:none'> Enter Property Holder Relation </span>
 										</div>
 									</div>
 
@@ -1087,7 +1078,7 @@ input:checked + .slider:before {
 										<div class="form-group">
 											<label for="doc_property_pype"> Property Type </label> <span class="required">&nbsp;*</span>
 											<input type="text" class="form-control" id="doc_property_pype" name="doc_property_pype" placeholder="Enter Property Type" value="" tabindex="12">
-											<span class="text-danger" id="docpropertytypeCheck" style='display:none'> Enter Property Type </span>
+											<span class="text-danger" id="docpropertytypeCheck" style='display:none'> Enter Property Type</span>
 										</div>
 									</div>
 
@@ -1111,6 +1102,7 @@ input:checked + .slider:before {
 										<div class="form-group">
 											<label for="doc_property_value"> Property Value </label> <span class="required">&nbsp;*</span>
 											<input type="text" class="form-control" id="doc_property_value" name="doc_property_value" placeholder="Enter Property Value" value="" tabindex="15">
+											<span class="text-danger" id="docpropertyvalueCheck" style='display:none'> Enter Property Value</span>
 										</div>
 									</div>
 								</div>
@@ -1199,10 +1191,11 @@ input:checked + .slider:before {
 							
 						</div>
 					</div>
+				</form>
 					<!-- Mortgage Info  End-->
 
 					<!-- Endorsement Info START-->
-
+				<form id="end_form" name="end_form" action="" method="post" enctype="multipart/form-data">
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Endorsement Info </div>
 						<div class="card-body">
@@ -1244,6 +1237,7 @@ input:checked + .slider:before {
 										<select type="text" class="form-control" id="ownername_relationship_name" name="ownername_relationship_name" style="display: none;" tabindex="26">
 											<option value=""> Select Relationship </option>
 										</select>
+										<span class="text-danger" id="ownernameCheck" style='display:none'> Select Owner type </span>
 									</div>
 								</div>
 
@@ -1365,6 +1359,7 @@ input:checked + .slider:before {
 							
 						</div>
 					</div>
+				</form>
 					<!-- Endorsement Info  End-->
 					<!-- Gold Info Start -->
 					<div class="card edit-document-card" style='display:none'>
@@ -1404,7 +1399,7 @@ input:checked + .slider:before {
 
 				</div>
 			</div> <!-- Row End -->
-		</form>
+		<!-- </form> -->
 	</div>
 
 	<!--  ///////////////////////////////////////////////////////////////// Documentation  End ////////////////////////////////////////////////////////// -->
