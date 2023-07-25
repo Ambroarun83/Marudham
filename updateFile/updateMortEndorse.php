@@ -34,7 +34,7 @@ if($id == 'update_mortgage'){
         `doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',
         `doc_property_value`='".strip_tags($doc_property_value)."',`mortgage_name`='".strip_tags($mortgage_name)."',`mortgage_dsgn`='".strip_tags($mortgage_dsgn)."',
         `mortgage_nuumber`='".strip_tags($mortgage_nuumber)."',`reg_office`='".strip_tags($reg_office)."',`mortgage_value`='".strip_tags($mortgage_value)."',
-        `mortgage_document`='".strip_tags($mortgage_document)."',`mortgage_document_upd`='',
+        `mortgage_document`='".strip_tags($mortgage_document)."',`mortgage_document_upd`='".strip_tags($mortgage_doc_upd)."',
         `mortgage_document_pending`='".strip_tags($pendingchk)."',`update_login_id`='$userid',`updated_date`=now() ";
 
 }else if($id == 'update_endorsement'){
@@ -43,7 +43,7 @@ if($id == 'update_mortgage'){
         `ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',
         `vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',
         `vehicle_reg_no`='".strip_tags($vehicle_reg_no)."',`endorsement_name`='".strip_tags($endorsement_name)."',`en_RC`='".strip_tags($en_RC)."',
-        `Rc_document_pending`='".strip_tags($endorsependingchk)."',`en_Key`='".strip_tags($en_Key)."',`Rc_document_upd`='',
+        `Rc_document_pending`='".strip_tags($endorsependingchk)."',`en_Key`='".strip_tags($en_Key)."',`Rc_document_upd`='".strip_tags($rc_doc_upd)."',
         `update_login_id`='$userid',`updated_date`=now() ";
 }
 

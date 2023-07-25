@@ -5,7 +5,7 @@ include '../ajaxconfig.php';
 <table class="table custom-table" id="chequeInfo_table_data">
     <thead>
         <tr>
-            <th width="15%"> S.No </th>
+            <th width="10%"> S.No </th>
             <th> Holder type </th>
             <th> Holder Name </th>
             <th> Relationship </th>
@@ -18,8 +18,8 @@ include '../ajaxconfig.php';
     <tbody>
 
         <?php
-        $cus_id = $_POST['cus_id'];
-        $chequeInfo = $connect->query("SELECT * FROM `cheque_info` where cus_id = '$cus_id' order by id desc");
+        $req_id = $_POST['req_id'];
+        $chequeInfo = $connect->query("SELECT * FROM `cheque_info` where req_id = '$req_id' order by id desc");
 
         $i = 1;
         while ($cheque = $chequeInfo->fetch()) {
@@ -36,8 +36,8 @@ include '../ajaxconfig.php';
                 $doc_upd_name .= "<a href=uploads/verification/cheque_upd/";
                 $doc_upd_name .= $docName ;
                 $doc_upd_name .= " target='_blank'>";
-                $doc_upd_name .=  $a. ' ' ;
-                $doc_upd_name .= "</a>" ;
+                $doc_upd_name .=  $docName. ' ' ;
+                $doc_upd_name .= "</a>," ;
                 $a++;
             }
         ?>
@@ -61,11 +61,11 @@ include '../ajaxconfig.php';
                 <td><?php echo $cheque["cheque_relation"]; ?></td>
                 <td><?php echo $cheque["chequebank_name"]; ?></td>
                 <td><?php echo $cheque["cheque_count"]; ?></td>
-                <td><?php echo $doc_upd_name; ?></td>
+                <td><?php echo rtrim($doc_upd_name,','); ?></td>
 
                 <td>
                     <?php if($doc_upd_name == ''){?>
-                    <a id="cheque_info_edit" value="<?php echo $cheque['id']; ?>" style="text-decoration: underline;"> ENTRY </a> 
+                    <a class="cheque_info_edit" value="<?php echo $cheque['id']; ?>" style="text-decoration: underline;"> Entry </a> 
                     <?php } ?>
                 </td>
 
