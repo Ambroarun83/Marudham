@@ -977,7 +977,7 @@ input:checked + .slider:before {
 					<!-- Signed Doc Info START -->
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Signed Doc Info
-							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6" onclick="resetsignInfo()"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6" ><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='signed_infoCheck'>Please Fill Signed Doc Info </span>
 						<div class="card-body">
@@ -999,7 +999,7 @@ input:checked + .slider:before {
 					<!-- Cheque Info START -->
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Cheque Info
-							<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7" onclick="resetchequeInfo()"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7"><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='Cheque_infoCheck'>Please Fill Cheque Info </span>
 						<div class="card-body">
@@ -1778,13 +1778,13 @@ input:checked + .slider:before {
 <!-- Add Signed Doc info Modal  START -->
 <div class="modal fade addSignDoc" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <form method="POST" enctype="multipart/form-data"  id="signDocUploads">
-	<input type="hidden" name="doc_req_id" id="doc_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
-	<input type="hidden" name="doc_cus_id" id="doc_cus_id" value="<?php if(isset($cus_id)){echo $cus_id;} ?>" >
+	<input type="hidden" name="doc_req_id" id="doc_req_id" value="" >
+	<input type="hidden" name="doc_cus_id" id="doc_cus_id" value="" >
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel">Add Signed Doc Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetsigninfoList()">
+				<button type="button" class="close closeSignedInfo" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -1867,7 +1867,7 @@ input:checked + .slider:before {
 
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="signedID" id="signedID">
-						<button type="submit" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+						<button type="button" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;" disabled>Submit</button>
 					</div>
 				
 				</div>
@@ -1892,7 +1892,7 @@ input:checked + .slider:before {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetsigninfoList()">Close</button>
+				<button type="button" class="btn btn-secondary closeSignedInfo" data-dismiss="modal" >Close</button>
 			</div>
 		</div>
 	</div>
@@ -1903,12 +1903,12 @@ input:checked + .slider:before {
 <!-- Add Cheque info Modal  START -->
 <div class="modal fade addCheque" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <form method="POST" enctype="multipart/form-data"  id="chequeUploads">
-	<input type="hidden" name="cheque_req_id" id="cheque_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
+	<input type="hidden" name="cheque_req_id" id="cheque_req_id" value="" >
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel">Add Cheque Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="chequeinfoList()">
+				<button type="button" class="close closeChequeInfo" data-dismiss="modal" aria-label="Close" >
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -1998,7 +1998,7 @@ input:checked + .slider:before {
 				<div class="row">
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="chequeID" id="chequeID">
-						<button type="submit" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+						<button type="button" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;" disabled>Submit</button>
 					</div>
 				</div>
 				</br>
@@ -2024,7 +2024,7 @@ input:checked + .slider:before {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="chequeinfoList();">Close</button>
+				<button type="button" class="btn btn-secondary closeChequeInfo" data-dismiss="modal" >Close</button>
 			</div>
 		</div>
 	</div>
