@@ -18,32 +18,16 @@
         "titleBar.inactiveBackground": "#1f3b3a99",
         "titleBar.inactiveForeground": "#e7e7e799"
     },
-    "peacock.color": "#1f3b3a"
-    // "workbench.colorCustomizations": {
-    //     "activityBar.activeBackground": "#8fe1f5",
-    //     "activityBar.background": "#8fe1f5",
-    //     "activityBar.foreground": "#15202b",
-    //     "activityBar.inactiveForeground": "#15202b99",
-    //     "activityBarBadge.background": "#028ecf",
-    //     "activityBarBadge.foreground": "#15202b",
-    //     "commandCenter.border": "#000000",
-    //     "sash.hoverBorder": "#8fe1f5",
-    //     "statusBar.background": "#60c3f1",
-    //     "statusBar.foreground": "#000000",
-    //     "statusBarItem.hoverBackground": "#8fe1f5",
-    //     "statusBarItem.remoteBackground": "#60c3f1",
-    //     "statusBarItem.remoteForeground": "#000000",
-    //     "titleBar.activeBackground": "#60c3f1",
-    //     "titleBar.activeForeground": "#000000",
-    //     "titleBar.inactiveBackground": "#60c3f199",
-    //     "titleBar.inactiveForeground": "#000000"
-    // },
-    // "workbench.colorCustomizations": {
-    //     "activityBar.background": "#bd4353",
-    //     "titleBar.activeBackground": "#850c0c",
-    //     "titleBar.activeForeground": "#ffffff"
-    // },
-    // "search.quickOpen.includeHistory": true
+    "peacock.color": "#1f3b3a",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true
+    },
+    "explorerExclude.backup": {}
     
     
 }

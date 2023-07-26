@@ -1,11 +1,11 @@
 <?php
 include '../ajaxconfig.php';
 
+if(isset($_POST['req_id'])){
+    $req_id = $_POST['req_id'];
+}
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
-}
-if(isset($_POST['pages'])){
-    $pages = $_POST['pages'];
 }
 ?>
 
@@ -19,13 +19,15 @@ if(isset($_POST['pages'])){
             <th> Document Holder</th>
             <th> Holder Name</th>
             <th> Relationship</th>
+            <th> Document</th>
             <th> ACTION </th>
         </tr>
     </thead>
     <tbody>
 
         <?php
-        $qry = $connect->query("SELECT * FROM `document_info` where cus_id = '$cus_id' order by id desc");
+
+        $qry = $connect->query("SELECT * FROM `document_info` where req_id = '$req_id' order by id desc");
 
         while ($row = $qry->fetch()) {
             if($row["holder_name"] == ''){
@@ -35,7 +37,8 @@ if(isset($_POST['pages'])){
                 $holder_name = $row["holder_name"];
             }
 
-            $docUpd = explode(',',$row["doc_upload"]);
+            // $docUpd = explode(',',$row["doc_upload"]);
+            $docUpd = $row["doc_upload"];
         ?>
 
             <tr>
@@ -46,15 +49,13 @@ if(isset($_POST['pages'])){
                 <td><?php if($row["doc_holder"] == '0'){ echo 'Customer';}else if($row["doc_holder"] == '1'){echo 'Guarentor'; }elseif($row["doc_holder"] == '2'){echo 'Family Member';} ?></td>
                 <td><?php echo $holder_name; ?></td>
                 <td><?php echo $row["relation"]; ?></td>
+                <td><?php echo $docUpd; ?></td>
 
                 <td>
-                    <?php if($pages == 1){  // Verification screen only delete option. ?>
-                        <a id="doc_info_edit" value="<?php echo $row['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp;
-                        <a id="doc_info_delete" value="<?php echo $row['id']; ?>"> <span class='icon-trash-2'></span> </a>
-                    <?php  }elseif($pages == 2){
-                                if(empty($docUpd)){?>
-                                    <a id="doc_info_edit" value="<?php echo $row['id']; ?>" style="text-decoration: underline;"> Upload</a> &nbsp;
-                    <?php   }   }?>
+                    <?php
+                        if(empty($docUpd)){?>
+                            <a class="doc_info_edit" value="<?php echo $row['id']; ?>" style="text-decoration: underline;"> Upload</a> &nbsp;
+                    <?php } ?>
                 </td>
 
             </tr>

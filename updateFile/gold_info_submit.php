@@ -1,6 +1,7 @@
 <?php
-require '../ajaxconfig.php';
+include '../ajaxconfig.php';
 
+$req_id        = $_POST['req_id'];
 $cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
 $gold_sts        = $_POST['gold_sts'];
 $gold_type              = $_POST['gold_type'];
@@ -10,15 +11,15 @@ $gold_Weight             = $_POST['gold_Weight'];
 $gold_Value             = $_POST['gold_Value'];
 $goldID             = $_POST['goldID'];
 
-
+$result = '';
 
 if($goldID == ''){
 
-$insert_qry = $connect ->query("INSERT INTO `gold_info`(`cus_id`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`) VALUES ('$cus_id','$gold_sts','$gold_type','$Purity','$gold_Count','$gold_Weight','$gold_Value')");
+    $insert_qry = $connect ->query("INSERT INTO `gold_info`(`cus_id`,`req_id`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`) VALUES ('$cus_id','$req_id','$gold_sts','$gold_type','$Purity','$gold_Count','$gold_Weight','$gold_Value')");
 
 }
 else{
-$update = $connect->query("UPDATE `gold_info` SET `cus_id`='$cus_id',`gold_sts`='$gold_sts',`gold_type`='$gold_type',`Purity`='$Purity',`gold_Count`='$gold_Count',`gold_Weight`='$gold_Weight',`gold_Value`='$gold_Value' WHERE `id`='$goldID' ");
+    $update = $connect->query("UPDATE `gold_info` SET `gold_sts`='$gold_sts',`gold_type`='$gold_type',`Purity`='$Purity',`gold_Count`='$gold_Count',`gold_Weight`='$gold_Weight',`gold_Value`='$gold_Value' WHERE `id`='$goldID' ");
 
 }
 

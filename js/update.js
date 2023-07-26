@@ -429,466 +429,6 @@ $(document).ready(function () {
     })
 
 
-    
-    // $('#close_edit_doc_card').click(function(){
-    //     // $('.documentation-card').show();
-    //     $('.edit-document-card').hide();
-    //     resetDocumentDetails();// to clear all the values if not submitted
-    // })
-
-    // ////Mortgage Info 
-    // $('#mortgageprocessCheck').hide(); $('#propertyholdertypeCheck').hide(); $('#docpropertytypeCheck').hide(); $('#docpropertymeasureCheck').hide(); $('#docpropertylocCheck').hide(); $('#docpropertyvalueCheck').hide();
-
-    // //Endorsement Info
-    // $('#endorsementprocessCheck').hide(); $('#ownertypeCheck').hide(); $('#vehicletypeCheck').hide(); $('#vehicleprocessCheck').hide(); $('#enCompanyCheck').hide(); $('#enModelCheck').hide(); 
-
-    // //Gold Info
-    // $('#goldCheck').hide(); $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
-
-    // //Document Info
-    // $('#documentnameCheck').hide(); $('#documentdetailsCheck').hide(); $('#documentTypeCheck').hide(); $('#docholderCheck').hide();
-
-    // $('#sign_type').change(function () { // Signed Type 
-    //     let type = $(this).val();
-
-    //     if (type == '3') {
-    //         $('#relation_doc').show();
-    //         signTypeRelation();
-
-    //     } else {
-    //         $('#relation_doc').hide();
-    //         $("#signType_relationship").empty();
-    //     }
-    // })
-
-    
-    // $("#signDocUploads").on('submit', function (e) {
-    //     e.preventDefault();
-
-    //     let doc_name = $("#doc_name").val();
-    //     let sign_type = $("#sign_type").val();
-    //     let doc_Count = $("#doc_Count").val();
-    //     let signeddoc_upd = $('#signdoc_upd').val();
-
-    //     if (doc_name != "" && sign_type != "" && doc_Count != "" && signeddoc_upd != "") {
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'updateFile/sign_info_doc_upload.php',
-    //             data: new FormData(this),
-    //             contentType: false,
-    //             processData: false,
-    //             success: function (response) {
-
-    //                 var insresult = response.includes("Uploaded");
-    //                 if (insresult) {
-    //                     $('#signInsertOk').show();
-    //                     setTimeout(function () {
-    //                         $('#signInsertOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-    //                 else {
-    //                     $('#signNotOk').show();
-    //                     setTimeout(function () {
-    //                         $('#signNotOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-
-    //                 resetsignInfo();
-    //             }
-    //         });
-    //         $('#docNameCheck').hide(); $('#signTypeCheck').hide(); $('#docCountCheck').hide(); $('#docupdCheck').hide();
-    //     } else {
-
-    //         if (doc_name == "") {
-    //             $('#docNameCheck').show();
-    //         } else {
-    //             $('#docNameCheck').hide();
-    //         }
-
-    //         if (sign_type == "") {
-    //             $('#signTypeCheck').show();
-    //         } else {
-    //             $('#signTypeCheck').hide();
-    //         }
-
-    //         if (doc_Count == "") {
-    //             $('#docCountCheck').show();
-    //         } else {
-    //             $('#docCountCheck').hide();
-    //         }
-
-    //         if (signeddoc_upd == "") {
-    //             $('#docupdCheck').show();
-    //         } else {
-    //             $('#docupdCheck').hide();
-    //         }
-
-    //     }
-    // });
-
-
-    // $("body").on("click", "#signed_doc_delete", function () {
-    //     var isok = confirm("Do you want delete this Signed Doc Info?");
-    //     if (isok == false) {
-    //         return false;
-    //     } else {
-    //         var signid = $(this).attr('value');
-
-    //         $.ajax({
-    //             url: 'verificationFile/documentation/signed_doc_delete.php',
-    //             type: 'POST',
-    //             data: { "signid": signid },
-    //             cache: false,
-    //             success: function (response) {
-    //                 var delresult = response.includes("Deleted");
-    //                 if (delresult) {
-    //                     $('#signDeleteOk').show();
-    //                     setTimeout(function () {
-    //                         $('#signDeleteOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-    //                 else {
-
-    //                     $('#signDeleteNotOk').show();
-    //                     setTimeout(function () {
-    //                         $('#signDeleteNotOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-
-    //                 resetsignInfo();
-    //             }
-    //         });
-    //     }
-    // });
-
-    // $('#holder_type').change(function () { // Cheque info 
-    //     let type = $(this).val();
-    //     let req_id = $('#req_id').val();
-
-    //     if (type == '0') {
-    //         $('#holder_name').show();
-    //         $('#holder_relationship_name').hide();
-
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'verificationFile/documentation/check_holder_name.php',
-    //             data: { "type": type, "reqId": req_id },
-    //             dataType: 'json',
-    //             cache: false,
-    //             success: function (result) {
-    //                 $('#holder_name').val(result['name']);
-    //                 $('#cheque_relation').val('NIL');
-    //             }
-    //         });
-
-    //     } else if (type == '1') {
-    //         $('#holder_name').show();
-    //         $('#holder_relationship_name').hide();
-
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'verificationFile/documentation/check_holder_name.php',
-    //             data: { "type": type, "reqId": req_id },
-    //             dataType: 'json',
-    //             cache: false,
-    //             success: function (result) {
-    //                 $('#holder_name').val(result['name']);
-    //                 $('#cheque_relation').val(result['relationship']);
-    //             }
-    //         });
-
-    //     } else if (type == '2') {
-    //         $('#holder_name').hide();
-    //         $('#holder_relationship_name').show();
-    //         $('#cheque_relation').val('');
-
-    //         chequeHolderName(); // Holder Name From Family Table.
-    //     } else {
-    //         $('#holder_name').show();
-    //         $('#holder_relationship_name').hide();
-    //         $('#holder_name').val('');
-    //         $('#cheque_relation').val('');
-    //     }
-    // });
-
-    // $('#holder_relationship_name').change(function () {
-    //     let fam_id = $(this).val();
-    //     $.ajax({
-    //         url: 'verificationFile/documentation/find_cheque_relation.php',
-    //         type: 'POST',
-    //         data: { "fam_id": fam_id },
-    //         dataType: 'json',
-    //         success: function (response) {
-    //             $('#cheque_relation').val(response);
-
-    //         }
-    //     });
-    // })
-
-    // $('#chequebankCheck').hide(); $('#holdertypeCheck').hide(); $('#chequeCountCheck').hide(); $('#chequeupdCheck').hide();
-
-    // $("#chequeUploads").on('submit', function (e) {
-    //     e.preventDefault();
-
-    //     let cus_id = $('#cus_id').val();
-    //     let holder_type = $("#holder_type").val();
-    //     var holder_name = $("#holder_name").val();
-    //     var holder_relationship_name = $("#holder_relationship_name").val();
-    //     let chequebank_name = $("#chequebank_name").val();
-    //     let cheque_count = $("#cheque_count").val();
-    //     // let cheque_upd = $("#cheque_upd")[0];
-    //     let formdata = new FormData();
-    //     let files = $("#cheque_upd")[0].files;     
-    //     for(var i=0; i<files.length; i++){
-    //         formdata.append('cheque_upd[]', files[i])
-    //     }
-    //     var chequeno = $("#cheque_upd_no").val();
-    //     var chequeArr = [];
-    //     var i =0;
-    //     $('.chequeno').each(function(){
-    //     chequeArr[i] = $(this).val();
-    //     i++;        
-    //     })
-
-    //     let chequeID = $("#chequeID").val();
-        
-    //     formdata.append('holder_type', holder_type)
-    //     formdata.append('holder_name', holder_name)
-    //     formdata.append('holder_relationship_name', holder_relationship_name)
-        
-    //     formdata.append('chequeID', chequeID)
-    //     formdata.append('cheque_upd_no', chequeArr)
-    //     formdata.append('cus_id', cus_id)
-        
-    //     if (holder_type != "" && chequebank_name != "" && cheque_count != "" ) {
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'updateFile/cheque_upload.php',
-    //             data: formdata,
-    //             contentType: false,
-    //             processData: false,
-    //             success: function (response) {
-
-    //                 var insresult = response.includes("Uploaded");
-    //                 if (insresult) {
-    //                     $('#chequeInsertOk').show();
-    //                     setTimeout(function () {
-    //                         $('#chequeInsertOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-    //                 else {
-    //                     $('#chequeNotOk').show();
-    //                     setTimeout(function () {
-    //                         $('#chequeNotOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-
-    //                 resetchequeInfo();
-    //             }
-    //         });
-    //         $('#chequebankCheck').hide(); $('#holdertypeCheck').hide(); $('#chequeCountCheck').hide(); $('#chequeupdCheck').hide();
-    //     } else {
-
-    //         if (holder_type == "") {
-    //             $('#holdertypeCheck').show();
-    //         } else {
-    //             $('#holdertypeCheck').hide();
-    //         }
-
-    //         if (chequebank_name == "") {
-    //             $('#chequebankCheck').show();
-    //         } else {
-    //             $('#chequebankCheck').hide();
-    //         }
-
-    //         if (cheque_count == "") {
-    //             $('#chequeCountCheck').show();
-    //         } else {
-    //             $('#chequeCountCheck').hide();
-    //         }
-
-    //         // if (checkupd == 0) {
-    //         //     $('#chequeupdCheck').show();
-    //         // } else {
-    //         //     $('#chequeupdCheck').hide();
-    //         // }
-
-    //     }
-    // });
-
-    
-
-
-    // $("body").on("click", "#gold_info_edit", function () {
-    //     let id = $(this).attr('value');
-    //     chequeHolderName(); // Holder Name From Family Table.
-
-    //     $.ajax({
-    //         url: 'verificationFile/documentation/gold_info_edit.php',
-    //         type: 'POST',
-    //         data: { "id": id },
-    //         dataType: 'json',
-    //         cache: false,
-    //         success: function (result) {
-
-    //             $("#goldID").val(result['id']);
-    //             $("#gold_sts").val(result['gold_sts']);
-    //             $("#gold_type").val(result['gold_type']);
-    //             $("#Purity").val(result['Purity']);
-    //             $("#gold_Count").val(result['gold_Count']);
-    //             $("#gold_Weight").val(result['gold_Weight']);
-    //             $("#gold_Value").val(result['gold_Value']);
-
-    //         }
-    //     });
-
-    // });
-
-
-    // $("body").on("click", "#gold_info_delete", function () {
-    //     var isok = confirm("Do you want delete this Gold Info?");
-    //     if (isok == false) {
-    //         return false;
-    //     } else {
-    //         var chequeid = $(this).attr('value');
-
-    //         $.ajax({
-    //             url: 'verificationFile/documentation/gold_info_delete.php',
-    //             type: 'POST',
-    //             data: { "chequeid": chequeid },
-    //             cache: false,
-    //             success: function (response) {
-    //                 var delresult = response.includes("Deleted");
-    //                 if (delresult) {
-    //                     $('#goldDeleteOk').show();
-    //                     setTimeout(function () {
-    //                         $('#goldDeleteOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-    //                 else {
-
-    //                     $('#goldDeleteNotOk').show();
-    //                     setTimeout(function () {
-    //                         $('#goldDeleteNotOk').fadeOut('fast');
-    //                     }, 2000);
-    //                 }
-
-    //                 resetgoldInfo();
-    //             }
-    //         });
-    //     }
-    // });
-
-    // // Mortgage Info
-    // $('#mortgageprocessCheck').hide(); $('#propertyholdertypeCheck').hide(); $('#docpropertytypeCheck').hide(); $('#docpropertymeasureCheck').hide(); $('#docpropertylocCheck').hide(); $('#docpropertyvalueCheck').hide();
-    // $('#mortgagenameCheck').hide(); $('#mortgagedsgnCheck').hide(); $('#mortgagenumCheck').hide(); $('#regofficeCheck').hide(); $('#mortgagevalueCheck').hide(); $('#mortgagedocCheck').hide(); $('#mortgagedocUpdCheck').hide();
-    
-
-   
-    // $('#document_holder').change(function () {
-    //     let type = $(this).val();
-    //     let req_id = $('#req_id').val();
-
-    //     if (type == '0') {//Customer
-    //         $('#docholder_name').show();
-    //         $('#docholder_relationship_name').val('');
-    //         $('#docholder_relationship_name').hide();
-
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'verificationFile/documentation/check_holder_name.php',
-    //             data: { "type": type, "reqId": req_id },
-    //             dataType: 'json',
-    //             cache: false,
-    //             success: function (result) {
-    //                 $('#docholder_name').val(result['name']);
-    //                 $('#doc_relation').val('NIL');
-    //             }
-    //         });
-
-    //     } else if (type == '1') {//Guarentor
-    //         $('#docholder_name').show();
-    //         $('#docholder_relationship_name').val('');
-    //         $('#docholder_relationship_name').hide();
-
-    //         $.ajax({
-    //             type: 'POST',
-    //             url: 'verificationFile/documentation/check_holder_name.php',
-    //             data: { "type": type, "reqId": req_id },
-    //             dataType: 'json',
-    //             cache: false,
-    //             success: function (result) {
-    //                 $('#docholder_name').val(result['name']);
-    //                 $('#doc_relation').val(result['relationship']);
-    //             }
-    //         });
-
-    //     } else if (type == '2') {//Family member
-    //         $('#docholder_name').hide();
-    //         $('#docholder_relationship_name').show();
-    //         $('#docholder_name').val('');
-    //         $('#doc_relation').val('');
-
-    //         docHolderName();
-    //     } else {
-    //         $('#docholder_name').show();
-    //         $('#docholder_relationship_name').hide();
-    //         $('#docholder_name').val('');
-    //         $('#doc_relation').val('');
-    //     }
-    // });
-
-    // $('#docholder_relationship_name').change(function () {
-    //     let fam_id = $(this).val();
-    //     $.ajax({
-    //         url: 'verificationFile/documentation/find_cheque_relation.php',
-    //         type: 'POST',
-    //         data: { "fam_id": fam_id },
-    //         dataType: 'json',
-    //         success: function (response) {
-    //             $('#doc_relation').val(response);
-
-    //         }
-    //     });
-    // });
-
-    // //To Show Relationship value on edit page.////
-    // let mortgage = $('#Propertyholder_type').val();
-    // if(mortgage == '2'){
-    //     $('#Propertyholder_name').hide();
-    //     $('#Propertyholder_relationship_name').show();
-    //     mortgageHolderName();
-    //     let mortgageHolder =  $('#mortgage_relation_name').val();
-
-    //     setTimeout(() => {
-    //         $('#Propertyholder_relationship_name').val(mortgageHolder);
-    //     }, 500);
-    // }
-
-    // let ot = $('#owner_type').val();
-    // if(ot == '2'){
-    //     $('#owner_name').hide();
-    //     $('#ownername_relationship_name').show();
-    //     endorseHolderName();
-    //     let Endorsename =  $('#en_relation_name').val();
-
-    //     setTimeout(() => {
-    //         $('#ownername_relationship_name').val(Endorsename);
-    //     }, 500);
-    // }
-
-    // let docHolder = $('#document_holder').val();    
-    // if(docHolder == '2'){
-    //     $('#docholder_name').hide();
-    //     $('#docholder_relationship_name').show();
-    //     docHolderName();
-    //     let holder =  $('#docrelation_name').val();
-
-    //     setTimeout(() => {
-    //         $('#docholder_relationship_name').val(holder);
-    //     }, 500);
-    // }
-
 });   ////////Document Ready End
 
 $(function () {
@@ -912,15 +452,6 @@ $(function () {
 
     getDocumentHistory();//for document history table
     
-
-    // resetchequeInfo(); // Cheque Info Reset.
-    // chequeinfoList(); // Cheque Info List.
-
-    // resetgoldInfo(); // Gold Info Reset.
-    // goldinfoList(); // Gold Info List.
-    
-    // resetdocInfo(); // Document Info Reset.
-    // docinfoList(); // Document Info List.
 
     resetfeedback(); //Reset Feedback Modal Table.
     feedbackList(); // Feedback List.
@@ -2685,6 +2216,40 @@ function getDocumentDetails(req_id,cus_id,cus_name){
             resetChequeList(req_id,cus_id)
         })
     }
+    {//gold modal on click events
+        $('#add_gold').off('click');//open event for Gold info modal
+        $('#add_gold').click(function(){
+            resetgoldInfo(req_id,cus_id)
+        })
+    
+        $('#goldInfoBtn').off('click');//submit event for Gold info modal
+        $('#goldInfoBtn').click(function(){
+            submitGoldInfo(req_id,cus_id)
+        })
+    
+        $('.closeGoldInfo').off('click');//close event for Gold info modal
+        $('.closeGoldInfo').click(function(){
+            resetGoldList(req_id,cus_id)
+        })
+    }
+    {//Document modal on click events
+        $('#add_document').off('click');//open event for Document info modal
+        $('#add_document').click(function(){
+            resetdocInfo(req_id,cus_id)
+        })
+    
+        $('#docInfoBtn').off('click');//submit event for Document info modal
+        $('#docInfoBtn').click(function(){
+            submitDocument(req_id,cus_id)
+        })
+    
+        $('.closeDocInfo').off('click');//close event for Document info modal
+        $('.closeDocInfo').click(function(){
+            resetDocmentList(req_id,cus_id)
+        })
+    }
+
+    
 }
 
 //Signed Doc List non-modal
@@ -2714,7 +2279,8 @@ function resetSignedDocList(req_id,cus_id) {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-        })
+        });
+        setTempDocumentEvents();//temp document click events
     })
 }
 
@@ -2750,6 +2316,7 @@ function resetChequeList(req_id,cus_id) {
                 [10, 25, 50, "All"]
             ],
         });
+        setTempDocumentEvents();//temp document click events
     })
 }
 
@@ -2782,6 +2349,42 @@ function resetGoldList(req_id,cus_id) {
                 [10, 25, 50, "All"]
             ]
         });
+        setTempDocumentEvents();//temp document click events
+    })
+}
+
+//Document Info List non-modal
+function resetDocmentList(req_id,cus_id) {
+    
+    $.ajax({
+        url: 'updateFile/doc_info_upd_list.php',
+        type: 'POST',
+        data: {"req_id":req_id,"cus_id": cus_id },
+        cache: false,
+        success: function (html) {
+            $("#documentResetDiv").empty();
+            $("#documentResetDiv").html(html);
+
+            $("#document_name").val('');
+            $("#document_details").val('');
+            $("#document_type").val('');
+            $("#document_holder").val('');
+            $("#docholder_name").val('');
+            $("#docholder_relationship_name").val('');
+            $("#doc_relation").val('');
+            $("#document_info_upd").val('');
+            $("#doc_info_id").val('');
+        }
+    }).then(function(){
+        $('#document_table').DataTable({
+            'processing': true,
+            'iDisplayLength': 5,
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ]
+        });
+        setTempDocumentEvents();//temp document click events
     })
 }
 
@@ -2811,36 +2414,44 @@ function getFamilyList(id){
     });
 }
 
-//Document Info List non-modal
-function resetDocmentList(req_id,cus_id) {
+function setTempDocumentEvents(){//temp document click events
     
-    $.ajax({
-        url: 'updateFile/doc_info_upd_list.php',
-        type: 'POST',
-        data: {"req_id":req_id,"cus_id": cus_id },
-        cache: false,
-        success: function (html) {
-            $("#documentResetDiv").empty();
-            $("#documentResetDiv").html(html);
-
-            $("#document_name").val('');
-            $("#document_details").val('');
-            $("#document_type").val('');
-            $("#document_holder").val('');
-            $("#docholder_name").val('');
-            $("#docholder_relationship_name").val('');
-            $("#doc_relation").val('');
-            $("#document_info_upd").val('');
+    $('.temp-take-out').off('click');
+    $('.temp-take-out').click(function(){// to take values from table on click of buttons
+        // let req_id = $(this).data('req_id');
+        // let table_id = $(this).data('tableid');
+        let doc_obj = {//set of document path
+            'sign':'uploads/verification/signed_doc/'
         }
-    }).then(function(){
-        $('#document_table').DataTable({
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ]
-        });
+        let doc_path = doc_obj[$(this).data('doc')];//assign path accoding to document type
+
+        let doc_link = $(this).parent().prev().prev().children().text();// to take document name
+        let doc_name = $(this).parent().prev().prev().prev().prev().prev().prev().text();// to take document type name
+
+        $('#doc_name_temp').val(doc_name);
+        $('#doc_temp_link').parent().attr('href',doc_path+doc_link);// to set the path of file
+        $('#doc_temp_link').val(doc_link);
+        $('#temp_submit').text('Take Out');
+
+        getFamilyList('temp_rel_name');
+    })
+
+    $('#temp_person').off('click')
+    $('#temp_person').click(function(){// to show and hide person name
+        let temp_person = $(this).val();
+        if(temp_person != ''){
+            if(temp_person == 1){
+                let cus_name = $('#cus_name').val();
+                
+                $('#temp_rel_name').hide();
+                $('#temp_name').show();
+
+                $('#temp_name').val(cus_name);
+            }else{
+                $('#temp_rel_name').show();
+                $('#temp_name').hide();
+            }
+        }
     })
 }
 
@@ -3144,6 +2755,7 @@ function MEValidation(id){
     return response;
 }
 
+
 /************************ Signed Doc Modal Events ************************/
 //reset table contents of sign table modal
 function resetsignInfo(req_id,cus_id) { 
@@ -3402,7 +3014,7 @@ function submitCheque(req_id,cus_id){
         i++;        
     })
 
-    if(files.length == cheque_count && !chequeArr.includes('')){ //!chequeArr.includes('') will check if any of array values is empty
+    if(files.length == cheque_count && !chequeArr.includes('')){ // !chequeArr.includes('') will check if any of array values is empty
         
         $('#chequeupdCheck').hide();
 
@@ -3452,420 +3064,267 @@ function submitCheque(req_id,cus_id){
     }
     
 }
-// function docHolderName(){
-//     let cus_id = $('#cus_id').val();
 
-//     $.ajax({
-//         url: 'verificationFile/verificationFam.php',
-//         type: 'post',
-//         data: { "cus_id": cus_id },
-//         dataType: 'json',
-//         success: function (response) {
-
-//             var len = response.length;
-//             $("#docholder_relationship_name").empty();
-//             $("#docholder_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-//             for (var i = 0; i < len; i++) {
-//                 var fam_name = response[i]['fam_name'];
-//                 var fam_id = response[i]['fam_id'];
-//                 $("#docholder_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
-//             }
-//             {//To Order ag_group Alphabetically
-//                 var firstOption = $("#docholder_relationship_name option:first-child");
-//                 $("#docholder_relationship_name").html($("#docholder_relationship_name option:not(:first-child)").sort(function (a, b) {
-//                     return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-//                 }));
-//                 $("#docholder_relationship_name").prepend(firstOption);
-//             }
-
-//         }
-//     });
-// }
-
-// $('#docNameCheck').hide(); $('#signTypeCheck').hide(); $('#docCountCheck').hide(); //Signed Doc Validation Hide ///
+/************************ Cheque Modal Events ************************/
 
 
+/************************ Gold Modal Events ************************/
 
-// // Signed Doc 
-// function signTypeRelation() {
-//     let cus_id = $('#cus_id').val();
-//     $.ajax({
-//         url: 'verificationFile/verificationFam.php',
-//         type: 'post',
-//         data: { "cus_id": cus_id },
-//         dataType: 'json',
-//         success: function (response) {
+//reset table contents of gold table modal
+function resetgoldInfo(req_id,cus_id) {
+    $.ajax({
+        url: 'updateFile/gold_info_reset.php',
+        data: { "req_id":req_id,"cus_id": cus_id,"pages": 2 },
+        type: 'POST',
+        cache: false,
+        success: function (html) {
+            $("#goldTable").empty();
+            $("#goldTable").html(html);
 
-//             var len = response.length;
-//             $("#signType_relationship").empty();
-//             $("#signType_relationship").append("<option value=''>" + 'Select Relationship' + "</option>");
-//             for (var i = 0; i < len; i++) {
-//                 var fam_name = response[i]['fam_name'];
-//                 var fam_id = response[i]['fam_id'];
-//                 var relationship = response[i]['relationship'];
-//                 $("#signType_relationship").append("<option value='" + fam_id + "'>" + fam_name + ' - ' + relationship + "</option>");
-//             }
+            $("#gold_sts").val('');
+            $("#gold_type").val('');
+            $("#Purity").val('');
+            $("#gold_Count").val('');
+            $("#gold_Weight").val('');
+            $("#gold_Value").val('');
+            $("#goldID").val('');
+        }
+    }).then(function(){
+        goldInfoEditEvent();
+    })
+}
 
-//         }
-//     });
-// }
-
-
-
-
-
-
-
-// //Cheque Holder Name 
-// function chequeHolderName() {
-//     let cus_id = $('#cus_id').val();
-//     $.ajax({
-//         url: 'verificationFile/verificationFam.php',
-//         type: 'post',
-//         data: { "cus_id": cus_id },
-//         dataType: 'json',
-//         success: function (response) {
-
-//             var len = response.length;
-//             $("#holder_relationship_name").empty();
-//             $("#holder_relationship_name").append("<option value=''>" + 'Select Holder Name' + "</option>");
-//             for (var i = 0; i < len; i++) {
-//                 var fam_name = response[i]['fam_name'];
-//                 var fam_id = response[i]['fam_id'];
-//                 $("#holder_relationship_name").append("<option value='" + fam_id + "'>" + fam_name + "</option>");
-//             }
-//             {//To Order ag_group Alphabetically
-//                 var firstOption = $("#holder_relationship_name option:first-child");
-//                 $("#holder_relationship_name").html($("#holder_relationship_name option:not(:first-child)").sort(function (a, b) {
-//                     return a.text == b.text ? 0 : a.text < b.text ? -1 : 1;
-//                 }));
-//                 $("#holder_relationship_name").prepend(firstOption);
-//             }
-
-//         }
-//     });
-// }
-
-
-
-
-
-
-
-// //Gold Info 
-// $(document).on("click", "#goldInfoBtn", function () {
-
-//     let cus_id = $('#cus_id').val();
-//     let gold_sts = $("#gold_sts").val();
-//     let gold_type = $("#gold_type").val();
-//     let Purity = $("#Purity").val();
-//     let gold_Count = $("#gold_Count").val();
-//     let gold_Weight = $("#gold_Weight").val();
-//     let gold_Value = $("#gold_Value").val();
-//     let goldID = $("#goldID").val();
-
-//     if ( gold_sts != "" && gold_type != "" && Purity != "" && gold_Count != "" && gold_Weight != "" && gold_Value != "" && cus_id != "") {
-//         $.ajax({
-//             url: 'updateFile/gold_info_submit.php',
-//             type: 'POST',
-//             data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "cus_id": cus_id },
-//             cache: false,
-//             success: function (response) {
-
-//                 var insresult = response.includes("Inserted");
-//                 var updresult = response.includes("Updated");
-//                 if (insresult) {
-//                     $('#goldInsertOk').show();
-//                     setTimeout(function () {
-//                         $('#goldInsertOk').fadeOut('fast');
-//                     }, 2000);
-//                 }
-//                 else if (updresult) {
-//                     $('#goldUpdateok').show();
-//                     setTimeout(function () {
-//                         $('#goldUpdateok').fadeOut('fast');
-//                     }, 2000);
-//                 }
-//                 else {
-//                     $('#goldNotOk').show();
-//                     setTimeout(function () {
-//                         $('#goldNotOk').fadeOut('fast');
-//                     }, 2000);
-//                 }
-
-//                 resetgoldInfo();
-//             }
-//         });
-
+//to set on click event for edit of gold 
+function goldInfoEditEvent() {
+    $('.gold_info_edit').off('click')
+    $('.gold_info_edit').click(function(){
+        let id = $(this).attr('value');
         
-//     $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
-//     }
-//     else {
+        $.ajax({
+            url: 'verificationFile/documentation/gold_info_edit.php',
+            type: 'POST',
+            data: { "id": id },
+            dataType: 'json',
+            cache: false,
+            success: function (result) {
 
-//         if (gold_sts == '') {
-//             $('#GoldstatusCheck').show();
-//         } else {
-//             $('#GoldstatusCheck').hide();
-//         }
-//         if (gold_type == '') {
-//             $('#GoldtypeCheck').show();
-//         } else {
-//             $('#GoldtypeCheck').hide();
-//         }
-//         if (Purity == '') {
-//             $('#purityCheck').show();
-//         } else {
-//             $('#purityCheck').hide();
-//         }
-//         if (gold_Count == '') {
-//             $('#goldCountCheck').show();
-//         } else {
-//             $('#goldCountCheck').hide();
-//         }
-//         if (gold_Weight == '') {
-//             $('#goldWeightCheck').show();
-//         } else {
-//             $('#goldWeightCheck').hide();
-//         }
-//         if (gold_Value == '') {
-//             $('#goldValueCheck').show();
-//         } else {
-//             $('#goldValueCheck').hide();
-//         }
+                $("#goldID").val(result['id']);
+                $("#gold_sts").val(result['gold_sts']);
+                $("#gold_type").val(result['gold_type']);
+                $("#Purity").val(result['Purity']);
+                $("#gold_Count").val(result['gold_Count']);
+                $("#gold_Weight").val(result['gold_Weight']);
+                $("#gold_Value").val(result['gold_Value']);
 
-//     }
+            }
+        });
+    });
+}
 
-// });
-
-// function resetgoldInfo() {
-//     let cus_id = $('#cus_id').val();
-//     $.ajax({
-//         url: 'updateFile/gold_info_reset.php',
-//         type: 'POST',
-//         data: { "cus_id": cus_id,'pages': 2 },
-//         cache: false,
-//         success: function (html) {
-//             $("#goldTable").empty();
-//             $("#goldTable").html(html);
-
-//             $("#gold_sts").val('');
-//             $("#gold_type").val('');
-//             $("#Purity").val('');
-//             $("#gold_Count").val('');
-//             $("#gold_Weight").val('');
-//             $("#gold_Value").val('');
-//             $("#goldID").val('');
-
-//         }
-//     });
-// }
-
-
-
-
-// // ///////////////////////////  Document Info Modal //////////////////////////////
-
-// $('#documentnameCheck').hide();$('#documentdetailsCheck').hide();$('#documentTypeCheck').hide();$('#docholderCheck').hide();
-// //Document info submit button action
-// $('#docInfoBtn').click(function(){
-//     let cus_id = $("#cus_id").val();
-//     let doc_id = $("#doc_info_id").val();
-//     let doc_name = $("#document_name").val();
-//     let doc_details = $("#document_details").val();
-//     let doc_type = $("#document_type").val();
-//     let doc_holder = $("#document_holder").val();
-//     let holder_name = $("#docholder_name").val();
-//     let relation_name = $("#docholder_relationship_name").val();
-//     let relation = $("#doc_relation").val();
-
-//     var formdata = new FormData();
-//     formdata.append('doc_id',doc_id)
-//     formdata.append('doc_name',doc_name)
-//     formdata.append('doc_details',doc_details)
-//     formdata.append('doc_type',doc_type)
-//     formdata.append('doc_holder',doc_holder)
-//     formdata.append('holder_name',holder_name)
-//     formdata.append('relation_name',relation_name)
-//     formdata.append('relation',relation)
-//     formdata.append('cus_id',cus_id)
-
-//     var files = $("#document_info_upd")[0].files;     
-//     for(var i=0; i<files.length; i++){
-//         formdata.append('document_info_upd[]', files[i])
-//     }
+//submit gold 
+function submitGoldInfo(req_id,cus_id){
     
-//     if (doc_name !='' && doc_details !='' && doc_type!='' && doc_holder!='' && relation!='') {
+    if(goldValidation() == true){
+        
+        let formdata = $('#goldform').serializeArray();
+        formdata.push({name:'req_id',value:req_id})
+        formdata.push({name:'cus_id',value:cus_id})
+        
+        $.ajax({
+            url: 'updateFile/gold_info_submit.php',
+            type: 'POST',
+            data: formdata,
+            cache: false,
+            success: function (response) {
 
-//         $.ajax({
-//             url:'updateFile/doc_info_submit.php',
-//             data: formdata,
-//             contentType: false,
-//             processData: false,
-//             type:'POST',
-//             // cache: false,
-//             success:function(response){
+                var insresult = response.includes("Inserted");
+                var updresult = response.includes("Updated");
+                if (insresult) {
+                    $('#goldInsertOk').show();
+                    setTimeout(function () {
+                        $('#goldInsertOk').fadeOut('fast');
+                    }, 2000);
+                    getDocumentHistory();// to reset the current status of the document history
+                }
+                else if (updresult) {
+                    $('#goldUpdateok').show();
+                    setTimeout(function () {
+                        $('#goldUpdateok').fadeOut('fast');
+                    }, 2000);
+                    getDocumentHistory();// to reset the current status of the document history
+                }
+                else {
+                    $('#goldNotOk').show();
+                    setTimeout(function () {
+                        $('#goldNotOk').fadeOut('fast');
+                    }, 2000);
+                }
+
+                resetgoldInfo(req_id,cus_id);
+            }
+        });
+
+    }
+    
+}
+
+//to validate Gold informations
+function goldValidation(){
+    var response = true;
+    let gold_sts = $('#gold_sts').val(); let gold_type = $('#gold_type').val(); let Purity = $('#Purity').val(); 
+    let gold_Count = $('#gold_Count').val(); let gold_Weight = $('#gold_Weight').val();let gold_Value = $('#gold_Value').val(); 
+
+    validateField(gold_sts, '#GoldstatusCheck');
+    validateField(gold_type, '#GoldtypeCheck');
+    validateField(Purity, '#purityCheck');
+    validateField(gold_Count, '#goldCountCheck');
+    validateField(gold_Weight, '#goldWeightCheck');
+    validateField(gold_Value, '#goldValueCheck');
+
+    function validateField(value, fieldId) {
+        if (value === '') {
+            response = false;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+    }
+    
+    
+    return response;
+}
+
+/************************ Gold Modal Events ************************/
+
+
+/************************ Document Modal Events ************************/
+
+//Document Info List Modal Table
+function resetdocInfo(req_id,cus_id) {
+
+    $.ajax({
+        url: 'updateFile/doc_info_reset.php',
+        type: 'POST',
+        data: { "req_id":req_id,"cus_id": cus_id },
+        cache: false,
+        success: function (html) {
+            $("#docModalDiv").empty();
+            $("#docModalDiv").html(html);
+
+            $("#document_name").val('');
+            $("#document_details").val('');
+            $("#document_type").val('');
+            $("#document_holder").val('');
+            $("#docholder_name").val('');
+            $("#relation_name").val('');
+            $("#doc_relation").val('');
+            $("#document_info_upd").val('');
+
+        }
+    }).then(function(){
+        docInfoEditEvent();
+    })
+}
+
+//to set on click event for edit of gold 
+function docInfoEditEvent() {
+    $('.doc_info_edit').off('click')
+    $('.doc_info_edit').click(function(){
+
+        getFamilyList('docholder_relationship_name');//get member details
+
+        let id = $(this).attr('value');
+        $.ajax({
+            url: 'verificationFile/documentation/doc_info_edit.php',
+            type: 'POST',
+            data: { "id": id },
+            dataType: 'json',
+            cache: false,
+            success: function (response) {
                 
-//                 var insresult = response.includes("Inserted");
-//                 var updresult = response.includes("Updated");
-//                 if (insresult) {
-//                     $('#docInsertOk').show();
-//                     setTimeout(function () {
-//                         $('#docInsertOk').fadeOut('fast');
-//                     }, 2000);
-//                 }
-//                 else if (updresult) {
-//                     $('#docUpdateok').show();
-//                     setTimeout(function () {
-//                         $('#docUpdateok').fadeOut('fast');
-//                     }, 2000);
-//                 }
-//                 else {
-//                     $('#docNotOk').show();
-//                     setTimeout(function () {
-//                         $('#docNotOk').fadeOut('fast');
-//                     }, 2000);
-//                 }
+                $("#doc_info_id").val(response['doc_id']);
+                $("#document_name").val(response['doc_name']);
+                $("#document_details").val(response['doc_details']);
+                $("#document_type").val(response['doc_type']);
+                $("#document_holder").val(response['doc_holder']);
+                if(response['doc_holder'] == '0' || response['doc_holder'] == '1' ){
+                    $("#docholder_name").show();
+                    $("#docholder_relationship_name").hide();
+                    $("#docholder_name").val(response['holder_name']);
+                }else{
+                    $("#docholder_name").hide();
+                    $("#docholder_relationship_name").show();
+                    $("#docholder_relationship_name").val(response['relation_name']);
+                }
+                $("#doc_relation").val(response['relation']);
+    
+            }
+        });
+    
+    });
+}
 
-//                 resetdocInfo();
-//             }
-//         })
-//     }else{
-//         $('#documentnameCheck').show();$('#documentdetailsCheck').show();$('#documentTypeCheck').show();$('#docholderCheck').show();
-//     }
-// })
+//submit document
+function submitDocument(req_id,cus_id){
+    let formdata = new FormData();
+    
+    let files = $("#document_info_upd")[0].files;
+    let doc_info_id = $("#doc_info_id").val();
+    
+    if(files.length > 0 && doc_info_id != ''){
+        
+        $('#docinfoupdCheck').hide();
 
-// $("body").on("click", "#doc_info_edit", function () {console.log('asdf')
-//     let id = $(this).attr('value');
-//     $.ajax({
-//         url: 'verificationFile/documentation/doc_info_edit.php',
-//         type: 'POST',
-//         data: { "id": id },
-//         dataType: 'json',
-//         cache: false,
-//         beforeSend:function(){
-//             docHolderName();
-//         },
-//         success: function (response) {
-            
-//             $("#doc_info_id").val(response['doc_id']);
-//             $("#document_name").val(response['doc_name']);
-//             $("#document_details").val(response['doc_details']);
-//             $("#document_type").val(response['doc_type']);
-//             $("#document_holder").val(response['doc_holder']);
-//             if(response['doc_holder'] == '0' || response['doc_holder'] == '1' ){
-//                 $("#docholder_name").show();
-//                 $("#docholder_relationship_name").hide();
-//                 $("#docholder_name").val(response['holder_name']);
-//             }else{
-//                 $("#docholder_name").hide();
-//                 $("#docholder_relationship_name").show();
-//                 $("#docholder_relationship_name").val(response['relation_name']);
-//             }
-//             $("#doc_relation").val(response['relation']);
+        for(var i=0; i<files.length; i++){
+            formdata.append('document_info_upd[]', files[i])
+        }
+        formdata.append('req_id', req_id)
+        formdata.append('cus_id', cus_id)
+        formdata.append('doc_info_id', doc_info_id)
 
-//         }
-//     });
+        $.ajax({
+            url:'updateFile/doc_info_submit.php',
+            data: formdata,
+            type:'POST',
+            contentType: false,
+            processData: false,
+            cache: false,
+            success: function (response) {
+                var insresult = response.includes("Inserted");
+                var updresult = response.includes("Updated");
+                if (insresult) {
+                    $('#docInsertOk').show();
+                    setTimeout(function () {
+                        $('#docInsertOk').fadeOut('fast');
+                    }, 2000);
+                    getDocumentHistory();// to reset the current status of the document history
+                }
+                else if (updresult) {
+                    $('#docUpdateok').show();
+                    setTimeout(function () {
+                        $('#docUpdateok').fadeOut('fast');
+                    }, 2000);
+                    getDocumentHistory();// to reset the current status of the document history
+                }
+                else {
+                    $('#docNotOk').show();
+                    setTimeout(function () {
+                        $('#docNotOk').fadeOut('fast');
+                    }, 2000);
+                }
 
-// });
+                resetdocInfo(req_id,cus_id);
+            }
+        });
+    }else{
+    console.log("🚀 ~ file: update.js:3671 ~ submitDocument ~ files.length:", files.length)
+        $('#docinfoupdCheck').show();
+    }
+    
+}
+/************************ Document Modal Events ************************/
 
-
-// $("body").on("click", "#doc_info_delete", function () {
-//     var isok = confirm("Do you want delete this Document Info?");
-//     if (isok == false) {
-//         return false;
-//     } else {
-//         var id = $(this).attr('value');
-
-//         $.ajax({
-//             url: 'verificationFile/documentation/doc_info_delete.php',
-//             type: 'POST',
-//             data: { "id": id },
-//             cache: false,
-//             success: function (response) {
-//                 var delresult = response.includes("Deleted");
-//                 if (delresult) {
-//                     $('#docDeleteOk').show();
-//                     setTimeout(function () {
-//                         $('#docDeleteOk').fadeOut('fast');
-//                     }, 2000);
-//                 }
-//                 else {
-
-//                     $('#docDeleteNotOk').show();
-//                     setTimeout(function () {
-//                         $('#docDeleteNotOk').fadeOut('fast');
-//                     }, 2000);
-//                 }
-
-//                 resetdocInfo();
-//             }
-//         });
-//     }
-// });
-// //Document Info List Modal Table
-// function resetdocInfo() {
-//     let cus_id = $('#cus_id').val();
-//     $.ajax({
-//         url: 'updateFile/doc_info_reset.php',
-//         type: 'POST',
-//         data: { "cus_id": cus_id,'pages': 2 },
-//         cache: false,
-//         success: function (html) {
-//             $("#docModalDiv").empty();
-//             $("#docModalDiv").html(html);
-
-//             $("#document_name").val('');
-//             $("#document_details").val('');
-//             $("#document_type").val('');
-//             $("#document_holder").val('');
-//             $("#docholder_name").val('');
-//             $("#relation_name").val('');
-//             $("#doc_relation").val('');
-//             $("#document_info_upd").val('');
-
-//         }
-//     });
-// }
-
-// ///////////////////////////  Document Info Modal END //////////////////////////////
-
-// $('#loanCategoryTableCheck').hide();	
-// let loanCategoryTableError = true;
-// function validateLoanCategoryTable() {
-//     var currentrow = $("#moduleTable tr").last();
-//     if (currentrow.find("#cheque_no").val() == '') {
-//         //   $('#loanCategoryTableCheck').show();
-//         loanCategoryTableError = false;
-//         return false;
-//     } else {
-//         // $('#loanCategoryTableCheck').hide();
-//         loanCategoryTableError = true;
-//         return true;
-//     }
-// }
-
-// // add module 
-// $(document).on("click", '.add_checqueNo', function () {
-
-//     validateLoanCategoryTable();
-
-//     if (loanCategoryTableError == true) {
-//         var appendTxt = "<tr><td><input type='text' tabindex='13' class='chosen-select form-control cheque_no' id='cheque_no' name='cheque_no[]' /></td>" +
-//             "<td><button type='button' tabindex='26' id='add_checqueNo' name='add_checqueNo' value='Submit' class='btn btn-primary add_checqueNo'>Add</button></td>" +
-//             "<td><span class='deleterow icon-trash-2' tabindex='18'></span></td>" +
-//             "</tr>";
-//     }
-//     else {
-//         return false;
-//     }
-
-//     $('#moduleTable').find('tbody').append(appendTxt);
-// });
-
-// // Delete unwanted Rows
-// $(document).on("click", '.deleterow', function () {
-//     $(this).parent().parent().remove();
-// });
 
 
 

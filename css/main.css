@@ -831,7 +831,7 @@ ul.header-tasks:last-child {
     padding-left: 0; } }
 @media (min-width: 768px) {
   .page-wrapper.pinned:not(.sidebar-hovered) .sidebar-wrapper {
-    width: 65px; }
+    width: 60px; }
 
   .page-wrapper.pinned:not(.sidebar-hovered) .sidebar-wrapper .sidebar-header {
     padding: 10px; }
