@@ -1364,7 +1364,7 @@ input:checked + .slider:before {
 					<!-- Gold Info Start -->
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Gold Info
-							<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;" onclick="resetgoldInfo()"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;" ><span class="icon-add"></span></button>
 						</div>
 						<span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
 						<div class="card-body">
@@ -1382,7 +1382,7 @@ input:checked + .slider:before {
 
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Documents Info
-							<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25" onclick="resetdocInfo()"><span class="icon-add"></span></button>
+							<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25" ><span class="icon-add"></span></button>
 						</div>
 						<div class="card-body">
 							<div class="row">
@@ -2131,11 +2131,12 @@ input:checked + .slider:before {
 
 <!-- Add Gold info Modal  START -->
 <div class="modal fade addGold" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="goldform">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel">Add Gold Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="goldinfoList()">
+				<button type="button" class="close closeGoldInfo" data-dismiss="modal" aria-label="Close" >
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -2242,10 +2243,11 @@ input:checked + .slider:before {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="goldinfoList()">Close</button>
+				<button type="button" class="btn btn-secondary closeGoldInfo" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
+</form>
 </div>
 <!-- END  Add Gold Info Modal -->
 
@@ -2256,7 +2258,7 @@ input:checked + .slider:before {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel">Add Document Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="docinfoList()">
+				<button type="button" class="close closeDocInfo" data-dismiss="modal" aria-label="Close" >
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -2347,6 +2349,7 @@ input:checked + .slider:before {
 					<div class="form-group">
 						<label for="DocumentUpd"> Document Uploads </label>
 						<input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]"  multiple tabindex="8">
+						<span class="text-danger" id="docinfoupdCheck" style='display:none'> Please Select Document </span>
 					</div>
 				</div>
 
@@ -2378,7 +2381,7 @@ input:checked + .slider:before {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="docinfoList()">Close</button>
+				<button type="button" class="btn btn-secondary closeDocInfo" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
@@ -2396,9 +2399,9 @@ input:checked + .slider:before {
                 </button>
             </div>
             <div class="modal-body">
-                <div id="nocsummaryModal">
-                    
-                </div>
+				<div id="nocsummaryModal">
+
+				</div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
@@ -2407,3 +2410,68 @@ input:checked + .slider:before {
     </div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- /////////////////////////////////////////////////////////////////// Temp document taking Modal START ////////////////////////////////////////////////////////////// -->
+<div class="modal fade temp-take-out-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Document Action </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+				<div class="row">
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="doc_name_temp"> Document name </label>
+							<input type="text" class="form-control" id="doc_name_temp" name="doc_name_temp" value="" tabindex="1" readonly />
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="doc_temp_link"> Document </label>
+							<a href="" target='_blank'  value="" tabindex="2" >
+								<input type='text' class="form-control" id="doc_temp_link" name="doc_temp_link" readonly value="">
+							</a>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="temp_date"> Taken Date </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="temp_date" name="temp_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="temp_person"> Given to </label> <span class="required">&nbsp;*</span>
+							<select class='form-control' id='temp_person' name='temp_person' tabindex="4">
+								<option value="">Select Given Person</option>
+								<option value="1">Customer</option>
+								<option value="2">Family Member</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="temp_name"> Person Name </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="temp_name" name="temp_name" value="" tabindex="5" readonly placeholder="Select Given to Person" />
+							<select class='form-control' id='temp_rel_name' name='temp_rel_name' style="display: none;" tabindex="5"></select>
+						</div>
+					</div>
+					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
+						<input type="hidden" name="table_id" id="table_id" value=''>
+						<button type="button" name="temp_submit" id="temp_submit" class="btn btn-primary" style="margin-top: 19px;" tabindex="6"></button>
+					</div>
+
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Temp document Modal END ////////////////////////////////////////////////////////////////////// -->

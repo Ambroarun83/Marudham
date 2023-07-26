@@ -44,7 +44,7 @@ include '../ajaxconfig.php';
             }
             
             $cheque_no ='';
-            $updnoresult = $connect->query("SELECT cheque_no,noc_given FROM `cheque_no_list` where cheque_table_id = '$id'");
+            $updnoresult = $connect->query("SELECT cheque_no,noc_given FROM `cheque_no_list` where cheque_table_id = '$id' and used_status = 0 ");
             while($updno = $updnoresult->fetch()){
                 $no = $updno['cheque_no'];
                 $noc_given[] = $updno['noc_given'];

@@ -331,7 +331,7 @@ if (sizeof($getUser)>0) {
 				<li class="dashboard" >
 					<a href="javascript:void(0)">
 						<!-- <span class="menu-text">Dashboard</span> -->
-						<a href="dashboard"><i><object class="svg-icon" data="svg/dashboard.svg" type="image/svg+xml"></object></i>Dashboard</a>
+						<a href="dashboard"><i><object class="svg-icon" data="svg/dashboard.svg" type="image/svg+xml"></object></i>&nbsp;Dashboard</a>
 					</a>
 					<!-- <div class="sidebar-submenu">
 						<ul>
