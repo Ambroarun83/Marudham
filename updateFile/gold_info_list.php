@@ -34,6 +34,8 @@ function moneyFormatIndia($num)
             <th> Count </th>
             <th> Weight </th>
             <th> Value </th>
+            <th> Availablity </th>
+            <th> Action </th>
         </tr>
     </thead>
     <tbody>
@@ -45,16 +47,25 @@ function moneyFormatIndia($num)
 
         $i = 1;
         while ($gold = $goldInfo->fetch()) {
-
+            $temp_sts = $gold['temp_sts'];
+            $id = $gold['id'];
         ?>
             <tr>
-                <td><?php echo $i; ?></td>
+                <td><?php echo $i;$i++; ?></td>
                 <td><?php if($gold["gold_sts"] == '0'){ echo 'Old';}else if($gold["gold_sts"] == '1'){echo 'New'; } ?></td>
                 <td> <?php echo $gold["gold_type"]; ?></td>
                 <td> <?php echo $gold["Purity"]; ?></td>
                 <td><?php echo $gold["gold_Count"]; ?></td>
                 <td><?php echo $gold["gold_Weight"]; ?></td>
                 <td><?php echo moneyFormatIndia($gold["gold_Value"]); ?></td>
+                <td><?php echo $temp_sts == 0 ? 'YES':'NO'; ?></td>
+                <td>
+                    <?php if($temp_sts == 0){//zero means document available,so show button for take out as temprory ?>
+                        <button class="btn btn-danger temp-take-out" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='gold' data-toggle='modal' data-target='.temp-take-out-modal'>Take Out</button>
+                    <?php }else if($temp_sts == 1){//one means document not available, taken for temp purpose?>
+                        <button class="btn btn-success temp-take-in" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='gold' data-toggle='modal' data-target='.temp-take-in-modal'>Take In</button>
+                    <?php } ?>
+                </td>
             </tr>
 
         <?php  } ?>

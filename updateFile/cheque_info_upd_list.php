@@ -12,7 +12,9 @@ include '../ajaxconfig.php';
             <th> Bank Name </th>
             <th> Cheque Count </th>
             <th> Cheque No </th>
-            <th> Uploads </th>
+            <th> Document </th>
+            <th> Availablity </th>
+            <th> Action </th>
             
         </tr>
     </thead>
@@ -43,12 +45,17 @@ include '../ajaxconfig.php';
                 $a++;
             }
             
-            $cheque_no ='';
-            $updnoresult = $connect->query("SELECT cheque_no,noc_given FROM `cheque_no_list` where cheque_table_id = '$id' and used_status = 0 ");
-            while($updno = $updnoresult->fetch()){
-                $no = $updno['cheque_no'];
-                $noc_given[] = $updno['noc_given'];
-                $cheque_no .= $no.', ';
+            $cheque_no ='';$temp_sts = '';
+            $updnoresult = $connect->query("SELECT cheque_no,noc_given,temp_sts FROM `cheque_no_list` where cheque_table_id = '$id' and used_status = 0 ");
+            if($updnoresult){
+                $temp_sts = '0';
+
+                while($updno = $updnoresult->fetch()){
+                    $temp_sts = ($temp_sts=='0') ? $updno["temp_sts"] : $temp_sts;
+                    $no = $updno['cheque_no'];
+                    $noc_given[] = $updno['noc_given'];
+                    $cheque_no .= $no.', ';
+                }
             }
         ?>
             <tr>
@@ -73,6 +80,14 @@ include '../ajaxconfig.php';
                 <td><?php echo rtrim($cheque_no,', '); // to trim the comma at end?></td>
                 <td><?php echo rtrim($doc_upd_name,', ');// to trim the comma at end ?></td>
                 
+                <td><?php echo $temp_sts == 0 ? 'YES':'NO'; ?></td>
+                <td>
+                    <?php if($temp_sts == 0){//zero means document available,so show button for take out as temprory ?>
+                        <button class="btn btn-danger temp-take-out" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='cheque' data-toggle='modal' data-target='.temp-take-out-modal'>Take Out</button>
+                    <?php }else if($temp_sts == 1){//one means document not available, taken for temp purpose?>
+                        <button class="btn btn-success temp-take-in" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='cheque' data-toggle='modal' data-target='.temp-take-in-modal'>Take In</button>
+                    <?php } ?>
+                </td>
 
             </tr>
 
@@ -81,24 +96,3 @@ include '../ajaxconfig.php';
 </table>
 
 
-
-<!-- <script type="text/javascript">
-    $(function() {
-        $('#cheque_table').DataTable({
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            // "createdRow": function(row, data, dataIndex) {
-            //     $(row).find('td:first').html(dataIndex + 1);
-            // },
-            // "drawCallback": function(settings) {
-            //     this.api().column(0).nodes().each(function(cell, i) {
-            //         cell.innerHTML = i + 1;
-            //     });
-            // },
-        });
-    });
-</script> -->

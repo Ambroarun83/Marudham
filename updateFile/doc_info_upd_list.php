@@ -21,6 +21,8 @@ if(isset($_POST['req_id'])){
             <th> Holder Name</th>
             <th> Relationship</th>
             <th> Document </th>
+            <th> Availablity </th>
+            <th> Action </th>
         </tr>
     </thead>
     <tbody>
@@ -32,6 +34,9 @@ if(isset($_POST['req_id'])){
         while ($row = $qry->fetch()) {
             $docUpd = explode(',',$row["doc_upload"]);
 
+            $temp_sts = $row['temp_sts'];
+            $id = $row['id'];
+
             if($row["holder_name"] == ''){
                 $qry1 = $con->query("SELECT * FROM verification_family_info where id = '".$row['relation_name']."' ");
                 $holder_name = $qry1->fetch_assoc()['famname'];
@@ -40,7 +45,7 @@ if(isset($_POST['req_id'])){
             }
         ?>
             <tr>
-                <td></td>
+                <td><?php echo $i; $i++;?></td>
                 <td><?php echo $row["doc_name"]; ?></td>
                 <td><?php echo $row["doc_detail"]; ?></td>
                 <td><?php if($row["doc_type"] == '0'){ echo 'Original';}else if($row["doc_type"] == '1'){echo 'Xerox'; } ?></td>
@@ -52,6 +57,15 @@ if(isset($_POST['req_id'])){
                     $text .= '<a href="uploads/verification/doc_info/'.$upd.'" target="_blank" title="View Document" > ' .$upd.  '</a>, ';
                 }
                 echo rtrim($text,', ');// to trim the comma at end ?></td>
+
+                <td><?php echo $temp_sts == 0 ? 'YES':'NO'; ?></td>
+                <td>
+                    <?php if($temp_sts == 0){//zero means document available,so show button for take out as temprory ?>
+                        <button class="btn btn-danger temp-take-out" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='document' data-toggle='modal' data-target='.temp-take-out-modal'>Take Out</button>
+                    <?php }else if($temp_sts == 1){//one means document not available, taken for temp purpose?>
+                        <button class="btn btn-success temp-take-in" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='document' data-toggle='modal' data-target='.temp-take-in-modal'>Take In</button>
+                    <?php } ?>
+                </td>
             </tr>
 
         <?php  } ?>

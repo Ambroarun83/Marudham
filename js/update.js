@@ -2414,45 +2414,201 @@ function getFamilyList(id){
     });
 }
 
-function setTempDocumentEvents(){//temp document click events
+//temp document click events
+function setTempDocumentEvents(){
     
-    $('.temp-take-out').off('click');
-    $('.temp-take-out').click(function(){// to take values from table on click of buttons
-        // let req_id = $(this).data('req_id');
-        // let table_id = $(this).data('tableid');
+    $('.temp-take-out, .temp-take-in').off('click');
+    $('.temp-take-out, .temp-take-in').click(function(){// to take values from table on click of buttons
+        let req_id = $(this).data('req_id');let cus_id = $(this).data('cus_id');
+        let table_id = $(this).data('tableid');
+        let doc_type = $(this).data('doc');
         let doc_obj = {//set of document path
-            'sign':'uploads/verification/signed_doc/'
+            'sign':'uploads/verification/signed_doc/',
+            'cheque':'uploads/verification/cheque_upd/',
+            'gold':'',
+            'document':'uploads/verification/doc_info/',
         }
-        let doc_path = doc_obj[$(this).data('doc')];//assign path accoding to document type
+        let doc_path = doc_obj[doc_type];//assign path accoding to document type
 
         let doc_link = $(this).parent().prev().prev().children().text();// to take document name
         let doc_name = $(this).parent().prev().prev().prev().prev().prev().prev().text();// to take document type name
 
-        $('#doc_name_temp').val(doc_name);
-        $('#doc_temp_link').parent().attr('href',doc_path+doc_link);// to set the path of file
-        $('#doc_temp_link').val(doc_link);
-        $('#temp_submit').text('Take Out');
+        $('#doc_name_tempout, #doc_name_tempin').val(doc_name);
+        $('#doc_tempout_link, #doc_tempin_link').parent().attr('href',doc_path+doc_link);// to set the path of file
+        if(doc_type == 'gold'){$('#doc_tempout_link, #doc_tempin_link').closest('div').parent().hide();}else{$('#doc_tempout_link, #doc_tempin_link').closest('div').parent().show();}
+        
+        $('#doc_tempout_link, #doc_tempin_link').val(doc_link);
+        $('#req_id_tempout, #req_id_tempin').val(req_id);
+        $('#cus_id_tempout, #cus_id_tempin').val(cus_id);
+        $('#table_id_tempout, #table_id_tempin').val(table_id);
+        $('#table_name_tempout, #table_name_tempin').val(doc_type);
+        
 
-        getFamilyList('temp_rel_name');
+        getFamilyList('tempout_rel_name');
+        getFamilyList('tempin_rel_name');
     })
 
-    $('#temp_person').off('click')
-    $('#temp_person').click(function(){// to show and hide person name
+    $('#tempout_person, #tempin_person').off('click');
+    $('#tempout_person, #tempin_person').click(function(){// to show and hide person name
         let temp_person = $(this).val();
         if(temp_person != ''){
             if(temp_person == 1){
                 let cus_name = $('#cus_name').val();
                 
-                $('#temp_rel_name').hide();
-                $('#temp_name').show();
+                $('#tempout_rel_name, #tempin_rel_name').hide();
+                $('#tempout_name, #tempin_name').show();
 
-                $('#temp_name').val(cus_name);
+                $('#tempout_name, #tempin_name').val(cus_name);
             }else{
-                $('#temp_rel_name').show();
-                $('#temp_name').hide();
+                $('#tempout_rel_name, #tempin_rel_name').show();
+                $('#tempout_name, #tempin_name').hide();
             }
         }
     })
+
+    $('.closetempout, .closetempin').off('click');
+    $('.closetempout, .closetempin').click(function(){// to remove all the inputs inside the form when closing
+        $("#tempoutform").find("input, select").not('#tempout_date').val("");
+        $("#tempinform").find("input, select").not('#tempin_date').val("");
+    })
+
+
+    $('#tempout_submit, #tempin_submit').off('click');
+    $('#tempout_submit, #tempin_submit').click(function(){
+
+        let type = $(this).data('type');
+        if(type == 'take-out'){
+            submitForTakeOut();
+        }else if(type == 'take-in'){
+            submitForTakeIn();
+        }
+
+        function submitForTakeOut(){
+
+            if(confirm('Are you sure to take this Document Out?')){
+    
+                if(tempoutSubmitValidation() == true){
+                    let temp_person = $('#tempout_person').val();let temp_name = $('#tempout_name').val();let temp_rel_name = $('#tempout_rel_name').val();
+                    let table_id = $('#table_id_tempout').val();let table_name = $('#table_name_tempout').val();
+                    let req_id = $('#req_id_tempout').val();let cus_id = $('#cus_id_tempout').val();
+                    $.ajax({
+                        url: 'updateFile/submitTempDocument.php',
+                        data:{"type":'out',"table_id":table_id,"table_name":table_name,"temp_person":temp_person,"temp_name":temp_name,"temp_rel_name":temp_rel_name},
+                        type: 'post',
+                        dataType: 'json',
+                        cache: false,
+                        success: function(response){
+                            if(response.includes('Successfully')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'success',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                })
+                                resetSignedDocList(req_id,cus_id);// to reset the current status of the signed list
+                                resetChequeList(req_id,cus_id);// to reset the current status of the cheque list
+                                resetGoldList(req_id,cus_id);// to reset the current status of the gold list
+                                resetDocmentList(req_id,cus_id);// to reset the current status of the gold list
+                                $('.closetempout').trigger('click');
+                            }else if(response.includes('Error')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                            }
+                        }
+                    })
+                }
+            }
+        }
+
+        function submitForTakeIn(){
+
+            if(confirm('Are you sure to take this Document In?')){
+    
+                if(tempinSubmitValidation() == true){
+                    let temp_person = $('#tempin_person').val();let temp_name = $('#tempin_name').val();let temp_rel_name = $('#tempin_rel_name').val();
+                    let table_id = $('#table_id_tempin').val();let table_name = $('#table_name_tempin').val();
+                    let req_id = $('#req_id_tempin').val();let cus_id = $('#cus_id_tempin').val();
+                    $.ajax({
+                        url: 'updateFile/submitTempDocument.php',
+                        data:{"type":'in',"table_id":table_id,"table_name":table_name,"temp_person":temp_person,"temp_name":temp_name,"temp_rel_name":temp_rel_name},
+                        type: 'post',
+                        dataType: 'json',
+                        cache: false,
+                        success: function(response){
+                            if(response.includes('Successfully')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'success',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                })
+                                resetSignedDocList(req_id,cus_id);// to reset the current status of the document history
+                                resetChequeList(req_id,cus_id);// to reset the current status of the cheque list
+                                resetGoldList(req_id,cus_id);// to reset the current status of the gold list
+                                resetDocmentList(req_id,cus_id);// to reset the current status of the gold list
+                                $('.closetempin').trigger('click');
+                            }else if(response.includes('Error')){
+                                Swal.fire({
+                                    title: response,
+                                    icon: 'error',
+                                    showConfirmButton: true,
+                                    confirmButtonColor: '#009688'
+                                });
+                            }
+                        }
+                    })
+                }
+            }
+        }
+
+        function tempoutSubmitValidation(){
+            let temp_person = $('#tempout_person').val();let temp_name = $('#tempout_name').val();let temp_rel_name = $('#tempout_rel_name').val();
+            let response = true;
+            if(temp_person == ''){
+                event.preventDefault();
+                $('#tempoutpersonCheck').show();
+                response = false;
+            }else{
+                $('#tempoutpersonCheck').hide();
+                if(temp_person == '2'){// 2 means family members 
+                    if(temp_rel_name == ''){
+                        event.preventDefault();
+                        $('#tempoutrelnameCheck').show();
+                        response = false;
+                    }else{
+                        $('#tempoutrelnameCheck').hide();
+                    }
+                }
+            }
+            return response;
+        }
+        function tempinSubmitValidation(){
+            let temp_person = $('#tempin_person').val();let temp_name = $('#tempin_name').val();let temp_rel_name = $('#tempin_rel_name').val();
+            let response = true;
+            if(temp_person == ''){
+                event.preventDefault();
+                $('#tempinpersonCheck').show();
+                response = false;
+            }else{
+                $('#tempinpersonCheck').hide();
+                if(temp_person == '2'){// 2 means family members 
+                    if(temp_rel_name == ''){
+                        event.preventDefault();
+                        $('#tempinrelnameCheck').show();
+                        response = false;
+                    }else{
+                        $('#tempinrelnameCheck').hide();
+                    }
+                }
+            }
+            return response;
+        }
+    });
+
 }
 
 //Motrgage info
@@ -2757,6 +2913,7 @@ function MEValidation(id){
 
 
 /************************ Signed Doc Modal Events ************************/
+
 //reset table contents of sign table modal
 function resetsignInfo(req_id,cus_id) { 
     $('#doc_req_id').val(req_id);$('#doc_cus_id').val(cus_id);

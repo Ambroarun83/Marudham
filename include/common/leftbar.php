@@ -317,7 +317,7 @@ if (sizeof($getUser)>0) {
 		
 		<!-- Sidebar brand start  -->
 		<div class="sidebar-brand" style="background-color: #009688">
-			<a href="javascript:void(0)" class="logo">
+			<a href="dashboard" class="logo">
 				<h2 class="ml-1" style="color: white">MARUDHAM</h2>
 				<!-- <img src="img/logo.png" alt="Auction Dashboard" /> -->
 			</a>

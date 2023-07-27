@@ -61,9 +61,9 @@ include '../ajaxconfig.php';
                 <td><?php echo $temp_sts == 0 ? 'YES':'NO'; ?></td>
                 <td>
                     <?php if($temp_sts == 0){//zero means document available,so show button for take out as temprory ?>
-                        <button class="btn btn-danger temp-take-out" data-req_id='<?php echo $req_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='sign' data-toggle='modal' data-target='.temp-take-out-modal'>Take Out</button>
+                        <button class="btn btn-danger temp-take-out" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='sign' data-toggle='modal' data-target='.temp-take-out-modal'>Take Out</button>
                     <?php }else if($temp_sts == 1){//one means document not available, taken for temp purpose?>
-                        <button class="btn btn-success temp-take-in" data-req_id='<?php echo $req_id; ?>' data-tableid = '<?php echo $id;?>' data-toggle='modal' data-target='.temp-take-in-modal'>Mark Available</button>
+                        <button class="btn btn-success temp-take-in" data-req_id='<?php echo $req_id; ?>' data-cus_id='<?php echo $cus_id; ?>' data-tableid = '<?php echo $id;?>' data-doc='sign' data-toggle='modal' data-target='.temp-take-in-modal'>Take In</button>
                     <?php } ?>
                 </td>
                 
@@ -74,25 +74,3 @@ include '../ajaxconfig.php';
     </tbody>
 </table>
 
-
-<!-- 
-<script type="text/javascript">
-    $(function() {
-        $('#signed_table').DataTable({
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            // "createdRow": function(row, data, dataIndex) {
-            //     $(row).find('td:first').html(dataIndex + 1);
-            // },
-            // "drawCallback": function(settings) {
-            //     this.api().column(0).nodes().each(function(cell, i) {
-            //         cell.innerHTML = i + 1;
-            //     });
-            // },
-        });
-    });
-</script> -->
