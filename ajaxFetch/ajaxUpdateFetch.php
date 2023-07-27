@@ -84,7 +84,7 @@ foreach ($result as $row) {
 
     $id          = $row['cus_id'];
     $cus_id      = $row['cus_id'];
-
+// if($cus_id == '100010001000'){die;}
     $action = "<a href='update&upd=$id' title='Update'>  <span class='icon-border_color' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
     
     $sub_array[] = $action;
@@ -131,7 +131,6 @@ function getDocumentStatus($con,$cus_id){
     }
     
 
-
     $response2 = false;
     $sts_qry = $con->query("SELECT id,cheque_count FROM cheque_info where cus_id = '$cus_id' ");
     if($sts_qry->num_rows > 0){
@@ -156,7 +155,7 @@ function getDocumentStatus($con,$cus_id){
         
             if($sts_row['mortgage_document_pending'] == 'YES' || $sts_row['Rc_document_pending'] == 'YES'){
 
-            }else{
+            }elseif($sts_row['mortgage_document_pending'] == 'NO' || $sts_row['Rc_document_pending'] == 'NO'){
                 $response3 = true;// if condition false then all documents are collected
             }
         }
@@ -164,6 +163,7 @@ function getDocumentStatus($con,$cus_id){
         $response3 = true;//if there is no cheque then direclty it will be considered as completed
     }
     
+    // var_dump($response3);
 
     $response4 = true;
     $sts_qry = $con->query("SELECT * FROM document_info where cus_id = '$cus_id' ");
@@ -181,7 +181,7 @@ function getDocumentStatus($con,$cus_id){
         $response4 = true;//if there is no cheque then direclty it will be considered as completed
     }
     
-    // var_dump($response4);
+    
 
     if($response1 == true and $response2 == true and $response3 == true and $response4 == true){
         $response = true;

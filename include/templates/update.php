@@ -2411,13 +2411,14 @@ input:checked + .slider:before {
 </div>
 <!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal END ////////////////////////////////////////////////////////////////////// -->
 
-<!-- /////////////////////////////////////////////////////////////////// Temp document taking Modal START ////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Temp document OUT Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade temp-take-out-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="tempoutform">
     <div class="modal-dialog modal-lg" >
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel"> Document Action </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+                <h5 class="modal-title" id="myLargeModalLabel"> Document Take Out </h5>
+                <button type="button" class="close closetempout" data-dismiss="modal" aria-label="Close" onclick="">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -2426,52 +2427,129 @@ input:checked + .slider:before {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="doc_name_temp"> Document name </label>
-							<input type="text" class="form-control" id="doc_name_temp" name="doc_name_temp" value="" tabindex="1" readonly />
+							<label for="doc_name_tempout"> Document name </label>
+							<input type="text" class="form-control" id="doc_name_tempout" name="doc_name_tempout" value="" tabindex="1" readonly />
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="doc_temp_link"> Document </label>
+							<label for="doc_tempout_link"> Document </label>
 							<a href="" target='_blank'  value="" tabindex="2" >
-								<input type='text' class="form-control" id="doc_temp_link" name="doc_temp_link" readonly value="">
+								<input type='text' class="form-control" id="doc_tempout_link" name="doc_tempout_link" readonly value="">
 							</a>
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="temp_date"> Taken Date </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="temp_date" name="temp_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
+							<label for="tempout_date"> Taken Date </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempout_date" name="tempout_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="temp_person"> Given to </label> <span class="required">&nbsp;*</span>
-							<select class='form-control' id='temp_person' name='temp_person' tabindex="4">
+							<label for="tempout_person"> Given to </label> <span class="required">&nbsp;*</span>
+							<select class='form-control' id='tempout_person' name='tempout_person' tabindex="4">
 								<option value="">Select Given Person</option>
 								<option value="1">Customer</option>
 								<option value="2">Family Member</option>
 							</select>
+							<span class="text-danger" id="tempoutpersonCheck" style='display:none'> Please Select Given Person </span>
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="temp_name"> Person Name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="temp_name" name="temp_name" value="" tabindex="5" readonly placeholder="Select Given to Person" />
-							<select class='form-control' id='temp_rel_name' name='temp_rel_name' style="display: none;" tabindex="5"></select>
+							<label for="tempout_name"> Person Name </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempout_name" name="tempout_name" value="" tabindex="5" readonly placeholder="Select Given to Person" />
+							<select class='form-control' id='tempout_rel_name' name='tempout_rel_name' style="display: none;" tabindex="5"></select>
+							<span class="text-danger" id="tempoutrelnameCheck" style='display:none'> Please Select Person name </span>
 						</div>
 					</div>
 					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
-						<input type="hidden" name="table_id" id="table_id" value=''>
-						<button type="button" name="temp_submit" id="temp_submit" class="btn btn-primary" style="margin-top: 19px;" tabindex="6"></button>
+						<input type="hidden" name="req_id_tempout" id="req_id_tempout" value=''>
+						<input type="hidden" name="cus_id_tempout" id="cus_id_tempout" value=''>
+						<input type="hidden" name="table_id_tempout" id="table_id_tempout" value=''>
+						<input type="hidden" name="table_name_tempout" id="table_name_tempout" value=''>
+						<button type="button" name="tempout_submit" id="tempout_submit" data-type='take-out' class="btn btn-primary" style="margin-top: 19px;" tabindex="6">Submit</button>
 					</div>
 
 				</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+                <button type="button" class="btn btn-secondary closetempout" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</form>
 </div>
-<!-- /////////////////////////////////////////////////////////////////// Temp document Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Temp document OUT Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Temp document IN Modal START ////////////////////////////////////////////////////////////// -->
+<div class="modal fade temp-take-in-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<form method="POST" enctype="multipart/form-data"  id="tempinform">
+    <div class="modal-dialog modal-lg" >
+        <div class="modal-content" style="background-color: white">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myLargeModalLabel"> Document Take In </h5>
+                <button type="button" class="close closetempin" data-dismiss="modal" aria-label="Close" onclick="">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+				<div class="row">
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="doc_name_tempin"> Document name </label>
+							<input type="text" class="form-control" id="doc_name_tempin" name="doc_name_tempin" value="" tabindex="1" readonly />
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="doc_tempin_link"> Document </label>
+							<a href="" target='_blank'  value="" tabindex="2" >
+								<input type='text' class="form-control" id="doc_tempin_link" name="doc_tempin_link" readonly value="">
+							</a>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="tempin_date"> Taken Date </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempin_date" name="tempin_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="tempin_person"> Given to </label> <span class="required">&nbsp;*</span>
+							<select class='form-control' id='tempin_person' name='tempin_person' tabindex="4">
+								<option value="">Select Given Person</option>
+								<option value="1">Customer</option>
+								<option value="2">Family Member</option>
+							</select>
+							<span class="text-danger" id="tempinpersonCheck" style='display:none'> Please Select Given Person </span>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="tempin_name"> Person Name </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempin_name" name="tempin_name" value="" tabindex="5" readonly placeholder="Select Given to Person" />
+							<select class='form-control' id='tempin_rel_name' name='tempin_rel_name' style="display: none;" tabindex="5"></select>
+							<span class="text-danger" id="tempinrelnameCheck" style='display:none'> Please Select Person name </span>
+						</div>
+					</div>
+					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
+						<input type="hidden" name="req_id_tempin" id="req_id_tempin" value=''>
+						<input type="hidden" name="cus_id_tempin" id="cus_id_tempin" value=''>
+						<input type="hidden" name="table_id_tempin" id="table_id_tempin" value=''>
+						<input type="hidden" name="table_name_tempin" id="table_name_tempin" value=''>
+						<button type="button" name="tempin_submit" id="tempin_submit" data-type='take-in' class="btn btn-primary" style="margin-top: 19px;" tabindex="6">Submit</button>
+					</div>
+
+				</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary closetempin" data-dismiss="modal" onclick="">Close</button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<!-- /////////////////////////////////////////////////////////////////// Temp document IN Modal END ////////////////////////////////////////////////////////////////////// -->
