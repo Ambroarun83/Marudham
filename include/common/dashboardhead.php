@@ -175,22 +175,22 @@
 
 	<link rel="stylesheet" href="vendor/bs-select/bs-select.css" />
 	<script>
-		var overlayDiv = document.createElement('div');
-		overlayDiv.classList.add('overlay');
-		document.body.appendChild(overlayDiv);
+		// var overlayDiv = document.createElement('div');
+		// overlayDiv.classList.add('overlay');
+		// document.body.appendChild(overlayDiv);
 
-		var loaderDiv = document.createElement('div');
-		loaderDiv.classList.add('loader');
-		overlayDiv.appendChild(loaderDiv);
+		// var loaderDiv = document.createElement('div');
+		// loaderDiv.classList.add('loader');
+		// overlayDiv.appendChild(loaderDiv);
 
-		var overlayText = document.createElement('span');
-		overlayText.classList.add('overlay-text');
-		overlayText.innerText = 'Please Wait';
-		overlayDiv.appendChild(overlayText);
+		// var overlayText = document.createElement('span');
+		// overlayText.classList.add('overlay-text');
+		// overlayText.innerText = 'Please Wait';
+		// overlayDiv.appendChild(overlayText);
 
-		window.addEventListener('load', function() {
-			overlayDiv.remove();
-		});
+		// window.addEventListener('load', function() {
+		// 	overlayDiv.remove();
+		// });
 
 	</script>
 </head>

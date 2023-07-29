@@ -51,6 +51,9 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$doctrackmodule = '';
+$doctrack = '';
+$doc_rec_access = '';
 $updatemodule = '';
 $update_screen = '';
 $concernmodule = '';
@@ -155,6 +158,9 @@ if($idupd>0)
 			$closed          		     = $getUser['closed'];
 			$nocmodule          		     = $getUser['nocmodule'];
 			$noc          		     	= $getUser['noc'];
+			$doctrackmodule 				= $getUser['doctrackmodule'];
+			$doctrack 				= $getUser['doctrack'];
+			$doc_rec_access 				= $getUser['doc_rec_access'];
 			$updatemodule 				= $getUser['updatemodule'];
 			$update_screen 				= $getUser['update_screen'];
 			$concernmodule          		     = $getUser['concernmodule'];
@@ -701,6 +707,30 @@ if($idupd>0)
                         </div>
 					</div>
 					
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($doctrackmodule==0){ echo'checked'; }} ?> tabindex="25" class="" id="doctrackmodule" name="doctrackmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="doctrackmodule">
+							<h5>Document Track</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($doctrack==0){ echo'checked'; }} ?> tabindex="25" class="doctrack-checkbox" id="doctrack" name="doctrack" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="doctrack">Document Track</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($doc_rec_access==0){ echo'checked'; }} ?> tabindex="25" class="doctrack-checkbox" id="doc_rec_access" name="doc_rec_access" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="doc_rec_access">Document Receive Access</label>
+                            </div>
+                        </div>
+					</div>
+
 					<hr>
 
 					<div class="custom-control custom-checkbox">
