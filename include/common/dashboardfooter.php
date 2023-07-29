@@ -905,6 +905,40 @@ $(document).ready(function() {
                 searchFunction();
             }
         });
+        //Document Track Table
+        var doc_track_table = $('#doc_track_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxDocumentTrackFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "NOC List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
+        });
         //UPDATE Table
         var update_table = $('#update_table').DataTable({
             "order": [
@@ -1110,6 +1144,12 @@ if($current_page == 'concern_solution'|| $current_page == 'concern_solution_view
 if($current_page == 'concern_feedback') { ?>
     <script src="js/concern_feedback.js"></script>
     <?php }
+
+//Document track Screen
+if($current_page == 'document_track') { ?>
+    <script src="js/document_track.js"></script>
+    <?php }
+
     
 //Update Screen
 if($current_page == 'update') { ?>
@@ -1421,25 +1461,60 @@ if($current_page == 'edit_bank_clearance') { ?>
 
 ////////// Show Loader if ajax function is called inside anywhere in entire project  ////////
     
-    $(document).ajaxStart(function() {
-        showOverlayWithDelay();
-    });
+    // $(document).ajaxStart(function() {
+    //     showOverlayWithDelay();
+    // });
     
-    $(document).ajaxStop(function() {
-        hideOverlay();
-    });
+    // $(document).ajaxStop(function() {
+    //     hideOverlay();
+    // });
     
     
-    var overlayTimer; // Variable to store the timer
+    // var overlayTimer; // Variable to store the timer
     
-    // Function to add the overlay after a delay
-    function showOverlayWithDelay() {
-        overlayTimer = setTimeout(function() {
-            showOverlay();
-        }, 500);
-    }
+    // // Function to add the overlay after a delay
+    // function showOverlayWithDelay() {
+    //     overlayTimer = setTimeout(function() {
+    //         showOverlay();
+    //     }, 500);
+    // }
 
-    // Function to add the overlay
+    // // Function to add the overlay
+    // function showOverlay() {
+    //     var overlayDiv = document.createElement('div');
+    //     overlayDiv.classList.add('overlay');
+    //     document.body.appendChild(overlayDiv);
+    
+    //     var loaderDiv = document.createElement('div');
+    //     loaderDiv.classList.add('loader');
+    //     overlayDiv.appendChild(loaderDiv);
+    
+    //     var overlayText = document.createElement('span');
+    //     overlayText.classList.add('overlay-text');
+    //     overlayText.innerText = 'Please Wait';
+    //     overlayDiv.appendChild(overlayText);
+    // }
+    
+    // // Function to remove the overlay and clear the timer
+    // function hideOverlay() {
+    //     clearTimeout(overlayTimer); // Clear the timer if it's still running
+    //     var overlayDiv = document.querySelector('.overlay');
+    //     if (overlayDiv) {
+    //         overlayDiv.remove();
+    //     }
+    // }
+
+    
+
+    // Function to remove the overlay
+    // function hideOverlay() {
+    //     var overlayDiv = document.querySelector('.overlay');
+    //     if (overlayDiv) {
+    //     overlayDiv.remove();
+    //     }
+    // }
+    
+// Function to show the overlay with loader
     function showOverlay() {
         var overlayDiv = document.createElement('div');
         overlayDiv.classList.add('overlay');
@@ -1454,25 +1529,27 @@ if($current_page == 'edit_bank_clearance') { ?>
         overlayText.innerText = 'Please Wait';
         overlayDiv.appendChild(overlayText);
     }
-    
-    // Function to remove the overlay and clear the timer
+
+    // Function to remove the overlay
     function hideOverlay() {
-        clearTimeout(overlayTimer); // Clear the timer if it's still running
         var overlayDiv = document.querySelector('.overlay');
         if (overlayDiv) {
             overlayDiv.remove();
         }
     }
 
-    
+    // Show the loader when window is still loading
+    window.addEventListener('load', function() {
+        hideOverlay();
+    });
 
-    // Function to remove the overlay
-    // function hideOverlay() {
-    //     var overlayDiv = document.querySelector('.overlay');
-    //     if (overlayDiv) {
-    //     overlayDiv.remove();
-    //     }
-    // }
-    
+    // Show the loader during AJAX requests
+    $(document).ajaxStart(function() {
+        showOverlay();
+    });
+
+    $(document).ajaxStop(function() {
+        hideOverlay();
+    });
 
 </script>

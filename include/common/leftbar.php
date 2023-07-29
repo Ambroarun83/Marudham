@@ -58,6 +58,10 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'update';
 
+}else if($current_page == 'document_track'){
+
+	$current_module = 'doctrack';
+
 }else if($current_page == 'edit_concern_creation' || $current_page == 'edit_concern_solution' || $current_page == 'concern_creation' || $current_page == 'concern_solution' || $current_page == 'concern_solution_view' || $current_page == 'edit_concern_feedback' || $current_page == 'concern_feedback'){
 
 	$current_module = 'concerncreation';
@@ -137,6 +141,9 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$doctrackmodule = '';
+$doctrack = '';
+$doc_rec_access = '';
 $updatemodule = '';
 $update_screen = '' ;
 $concernmodule = '';
@@ -195,6 +202,9 @@ if (sizeof($getUser)>0) {
 		$closed          		     = $getUser['closed'];
 		$nocmodule          		     = $getUser['nocmodule'];
 		$noc          		     = $getUser['noc'];
+		$doctrackmodule          		     = $getUser['doctrackmodule'];
+		$doctrack          		     = $getUser['doctrack'];
+		$doc_rec_access          		     = $getUser['doc_rec_access'];
 		$updatemodule          		     = $getUser['updatemodule'];
 		$update_screen          		     = $getUser['update_screen'];
 		$concernmodule          		     = $getUser['concernmodule'];
@@ -562,7 +572,24 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
-				<?php if($updatemodule == 0){ ?>
+				<?php if($doctrackmodule == 0){ ?>
+                    <li class="sidebar-dropdown ">
+                        <a href="javascript:void(0)">
+							<i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>
+                            <span class="menu-text">Document Track</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='doctrack') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($doctrack == 0){ ?>
+                                    <li>
+                                        <a href="document_track"><i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>Document Track</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
+                <?php if($updatemodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
 							<i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>
@@ -684,6 +711,9 @@ $closedmodule = '';
 $closed = '';
 $nocmodule = '';
 $noc = '';
+$doctrackmodule = '';
+$doctrack = '';
+$doc_rec_access = '';
 $updatemodule = '';
 $update_screen = '';
 $concernmodule = '';

@@ -182,6 +182,7 @@ foreach ($result as $row) {
 
     $sub_array[] = $row['cus_data'];
     $id = $row['req_id'];
+    $cus_id = $row['cus_id'];
     
     $cus_status = $row['cus_status'];
     if($cus_status == '3'){
@@ -189,7 +190,7 @@ foreach ($result as $row) {
         $cus_doc_row =  $cus_doc->fetch_assoc();
 
         if(isset($cus_doc_row['submitted']) && $cus_doc_row['submitted'] =='1'){
-            $sub_array[] = "<button class='btn btn-outline-secondary move_issue' value='$id'><span class = 'icon-arrow_forward'></span></button>";
+            $sub_array[] = "<button class='btn btn-outline-secondary move_issue' value='$id' data-cusid='$cus_id'><span class = 'icon-arrow_forward'></span></button>";
         }else{
 
             $sub_array[] = 'In Acknowledgement';

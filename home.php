@@ -324,7 +324,12 @@ include('api/main.php'); // Database Connection File
             <?php include "include/templates/concern_feedback.php" ?>
             <?php } ?>
 
-			<!-- Update Screen -->
+			<!-- Document Track Screen -->
+            <?php if($current_page == 'document_track') { ?>
+            <?php include "include/templates/document_track.php" ?>
+            <?php } ?>
+
+            <!-- Update Screen -->
             <?php if($current_page == 'edit_update') { ?>
             <?php include "include/templates/edit_update.php" ?>
             <?php } ?>

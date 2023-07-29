@@ -3475,7 +3475,6 @@ function submitDocument(req_id,cus_id){
             }
         });
     }else{
-    console.log("🚀 ~ file: update.js:3671 ~ submitDocument ~ files.length:", files.length)
         $('#docinfoupdCheck').show();
     }
     
