@@ -65,6 +65,7 @@ $cash_tally = '';
 $cash_tally_admin = '';
 $bank_details = '';
 $bank_clearance = '';
+$finance_insight = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -172,6 +173,7 @@ if($idupd>0)
 			$cash_tally_admin          		     = $getUser['cash_tally_admin'];
 			$bank_details          		     = $getUser['bank_details'];
 			$bank_clearance          		     = $getUser['bank_clearance'];
+			$finance_insight          		     = $getUser['finance_insight'];
 		}
 	}
 }
@@ -800,7 +802,7 @@ if($idupd>0)
                         </div>
 						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 bank_details" style='display:none'>
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($cash_tally_admin==0){ echo'checked'; }} ?> tabindex="44" class="accounts-checkbox" id="cash_tally_admin" name="cash_tally_admin" disabled>&nbsp;&nbsp;
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($cash_tally_admin==0){ echo'checked'; }} ?> tabindex="45" class="accounts-checkbox" id="cash_tally_admin" name="cash_tally_admin" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="cash_tally_admin">Cash Tally Admin</label>
                             </div>
                         </div>
@@ -816,8 +818,14 @@ if($idupd>0)
                         </div>
 						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($bank_clearance==0){ echo'checked'; }} ?> tabindex="44" class="accounts-checkbox" id="bank_clearance" name="bank_clearance" disabled>&nbsp;&nbsp;
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($bank_clearance==0){ echo'checked'; }} ?> tabindex="46" class="accounts-checkbox" id="bank_clearance" name="bank_clearance" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="bank_clearance">Bank Clearance</label>
+                            </div>
+                        </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($finance_insight==0){ echo'checked'; }} ?> tabindex="47" class="accounts-checkbox" id="finance_insight" name="finance_insight" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="finance_insight">Financial Insights</label>
                             </div>
                         </div>
 					</div>

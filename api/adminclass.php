@@ -74,6 +74,7 @@ require 'PHPMailerAutoload.php';
                 $detailrecords['cash_tally_admin']              = strip_tags($row->cash_tally_admin);
                 $detailrecords['bank_details']              = strip_tags($row->bank_details);
                 $detailrecords['bank_clearance']              = strip_tags($row->bank_clearance);
+                $detailrecords['finance_insight']              = strip_tags($row->finance_insight);
                 $detailrecords['status']                     = strip_tags($row->status);
             }
             return $detailrecords;
@@ -2448,13 +2449,19 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$bank_clearance=1;
 		}
+		if(isset($_POST['finance_insight']) &&    $_POST['finance_insight'] == 'Yes')
+		{
+			$finance_insight=0;
+		}else{
+			$finance_insight=1;
+		}
         $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`,`loan_cat`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`bank_creation`,`requestmodule`,
         `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,
 		`collectionmodule`,`collection`,`collection_access`,`closedmodule`,`closed`,`nocmodule`,`noc`,
 		`doctrackmodule`,`doctrack`,`doc_rec_access`,`updatemodule`,`update_screen`,`concernmodule`, `concern_creation`, `concern_solution`,`concern_feedback`,
-		`accountsmodule`,`cash_tally`,`cash_tally_admin`,`bank_details`,`bank_clearance`,`insert_login_id`,`created_date`)
+		`accountsmodule`,`cash_tally`,`cash_tally_admin`,`bank_details`,`bank_clearance`,`finance_insight`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($loan_cat)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
@@ -2465,7 +2472,8 @@ require 'PHPMailerAutoload.php';
         '".strip_tags($acknowledgementmodule)."','".strip_tags($acknowledgement)."','".strip_tags($loanissuemodule)."','".strip_tags($loan_issue)."',
 		'".strip_tags($collectionmodule)."','".strip_tags($collection)."','".strip_tags($collection_access)."','".strip_tags($closedmodule)."','".strip_tags($closed)."',
 		'".strip_tags($nocmodule)."','".strip_tags($noc)."','".strip_tags($doctrackmodule)."','".strip_tags($doctrack)."','".strip_tags($doc_rec_access)."','".strip_tags($updatemodule)."','".strip_tags($update_screen)."','".strip_tags($concernmodule)."','".strip_tags($concernCreation)."','".strip_tags($concernSolution)."','".strip_tags($concernFeedback)."',
-		'".strip_tags($accountsmodule)."','".strip_tags($cash_tally)."','".strip_tags($cash_tally_admin)."','".strip_tags($bank_details)."','".strip_tags($bank_clearance)."','".strip_tags($userid)."',now() )";
+		'".strip_tags($accountsmodule)."','".strip_tags($cash_tally)."','".strip_tags($cash_tally_admin)."','".strip_tags($bank_details)."','".strip_tags($bank_clearance)."','".strip_tags($finance_insight)."',
+		'".strip_tags($userid)."',now() )";
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
 
@@ -2808,6 +2816,12 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$bank_clearance=1;
 	}
+	if(isset($_POST['finance_insight']) &&    $_POST['finance_insight'] == 'Yes')
+	{
+		$finance_insight=0;
+	}else{
+		$finance_insight=1;
+	}
 	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
 	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
 	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
@@ -2825,7 +2839,8 @@ function updateUser($mysqli,$id,$user_id){
 	`doctrack` = '".strip_tags($doctrack)."',`doc_rec_access` = '".strip_tags($doc_rec_access)."',
 	`updatemodule` = '".strip_tags($updatemodule)."',`update_screen` = '".strip_tags($update_screen)."',
 	`concernmodule`='".strip_tags($concernmodule)."',`concern_creation`='".strip_tags($concernCreation)."',`concern_solution`='".strip_tags($concernSolution)."',`concern_feedback`='".strip_tags($concernFeedback)."',
-	`accountsmodule`='".strip_tags($accountsmodule)."',`cash_tally`='".strip_tags($cash_tally)."',`cash_tally_admin`='".strip_tags($cash_tally_admin)."',`bank_details`='".strip_tags($bank_details)."',`bank_clearance`='".strip_tags($bank_clearance)."',
+	`accountsmodule`='".strip_tags($accountsmodule)."',`cash_tally`='".strip_tags($cash_tally)."',`cash_tally_admin`='".strip_tags($cash_tally_admin)."',`bank_details`='".strip_tags($bank_details)."',
+	`bank_clearance`='".strip_tags($bank_clearance)."',	`finance_insight`='".strip_tags($finance_insight)."',
 	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = current_timestamp() WHERE user_id = '".strip_tags($id)."' ";
 	$result = $mysqli->query($updateQry) or die;
 }

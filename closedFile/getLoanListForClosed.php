@@ -134,7 +134,7 @@ function moneyFormatIndia($num) {
                 <?php
                     if($closed_cnt== '0'){
                     if($row['cus_status'] == '20'){ // 20 is collection completed.
-                        echo  $action="<div class='dropdown'><span class='btn btn-primary noc-window'  data-value='".$row['req_id']."'>  NOC </span></div>";
+                        echo  $action="<div class='dropdown'><span class='btn btn-primary noc-window'  data-value='".$row['req_id']."'>  Close </span></div>";
                     }
                 }else{
                     
