@@ -1169,6 +1169,11 @@ if($current_page == 'bank_clearance') { ?>
 if($current_page == 'edit_bank_clearance') { ?>
     <script src="js/edit_bank_clearance.js"></script>
     <?php }
+
+//Financial Insights
+if($current_page == 'finance_insight') { ?>
+    <script src="js/finance_insight.js"></script>
+    <?php }
 ?>
 
 <script src="js/logincreation.js"></script>
@@ -1461,60 +1466,25 @@ if($current_page == 'edit_bank_clearance') { ?>
 
 ////////// Show Loader if ajax function is called inside anywhere in entire project  ////////
     
-    // $(document).ajaxStart(function() {
-    //     showOverlayWithDelay();
-    // });
+    $(document).ajaxStart(function() {
+        showOverlayWithDelay();
+    });
     
-    // $(document).ajaxStop(function() {
-    //     hideOverlay();
-    // });
+    $(document).ajaxStop(function() {
+        hideOverlay();
+    });
     
     
-    // var overlayTimer; // Variable to store the timer
+    var overlayTimer; // Variable to store the timer
     
-    // // Function to add the overlay after a delay
-    // function showOverlayWithDelay() {
-    //     overlayTimer = setTimeout(function() {
-    //         showOverlay();
-    //     }, 500);
-    // }
+    // Function to add the overlay after a delay
+    function showOverlayWithDelay() {
+        overlayTimer = setTimeout(function() {
+            showOverlay();
+        }, 500);
+    }
 
-    // // Function to add the overlay
-    // function showOverlay() {
-    //     var overlayDiv = document.createElement('div');
-    //     overlayDiv.classList.add('overlay');
-    //     document.body.appendChild(overlayDiv);
-    
-    //     var loaderDiv = document.createElement('div');
-    //     loaderDiv.classList.add('loader');
-    //     overlayDiv.appendChild(loaderDiv);
-    
-    //     var overlayText = document.createElement('span');
-    //     overlayText.classList.add('overlay-text');
-    //     overlayText.innerText = 'Please Wait';
-    //     overlayDiv.appendChild(overlayText);
-    // }
-    
-    // // Function to remove the overlay and clear the timer
-    // function hideOverlay() {
-    //     clearTimeout(overlayTimer); // Clear the timer if it's still running
-    //     var overlayDiv = document.querySelector('.overlay');
-    //     if (overlayDiv) {
-    //         overlayDiv.remove();
-    //     }
-    // }
-
-    
-
-    // Function to remove the overlay
-    // function hideOverlay() {
-    //     var overlayDiv = document.querySelector('.overlay');
-    //     if (overlayDiv) {
-    //     overlayDiv.remove();
-    //     }
-    // }
-    
-// Function to show the overlay with loader
+    // Function to add the overlay
     function showOverlay() {
         var overlayDiv = document.createElement('div');
         overlayDiv.classList.add('overlay');
@@ -1529,27 +1499,62 @@ if($current_page == 'edit_bank_clearance') { ?>
         overlayText.innerText = 'Please Wait';
         overlayDiv.appendChild(overlayText);
     }
-
-    // Function to remove the overlay
+    
+    // Function to remove the overlay and clear the timer
     function hideOverlay() {
+        clearTimeout(overlayTimer); // Clear the timer if it's still running
         var overlayDiv = document.querySelector('.overlay');
         if (overlayDiv) {
             overlayDiv.remove();
         }
     }
 
-    // Show the loader when window is still loading
-    window.addEventListener('load', function() {
-        hideOverlay();
-    });
+    
 
-    // Show the loader during AJAX requests
-    $(document).ajaxStart(function() {
-        showOverlay();
-    });
+    // Function to remove the overlay
+    // function hideOverlay() {
+    //     var overlayDiv = document.querySelector('.overlay');
+    //     if (overlayDiv) {
+    //     overlayDiv.remove();
+    //     }
+    // }
+    
+// // Function to show the overlay with loader
+//     function showOverlay() {
+//         var overlayDiv = document.createElement('div');
+//         overlayDiv.classList.add('overlay');
+//         document.body.appendChild(overlayDiv);
+    
+//         var loaderDiv = document.createElement('div');
+//         loaderDiv.classList.add('loader');
+//         overlayDiv.appendChild(loaderDiv);
+    
+//         var overlayText = document.createElement('span');
+//         overlayText.classList.add('overlay-text');
+//         overlayText.innerText = 'Please Wait';
+//         overlayDiv.appendChild(overlayText);
+//     }
 
-    $(document).ajaxStop(function() {
-        hideOverlay();
-    });
+//     // Function to remove the overlay
+//     function hideOverlay() {
+//         var overlayDiv = document.querySelector('.overlay');
+//         if (overlayDiv) {
+//             overlayDiv.remove();
+//         }
+//     }
+
+//     // Show the loader when window is still loading
+//     window.addEventListener('load', function() {
+//         hideOverlay();
+//     });
+
+//     // Show the loader during AJAX requests
+//     $(document).ajaxStart(function() {
+//         showOverlay();
+//     });
+
+//     $(document).ajaxStop(function() {
+//         hideOverlay();
+//     });
 
 </script>

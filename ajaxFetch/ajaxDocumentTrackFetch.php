@@ -108,9 +108,11 @@ foreach ($result as $row) {
     }elseif($track_status == '4'){
 
         //if status is 4 means then document sent to branch from main
-        // $sub_array[] = 'Moved to Branch';//document keeper column
-        $qry = $con->query("SELECT fullname FROM user WHERE user_id = $doc_keeper ");
-        $sub_array[] = $qry->fetch_assoc()['fullname'];//document keeper column
+        // $qry = $con->query("SELECT fullname FROM user WHERE user_id = $doc_keeper ");
+        // $sub_array[] = $qry->fetch_assoc()['fullname'];//document keeper column
+
+        $branchqry = $con->query("SELECT bc.branch_name FROM area_line_mapping lm JOIN branch_creation bc ON lm.branch_id = bc.branch_id where FIND_IN_SET('".$sub_area_id."' , lm.sub_area_id) ");
+        $sub_array[] = $branchqry->fetch_assoc()['branch_name'] . " Branch"; //document keeper column
 
     }
 
@@ -136,7 +138,7 @@ foreach ($result as $row) {
 
         }else if($track_status == '3'){//3 means to be sent for noc
             //show Mark Sent when Moveing from main branch to branch for noc
-            $action .="<a href='' title='Mark Documents Sent' class='send-track' data-id='$id' data-reqid='$req_id'>Mark As Sent</a>";            
+            $action .="<a href='' title='Mark Documents Sent' class='send-track' data-id='$id' data-reqid='$req_id'>Mark as Sent</a>";            
         }
     }
 

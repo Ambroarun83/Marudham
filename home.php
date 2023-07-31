@@ -360,6 +360,10 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'edit_bank_clearance') { ?>
 			<?php include "include/templates/edit_bank_clearance.php" ?>
 			<?php } ?>
+			
+			<?php if($current_page == 'finance_insight') { ?>
+			<?php include "include/templates/finance_insight.php" ?>
+			<?php } ?>
 
 		</div>
 		<!-- Page content end -->

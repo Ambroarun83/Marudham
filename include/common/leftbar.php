@@ -66,7 +66,7 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'concerncreation';
 
-}else if($current_page == 'cash_tally' || $current_page == 'bank_clearance'){
+}else if($current_page == 'cash_tally' || $current_page == 'bank_clearance' || $current_page == 'finance_insight'){
 
 	$current_module = 'accounts';
 
@@ -153,6 +153,7 @@ $concern_feedback = '';
 $accountsmodule = '';
 $cash_tally = '';
 $bank_clearance = '';
+$finance_insight = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -214,6 +215,7 @@ if (sizeof($getUser)>0) {
 		$accountsmodule          		     = $getUser['accountsmodule'];
 		$cash_tally          		     = $getUser['cash_tally'];
 		$bank_clearance          		     = $getUser['bank_clearance'];
+		$finance_insight          		     = $getUser['finance_insight'];
 	}
 }
 ?>
@@ -575,14 +577,14 @@ if (sizeof($getUser)>0) {
 				<?php if($doctrackmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>
+							<i><object class="svg-icon" data="svg/track.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Document Track</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='doctrack') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($doctrack == 0){ ?>
                                     <li>
-                                        <a href="document_track"><i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>Document Track</a>
+                                        <a href="document_track"><i><object class="svg-icon" data="svg/track.svg" type="image/svg+xml"></object></i>Document Track</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -649,6 +651,11 @@ if (sizeof($getUser)>0) {
                                 <?php  if($bank_clearance == 0){ ?>
                                     <li>
                                         <a href="edit_bank_clearance"><i><object class="svg-icon" data="svg/bank_clearance.svg" type="image/svg+xml"></object></i>Bank Clearance</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($finance_insight == 0){ ?>
+                                    <li>
+                                        <a href="finance_insight"><i><object class="svg-icon" data="svg/finance_insight.svg" type="image/svg+xml"></object></i>Financial Insights</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -723,4 +730,5 @@ $concern_feedback = '';
 $accountsmodule = '';
 $cash_tally = '';
 $bank_clearance = '';
+$finance_insight = '';
 ?>
