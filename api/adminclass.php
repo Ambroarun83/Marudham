@@ -4945,14 +4945,14 @@ function updateUser($mysqli,$id,$user_id){
 			$qry = $mysqli->query("UPDATE request_creation set cus_status = 7, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
 			$qry = $mysqli->query("UPDATE in_verification set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
 			$qry = $mysqli->query("UPDATE in_approval set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7 , update_login_id = $userid where req_id = $id and updated_date=now() ") or die('Error While Cancelling Acknowledgement');
 		}
 		//Delete Acknowledgement
 		function removeAcknowledgement($mysqli,$id, $userid){
 			$qry = $mysqli->query("UPDATE request_creation set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
 			$qry = $mysqli->query("UPDATE in_verification set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
 			$qry = $mysqli->query("UPDATE in_approval set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_acknowledgement set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_acknowledgement set status = 1, delete_login_id = $userid where req_id = $id and updated_date=now() ") or die('Error While Removing Acknowledgement');
 		}
 
 ///  Acknowlegement END
@@ -5213,7 +5213,7 @@ function updateUser($mysqli,$id,$user_id){
                 // $selectIC = $mysqli->query("UPDATE customer_register set cus_status = 14 WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
                 $selectIC = $mysqli->query("UPDATE in_verification set cus_status = $cus_status, update_login_id = $userid WHERE req_id = '".$req_id."' ")or die('Error on inVerification Table');
                 $selectIC = $mysqli->query("UPDATE `in_approval` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_approval Table');
-                $selectIC = $mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
+                $selectIC = $mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' and updated_date=now() ") or die('Error on in_acknowledgement Table');
                 $insertIssue = $mysqli->query("UPDATE `in_issue` SET `cus_status`= $cus_status,`updated_date`=current_timestamp,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
 
 			}
