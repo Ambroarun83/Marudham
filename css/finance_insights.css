@@ -1,6 +1,6 @@
 .card {
     min-height: 90vh;
-    margin: 10px;
+    margin: 12px 5px;
 }
 
 .split-card {
@@ -24,9 +24,11 @@ table {
 
 thead {
     background-color: #00a494a1;
+    font-weight: bolder;
 }
 tfoot{
     background-color: #a4190082;
+    font-weight: bolder;
 }
 
 tr td {
@@ -79,7 +81,7 @@ table tr td:not(:first-child) {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 5px;
 }
 
 .toggle-button {
@@ -95,7 +97,19 @@ table tr td:not(:first-child) {
     transition: background-color 0.3s, color 0.3s;
 }
   
-.toggle-button.active {
+.toggle-button.active:not(#by_user) {
     background-color: #009688;
     color: white;
+}
+
+
+/* label */
+.BBDiff{
+    padding: 12px 20px;
+    background-color: #ffd09b;
+    border: 1px solid #fa9017;
+    border-radius: 5px;
+    color: black;
+    margin-top: 35px;
+    font-family: 'Open Sans';
 }

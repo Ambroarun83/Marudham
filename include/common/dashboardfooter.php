@@ -1402,6 +1402,12 @@ if($current_page == 'finance_insight') { ?>
 
 
     function moneyFormatIndia(num) {
+        var isNegative = false;
+        if (num < 0) {
+            isNegative = true;
+            num = Math.abs(num);
+        }
+
         var explrestunits = "";
         if (num.toString().length > 3) {
             var lastthree = num.toString().substr(num.toString().length - 3);
@@ -1419,9 +1425,9 @@ if($current_page == 'finance_insight') { ?>
         } else {
             var thecash = num;
         }
-        return thecash;
-    }
 
+        return isNegative ? "-" + thecash : thecash;
+    }
     function searchFunction() {
         // Unbind or disable all other event listeners to avoid conflict
         $('#search').unbind('input');

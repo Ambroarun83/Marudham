@@ -14,6 +14,7 @@ $(document).ready(function(){
         if(chosenOpt == 'Today'){
             BalanceSheetCalculations('today','','','');
             BenefitCalculations('today','','','');
+            BenefitCheckCalculations('today','','','');
         }
     });
 
@@ -23,6 +24,7 @@ $(document).ready(function(){
             
             BalanceSheetCalculations('day',from_date, to_date,'');
             BenefitCalculations('day',from_date, to_date,'');
+            BenefitCheckCalculations('day',from_date, to_date,'');
             
             $('.close').trigger('click');//it will close modal
         }else{
@@ -37,6 +39,7 @@ $(document).ready(function(){
             
             BalanceSheetCalculations('month','', '',for_month);
             BenefitCalculations('month','', '',for_month);
+            BenefitCheckCalculations('month','', '',for_month);
             
             $('.close').trigger('click');//it will close modal
         }else{
@@ -51,19 +54,31 @@ $(document).ready(function(){
 
 $(function(){
     
-    
+    getUserNames();
 
 })// auto load functions End
 
+
+function getUserNames(){
+    //get user name only who has access of cash tally
+    $.post('financeFile/getUsersName.php',function(response){
+        $('#by_user').empty()
+        $('#by_user').append("<option value=''>Select User</option>")
+        $.each(response,function(index,val){
+            $('#by_user').append("<option value='"+val['user_id']+"'>"+val['username']+"</option> ");
+        })
+    },'json')
+}
 
 //it will calculate for all type of searches handling by type, after ajax calls are completed then it will trigger to calculate closing details
 function BalanceSheetCalculations(type,from_date,to_date,month){
 
     clearAllContents();
 
-    if(type == 'today'){var args = {'type':'today'}; }else
-    if(type == 'day'){var args = {'type':'day','from_date':from_date,'to_date':to_date}; }else
-    if(type == 'month'){var args = {'type':'month','month':month}; }
+    var user_id = $('#by_user').val();
+    if(type == 'today'){var args = {'type':'today','user_id':user_id}; }else
+    if(type == 'day'){var args = {'type':'day','from_date':from_date,'to_date':to_date,'user_id':user_id}; }else
+    if(type == 'month'){var args = {'type':'month','month':month,'user_id':user_id}; }
 
     // Create an array to store all the Ajax calls
     let ajaxCalls = [];
@@ -120,14 +135,17 @@ function BalanceSheetCalculations(type,from_date,to_date,month){
         // This function will be executed when all Ajax calls are completed successfully
         // Put your code here for the function you want to run after all Ajax calls are completed.
         calculateClosingForBS();
+        calculateClosingForBenefit();
+        calculateClosingForBenefitCheck();
     });
 }
 // function to calculate closing details for balance sheet calculations
 function calculateClosingForBS(){
     var credit = 0; var debit = 0;
-    var opening_balance = parseInt($('.balance-sheet-card').find('tbody tr:first td:nth-child(2)').text());
+    // var op_text = $('.balance-sheet-card').find('tbody tr:first td:nth-child(2)').text();
+    // var opening_balance = parseInt(op_text.replaceAll(',',''));
 
-    $('.balance-sheet-card').find('tbody tr').not('tr:first, tr:last').each(function(){
+    $('.balance-sheet-card').find('tbody tr').not('tr:last').each(function(){ //included opening balance also for credit total//only removed closing balance while summarizing debit amount for closing bal calculation
         let credit_val = $(this).find('td:nth-child(2)').text() ? $(this).find('td:nth-child(2)').text() : '0';
         credit = credit + parseInt(credit_val.replaceAll(',',''));
         
@@ -135,22 +153,27 @@ function calculateClosingForBS(){
         debit = debit + parseInt(debit_val.replaceAll(',',''));
     })
     
-    var closing_balance = opening_balance + credit - debit;
+    var closing_balance = credit - debit;
+    debit = debit + closing_balance;//included closing balance also for debit total
     var difference = credit - debit;
     $('.balance-sheet-card').find('tbody tr:nth-child(17) td:nth-child(3)').text(moneyFormatIndia(closing_balance));
+    $('.benefits-check-card').find('tbody tr:nth-child(9) td:nth-child(3)').text(moneyFormatIndia(closing_balance));//benefit check table also will have same closing balance
     $('.balance-sheet-card').find('tfoot tr:first td:nth-child(2)').text(moneyFormatIndia(credit));
-    $('.balance-sheet-card').find('tfoot tr:first td:nth-child(3)').text(moneyFormatIndia(debit));
+    $('.balance-sheet-card').find('tfoot tr:first td:nth-child(3)').text(moneyFormatIndia(debit )); 
     $('.balance-sheet-card').find('tfoot tr:last td:nth-child(2)').text(moneyFormatIndia(difference));
 }
+
+
 
 //it will calculate for all type of searches handling by type, after ajax calls are completed then it will trigger to calculate closing details
 function BenefitCalculations(type,from_date,to_date,month){
 
     clearAllContents();
 
-    if(type == 'today'){var args = {'type':'today'}; }else
-    if(type == 'day'){var args = {'type':'day','from_date':from_date,'to_date':to_date}; }else
-    if(type == 'month'){var args = {'type':'month','month':month}; }
+    var user_id = $('#by_user').val();
+    if(type == 'today'){var args = {'type':'today','user_id':user_id}; }else
+    if(type == 'day'){var args = {'type':'day','from_date':from_date,'to_date':to_date,'user_id':user_id}; }else
+    if(type == 'month'){var args = {'type':'month','month':month,'user_id':user_id}; }
 
     // Create an array to store all the Ajax calls
     let ajaxCalls = [];
@@ -166,47 +189,32 @@ function BenefitCalculations(type,from_date,to_date,month){
         $('.benefits-card').find('tbody tr:nth-child(3) td:nth-child(2)').text(response['doc_charge']);
         $('.benefits-card').find('tbody tr:nth-child(4) td:nth-child(2)').text(response['proc_charge']);
     },'json')
+    
+    //to get Penalty and fine 
+    let ajaxCall3 = $.post('financeFile/Benefits/getPenaltyFine.php', args,function(response){
+        $('.benefits-card').find('tbody tr:nth-child(5) td:nth-child(2)').text(response['penalty']);
+        $('.benefits-card').find('tbody tr:nth-child(6) td:nth-child(2)').text(response['fine']);
+    },'json'); 
 
     //to get Other income
-    let ajaxCall3 = $.post('financeFile/BS/getBSCrContents.php', args,function(response){
+    let ajaxCall4 = $.post('financeFile/BS/getBSCrContents.php', args,function(response){
         $('.benefits-card').find('tbody tr:nth-child(7) td:nth-child(2)').text(response['other_income']);
     },'json')
 
     //to get Expense
-    let ajaxCall4 = $.post('financeFile/BS/getBSDbContents.php', args,function(response){
+    let ajaxCall5 = $.post('financeFile/BS/getBSDbContents.php', args,function(response){
         $('.benefits-card').find('tbody tr:nth-child(8) td:nth-child(3)').text(response['expense']);
     },'json'); 
     
-    //to get Penalty and fine 
-    let ajaxCall5 = $.post('financeFile/Benefits/getPenaltyFine.php', args,function(response){
-        $('.benefits-card').find('tbody tr:nth-child(8) td:nth-child(3)').text(response['expense']);
-    },'json'); 
-
-    //to get collection amount
-    // let ajaxCall2 = $.post('financeFile/Benefits/getCollectionAmount.php', args,function(response){
-    //     $('.benefits-card').find('tbody tr:nth-child(2) td:nth-child(2)').text(response['collection']);
-    // },'json')
-
-    // //to get Document charges with processing fees
-    // let ajaxCall3 = $.post('financeFile/Benefits/getDocumentCharges.php', args,function(response){
-    //     $('.benefits-card').find('tbody tr:nth-child(3) td:nth-child(2)').text(response['doc_charge']);
-    //     $('.benefits-card').find('tbody tr:nth-child(4) td:nth-child(2)').text(response['proc_charge']);
-    // },'json')
-
-    // //to get Other income, bank withdrawal and cash deposit
-    // let ajaxCall4 = $.post('financeFile/Benefits/getBSCrContents.php', args,function(response){
-    //     $('.benefits-card').find('tbody tr:nth-child(5) td:nth-child(2)').text(response['other_income']);
-    //     $('.benefits-card').find('tbody tr:nth-child(6) td:nth-child(2)').text(response['bank_withdrawal']);
-    //     $('.benefits-card').find('tbody tr:nth-child(7) td:nth-child(2)').text(response['cash_deposit']);
-    // },'json')
-    
-    ajaxCalls.push(ajaxCall1,ajaxCall2,ajaxCall3,ajaxCall4);
+    ajaxCalls.push(ajaxCall1,ajaxCall2,ajaxCall3,ajaxCall4,ajaxCall5);
 
     // Now use $.when() to wait for all Ajax calls to complete
     $.when.apply($, ajaxCalls).done(function () {
         // This function will be executed when all Ajax calls are completed successfully
         // Put your code here for the function you want to run after all Ajax calls are completed.
+        calculateClosingForBS();
         calculateClosingForBenefit();
+        calculateClosingForBenefitCheck();
     });
 }
 // function to calculate closing details for Benefits calculations
@@ -225,6 +233,87 @@ function calculateClosingForBenefit(){
     $('.benefits-card').find('tfoot tr:first td:nth-child(2)').text(moneyFormatIndia(credit));
     $('.benefits-card').find('tfoot tr:first td:nth-child(3)').text(moneyFormatIndia(debit));
     $('.benefits-card').find('tfoot tr:last td:nth-child(2)').text(moneyFormatIndia(difference));
+}
+
+
+
+//it will calculate for all type of searches handling by type, after ajax calls are completed then it will trigger to calculate closing details
+function BenefitCheckCalculations(type,from_date,to_date,month){
+
+    clearAllContents();
+
+    var user_id = $('#by_user').val();
+    if(type == 'today'){var args = {'type':'today','user_id':user_id}; }else
+    if(type == 'day'){var args = {'type':'day','from_date':from_date,'to_date':to_date,'user_id':user_id}; }else
+    if(type == 'month'){var args = {'type':'month','month':month,'user_id':user_id}; }
+
+    // Create an array to store all the Ajax calls
+    let ajaxCalls = [];
+
+    //to get opening outstanding
+    let ajaxCall1 = $.post('financeFile/BenefitsCheck/getOpeningOutstanding.php', args,function(response){
+        $('.benefits-check-card').find('tbody tr:first td:nth-child(2)').text(response['opening_outstanding']) //it will get the 2nd column value inside tbody // will take you to opening outstanding credit column
+    },'json');
+
+    //to get opening balance
+    let ajaxCall2 = $.post('financeFile/BS/getOpeningDate.php', args,function(response){
+        $('.benefits-check-card').find('tbody tr:nth-child(2) td:nth-child(2)').text(response['closing_bal']) //it will get the 2nd column value inside tbody // will take you to opening balance credit column
+    },'json')
+
+    //to get Investment, Deposit, EL, Exchange and Agent
+    let ajaxCall3 = $.post('financeFile/BS/getBSCrDbContents.php', args,function(response){
+        $('.benefits-check-card').find('tbody tr:nth-child(3) td:nth-child(2)').text(response['cr_investment']);
+        $('.benefits-check-card').find('tbody tr:nth-child(3) td:nth-child(3)').text(response['db_investment']);
+        $('.benefits-check-card').find('tbody tr:nth-child(4) td:nth-child(2)').text(response['cr_deposit']);
+        $('.benefits-check-card').find('tbody tr:nth-child(4) td:nth-child(3)').text(response['db_deposit']);
+        $('.benefits-check-card').find('tbody tr:nth-child(5) td:nth-child(2)').text(response['cr_el']);
+        $('.benefits-check-card').find('tbody tr:nth-child(5) td:nth-child(3)').text(response['db_el']);
+        $('.benefits-check-card').find('tbody tr:nth-child(6) td:nth-child(2)').text(response['cr_exchange']);
+        $('.benefits-check-card').find('tbody tr:nth-child(6) td:nth-child(3)').text(response['db_exchange']);
+        $('.benefits-check-card').find('tbody tr:nth-child(7) td:nth-child(2)').text(response['cr_agent']);
+        $('.benefits-check-card').find('tbody tr:nth-child(7) td:nth-child(3)').text(response['db_agent']);
+    },'json')
+
+    ajaxCalls.push(ajaxCall1,ajaxCall2,ajaxCall3);
+
+    // Now use $.when() to wait for all Ajax calls to complete
+    $.when.apply($, ajaxCalls).done(function () {
+        // This function will be executed when all Ajax calls are completed successfully
+        // Put your code here for the function you want to run after all Ajax calls are completed.
+        calculateClosingForBS();
+        calculateClosingForBenefit();
+        calculateClosingForBenefitCheck();
+    });
+}
+// function to calculate closing details for Benefits calculations
+function calculateClosingForBenefitCheck(){
+    var credit = 0; var debit = 0;
+    var op_text = $('.benefits-check-card').find('tbody tr:first td:nth-child(2)').text();
+    var opening_outstanding = parseInt(op_text.replaceAll(',',''));
+    var cl_text = $('.benefits-check-card').find('tbody tr:last td:nth-child(3)').text();
+    var closing_balance = parseInt(cl_text.replaceAll(',',''));
+
+    $('.benefits-check-card').find('tbody tr').not('tr:last').each(function(){
+        let credit_val = $(this).find('td:nth-child(2)').text() ? $(this).find('td:nth-child(2)').text() : '0';
+        credit = credit + parseInt(credit_val.replaceAll(',',''));
+        
+        let debit_val = $(this).find('td:nth-child(3)').text() ? $(this).find('td:nth-child(3)').text() : '0';
+        debit = debit + parseInt(debit_val.replaceAll(',',''));
+    })
+    var closing_outstanding = credit - debit;
+    debit = debit + closing_outstanding + closing_balance;//included closing outstanding and closing balance also for debit total
+    var difference = credit - debit;
+    
+    $('.benefits-check-card').find('tbody tr:nth-child(8) td:nth-child(3)').text(moneyFormatIndia(closing_outstanding));
+    $('.benefits-check-card').find('tfoot tr:first td:nth-child(2)').text(moneyFormatIndia(credit));
+    $('.benefits-check-card').find('tfoot tr:first td:nth-child(3)').text(moneyFormatIndia(debit));
+    $('.benefits-check-card').find('tfoot tr:last td:nth-child(2)').text(moneyFormatIndia(difference));
+
+    //to calculate difference between benefit and benefit check tables
+    let ben_diff = $('.benefits-card').find('tfoot tr:last td:nth-child(2)').text().replaceAll(',','');
+    let benc_diff = $('.benefits-check-card').find('tfoot tr:last td:nth-child(2)').text().replaceAll(',','');
+    ben_diff = parseInt(ben_diff) - parseInt(benc_diff);
+    $('#BBDiff').text('Difference: '+ moneyFormatIndia(ben_diff));
 }
 
 
