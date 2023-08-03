@@ -214,6 +214,11 @@ function calculateOthers($loan_arr,$response,$con){
 
             //Payable amount will be pending amount added with current month due amount
             $response['payable'] = $response['due_amt'] + $response['pending'];
+            if($response['payable'] > $response['balance']){
+                //if payable is greater than balance then change it as balance amt coz dont collect more than balance
+                //this case will occur when collection status becoms OD
+                $response['payable'] = $response['balance']; 
+            }
             // $response['payable'] = $response['pending'];
         }else{
             //If still current month is not ended, then pending will be same due amt // pending will be 0 if due date not exceeded
@@ -317,6 +322,11 @@ function calculateOthers($loan_arr,$response,$con){
 
             //Payable amount will be pending amount added with current month due amount
             $response['payable'] = $response['due_amt'] + $response['pending'];
+            if($response['payable'] > $response['balance']){
+                //if payable is greater than balance then change it as balance amt coz dont collect more than balance
+                //this case will occur when collection status becoms OD
+                $response['payable'] = $response['balance']; 
+            }
 
         }else{
             //If still current month is not ended, then pending will be same due amt // pending will be 0 if due date not exceeded
@@ -417,6 +427,11 @@ function calculateOthers($loan_arr,$response,$con){
 
             //Payable amount will be pending amount added with current month due amount
             $response['payable'] = $response['due_amt'] + $response['pending'];
+            if($response['payable'] > $response['balance']){
+                //if payable is greater than balance then change it as balance amt coz dont collect more than balance
+                //this case will occur when collection status becoms OD
+                $response['payable'] = $response['balance']; 
+            }
 
         }else{
             //If still current month is not ended, then pending will be same due amt// pending will be 0 if due date not exceeded

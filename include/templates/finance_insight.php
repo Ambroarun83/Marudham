@@ -25,6 +25,7 @@ $bank_details = $getuser['bank_details'];
 			<input type="button" class="toggle-button active" data-toggle='modal' data-target='#dayModal' value='Day Wise'>
 			<input type="button" class="toggle-button" value='Today'>
 			<input type="button" class="toggle-button" data-toggle='modal' data-target='#monthModal' value= 'Month Wise'>
+			<select type="text" class="toggle-button" id='by_user' name='by_user'><option value=''>Select User</option></select>
 		</div>
 
 		
@@ -211,6 +212,7 @@ $bank_details = $getuser['bank_details'];
 								</tr>
 							</tfoot>
 						</table>
+						<!-- <label class="BBDiff" id='BBDiff' name='BBDiff'>Difference: Benefit - Benefit Check</label> -->
 					</div>
 				</div>
 			</div>

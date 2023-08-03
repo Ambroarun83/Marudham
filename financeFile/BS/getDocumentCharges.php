@@ -1,16 +1,17 @@
 <?php
-session_start();
-$userid = $_SESSION['userid'];
+
 
 include ('../../ajaxconfig.php');
 
 $type = $_POST['type'];
+$user_id = ($_POST['user_id'] != '') ? $where = " and insert_login_id = '".$_POST['user_id']."' " : $where = '';//for user based
+
 $doc_charge = 0;
 $proc_charge = 0;
 
 if($type == 'today'){
     
-    $qry1 = $con->query("SELECT req_id from in_acknowledgement where DATE(updated_date) = CURRENT_DATE and cus_status > 13 ");// >13 means entries moved to collection from issue
+    $qry1 = $con->query("SELECT req_id from in_acknowledgement where DATE(updated_date) = CURRENT_DATE and cus_status > 13 $where ");// >13 means entries moved to collection from issue
     
     if($qry1->num_rows > 0){
         while($row1 = $qry1->fetch_assoc()){
@@ -31,7 +32,7 @@ if($type == 'today'){
 
     $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
     
-    $qry1 = $con->query("SELECT req_id from in_acknowledgement where (DATE(updated_date) >= DATE('$from_date') && DATE(updated_date) <= DATE('$to_date')) and cus_status > 13 ");// >13 means entries moved to collection from issue
+    $qry1 = $con->query("SELECT req_id from in_acknowledgement where (DATE(updated_date) >= DATE('$from_date') && DATE(updated_date) <= DATE('$to_date')) and cus_status > 13 $where ");// >13 means entries moved to collection from issue
     
     if($qry1->num_rows > 0){
         while($row1 = $qry1->fetch_assoc()){
@@ -53,7 +54,7 @@ if($type == 'today'){
     $month = date('m',strtotime($_POST['month']));
     $year = date('Y',strtotime($_POST['month']));
 
-    $qry1 = $con->query("SELECT req_id from in_acknowledgement where (MONTH(updated_date) = '$month' && YEAR(updated_date) = '$year') and cus_status > 13 ");// >13 means entries moved to collection from issue
+    $qry1 = $con->query("SELECT req_id from in_acknowledgement where (MONTH(updated_date) = '$month' && YEAR(updated_date) = '$year') and cus_status > 13 $where ");// >13 means entries moved to collection from issue
     
     if($qry1->num_rows > 0){
         while($row1 = $qry1->fetch_assoc()){
@@ -82,23 +83,24 @@ echo json_encode($response);
 <?php
 
 //Format number in Indian Format
-function moneyFormatIndia($num1) {
-    if($num1 < 0){
-        $num = str_replace("-","",$num1);
-    }else{
-        $num = $num1;
+function moneyFormatIndia($num) {
+    $isNegative = false;
+    if ($num < 0) {
+        $isNegative = true;
+        $num = abs($num);
     }
+
     $explrestunits = "";
-    if (strlen($num) > 3) {
-        $lastthree = substr($num, strlen($num) - 3, strlen($num));
-        $restunits = substr($num, 0, strlen($num) - 3);
+    if (strlen((string)$num) > 3) {
+        $lastthree = substr((string)$num, -3);
+        $restunits = substr((string)$num, 0, -3);
         $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits;
         $expunit = str_split($restunits, 2);
-        for ($i = 0; $i < sizeof($expunit); $i++) {
-            if ($i == 0) {
-                $explrestunits .= (int)$expunit[$i] . ",";
+        foreach ($expunit as $index => $value) {
+            if ($index == 0) {
+                $explrestunits .= (int)$value . ",";
             } else {
-                $explrestunits .= $expunit[$i] . ",";
+                $explrestunits .= $value . ",";
             }
         }
         $thecash = $explrestunits . $lastthree;
@@ -106,10 +108,6 @@ function moneyFormatIndia($num1) {
         $thecash = $num;
     }
 
-    if($num1 < 0 && $num1 != ''){
-        $thecash = "-" . $thecash;
-    }
-
-    return $thecash;
+    return $isNegative ? "-" . $thecash : $thecash;
 }
 ?>
