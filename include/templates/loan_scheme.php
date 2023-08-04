@@ -279,7 +279,7 @@ if(isset($_GET['type'])){
 										<div class="form-group">
 											<label for="disabledInput">Profit Method</label>
 											<input type="hidden" name="profit_method" id="profit_method"  value="pre_intrest" class="form-control" >
-											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Interest" readonly class="form-control" tabindex="6">
+											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Benefit" readonly class="form-control" tabindex="6">
 										</div>
 									</div>
 									
@@ -473,7 +473,7 @@ if(isset($_GET['type'])){
 										<div class="form-group">
 											<label for="disabledInput">Profit Method</label>
 											<input type="hidden" name="profit_method1" id="profit_method1"  value="pre_intrest" class="form-control" >
-											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Interest" readonly class="form-control" tabindex="6">
+											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Benefit" readonly class="form-control" tabindex="6">
 										</div>
 									</div>
 									
@@ -647,7 +647,7 @@ if(isset($_GET['type'])){
 										<div class="form-group">
 											<label for="disabledInput">Profit Method</label>
 											<input type="hidden" name="profit_method2" id="profit_method2"  value="pre_intrest" class="form-control" >
-											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Interest" readonly class="form-control" tabindex='6'>
+											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Benefit" readonly class="form-control" tabindex='6'>
 										</div>
 									</div>
 									

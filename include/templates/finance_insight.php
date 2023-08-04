@@ -8,7 +8,7 @@ $bank_details = $getuser['bank_details'];
 <div class="page-header">
     <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
         Marudham -  Financial Insights 
-   </div>
+	</div>
 </div><br>
 
 
@@ -147,7 +147,7 @@ $bank_details = $getuser['bank_details'];
 			</div>
 			<div class="card col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 				<div class="card-header">
-					<div class="card-title">Benefits</div>
+					<div class="card-title">Benefit</div>
 				</div>
 				<div class="card-body">
 					<div class="row benefits-card">
@@ -214,11 +214,78 @@ $bank_details = $getuser['bank_details'];
 						</table>
 						<!-- <label class="BBDiff" id='BBDiff' name='BBDiff'>Difference: Benefit - Benefit Check</label> -->
 					</div>
+					<br>
+					<div class="card-header">
+						<div class="inside-title">Profit</div>
+					</div>
+					<div class='row profit-card'>
+						<table>
+							<thead class='break'>
+								<td></td>
+								<td>Credit</td>
+								<td>Debit</td>
+							</thead>
+							<tbody>
+								<tr>
+									<td>Due Interest</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Interest Amount</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Document Charges</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Processing Charges</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Penalty</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Fine</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr class="break">
+									<td>Other Income</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr class="break">
+									<td>Expenses</td>
+									<td></td>
+									<td></td>
+								</tr>
+								
+							</tbody>
+							<tfoot>
+								<tr>
+									<td>Totals</td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr class='break'>
+									<td>Total Profit</td>
+									<td colspan="2"></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
 			</div>
 			<div class="card col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 				<div class="card-header">
-					<div class="card-title">Benefits Check</div>
+					<div class="card-title">Benefit Check</div>
 				</div>
 				<div class="card-body">
 					<div class="row benefits-check-card">

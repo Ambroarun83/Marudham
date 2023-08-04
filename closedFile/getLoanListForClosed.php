@@ -51,7 +51,7 @@ function moneyFormatIndia($num) {
             <th>Agent</th>
             <th>Loan date</th>
             <th>Loan Amount</th>
-            <th>Banlance Amount</th>
+            <th>Balance Amount</th>
             <th>Status</th>
             <th>Sub Status</th>
             <th>Action</th>

@@ -12,11 +12,12 @@ $records = array();
 
 if($type == 'today'){
 
-    $where = " date(ct1.cl_date) = CURRENT_DATE() ";
+    $where = " date(ct1.cl_date) <= CURRENT_DATE() ";
+    $where2 = " date(ct2.cl_date) <= CURRENT_DATE() ";
 
     if($user_id != ''){$where .= " and ct1.insert_login_id = $user_id " ; }//for user based
 
-    getDetails($con, $where);
+    getDetails($con, $where, $where2);
 
     // $qry1 = $con->query("SELECT closing_bal FROM cash_tally where insert_login_id = '$user_id' and date(cl_date) = CURRENT_DATE() ");
 
@@ -40,11 +41,12 @@ if($type == 'today'){
 
     $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
     
-    $where = " (date(ct1.cl_date) >= DATE('$from_date') && date(ct1.cl_date) <= DATE('$to_date')) ";
+    $where = " date(ct1.cl_date) <= DATE('$from_date') ";
+    $where2 = " date(ct2.cl_date) <= DATE('$from_date') ";
     
     if($user_id != ''){$where .= " and ct1.insert_login_id = $user_id " ; }//for user based
 
-    getDetails($con, $where);
+    getDetails($con, $where, $where2);
 
 
     // $qry1 = $con->query("SELECT closing_bal FROM cash_tally where insert_login_id = '$user_id' and (date(cl_date) >= DATE($from_date) && date(cl_date) <= DATE($to_date)) ORDER BY date(cl_date) DESC"); // then fetch the last updated date
@@ -72,9 +74,10 @@ if($type == 'today'){
     $year = date('Y',strtotime($_POST['month']));
 
     $where = " (month(ct1.cl_date) = $month && YEAR(ct1.cl_date) = '$year' ) ";
+    $where2 = " (month(ct2.cl_date) = $month && YEAR(ct2.cl_date) = '$year' ) ";
     if($user_id != ''){$where .= " and ct1.insert_login_id = $user_id " ; }//for user based
 
-    getDetails($con, $where);
+    getDetails($con, $where, $where2);
 
 
     // $qry1 = $con->query("SELECT closing_bal FROM cash_tally where insert_login_id = '$user_id' and (month(cl_date) = $month && YEAR(cl_date) = '$year' ) ORDER BY date(cl_date) DESC"); // then fetch the last updated date
@@ -97,7 +100,7 @@ if($type == 'today'){
 
 }
 
-function getDetails($con, $where){
+function getDetails($con, $where, $where2){
     
     $records['closing_bal'] = 0;
 
@@ -107,7 +110,7 @@ function getDetails($con, $where){
         SELECT 1
         FROM cash_tally ct2
         WHERE ct1.insert_login_id = ct2.insert_login_id 
-    AND ct1.cl_date < ct2.cl_date) "); // then fetch the last updated date
+    AND ct1.cl_date < ct2.cl_date and $where2 ) "); // then fetch the last updated date
 
     if($qry->num_rows != 0){
 

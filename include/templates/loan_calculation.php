@@ -167,7 +167,7 @@ if($idupd>0)
                             <div class="form-group">
                                 <label for="disabledInput">Profit Method</label>
                                 <select tabindex="5" type="text" class="form-control selectpicker" id="profit_method" name="profit_method[]" data-live-search="true" multiple data-actions-box="true" title="Select Profit Method">
-                                    <option <?php  if(isset($profit_method)) { if($profit_method[0] == "pre_intrest") echo 'selected'; }?> value="pre_intrest">Pre Interest</option>
+                                    <option <?php  if(isset($profit_method)) { if($profit_method[0] == "pre_intrest") echo 'selected'; }?> value="pre_intrest">Pre Benefit</option>
                                     <option <?php  if(isset($profit_method) ) {
                                                     if($profit_method[0] == "after_intrest") {
                                                         echo 'selected';
@@ -175,7 +175,7 @@ if($idupd>0)
                                                         echo 'selected';
                                                     }
                                                 }
-                                            ?> value="after_intrest">After Interest</option>
+                                            ?> value="after_intrest">After Benefit</option>
                                 </select> 
                             </div>
                         </div>

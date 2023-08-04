@@ -54,15 +54,16 @@ $current_page == 'edit_staff_creation' || $current_page == 'staff_creation' || $
 
 	$current_module = 'noc';
 
-}else if($current_page == 'edit_update' || $current_page == 'update' ){
+}else if($current_page == 'edit_update' || $current_page == 'update' || $current_page == 'document_track'){
 
 	$current_module = 'update';
 
-}else if($current_page == 'document_track'){
+}//else if($current_page == 'document_track'){
 
-	$current_module = 'doctrack';
+	//$current_module = 'doctrack';
 
-}else if($current_page == 'edit_concern_creation' || $current_page == 'edit_concern_solution' || $current_page == 'concern_creation' || $current_page == 'concern_solution' || $current_page == 'concern_solution_view' || $current_page == 'edit_concern_feedback' || $current_page == 'concern_feedback'){
+//}
+else if($current_page == 'edit_concern_creation' || $current_page == 'edit_concern_solution' || $current_page == 'concern_creation' || $current_page == 'concern_solution' || $current_page == 'concern_solution_view' || $current_page == 'edit_concern_feedback' || $current_page == 'concern_feedback'){
 
 	$current_module = 'concerncreation';
 
@@ -575,7 +576,7 @@ if (sizeof($getUser)>0) {
                     </li>
                 <?php  } ?>
 				<?php if($doctrackmodule == 0){ ?>
-                    <li class="sidebar-dropdown ">
+                    <!-- <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
 							<i><object class="svg-icon" data="svg/track.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Document Track</span>
@@ -589,7 +590,7 @@ if (sizeof($getUser)>0) {
                                 <?php  } ?>
                             </ul>
                         </div>
-                    </li>
+                    </li> -->
                 <?php  } ?>
                 <?php if($updatemodule == 0){ ?>
                     <li class="sidebar-dropdown ">
@@ -602,6 +603,11 @@ if (sizeof($getUser)>0) {
                                 <?php  if($update_screen == 0){ ?>
                                     <li>
                                         <a href="edit_update"><i><object class="svg-icon" data="svg/update.svg" type="image/svg+xml"></object></i>Update</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($doctrack == 0){ ?>
+                                    <li>
+                                        <a href="document_track"><i><object class="svg-icon" data="svg/track.svg" type="image/svg+xml"></object></i>Document Track</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
