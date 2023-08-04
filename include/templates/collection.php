@@ -207,7 +207,7 @@ if($idupd>0)
 														<th>Loan date</th>
 														<th>Loan Amount</th>
 														<th>Banlance Amount</th>
-														<th>Collection Method</th>
+														<th>Collection Format</th>
 														<th>Status</th>
 														<th>Sub Status</th>
 														<th>Collect</th>

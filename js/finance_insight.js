@@ -15,6 +15,7 @@ $(document).ready(function(){
             BalanceSheetCalculations('today','','','');
             BenefitCalculations('today','','','');
             BenefitCheckCalculations('today','','','');
+            ProfitCalculations('today','','','');
         }
     });
 
@@ -25,10 +26,11 @@ $(document).ready(function(){
             BalanceSheetCalculations('day',from_date, to_date,'');
             BenefitCalculations('day',from_date, to_date,'');
             BenefitCheckCalculations('day',from_date, to_date,'');
+            ProfitCalculations('day',from_date, to_date,'');
             
             $('.close').trigger('click');//it will close modal
         }else{
-            swalError();
+            swalError('Please Fill Dates!','error');
             event.preventDefault();
         }
     })
@@ -40,10 +42,11 @@ $(document).ready(function(){
             BalanceSheetCalculations('month','', '',for_month);
             BenefitCalculations('month','', '',for_month);
             BenefitCheckCalculations('month','', '',for_month);
+            ProfitCalculations('month','', '',for_month);
             
             $('.close').trigger('click');//it will close modal
         }else{
-            swalError();
+            swalError('Please Choose Month!','error');
             event.preventDefault();
         }
     })
@@ -238,6 +241,82 @@ function calculateClosingForBenefit(){
 
 
 //it will calculate for all type of searches handling by type, after ajax calls are completed then it will trigger to calculate closing details
+function ProfitCalculations(type,from_date,to_date,month){
+
+    clearAllContents();
+
+    var user_id = $('#by_user').val();
+    if(type == 'today'){var args = {'type':'today','user_id':user_id}; }else
+    if(type == 'day'){var args = {'type':'day','from_date':from_date,'to_date':to_date,'user_id':user_id}; }else
+    if(type == 'month'){var args = {'type':'month','month':month,'user_id':user_id}; }
+
+    // Create an array to store all the Ajax calls
+    let ajaxCalls = [];
+
+    //to get Profit Amount
+    let ajaxCall1 = $.post('financeFile/Profit/getProfitAmount.php', args,function(response){
+        $('.profit-card').find('tbody tr:first td:nth-child(2)').text(response['interest_paid']) //it will get the 2nd column value inside tbody // will take you to Profit amount credit column
+    },'json')
+    //to get Interest Amount
+    let ajaxCall2 = $.post('financeFile/Benefits/getBenefitAmount.php', args,function(response){
+        $('.profit-card').find('tbody tr:nth-child(2) td:nth-child(2)').text(response['interest_amount']) 
+    },'json')
+
+    //to get Document charges with processing fees
+    let ajaxCall3 = $.post('financeFile/BS/getDocumentCharges.php', args,function(response){
+        $('.profit-card').find('tbody tr:nth-child(3) td:nth-child(2)').text(response['doc_charge']);
+        $('.profit-card').find('tbody tr:nth-child(4) td:nth-child(2)').text(response['proc_charge']);
+    },'json')
+    
+    //to get Penalty and fine 
+    let ajaxCall4 = $.post('financeFile/Benefits/getPenaltyFine.php', args,function(response){
+        $('.profit-card').find('tbody tr:nth-child(5) td:nth-child(2)').text(response['penalty']);
+        $('.profit-card').find('tbody tr:nth-child(6) td:nth-child(2)').text(response['fine']);
+    },'json'); 
+
+    //to get Other income
+    let ajaxCall5 = $.post('financeFile/BS/getBSCrContents.php', args,function(response){
+        $('.profit-card').find('tbody tr:nth-child(7) td:nth-child(2)').text(response['other_income']);
+    },'json')
+
+    //to get Expense
+    let ajaxCall6 = $.post('financeFile/BS/getBSDbContents.php', args,function(response){
+        $('.profit-card').find('tbody tr:nth-child(8) td:nth-child(3)').text(response['expense']);
+    },'json'); 
+    
+    ajaxCalls.push(ajaxCall1,ajaxCall2,ajaxCall3,ajaxCall4,ajaxCall5,ajaxCall6);
+
+    // Now use $.when() to wait for all Ajax calls to complete
+    $.when.apply($, ajaxCalls).done(function () {
+        // This function will be executed when all Ajax calls are completed successfully
+        // Put your code here for the function you want to run after all Ajax calls are completed.
+        calculateClosingForBS();
+        calculateClosingForBenefit();
+        calculateClosingForProfit();
+        calculateClosingForBenefitCheck();
+    });
+}
+// function to calculate closing details for Profit calculations
+function calculateClosingForProfit(){
+    var credit = 0; var debit = 0;
+
+    $('.profit-card').find('tbody tr').each(function(){
+        let credit_val = $(this).find('td:nth-child(2)').text() ? $(this).find('td:nth-child(2)').text() : '0';
+        credit = credit + parseInt(credit_val.replaceAll(',',''));
+        
+        let debit_val = $(this).find('td:nth-child(3)').text() ? $(this).find('td:nth-child(3)').text() : '0';
+        debit = debit + parseInt(debit_val.replaceAll(',',''));
+    })
+    
+    var difference = credit - debit;
+    $('.profit-card').find('tfoot tr:first td:nth-child(2)').text(moneyFormatIndia(credit));
+    $('.profit-card').find('tfoot tr:first td:nth-child(3)').text(moneyFormatIndia(debit));
+    $('.profit-card').find('tfoot tr:last td:nth-child(2)').text(moneyFormatIndia(difference));
+}
+
+
+
+//it will calculate for all type of searches handling by type, after ajax calls are completed then it will trigger to calculate closing details
 function BenefitCheckCalculations(type,from_date,to_date,month){
 
     clearAllContents();
@@ -334,11 +413,11 @@ function clearAllContents(){
     })
 }
 
-//alert message error
-function swalError(){
+//alert message
+function swalError(title, icon){
     Swal.fire({
-        title: 'Please fill Dates!',
-        icon: 'error',
+        title: title,
+        icon: icon,
         showConfirmButton: true,
         confirmButtonColor: '#009688'
     })

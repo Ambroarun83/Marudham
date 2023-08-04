@@ -113,6 +113,80 @@ $(document).ready(function(){
         }
     })
 
+    $('#category').on('change', function () {
+
+        let category = $('#category').val();
+
+        if (category == 0) {
+            $('#nameCheck').show();
+            $('#aadharNo').hide();
+            $('#mobileNo').hide();
+
+            famNameList(); /// To show family name for Data Check.
+
+        } else if (category == 1) {
+            $('#aadharNo').show();
+            $('#nameCheck').hide();
+            $('#mobileNo').hide();
+
+            aadharList()//// To show Aadhar No for Data Checking.
+
+        } else if (category == 2) {
+            $('#mobileNo').show();
+            $('#nameCheck').hide();
+            $('#aadharNo').hide();
+
+            mobileList(); //// To show Mobile No for Data Checking.
+
+        } else {
+            $('#nameCheck').hide();
+            $('#aadharNo').hide();
+            $('#mobileNo').hide();
+        }
+
+    })
+
+    $('#check_name, #check_aadhar, #check_mobileno').on('change', function () {
+
+        let name = $(this).val();
+        let category = $('#category').val();
+        let req_id = $('#req_id').val();
+
+        $.ajax({
+            url: 'verificationFile/verification_cus_datacheck.php',
+            type: 'POST',
+            data: { "name": name,"req_id": req_id, "category": category },
+            cache: false,
+            success: function (html) {
+                $("#cus_check").empty();
+                $("#cus_check").html(html);
+            }
+        });
+
+        $.ajax({
+            url: 'verificationFile/verification_fam_datacheck.php',
+            type: 'POST',
+            data: { "name": name, "req_id": req_id, "category": category },
+            cache: false,
+            success: function (html) {
+                $("#fam_check").empty();
+                $("#fam_check").html(html);
+            }
+        });
+
+        $.ajax({
+            url: 'verificationFile/verification_group_datacheck.php',
+            type: 'POST',
+            data: { "name": name, "req_id": req_id, "category": category },
+            cache: false,
+            success: function (html) {
+                $("#group_check").empty();
+                $("#group_check").html(html);
+            }
+        });
+
+    })
+
 })//Document Ready End
 
 
@@ -1106,4 +1180,83 @@ function updateCheckedDetails(){
         });
     });
 
+}
+
+
+
+function famNameList() {  // To show family name for Data Check.
+    let req_id = $('#req_id').val();
+    var cus_name = $('#cus_name').val();
+    var cus_id = $('#cusidupd').val();//customer id
+
+    $.ajax({
+        url: 'verificationFile/verification_datacheck_name.php',
+        type: 'POST',
+        data: { "cus_id": cus_id },
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            $("#check_name").empty();
+            $('#check_name').append("<option value=''> Select Name </option>")
+            $('#check_name').append("<option value='" + cus_name + "'> " + cus_name + " </option>");//Current Customer Name
+            let len = response.length;
+            for (let i = 0; i < len; i++) {
+                let name = response[i]['fam_name'];
+                $('#check_name').append("<option value='" + name + "'> " + name + " </option>")
+            }
+
+        }
+    });
+}
+
+function mobileList() { // To show Mobile No for Data Checking.
+    let req_id = $('#req_id').val();
+    var mobile1 = $('#mobile').val();
+    var cus_id = $('#cusidupd').val();//customer id
+
+    $.ajax({
+        url: 'verificationFile/verification_datacheck_name.php',
+        type: 'POST',
+        data: { "cus_id": cus_id },
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            $("#check_mobileno").empty();
+            $('#check_mobileno').append("<option value=''> Select Mobile Number </option>")
+            $('#check_mobileno').append("<option value='" + mobile1 + "'> " + mobile1 + " </option>");//Current Customer Number
+            let len = response.length;
+            for (let i = 0; i < len; i++) {
+                let no = response[i]['mobile'];
+                $('#check_mobileno').append("<option value='" + no + "'> " + no + " </option>")
+            }
+
+        }
+    });
+}
+
+
+function aadharList() {   // To show Aadhar No for Data Checking.
+    let req_id = $('#req_id').val();
+    var cus_name = $('#cus_name').val();//Customer name for display
+    var cus_id = $('#cusidupd').val();//customer adhar for 
+
+    $.ajax({
+        url: 'verificationFile/verification_datacheck_name.php',
+        type: 'POST',
+        data: { "cus_id": cus_id },
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            $("#check_aadhar").empty();
+            $('#check_aadhar').append("<option value=''> Select Aadhar Number    </option>")
+            $('#check_aadhar').append("<option value='" + cus_id + "'> " + cus_name + " </option>");//Current Customer Adhaar
+            let len = response.length;
+            for (let i = 0; i < len; i++) {
+                let aadhar = response[i]['aadhar'];
+                let fam_name = response[i]['fam_name'];
+                $('#check_aadhar').append("<option value='" + aadhar + "'> " + fam_name + " </option>")
+            }
+
+        }
+    });
 }

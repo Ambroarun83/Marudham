@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2023 at 03:19 PM
+-- Generation Time: Aug 04, 2023 at 03:44 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -671,11 +671,8 @@ CREATE TABLE `cash_tally` (
 --
 
 INSERT INTO `cash_tally` (`id`, `op_hand`, `op_date`, `op_bank`, `op_agent`, `opening_bal`, `cl_date`, `cl_hand`, `cl_bank`, `bank_untrkd`, `cl_agent`, `closing_bal`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '0', '03-08-2023', '0', '0', '0', '2023-08-03', '500', '500', '0', '500', '1500', '2', '2', '2023-08-03 16:51:14', '2023-08-03 16:52:28'),
-(2, '0', '03-08-2023', '0', '0', '0', '2023-08-02', '500', '500', '0', '500', '4500', '2', '2', '2023-08-03 16:51:14', '2023-08-03 16:52:54'),
-(3, '0', '04-07-2023', '0', '0', '0', '2023-07-04', '500', '500', '0', '500', '5500', '5', '5', '2023-08-03 16:51:14', '2023-08-03 16:53:20'),
-(4, '0', '15-07-2023', '0', '0', '0', '2023-07-15', '500', '500', '0', '500', '8000', '5', '5', '2023-08-03 16:51:14', '2023-08-03 16:53:32'),
-(5, '0', '15-07-2023', '0', '0', '0', '2023-07-25', '500', '500', '0', '2000', '3000', '3', '3', '2023-08-03 16:51:14', '2023-08-03 16:53:53');
+(7, '0', '2023-08-02', '0', '0', '0', '2023-08-02', '0', '0', '0', '0', '0', '2', NULL, '2023-08-02 13:53:59', '2023-08-02 13:53:59'),
+(8, '0', '2023-08-03', '0', '0', '0', '2023-08-03', '13300', '-6400', '0', '-5400', '1500', '2', NULL, '2023-08-03 13:55:32', '2023-08-03 13:55:32');
 
 -- --------------------------------------------------------
 
@@ -1074,6 +1071,15 @@ CREATE TABLE `ct_bank_collection` (
   `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Dumping data for table `ct_bank_collection`
+--
+
+INSERT INTO `ct_bank_collection` (`id`, `bank_id`, `credited_amt`, `insert_login_id`, `created_date`, `updated_date`) VALUES
+(1, '1', '0', '2', '2023-08-01 00:00:00', '2023-08-01 13:52:42'),
+(2, '1', '0', '2', '2023-08-02 00:00:00', '2023-08-02 13:53:53'),
+(3, '1', '0', '2', '2023-08-03 00:00:00', '2023-08-03 13:55:26');
+
 -- --------------------------------------------------------
 
 --
@@ -1372,7 +1378,8 @@ CREATE TABLE `ct_cr_hoti` (
 --
 
 INSERT INTO `ct_cr_hoti` (`id`, `category`, `remark`, `amt`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, 'OTI', 'Check for', '6800', '2', NULL, '2023-08-03 00:00:00', '2023-08-03 14:58:25');
+(1, 'OTI', 'Check for', '6800', '2', NULL, '2023-08-03 00:00:00', '2023-08-03 14:58:25'),
+(2, 'Papers', '1kg', '1500', '2', NULL, '2023-08-03 00:00:00', '2023-08-03 13:55:15');
 
 -- --------------------------------------------------------
 
@@ -3220,7 +3227,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `loan_cat`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `doctrackmodule`, `doctrack`, `doc_rec_access`, `updatemodule`, `update_screen`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `accountsmodule`, `cash_tally`, `bank_details`, `cash_tally_admin`, `bank_clearance`, `finance_insight`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '0', '0', '0', '0', '0', '0', NULL, '0', '0', '1', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
-(2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '1,2,6', '1,2', '1,2,3,5,6', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2023-07-31 17:08:54'),
+(2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '1,2,6', '1,2', '1,2,3,5,6', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2023-08-04 18:44:07'),
 (3, NULL, NULL, 'Alaathi Mobiles and Furniture', NULL, 'alaathi@gmail.com', 'alaathi', '123', '2', '', '', '1', '', '1', '3', '', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '0', '2', '2', NULL, '2023-07-01 12:12:04', '2023-07-21 10:14:54'),
 (4, NULL, NULL, 'Jafar', NULL, '', 'jafar', '123', '3', '1', '', '', '28', '1', '1', '5,7', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '0', '2', '2', NULL, '2023-07-03 11:59:48', '2023-07-29 15:13:03'),
 (5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '', '1', '1', '1', '0', '2', '5', NULL, '2023-07-03 13:31:46', '2023-07-19 16:12:05');
@@ -4260,7 +4267,7 @@ ALTER TABLE `branch_creation`
 -- AUTO_INCREMENT for table `cash_tally`
 --
 ALTER TABLE `cash_tally`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `cash_tally_modes`
@@ -4326,7 +4333,7 @@ ALTER TABLE `concern_subject`
 -- AUTO_INCREMENT for table `ct_bank_collection`
 --
 ALTER TABLE `ct_bank_collection`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key';
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `ct_cr_bag`
@@ -4410,7 +4417,7 @@ ALTER TABLE `ct_cr_hinvest`
 -- AUTO_INCREMENT for table `ct_cr_hoti`
 --
 ALTER TABLE `ct_cr_hoti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `ct_db_bag`

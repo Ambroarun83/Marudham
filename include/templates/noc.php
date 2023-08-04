@@ -242,6 +242,58 @@ if(sizeof($documentationInfo)>0){
 					</div>
 				</div>
 				<!-- Loan List End -->
+				<!-- Data Checking START -->
+				<div class="card">
+					<div class="card-header"> Data Checking <span style="font-weight:bold" class=""></span></div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="category"> Category </label>
+									<select type="text" class="form-control" id="category" name="category" tabindex="22">
+										<option> Select Category </option>
+										<option value="0"> Name </option>
+										<option value="1"> Aadhar Number </option>
+										<option value="2"> Mobile Number </option>
+									</select>
+								</div>
+							</div>
+
+							<div id="nameCheck" style="display: none" class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="check_name"> Name </label>
+									<select type="text" class="form-control" name="check_name" id="check_name" tabindex="23">
+										<option> Select Name </option>
+									</select>
+								</div>
+							</div>
+
+							<div id="aadharNo" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label for="check_aadhar"> Aadhar Number </label>
+									<select type="text" class="form-control" name="check_aadhar" id="check_aadhar" tabindex="24"> 
+										<option> Select Aadhar Number </option>
+									</select>
+								</div>
+							</div>
+
+							<div id="mobileNo" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label for="check_mobileno"> Mobile Number </label>
+									<select type="text" class="form-control" name="check_mobileno" id="check_mobileno" tabindex="25">
+										<option> Select Mobile Number </option>
+									</select>
+								</div>
+							</div>
+
+						</div>
+						<div id="cus_check"></div></br>
+						<div id="fam_check"></div></br>
+						<div id="group_check"></div>
+					</div>
+				</div>
+				<!-- Data Checking END -->
+				
 				<!-- NOC window -->
 				<div class="card noc-card" >
 					<div class="card-header">NOC Summary</div>

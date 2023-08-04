@@ -1,7 +1,13 @@
 .card {
-    min-height: 90vh;
+    min-height: 105vh;
     margin: 12px 5px;
 }
+
+.inside-title{
+    margin: 10px -20px;
+}
+
+
 
 .split-card {
     display: flex;
@@ -11,7 +17,8 @@
 
 .balance-sheet-card,
 .benefits-card,
-.benefits-check-card {
+.benefits-check-card,
+.profit-card {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,35 +52,7 @@ table tr td:not(:first-child) {
     width: 30%;
 }
 
-@media (max-width: 992px) {
-    .split-card {
-        flex-wrap: wrap;
-    }
-    .card {
-        flex: 0 0 45%;
-        margin: 10px;
-    }
-}
 
-@media (max-width: 768px) {
-    .card {
-        height: 150vh;
-        min-width: 44vw;
-    }
-    tr td {
-        padding: 10px 3px; /* Adjust the padding for better responsiveness on smaller screens */
-    }
-}
-
-@media (max-width: 576px) {
-    .card {
-        height: 115vh;
-        flex: 0 0 100%;
-    }
-    tr td {
-        padding: 5px 2px; /* Further adjust the padding for better responsiveness on mobile devices */
-    }
-}
 
 
 /* Toggle button styles */
@@ -112,4 +91,48 @@ table tr td:not(:first-child) {
     color: black;
     margin-top: 35px;
     font-family: 'Open Sans';
+}
+
+
+@media (max-width: 992px) {
+    .split-card {
+        flex-wrap: wrap;
+    }
+    .card {
+        flex: 0 0 45%;
+        margin: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card {
+        height: 171vh;
+        min-width: 44vw;
+    }
+    tr td {
+        padding: 10px 3px; /* Adjust the padding for better responsiveness on smaller screens */
+    }
+}
+
+@media (max-width: 576px) { 
+    /* mobile view */
+    .card {
+        height: auto;
+        flex: 0 0 100%;
+    }
+    tr td {
+        padding: 5px 2px; /* Further adjust the padding for better responsiveness on mobile devices */
+    }
+    .toggle-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .toggle-button {
+        margin: 2px 5px;
+        width: 100%;
+    }
+    select{
+        text-align: center;
+    }
 }

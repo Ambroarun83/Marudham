@@ -2457,23 +2457,34 @@ $('#refresh_cal').click(function () {
 
     var profit_method = $('#profit_method').val(); // if profit method changes, due type is EMI
     if (profit_method == 'after_intrest') {
-        getLoanAfterInterest();
+        getLoanAfterInterest();changeInttoBen()
     } else if (profit_method == 'pre_intrest') {
-        getLoanPreInterest();
+        getLoanPreInterest();changeInttoBen()
     }
 
     var due_type = $('#due_type').val(); //If Changes not found in profit method, calculate loan amt for monthly basis
     if (due_type == 'Interest') {
-        getLoanInterest();
+        getLoanInterest();changeInttoBen()
     }
 
     var due_method_scheme = $('#due_method_scheme').val();
     if (due_method_scheme == '1') {//Monthly scheme as 1
-        getLoanMonthly();
+        getLoanMonthly();changeInttoBen()
     } else if (due_method_scheme == '2') {//Weekly scheme as 2
-        getLoanWeekly();
+        getLoanWeekly();changeInttoBen()
     } else if (due_method_scheme == '3') {//Daily scheme as 3
-        getLoanDaily();
+        getLoanDaily();changeInttoBen()
+    }
+
+    function changeInttoBen(){
+        let due_type = document.getElementById('due_type');
+        let int_label = document.querySelector('#int_amt_cal');
+        if(due_type.value == 'Interest'){
+            // Set its value to 'Benefit Amount'
+            int_label.previousElementSibling.previousElementSibling.textContent = 'Benefit Amount';
+        }else{
+            int_label.previousElementSibling.previousElementSibling.textContent = 'Interest Amount';
+        }
     }
 });
 
@@ -2901,7 +2912,7 @@ function profitCalAjax(profit_type, sub_cat) {
                     $('#profit_method').empty();
                     $('#profit_method').append(`<option value=''>Select Profit Method</option>`);
                     for (var i = 0; i < profit_method.length; i++) {
-                        if (profit_method[i] == 'pre_intrest') { valuee = 'Pre Interest'; } else if (profit_method[i] == 'after_intrest') { valuee = 'After Interest'; }
+                        if (profit_method[i] == 'pre_intrest') { valuee = 'Pre Benefit'; } else if (profit_method[i] == 'after_intrest') { valuee = 'After Benefit'; }
                         var selected = '';
                         if (profit_method_upd != '' && profit_method_upd != undefined && profit_method_upd == profit_method[i]) {
                             selected = 'selected';
