@@ -243,7 +243,7 @@ if(sizeof($documentationInfo)>0){
 				</div>
 				<!-- Loan List End -->
 				<!-- Data Checking START -->
-				<div class="card">
+				<div class="card loanlist_card">
 					<div class="card-header"> Data Checking <span style="font-weight:bold" class=""></span></div>
 					<div class="card-body">
 						<div class="row">

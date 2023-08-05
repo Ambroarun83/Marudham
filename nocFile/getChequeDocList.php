@@ -31,7 +31,7 @@ function getfamName($con,$rel_id){
     <tbody>
         <?php
         $i=1;
-        $qry = $con->query("SELECT a.id,a.cheque_holder_type,a.cheque_holder_name,a.cheque_no,a.noc_given,a.noc_date,a.noc_person,a.noc_name,b.cheque_relation,b.chequebank_name from `cheque_no_list` a JOIN cheque_info b on a.cheque_table_id = b.id where a.req_id = $req_id && a.used_status != '1' ");
+        $qry = $con->query("SELECT a.id,a.cheque_holder_type,a.cheque_holder_name,a.cheque_no,a.noc_given,a.noc_date,a.noc_person,a.noc_name,a.temp_sts,b.cheque_relation,b.chequebank_name from `cheque_no_list` a JOIN cheque_info b on a.cheque_table_id = b.id where a.req_id = $req_id && a.used_status != '1' ");
         while($row = $qry->fetch_assoc()){
 
             if(is_numeric($row['cheque_holder_name'])){
@@ -63,7 +63,13 @@ function getfamName($con,$rel_id){
                     <?php } ?>
                 </td>
 
-                <td><input type='checkbox' id='cheque_check' name='cheque_check' class="form-control cheque_check" <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of cheque list table?>'></td>
+                <td>
+                    <?php if($row['temp_sts'] == '0'){ ?>
+                        <input type='checkbox' id='cheque_check' name='cheque_check' class="form-control cheque_check" <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of cheque list table?>'>
+                    <?php }else if($row['temp_sts'] == '1'){?>
+                        <label>Not Available</label>
+                    <?php } ?>
+                </td>
             </tr>
         <?php
         }

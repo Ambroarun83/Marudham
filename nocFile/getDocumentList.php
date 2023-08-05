@@ -51,7 +51,7 @@ function getfamName($con,$rel_id){
         <?php
         $k=1;
             // $qry = $con->query("SELECT ac.id,ac.document_name,ac.document_type,ac.doc_info_upload,ac.document_holder,ac.docholder_name,ac.docholder_relationship_name,ac.doc_info_upload_noc,fam.famname from acknowlegement_documentation ac Left JOIN verification_family_info fam ON ac.docholder_relationship_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_used != '1' ");
-            $qry = $con->query("SELECT ac.id as doc_id,ac.doc_name,ac.doc_type,ac.doc_upload,ac.doc_holder,ac.holder_name,ac.`relation_name`,ac.`doc_info_upload_noc`,ac.noc_date,ac.noc_person,ac.noc_name,fam.famname,fam.id
+            $qry = $con->query("SELECT ac.id as doc_id,ac.doc_name,ac.doc_type,ac.doc_upload,ac.doc_holder,ac.holder_name,ac.`relation_name`,ac.`doc_info_upload_noc`,ac.noc_date,ac.noc_person,ac.noc_name,ac.temp_sts,fam.famname,fam.id
             from document_info ac Left JOIN verification_family_info fam ON ac.relation_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_used != '1' AND ac.doc_upload !=''");
 
             while($row = $qry->fetch_assoc()){
@@ -79,7 +79,12 @@ function getfamName($con,$rel_id){
                             <?php } ?>
                         </td>
 
-                        <td><input type='checkbox' id='doc_check' name='doc_check' class="form-control doc_check"  <?php if($row['doc_info_upload_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['doc_id'];//name of uploaded document?>'></td>
+                        <td>
+                            <?php if($row['temp_sts'] == '0'){ ?>
+                                <input type='checkbox' id='doc_check' name='doc_check' class="form-control doc_check"  <?php if($row['doc_info_upload_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['doc_id'];//name of uploaded document?>'></td>
+                            <?php }else if($row['temp_sts'] == '1'){?>
+                                <label>Not Available</label>
+                            <?php } ?>
                     </tr>
                 <?php
                 }

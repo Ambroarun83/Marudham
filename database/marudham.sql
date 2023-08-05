@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 04, 2023 at 03:44 PM
+-- Generation Time: Aug 05, 2023 at 03:13 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -762,7 +762,8 @@ CREATE TABLE `cheque_no_list` (
   `temp_sts` varchar(10) NOT NULL DEFAULT '0',
   `temp_date` date DEFAULT NULL,
   `temp_person` varchar(255) DEFAULT NULL,
-  `temp_name` varchar(255) DEFAULT NULL,
+  `temp_purpose` varchar(255) DEFAULT NULL,
+  `temp_remarks` varchar(255) DEFAULT NULL,
   `insert_login_id` varchar(100) DEFAULT NULL,
   `update_login_id` varchar(100) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
@@ -773,10 +774,10 @@ CREATE TABLE `cheque_no_list` (
 -- Dumping data for table `cheque_no_list`
 --
 
-INSERT INTO `cheque_no_list` (`id`, `cus_id`, `req_id`, `cheque_table_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`, `used_status`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `temp_sts`, `temp_date`, `temp_person`, `temp_name`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '100010001000', '2', '1', '0', 'Ganesan', '123456', '0', '0', NULL, NULL, NULL, '0', '2023-07-27', '1', 'Ganesan', NULL, '2', NULL, '2023-07-27 13:33:18'),
-(12, '100010001000', '9', '3', ' 1', 'Guna', '132', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 13:21:02'),
-(13, '100010001000', '9', '3', ' 1', 'Guna', '142', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 13:21:02');
+INSERT INTO `cheque_no_list` (`id`, `cus_id`, `req_id`, `cheque_table_id`, `cheque_holder_type`, `cheque_holder_name`, `cheque_no`, `used_status`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `temp_sts`, `temp_date`, `temp_person`, `temp_purpose`, `temp_remarks`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '100010001000', '2', '1', '0', 'Ganesan', '123456', '0', '0', NULL, NULL, NULL, '0', '2023-07-27', '1', 'Ganesan', NULL, NULL, '2', NULL, '2023-07-27 13:33:18'),
+(12, '100010001000', '9', '3', ' 1', 'Guna', '132', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 13:21:02'),
+(13, '100010001000', '9', '3', ' 1', 'Guna', '142', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 13:21:02');
 
 -- --------------------------------------------------------
 
@@ -1988,7 +1989,8 @@ CREATE TABLE `document_info` (
   `temp_sts` varchar(10) NOT NULL DEFAULT '0',
   `temp_date` date DEFAULT NULL,
   `temp_person` varchar(255) DEFAULT NULL,
-  `temp_name` varchar(255) DEFAULT NULL,
+  `temp_purpose` varchar(255) DEFAULT NULL,
+  `temp_remarks` varchar(255) DEFAULT NULL,
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
   `delete_login_id` varchar(255) DEFAULT NULL,
@@ -2000,14 +2002,14 @@ CREATE TABLE `document_info` (
 -- Dumping data for table `document_info`
 --
 
-INSERT INTO `document_info` (`id`, `cus_id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `doc_upload`, `doc_info_upload_noc`, `noc_date`, `noc_person`, `noc_name`, `doc_info_upload_used`, `temp_sts`, `temp_date`, `temp_person`, `temp_name`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, '100010001000', '2', 'House Document', 'House Document', '0', '0', 'Ganesan', '', 'NIL', 'Text Formatting.docx', 0, '', '', '', 0, '0', NULL, NULL, NULL, '5', '5', NULL, '2023-07-06 10:14:00', '2023-07-06 10:14:00'),
-(2, '100010001000', '2', 'Ration card', 'Ration card', '1', '2', '', '1', 'Father', 'welcome1.docx', 1, '2023-07-17', '1', 'Ganesan', 0, '0', NULL, NULL, NULL, '5', '5', NULL, '2023-07-06 10:14:35', '2023-07-06 10:14:35'),
-(3, '300030003000', '7', 'DL', 'License', '1', '2', '', '7', 'Father', NULL, 0, '', '', '', 0, '0', NULL, NULL, NULL, '5', NULL, NULL, '2023-07-10 12:02:13', '2023-07-10 12:02:13'),
-(4, '300030003000', '7', 'PAN', '123', '0', '0', 'Rakesh', '', 'NIL', NULL, 0, '', '', '', 0, '0', NULL, NULL, NULL, '5', NULL, NULL, '2023-07-10 12:03:15', '2023-07-10 12:03:15'),
-(5, '010720232023', '1', 'Ration card', 'Ration card', '0', '1', 'Senthil kumar', '', 'Father', NULL, 0, '', '', '', 0, '0', NULL, NULL, NULL, '3', NULL, NULL, '2023-07-18 18:33:45', '2023-07-18 18:33:45'),
-(6, '500050005000', '11', 'Land paper', 'Land paper', '0', '1', 'Mani kapoor', '', 'Father', 'sample1.pdf', 0, '', '', '', 0, '0', NULL, NULL, NULL, '2', '2', NULL, '2023-07-21 12:10:18', '2023-07-26 12:10:21'),
-(7, '500050005000', '11', 'Car RC', 'Rc Book', '1', '0', 'Manikandan', '', 'NIL', 'sample3.pdf', 0, '', '', '', 0, '0', '2023-08-02', '1', 'Manikandan', '2', '2', NULL, '2023-07-21 12:15:29', '2023-08-02 17:51:57');
+INSERT INTO `document_info` (`id`, `cus_id`, `req_id`, `doc_name`, `doc_detail`, `doc_type`, `doc_holder`, `holder_name`, `relation_name`, `relation`, `doc_upload`, `doc_info_upload_noc`, `noc_date`, `noc_person`, `noc_name`, `doc_info_upload_used`, `temp_sts`, `temp_date`, `temp_person`, `temp_purpose`, `temp_remarks`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
+(1, '100010001000', '2', 'House Document', 'House Document', '0', '0', 'Ganesan', '', 'NIL', 'Text Formatting.docx', 0, '', '', '', 0, '1', '2023-08-05', '1', 'Ganesan', NULL, '5', '2', NULL, '2023-07-06 10:14:00', '2023-08-05 13:04:27'),
+(2, '100010001000', '2', 'Ration card', 'Ration card', '1', '2', '', '1', 'Father', 'welcome1.docx', 1, '2023-07-17', '1', 'Ganesan', 0, '0', '2023-08-05', '1', 'Ganesan', NULL, '5', '2', NULL, '2023-07-06 10:14:35', '2023-08-05 11:42:38'),
+(3, '300030003000', '7', 'DL', 'License', '1', '2', '', '7', 'Father', NULL, 0, '', '', '', 0, '0', NULL, NULL, NULL, NULL, '5', NULL, NULL, '2023-07-10 12:02:13', '2023-07-10 12:02:13'),
+(4, '300030003000', '7', 'PAN', '123', '0', '0', 'Rakesh', '', 'NIL', NULL, 0, '', '', '', 0, '0', NULL, NULL, NULL, NULL, '5', NULL, NULL, '2023-07-10 12:03:15', '2023-07-10 12:03:15'),
+(5, '010720232023', '1', 'Ration card', 'Ration card', '0', '1', 'Senthil kumar', '', 'Father', NULL, 0, '', '', '', 0, '0', NULL, NULL, NULL, NULL, '3', NULL, NULL, '2023-07-18 18:33:45', '2023-07-18 18:33:45'),
+(6, '500050005000', '11', 'Land paper', 'Land paper', '0', '1', 'Mani kapoor', '', 'Father', 'sample1.pdf', 0, '', '', '', 0, '0', NULL, NULL, NULL, NULL, '2', '2', NULL, '2023-07-21 12:10:18', '2023-07-26 12:10:21'),
+(7, '500050005000', '11', 'Car RC', 'Rc Book', '1', '0', 'Manikandan', '', 'NIL', 'sample3.pdf', 0, '', '', '', 0, '0', '2023-08-02', '1', 'Manikandan', NULL, '2', '2', NULL, '2023-07-21 12:15:29', '2023-08-02 17:51:57');
 
 -- --------------------------------------------------------
 
@@ -2113,12 +2115,14 @@ CREATE TABLE `fingerprints` (
 --
 
 INSERT INTO `fingerprints` (`id`, `adhar_num`, `name`, `hand`, `ansi_template`, `bitmap_data`, `insert_user_id`, `update_user_id`, `created_date`, `updated_date`) VALUES
-(2, '100010001000', 'Ganesan', '1', 'Rk1SACAyMAABBAA1AA0AAAE8AWIAxQDFAQAAACgmgGEA060AQF4A96UAQDkAvgkAQHgAkWIAQEkAjwkAQGwBLpYAgMoA8aIAQCoBJWcAQDsBM5cAgCsBL64AQEkAYwQAgCoBPHAAQPYAj04AQHgAv1sAgEcA2WYAQLMAx6MAQK8A/ZwAgGUAfgcAQC8Am2cAgMUArKUAQNsA1ksAQFcAZ14AQKcAbLMAgGIBUJIAQBYBLg0AQLYAOwMAgGUAtrMAQEEA4wYAQIEBGJoAQJMAkK0AQFABI5sAQDQBE7AAQLgAklEAQLgAgKkAQBsBGwkAQIIAXwoAQJgBTZYAQKQBWpkAAAA=', NULL, '5', '2', '2023-07-10 12:19:32', '2023-01-13 10:52:45'),
+(2, '100010001000', 'Ganesan', '1', 'Rk1SACAyMAABFgA1AA0AAAE8AWIAxQDFAQAAACgpgJsA3Z8AQIYA/JcAQIQAua4AgJQBHDoAQKkAmK8AQE0AvV0AQM0BHDoAQOgAvp4AQDMA0wIAQDABA2AAQMgAelEAQHgAaQAAQQoA1EMAQQwAqKcAgIMA2FsAgK4AyaIAQLgAwlUAQJwBIpIAgI0AkloAQNIAsVIAQGgAlLMAgMwAla0AQMsBMJIAQLQBSpIAQGkBTH8AQKABVoMAQPIAiLEAQDwBTGwAgHgA27IAQLkA20wAgLkAuqUAgFUBAKAAQGcBG48AQH0BMI0AQFQAnFoAgDoA+q4AQE8BKoYAQCwBCqkAQL4AcawAQCUBFmUAQREAwJkAAAA=', NULL, '5', '2', '2023-07-10 12:19:32', '2023-08-05 18:19:38'),
 (3, '200020002000', 'Aravind', '1', 'Rk1SACAyMAABIgA1AA0AAAE8AWIAxQDFAQAAACgrQIwA0rAAQFoA2l4AQJMBF5UAQFkAuVsAQEAA8gMAQFEBJ2AAQDsBG2UAQNgAxFYAgHUAfwMAQKEBRosAQO4AzaEAQCsAlAoAgFcAbWAAQKAAWAgAgM4ATQYAQIIA+qwAgKUA+aAAgLkA4KIAgGEBG6IAQDsA6WIAQEcBGa8AQCoAyWAAgM0ApbAAgEsBN5sAgEYBPWQAQDQBM2oAQMsAilYAQEIBVHkAQQ8AsKsAgJAA81gAgJQAsloAQG0ArwAAQKwArbIAQMIA8U4AQHMBNosAQCsAv14AQFsBPIgAQDwBKgIAQIQBToYAQL0AgLAAgDgBRGwAQPIAlAEAQRcAyJ0AAAA=', NULL, '2', '2', '2023-07-10 16:35:55', '2023-01-01 16:24:46'),
 (4, '300030003000', 'Rakesh', '1', 'Rk1SACAyMAAA/gA1AA0AAAE8AWIAxQDFAQAAACglgLEA8RUAQHkA/G8AQKsAuhQAgNgA+gUAQN4BHrAAQNcArG4AQGABJXEAQD4A9m4AQOsAogQAQMEBWW8AQQYBLZ4AQCoBCBQAgIUAVR4AQIAA6RcAgMYBBnEAQMABExIAQOYA3WYAgH4BNXUAQFYBF3IAQJwAjBMAQEgAv3EAgKwBUxIAQEUBMBcAQG4AfB4AQPoBTpoAgJ0AzXIAQI8BGHIAgNMA2AcAgGUAuxgAgL4AnBQAQIsBPRkAgMABRgUAQKoAiW0AgDQA1xcAQOABTqAAQMoAdRkAQPAAcwkAAAA=', NULL, '5', NULL, '2023-01-03 14:46:44', '2023-01-03 14:46:44'),
 (5, '010720232023', 'Bharath', '1', 'Rk1SACAyMAABIgA1AA0AAAE8AWIAxQDFAQAAACgrgH0A2KkAQF4A4wEAQHQA+Z8AQKEAml4AQJEBH5MAQDUAoQYAQNMA3J4AQDsBHmEAQIkAaFsAQN8ApkwAQLQAaQUAgDQAbQgAgB8BLm4AQJcBXIwAQOwAT7MAgGgA12EAQJcAyFYAQFsAmWEAQCsA0WUAQLsAnqcAQGEBI5QAQHcBMI4AQBkA7gsAgOUAw6AAgN0BBpkAQCUBJAcAQD4BO4AAQDsBSnsAQFwAPQwAgIoAu6sAQFsAvAUAQHIAjwUAgEYBDKsAgJMAgQMAQCUAr2IAQMEBD5QAQEsBLpAAQHwAYgEAQDgBKqUAQOIAlKQAQNUAfqwAgGYBWIMAQI0ALggAAAA=', NULL, '3', NULL, '2023-07-18 18:37:11', '2023-07-18 18:37:11'),
 (6, '500050005000', 'Manikandan', '1', 'Rk1SACAyMAAAyAA1AA0AAAE8AWIAxQDFAQAAACgcgHkBDLMAgJ0A464AQFUA4AsAgE4BGQwAgNMA+6gAQIsArAsAQHgBUacAQB8A/w0AQCMBM2wAQBgBWBIAQIQA5GIAgHgBK64AQF8BL2cAQMgBGaYAQMEAzasAQFoBPwcAQFYArgYAQO0BJEwAgL4AiAMAQIoBFV4AgHAAywgAgMMA5VEAQEEA7WgAQLEAubMAQGMAs2AAgMUBVJ8AgOABQqAAQQIA208AAAA=', NULL, '2', NULL, '2023-07-21 15:01:41', '2023-07-21 15:01:41'),
-(7, '400040004000', 'Bharathi', '1', 'Rk1SACAyMAABcAA1AA0AAAE8AWIAxQDFAQAAACg4gIcA9bEAQIABCmwAQG4BAg8AQGcBDXgAQFAA6xcAgGwBIn4AQI8BMYEAQIUBNn4AQJwBQn4AQCsA13MAgD0BJn8AQHoBTSQAQIMAcwsAgKQBWkEAQLQAcmMAgO4BOI8AQBYBIB8AgQcAk6EAQLgAPwgAQIwAyAcAgJIAu2gAgKgAtq4AQG8BFRIAgFYAxnEAgEUA5XUAgKsAlrAAQEcArm8AgG8Ah2wAQEoBLSAAQCMAzXMAgFgBQ40AgC0BH3sAgEABPoQAQPsArKAAQM8AcqwAgRQA3J4AQPYAdlAAQOQAUK4AQKoA2aUAQKUBBZsAQIIBGagAQH8ApA0AQMEBEZYAQNEA+ZkAQLsAoF4AQFEAmxIAgLsBOYgAgGMBPSUAgPgA5pkAQG8BTikAgBsA3xkAQMwBSYcAgNQBSIoAgJ0AXQgAgD8AbxQAQPYAZqUAAAA=', NULL, '2', NULL, '2023-08-02 15:11:28', '2023-08-02 15:11:28');
+(7, '400040004000', 'Bharathi', '1', 'Rk1SACAyMAABcAA1AA0AAAE8AWIAxQDFAQAAACg4gIcA9bEAQIABCmwAQG4BAg8AQGcBDXgAQFAA6xcAgGwBIn4AQI8BMYEAQIUBNn4AQJwBQn4AQCsA13MAgD0BJn8AQHoBTSQAQIMAcwsAgKQBWkEAQLQAcmMAgO4BOI8AQBYBIB8AgQcAk6EAQLgAPwgAQIwAyAcAgJIAu2gAgKgAtq4AQG8BFRIAgFYAxnEAgEUA5XUAgKsAlrAAQEcArm8AgG8Ah2wAQEoBLSAAQCMAzXMAgFgBQ40AgC0BH3sAgEABPoQAQPsArKAAQM8AcqwAgRQA3J4AQPYAdlAAQOQAUK4AQKoA2aUAQKUBBZsAQIIBGagAQH8ApA0AQMEBEZYAQNEA+ZkAQLsAoF4AQFEAmxIAgLsBOYgAgGMBPSUAgPgA5pkAQG8BTikAgBsA3xkAQMwBSYcAgNQBSIoAgJ0AXQgAgD8AbxQAQPYAZqUAAAA=', NULL, '2', NULL, '2023-08-02 15:11:28', '2023-08-02 15:11:28'),
+(9, '100010002000', 'Guna', '1', 'Rk1SACAyMAABWAA1AA0AAAE8AWIAxQDFAQAAACg0QJMAvGcAgK4A+awAgJUA/gcAQNoA5KAAQI8BEwUAQLIBG5MAQI4BIHMAQLoAe2YAgGcBHBYAQPgBB5QAQHsBNRoAQDkA+hUAQFgBNHwAQO4AYQgAgE8AZg0AQOcBVYcAQM4AQAQAQQUAPQwAQMQAzQEAgHkA0mwAQL8AowcAQIgAmmUAQMgBDpQAQJUAiwoAQFAAvA0AQFIBAnEAQOABH48AQKgBO3gAQGwBNIUAQK4BTXUAgIoAWA0AQHcBU5gAQN0BVoUAgRUAd6sAQN0ARF8AQIAA3g4AgM0AwWIAQI0BB24AgOQAwKsAQGIAuGcAgF8ArWkAgOoAn7AAgFwBE3UAQPoArFoAQM8AcQgAQE8AhWcAgNABRYIAQP4Ad2EAQGoAVmYAQQEBQ4wAQCEBHHUAQKYAIRIAAAA=', NULL, '2', NULL, '2023-08-05 17:53:48', '2023-08-05 17:53:48'),
+(11, '100010003000', 'Selvi', '1', 'Rk1SACAyMAAA/gA1AA0AAAE8AWIAxQDFAQAAACglgKcA6LIAQLcA8V4AQHIAzGoAgKQAqgkAQFAA4Q4AQJYAlGIAQL8AiwsAgQMA3aQAQPUArqgAQJgBXJkAQCMBGW4AQGIAdhIAgPMAaQEAQHsA8gwAgIwBDWcAQIUBGwgAQKIBLaUAQFMBE20AQPcA+qIAgHwBS7EAQOYAmbIAgD4BL28AQCIA2CkAgGABVg4AgQ0BJp4AgKMBCK4AQIYAwAsAQLcAwWIAQNAAwK0AQEUA82kAgEQArw8AQPkAwlIAQMcBTpkAQEYBOhQAQPQBNJgAQBwBCGkAgIsAWQ8AAAA=', NULL, '2', NULL, '2023-08-05 18:00:31', '2023-08-05 18:00:31');
 
 -- --------------------------------------------------------
 
@@ -2144,7 +2148,8 @@ CREATE TABLE `gold_info` (
   `temp_sts` varchar(10) NOT NULL DEFAULT '0',
   `temp_date` date DEFAULT NULL,
   `temp_person` varchar(255) DEFAULT NULL,
-  `temp_name` varchar(255) DEFAULT NULL,
+  `temp_purpose` varchar(255) DEFAULT NULL,
+  `temp_remarks` varchar(255) DEFAULT NULL,
   `insert_login_id` varchar(100) DEFAULT NULL,
   `update_login_id` varchar(100) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
@@ -2155,12 +2160,12 @@ CREATE TABLE `gold_info` (
 -- Dumping data for table `gold_info`
 --
 
-INSERT INTO `gold_info` (`id`, `cus_id`, `req_id`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `used_status`, `temp_sts`, `temp_date`, `temp_person`, `temp_name`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '100010001000', '5', '1', 'Ring', '916', '1', '3.146', '21000', '0', '', '', '', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
-(2, '200020002000', '8', '1', 'Ring', '916', '1', '300', '32000', '0', NULL, NULL, NULL, '0', '0', '2023-07-27', '1', 'Aravind', NULL, '2', NULL, '2023-07-27 15:58:08'),
-(3, '100010001000', '2', '1', 'Chain', '24k', '1', '3.146', '42000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
-(4, '500050005000', '11', '1', 'Metti', '24k916', '2', '290', '42000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
-(6, '500050005000', '11', '0', 'Kammal', '24k', '1', '1.5', '59000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19');
+INSERT INTO `gold_info` (`id`, `cus_id`, `req_id`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `used_status`, `temp_sts`, `temp_date`, `temp_person`, `temp_purpose`, `temp_remarks`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '100010001000', '5', '1', 'Ring', '916', '1', '3.146', '21000', '0', '', '', '', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
+(2, '200020002000', '8', '1', 'Ring', '916', '1', '300', '32000', '0', NULL, NULL, NULL, '0', '0', '2023-07-27', '1', 'Aravind', NULL, NULL, '2', NULL, '2023-07-27 15:58:08'),
+(3, '100010001000', '2', '1', 'Chain', '24k', '1', '3.146', '42000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
+(4, '500050005000', '11', '1', 'Metti', '24k916', '2', '290', '42000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
+(6, '500050005000', '11', '0', 'Kammal', '24k', '1', '1.5', '59000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19');
 
 -- --------------------------------------------------------
 
@@ -2947,7 +2952,8 @@ CREATE TABLE `signed_doc` (
   `temp_sts` varchar(10) NOT NULL DEFAULT '0',
   `temp_date` date DEFAULT NULL,
   `temp_person` varchar(255) DEFAULT NULL,
-  `temp_name` varchar(255) DEFAULT NULL,
+  `temp_purpose` varchar(255) DEFAULT NULL,
+  `temp_remarks` varchar(255) DEFAULT NULL,
   `insert_login_id` varchar(100) DEFAULT NULL,
   `update_login_id` varchar(100) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
@@ -2958,13 +2964,13 @@ CREATE TABLE `signed_doc` (
 -- Dumping data for table `signed_doc`
 --
 
-INSERT INTO `signed_doc` (`id`, `cus_id`, `req_id`, `signed_doc_id`, `upload_doc_name`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `used_status`, `temp_sts`, `temp_date`, `temp_person`, `temp_name`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '100010001000', '2', '8', 'Order_ID_4479904631.pdf', '1', '2023-07-15', '2', '2', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 11:15:42'),
-(2, '100010001000', '2', '7', 'Invoice_4479904631.pdf', '0', NULL, NULL, NULL, '0', '0', '2023-07-27', '1', 'Ganesan', NULL, '2', NULL, '2023-07-27 12:41:37'),
-(3, '100010001000', '2', '5', 'Mantra_RD_Service_Manual_Windows.pdf', '0', NULL, NULL, NULL, '0', '0', '2023-07-27', '1', 'Ganesan', NULL, '2', NULL, '2023-07-27 12:46:12'),
-(4, '100010001000', '2', '1', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '1', '2023-07-17', '1', 'Ganesan', '0', '0', '2023-07-27', '1', 'Ganesan', NULL, '2', NULL, '2023-07-27 12:47:55'),
-(6, '100010001000', '5', '9', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '0', '', '', '', '0', '1', '2023-07-27', '1', 'Ganesan', NULL, '2', NULL, '2023-07-27 16:09:09'),
-(12, '500050005000', '11', '11', 'sample5.pdf', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 11:07:21');
+INSERT INTO `signed_doc` (`id`, `cus_id`, `req_id`, `signed_doc_id`, `upload_doc_name`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `used_status`, `temp_sts`, `temp_date`, `temp_person`, `temp_purpose`, `temp_remarks`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '100010001000', '2', '8', 'Order_ID_4479904631.pdf', '1', '2023-07-15', '2', '2', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 11:15:42'),
+(2, '100010001000', '2', '7', 'Invoice_4479904631.pdf', '0', NULL, NULL, NULL, '0', '1', '2023-08-05', '1', 'Ganesan', NULL, NULL, '2', NULL, '2023-08-05 11:42:54'),
+(3, '100010001000', '2', '5', 'Mantra_RD_Service_Manual_Windows.pdf', '0', NULL, NULL, NULL, '0', '0', '2023-07-27', '1', 'Ganesan', NULL, NULL, '2', NULL, '2023-07-27 12:46:12'),
+(4, '100010001000', '2', '1', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '1', '2023-07-17', '1', 'Ganesan', '0', '0', '2023-08-05', 'Guna', 'Regular checkup', 'Regular checkup', NULL, '2', NULL, '2023-08-05 17:17:43'),
+(6, '100010001000', '5', '9', 'VVDN SCANNER MobileApp_ Architecture  (1).pdf', '0', '', '', '', '0', '1', '2023-07-27', '1', 'Ganesan', NULL, NULL, '2', NULL, '2023-07-27 16:09:09'),
+(12, '500050005000', '11', '11', 'sample5.pdf', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 11:07:21');
 
 -- --------------------------------------------------------
 
@@ -4573,7 +4579,7 @@ ALTER TABLE `expense_category`
 -- AUTO_INCREMENT for table `fingerprints`
 --
 ALTER TABLE `fingerprints`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `gold_info`
