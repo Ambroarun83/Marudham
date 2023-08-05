@@ -2172,6 +2172,8 @@ function getDocumentDetails(req_id,cus_id,cus_name){
     // getFamilyList();//to get family , it may used in mort and endorse processes
     getMortgageInfo(req_id,cus_id); // to get mortgage details
     getEndorsementInfo(req_id,cus_id); // to get mortgage details
+    getFingerPrintDetails(req_id,cus_id,cus_name); // to get Fingerprint details like customer, family name and buttons
+
 
     $('#update_mortgage, #update_endorsement').off('click');
     $('#update_mortgage, #update_endorsement').click(function(){//submit events of mort and endorsement
@@ -2448,24 +2450,6 @@ function setTempDocumentEvents(){
         getFamilyList('tempin_rel_name');
     })
 
-    $('#tempout_person, #tempin_person').off('click');
-    $('#tempout_person, #tempin_person').click(function(){// to show and hide person name
-        let temp_person = $(this).val();
-        if(temp_person != ''){
-            if(temp_person == 1){
-                let cus_name = $('#cus_name').val();
-                
-                $('#tempout_rel_name, #tempin_rel_name').hide();
-                $('#tempout_name, #tempin_name').show();
-
-                $('#tempout_name, #tempin_name').val(cus_name);
-            }else{
-                $('#tempout_rel_name, #tempin_rel_name').show();
-                $('#tempout_name, #tempin_name').hide();
-            }
-        }
-    })
-
     $('.closetempout, .closetempin').off('click');
     $('.closetempout, .closetempin').click(function(){// to remove all the inputs inside the form when closing
         $("#tempoutform").find("input, select").not('#tempout_date').val("");
@@ -2485,15 +2469,15 @@ function setTempDocumentEvents(){
 
         function submitForTakeOut(){
 
-            if(confirm('Are you sure to take this Document Out?')){
-    
-                if(tempoutSubmitValidation() == true){
-                    let temp_person = $('#tempout_person').val();let temp_name = $('#tempout_name').val();let temp_rel_name = $('#tempout_rel_name').val();
+            if(tempoutSubmitValidation() == true){
+                if(confirm('Are you sure to take this Document Out?')){
+            
+                    let temp_person = $('#tempout_person').val();let temp_purpose = $('#tempout_purpose').val();let temp_remarks = $('#tempout_remarks').val();
                     let table_id = $('#table_id_tempout').val();let table_name = $('#table_name_tempout').val();
                     let req_id = $('#req_id_tempout').val();let cus_id = $('#cus_id_tempout').val();
                     $.ajax({
                         url: 'updateFile/submitTempDocument.php',
-                        data:{"type":'out',"table_id":table_id,"table_name":table_name,"temp_person":temp_person,"temp_name":temp_name,"temp_rel_name":temp_rel_name},
+                        data:{"type":'out',"table_id":table_id,"table_name":table_name,"temp_person":temp_person,"temp_purpose":temp_purpose,"temp_remarks":temp_remarks},
                         type: 'post',
                         dataType: 'json',
                         cache: false,
@@ -2526,15 +2510,15 @@ function setTempDocumentEvents(){
 
         function submitForTakeIn(){
 
-            if(confirm('Are you sure to take this Document In?')){
-    
-                if(tempinSubmitValidation() == true){
-                    let temp_person = $('#tempin_person').val();let temp_name = $('#tempin_name').val();let temp_rel_name = $('#tempin_rel_name').val();
+            if(tempinSubmitValidation() == true){
+                if(confirm('Are you sure to take this Document In?')){
+                
+                    let temp_person = $('#tempin_person').val();let temp_purpose = $('#tempin_purpose').val();let temp_remarks = $('#tempin_remarks').val();
                     let table_id = $('#table_id_tempin').val();let table_name = $('#table_name_tempin').val();
                     let req_id = $('#req_id_tempin').val();let cus_id = $('#cus_id_tempin').val();
                     $.ajax({
                         url: 'updateFile/submitTempDocument.php',
-                        data:{"type":'in',"table_id":table_id,"table_name":table_name,"temp_person":temp_person,"temp_name":temp_name,"temp_rel_name":temp_rel_name},
+                        data:{"type":'in',"table_id":table_id,"table_name":table_name,"temp_person":temp_person,"temp_purpose":temp_purpose,"temp_remarks":temp_remarks},
                         type: 'post',
                         dataType: 'json',
                         cache: false,
@@ -2566,7 +2550,7 @@ function setTempDocumentEvents(){
         }
 
         function tempoutSubmitValidation(){
-            let temp_person = $('#tempout_person').val();let temp_name = $('#tempout_name').val();let temp_rel_name = $('#tempout_rel_name').val();
+            let temp_person = $('#tempout_person').val();let temp_purpose = $('#tempout_purpose').val();let temp_remarks = $('#tempout_remarks').val();
             let response = true;
             if(temp_person == ''){
                 event.preventDefault();
@@ -2574,20 +2558,25 @@ function setTempDocumentEvents(){
                 response = false;
             }else{
                 $('#tempoutpersonCheck').hide();
-                if(temp_person == '2'){// 2 means family members 
-                    if(temp_rel_name == ''){
-                        event.preventDefault();
-                        $('#tempoutrelnameCheck').show();
-                        response = false;
-                    }else{
-                        $('#tempoutrelnameCheck').hide();
-                    }
-                }
+            }
+            if(temp_purpose == ''){
+                event.preventDefault();
+                $('#tempoutpurposeCheck').show();
+                response = false;
+            }else{
+                $('#tempoutpurposeCheck').hide();
+            }
+            if(temp_remarks == ''){
+                event.preventDefault();
+                $('#tempoutremarksCheck').show();
+                response = false;
+            }else{
+                $('#tempoutremarksCheck').hide();
             }
             return response;
         }
         function tempinSubmitValidation(){
-            let temp_person = $('#tempin_person').val();let temp_name = $('#tempin_name').val();let temp_rel_name = $('#tempin_rel_name').val();
+            let temp_person = $('#tempin_person').val();let temp_purpose = $('#tempin_purpose').val();let temp_remarks = $('#tempin_remarks').val();
             let response = true;
             if(temp_person == ''){
                 event.preventDefault();
@@ -2595,15 +2584,20 @@ function setTempDocumentEvents(){
                 response = false;
             }else{
                 $('#tempinpersonCheck').hide();
-                if(temp_person == '2'){// 2 means family members 
-                    if(temp_rel_name == ''){
-                        event.preventDefault();
-                        $('#tempinrelnameCheck').show();
-                        response = false;
-                    }else{
-                        $('#tempinrelnameCheck').hide();
-                    }
-                }
+            }
+            if(temp_purpose == ''){
+                event.preventDefault();
+                $('#tempinpurposeCheck').show();
+                response = false;
+            }else{
+                $('#tempinpurposeCheck').hide();
+            }
+            if(temp_remarks == ''){
+                event.preventDefault();
+                $('#tempinremarksCheck').show();
+                response = false;
+            }else{
+                $('#tempinremarksCheck').hide();
             }
             return response;
         }
@@ -2911,6 +2905,78 @@ function MEValidation(id){
     return response;
 }
 
+// to get family details of customer to get fingerprint
+function getFingerPrintDetails(req_id,cus_id,cus_name){
+    $.ajax({
+        url:'verificationFile/getNamesForFingerprint.php',
+        data:{'req_id':req_id,'cus_name':cus_name,'cus_id':cus_id},
+        type: 'post',
+        cache: false,
+        success:function(html){
+            $('.fingerprintTable').empty()
+            $('.fingerprintTable').html(html)
+
+            $('.scanBtn').click(function(){
+                var hand = $(this).prev().val();
+                var name = $(this).parent().prev().find('input[id="name_print"]').val();var adhar = $(this).parent().prev().prev().find('input[id="adhar_print"]').val();
+                if(hand == ''){ //prevent if hand is not selected
+                    $(this).prev().css('border-color','red');
+                }else{
+                    $(this).prev().css('border-color','#009688')
+                
+                    $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
+
+                    $(this).attr('disabled',true);
+
+                    setTimeout(()=>{
+                        var quality = 60; //(1 to 100) (recommended minimum 55)
+                        var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
+                        var res = CaptureFinger(quality, timeout);
+                        if (res.httpStaus) {
+                            if (res.data.ErrorCode == "0") {
+                                let fdata = res.data.AnsiTemplate;
+                                $(this).next().val(fdata); // Take ansi template that is the unique id which is passed by sensor
+                                storeFingerprints(fdata,hand,adhar,name);//stores the current finger data in database
+                            }//Error codes and alerts below
+                            else if(res.data.ErrorCode == -1307){
+                                alert('Connect Your Device');
+                                $(this).removeAttr('disabled');
+                            }else if(res.data.ErrorCode == -1140 || res.data.ErrorCode == 700){
+                                alert('Timeout');
+                                $(this).removeAttr('disabled');
+                            }else if(res.data.ErrorCode == 720){
+                                alert('Reconnect Device');
+                                $(this).removeAttr('disabled');
+                            }else if(res.data.ErrorCode == 730){
+                                alert('Capture Finger Again');
+                                $(this).removeAttr('disabled');
+                            }else {
+                                alert('Error Code:' + res.data.ErrorCode);
+                                $(this).removeAttr('disabled');
+                            }
+                        }
+                        else {
+                            alert(res.err);
+                        }
+                        // Hide the loading animation and remove blur effect from the body
+                        $('.overlay').remove();
+
+                    },700)
+                }
+            })
+        }
+    })
+
+    function storeFingerprints(fdata,hand,cus_id,cus_name){//stores the current finger data in database
+        $.post('updateFile/storeFingerprints.php',{'fdata':fdata,'hand':hand,'cus_id':cus_id,'cus_name':cus_name},function(response){
+            if(response.includes('Successfully')){
+                Swal.fire({
+                    title: response,icon: 'success', confirmButtonColor: '#009688'
+                })
+            }
+        },'json')
+    }
+}
 
 /************************ Signed Doc Modal Events ************************/
 

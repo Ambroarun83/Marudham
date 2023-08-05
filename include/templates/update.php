@@ -1396,6 +1396,20 @@ input:checked + .slider:before {
 					</div>
 					<!-- Document Info End -->
 
+					<!-- Fingerprint Info start-->
+					<div class="card edit-document-card">
+                        <div class="card-header"> Fingerprint Info </div><span class="text-danger fingerSpan" style="margin-left:25px;display: none;">Please Scan Customer Fingerprint</span>
+                        <div class="card-body">
+                            <div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                    <div class="form-group fingerprintTable">
+										
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+					<!-- Fingerprint Info End-->
 
 				</div>
 			</div> <!-- Row End -->
@@ -2441,11 +2455,32 @@ input:checked + .slider:before {
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="tempout_date"> Taken Date </label> <span class="required">&nbsp;*</span>
+							<label for="tempout_date"> Date </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="tempout_date" name="tempout_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="tempout_purpose"> Purpose </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempout_purpose" name="tempout_purpose" value="" tabindex="4" placeholder='Enter Purpose'/>
+							<span class="text-danger" id="tempoutpurposeCheck" style='display:none'> Please Enter Purpose </span>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="tempout_person"> Person </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempout_person" name="tempout_person" value="" tabindex="5" placeholder='Enter Person'/>
+							<span class="text-danger" id="tempoutpersonCheck" style='display:none'> Please Enter Person </span>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="tempout_remarks"> Remarks </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempout_remarks" name="tempout_remarks" value="" tabindex="6" placeholder='Enter Remarks'/>
+							<span class="text-danger" id="tempoutremarksCheck" style='display:none'> Please Enter Remarks </span>
+						</div>
+					</div>
+					<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="tempout_person"> Given to </label> <span class="required">&nbsp;*</span>
 							<select class='form-control' id='tempout_person' name='tempout_person' tabindex="4">
@@ -2463,13 +2498,13 @@ input:checked + .slider:before {
 							<select class='form-control' id='tempout_rel_name' name='tempout_rel_name' style="display: none;" tabindex="5"></select>
 							<span class="text-danger" id="tempoutrelnameCheck" style='display:none'> Please Select Person name </span>
 						</div>
-					</div>
+					</div> -->
 					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
 						<input type="hidden" name="req_id_tempout" id="req_id_tempout" value=''>
 						<input type="hidden" name="cus_id_tempout" id="cus_id_tempout" value=''>
 						<input type="hidden" name="table_id_tempout" id="table_id_tempout" value=''>
 						<input type="hidden" name="table_name_tempout" id="table_name_tempout" value=''>
-						<button type="button" name="tempout_submit" id="tempout_submit" data-type='take-out' class="btn btn-primary" style="margin-top: 19px;" tabindex="6">Submit</button>
+						<button type="button" name="tempout_submit" id="tempout_submit" data-type='take-out' class="btn btn-primary" style="margin-top: 19px;" tabindex="7">Submit</button>
 					</div>
 
 				</div>
@@ -2512,27 +2547,29 @@ input:checked + .slider:before {
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="tempin_date"> Taken Date </label> <span class="required">&nbsp;*</span>
+							<label for="tempin_date"> Date </label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="tempin_date" name="tempin_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="tempin_person"> Given to </label> <span class="required">&nbsp;*</span>
-							<select class='form-control' id='tempin_person' name='tempin_person' tabindex="4">
-								<option value="">Select Given Person</option>
-								<option value="1">Customer</option>
-								<option value="2">Family Member</option>
-							</select>
-							<span class="text-danger" id="tempinpersonCheck" style='display:none'> Please Select Given Person </span>
+							<label for="tempin_purpose"> Purpose </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempin_purpose" name="tempin_purpose" value="" tabindex="4" placeholder='Enter Purpose'/>
+							<span class="text-danger" id="tempinpurposeCheck" style='display:none'> Please Enter Purpose </span>
 						</div>
 					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="tempin_name"> Person Name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempin_name" name="tempin_name" value="" tabindex="5" readonly placeholder="Select Given to Person" />
-							<select class='form-control' id='tempin_rel_name' name='tempin_rel_name' style="display: none;" tabindex="5"></select>
-							<span class="text-danger" id="tempinrelnameCheck" style='display:none'> Please Select Person name </span>
+							<label for="tempin_person"> Person </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempin_person" name="tempin_person" value="" tabindex="5" placeholder='Enter Person'/>
+							<span class="text-danger" id="tempinpersonCheck" style='display:none'> Please Enter Person </span>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="tempin_remarks"> Remarks </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="tempin_remarks" name="tempin_remarks" value="" tabindex="6" placeholder='Enter Remarks'/>
+							<span class="text-danger" id="tempinremarksCheck" style='display:none'> Please Enter Remarks </span>
 						</div>
 					</div>
 					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
@@ -2553,3 +2590,8 @@ input:checked + .slider:before {
 </form>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Temp document IN Modal END ////////////////////////////////////////////////////////////////////// -->
+
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- to get icons like fingerprint -->
+<script src="vendor/mfs100/Library/js/jquery-1.8.2.js" type="text/javascript"></script><!-- to work with fingerprint sensor -->
+<script src="vendor/mfs100/Library/js/mfs100.js"></script>

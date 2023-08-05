@@ -22,16 +22,17 @@ if(isset($_POST['table_name'])){
 }
 if(isset($_POST['temp_person'])){
     $temp_person = $_POST['temp_person'];
-    if($temp_person == '1'){
-        $temp_name = $_POST['temp_name'];
-    }else{
-        $temp_name = $_POST['temp_rel_name'];
-    }
+}
+if(isset($_POST['temp_purpose'])){
+    $temp_purpose = $_POST['temp_purpose'];
+}
+if(isset($_POST['temp_remarks'])){
+    $temp_remarks = $_POST['temp_remarks'];
 }
 
 
 
-$update = $con->query("UPDATE $table_name SET `temp_sts`='$temp_sts',`temp_date`=date(now()),`temp_person`='$temp_person',`temp_name`='$temp_name',
+$update = $con->query("UPDATE $table_name SET `temp_sts`='$temp_sts',`temp_date`=date(now()),`temp_person`='$temp_person',`temp_purpose`='$temp_purpose',`temp_remarks`='$temp_remarks',
     `update_login_id`= $userid,`updated_date`=now()  WHERE $table_col = '$table_id' ");
 
 if($update){

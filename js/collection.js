@@ -160,6 +160,19 @@ $(document).ready(function(){
         validations();
     })
     
+    window.onscroll = function () {
+        let navbar = document.getElementById("navbar");
+        let navAttr = navbar.getAttribute('class')
+        let stickyHeader = navbar.offsetTop;
+        if (window.pageYOffset > 200 && navAttr.includes('collection-card')) {
+            // navbar.style.display = "block";
+            $('#navbar').fadeIn('fast');
+            navbar.classList.add("stickyHeader")
+        } else {
+            $('#navbar').fadeOut('fast');
+            navbar.classList.remove("stickyHeader");
+        }
+    };
 
 })//Document Ready End
 
@@ -239,6 +252,8 @@ function OnLoadFunctions(req_id,cus_id){
                     $('.loanlist_card').hide();
                     $('.back-button').hide();
                     $('.collection_card').show();
+                    let navbar = document.getElementById('navbar');
+                    navbar.classList.add('collection-card')
                     $('#close_collection_card').show();
                     $('#submit_collection').show();
 

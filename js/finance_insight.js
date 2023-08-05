@@ -373,10 +373,10 @@ function calculateClosingForBenefitCheck(){
     var closing_balance = parseInt(cl_text.replaceAll(',',''));
 
     $('.benefits-check-card').find('tbody tr').not('tr:last').each(function(){
-        let credit_val = $(this).find('td:nth-child(2)').text() ? $(this).find('td:nth-child(2)').text() : '0';
+        let credit_val = ($(this).find('td:nth-child(2)').text()!='') ? $(this).find('td:nth-child(2)').text() : '0';
         credit = credit + parseInt(credit_val.replaceAll(',',''));
         
-        let debit_val = $(this).find('td:nth-child(3)').text() ? $(this).find('td:nth-child(3)').text() : '0';
+        let debit_val = ($(this).find('td:nth-child(3)').text()!='') ? $(this).find('td:nth-child(3)').text() : '0';
         debit = debit + parseInt(debit_val.replaceAll(',',''));
     })
     var closing_outstanding = credit - debit;
@@ -389,10 +389,10 @@ function calculateClosingForBenefitCheck(){
     $('.benefits-check-card').find('tfoot tr:last td:nth-child(2)').text(moneyFormatIndia(difference));
 
     //to calculate difference between benefit and benefit check tables
-    let ben_diff = $('.benefits-card').find('tfoot tr:last td:nth-child(2)').text().replaceAll(',','');
-    let benc_diff = $('.benefits-check-card').find('tfoot tr:last td:nth-child(2)').text().replaceAll(',','');
-    ben_diff = parseInt(ben_diff) - parseInt(benc_diff);
-    $('#BBDiff').text('Difference: '+ moneyFormatIndia(ben_diff));
+    // let ben_diff = $('.benefits-card').find('tfoot tr:last td:nth-child(2)').text().replaceAll(',','');
+    // let benc_diff = $('.benefits-check-card').find('tfoot tr:last td:nth-child(2)').text().replaceAll(',','');
+    // ben_diff = parseInt(ben_diff) - parseInt(benc_diff);
+    // $('#BBDiff').text('Difference: '+ moneyFormatIndia(ben_diff));
 }
 
 

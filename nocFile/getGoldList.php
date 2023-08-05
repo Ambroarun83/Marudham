@@ -82,7 +82,12 @@ function getfamName($con,$rel_id){
                     <?php } ?>
                 </td>
 
-                <td><input type='checkbox' id='gold_check' name='gold_check' class="form-control gold_check"  <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'></td>
+                <td>
+                    <?php if($row['temp_sts'] == '0'){ ?>
+                        <input type='checkbox' id='gold_check' name='gold_check' class="form-control gold_check"  <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'></td>
+                    <?php }else if($row['temp_sts'] == '1'){?>
+                        <label>Not Available</label>
+                    <?php } ?>
             </tr>
         <?php
         }

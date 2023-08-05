@@ -59,13 +59,12 @@ if($idupd>0)
 
 <style>
 .img_show {
-		height: 150px;
-		width: 150px;
-		border-radius: 50%;
-		object-fit: cover;
-		background-color: white;
+	height: 150px;
+	width: 150px;
+	border-radius: 50%;
+	object-fit: cover;
+	background-color: white;
 }
-
 </style>
 
 <!-- Page header start -->
@@ -73,6 +72,14 @@ if($idupd>0)
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
 		Marudham - Collection
+	</div>
+</div>
+<br>
+<div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
+	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
+		Customer Name - <?php if (isset($cus_name)) {echo $cus_name;} ?>
+		,&nbsp;&nbsp;Area - <?php if (isset($area_name)) {echo $area_name;} ?>
+		,&nbsp;&nbsp;Sub Area - <?php if (isset($sub_area_name)) {echo $sub_area_name;} ?>
 	</div>
 </div>
 <br>
