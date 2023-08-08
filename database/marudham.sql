@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2023 at 03:17 PM
+-- Generation Time: Aug 08, 2023 at 03:11 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2825,8 +2825,7 @@ INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`,
 ('8', '2023-01-21', '49', NULL, '0', '0', '2023-07-18 18:56:12', '2023-07-18 18:56:12'),
 ('8', NULL, NULL, '2023-08-02', '931', '', '2023-08-02 17:39:50', '2023-08-02 17:39:50'),
 ('8', NULL, NULL, '2023-08-02', '931', '', '2023-08-02 17:40:35', '2023-08-02 17:40:35'),
-('8', NULL, NULL, '2023-08-02', '931', '', '2023-08-02 17:42:01', '2023-08-02 17:42:01'),
-('10', '2023-08', '14', NULL, '0', '0', '2023-09-10 17:30:21', '2023-09-10 17:30:21');
+('8', NULL, NULL, '2023-08-02', '931', '', '2023-08-02 17:42:01', '2023-08-02 17:42:01');
 
 -- --------------------------------------------------------
 
@@ -4323,7 +4322,7 @@ ALTER TABLE `closed_status`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=32;
+  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `collection_charges`

@@ -345,7 +345,7 @@ function OnLoadFunctions(req_id,cus_id){
                             $('#penalty').val(response['penalty'])
                             $('#coll_charge').val(response['coll_charge']);
 
-                            if(response['till_date_int'] != ''){
+                            if(response['till_date_int'] !== ""  ){
                                 $('.till-date-int').show();
                                 $('#till_date_int').val(response['till_date_int'].toFixed(0))
                                 $('#tot_amt').prev().prev().text('Principal Amount')
@@ -462,7 +462,7 @@ function OnLoadFunctions(req_id,cus_id){
                     collectionChargeChartList(req_id) //To Show Fine Chart List
                 })
                 $('.coll-charge').click(function(){
-                    var req_id = $(this).attr('value');console.log(req_id)
+                    var req_id = $(this).attr('value');
                     resetcollCharges(req_id);  //Fine
                 })
                 $('.move-error').click(function(){
