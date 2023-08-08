@@ -411,6 +411,14 @@ if($idupd>0)
 											<input type="hidden" class="form-control" readonly id="payableAmount" name="payableAmount" >
 										</div>
 									</div>
+									
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 till-date-int">
+										<div class="form-group">
+											<label for="disabledInput">Till Date Interest</label>&nbsp;<span class="text-danger ">*</span>
+											<input type="text" class="form-control" readonly id="till_date_int" name="till_date_int" value=''>
+										</div>
+									</div>
+
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Penalty</label>&nbsp;<span class="text-danger ">*</span>

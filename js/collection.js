@@ -343,7 +343,19 @@ function OnLoadFunctions(req_id,cus_id){
                             $('#payable_amt').val(response['payable'])
                             $('#payableAmount').val(response['payable'])
                             $('#penalty').val(response['penalty'])
-                            $('#coll_charge').val(response['coll_charge'])
+                            $('#coll_charge').val(response['coll_charge']);
+
+                            if(response['till_date_int'] != ''){
+                                $('.till-date-int').show();
+                                $('#till_date_int').val(response['till_date_int'].toFixed(0))
+                                $('#tot_amt').prev().prev().text('Principal Amount')
+                                $('#due_amt').prev().prev().text('Interest Amount')
+                            }else{
+                                $('.till-date-int').hide();
+                                $('#till_date_int').val('')
+                                $('#tot_amt').prev().prev().text('Total Amount')
+                                $('#due_amt').prev().prev().text('Due Amount')
+                            }
                             
                             //to get how many due are pending till now
                             var totspan = (response['total_amt'] / response['due_amt']).toFixed(1);
