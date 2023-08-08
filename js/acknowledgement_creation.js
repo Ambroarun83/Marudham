@@ -196,8 +196,8 @@ $(document).ready(function () {
         var chequeArr = [];
         var i =0;
         $('.chequeno').each(function(){
-           chequeArr[i] = $(this).val();
-           i++;        
+            chequeArr[i] = $(this).val();
+            i++;        
         })
 
         let chequeID = $("#chequeID").val();

@@ -13,6 +13,8 @@ if(isset($_POST['req_id'])){
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
 }
+
+// Caution **** Dont Touch any code below..
 //get Total amt from ack loan calculation (For monthly interest total amount will not be there, so take principals)*
 //get Paid amt from collection table if nothing paid show 0*
 //balance amount is Total amt - paid amt*
@@ -85,7 +87,7 @@ if($loan_arr['loan_type'] == 'interest'){
     if ($curInterest < $int) {
         $curInterest += 5;
     }
-    $response['due_amt'] = $curInterest;
+     $response['due_amt'] = $curInterest;
 }
 
 //To get the collection charges
@@ -119,27 +121,6 @@ function calculateOthers($loan_arr,$response,$con){
     $maturity_month = $loan_arr['maturity_month'];
 
 
-    //to calculate till date interest if loan is interst based
-    if($loan_arr['loan_type'] == 'interest'){
-        
-        // // Get the current month's count of days
-        // $currentMonthCount = date('t',strtotime(date('Y-m-d')));
-
-        // $amtperDay = $response['due_amt'] / intVal($currentMonthCount); // divide current interest amt for one day of current month
-        
-
-        // $st_date = new DateTime(date('Y-m-d',strtotime($due_start_from))); // start date's first day
-        // $tdate = new DateTime();//current date
-        // // $tdate = $tdate->modify('+1 day');//current date +1
-        // // Calculate the interval between the two dates
-        // $date_diff = $st_date->diff($tdate);
-        // // Get the number of days from the interval
-        // $numberOfDays = $date_diff->days;
-        // $response['till_date_int'] = $amtperDay * $numberOfDays;
-    // }else{
-        $response['till_date_int'] =0;
-    }
-
 
     $checkcollection = $con->query("SELECT SUM(`due_amt_track`) as totalPaidAmt FROM `collection` WHERE `req_id` = '$req_id'"); // To Find total paid amount till Now.
     $checkrow = $checkcollection->fetch_assoc();
@@ -150,11 +131,10 @@ function calculateOthers($loan_arr,$response,$con){
     $due_amt = $checkAckrow['due_amt_cal'];
 
     if($loan_arr['due_method_calc'] == 'Monthly' || $loan_arr['due_method_scheme'] == '1'){
+
         //Convert Date to Year and month, because with date, it will use exact date to loop months, instead of taking end of month
         $due_start_from = date('Y-m',strtotime($due_start_from));
         $maturity_month = date('Y-m',strtotime($maturity_month));
-
-        
 
         // Create a DateTime object from the given date
         $maturity_month = new DateTime($maturity_month);
@@ -181,6 +161,10 @@ function calculateOthers($loan_arr,$response,$con){
             $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
             $start = DateTime::createFromFormat('Y-m', $due_start_from);
             $current = DateTime::createFromFormat('Y-m', $current_date);
+
+            // if($loan_arr['loan_type'] == 'interest'){
+            //     $start->modify('+1 month');
+            // }
 
             for($i=$start; $i<$current;$start->add($interval) ){
                 $loandate_tillnow += 1;
@@ -211,41 +195,14 @@ function calculateOthers($loan_arr,$response,$con){
                         $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_date','$penalty',current_timestamp)");
                     }
                     $countForPenalty++;
-                 } 
-
-                 //to calculate till date interest if loan is interst based
-                if($loan_arr['loan_type'] == 'interest'){
-                    
-                    // Get the current month's count of days
-                    $currentMonthCount = date('t',strtotime(date('Y-m-d')));
-
-                    $amtperDay = $response['due_amt'] / intVal($currentMonthCount); // divide current interest amt for one day of current month
-                    
-                    $st_date = new DateTime($start_date_obj->format('Y-m-01')); // start date's first day
-                    $tdate = new DateTime();//current date
-                    // Calculate the interval between the two dates
-                    $date_diff = $st_date->diff($tdate);
-                    // Get the number of days from the interval
-                    $numberOfDays = $date_diff->days;
-                    // echo $response['till_date_int'];
-                    $response['till_date_int'] += $amtperDay * $numberOfDays;
-                }else{
-                    $response['till_date_int'] ='';
-                }
+                } 
             }
            //condition END
 
         if($count>0){
             //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'] ; 
+            $response['pending'] = ($response['due_amt'] * ($count)) - $response['total_paid'] - $response['pre_closure'] ; 
 
-            //if pending amt is there then add it to the till date interest
-            $response['till_date_int'] += $response['pending'];
-            $cur_amt = ceil($response['till_date_int'] / 5) * 5; //to increase till date Interest to nearest multiple of 5
-            if ($cur_amt < $response['till_date_int']) {
-                $cur_amt += 5;
-            }
-            $response['till_date_int'] = $cur_amt;
 
             // If due month exceeded
             if($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null ){
@@ -274,18 +231,57 @@ function calculateOthers($loan_arr,$response,$con){
                 $penalty = $row1['penalty'];
             }
 
-            // $penalty = intval((($response['due_amt'] * $penalty_per) / 100));
-            // echo $penalty;
             $response['penalty'] = $penalty - $row['penalty'] - $row['penalty_waiver'];
+
 
             //Payable amount will be pending amount added with current month due amount
             $response['payable'] = $response['due_amt'] + $response['pending'];
+
+                
+            if($loan_arr['loan_type'] == 'interest'){ // if loan type is interest then we need to calculate pending and payable again
+
+                if($count == 1){
+                    // if this condition true then, first month of the start date only has been ended
+                    // so we need to calculate only the first month interest , not whole interest amount as payable
+                    $response['payable'] = getTillDateInterest($loan_arr,$response,$con,'fullstartmonth') ;
+
+                    //pending amount will remain zero , coz usually we pay ended month's interest amount only in next month
+                    //so when only one month is exceeded, that not the pending 
+                    $response['pending'] =  0;
+
+                }else{
+                    //if this condition means, more than 1 month is crossed from start month
+                    //pending amount will be calculated above for all other loan types as usual
+                    //for interest type, we should not calculate due month multiplied by count of month crossed.
+                    //in interest loan we need to calculate interest amount of first month by how many days are used in first month only
+                    //so that, here subracted one month due amt and added first month's interest based on days spent there
+                    $response['pending'] =  $response['pending'] - $response['due_amt'] + getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
+
+                    
+                    $response['payable'] =  $response['pending'];
+
+                    if($count == 2){
+                        //if condition is true then this is , 2 months has been completed.
+                        //so the pending amt will be only the first month's complete interest amount
+                        $response['pending'] =  getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
+                    }else{
+                        //else means, month crossed is more than 2 or less than 2 means the pending amount will remain same with above calculated pending amt
+                        $response['pending'] =  $response['pending'] - $response['due_amt'] ;
+                    }
+                }
+            }
+            
             if($response['payable'] > $response['balance']){
                 //if payable is greater than balance then change it as balance amt coz dont collect more than balance
                 //this case will occur when collection status becoms OD
                 $response['payable'] = $response['balance']; 
             }
             // $response['payable'] = $response['pending'];
+
+            //in this calculate till date interest when month are crossed for current month
+            $response['till_date_int'] = getTillDateInterest($loan_arr,$response,$con,'from01');
+            
+
         }else{
             //If still current month is not ended, then pending will be same due amt // pending will be 0 if due date not exceeded
             $response['pending'] = 0;// $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
@@ -293,6 +289,14 @@ function calculateOthers($loan_arr,$response,$con){
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
             $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
+
+            if($loan_arr['loan_type'] == 'interest'){
+                $response['payable'] =  0;
+
+            }
+
+            //in this calculate till date interest when month are not crossed for due starting month
+            $response['till_date_int'] = getTillDateInterest($loan_arr,$response,$con,'forstartmonth');
         }
 
     }else
@@ -508,12 +512,112 @@ function calculateOthers($loan_arr,$response,$con){
             $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
         }
     }
+
     if($response['pending'] < 0){
         $response['pending'] = 0; 
     }
     if($response['payable'] < 0){
         $response['payable'] = 0; 
     }
+    return $response;
+}
+
+
+function getTillDateInterest($loan_arr,$response,$con,$data){
+
+    if($data == 'from01'){
+        //in this calculate till date interest when month are crossed for current month
+
+        //to calculate till date interest if loan is interst based
+        if($loan_arr['loan_type'] == 'interest'){
+
+            
+            // Get the current month's count of days
+            $currentMonthCount = date('t');
+            // divide current interest amt for one day of current month
+            $amtperDay = $response['due_amt'] / intVal($currentMonthCount); 
+            
+            $st_date = new DateTime(date('Y-m-01')); // start date
+            $tdate = new DateTime();//current date
+            // $tdate = $tdate->modify('+1 day');//current date +1
+            // Calculate the interval between the two dates
+            $date_diff = $st_date->diff($tdate);
+            // Get the number of days from the interval
+            $numberOfDays = $date_diff->days;
+            $response = $amtperDay * $numberOfDays;
+            
+            //to increase till date Interest to nearest multiple of 5
+            $cur_amt = ceil($response / 5) * 5; //ceil will set the number to nearest upper integer//i.e ceil(121/5)*5 = 125
+            if ($cur_amt < $response) {
+                $cur_amt += 5;
+            }
+            $response = $cur_amt;
+        }
+
+
+    }else if($data == 'forstartmonth'){
+        //if condition is true then this is , 2 months has been completed.
+        //so the pending amt will be only the first month's complete interest amount
+
+
+        //to calculate till date interest if loan is interst based
+        if($loan_arr['loan_type'] == 'interest'){
+            
+            // Get the current month's count of days
+            $currentMonthCount = date('t',strtotime($loan_arr['due_start_from']));
+            // divide current interest amt for one day of current month
+            $amtperDay = $response['due_amt'] / intVal($currentMonthCount); 
+            
+            $st_date = new DateTime(date('Y-m-d',strtotime($loan_arr['due_start_from']))); // start date
+            $tdate = new DateTime();//current date
+            // $tdate = $tdate->modify('+1 day');//current date +1
+            // Calculate the interval between the two dates
+            $date_diff = $st_date->diff($tdate);
+            // Get the number of days from the interval
+            $numberOfDays = $date_diff->days;
+            $response = $amtperDay * $numberOfDays;
+            
+            //to increase till date Interest to nearest multiple of 5
+            $cur_amt = ceil($response / 5) * 5; //ceil will set the number to nearest upper integer//i.e ceil(121/5)*5 = 125
+            if ($cur_amt < $response) {
+                $cur_amt += 5;
+            }
+            $response = $cur_amt;
+            if($st_date > $tdate){
+                $response = 0;
+            }
+        }
+
+    }else if($data == 'fullstartmonth'){
+        //in this calculate till date interest when month are not crossed for due starting month
+
+        //to calculate till date interest if loan is interst based
+        if($loan_arr['loan_type'] == 'interest'){
+            
+            // Get the current month's count of days
+            $currentMonthCount = date('t',strtotime($loan_arr['due_start_from']));
+            // divide current interest amt for one day of current month
+            $amtperDay = $response['due_amt'] / intVal($currentMonthCount); 
+            
+            $st_date = new DateTime(date('Y-m-d',strtotime($loan_arr['due_start_from']))); // start date
+            $tdate = new DateTime(date('Y-m-t',strtotime($loan_arr['due_start_from']))) ;//current date
+            // $tdate = $tdate->modify('+1 day');//current date +1
+            // Calculate the interval between the two dates
+            $date_diff = $st_date->diff($tdate);
+            // Get the number of days from the interval
+            $numberOfDays = $date_diff->days;
+            $response = ceil($amtperDay * $numberOfDays);
+            
+                // //to increase till date Interest to nearest multiple of 5
+                // $cur_amt = ceil($response / 5) * 5; //ceil will set the number to nearest upper integer//i.e ceil(121/5)*5 = 125
+                // if ($cur_amt < $response) {
+                //     $cur_amt += 5;
+                // }
+                // $response = $cur_amt;
+        }
+
+    }
+
     return $response;
 }
 
