@@ -447,10 +447,24 @@ if($idupd>0)
 							<!--Fields -->
 							<div class="col-md-12 ">
 								<div class="row">
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 emiLoanDiv">
 										<div class="form-group">
 											<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger">*</span>
 											<input type="text" class="form-control" id="due_amt_track" name="due_amt_track" value='' placeholder='Enter Due Amount'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 intLoanDiv" style="display: none;">
+										<div class="form-group">
+											<label for="disabledInput">Principal Amount</label>&nbsp;<span class="text-danger">*</span>
+											<input type="text" class="form-control" id="princ_amt_track" name="princ_amt_track" value='' placeholder='Enter Principal Amount'>
+											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 intLoanDiv" style="display: none;">
+										<div class="form-group">
+											<label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger">*</span>
+											<input type="text" class="form-control" id="int_amt_track" name="int_amt_track" value='' placeholder='Enter Interest Amount'>
 											<span class="text-danger totalpaidCheck" style="display: none;">Please Enter any one of these<span>
 										</div>
 									</div>
@@ -474,8 +488,9 @@ if($idupd>0)
 											<input type="text" readonly class="form-control" id="total_paid_track" name="total_paid_track" value=''>
 										</div>
 									</div>
+								</div>
 
-									<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12"></div>
+								<div class="row">
 
 									<!-- Only if user has collection access can have the waiver details -->
 									<?php if(isset($collection_access) && $collection_access =='0'){?>
