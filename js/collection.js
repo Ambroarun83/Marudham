@@ -41,42 +41,24 @@ $(document).ready(function(){
         }
     })
 
-    $('#due_amt_track , #penalty_track , #coll_charge_track').blur(function(){
-        if($('#due_amt_track').val() != ''){
-            var due_amt_track = $('#due_amt_track').val();
-        }else{
-            var due_amt_track = 0;
-        }
-        if($('#penalty_track').val() != ''){
-            var penalty_track = $('#penalty_track').val();
-        }else{
-            var penalty_track = 0;
-        }
-        if($('#coll_charge_track').val() != ''){
-            var coll_charge_track = $('#coll_charge_track').val();
-        }else{
-            var coll_charge_track = 0;
-        }
-        var total_paid_track = parseInt(due_amt_track) + parseInt(penalty_track) + parseInt(coll_charge_track);
+    $('#due_amt_track, #princ_amt_track, #int_amt_track, #penalty_track , #coll_charge_track').blur(function(){
+        
+        var due_amt_track = ($('#due_amt_track').val()!='') ? $('#due_amt_track').val() : 0;
+        var penalty_track = ($('#penalty_track').val()!='') ? $('#penalty_track').val() : 0;
+        var coll_charge_track = ($('#coll_charge_track').val()!='') ? $('#coll_charge_track').val() : 0;
+        var princ_amt_track = ($('#princ_amt_track').val()!='') ? $('#princ_amt_track').val() : 0;
+        var int_amt_track = ($('#int_amt_track').val()!='') ? $('#int_amt_track').val() : 0;
+        
+        var total_paid_track = parseInt(due_amt_track) + parseInt(princ_amt_track) + parseInt(int_amt_track) + parseInt(penalty_track) + parseInt(coll_charge_track);
         $('#total_paid_track').val(total_paid_track)
     })
 
     $('#pre_close_waiver , #penalty_waiver , #coll_charge_waiver').blur(function(){
-        if($('#pre_close_waiver').val() != ''){
-            var pre_close_waiver = $('#pre_close_waiver').val();
-        }else{
-            var pre_close_waiver = 0;
-        }
-        if($('#penalty_waiver').val() != ''){
-            var penalty_waiver = $('#penalty_waiver').val();
-        }else{
-            var penalty_waiver = 0;
-        }
-        if($('#coll_charge_waiver').val() != ''){
-            var coll_charge_waiver = $('#coll_charge_waiver').val();
-        }else{
-            var coll_charge_waiver = 0;
-        }
+        
+        var pre_close_waiver = ($('#pre_close_waiver').val()!='') ? $('#pre_close_waiver').val() : 0;
+        var penalty_waiver = ($('#penalty_waiver').val()!='') ? $('#penalty_waiver').val() : 0;
+        var coll_charge_waiver = ($('#coll_charge_waiver').val()!='') ? $('#coll_charge_waiver').val() : 0;
+
         var total_waiver = parseInt(pre_close_waiver) + parseInt(penalty_waiver) + parseInt(coll_charge_waiver);
         $('#total_waiver').val(total_waiver)
     })
@@ -345,41 +327,127 @@ function OnLoadFunctions(req_id,cus_id){
                             $('#penalty').val(response['penalty'])
                             $('#coll_charge').val(response['coll_charge']);
 
-                            if(response['till_date_int'] !== ""  ){
+                            if(response['loan_type'] == "interest"  ){
                                 $('.till-date-int').show();
                                 $('#till_date_int').val(response['till_date_int'].toFixed(0))
                                 $('#tot_amt').prev().prev().text('Principal Amount')
                                 $('#due_amt').prev().prev().text('Interest Amount')
+
+                                $('.emiLoanDiv').hide()
+                                $('.intLoanDiv').show()
+
+                                //Show all in span class
+                                $('.totspan').text('*')
+                                $('.paidspan').text('*')
+                                $('.balspan').text('*')
+                                $('.pendingspan').text('*')
+                                $('.payablespan').text('*')
+
                             }else{
                                 $('.till-date-int').hide();
                                 $('#till_date_int').val('')
                                 $('#tot_amt').prev().prev().text('Total Amount')
                                 $('#due_amt').prev().prev().text('Due Amount')
+
+                                $('.emiLoanDiv').show()
+                                $('.intLoanDiv').hide()
+                                
+                                //to get how many due are pending till now
+                                var totspan = (response['total_amt'] / response['due_amt']).toFixed(1);
+                                var paidspan =(response['total_paid'] / response['due_amt']).toFixed(1);
+                                var balspan =(response['balance'] / response['due_amt']).toFixed(1);
+                                var pendingspan =(response['pending'] / response['due_amt']).toFixed(1);
+                                var payablespan =(response['payable'] / response['due_amt']).toFixed(1);
+                                
+                                //Show all in span class
+                                $('.totspan').text('* (No of Due : '+totspan+')')
+                                $('.paidspan').text('* (No of Due : '+paidspan+')')
+                                $('.balspan').text('* (No of Due : '+balspan+')')
+                                $('.pendingspan').text('* (No of Due : '+pendingspan+')')
+                                $('.payablespan').text('* (No of Due : '+payablespan+')')
                             }
                             
-                            //to get how many due are pending till now
-                            var totspan = (response['total_amt'] / response['due_amt']).toFixed(1);
-                            var paidspan =(response['total_paid'] / response['due_amt']).toFixed(1);
-                            var balspan =(response['balance'] / response['due_amt']).toFixed(1);
-                            var pendingspan =(response['pending'] / response['due_amt']).toFixed(1);
-                            var payablespan =(response['payable'] / response['due_amt']).toFixed(1);
                             
-                            //Show all in span class
-                            $('.totspan').text('* (No of Due : '+totspan+')')
-                            $('.paidspan').text('* (No of Due : '+paidspan+')')
-                            $('.balspan').text('* (No of Due : '+balspan+')')
-                            $('.pendingspan').text('* (No of Due : '+pendingspan+')')
-                            $('.payablespan').text('* (No of Due : '+payablespan+')')
                             
                             //To set limitations for input fields
-                            $('#due_amt_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['balance'] + ` ){ alert("Enter Lesser Value"); $(this).val("");$('#total_paid_track').val(""); }`)
-                            $('#penalty_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['penalty'] + ` ){ alert("Enter Lesser Value"); $(this).val("");$('#total_paid_track').val(""); }`)
-                            $('#coll_charge_track').attr('onblur',`if( parseInt($(this).val()) > ` + response['coll_charge'] + ` ){ alert("Enter Lesser Value"); $(this).val("");$('#total_paid_track').val(""); }`)
+                            $('#due_amt_track').on('blur', function() {
+                                if (parseInt($(this).val()) > response['balance']) {
+                                    alert("Enter a Lesser Value");
+                                    $(this).val("");
+                                    $('#total_paid_track').val("");
+                                }
+                                $('#pre_close_waiver').trigger('blur');//this will check whether preclosure amount crosses limit
+                            });
+
+                            $('#princ_amt_track').on('blur', function() {
+                                if (parseInt($(this).val()) > response['balance']) {
+                                    alert("Enter a Lesser Value");
+                                    $(this).val("");
+                                    $('#total_paid_track').val("");
+                                }
+                                $('#pre_close_waiver').trigger('blur');//this will check whether preclosure amount crosses limit
+                            });
+
+                            $('#int_amt_track').on('blur', function() {
+                                if (parseInt($(this).val()) > response['payable']) {
+                                    alert("Enter a Lesser Value");
+                                    $(this).val("");
+                                    $('#total_paid_track').val("");
+                                }
+                            });
+                            
+                            $('#penalty_track').on('blur', function() {
+                                if (parseInt($(this).val()) > response['penalty']) {
+                                    alert("Enter a Lesser Value");
+                                    $(this).val("");
+                                    $('#total_paid_track').val("");
+                                }
+                            });
+                            
+                            $('#coll_charge_track').on('blur', function() {
+                                if (parseInt($(this).val()) > response['coll_charge']) {
+                                    alert("Enter a Lesser Value");
+                                    $(this).val("");
+                                    $('#total_paid_track').val("");
+                                }
+                            });
                             
                             //To set Limitation that should not cross its limit with considering track values and previous readonly values
-                            $('#pre_close_waiver').attr('onblur',`var due_track = $('#due_amt_track').val(); if( parseFloat($(this).val()) > '` + response['balance'] + `' -due_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
-                            $('#penalty_waiver').attr('onblur',`var penalty_track = $('#penalty_track').val(); if( parseFloat($(this).val()) > '` + response['penalty'] + `' -penalty_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
-                            $('#coll_charge_waiver').attr('onblur',`var coll_charge_track = $('#coll_charge_track').val(); if( parseFloat($(this).val()) > '` + response['coll_charge'] + `' -coll_charge_track){ alert("Enter Lesser Value"); $(this).val("");$('#total_waiver').val(""); }`)
+                            $('#pre_close_waiver').on('blur', function() {
+                                if(response['loan_type'] == "emi" ){
+                                    var due_track = $('#due_amt_track').val();
+                                    if (parseFloat($(this).val()) > response['balance'] - due_track) {
+                                        alert("Enter a Lesser Value");
+                                        $(this).val("");
+                                        $('#total_waiver').val("");
+                                    }
+                                }else if(response['loan_type'] == 'interest'){
+                                    var princ_track = $('#princ_amt_track').val();
+                                    if (parseFloat($(this).val()) > response['balance'] - princ_track) {
+                                        alert("Enter a Lesser Value");
+                                        $(this).val("");
+                                        $('#total_waiver').val("");
+                                    }
+                                }
+                            });
+                            
+                            $('#penalty_waiver').on('blur', function() {
+                                var penalty_track = $('#penalty_track').val();
+                                if (parseFloat($(this).val()) > response['penalty'] - penalty_track) {
+                                    alert("Enter a Lesser Value");
+                                    $(this).val("");
+                                    $('#total_waiver').val("");
+                                }
+                            });
+                            
+                            $('#coll_charge_waiver').on('blur', function() {
+                                var coll_charge_track = $('#coll_charge_track').val();
+                                if (parseFloat($(this).val()) > response['coll_charge'] - coll_charge_track) {
+                                    alert("Enter a Lesser Value");
+                                    $(this).val("");
+                                    $('#total_waiver').val("");
+                                }
+                            });
                         }
                     })
 

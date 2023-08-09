@@ -5148,6 +5148,12 @@ function updateUser($mysqli,$id,$user_id){
 			if(isset($_POST['due_amt_track'])){
 				$due_amt_track = $_POST['due_amt_track'];
 			}
+			if(isset($_POST['princ_amt_track'])){
+				$princ_amt_track = $_POST['princ_amt_track'];
+			}
+			if(isset($_POST['int_amt_track'])){
+				$int_amt_track = $_POST['int_amt_track'];
+			}
 			$penalty_track='';
 			if(isset($_POST['penalty_track'])){
 				$penalty_track = $_POST['penalty_track'];
@@ -5178,13 +5184,13 @@ function updateUser($mysqli,$id,$user_id){
 
 			$insertQry = "INSERT INTO `collection`(  `coll_code`, `req_id`, `cus_id`, `cus_name`, `branch`, `area`, `sub_area`, `line`, `loan_category`, `sub_category`, `coll_status`, 
 			`coll_sub_status`, `tot_amt`, `paid_amt`, `bal_amt`, `due_amt`, `pending_amt`, `payable_amt`, `penalty`, `coll_charge`, `coll_mode`, `bank_id`, `cheque_no`, `trans_id`, `trans_date`, 
-			`coll_location`, `coll_date`, `due_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, 
+			`coll_location`, `coll_date`, `due_amt_track`,`princ_amt_track`,`int_amt_track`, `penalty_track`, `coll_charge_track`, `total_paid_track`, `pre_close_waiver`, `penalty_waiver`, `coll_charge_waiver`, 
 			`total_waiver`, `insert_login_id`,`created_date`)  VALUES('".strip_tags($collection_id)."','".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."',
 			'".strip_tags($branch_id)."', '".strip_tags($area_id)."', '".strip_tags($sub_area_id)."', '".strip_tags($line_id)."','".strip_tags($loan_category_id)."',
 			'".strip_tags($sub_category_id)."','".strip_tags($status)."','".strip_tags($sub_status)."', '".strip_tags($tot_amt)."', '".strip_tags($paid_amt)."', 
 			'".strip_tags($bal_amt)."','".strip_tags($due_amt)."','".strip_tags($pending_amt)."','".strip_tags($payable_amt)."','".strip_tags($penalty)."','".strip_tags($coll_charge)."',
 			'".strip_tags($collection_mode)."','".strip_tags($bank_id)."','".strip_tags($cheque_no)."','".strip_tags($trans_id)."','".strip_tags($trans_date)."','".strip_tags($collection_loc)."',
-			'".strip_tags($collection_date)."','".strip_tags($due_amt_track)."','".strip_tags($penalty_track)."','".strip_tags($coll_charge_track)."','".strip_tags($total_paid_track)."',
+			'".strip_tags($collection_date)."','".strip_tags($due_amt_track)."','".strip_tags($princ_amt_track)."','".strip_tags($int_amt_track)."','".strip_tags($penalty_track)."','".strip_tags($coll_charge_track)."','".strip_tags($total_paid_track)."',
 			'".strip_tags($pre_close_waiver)."','".strip_tags($penalty_waiver)."','".strip_tags($coll_charge_waiver)."','".strip_tags($total_waiver)."',$userid,current_timestamp )";
 
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
@@ -5203,6 +5209,12 @@ function updateUser($mysqli,$id,$user_id){
 			}
 
 			$check = intval($due_amt_track) + intval($pre_close_waiver) - intval($bal_amt);
+
+			if(($princ_amt_track != '' or $int_amt_track != '') and ($due_amt_track == '' or $due_amt_track == 0 or $due_amt_track == null)){
+				// if this condition is true then it will be the interest based loan. coz thats where we able to give princ/int amt track and not able to give due amt track
+				//if yes then $check variable should check with principal amt
+				$check = intVal($princ_amt_track) + intVal($pre_close_waiver) - intval($bal_amt);
+			}
 
 			$penalty_check = intval($penalty_track) + intval($penalty_waiver) - intval($penalty);
             $coll_charge_check = intval($coll_charge_track) + intval($coll_charge_waiver) - intval($coll_charge);

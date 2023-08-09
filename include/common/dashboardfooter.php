@@ -1400,6 +1400,23 @@ if($current_page == 'finance_insight') { ?>
     
     // $('input').attr('autocomplete','off');
 
+    window.alert = function(message) {// this will prevent normal window.alert messages to set it as swal
+        
+        Swal.fire({
+            text: message,
+            target: 'body',
+            toast: true,
+            position: 'top-right',
+            // background: '#00e2cd',
+            timer: 2000,
+            showConfirmButton: true,
+            confirmButtonColor: '#f2372b',
+            timerProgressBar: true,
+        })
+
+        return false;
+    };
+
 
     function moneyFormatIndia(num) {
         var isNegative = false;
