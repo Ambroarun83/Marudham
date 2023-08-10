@@ -76,6 +76,7 @@ if($result->num_rows>0){
     $response['balance'] = $response['total_amt'] - $response['total_paid'] - $pre_closure;
 
     if($loan_arr['loan_type'] == 'interest'){
+        $response['due_amt_for1'] = $response['due_amt'];
         $response['due_amt'] = calculateNewInterestAmt($loan_arr,$response);
     }
 
@@ -91,6 +92,7 @@ if($result->num_rows>0){
     $response['balance'] = $response['total_amt'];
 
     if($loan_arr['loan_type'] == 'interest'){
+        $response['due_amt_for1'] = $response['due_amt'];
         $response['due_amt'] = calculateNewInterestAmt($loan_arr,$response);
     }
     
@@ -181,7 +183,8 @@ function calculateOthers($loan_arr,$response,$con){
             while($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj){ // To find loan date count till now from start date.
                 $penalty_checking_date  = $start_date_obj->format('Y-m-d'); // This format is for query.. month , year function accept only if (Y-m-d).
                 $penalty_date  = $start_date_obj->format('Y-m');
-                $start_date_obj->add($interval);
+                $start_date_obj->add($interval); //increase one month to loop again
+                
                             
                 $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((MONTH(coll_date)= MONTH('$penalty_checking_date') || MONTH(trans_date)= MONTH('$penalty_checking_date')) && (YEAR(coll_date)= YEAR('$penalty_checking_date') || YEAR(trans_date)= YEAR('$penalty_checking_date')))");
                 $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
@@ -200,6 +203,10 @@ function calculateOthers($loan_arr,$response,$con){
                     // if loan type is interest and when this loop for first month crossed then we need to calculate toPaytilldate again
                     // coz for first month interest amount may vary depending on start date of due, so reduce one due amt from it and add the calculated first month interest to it
                     $toPaytilldate = $toPaytilldate - $response['due_amt'] + getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
+
+                }
+                if($loan_arr['loan_type'] == 'interest'){
+                    $loan_arr[$count]['all_due_amt'] = getTillDateInterest($loan_arr, $start_date_obj, $con, 'foreachmonth');
                 }
                 
                 if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
@@ -222,7 +229,6 @@ function calculateOthers($loan_arr,$response,$con){
            //condition END
 
         if($count>0){
-            
             
             if($loan_arr['loan_type'] == 'interest'){
                 
@@ -272,55 +278,22 @@ function calculateOthers($loan_arr,$response,$con){
                 if($count == 1){
                     // if this condition true then, first month of the start date only has been ended
                     // so we need to calculate only the first month interest , not whole interest amount as payable
-                    // if($response['total_paid'] != 0){
-                    //     $response['payable'] = $response['total_paid'] - getTillDateInterest($loan_arr,$response,$con,'fullstartmonth') ;
-                    // }else{
-                        // if($response['total_paid_int'] != 0){
-                        //     $response['payable'] = $response['total_paid_int'] - getTillDateInterest($loan_arr,$response,$con,'fullstartmonth') ;
-                        // }else{
-                            $response['payable'] = $response['pending'] ;
-                        // }
-                    // }
+
+                    $response['payable'] = $response['pending'] ;
+
 
                     //pending amount will remain zero , coz usually we pay ended month's interest amount only in next month
                     //so when only one month is exceeded, that not the pending 
                     $response['pending'] =  0;
 
                 }else{
-                    //if this condition means, more than 1 month is crossed from start month
-                    //pending amount will be calculated above for all other loan types as usual
-                    //for interest type, we should not calculate due month multiplied by count of month crossed.
-                    //in interest loan we need to calculate interest amount of first month by how many days are used in first month only
-                    //so that, here subracted one month due amt and added first month's interest based on days spent there
-                    
-                    // $response['pending'] =  $response['pending'] - $response['due_amt'] + getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
 
-                    // if($response['total_paid_int'] != 0){
-                    //     $response['payable'] =  abs($response['total_paid_int'] - $response['pending']);
-                    // }else{
                         $response['payable'] =  $response['pending'];
-                    // }
 
                     if($count >= 2){
-                        //if condition is true then this is , 2 months has been completed.
-                        //so the pending amt will be only the first month's complete interest amount
-                        // if($response['total_paid'] != 0){
-                        //     $response['pending'] =  $response['total_paid'] - getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
-                        // }else{
-                        //     if($response['total_paid_int'] != 0){
-                        //         $response['pending'] = $response['total_paid_int'] - getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
-                        //     }else{
-                        //         $response['pending'] =  getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
-                        //     }
-                        // }
+
                         $response['pending'] =  $response['pending'] - $response['due_amt'] ;
-                    }else{
-                        // //else means, month crossed is more than 2 or less than 2 means the pending amount will remain same with above calculated pending amt
-                        // if($response['total_paid_int'] != 0){
-                        //     $response['pending'] =  $response['pending'] - $response['due_amt'] ;
-                        // }else{
-                        //     echo $response['pending'] =  $response['pending'] - $response['due_amt'] ;
-                        // }
+                    
                     }
                 }
             }
@@ -661,7 +634,7 @@ function getTillDateInterest($loan_arr,$response,$con,$data){
             // Get the current month's count of days
             $currentMonthCount = date('t',strtotime($loan_arr['due_start_from']));
             // divide current interest amt for one day of current month
-            $amtperDay = $response['due_amt'] / intVal($currentMonthCount); 
+            $amtperDay = $response['due_amt_for1'] / intVal($currentMonthCount); 
             
             $st_date = new DateTime(date('Y-m-d',strtotime($loan_arr['due_start_from']))); // start date
             $tdate = new DateTime(date('Y-m-t',strtotime($loan_arr['due_start_from']))) ;//current date
@@ -679,6 +652,26 @@ function getTillDateInterest($loan_arr,$response,$con,$data){
                 // }
                 // $response = $cur_amt;
         }
+
+    }else if($data == 'foreachmonth'){
+        if(isset($_POST['req_id'])){
+            $req_id = $_POST['req_id'];
+        }
+        
+        $date_string = $response->format('Y-m-01');
+        print_r($response);echo '****************************************';
+        $sql = $con->query("SELECT bal_amt, princ_amt_track from collection where req_id = $req_id and month(coll_date) = month('".$date_string."') ORDER BY coll_date DESC ");
+            // echo "SELECT bal_amt, princ_amt_track from collection where req_id = $req_id and month(coll_date) = month('".$date_string."') ORDER BY coll_date DESC ";
+        if($sql->num_rows){
+            $row = $sql->fetch_assoc()['princ_amt_track'];
+            if($row == '' or $row ==null){
+                $row=0;
+            }
+        }else{
+            $row=1;
+        }
+        // echo($row);
+        // echo '****************************************';
 
     }
     return $response;
