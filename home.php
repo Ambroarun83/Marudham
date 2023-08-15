@@ -364,6 +364,11 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'finance_insight') { ?>
 			<?php include "include/templates/finance_insight.php" ?>
 			<?php } ?>
+			
+			<!-- Follow up -->
+			<?php if($current_page == 'promotion_activity') { ?>
+			<?php include "include/templates/promotion_activity.php" ?>
+			<?php } ?>
 
 		</div>
 		<!-- Page content end -->

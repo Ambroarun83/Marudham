@@ -77,7 +77,7 @@ if($result->num_rows>0){
 
     if($loan_arr['loan_type'] == 'interest'){
         $response['due_amt_for1'] = $response['due_amt'];
-        $response['due_amt'] = calculateNewInterestAmt($loan_arr,$response);
+        $response['due_amt'] = calculateNewInterestAmt($loan_arr['int_rate'],$response['balance']);
     }
 
     $response = calculateOthers($loan_arr,$response,$con);
@@ -93,7 +93,7 @@ if($result->num_rows>0){
 
     if($loan_arr['loan_type'] == 'interest'){
         $response['due_amt_for1'] = $response['due_amt'];
-        $response['due_amt'] = calculateNewInterestAmt($loan_arr,$response);
+        $response['due_amt'] = calculateNewInterestAmt($loan_arr['int_rate'],$response['balance']);
     }
     
     $response = calculateOthers($loan_arr,$response,$con); 
@@ -183,9 +183,8 @@ function calculateOthers($loan_arr,$response,$con){
             while($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj){ // To find loan date count till now from start date.
                 $penalty_checking_date  = $start_date_obj->format('Y-m-d'); // This format is for query.. month , year function accept only if (Y-m-d).
                 $penalty_date  = $start_date_obj->format('Y-m');
-                $start_date_obj->add($interval); //increase one month to loop again
                 
-                            
+                
                 $checkcollection =$con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((MONTH(coll_date)= MONTH('$penalty_checking_date') || MONTH(trans_date)= MONTH('$penalty_checking_date')) && (YEAR(coll_date)= YEAR('$penalty_checking_date') || YEAR(trans_date)= YEAR('$penalty_checking_date')))");
                 $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
 
@@ -202,12 +201,12 @@ function calculateOthers($loan_arr,$response,$con){
                 if($loan_arr['loan_type'] == 'interest' and $count == 0){ 
                     // if loan type is interest and when this loop for first month crossed then we need to calculate toPaytilldate again
                     // coz for first month interest amount may vary depending on start date of due, so reduce one due amt from it and add the calculated first month interest to it
-                    $toPaytilldate = $toPaytilldate - $response['due_amt'] + getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
+                    $toPaytilldate = $toPaytilldate - $response['due_amt'] + getTillDateInterest($loan_arr,$response,$con,'fullstartmonth','');
 
                 }
                 if($loan_arr['loan_type'] == 'interest'){
-                    $loan_arr[$count]['all_due_amt'] = getTillDateInterest($loan_arr, $start_date_obj, $con, 'foreachmonth');
-                }
+                    $loan_arr[$count]['all_due_amt'] = getTillDateInterest($loan_arr, $start_date_obj, $con, 'foreachmonth',$count);
+                } 
                 
                 if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
                     $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$penalty_date' and req_id = '$req_id' ");
@@ -223,7 +222,8 @@ function calculateOthers($loan_arr,$response,$con){
                     }
                     $countForPenalty++;
                 } 
-
+                
+                $start_date_obj->add($interval); //increase one month to loop again
                 $count++; //Count represents how many months are exceeded
             }
            //condition END
@@ -232,7 +232,7 @@ function calculateOthers($loan_arr,$response,$con){
             
             if($loan_arr['loan_type'] == 'interest'){
                 
-                $response['pending'] = (($response['due_amt'] * ($count)) - $response['due_amt'] + getTillDateInterest($loan_arr,$response,$con,'fullstartmonth')) - $response['total_paid_int'] ; 
+                $response['pending'] = (($response['due_amt'] * ($count)) - $response['due_amt'] + getTillDateInterest($loan_arr,$response,$con,'fullstartmonth','')) - $response['total_paid_int'] ; 
             }else{
                 
                 //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
@@ -305,7 +305,7 @@ function calculateOthers($loan_arr,$response,$con){
             }
             
             //in this calculate till date interest when month are crossed for current month
-            $response['till_date_int'] = getTillDateInterest($loan_arr,$response,$con,'from01') ;
+            $response['till_date_int'] = getTillDateInterest($loan_arr,$response,$con,'from01','') ;
             
 
         }else{
@@ -321,7 +321,7 @@ function calculateOthers($loan_arr,$response,$con){
             }
 
             //in this calculate till date interest when month are not crossed for due starting month
-            $response['till_date_int'] = getTillDateInterest($loan_arr,$response,$con,'forstartmonth') ;
+            $response['till_date_int'] = getTillDateInterest($loan_arr,$response,$con,'forstartmonth','') ;
         }
 
     }else
@@ -547,9 +547,9 @@ function calculateOthers($loan_arr,$response,$con){
     return $response;
 }
 
-function calculateNewInterestAmt($loan_arr,$response){
+function calculateNewInterestAmt($int_rate,$balance){
     //to calculate current interest amount based on current balance value//bcoz interest will be calculated based on current balance amt only for interest loan
-    $int = $response['balance'] * ($loan_arr['int_rate']/100);
+    $int = $balance * ($int_rate/100);
     $curInterest = ceil($int / 5) * 5; //to increase Interest to nearest multiple of 5
     if ($curInterest < $int) {
         $curInterest += 5;
@@ -559,7 +559,7 @@ function calculateNewInterestAmt($loan_arr,$response){
     return $response;
 }
 
-function getTillDateInterest($loan_arr,$response,$con,$data){
+function getTillDateInterest($loan_arr,$response,$con,$data,$count){
 
     if($data == 'from01'){
         //in this calculate till date interest when month are crossed for current month
@@ -630,7 +630,6 @@ function getTillDateInterest($loan_arr,$response,$con,$data){
 
         //to calculate till date interest if loan is interst based
         if($loan_arr['loan_type'] == 'interest'){
-            
             // Get the current month's count of days
             $currentMonthCount = date('t',strtotime($loan_arr['due_start_from']));
             // divide current interest amt for one day of current month
@@ -657,21 +656,87 @@ function getTillDateInterest($loan_arr,$response,$con,$data){
         if(isset($_POST['req_id'])){
             $req_id = $_POST['req_id'];
         }
-        
-        $date_string = $response->format('Y-m-01');
-        print_r($response);echo '****************************************';
-        $sql = $con->query("SELECT bal_amt, princ_amt_track from collection where req_id = $req_id and month(coll_date) = month('".$date_string."') ORDER BY coll_date DESC ");
-            // echo "SELECT bal_amt, princ_amt_track from collection where req_id = $req_id and month(coll_date) = month('".$date_string."') ORDER BY coll_date DESC ";
-        if($sql->num_rows){
-            $row = $sql->fetch_assoc()['princ_amt_track'];
-            if($row == '' or $row ==null){
-                $row=0;
+
+        $start_date = $response->format('Y-m-d');$end_date = $response->format('Y-m-t');
+        if($count == 0){//if count is zero then take first collection entry to calc first month's due amt
+            $sql = $con->query("SELECT bal_amt, princ_amt_track from collection where req_id = $req_id  ORDER BY coll_date ASC ");
+            if($sql->num_rows){
+                $row = $sql->fetch_assoc();
+                $bal_amt = $row['bal_amt'];//this is the balance amt for first month
+                
+                //calculate interest for that month based on balance amt
+                $interest = $bal_amt * ($loan_arr['int_rate']/100);
+
+                // Get the current month's count of days
+                $currentMonthCount = date('t',strtotime($start_date));
+                $amtperDay = $interest / intVal($currentMonthCount); 
+                
+                $start_date = new DateTime($start_date); // start date
+                $end_date = new DateTime($end_date) ;//last date of month
+                $date_diff = $start_date->diff($end_date);
+                $numberOfDays = $date_diff->days;
+                $response = ceil($amtperDay * $numberOfDays);
             }
-        }else{
-            $row=1;
+        }elseif($count > 0){
+            //if count is one then take first collection entry to calc second month's due amt from start date to collection date first
+            //then from that collection date to next collection date will be that particular date's due amt
+            // else if only one entry or empty in the current month then take bal amt from next collection when available to calculate curr month's due
+            //if various collection entry available then take as before said then sum all to get cur month's overall interest to show next month
+
+            $sql = $con->query("SELECT bal_amt, princ_amt_track,date(coll_date) from collection where req_id = $req_id and (month(coll_date) = month('$start_date') and year(coll_date) = year('$start_date')) ORDER BY coll_date ASC ");
+            if($sql->num_rows){
+                $i=0;$response = 0;
+                while($row = $sql->fetch_assoc()){
+                    $bal_amt = $row['bal_amt'];//this is the balance amt for first month
+                    $coll_date = $row['date(coll_date)'];
+
+                    //calculate interest for that month based on balance amt
+                    $interest = $bal_amt * ($loan_arr['int_rate']/100);
+
+                    // Get the current month's count of days
+                    $currentMonthCount = date('t',strtotime($start_date));
+                    $amtperDay = $interest / intVal($currentMonthCount); 
+                    
+                    if($i==0){
+                        // set start date as first date of month, coz first time should calculate for month's start point to coll date
+                        $start_date = new DateTime(date('Y-m-01',strtotime($start_date))); 
+                    }else{
+                        // change start date as collection date , coz we dont need to calculate due from start of month
+                        $start_date = new DateTime(date('Y-m-d',strtotime($start_date))); 
+                    }
+
+                    $end_date = new DateTime($coll_date) ;//setting collection date as end date to calculate interst from day 1 to collection date
+                    $date_diff = $start_date->diff($end_date);
+                    $numberOfDays = $date_diff->days;
+                    $response = $response + ceil($amtperDay * $numberOfDays);
+
+                    $start_date = $coll_date;//changing start date as coll date, coz next period until next collection due will be changed 
+
+                    $i++;
+                }
+                //when loop completed then calculate rest of the month's due amt by taking next collection entry's bal amt. validate that with last collection date above
+                $sql = $con->query("SELECT bal_amt, princ_amt_track,date(coll_date) from collection where req_id = $req_id and month(coll_date) > month('$start_date')  ORDER BY coll_date ASC ");
+                if($sql->num_rows){
+                    $row = $sql->fetch_assoc();
+                    $bal_amt = $row['bal_amt'];
+                    $coll_date = $row['date(coll_date)'];
+                    
+                    //calculate interest for that month based on balance amt
+                    $interest = $bal_amt * ($loan_arr['int_rate']/100);
+                    // Get the current month's count of days
+                    $currentMonthCount = date('t',strtotime($start_date));
+                    $amtperDay = $interest / intVal($currentMonthCount); 
+                    // change start date as collection date , coz we dont need to calculate due from start of month
+                    $end_date = new DateTime(date('Y-m-t',strtotime($start_date))) ;//setting end date as start month's end date
+                    $start_date = new DateTime(date('Y-m-d',strtotime($start_date))); // taking last collection date from above loop
+                    $date_diff = $start_date->diff($end_date);
+                    $numberOfDays = $date_diff->days;
+                    echo ceil($amtperDay * $numberOfDays);die;
+                    $response = $response + ceil($amtperDay * $numberOfDays);
+                }
+            }
+        
         }
-        // echo($row);
-        // echo '****************************************';
 
     }
     return $response;

@@ -1174,7 +1174,14 @@ if($current_page == 'edit_bank_clearance') { ?>
 if($current_page == 'finance_insight') { ?>
     <script src="js/finance_insight.js"></script>
     <?php }
+
+//Follow up
+if($current_page == 'promotion_activity') { ?>
+    <script src="js/promotion_activity.js"></script>
+    <?php }
+
 ?>
+
 
 <script src="js/logincreation.js"></script>
 

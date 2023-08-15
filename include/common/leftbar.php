@@ -71,6 +71,10 @@ else if($current_page == 'edit_concern_creation' || $current_page == 'edit_conce
 
 	$current_module = 'accounts';
 
+}else if($current_page == 'promotion_activity' || $current_page == 'loan_followup' || $current_page == 'confirmation_followup' || $current_page == 'due_followup'){
+
+	$current_module = 'followup';
+
 }else{
 	$current_module = '';
 }
@@ -155,6 +159,11 @@ $accountsmodule = '';
 $cash_tally = '';
 $bank_clearance = '';
 $finance_insight = '';
+$followupmodule = '';
+$promotion_activity = '';
+$loan_followup = '';
+$confirmation_followup = '';
+$due_followup = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -217,6 +226,11 @@ if (sizeof($getUser)>0) {
 		$cash_tally          		     = $getUser['cash_tally'];
 		$bank_clearance          		     = $getUser['bank_clearance'];
 		$finance_insight          		     = $getUser['finance_insight'];
+		$followupmodule          		     = $getUser['followupmodule'];
+		$promotion_activity          		     = $getUser['promotion_activity'];
+		$loan_followup          		     = $getUser['loan_followup'];
+		$confirmation_followup          		     = $getUser['confirmation_followup'];
+		$due_followup          		     = $getUser['due_followup'];
 	}
 }
 ?>
@@ -493,7 +507,7 @@ if (sizeof($getUser)>0) {
 				<?php if($acknowledgementmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-                            <i class="icon-accessibility"></i>
+							<i><object class="svg-icon" data="svg/acknow.svg" type="image/svg+xml"></object></i>
                             <span class="menu-text">Acknowledgement</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='acknowledgement') echo 'style="display:block" '; ?>>
@@ -668,6 +682,38 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
+				<?php if($followupmodule == 0){ ?>
+                    <li class="sidebar-dropdown ">
+                        <a href="javascript:void(0)">
+							<i><object class="svg-icon" data="svg/followup.svg" type="image/svg+xml"></object></i>
+                            <span class="menu-text">Follow Up</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='followup') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($promotion_activity == 0){ ?>
+                                    <li>
+                                        <a href="promotion_activity"><i><object class="svg-icon" data="svg/promotion.svg" type="image/svg+xml"></object></i>Promotion Activity</a>
+                                    </li>
+                                <?php  } ?>
+                                <?php  if($loan_followup == 0){ ?>
+                                    <li>
+                                        <a href="loan_followup"><i><object class="svg-icon" data="svg/loan_follow.svg" type="image/svg+xml"></object></i>Loan Follow Up</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($confirmation_followup == 0){ ?>
+                                    <li>
+                                        <a href="confirmation_followup"><i><object class="svg-icon" data="svg/confirmation.svg" type="image/svg+xml"></object></i>Confirmation Follow Up</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($due_followup == 0){ ?>
+                                    <li>
+                                        <a href="due_followup"><i><object class="svg-icon" data="svg/due.svg" type="image/svg+xml"></object></i>Due Follow Up</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->
@@ -737,4 +783,9 @@ $accountsmodule = '';
 $cash_tally = '';
 $bank_clearance = '';
 $finance_insight = '';
+$followupmodule = '';
+$promotion_activity = '';
+$loan_followup = '';
+$confirmation_followup = '';
+$due_followup = '';
 ?>
