@@ -1,0 +1,60 @@
+.card{
+    min-height: fit-content;
+}
+#search_cus{
+    padding: 12px 20px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 5px;
+    margin: 12px 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+#search_cus:hover{
+    background-color: #009688;
+    color: white;
+}
+
+/* .label-data{
+    padding: 12px 20px;
+    background-color: #4ecdc1;
+    border: 1px solid #009688;
+    border-radius: 5px;
+    color: black;
+    margin-top: 35px;
+    font-family: 'Open Sans';
+}
+.label-data > #cus_data_label, #cus_data{
+    position: relative;
+    left: 40%;
+} */
+
+/* Toggle button styles */
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0px;
+    background-color: transparent;
+}
+
+.toggle-button {
+    padding: 12px 20px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.toggle-button.active:not(#by_user) {
+    background-color: #009688;
+    color: white;
+}
