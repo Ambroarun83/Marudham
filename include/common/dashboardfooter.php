@@ -1404,6 +1404,8 @@ if($current_page == 'promotion_activity') { ?>
 	setTimeout(function() {
 		$('.alert').fadeOut('slow');
 	}, 2000);
+
+    $('.modal').attr({'data-backdrop':"static",'data-keyboard':"false"})
     
     // $('input').attr('autocomplete','off');
 
