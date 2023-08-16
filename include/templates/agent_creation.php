@@ -217,7 +217,7 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Pincode</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="number" onKeyDown="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>" placeholder="Enter Pincode" tabindex="9">
+                                            <input type="number" onKeyPress="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>" placeholder="Enter Pincode" tabindex="9">
                                         </div>
                                     </div>
 								</div>

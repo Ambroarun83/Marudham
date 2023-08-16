@@ -362,7 +362,7 @@ function moneyFormatIndia($num){
         $waiver = 0;
         $bal_amt = 0;$jj =0;
         $last_int_amt = $due_amt_1;
-        $last_princ_amt = $princ_amt_1;
+        if($loan_type == 'interest'){$last_princ_amt = $princ_amt_1;}
         $lastCusdueMonth = '1970-00-00';
         foreach ($dueMonth as $cusDueMonth) {
             if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
@@ -381,8 +381,10 @@ function moneyFormatIndia($num){
                 while ($row = $run->fetch()) { //if($jj == 0){$lastCusdueMonth = '00';$jj++;}else{$lastCusdueMonth =date('m',strtotime($lastCusdueMonth));}echo $lastCusdueMonth.',';
                     $role = $row['role'];
                     $due_amt_track = intVal($row['due_amt_track']);
-                    $princ_amt_track = intVal($row['princ_amt_track']);
-                    $int_amt_track = intVal($row['int_amt_track']);
+                    if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                        $princ_amt_track = intVal($row['princ_amt_track']);
+                        $int_amt_track = intVal($row['int_amt_track']);
+                    }
                     // $waiver = $waiver + intVal($row['pre_close_waiver']);
                     $waiver = intVal($row['pre_close_waiver']);
                     $bal_amt = intVal($row['bal_amt']) - $due_amt_track - $waiver;
@@ -466,7 +468,7 @@ function moneyFormatIndia($num){
                         <?php } ?>
 
 
-                        <td><?php echo $bal_amt; $last_princ_amt = $bal_amt;?></td>
+                        <td><?php echo $bal_amt; if($loan_type == 'interest'){$last_princ_amt = $bal_amt;}?></td>
                         <td><?php if ($row['pre_close_waiver'] > 0) {
                                 echo $row['pre_close_waiver'];
                             } else {

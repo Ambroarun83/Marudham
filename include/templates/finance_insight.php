@@ -22,7 +22,7 @@ $bank_details = $getuser['bank_details'];
 	<div class="row gutters">
 		
 		<div class="toggle-container col-12">
-			<input type="button" class="toggle-button active" data-toggle='modal' data-target='#dayModal' value='Day Wise'>
+			<input type="button" class="toggle-button" data-toggle='modal' data-target='#dayModal' value='Day Wise'>
 			<input type="button" class="toggle-button" value='Today'>
 			<input type="button" class="toggle-button" data-toggle='modal' data-target='#monthModal' value= 'Month Wise'>
 			<select type="text" class="toggle-button" id='by_user' name='by_user'><option value=''>Select User</option></select>
