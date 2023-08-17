@@ -370,6 +370,19 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/promotion_activity.php" ?>
 			<?php } ?>
 
+			<!-- Due Follow up -->
+			<?php if($current_page == 'edit_due_followup') { ?>
+			<?php include "include/templates/edit_due_followup.php" ?>
+			<?php } ?>
+			
+			<?php if($current_page == 'due_followup') { ?>
+			<?php include "include/templates/due_followup.php" ?>
+			<?php } ?>
+
+			<?php if($current_page == 'due_followup_info') { ?>
+			<?php include "include/templates/due_followup_info.php" ?>
+			<?php } ?>
+
 		</div>
 		<!-- Page content end -->
 

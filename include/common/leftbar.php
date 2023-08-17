@@ -707,7 +707,7 @@ if (sizeof($getUser)>0) {
                                 <?php  } ?>
 								<?php  if($due_followup == 0){ ?>
                                     <li>
-                                        <a href="due_followup"><i><object class="svg-icon" data="svg/due.svg" type="image/svg+xml"></object></i>Due Follow Up</a>
+                                        <a href="edit_due_followup"><i><object class="svg-icon" data="svg/due.svg" type="image/svg+xml"></object></i>Due Follow Up</a>
                                     </li>
                                 <?php  } ?>
                             </ul>

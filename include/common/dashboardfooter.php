@@ -1008,6 +1008,41 @@ $(document).ready(function() {
             }
         });
 
+        // Due Followup List
+        var due_followup_table = $('#due_followup_table').DataTable({
+            "order": [
+                [0, "desc"]
+            ],
+            "ordering": false,
+            'processing': true,
+            'serverSide': true,
+            'serverMethod': 'post',
+            'ajax': {
+                'url': 'ajaxFetch/ajaxDueFollowupFetch.php',
+                'data': function(data) {
+                    var search = $('#search').val();
+                    data.search = search;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "Collection List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            'drawCallback':function(){
+                searchFunction();
+            }
+        });
+
 });//Document Ready End
 </script>
 
@@ -1178,6 +1213,10 @@ if($current_page == 'finance_insight') { ?>
 //Follow up
 if($current_page == 'promotion_activity') { ?>
     <script src="js/promotion_activity.js"></script>
+    <?php }
+
+if($current_page == 'due_followup') { ?>
+    <script src="js/due_followup.js"></script>
     <?php }
 
 ?>
