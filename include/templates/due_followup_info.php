@@ -2,41 +2,21 @@
 if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd'];
 }
-if (isset($_GET['pge'])) {
-    $pge = $_GET['pge']; // 1 = page edit Documentation. // 2 = View Page.
-}
-$can=0;
-if(isset($_GET['can']))//Cancel for Acknowledgement
-{
-$can=$_GET['can'];
-}
-if($can>0)
-{
-    $cancelAcknowledgement = $userObj->cancelAcknowledgement($mysqli,$can, $userid);
-    ?>
-    <script>location.href='<?php echo $HOSTPATH;  ?>edit_acknowledgement_list&msc=1';</script>
-<?php
-}
-$rem=0;
-if(isset($_GET['rem']))//remove for Acknowledgement
-{
-$rem=$_GET['rem'];
-}
-if($rem>0)
-{
-    $removeAcknowledgement = $userObj->removeAcknowledgement($mysqli,$rem, $userid);
-    ?>
-    <script>location.href='<?php echo $HOSTPATH;  ?>edit_acknowledgement_list&msc=2';</script>
-<?php
+if (isset($_GET['pgeView'])) {
+	$pgeView = $_GET['pgeView'];
+
+	if($pgeView == '1'){
+		$titleName = 'Customer Profile';
+
+	}elseif($pgeView == '2'){
+		$titleName = 'Documentation';
+
+	}elseif($pgeView == '3'){
+		$titleName = 'Loan Calculation';
+
+	}
 }
 
-if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''){
-
-	$addDocVerification = $userObj->addAcknowlegeDocumentation($mysqli, $userid);
-?>
-	<script> alert('Documentation Details Submitted'); </script>
-<?php
-}
 
 $getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
 if (sizeof($getRequestData) > 0) {
@@ -134,10 +114,6 @@ if(sizeof($getCustomerProfile) > 0 ){
 	$area_confirm_subarea = $getCustomerProfile['area_confirm_subarea'];
 	$area_group = $getCustomerProfile['area_group'];
 	$area_line = $getCustomerProfile['area_line'];
-	// $communication = $getCustomerProfile['communication'];
-	// $com_audio = $getCustomerProfile['com_audio'];
-	// $verification_person = $getCustomerProfile['verification_person'];
-	// $verification_location = $getCustomerProfile['verification_location'];
 	$cp_cus_status = $getCustomerProfile['cus_status'];
 	$how_to_know = $getCustomerProfile['how_to_know'];
 	$loan_count = $getCustomerProfile['loan_count'];
@@ -149,12 +125,6 @@ if(sizeof($getCustomerProfile) > 0 ){
 	$commitment = $getCustomerProfile['commitment'] ;
 	$monthly_due_capacity = $getCustomerProfile['monthly_due_capacity'] ;
 	$loan_limit = $getCustomerProfile['loan_limit'] ;
-	// $cus_character = $getCustomerProfile['cus_character'];
-	// $approach = $getCustomerProfile['approach'];
-	// $relationship = $getCustomerProfile['relationship'] ;
-	// $attitude = $getCustomerProfile['attitude'] ;
-	// $behavior = $getCustomerProfile['behavior'] ;
-	// $incident_remark  = $getCustomerProfile['incident_remark'] ;
 	$about_customer = $getCustomerProfile['about_customer']  ;
 	$dow 					= $getCustomerProfile['dow'];
 	$abt_occ 					= $getCustomerProfile['abt_occ'];
@@ -213,13 +183,6 @@ if(sizeof($documentationInfo)>0){
 	$Rc_document_upd = $documentationInfo['Rc_document_upd'];
 	$Rc_document_pending = $documentationInfo['Rc_document_pending'];
 	$en_Key = $documentationInfo['en_Key'];
-	// $gold_info = $documentationInfo['gold_info'];
-	// $gold_sts = $documentationInfo['gold_sts'];
-	// $gold_type = $documentationInfo['gold_type'];
-	// $Purity = $documentationInfo['Purity'];
-	// $gold_Count = $documentationInfo['gold_Count'];
-	// $gold_Weight = $documentationInfo['gold_Weight'];
-	// $gold_Value = $documentationInfo['gold_Value'];
 	$document_name = $documentationInfo['document_name'];
 	$document_details = $documentationInfo['document_details'];
 	$document_type = $documentationInfo['document_type'];
@@ -390,7 +353,7 @@ input:checked + .slider:before {
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Acknowledgement
+		Marudham - <?php if(isset($titleName)) echo $titleName; ?>
 	</div>
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
@@ -401,25 +364,16 @@ input:checked + .slider:before {
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
-	<a href="due_followup">
+
+	<a href="due_followup&upd=<?php if (isset($req_id)){echo $req_id;} ?>&cusidupd=<?php if (isset($cus_id)) {echo $cus_id;} ?>">
 		<button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
 	</a>
 </div><br><br>
 <!-- Page header end -->
 
-
-
 <!-- Main container start -->
 <div class="main-container">
-
-	<div class="col-md-12">
-		<div class="form-group" style="text-align:center">
-			<!-- <label for=''style="font-size:16px" >Verification:</label><br><br> -->
-			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile"></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile  <?php if(isset($customer_profile_sts)) {if($customer_profile_sts == 10) {?> <span class="icon-done" ></span> <?php } } ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="documentation" value="documentation" ></input><label for='documentation' >&nbsp;&nbsp; Documentation  <?php if(isset($document_sts)){if($document_sts == 11) {?> <span class="icon-done" ></span> <?php } } ?> </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="loan_calc" value="loan_calc" ></input><label for='loan_calc' >&nbsp;&nbsp; Loan Calculation  <?php if(isset($cus_status_lc)){if($cus_status_lc == 12) {?> <span class="icon-done" ></span> <?php } } ?> </label>
-		</div>
-	</div>
+<input type="hidden" name="page_view" id="page_view" value="<?php if (isset($pgeView)) {echo $pgeView;} ?>" />
 	
 	<!-- Customer Profile form start-->
 	<div  id="customer_profile" style="display: none;">
@@ -1137,7 +1091,7 @@ input:checked + .slider:before {
 						<hr>
 
 						<div class="row">
-						    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="abtCustomer"> About Customer </label> <span class="required">*</span>
 									<textarea class="form-control" name="about_cus" id="about_cus" readonly tabindex="48"> <?php if (isset($about_customer)) { echo $about_customer; } ?> </textarea>
@@ -1145,130 +1099,14 @@ input:checked + .slider:before {
 							</div>
 						</div>
 
-
-
-						<!-- <div class="row">
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="Character"> Character </label> <span class="required">*</span>
-									<input type="text" class="form-control" name="cus_Character" id="cus_Character" placeholder="Enter Character">
-									<span class="text-danger" style='display:none' id='CharacterCheck'>Please Enter Character </span>
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="Approach"> Approach </label> <span class="required">*</span>
-									<input type="text" class="form-control" name="cus_Approach" id="cus_Approach" placeholder="Enter Approach">
-									<span class="text-danger" style='display:none' id='ApproachCheck'>Please Enter Approach </span>
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="Relationship"> Relationship </label> <span class="required">*</span>
-									<input type="text" class="form-control" name="cus_Relationship" id="cus_Relationship" placeholder="Relationship">
-									<span class="text-danger" style='display:none' id='cusRelationshipCheck'>Please Enter Relationship </span>
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group"> 
-									<label for="Attitude"> Attitude </label> <span class="required">*</span>
-									<input type="text" class="form-control" name="cus_Attitude" id="cus_Attitude" placeholder="Enter Attitude">
-									<span class="text-danger" style='display:none' id='cusAttitudeCheck'>Please Enter Attitude </span>
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="Behavior"> Behavior </label> <span class="required">*</span>
-									<input type="text" class="form-control" name="cus_Behavior" id="cus_Behavior" placeholder="Enter Behavior">
-									<span class="text-danger" style='display:none' id='cusBehaviorCheck'>Please Enter Behavior </span>
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="IncidentsRemarks"> Incidents Remarks </label> <span class="required">*</span>
-									<input type="text" class="form-control" name="cus_Incidents_Remarks" id="cus_Incidents_Remarks" placeholder="Enter Incidents Remarks">
-									<span class="text-danger" style='display:none' id='cusIncidentsRemarksCheck'>Please Enter Incidents Remarks </span>
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="abtCustomer"> About Customer </label> <span class="required">*</span>
-									<textarea class="form-control" name="about_cus" id="about_cus"></textarea>
-									<span class="text-danger" style='display:none' id='aboutcusCheck'> Please Enter About Customer </span>
-								</div>
-							</div>
-
-						</div> -->
-
 					</div>
 				</div>
 				 <!-- ///////////////////////////////////////////////  Customer Summary  END /////////////////////////////////////////////////////////// -->
-
-
-				<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
-				<!-- <div class="card">
-					<div class="card-header"> Verfication Info  <span style="font-weight:bold" class="" ></span></div>
-					<div class="card-body">
-						<div class="row">
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="Communitcation"> Communitcation </label> <span class="required">*</span>
-									<select type="text" class="form-control" name="Communitcation_to_cus" id="Communitcation_to_cus">
-										<option value=""> Select Communication </option>
-										<option value="0" <?php if(isset($communication) and $communication == '0') echo 'selected'; ?>> Phone </option>
-										<option value="1" <?php if(isset($communication) and $communication == '1') echo 'selected'; ?>> Direct </option>
-									</select>
-								</div>
-							</div>
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" <?php if(isset($communication)){if($communication == '1'){?> style="display: none;" <?php }} else{ ?> style="display: none;" <?php }?>  id="verifyaudio">
-                                <div class="form-group">
-                                    <label for="Communitcation"> Audio </label>
-                                    <input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if(isset($com_audio)){ echo $com_audio; }?>">
-                                    <?php if(isset($communication)){if($communication == '0'){ ?>
-                                        <a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>
-                                    <?php }}?>
-                                </div>
-                            </div>
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="Verificationperson"> Verification person </label> <span class="required">*</span>
-									<input type="hidden" id="verifyPerson" name="verifyPerson" >
-									<select type="text" class="form-control" name="verification_person" id="verification_person" multiple disabled>
-										<option value=""> Select Verification Person </option>
-									</select>
-								</div>
-							</div>
-
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<div class="form-group">
-									<label for="Verificationlocation"> Verification location </label> <span class="required">*</span>
-									<select type="text" class="form-control" name="verification_location" id="verification_location">
-										<option value=""> Select Verification location </option>
-										<option value="0" <?php if(isset($verification_location) and $verification_location == '0') echo 'selected'; ?>> On Spot </option>
-										<option value="1" <?php if(isset($verification_location) and $verification_location == '1') echo 'selected'; ?>> Customer Spot </option>
-									</select>
-								</div>
-							</div>
-
-						</div>
-
-					</div>
-				</div> -->
-				<!-- ///////////////////////////////////////////////  Verification Info  END /////////////////////////////////////////////////////////// -->
-
 			</div>
 		</div>
 	</form>
 </div>
-	 <!-- Customer Form End -->
+	<!-- Customer Form End -->
 
 
 <!--  ///////////////////////////////////////////////////////////////// Documentation  start ////////////////////////////////////////////////////////// -->
@@ -1352,9 +1190,7 @@ input:checked + .slider:before {
 
                     <!-- Signed Doc Info START -->
                     <div class="card">
-                        <div class="card-header"> Signed Doc Info
-							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6"><span class="icon-add"></span></button>
-                        </div>
+                        <div class="card-header"> Signed Doc Info  </div>
                         <span class="text-danger" style='display:none' id='signed_infoCheck'>Please Fill Signed Doc Info </span>
                         <div class="card-body">
 
@@ -1386,9 +1222,7 @@ input:checked + .slider:before {
 
                     <!-- Cheque Info START -->
                     <div class="card">
-                        <div class="card-header"> Cheque Info
-						<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7"><span class="icon-add"></span></button>
-                        </div>
+                        <div class="card-header"> Cheque Info </div>
                         <span class="text-danger" style='display:none' id='Cheque_infoCheck'>Please Fill Cheque Info </span>
                         <div class="card-body">
 
@@ -1570,18 +1404,6 @@ input:checked + .slider:before {
                                         </div>
                                     </div>
 
-
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                        <div class="form-group">
-                                           <label for="pendingDocument"> Pending </label> <span class="required">&nbsp;*</span>
-                                           <label class="switch">
-                                            <input type="checkbox" value="YES" id="pendingchk" name="pendingchk" checked tabindex="23">
-                                            <span class="slider round"></span>
-                                           </label>
-                                        </div>
-                                    </div>
-
-
                                 </div>
 
                             </div>
@@ -1730,20 +1552,9 @@ input:checked + .slider:before {
                                             <label for="RCDocumentUpd"> RC Uploads </label> <span class="required">&nbsp;*</span>
                                             <input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="36">
 											<input type="hidden" id="rc_doc_upd" name="rc_doc_upd"  value="<?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>">
-											<!-- <a href="<?php echo "uploads/verification/endorsement_doc/".$Rc_document_upd; ?>" target="_blank" > <?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>  </a> -->
                                             <span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
                                         </div>
                                 </div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="pendingendorse"> Pending </label> <span class="required">&nbsp;*</span>
-										<label class="switch">
-										<input type="checkbox" value="YES" id="endorsependingchk" name="endorsependingchk" checked tabindex="37">
-										<span class="slider round"></span>
-										</label>
-									</div>
-								</div>
 
                             </div>
                         </div>
@@ -1751,9 +1562,7 @@ input:checked + .slider:before {
                     <!-- Endorsement Info  End-->
 					<!-- Gold Info Start -->
 					<div class="card">
-                        <div class="card-header"> Gold Info
-                            <button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
-                        </div>
+                        <div class="card-header"> Gold Info </div>
                         <span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
                         <div class="card-body">
                             <div class="row">
@@ -1782,9 +1591,7 @@ input:checked + .slider:before {
                     <!-- Documents Info START-->
 
                     <div class="card">
-						<div class="card-header"> Documents Info 
-							<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25"><span class="icon-add"></span></button>
-						</div>
+						<div class="card-header"> Documents Info </div>
                         <div class="card-body">
                             <div class="row">
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" style="overflow-x: auto;">
@@ -1807,101 +1614,10 @@ input:checked + .slider:before {
 											</table>
 										</div>
 									</div>
-                                <!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="<?php if(isset($document_name)) echo $document_name; ?>" tabindex="38">
-                                        <span class="text-danger" id="documentnameCheck"> Enter Document name </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="<?php if(isset($document_details)) echo $document_details; ?>" tabindex="39">
-                                        <span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="Documenttype"> Document Type </label> <span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="document_type" name="document_type" tabindex="40">
-                                        <option value=''> Select Document Type </option>    
-                                        <option value='0' <?php if(isset($document_type) and $document_type == '0') echo 'selected'; ?> > Original </option>    
-                                        <option value='1' <?php if(isset($document_type) and $document_type == '1') echo 'selected'; ?> > Xerox </option>   
-                                    </select>
-                                        <span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
-                                    </div>
-                                </div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                        <div class="form-group">
-                                            <label for="DocumentUpd"> Document Uploads </label>
-                                            <input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="41">
-											<input type="hidden" id="doc_info_upd" name="doc_info_upd"  value="<?php if (isset($doc_info_upload)) echo $doc_info_upload; ?>">
-                                        </div>
-                                    </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="DocumentHolder"> Document Holder </label> <span class="required">&nbsp;*</span>
-                                        <select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="42">
-                                            <option value=""> Select Holder type </option>
-                                            <option value="0" <?php if(isset($document_holder) and $document_holder == '0') echo 'selected'; ?> > Customer </option>
-                                            <option value="1" <?php if(isset($document_holder) and $document_holder == '1') echo 'selected'; ?> > Guarantor </option>
-                                            <option value="2" <?php if(isset($document_holder) and $document_holder == '2') echo 'selected'; ?> > Family Members </option>
-                                        </select>
-                                        <span class="text-danger" id="docholderCheck"> Select Document Holder </span>
-                                    </div>
-                                </div>
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="docholdername"> Holder Name </label>
-                                        <input type="text" class="form-control" id="docholder_name" name="docholder_name" value="<?php if(isset($docholder_name)) echo $docholder_name; ?>" readonly tabindex="43">
-
-                                        <select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="44">
-                                            <option value=""> Select Relationship </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="DocRelationship"> Relationship </label>
-                                        <input type="text" class="form-control" id="doc_relation" name="doc_relation" value="<?php if(isset($doc_relation)) echo $doc_relation; ?>" readonly tabindex="45">
-                                    </div>
-                                </div> -->
-
-
                             </div>
                         </div>
                     </div>
 					<!-- Document Info End -->
-
-					<!-- Fingerprint Info start-->
-					<div class="card">
-                        <div class="card-header"> Fingerprint Info </div><span class="text-danger fingerSpan" style="margin-left:25px;display: none;">Please Scan Customer Fingerprint</span>
-                        <div class="card-body">
-                            <div class="row">
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <div class="form-group fingerprintTable">
-										
-                                    </div>
-                                </div>
-							</div>
-						</div>
-					</div>
-					<!-- Fingerprint Info End-->
-
-                    <div class="col-md-12 ">
-                        <div class="text-right">
-                            <button type="submit" name="submit_documentation" id="submit_documentation" class="btn btn-primary" value="Submit" tabindex="46"><span class="icon-check"></span>&nbsp;Submit</button>
-                            <button type="reset" class="btn btn-outline-secondary" tabindex="47">Clear</button>
-                        </div>
-                    </div>
 
                 </div>
             </div> <!-- Row End -->
@@ -2003,57 +1719,6 @@ input:checked + .slider:before {
 							</div>
 						</div>
 					</div>
-					<!-- Personal info START -->
-					<!-- <div class="card">
-						<div class="card-header">Personal Info <span style="font-weight:bold" class="" ></span></div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-md-8">
-									<div class="row">
-										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
-											<div class="form-group">
-												<label for="">Customer ID</label><span class="required">&nbsp;*</span> -->
-												<input type="hidden" class="form-control" id="cus_id_loan" name="cus_id_loan" readonly value='<?php if(isset($cus_id_loan)){echo $cus_id_loan;}elseif (isset($cus_id_lc)) {echo $cus_id_lc;} ?>' tabindex="10">
-											<!--</div>
-										</div>
-
-										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
-											<div class="form-group">
-												<label for="">Customer Name</label><span class="required">&nbsp;*</span> -->
-												<input type="hidden" class="form-control" id="cus_name_loan" name="cus_name_loan" readonly value='<?php if (isset($cus_name_loan)) {echo $cus_name_loan;}elseif (isset($cus_name_lc)) {echo $cus_name_lc;} ?>' tabindex="11">
-											<!--</div>
-										</div>
-										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
-											<div class="form-group">
-												<label for="">Customer Data</label><span class="required">&nbsp;*</span> -->
-												<input type="hidden" class="form-control" id="cus_data_loan" name="cus_data_loan" readonly value='<?php if (isset($cus_data_loan)) {echo $cus_data_loan;}elseif (isset($cus_data_lc)) {echo $cus_data_lc;} ?>' tabindex="12">
-											<!--</div>
-										</div>
-
-										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
-											<div class="form-group">
-												<label for="">Mobile No</label><span class="required">&nbsp;*</span> -->
-												<input type="hidden" class="form-control" id="mobile_loan" name="mobile_loan"  readonly value='<?php if (isset($mobile_loan)) {echo $mobile_loan;}elseif (isset($mobile_lc)) {echo $mobile_lc;} ?>' tabindex="13">
-											<!--</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-md-4">
-									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-										<div class="form-group" style="margin-left: 30px;margin-top:-20px;">
-											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br> -->
-											<input type="hidden" name="pic_loan" id="pic_loan" value="<?php if (isset($pic_loan)) {echo $pic_loan;}elseif (isset($cus_pic_lc)) {echo $cus_pic_lc;} ?>">
-											<!-- <img id='imgshow' class="img_show" src='img/avatar.png' /> -->
-											<!-- <img id='imgshow' class="img_show" src='<?php if (isset($pic_loan)) {echo 'uploads/request/customer/'.$pic_loan;}elseif (isset($cus_pic_lc)) {echo 'uploads/request/customer/'. $cus_pic_lc;}else{echo 'img/avatar.png';} ?>' />
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div> -->
-					<!-- Personal info END -->
 
 				<!-- ///////////////////////////////////////////////// Verification Info START ///////////////////////////////////////////////////////////// -->
 				<div class="card">
@@ -2288,7 +1953,7 @@ input:checked + .slider:before {
 					<!-- Loan info End -->
 					<!-- Loan Calculation Start -->
 					<div class="card">
-						<div class="card-header">Loan Calculation <span style="font-weight:bold" class="" ></span><!--<input type="button" class="btn btn-outline-secondary text-right" id="refresh_cal" name="refresh_cal" value='Calculate' style="float:right">--></div>
+						<div class="card-header">Loan Calculation <span style="font-weight:bold" class="" ></span></div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-md-12">
@@ -2393,12 +2058,7 @@ input:checked + .slider:before {
 						</div>
 					</div>
 					<!-- Collection Info End -->
-					<div class="col-md-12 ">
-						<div class="text-right">
-							<button type="submit" name="submit_loan_calculation" id="submit_loan_calculation" class="btn btn-primary" value="Submit" tabindex="34"><span class="icon-check"></span>&nbsp;Submit</button>
-							<button type="reset" class="btn btn-outline-secondary" tabindex="35">Clear</button>
-						</div>
-					</div>
+					
 				</div>
 			</div>
 		</form>
@@ -2407,528 +2067,6 @@ input:checked + .slider:before {
 
 </div>
 
-
-<!-- Add Signed Doc info Modal  START -->
-<div class="modal fade addSignDoc" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
- <form method="POST" enctype="multipart/form-data"  id="signDocUploads">
-	<input type="hidden" name="doc_req_id" id="doc_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
-	<input type="hidden" name="doc_cus_id" id="doc_cus_id" value="<?php if(isset($cus_id)){echo $cus_id;} ?>" >
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Signed Doc Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetsigninfoList()">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="signInsertOk" class="successalert"> Signed Doc Info Uploaded Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="signUpdateok" class="successalert"> Signed Doc Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="signNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="signDeleteOk" class="unsuccessalert"> Signed Doc Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="signDeleteNotOk" class="unsuccessalert"> Signed Doc Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<br />
-
-				<div class="row">
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="doc_name" name="doc_name" disabled>
-								<option value=""> Select Doc Name </option>
-								<option value="0"> Promissory Note </option>
-								<option value="1"> Stamp Paper </option>
-								<option value="2"> P Additional </option>
-								<option value="3"> S Additional </option>
-							</select>
-							<span class="text-danger" id="docNameCheck"> Select Doc Name </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="SignType"> Sign Type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="sign_type" name="sign_type" disabled>
-								<option value=""> Select Sign Type </option>
-								<option value="0"> Customer </option>
-								<option value="1"> Guarantor </option>
-								<option value="2"> Combined </option>
-								<option value="3"> Family Members </option>
-							</select>
-							<span class="text-danger" id="signTypeCheck"> Select Sign Type </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="guar_name_div">
-						<div class="form-group">
-							<label for="guar_name"> Guarentor Name </label>
-							<input type="text" class="form-control" id="guar_name" name="guar_name" readonly>
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
-						<div class="form-group">
-							<label for="signRelationship"> Relationship </label>
-							<select type="text" class="form-control" id="signType_relationship" name="signType_relationship" disabled>
-								<option value=""> Select Relationship </option>
-							</select>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count" readonly>
-							<span class="text-danger" id="docCountCheck"> Enter Count </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="upd"> Uploads </label>
-							<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()">
-							<span class="text-danger" id="docupdCheck"> Upload Document </span>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="signedID" id="signedID">
-						<button type="submit" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
-					</div>
-				
-				</div>
-				</br>
-
-				<div id="signTable" style="overflow-x: auto;">
-					<table class="table custom-table modalTable">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Doc Name </th>
-								<th> Sign Type </th>
-								<th> Relationship </th>
-								<th> Count </th>
-								<th> ACTION </th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetsigninfoList()">Close</button>
-			</div>
-		</div>
-	</div>
-	</form>
-</div>
-<!-- END  Add Signed Doc Info Modal -->
-
-
-<!-- Add Cheque info Modal  START -->
-<div class="modal fade addCheque" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="chequeUploads">
-	<input type="hidden" name="cheque_req_id" id="cheque_req_id" value="<?php if(isset($req_id)){echo $req_id;} ?>" >
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Cheque Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="chequeinfoList()">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="chequeInsertOk" class="successalert"> Cheque Info Uploaded Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="chequeUpdateok" class="successalert"> Cheque Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="chequeNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="chequeDeleteOk" class="unsuccessalert"> Cheque Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="chequeDeleteNotOk" class="unsuccessalert"> Cheque Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<br />
-
-				<div class="row">
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Holdertype "> Holder type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="holder_type" name="holder_type" disabled>
-								<option value=""> Select Holder type </option>
-								<option value="0"> Customer </option>
-								<option value="1"> Guarantor </option>
-								<option value="2"> Family Members </option>
-							</select>
-							<span class="text-danger" id="holdertypeCheck"> Select Holder type </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="HolderName "> Holder Name </label>
-							<input type="text" class="form-control" id="holder_name" name="holder_name" readonly>
-
-							<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;" disabled>
-								<option value=""> Select Holder Name </option>
-							</select>
-						</div>
-					</div>
-
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="chequeRelationship"> Relationship </label>
-							<input type="text" class="form-control" id="cheque_relation" name="cheque_relation" readonly>
-
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="BankName"> Bank Name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)" readonly>
-							<span class="text-danger" id="chequebankCheck"> Enter Bank Name </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="chequeNo"> Cheque Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count" readonly>
-							<span class="text-danger" id="chequeCountCheck"> Enter Cheque Count </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="upd"> Uploads </label>
-							<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple  onchange="chequefilesCount()">
-							<span class="text-danger" id="chequeupdCheck"> Upload Cheque </span>
-						</div>
-					</div>
-				</div>
-
-				<div class="row" id="chequeColumnDiv">  </div>
-
-				<div class="row">
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="chequeID" id="chequeID">
-						<button type="submit" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
-					</div>
-				</div>
-				</br>
-
-
-				<div id="chequeTable" style="overflow-x: auto;">
-					<table class="table custom-table">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Holder type </th>
-								<th> Holder Name </th>
-								<th> Relationship </th>
-								<th> Bank Name </th>
-								<th> Cheque No </th>
-								<th> ACTION </th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="chequeinfoList();">Close</button>
-			</div>
-		</div>
-	</div>
-</form>
-</div>
-<!-- END  Add Cheque Info Modal -->
-
-
-<!-- Add Gold info Modal  START -->
-<div class="modal fade addGold" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Gold Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="goldinfoList()">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="goldInsertOk" class="successalert"> Gold Info Added Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="goldUpdateok" class="successalert"> Gold Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="goldNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="goldDeleteOk" class="unsuccessalert"> Gold Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="goldDeleteNotOk" class="unsuccessalert"> Gold Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<br />
-
-				<div class="row">
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="GoldStatus "> Gold Status </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="gold_sts" name="gold_sts">
-								<option value=""> Select Gold Status </option>
-								<option value="0" > Old </option>
-								<option value="1" > New </option>
-							</select>
-							<span class="text-danger" id="GoldstatusCheck"> Select Gold Status </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Goldtype "> Gold Type </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type" >
-							<span class="text-danger" id="GoldtypeCheck"> Enter Gold Type </span>
-						</div>
-					</div>
-
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Purity "> Purity </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity" >
-							<span class="text-danger" id="purityCheck"> Enter Purity </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="gold_Count" name="gold_Count" placeholder="Enter Count" >
-							<span class="text-danger" id="goldCountCheck"> Enter Count </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Weight"> Weight </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight in Grams" >
-							<span class="text-danger" id="goldWeightCheck"> Enter Weight </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Value"> Value </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value" >
-							<span class="text-danger" id="goldValueCheck"> Enter Value </span>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="goldID" id="goldID">
-						<button type="button" name="goldInfoBtn" id="goldInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
-					</div>
-				</div>
-				</br>
-
-
-				<div id="goldTable" style="overflow-x: auto;">
-					<table class="table custom-table">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Gold Status </th>
-								<th> Purity </th>
-								<th> Count </th>
-								<th> Weight </th>
-								<th> Value </th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="goldinfoList()">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- END  Add Gold Info Modal -->
-
-
-<!-- Add Document info Modal  START -->
-<div class="modal fade addDocument" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="docUploads">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Document Info</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="docinfoList()">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="docInsertOk" class="successalert"> Document Info Added Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="docUpdateok" class="successalert"> Document Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="docNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="docDeleteOk" class="unsuccessalert"> Document Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<div id="docDeleteNotOk" class="unsuccessalert"> Document Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-
-				<br />
-
-				<div class="row">
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="" tabindex="1" readonly />
-										<span class="text-danger" id="documentnameCheck"> Enter Document name </span>
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
-										<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="" tabindex="2" readonly />
-										<span class="text-danger" id="documentdetailsCheck"> Enter Document Details </span>
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="Documenttype"> Document Type </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="document_type" name="document_type" tabindex="3" readonly>
-											<option value=''> Select Document Type </option>
-											<option value='0' > Original </option>
-											<option value='1' > Xerox </option>
-										</select>
-										<span class="text-danger" id="documentTypeCheck"> Select Document Type </span>
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="DocumentHolder"> Document Holder </label> <span class="required">&nbsp;*</span>
-										<select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="4" readonly>
-											<option value=""> Select Holder type </option>
-											<option value="0" > Customer </option>
-											<option value="1" > Guarantor </option>
-											<option value="2" > Family Members </option>
-										</select>
-										<span class="text-danger" id="docholderCheck"> Select Document Holder </span>
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="docholdername"> Holder Name </label>
-										<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="" readonly tabindex="5" readonly>
-
-										<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="6" readonly>
-											<option value=""> Select Relationship </option>
-										</select>
-									</div>
-								</div>
-
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="DocRelationship"> Relationship </label>
-										<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="" readonly tabindex="7" >
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="DocumentUpd"> Document Uploads </label>
-										<input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]"  multiple tabindex="8">
-									</div>
-								</div>
-
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="doc_info_id" id="doc_info_id" value=''>
-						<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="9">Submit</button>
-					</div>
-				</div>
-				</br>
-
-
-				<div id="docModalDiv" style="overflow-x: auto;">
-					<table class="table custom-table">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Document Name </th>
-								<th> Document Details</th>
-								<th> Document Type </th>
-								<th> Document Holder</th>
-								<th> Holder Name</th>
-								<th> Relationship</th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="docinfoList()">Close</button>
-			</div>
-		</div>
-	</div>
-</form>
-</div>
-<!-- END  Add Document Info Modal -->
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <script src="vendor/mfs100/Library/js/jquery-1.8.2.js" type="text/javascript"></script>
