@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 16, 2023 at 03:37 PM
+-- Generation Time: Aug 17, 2023 at 03:38 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2754,10 +2754,10 @@ INSERT INTO `name_detail_creation` (`name_id`, `name`, `area`, `ident`, `status`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `new_promotion`
+-- Table structure for table `new_cus_promo`
 --
 
-CREATE TABLE `new_promotion` (
+CREATE TABLE `new_cus_promo` (
   `id` int(11) NOT NULL COMMENT 'Primary Key',
   `cus_id` varchar(255) DEFAULT NULL,
   `cus_name` varchar(255) DEFAULT NULL,
@@ -2772,11 +2772,40 @@ CREATE TABLE `new_promotion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `new_cus_promo`
+--
+
+INSERT INTO `new_cus_promo` (`id`, `cus_id`, `cus_name`, `mobile`, `area`, `sub_area`, `int_status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(5, '123456789012', 'Arun', '7894561230', 'Karur', 'vengamedu', '1', '2', '2', '2023-08-17 17:28:32', '2023-08-17 17:28:32'),
+(6, '123456789013', 'Puthusu', '9876543210', 'Chennai', 'Egmore', '0', '2', NULL, '2023-08-17 18:35:28', '2023-08-17 18:35:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `new_promotion`
+--
+
+CREATE TABLE `new_promotion` (
+  `id` int(11) NOT NULL,
+  `cus_promo_ref` varchar(55) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `follow_date` datetime DEFAULT NULL,
+  `insert_login_id` varchar(255) DEFAULT NULL,
+  `update_login_id` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT curdate()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
 -- Dumping data for table `new_promotion`
 --
 
-INSERT INTO `new_promotion` (`id`, `cus_id`, `cus_name`, `mobile`, `area`, `sub_area`, `int_status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(2, '123456789012', 'Arun', '7895461230', 'Karur', 'Vengamedu', NULL, NULL, NULL, NULL, '2023-08-16 17:39:09');
+INSERT INTO `new_promotion` (`id`, `cus_promo_ref`, `status`, `label`, `remark`, `follow_date`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(17, '5', 'Interested', 'Check', 'Check', '2023-09-01 00:00:00', '2', NULL, '2023-08-17 17:28:57', '2023-08-17 00:00:00'),
+(18, '5', 'Not Interested', 'Not interested', 'Not interested', '2023-10-01 00:00:00', '2', NULL, '2023-08-17 17:46:28', '2023-08-17 00:00:00'),
+(19, '6', 'Interested', 'Interested', 'Interested', '2023-08-31 00:00:00', '2', NULL, '2023-08-17 18:39:00', '2023-08-17 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4170,6 +4199,12 @@ ALTER TABLE `name_detail_creation`
   ADD PRIMARY KEY (`name_id`);
 
 --
+-- Indexes for table `new_cus_promo`
+--
+ALTER TABLE `new_cus_promo`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `new_promotion`
 --
 ALTER TABLE `new_promotion`
@@ -4751,10 +4786,16 @@ ALTER TABLE `name_detail_creation`
   MODIFY `name_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `new_cus_promo`
+--
+ALTER TABLE `new_cus_promo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `new_promotion`
 --
 ALTER TABLE `new_promotion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `noc`

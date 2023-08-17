@@ -1,41 +1,35 @@
 <?php
-
+session_start();
+$userid = $_SESSION['userid'];
 include('../../ajaxconfig.php');
 
 
-if(isset($_POST['cus_id'])){
-    $cus_id = preg_replace('/\D/', '',$_POST['cus_id']);
+if(isset($_POST['table_id'])){
+    $new_cus_tbl_id = $_POST['table_id'];
 }
-if(isset($_POST['cus_name'])){
-    $cus_name = $_POST['cus_name'];
+if(isset($_POST['status'])){
+    $status = $_POST['status'];
+    $int_status = $status=='Interested' ? '0':'1';
 }
-if(isset($_POST['cus_mob'])){
-    $cus_mob = $_POST['cus_mob'];
+if(isset($_POST['label'])){
+    $label = $_POST['label'];
 }
-if(isset($_POST['area'])){
-    $area = $_POST['area'];
+if(isset($_POST['remark'])){
+    $remark = $_POST['remark'];
 }
-if(isset($_POST['sub_area'])){
-    $sub_area = $_POST['sub_area'];
+if(isset($_POST['follow_date'])){
+    $follow_date = $_POST['follow_date'];
 }
 
-$sql = $con->query("SELECT * FROM new_promotion WHERE cus_id = '$cus_id'");
-
-if($sql->num_rows > 0){
-    $sql = $con->query("UPDATE new_promotion SET cus_name = '$cus_name', mobile = '$cus_mob', area = '$area', sub_area = '$sub_area' WHERE cus_id = '$cus_id'");
-    if($sql){
-        $response = 'Updated Successfully';
-    }else{
-        $response = 'Error While Updating';
-    }
-}else{
-    $sql = $con->query("INSERT INTO new_promotion(cus_id, cus_name, mobile, area, sub_area) VALUES('$cus_id', '$cus_name', '$cus_mob', '$area', '$sub_area')");
-    if($sql){
+    $sql = $con->query("UPDATE new_cus_promo SET int_status = '$int_status' WHERE id = '$new_cus_tbl_id'");
+    $sql1 = $con->query("INSERT INTO new_promotion(cus_promo_ref, status, label, remark, follow_date, insert_login_id, created_date) 
+        VALUES('$new_cus_tbl_id', '$status', '$label', '$remark', '$follow_date', '$userid', now())");
+    
+    if($sql && $sql1){
         $response = 'Inserted Successfully';
     }else{
         $response = 'Error While Inserting';
     }
-}
 
 echo json_encode($response);
 ?>
