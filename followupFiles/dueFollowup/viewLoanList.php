@@ -22,15 +22,7 @@ if(isset($_POST["bal_amt"])){
 }
 
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-    .btn-outline-secondary {
-        color: #383737;
-        border-color: #383737;
-        position: inherit;
-        left: -20px;
-    }
-</style>
+
 <?php
 function moneyFormatIndia($num) {
     $explrestunits = "";
@@ -139,7 +131,7 @@ function moneyFormatIndia($num) {
                         } ?></td>
                 <td>
                     <?php 
-                        $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary' ";
+                        $action="<div class='dropdown' ><button class='btn btn-outline-secondary' ";
                         
                         $action .="><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
                         $action .= "<a><span data-toggle='modal' data-target='.DueChart' class='due-chart' value='".$row['req_id']."' > Due Chart</span></a>
@@ -153,21 +145,21 @@ function moneyFormatIndia($num) {
                 <td>
                     <?php 
                         $r_id = $row['req_id'];
-                        $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary' ";
+                        $action="<div class='dropdown' ><button class='btn btn-outline-secondary' ";
                         
                         $action .="><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
-                        $action .= "<a href='due_followup_info&upd=$r_id'> Customer Profile </a>
-                        <a href='due_followup_info&upd=$r_id'> Documentation </a>
-                        <a href='due_followup_info&upd=$r_id'> Loan Calculation </a>
-                        <a href='due_followup_info&upd=$r_id'> Loan History </a>
-                        <a href='due_followup_info&upd=$r_id'> Document History </a>";
+                        $action .= "<a href='due_followup_info&upd=$r_id&pgeView=1'> Customer Profile </a>
+                        <a href='due_followup_info&upd=$r_id&pgeView=2'> Documentation </a>
+                        <a href='due_followup_info&upd=$r_id&pgeView=3'> Loan Calculation </a>
+                        <a href='' class='loan-history-window'> Loan History </a>
+                        <a href='' class='doc-history-window'> Document History </a>";
                         $action .= "</div></div>";
                         echo $action;
                     ?>
                 </td>
                 <td>
                     <?php 
-                        $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary' ";
+                        $action="<div class='dropdown' ><button class='btn btn-outline-secondary' ";
                         
                         $action .="><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
                         $action .= "<a><span data-toggle='modal' data-target='.addcommitmentChart' class='add-commitment-chart' value='".$row['req_id']."' > New Commitment </span></a>";

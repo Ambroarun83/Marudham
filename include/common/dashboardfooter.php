@@ -1219,6 +1219,10 @@ if($current_page == 'due_followup') { ?>
     <script src="js/due_followup.js"></script>
     <?php }
 
+if($current_page == 'due_followup_info') { ?>
+    <script src="js/due_followup_info.js"></script>
+    <?php }
+
 ?>
 
 
