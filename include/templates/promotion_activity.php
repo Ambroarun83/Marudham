@@ -1,5 +1,13 @@
 <link rel="stylesheet" type="text/css" href="css/promotion_activity.css" />
+<?php
 
+$getUser = $userObj->getUser($mysqli,$_SESSION['userid']); 
+if (sizeof($getUser)>0) {
+	$user_name = $getUser['fullname'];
+	$user_type = $getUser['role'];
+	if($user_type == '1'){$user_type = 'Director';}elseif($user_type == '2'){$user_type = 'Agent';}elseif($user_type == '3'){$user_type = 'Staff';}
+}
+?>
 <!-- Page header start -->
 <br><br>
 <div class="page-header">
@@ -168,42 +176,13 @@
 	</div>
 </div>
 
-<!-- Modal for promotion Chart just view table   -->
-<div class="modal fade" id="promoChartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-lg " role="document">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Promotion Chart</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="container-fluid row">
-
-					<div class="col-12">
-						<div class="row">
-							
-						</div>
-					</div>
-					
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button class='btn btn-primary' name="" id="" tabindex="6">Submit</button>
-				<button class="btn btn-secondary" data-dismiss="modal" tabindex="7">Close</button>
-			</div>
-		</div>
-	</div>
-</div>
-
 <!-- Modal for promotion add -->
 <div class="modal fade" id="addPromotion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-lg " role="document">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Promotion</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -212,13 +191,14 @@
 
 					<div class="col-12">
 						<div class="row">
+							<input type="hidden" name="promo_table_id" id="promo_table_id">
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<label for="promo_date">Date</label><span class="required">&nbsp;*</span>
-								<input type="text" class='form-control' readonly name="promo_date" id="promo_date" tabindex="1" placeholder='<?php echo date('d-m-Y');?>' />
+								<label for="promo_date">Date</label><span class="required">&nbsp;*</span> 
+								<input type="text" class='form-control' readonly name="promo_date" id="promo_date" tabindex="1" value='<?php echo date('d-m-Y');?>' />
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_status">Status</label><span class="required">&nbsp;*</span>
-								<input type="text" name="promo_status" id="promo_status" class='form-control' placeholder="Enter Status" tabindex="2">
+								<input type="text" name="promo_status" id="promo_status" class='form-control' placeholder="Enter Status" tabindex="2" readonly>
 								<span class="text-danger" id='promo_statusCheck' style="display: none;">Please Enter Status</span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -233,12 +213,12 @@
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_user_type">User Type</label><span class="required">&nbsp;*</span>
-								<input type="text" name="promo_user_type" id="promo_user_type" class='form-control' placeholder="Enter User Type" tabindex="5">
+								<input type="text" name="promo_user_type" id="promo_user_type" class='form-control' value='<?php echo $user_type;?>' tabindex="5" readonly>
 								<span class="text-danger" id='promo_user_typeCheck' style="display: none;">Please Enter User Type </span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_user">User</label><span class="required">&nbsp;*</span>
-								<input type="text" name="promo_user" id="promo_user" class='form-control' placeholder="Enter User" tabindex="6">
+								<input type="text" name="promo_user" id="promo_user" class='form-control' value="<?php echo $user_name;?>" tabindex="6" readonly>
 								<span class="text-danger" id='promo_userCheck' style="display: none;">Please Enter User </span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -253,7 +233,34 @@
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="sumit_add_promo" id="sumit_add_promo" tabindex="8">Submit</button>
-				<button class="btn btn-secondary" data-dismiss="modal" tabindex="9" onclick="">Close</button>
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="9" onclick="resetNewPromotionTable()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal for promotion Chart just view table   -->
+<div class="modal fade" id="promoChartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg " role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Promotion Chart</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					
+					<div class="col-12" >
+						<div class="row">
+							<div class="col-12" id='promoChartDiv'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="7">Close</button>
 			</div>
 		</div>
 	</div>
