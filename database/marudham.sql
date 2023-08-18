@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2023 at 03:38 PM
+-- Generation Time: Aug 18, 2023 at 03:52 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2275,7 +2275,7 @@ INSERT INTO `in_issue` (`id`, `loan_id`, `req_id`, `cus_id`, `cus_status`, `stat
 (2, 'LID-102', '6', '200020002000', '21', '0', '2', '2', NULL, '2023-07-10 18:30:57', '2023-07-17 16:02:21'),
 (3, 'LID-103', '5', '100010001000', '20', '0', '2', '2', NULL, '2023-01-13 10:53:37', '2023-01-13 11:14:18'),
 (4, 'LID-104', '7', '300030003000', '14', '0', '5', '5', NULL, '2023-01-03 14:54:34', '2023-01-03 11:26:37'),
-(5, 'LID-105', '8', '200020002000', '14', '0', '2', '2', NULL, '2023-01-01 16:25:22', '2023-08-02 17:42:01'),
+(5, 'LID-105', '8', '200020002000', '14', '0', '2', '2', NULL, '2023-01-01 16:25:22', '2023-01-01 17:42:01'),
 (6, 'LID-106', '1', '010720232023', '14', '0', '3', '3', NULL, '2023-07-18 18:37:20', '2023-07-19 10:59:17'),
 (7, 'LID-107', '11', '500050005000', '14', '0', '2', '2', NULL, '2023-07-21 15:02:51', '2023-07-21 16:53:52'),
 (8, 'LID-108', '12', '400040004000', '14', '0', '2', '2', NULL, '2023-08-02 15:02:51', '2023-08-02 15:02:51'),
@@ -2776,8 +2776,9 @@ CREATE TABLE `new_cus_promo` (
 --
 
 INSERT INTO `new_cus_promo` (`id`, `cus_id`, `cus_name`, `mobile`, `area`, `sub_area`, `int_status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(5, '123456789012', 'Arun', '7894561230', 'Karur', 'vengamedu', '1', '2', '2', '2023-08-17 17:28:32', '2023-08-17 17:28:32'),
-(6, '123456789013', 'Puthusu', '9876543210', 'Chennai', 'Egmore', '0', '2', NULL, '2023-08-17 18:35:28', '2023-08-17 18:35:28');
+(5, '123456789012', 'Arun', '7894561230', 'Karur', 'vengamedu', NULL, '2', '2', '2023-08-17 17:28:32', '2023-08-17 17:28:32'),
+(6, '123456789013', 'Kumar', '9876543210', 'Chennai', 'Ennore', NULL, '2', '2', '2023-08-17 18:35:28', '2023-08-17 18:35:28'),
+(7, '123456789014', 'Dinesh', '7418529630', 'Coimbatore', 'Ukkadam', NULL, '2', '2', '2023-08-18 09:46:31', '2023-08-18 09:46:31');
 
 -- --------------------------------------------------------
 
@@ -2787,7 +2788,7 @@ INSERT INTO `new_cus_promo` (`id`, `cus_id`, `cus_name`, `mobile`, `area`, `sub_
 
 CREATE TABLE `new_promotion` (
   `id` int(11) NOT NULL,
-  `cus_promo_ref` varchar(55) DEFAULT NULL,
+  `cus_id` varchar(255) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `label` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
@@ -2795,17 +2796,18 @@ CREATE TABLE `new_promotion` (
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
-  `updated_date` datetime DEFAULT curdate()
+  `updated_date` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `new_promotion`
 --
 
-INSERT INTO `new_promotion` (`id`, `cus_promo_ref`, `status`, `label`, `remark`, `follow_date`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(17, '5', 'Interested', 'Check', 'Check', '2023-09-01 00:00:00', '2', NULL, '2023-08-17 17:28:57', '2023-08-17 00:00:00'),
-(18, '5', 'Not Interested', 'Not interested', 'Not interested', '2023-10-01 00:00:00', '2', NULL, '2023-08-17 17:46:28', '2023-08-17 00:00:00'),
-(19, '6', 'Interested', 'Interested', 'Interested', '2023-08-31 00:00:00', '2', NULL, '2023-08-17 18:39:00', '2023-08-17 00:00:00');
+INSERT INTO `new_promotion` (`id`, `cus_id`, `status`, `label`, `remark`, `follow_date`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(21, '123456789012', 'Interested', 'Check', 'Check', '2023-08-20 00:00:00', '2', NULL, '2023-08-18 18:25:27', '2023-08-18 00:00:00'),
+(22, '123456789012', 'Not Interested', 'Checked', 'Checked', '2023-09-01 00:00:00', '2', NULL, '2023-08-18 18:26:36', '2023-08-18 00:00:00'),
+(23, '100010001000', 'Interested', 'Existing check', 'Existing check', '2023-09-01 00:00:00', '2', NULL, '2023-08-18 18:31:07', '2023-08-18 18:31:07'),
+(24, '100010001000', 'Not Interested', 'Existing check', 'Existing check 2', '2023-10-01 00:00:00', '2', NULL, '2023-08-18 18:31:43', '2023-08-18 18:31:43');
 
 -- --------------------------------------------------------
 
@@ -3044,7 +3046,7 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '21', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
 (7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '14', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00'),
 (8, 'Staff', 'Arun', '', '', 'Old customer new prod', '', 'REQ-106', '2023-01-02', '4', '200020002000', 'Existing', 'Aravind', '1988-03-10', '35', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '1', 'Personal', '35500', '3500', '9.9', '32000', '1', '4500', '', '14', '0', '2', '2', NULL, '2023-01-02 16:17:35', '2023-01-02 16:17:35'),
-(9, 'Staff', 'Arun', '2', '', 'Old customer new prod', '', 'REQ-107', '2023-07-15', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '2', '', '10', '3', '0', '2', '5', NULL, '2023-07-15 10:55:01', '2023-07-15 10:55:01'),
+(9, 'Staff', 'Arun', '2', '', 'Old customer new prod', '', 'REQ-107', '2023-07-15', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '2', '', '10', '21', '0', '2', '5', NULL, '2023-07-15 10:55:01', '2023-07-15 10:55:01'),
 (10, 'Staff', 'Arun', '', '', 'checking Rakesh', '', 'REQ-108', '2023-07-15', '6', '300030003000', 'Existing', 'Rakesh', '1992-06-09', '31', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '1', 'Personal', '52000', '4000', '7.7', '48000', '1', '4400', '', '14', '0', '2', '2', NULL, '2023-07-15 11:08:11', '2023-07-15 11:08:11'),
 (11, 'Staff', 'Arun', '', '', 'New customer', '', 'REQ-109', '2023-07-21', '7', '500050005000', 'New', 'Manikandan', '1995-03-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', 'Harington road', '7888878888', '', 'Mani Kapoor', 'Mani megalai', '2', '', '5', 'Watchman', 'musk.jpg', '1', 'Personal', '28000', '2000', '7.1', '26000', '2', '', '12', '14', '0', '2', '2', NULL, '2023-07-21 11:11:38', '2023-07-21 11:11:38'),
 (12, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-110', '2023-08-02', '8', '400040004000', 'New', 'Bharathi', '1999-01-21', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '17', 'EVR', '9459416164', '994949494', 'Vedha', 'Gayathri', '2', '', '1', 'Watchman', 'images (1).jpg', '5', 'AC', '50000', '0', '0.0', '50000', '1', '1600', '', '14', '0', '2', '2', NULL, '2023-08-02 14:59:57', '2023-08-02 14:59:57'),
@@ -4789,13 +4791,13 @@ ALTER TABLE `name_detail_creation`
 -- AUTO_INCREMENT for table `new_cus_promo`
 --
 ALTER TABLE `new_cus_promo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `new_promotion`
 --
 ALTER TABLE `new_promotion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `noc`

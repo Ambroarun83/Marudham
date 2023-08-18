@@ -14,8 +14,12 @@ if (sizeof($getUser)>0) {
     <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
         Marudham -  Promotion Activity 
 	</div>
+	
 </div><br>
 
+<div class="text-right" style="margin-right: 25px;">
+	<button class="btn btn-primary" id='close_history_card' style="display: none;" >&times;&nbsp;&nbsp;Cancel</button>
+</div>
 
 <!-- Main container start -->
 <div class="main-container">
@@ -36,11 +40,42 @@ if (sizeof($getUser)>0) {
 			<div class="card">
 				<div class="card-header">Existing Customer</div>
 				<div class="card-body">
-					
+					<div id="exCusDiv">
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+	<!-- Loan History START -->
+	<div class="row gutters loan-history-card" style="display:none">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="card">
+				<div class="card-header"> Loan History </div>
+				<div class="card-body">
+					<div id="loanHistoryDiv">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Loan History END -->
+
+	<!-- Document History START -->
+	<div class="row gutters doc-history-card" style="display:none">
+		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+			<div class="card">
+				<div class="card-header"> Document History </div>
+				<div class="card-body">
+					<div id="docHistoryDiv">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Document History END -->
 
 
 	<div class="row gutters new_card" style="display:none">
@@ -191,7 +226,7 @@ if (sizeof($getUser)>0) {
 
 					<div class="col-12">
 						<div class="row">
-							<input type="hidden" name="promo_table_id" id="promo_table_id">
+							<input type="hidden" name="promo_cus_id" id="promo_cus_id">
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_date">Date</label><span class="required">&nbsp;*</span> 
 								<input type="text" class='form-control' readonly name="promo_date" id="promo_date" tabindex="1" value='<?php echo date('d-m-Y');?>' />

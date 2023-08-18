@@ -35,8 +35,8 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE 1 ");
 
                             $action="<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
                             
-                            $action .= "<a class='intrest' data-toggle='modal' data-target='#addPromotion' data-id='".$row['id']."'><span>Interested</span></a>
-                            <a class='not-intrest' data-toggle='modal' data-target='#addPromotion' data-id='".$row['id']."'><span>Not Interested</span></a>";
+                            $action .= "<a class='intrest' data-toggle='modal' data-target='#addPromotion' data-id='".$row['cus_id']."'><span>Interested</span></a>
+                            <a class='not-intrest' data-toggle='modal' data-target='#addPromotion' data-id='".$row['cus_id']."'><span>Not Interested</span></a>";
                             $action .= "</div></div>";
                             echo $action;
 
@@ -49,12 +49,12 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE 1 ");
                 </td>
                 <td>
                     <?php //for promotion chart
-                        echo "<input type='button' class='btn btn-primary promo-chart' data-id='".$row['id']."' data-toggle='modal' data-target='#promoChartModal' value='View' />";
+                        echo "<input type='button' class='btn btn-primary promo-chart' data-id='".$row['cus_id']."' data-toggle='modal' data-target='#promoChartModal' value='View' />";
                     ?>
                 </td>
                 <td>
                     <?php 
-                    $qry = $con->query("SELECT follow_date FROM new_promotion WHERE cus_promo_ref = '".$row['id']."' ORDER BY created_date DESC limit 1");
+                    $qry = $con->query("SELECT follow_date FROM new_promotion WHERE cus_id = '".$row['cus_id']."' ORDER BY created_date DESC limit 1");
                     //take last promotion follow up date inserted from new promotion table
                     if($qry->num_rows > 0){
                         $fdate = $qry->fetch_assoc()['follow_date'];

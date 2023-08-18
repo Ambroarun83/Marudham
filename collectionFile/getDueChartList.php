@@ -257,8 +257,8 @@ function moneyFormatIndia($num){
             LEFT JOIN user u ON c.insert_login_id = u.user_id
             WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
             AND (
-                (c.coll_date >= '$issued' AND c.coll_date < '$due_start_from' ) OR
-                (c.trans_date >= '$issued' AND c.trans_date < '$due_start_from' )
+                (c.coll_date >= '$issued' AND c.coll_date < '$due_start_from' AND c.coll_date != '0000-00-00' ) OR
+                (c.trans_date >= '$issued' AND c.trans_date < '$due_start_from' AND c.trans_date != '0000-00-00' )
             ) ");
         }
        
@@ -269,8 +269,10 @@ function moneyFormatIndia($num){
             while ($row = $run->fetch()) {
                 $role = $row['role'];
                 $collectionAmnt = intVal($row['due_amt_track']);
-                $PcollectionAmnt = intVal($row['princ_amt_track']);
-                $IcollectionAmnt = intVal($row['int_amt_track']);
+                if($loan_type == 'interest'){
+                    $PcollectionAmnt = intVal($row['princ_amt_track']);
+                    $IcollectionAmnt = intVal($row['int_amt_track']);
+                }
                 $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
                 $waiver = $waiver + intVal($row['pre_close_waiver']);
                 $bal_amt = $loan_amt - $due_amt_track - $waiver;
