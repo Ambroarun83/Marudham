@@ -490,7 +490,8 @@ h3.styled {
     .header-actions > li:hover > a i, .header-actions > li:focus > a i {
       color: #383737; }
   .header-actions > li:hover .dropdown-menu, .header-actions > li:focus .dropdown-menu {
-    margin-top: 0;
+    margin-top: 0px;
+    left: -70px;
     display: block; }
 
 @media (max-width: 576px) {

@@ -40,7 +40,7 @@ if($sql->num_rows == 0){
             $sql = $con->query("UPDATE new_cus_promo SET cus_name = '$cus_name', mobile = '$cus_mob', area = '$area', sub_area = '$sub_area', update_login_id = '$userid' WHERE cus_id = '$cus_id' ");
             //update customer details if customer id is already present in the table
             if($sql){
-                $response = 'Updated Successfully';
+                $response = 'Customer Updated Successfully';
             }else{
                 $response = 'Error While Updating';
             }
@@ -57,7 +57,7 @@ if($sql->num_rows == 0){
             VALUES('$cus_id', '$cus_name', '$cus_mob', '$area', '$sub_area','$userid',now())");
         //insert customer details if customer id is not present in the table
         if($sql){
-            $response = 'Inserted Successfully';
+            $response = 'Customer Added Successfully';
         }else{
             $response = 'Error While Inserting';
         }
@@ -68,5 +68,5 @@ if($sql->num_rows == 0){
     $response = "Error! Customer Exists";
 }
 
-echo json_encode($response);
+echo $response;
 ?>

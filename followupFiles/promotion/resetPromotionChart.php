@@ -2,10 +2,10 @@
 
 include('../../ajaxconfig.php');
 
-$table_id = $_POST['table_id'];
+$cus_id = $_POST['cus_id'];
 
 $sql = $con->query("SELECT a.*,b.fullname, CASE b.role WHEN 1 then 'Director' when 2 then 'Agent' when 3 then 'Staff' end as role FROM new_promotion a 
-        JOIN user b ON a.insert_login_id = b.user_id WHERE cus_promo_ref = '$table_id' ");
+        JOIN user b ON a.insert_login_id = b.user_id WHERE a.cus_id = '$cus_id'  ORDER BY a.id DESC "); //order by desc will show last entered data of promotion table
 
 //this query will take new promotion data from that table with username and user type according to inserted login id and using switch case in query for output
 

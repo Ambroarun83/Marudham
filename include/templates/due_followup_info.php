@@ -365,9 +365,10 @@ input:checked + .slider:before {
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
 
-	<a href="due_followup&upd=<?php if (isset($req_id)){echo $req_id;} ?>&cusidupd=<?php if (isset($cus_id)) {echo $cus_id;} ?>">
-		<button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-	</a>
+	<!-- <a href="due_followup&upd=<?php if (isset($req_id)){echo $req_id;} ?>&cusidupd=<?php if (isset($cus_id)) {echo $cus_id;} ?>"> -->
+		<!-- this onclick will go back to previous url -->
+		<button type="button" class="btn btn-primary" onclick="history.back();"><span class="icon-arrow-left"></span>&nbsp; Back</button>
+	<!-- </a> -->
 </div><br><br>
 <!-- Page header end -->
 
