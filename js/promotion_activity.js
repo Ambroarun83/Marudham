@@ -10,14 +10,15 @@ $(document).ready(function(){
         $(this).addClass("active");
 
         const typevalue = this.value;
-        $('.existing_card, .new_card, .new_promo_card, .repromotion_card').hide();
+        $('.existing_card, .new_card, .new_promo_card, .loan-history-card, .doc-history-card, #close_history_card, .repromotion_card').hide();
         if(typevalue == 'New'){
             $('.new_card').toggle('show')
         }else if(typevalue == 'Existing'){
             $('.existing_card').toggle('show');
-            showPromotionList();
+            showPromotionList('existing');
         }else if(typevalue == 'Repromotion'){
             $('.repromotion_card').toggle('show')
+            showPromotionList('repromotion');
         }
     })
 
@@ -249,17 +250,36 @@ function intNotintOnclick(){
     $('.intrest, .not-intrest').off('click').click(function(){//onclick for add promotion modal
         let value = $(this).children().text();//takes span inner html
         let cus_id = $(this).data('id');//takes customer id of new customer promotion
-
+        
         $('#promo_status').val(value);//this will set status as intrested/Not intrested
         $('#promo_cus_id').val(cus_id);
+        
+        let orgin_table = $(this).closest('table').data('id');//takes table id for reset table when modal close
+        $('#orgin_table').val(orgin_table);
+    })
+
+    $('.closeModal').off('click').click(function(){
+        //every time use clicked on modal close button this function will call back respective tables to refresh
+        //new promotion will run resetpromotiontable itself coz its added inside html tag
+        let orgin_table = $('#orgin_table').val();
+        if(orgin_table == 'existing'){
+            showPromotionList('existing');
+        }else if(orgin_table == 'repromotion'){
+            showPromotionList('repromotion')
+        }
     })
 }
 
 
-function showPromotionList(){
-    $.post('followupFiles/promotion/showPromotionList.php',{},function(html){
-        $('#exCusDiv').empty();
-        $('#exCusDiv').html(html);
+function showPromotionList(type){
+    $.post('followupFiles/promotion/showPromotionList.php',{type},function(html){
+        if(type == 'existing'){
+            $('#rePromoCusDiv').empty()
+            $('#exCusDiv').empty().html(html);
+        }else{
+            $('#exCusDiv').empty()
+            $('#rePromoCusDiv').empty().html(html);
+        }
         intNotintOnclick();
         promoChartOnclick();
 
@@ -267,7 +287,6 @@ function showPromotionList(){
         
     })
 }
-
 function promotionListOnclick(){
     
     //on click for customer profile showing in next page
@@ -279,12 +298,19 @@ function promotionListOnclick(){
     $('.loan-history, .doc-history').off('click').click(function(){
         let req_id = $(this).data('reqid');
         let cus_id = $(this).data('cusid');
-        historyTableContents(req_id,cus_id)
+        let type = $(this).attr('class');
+        historyTableContents(req_id,cus_id,type)
     });
+
+    $('.personal-info').off('click').click(function(){
+        let cus_id = $(this).data('cusid');
+        getPersonalInfo(cus_id);
+    })
 }
 
+
 //Code snippet from c:\xampp\htdocs\marudham\js\due_followup.js
-function historyTableContents(req_id,cus_id){
+function historyTableContents(req_id,cus_id,type){
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -292,7 +318,7 @@ function historyTableContents(req_id,cus_id){
     var closed_arr = [];
     var balAmnt = [];
     $.ajax({
-        url: 'collectionFile/resetCustomerStatus.php',
+        url: 'closedFile/resetCustomerStsForClosed.php',
         data: {'cus_id':cus_id},
         dataType:'json',
         type:'post',
@@ -316,77 +342,102 @@ function historyTableContents(req_id,cus_id){
                 var closed_sts = closed_arr.join(',');
                 $('#closed_sts').val(closed_sts);
                 balAmnt = balAmnt.join(',');
-                // $('#balAmnt').val(balAmnt);
             }
         }
     })
-    $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Please Wait</span>');
+    showOverlayWithDelay();//loader start
     setTimeout(()=>{ 
 
         var pending_sts = $('#pending_sts').val()
-        console.log("🚀 ~ file: promotion_activity.js:327 ~ setTimeout ~ pending_sts:", pending_sts)
         var od_sts = $('#od_sts').val()
         var due_nil_sts = $('#due_nil_sts').val()
         var closed_sts = $('#closed_sts').val()
         var bal_amt = balAmnt;
 
-        //for loan history
-        $('.loan-history-card').show();
-        $('#close_history_card').show();
-        $('.doc-history-card').hide();
-        $('.existing_card').hide();
-        
-        $.ajax({
-            //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
-            url: 'followupFiles/dueFollowup/viewLoanHistory.php',
-            data: {'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts},
-            type:'post',
-            cache: false,
-            success: function(response){
-                $('#loanHistoryDiv').empty()
-                $('#loanHistoryDiv').html(response);
-            }
-        });
+        if(type == 'loan-history'){
 
-        //for Document history
-        $('.doc-history-card').show();
-        $('#close_history_card').show();
-        $('.loan-history-card').hide();
-        $('.existing_card').hide();
+            //for loan history
+            $('.loan-history-card').show();
+            $('#close_history_card').show();
+            $('.doc-history-card').hide();
+            $('.existing_card').hide();
+            
+            $.ajax({
+                // Fetching details by customer ID instead of req ID because we need all loans from the customer
+                url: 'followupFiles/dueFollowup/viewLoanHistory.php',
+                data: {
+                    'cus_id': cus_id,
+                    'pending_sts': pending_sts,
+                    'od_sts': od_sts,
+                    'due_nil_sts': due_nil_sts,
+                    'closed_sts': closed_sts
+                },
+                type: 'post',
+                cache: false,
+                success: function(response) {
+                    // Clearing and updating the loan history div with the response
+                    $('#loanHistoryDiv').empty().html(response);
+                }
+            });
+        }else{
 
-        $.ajax({
-            //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
-            url: 'followupFiles/dueFollowup/viewDocumentHistory.php',
-            data: {'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
-            type:'post',
-            cache: false,
-            success: function(response){
-                $('#docHistoryDiv').empty()
-                $('#docHistoryDiv').html(response);
-            }
-        })
+            //for Document history
+            $('.doc-history-card').show();
+            $('#close_history_card').show();
+            $('.loan-history-card').hide();
+            $('.existing_card').hide();
+    
+            $.ajax({
+                // Fetching details by customer ID instead of req ID because we need all loans from the customer
+                url: 'followupFiles/dueFollowup/viewDocumentHistory.php',
+                data: {
+                    'cus_id': cus_id,
+                    'pending_sts': pending_sts,
+                    'od_sts': od_sts,
+                    'due_nil_sts': due_nil_sts,
+                    'closed_sts': closed_sts,
+                    'bal_amt': bal_amt
+                },
+                type: 'post',
+                cache: false,
+                success: function(response) {
+                    // Emptying the docHistoryDiv and adding the response
+                    $('#docHistoryDiv').empty().html(response);
+                }
+            });
+        }
 
-        $('#close_history_card').click(()=>{
+        $('#close_history_card').off('click').click(()=>{
             $('.existing_card').show();//shows existing card
             $('.loan-history-card').hide();//hides loan history card
             $('.doc-history-card').hide();//hides document history card
-            $(this).hide();// hides close button
+            $('#close_history_card').hide();// Hides the close button
         })
-
+        hideOverlay();//loader stop
     },2000)
 
 }
 
 
-function swarlErrorAlert(response){
+function getPersonalInfo(cus_id){
+    $.post('followupFiles/promotion/getPersonalInfo.php',{cus_id},function(html){
+        $('#personalInfoDiv').empty().html(html);
+    })
+}
+
+
+
+// Improved code snippet
+function swarlErrorAlert(response) {
     Swal.fire({
         title: response,
         icon: 'error',
         confirmButtonText: 'Ok',
         confirmButtonColor: '#009688'
-    })
+    });
 }
-function swarlInfoAlert(title,text){
+
+function swarlInfoAlert(title, text) {
     Swal.fire({
         title: title,
         text: text,
@@ -397,19 +448,20 @@ function swarlInfoAlert(title,text){
         cancelButtonColor: '#cc4444',
         cancelButtonText: 'No',
         confirmButtonText: 'Yes'
-    }).then(function(result){
-        if(result.isConfirmed){
-            update();
+    }).then(function(result) {
+        if (result.isConfirmed) {
+        update();
         }
-    })
+    });
 }
-function swarlSuccessAlert(response){
+
+function swarlSuccessAlert(response) {
     Swal.fire({
         title: response,
         icon: 'success',
         confirmButtonText: 'Ok',
         confirmButtonColor: '#009688'
-    })
+    });
 }
 
 

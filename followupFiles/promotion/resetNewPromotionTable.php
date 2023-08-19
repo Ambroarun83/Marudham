@@ -8,7 +8,7 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE 1 ");
 ?>
 
 
-<table class="table custom-table" id='new_promo_table'>
+<table class="table custom-table" id='new_promo_table' data-id='new_promotion'>
     <thead>
         <th>Date</th>
         <th>Customer ID</th>

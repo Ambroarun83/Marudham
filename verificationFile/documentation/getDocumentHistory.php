@@ -186,7 +186,7 @@ function moneyFormatIndia($num) {
                     if($row['cus_status'] > 20) { //if request goes to NOC then noc summary can be fetched
                         $action .= "<a href='' class='noc-summary' data-reqid='$ii_req_id' data-cusid='$cus_id' data-cusname='$cus_name' data-toggle='modal' data-target='.noc-summary-modal' >NOC Summary</a>";
                     }
-                    if($screen == 'update' ){
+                    if($screen == 'update' && $row['cus_status'] <= 20){//cus status <= 20 will allow only document statuses only to edit, not NOC
                         $action .= "<a href='' class='edit-doc' data-reqid='$ii_req_id' data-cusid='$cus_id' data-cusname='$cus_name'>Edit Documents</a>";
                     }
                     $action .= "</div></div>";

@@ -25,7 +25,10 @@ if (sizeof($getUser)>0) {
 <div class="main-container">
 	<!--form start-->
 	<form id = "finance_insight_form" name="finance_insight_form" action="" method="post" enctype="multipart/form-data"> 
-	
+		<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+		<input type="hidden" name="od_sts" id="od_sts" value="" />
+		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+		<input type="hidden" name="closed_sts" id="closed_sts" value="" />
 	<div class="row gutters">
 		
 		<div class="toggle-container col-12">
@@ -146,7 +149,8 @@ if (sizeof($getUser)>0) {
 			<div class="card">
 				<div class="card-header">Repromotion</div>
 				<div class="card-body">
-					
+					<div id="rePromoCusDiv">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -217,7 +221,7 @@ if (sizeof($getUser)>0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Promotion</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
+				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -226,6 +230,7 @@ if (sizeof($getUser)>0) {
 
 					<div class="col-12">
 						<div class="row">
+							<input type="hidden" name="orgin_table" id="orgin_table"><!-- this is to reset the table contents -->
 							<input type="hidden" name="promo_cus_id" id="promo_cus_id">
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_date">Date</label><span class="required">&nbsp;*</span> 
@@ -268,7 +273,7 @@ if (sizeof($getUser)>0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="sumit_add_promo" id="sumit_add_promo" tabindex="8">Submit</button>
-				<button class="btn btn-secondary" data-dismiss="modal" tabindex="9" onclick="resetNewPromotionTable()">Close</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" onclick="resetNewPromotionTable()">Close</button>
 			</div>
 		</div>
 	</div>
@@ -292,6 +297,29 @@ if (sizeof($getUser)>0) {
 							<div class="col-12" id='promoChartDiv'></div>
 						</div>
 					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="7">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Modal for Personal Info   -->
+<div class="modal fade" id="personalInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg " role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Personal Info</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid row" id='personalInfoDiv'>
+					
+					
 				</div>
 			</div>
 			<div class="modal-footer">

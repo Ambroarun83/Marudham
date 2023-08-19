@@ -3111,15 +3111,15 @@ function updateUser($mysqli,$id,$user_id){
 	}
 
 	public function cancelRequest($mysqli,$can, $userid){
-		$cancelQry = $mysqli->query("Update request_creation set cus_status = 4, update_login_id= $userid where req_id = $can ") or die($mysqli->error());
-		$cancelQry = $mysqli->query("Update customer_register set cus_status = 4 where req_ref_id = $can ") or die($mysqli->error());
+		$cancelQry = $mysqli->query("Update request_creation set cus_status = 4,updated_date=now(), update_login_id= $userid where req_id = $can ") or die($mysqli->error());
+		$cancelQry = $mysqli->query("Update customer_register set cus_status = 4,updated_date=now() where req_ref_id = $can ") or die($mysqli->error());
 	}
 	public function revokeRequest($mysqli,$rev, $userid){
-		$revokeQry = $mysqli->query("Update request_creation set cus_status = 8, update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
-		$revokeQry = $mysqli->query("Update customer_register set cus_status = 8 where req_ref_id = $rev ") or die($mysqli->error());
+		$revokeQry = $mysqli->query("Update request_creation set cus_status = 8,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
+		$revokeQry = $mysqli->query("Update customer_register set cus_status = 8,updated_date=now() where req_ref_id = $rev ") or die($mysqli->error());
 	}
 	public function deleteRequest($mysqli,$del, $userid){
-		$deleteQry = $mysqli->query("Update request_creation set status = 1, delete_login_id= $userid where req_id = $del ") or die($mysqli->error());
+		$deleteQry = $mysqli->query("Update request_creation set status = 1,updated_date=now(), delete_login_id= $userid where req_id = $del ") or die($mysqli->error());
 	}
 
 	public function getRequest($mysqli,$id){
@@ -3363,24 +3363,24 @@ function updateUser($mysqli,$id,$user_id){
 
 	//Cancel verification 
 	function cancelVerification($mysqli,$id, $userid){
-		$qry = $mysqli->query("UPDATE request_creation set cus_status = 5, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
-		$qry = $mysqli->query("UPDATE in_verification set cus_status = 5 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+		$qry = $mysqli->query("UPDATE request_creation set cus_status = 5,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+		$qry = $mysqli->query("UPDATE in_verification set cus_status = 5 ,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
 	}
 	// Revoke Verification
 	public function revokeVerification($mysqli,$rev, $userid){
-		$revokeQry = $mysqli->query("Update request_creation set cus_status = 9, update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
-		$revokeQry = $mysqli->query("Update in_verification set cus_status = 9 where req_id = $rev ") or die($mysqli->error());
+		$revokeQry = $mysqli->query("Update request_creation set cus_status = 9,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
+		$revokeQry = $mysqli->query("Update in_verification set cus_status = 9,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
 	}
 	//Delete verification 
 	function deleteVerification($mysqli,$id, $userid){
-		$qry = $mysqli->query("UPDATE request_creation set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Verification');
-		$qry = $mysqli->query("UPDATE in_verification set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Verification');
+		$qry = $mysqli->query("UPDATE request_creation set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id ") or die('Error While Removing Verification');
+		$qry = $mysqli->query("UPDATE in_verification set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id ") or die('Error While Removing Verification');
 	}
 
 	//Cancel Approval
     function cancelApproval($mysqli,$id, $userid){
-        $qry = $mysqli->query("UPDATE request_creation set cus_status = 6, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
-        $qry = $mysqli->query("UPDATE in_verification set cus_status = 6, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+        $qry = $mysqli->query("UPDATE request_creation set cus_status = 6,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+        $qry = $mysqli->query("UPDATE in_verification set cus_status = 6,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
     }
 
 	public function getRequestForVerification($mysqli,$id){
@@ -3623,10 +3623,10 @@ function updateUser($mysqli,$id,$user_id){
             '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($cus_occ_dow)."','".strip_tags($cus_occ_abt)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($area_group)."','".strip_tags($area_line)."','10','".$userid."' )";
             $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
-			$insertQry = "UPDATE request_creation set cus_status = 10 where req_id ='".strip_tags($req_id)."' ";
+			$insertQry = "UPDATE request_creation set cus_status = 10,updated_date=now() where req_id ='".strip_tags($req_id)."' ";
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			
-			$insertQry = "UPDATE in_verification set cus_status = 10,`cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."' where req_id ='".strip_tags($req_id)."' ";
+			$insertQry = "UPDATE in_verification set cus_status = 10,`cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`blood_group`='".strip_tags($bloodGroup)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`pic`='".strip_tags($pic)."',updated_date=now() where req_id ='".strip_tags($req_id)."' ";
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			
 
@@ -3872,10 +3872,10 @@ function updateUser($mysqli,$id,$user_id){
 
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
-						$insertQry = "UPDATE request_creation set cus_status = 11 where req_id ='".strip_tags($req_id)."' ";
+						$insertQry = "UPDATE request_creation set cus_status = 11,updated_date=now() where req_id ='".strip_tags($req_id)."' ";
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 						
-						$insertQry = "UPDATE in_verification set cus_status = 11 where req_id ='".strip_tags($req_id)."' ";
+						$insertQry = "UPDATE in_verification set cus_status = 11,updated_date=now() where req_id ='".strip_tags($req_id)."' ";
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 			}else{
 				$update_doc = " UPDATE `verification_documentation` SET `req_id`='".strip_tags($req_id)."',`cus_id_doc`='".strip_tags($cus_id_doc)."',`customer_name`='".strip_tags($Customer_name)."',`cus_profile_id`='".strip_tags($cus_profile_id)."',`doc_id`='".strip_tags($doc_id)."',`mortgage_process`='".strip_tags($mortgage_process)."',`Propertyholder_type`='".strip_tags($Propertyholder_type)."',`Propertyholder_name`='".strip_tags($Propertyholder_name)."',`Propertyholder_relationship_name`='".strip_tags($Propertyholder_relationship_name)."',`doc_property_relation`='".strip_tags($doc_property_relation)."',`doc_property_type`='".strip_tags($doc_property_pype)."',`doc_property_measurement`='".strip_tags($doc_property_measurement)."',`doc_property_location`='".strip_tags($doc_property_location)."',`doc_property_value`='".strip_tags($doc_property_value)."',`endorsement_process`='".strip_tags($endorsement_process)."',`owner_type`='".strip_tags($owner_type)."',`owner_name`='".strip_tags($owner_name)."',`ownername_relationship_name`='".strip_tags($ownername_relationship_name)."',`en_relation`='".strip_tags($en_relation)."',`vehicle_type`='".strip_tags($vehicle_type)."',`vehicle_process`='".strip_tags($vehicle_process)."',`en_Company`='".strip_tags($en_Company)."',`en_Model`='".strip_tags($en_Model)."',`status`='0',`update_login_id`='".$userid."' WHERE `id` = '".strip_tags($doc_table_id)."' ";
@@ -4216,9 +4216,9 @@ function updateUser($mysqli,$id,$user_id){
 				'".strip_tags($category_info[$i])."' )");
 			}
 
-			$updateQry = $mysqli->query("UPDATE request_creation set cus_status = 12 where req_id ='".strip_tags($req_id)."' "); //12 means loan calculation completed
+			$updateQry = $mysqli->query("UPDATE request_creation set cus_status = 12,updated_date=now() where req_id ='".strip_tags($req_id)."' "); //12 means loan calculation completed
 			
-			$updateQry = $mysqli->query("UPDATE in_verification set cus_status = 12 where req_id ='".strip_tags($req_id)."' ");
+			$updateQry = $mysqli->query("UPDATE in_verification set cus_status = 12,updated_date=now() where req_id ='".strip_tags($req_id)."' ");
 
 		}
 	}
@@ -4947,17 +4947,17 @@ function updateUser($mysqli,$id,$user_id){
 		
 		//Cancel Acknowledgement
 		function cancelAcknowledgement($mysqli,$id, $userid){
-			$qry = $mysqli->query("UPDATE request_creation set cus_status = 7, update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_verification set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_approval set cus_status = 7 , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7 , update_login_id = $userid where req_id = $id and updated_date=now() ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE request_creation set cus_status = 7, updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_verification set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_approval set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id  ") or die('Error While Cancelling Acknowledgement');
 		}
 		//Delete Acknowledgement
 		function removeAcknowledgement($mysqli,$id, $userid){
-			$qry = $mysqli->query("UPDATE request_creation set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_verification set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_approval set status = 1, delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_acknowledgement set status = 1, delete_login_id = $userid where req_id = $id and updated_date=now() ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE request_creation set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_verification set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_approval set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');
+			$qry = $mysqli->query("UPDATE in_acknowledgement set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id  ") or die('Error While Removing Acknowledgement');
 		}
 
 ///  Acknowlegement END
@@ -5226,11 +5226,11 @@ function updateUser($mysqli,$id,$user_id){
 
 			if($check == 0 && $penalty_check == 0 && $coll_charge_check == 0){
 				$cus_status = 20;
-				$selectIC = $mysqli->query("UPDATE request_creation set cus_status = $cus_status, update_login_id = $userid WHERE  req_id = '".$req_id."' ") or die('Error on Request Table');
+				$selectIC = $mysqli->query("UPDATE request_creation set cus_status = $cus_status,updated_date=now(), update_login_id = $userid WHERE  req_id = '".$req_id."' ") or die('Error on Request Table');
                 // $selectIC = $mysqli->query("UPDATE customer_register set cus_status = 14 WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
-                $selectIC = $mysqli->query("UPDATE in_verification set cus_status = $cus_status, update_login_id = $userid WHERE req_id = '".$req_id."' ")or die('Error on inVerification Table');
-                $selectIC = $mysqli->query("UPDATE `in_approval` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_approval Table');
-                $selectIC = $mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= $cus_status,`update_login_id`= $userid WHERE  req_id = '".$req_id."' and updated_date=now() ") or die('Error on in_acknowledgement Table');
+                $selectIC = $mysqli->query("UPDATE in_verification set cus_status = $cus_status,updated_date=now(), update_login_id = $userid WHERE req_id = '".$req_id."' ")or die('Error on inVerification Table');
+                $selectIC = $mysqli->query("UPDATE `in_approval` SET `cus_status`= $cus_status,updated_date=now(),`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_approval Table');
+                $selectIC = $mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= $cus_status,updated_date=now(),`update_login_id`= $userid WHERE  req_id = '".$req_id."' ") or die('Error on in_acknowledgement Table');
                 $insertIssue = $mysqli->query("UPDATE `in_issue` SET `cus_status`= $cus_status,`updated_date`=current_timestamp,`update_login_id` = $userid where req_id = '".$req_id."' ") or die('Error on in_issue Table');
 
 			}
