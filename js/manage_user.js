@@ -248,6 +248,11 @@ $(document).ready(function () {
             $('.bank_details').hide()
         }
     });
+    $("#followupmodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.followup-checkbox");
+        var followupmodule = document.querySelector('#followupmodule');
+        checkbox(checkboxesToEnable,followupmodule);
+    });
 
     $('#cash_tally').click(function(){
         var cash_tally = document.querySelector('#cash_tally');
@@ -313,6 +318,7 @@ $(function(){
         var updatemodule = document.getElementById('updatemodule');
         var concernmodule = document.getElementById('concernmodule');
         var accountsmodule = document.getElementById('accountsmodule');
+        var followupmodule = document.getElementById('followupmodule');
         if(mastermodule.checked){const checkboxesToEnable = document.querySelectorAll("input.master-checkbox");var mastermodule = document.querySelector('#mastermodule');checkbox(checkboxesToEnable,mastermodule);}
         if(adminmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.admin-checkbox");var adminmodule = document.querySelector('#adminmodule');checkbox(checkboxesToEnable,adminmodule);}
         if(requestmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.request-checkbox");var requestmodule = document.querySelector('#requestmodule');checkbox(checkboxesToEnable,requestmodule);}
@@ -327,6 +333,7 @@ $(function(){
         if(updatemodule.checked){const checkboxesToEnable = document.querySelectorAll("input.update-checkbox");var updatemodule = document.querySelector('#updatemodule');checkbox(checkboxesToEnable,updatemodule);}
         if(concernmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.concern-checkbox");var concernmodule = document.querySelector('#concernmodule');checkbox(checkboxesToEnable,concernmodule);}
         if(accountsmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.accounts-checkbox");var accountsmodule = document.querySelector('#accountsmodule');checkbox(checkboxesToEnable,accountsmodule);}
+        if(followupmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.followup-checkbox");var followupmodule = document.querySelector('#followupmodule');checkbox(checkboxesToEnable,followupmodule);}
     }else{
 
     }

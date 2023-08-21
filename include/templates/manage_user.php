@@ -66,6 +66,11 @@ $cash_tally_admin = '';
 $bank_details = '';
 $bank_clearance = '';
 $finance_insight = '';
+$followupmodule = '';
+$promotion_activity = '';
+$loan_followup  = '';
+$conf_followup  = '';
+$due_followup  = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -174,6 +179,11 @@ if($idupd>0)
 			$bank_details          		     = $getUser['bank_details'];
 			$bank_clearance          		     = $getUser['bank_clearance'];
 			$finance_insight          		     = $getUser['finance_insight'];
+			$followupmodule          		     = $getUser['followupmodule'];
+			$promotion_activity = $getUser['promotion_activity'];
+			$loan_followup = $getUser['loan_followup'];
+			$conf_followup = $getUser['confirmation_followup'];
+			$due_followup = $getUser['due_followup'];
 		}
 	}
 }
@@ -838,6 +848,42 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($finance_insight==0){ echo'checked'; }} ?> tabindex="47" class="accounts-checkbox" id="finance_insight" name="finance_insight" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="finance_insight">Financial Insights</label>
+                            </div>
+                        </div>
+					</div>
+
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($followupmodule==0){ echo'checked'; }} ?> tabindex="48" class="" id="followupmodule" name="followupmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="followupmodule">
+							<h5>Follow up</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($promotion_activity==0){ echo'checked'; }} ?> tabindex="49" class="followup-checkbox" id="promotion_activity" name="promotion_activity" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="promotion_activity">Promotion Activity</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($loan_followup==0){ echo'checked'; }} ?> tabindex="50" class="followup-checkbox" id="loan_followup" name="loan_followup" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="loan_followup">Loan Followup</label>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($conf_followup==0){ echo'checked'; }} ?> tabindex="51" class="followup-checkbox" id="conf_followup" name="conf_followup" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="conf_followup">Confirmation Followup</label>
+                            </div>
+                        </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($due_followup==0){ echo'checked'; }} ?> tabindex="52" class="followup-checkbox" id="due_followup" name="due_followup" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="due_followup">Due Followup</label>
                             </div>
                         </div>
 					</div>

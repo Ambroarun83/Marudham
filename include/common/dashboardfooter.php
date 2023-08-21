@@ -1223,6 +1223,14 @@ if($current_page == 'due_followup_info') { ?>
     <script src="js/due_followup_info.js"></script>
     <?php }
 
+if($current_page == 'loan_followup') { ?>
+    <script src="js/loan_followup.js"></script>
+    <?php }
+
+if($current_page == 'confirmation_followup') { ?>
+    <script src="js/confirmation_followup.js"></script>
+    <?php }
+
 ?>
 
 

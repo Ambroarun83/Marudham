@@ -24,7 +24,7 @@ if (sizeof($getUser)>0) {
 <!-- Main container start -->
 <div class="main-container">
 	<!--form start-->
-	<form id = "finance_insight_form" name="finance_insight_form" action="" method="post" enctype="multipart/form-data"> 
+	<form id = "promotion_activity_form" name="promotion_activ_form" action="" method="post" enctype="multipart/form-data"> 
 		<input type="hidden" name="pending_sts" id="pending_sts" value="" />
 		<input type="hidden" name="od_sts" id="od_sts" value="" />
 		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
@@ -168,7 +168,7 @@ if (sizeof($getUser)>0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">New Promotion</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -209,7 +209,7 @@ if (sizeof($getUser)>0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="submit_new_cus" id="submit_new_cus" tabindex="6">Submit</button>
-				<button class="btn btn-secondary" data-dismiss="modal" tabindex="7" onclick="resetNewPromotionTable()">Close</button>
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="7" onclick="">Close</button>
 			</div>
 		</div>
 	</div>
@@ -221,7 +221,7 @@ if (sizeof($getUser)>0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Promotion</h5>
-				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
+				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -273,7 +273,7 @@ if (sizeof($getUser)>0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="sumit_add_promo" id="sumit_add_promo" tabindex="8">Submit</button>
-				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" onclick="resetNewPromotionTable()">Close</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" onclick="">Close</button>
 			</div>
 		</div>
 	</div>

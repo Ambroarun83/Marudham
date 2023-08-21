@@ -194,7 +194,7 @@ function submitPromotion(){
             swarlErrorAlert(response);
         }else{
             swarlSuccessAlert(response);
-            $('#addPromotion').find('.modal-body input').not('[readonly]').val('');
+            $('#addPromotion').find('.modal-body input').not('[readonly]').not('#orgin_table').val('');
         }
     })
 }
@@ -263,9 +263,11 @@ function intNotintOnclick(){
         //new promotion will run resetpromotiontable itself coz its added inside html tag
         let orgin_table = $('#orgin_table').val();
         if(orgin_table == 'existing'){
-            showPromotionList('existing');
+            $(".toggle-button[value='Existing']").trigger('click');
         }else if(orgin_table == 'repromotion'){
-            showPromotionList('repromotion')
+            $(".toggle-button[value='Repromotion']").trigger('click');
+        }else{
+            resetNewPromotionTable();
         }
     })
 }
