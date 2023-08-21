@@ -383,6 +383,16 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/due_followup_info.php" ?>
 			<?php } ?>
 
+			<!-- Loan Follow up -->
+			<?php if($current_page == 'loan_followup') { ?>
+			<?php include "include/templates/loan_followup.php" ?>
+			<?php } ?>
+			
+			<!-- Confirmation Follow up -->
+			<?php if($current_page == 'confirmation_followup') { ?>
+			<?php include "include/templates/confirmation_followup.php" ?>
+			<?php } ?>
+
 		</div>
 		<!-- Page content end -->
 

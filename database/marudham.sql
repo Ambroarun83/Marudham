@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2023 at 03:03 PM
+-- Generation Time: Aug 21, 2023 at 03:03 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1066,6 +1066,31 @@ CREATE TABLE `concern_subject` (
 
 INSERT INTO `concern_subject` (`concern_sub_id`, `concern_subject`, `status`, `insert_user_id`, `update_user_id`, `delete_user_id`, `created_date`, `updated_date`) VALUES
 (1, 'Behaviour', 0, NULL, NULL, NULL, '2023-07-19 11:49:31', '2023-07-19 11:49:31');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `confirmation_followup`
+--
+
+CREATE TABLE `confirmation_followup` (
+  `id` int(11) NOT NULL,
+  `req_id` varchar(255) NOT NULL,
+  `cus_id` varchar(255) NOT NULL,
+  `person_type` varchar(255) NOT NULL,
+  `person_name` varchar(255) NOT NULL,
+  `relationship` varchar(255) NOT NULL,
+  `mobile` varchar(255) NOT NULL,
+  `upload` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `sub_status` varchar(255) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  `insert_login_id` varchar(50) NOT NULL,
+  `update_login_id` varchar(50) DEFAULT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -2596,6 +2621,34 @@ INSERT INTO `loan_category_ref` (`loan_category_ref_id`, `loan_category_ref_name
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `loan_followup`
+--
+
+CREATE TABLE `loan_followup` (
+  `id` int(11) NOT NULL,
+  `cus_id` varchar(255) NOT NULL,
+  `stage` varchar(255) NOT NULL,
+  `label` varchar(255) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  `follow_date` date NOT NULL,
+  `insert_login_id` varchar(50) NOT NULL,
+  `update_login_id` varchar(50) DEFAULT NULL,
+  `created_date` datetime NOT NULL,
+  `updated_date` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `loan_followup`
+--
+
+INSERT INTO `loan_followup` (`id`, `cus_id`, `stage`, `label`, `remark`, `follow_date`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '100010001000', 'Acknowledgement', 'Check', 'Check', '2023-08-21', '2', NULL, '2023-08-21 12:27:01', '2023-08-21 12:27:01'),
+(2, '100010001000', 'Acknowledgement', 'Check', 'Check', '2023-08-20', '2', NULL, '2023-08-21 12:27:34', '2023-08-21 12:27:34'),
+(3, '100010001000', 'Acknowledgement', 'Check', 'Check', '2023-08-22', '2', NULL, '2023-08-21 12:27:56', '2023-08-21 12:27:56');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `loan_issue`
 --
 
@@ -2816,7 +2869,12 @@ INSERT INTO `new_promotion` (`id`, `cus_id`, `status`, `label`, `remark`, `follo
 (30, '400040004000', 'Not Interested', 'Color check', 'Color check', '2023-08-19 00:00:00', '2', NULL, '2023-08-19 15:53:33', '2023-08-19 15:53:33'),
 (31, '400040004000', 'Not Interested', 'Check', 'check', '2023-09-01 00:00:00', '2', NULL, '2023-08-19 16:13:25', '2023-08-19 16:13:25'),
 (32, '400040004000', 'Interested', 'Check', 'Check', '2023-08-19 00:00:00', '2', NULL, '2023-08-19 16:14:24', '2023-08-19 16:14:24'),
-(33, '400040004000', 'Interested', 'check', 'check', '2023-08-20 00:00:00', '2', NULL, '2023-08-19 16:14:57', '2023-08-19 16:14:57');
+(33, '400040004000', 'Interested', 'check', 'check', '2023-08-20 00:00:00', '2', NULL, '2023-08-19 16:14:57', '2023-08-19 16:14:57'),
+(35, '400040004000', 'Not Interested', 'asdf', 'asdf', '2023-08-11 00:00:00', '2', NULL, '2023-08-19 18:40:48', '2023-08-19 18:40:48'),
+(36, '400040004000', 'Not Interested', 'asdf', 'asdf', '2023-08-19 00:00:00', '2', NULL, '2023-08-19 18:41:14', '2023-08-19 18:41:14'),
+(37, '400040004000', 'Not Interested', 'Check', 'Check', '2023-08-22 00:00:00', '2', NULL, '2023-08-21 10:25:33', '2023-08-21 10:25:33'),
+(38, '400040004000', 'Interested', 'Check', 'Check', '2023-08-21 00:00:00', '2', NULL, '2023-08-21 10:27:20', '2023-08-21 10:27:20'),
+(39, '100010001000', 'Not Interested', 'Check', 'Check', '2023-08-19 00:00:00', '2', NULL, '2023-08-21 10:27:32', '2023-08-21 10:27:32');
 
 -- --------------------------------------------------------
 
@@ -3373,7 +3431,7 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `em
 (2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '1,2,6,7', '1,2', '1,2,3,5,6', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2023-08-19 09:55:26'),
 (3, NULL, NULL, 'Alaathi Mobiles and Furniture', NULL, 'alaathi@gmail.com', 'alaathi', '123', '2', '', '', '1', '', '1', '3', '', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-01 12:12:04', '2023-07-21 10:14:54'),
 (4, NULL, NULL, 'Jafar', NULL, '', 'jafar', '123', '3', '1', '', '', '28', '1', '1', '5,7', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-03 11:59:48', '2023-07-29 15:13:03'),
-(5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '5', NULL, '2023-07-03 13:31:46', '2023-08-09 10:35:42');
+(5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '5', NULL, '2023-07-03 13:31:46', '2023-08-21 16:57:30');
 
 -- --------------------------------------------------------
 
@@ -3895,6 +3953,12 @@ ALTER TABLE `concern_subject`
   ADD PRIMARY KEY (`concern_sub_id`);
 
 --
+-- Indexes for table `confirmation_followup`
+--
+ALTER TABLE `confirmation_followup`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `ct_bank_collection`
 --
 ALTER TABLE `ct_bank_collection`
@@ -4187,6 +4251,12 @@ ALTER TABLE `loan_category_creation`
 --
 ALTER TABLE `loan_category_ref`
   ADD PRIMARY KEY (`loan_category_ref_id`);
+
+--
+-- Indexes for table `loan_followup`
+--
+ALTER TABLE `loan_followup`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `loan_issue`
@@ -4488,6 +4558,12 @@ ALTER TABLE `concern_subject`
   MODIFY `concern_sub_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `confirmation_followup`
+--
+ALTER TABLE `confirmation_followup`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `ct_bank_collection`
 --
 ALTER TABLE `ct_bank_collection`
@@ -4776,6 +4852,12 @@ ALTER TABLE `loan_category_ref`
   MODIFY `loan_category_ref_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
+-- AUTO_INCREMENT for table `loan_followup`
+--
+ALTER TABLE `loan_followup`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `loan_issue`
 --
 ALTER TABLE `loan_issue`
@@ -4809,7 +4891,7 @@ ALTER TABLE `new_cus_promo`
 -- AUTO_INCREMENT for table `new_promotion`
 --
 ALTER TABLE `new_promotion`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `noc`
