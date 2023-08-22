@@ -10,7 +10,7 @@ LEFT JOIN agent_creation ac ON rc.agent_id = ac.ag_id
 LEFT JOIN area_group_mapping agm ON FIND_IN_SET(rc.sub_area,agm.sub_area_id)
 LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
 LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area,alm.sub_area_id)
-WHERE rc.cus_status >= 14 ");
+WHERE rc.cus_status >= 14");
 //this query will get all the request which are raised in request and shows till loan gets issued.
 //this query will not result entries which are cancelled or revoked
 
@@ -43,7 +43,12 @@ $sno = 1;
         <th>Status</th>
     </thead>
     <tbody>
-        <?php while($row =  $sql->fetch_assoc()){?>
+        <?php while($row =  $sql->fetch_assoc()){
+                $req_id = $row['req_id'];
+                // $qry = $con->query("SELECT remove_status FROM confirmation_followup WHERE req_id = '".$req_id."' ORDER BY created_date DESC limit 1");
+                // $rst = $qry->fetch_assoc()['remove_status']??Null;
+                // if(mysqli_num_rows($qry) > 0 && $rst == 0){//show below contents only if confirmation of the request id is not removed from table already
+            ?>
             <tr>
                 <td><?php echo $sno; $sno++; ?></td>
                 <td><?php echo date('d-m-Y',strtotime($row['updated_date'])); ?></td>
@@ -62,7 +67,7 @@ $sno = 1;
                     <?php  
                         $action="<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
                         
-                        $action .= "<a class='conf-chart' data-cusid='".$row['cus_id']."' data-toggle='modal' data-target='#confChartModal'><span>Confirmation Chart</span></a>
+                        $action .= "<a class='conf-chart' data-cusid='".$row['cus_id']."' data-reqid='".$row['req_id']."' data-toggle='modal' data-target='#confChartModal'><span>Confirmation Chart</span></a>
                         <a class='personal-info' data-toggle='modal' data-target='#personalInfoModal' data-cusid='".$row['cus_id']."'><span>Personal Info</span></a>
                         <a class='cust-profile' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Customer Profile</span></a>
                         <a class='documentation' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Documentation</span></a>
@@ -80,14 +85,17 @@ $sno = 1;
                     <?php 
                         //for Confirmation edit
                         $action="<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
-                        $action .= "<a class='conf-edit' data-cusid='".$row['cus_id']."' data-cusname='".$row['cus_name']."' data-reqid='".$row['req_id']."' data-toggle='modal' data-target='#addConfimation'><span>Confirmation</span></a>";
 
                         $qry = $con->query("SELECT `status` FROM confirmation_followup WHERE req_id = '".$row['req_id']."' ORDER BY created_date DESC limit 1");
                         if($qry->num_rows > 0){
                             $status = $qry->fetch_assoc()['status'];
                             if($status == '1'){//1 means completed
                                 $action .= "<a class='conf-remove' data-cusid='".$row['cus_id']."' data-reqid='".$row['req_id']."' ><span>Remove</span></a>";
+                            }else{
+                                $action .= "<a class='conf-edit' data-cusid='".$row['cus_id']."' data-cusname='".$row['cus_name']."' data-reqid='".$row['req_id']."' data-toggle='modal' data-target='#addConfimation'><span>Confirmation</span></a>";
                             }
+                        }else{
+                            $action .= "<a class='conf-edit' data-cusid='".$row['cus_id']."' data-cusname='".$row['cus_name']."' data-reqid='".$row['req_id']."' data-toggle='modal' data-target='#addConfimation'><span>Confirmation</span></a>";
                         }
 
                         $action .= "</div></div>";
@@ -108,7 +116,7 @@ $sno = 1;
                     ?></td>
 
             </tr>
-        <?php } ?>
+        <?php } //} ?>
 
     </tbody>
 </table>
@@ -116,7 +124,7 @@ $sno = 1;
 <script>
     $('#conf_follow_table').dataTable({
         'processing': true,
-        'iDisplayLength': 5,
+        'iDisplayLength': 20,
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
