@@ -4,20 +4,74 @@ $(document).ready(function(){
 
     $('#conf_person_type').change(function(){
         let type = $(this).val();
-        if(type == '1'){
+        let req_id = $('#conf_req_id').val();
+        let cus_id = $('#conf_cus_id').val();
+        if(type == 1){
+
             let cus_name = $('#conf_cus_name').val();
+            $('#conf_person_name1').hide();//select box
+            $('#conf_person_name').show();
             $('#conf_person_name').val(cus_name);//storing customer name in person name
             $('#conf_relationship').val('NIL');
-        }else if(type == '2'){
-            
+
+        }else if(type == 2 ){
+            type=1;//cause in below url garentor is managed as type 1
+            $.post('verificationFile/documentation/check_holder_name.php',{'reqId':req_id,type},function(response){
+                //if guarentor show readonly input box and hide select box
+                $('#conf_person_name').show();
+                $('#conf_person_name1').hide();//select box
+                $('#conf_person_name1').empty();//select box
+                
+                $('#conf_person_name').val(response['name'])
+                $('#conf_relationship').val(response['relationship']);
+            },'json')
+        }else if(type == 3){
+            $.post('verificationFile/verificationFam.php',{cus_id},function(response){
+                //if Family member then show dropdown and hide input box
+                $('#conf_person_name1').show();//select box
+                $('#conf_person_name').hide();
+                $('#conf_person_name').empty();
+                
+                $('#conf_person_name1').empty().append("<option value=''>Select Person Name</option>")
+                for(var i=0;i<response.length-1;i++){
+                    $('#conf_person_name1').append("<option value='"+response[i]['fam_id']+"'>"+response[i]['fam_name']+"</option>")
+                }
+
+                //create onchange event for person name that will bring the relationship of selected customer
+                $('#conf_person_name1').off('change').change(function(){
+                    let person = $(this).val();
+                    for(var i=0;i<response.length-1;i++){
+                        if(person == response[i]['fam_id']){
+                            $('#conf_relationship').val(response[i]['relationship']);
+                        }
+                    }
+                })
+                
+            },'json')
+        }
+    });
+
+    $('#conf_status').change(function(){
+        let status = $(this).val();
+        $('.unav-div').hide();$('.unav-div select').val('');
+        $('.reconf-div').hide();$('.reconf-div input').val('');
+        if(status == 2){
+            $('.unav-div').show();
+        }else if(status == 3){
+            $('.reconf-div').show();
         }
     })
 
-    // $('#sumit_add_lfollow').click(()=>{
-    //     if(validateLoanfollowup() == true){
-    //         submitLoanfollowup();
-    //     }
-    // })
+    $('.closeModal').click(function(){
+        //reset modal contents back
+        resetModalContents();
+    })
+
+    $('#sumit_add_conf').click(()=>{
+        if(validateConfirmation() == true){
+            submitConfirmation();
+        }
+    })
 
 });
 
@@ -30,30 +84,76 @@ $(function(){
 
 
 
-function submitLoanfollowup(){
-    let cus_id = $('#lfollow_cus_id').val();
-    let stage = $('#lfollow_stage').val();let label = $('#lfollow_label').val();
-    let remark = $('#lfollow_remark').val();let follow_date = $('#lfollow_fdate').val();
-    let args = {cus_id,stage,label,remark,follow_date};
+function submitConfirmation(){
+    var formdata = new FormData();                  
+    let cus_id = $('#conf_cus_id').val();let req_id = $('#conf_req_id').val();
+    let person_type = $('#conf_person_type').val();let person_name = $('#conf_person_name').val();let person_name1 = $('#conf_person_name1').val();//select box
+    let relationship = $('#conf_relationship').val();let mobile = $('#conf_mobile').val();let file = $('#conf_upload').prop('files')[0];
+    let status = $('#conf_status').val();let sub_status = $('#conf_sub_status').val();
+    let label = $('#conf_label').val();let remark = $('#conf_remark').val();
     
-    $.post('followupFiles/loanFollowup/submitLoanfollowup.php',args,function(response){
-        if(response.includes('Error')){
-            swarlErrorAlert(response);
-        }else{
-            swarlSuccessAlert(response);
-            $('#addLoanFollow').find('.modal-body input').not('[readonly]').val('');
+    formdata.append('cus_id',cus_id)
+    formdata.append('req_id',req_id)
+    formdata.append('person_type',person_type)
+    formdata.append('person_name',person_name)
+    formdata.append('person_name1',person_name1)
+    formdata.append('relationship',relationship)
+    formdata.append('mobile',mobile)
+    formdata.append('file',file)
+    formdata.append('status',status)
+    formdata.append('sub_status',sub_status)
+    formdata.append('label',label)
+    formdata.append('remark',remark)
+    
+
+    // let args = {cus_id,req_id,person_type,person_name,person_name1,relationship,mobile,status,sub_status,label,remark};
+    
+    // $.post('followupFiles/confirmation/submitConfirmation.php',formdata,function(response){
+    //     if(response.includes('Error')){
+    //         swarlErrorAlert(response);
+    //     }else{
+    //         swarlSuccessAlert(response);
+    //         resetModalContents();
+    //     }
+    // })
+    $.ajax({
+        url:'followupFiles/confirmation/submitConfirmation.php',
+        data: formdata,
+        type: 'post',
+        cache: false,
+        contentType: false,
+        processData: false,
+        success:function(response){
+            if(response.includes('Error')){
+                swarlErrorAlert(response);
+            }else{
+                swarlSuccessAlert(response);
+                resetModalContents();
+            }
         }
     })
 }
-function validateLoanfollowup(){
+function validateConfirmation(){
     let response = true;
-    let stage = $('#lfollow_stage').val();let label = $('#lfollow_label').val();
-    let remark = $('#lfollow_remark').val();let follow_date = $('#lfollow_fdate').val();
+    let person_type = $('#conf_person_type').val();let person_name1 = $('#conf_person_name1').val();//select box
+    let mobile = $('#conf_mobile').val();
+    let status = $('#conf_status').val();let sub_status = $('#conf_sub_status').val();
+    let label = $('#conf_label').val();let remark = $('#conf_remark').val();
     
-    validateField(stage, '#lfollow_stageCheck');
-    validateField(label, '#lfollow_labelCheck');
-    validateField(remark, '#lfollow_remarkCheck');
-    validateField(follow_date, '#lfollow_fdateCheck');
+    validateField(person_type, '#conf_person_typeCheck');
+    if(person_type == 3){
+        validateField(person_name1, '#conf_person_nameCheck');
+    }
+    
+    validateField(mobile, '#conf_mobileCheck');
+    validateField(status, '#conf_statusCheck');
+    
+    if(status == 2){
+        validateField(sub_status, '#conf_sub_statusCheck');
+    }else if(status == 3){
+        validateField(label, '#conf_labelCheck');
+        validateField(remark, '#conf_remarkCheck');
+    }
 
     function validateField(value, fieldId) {
         if (value === '' ) {
@@ -69,6 +169,11 @@ function validateLoanfollowup(){
     return response;
 }
 
+function resetModalContents(){
+    $('#addConfimation').find('.modal-body input,select').not('#conf_date').val('');
+    $('#conf_person_name1, .unav-div, .reconf-div').hide();
+    $('#conf_person_name').show();
+}
 
 
 function resetConfirmationFollowupTable(){
@@ -77,16 +182,16 @@ function resetConfirmationFollowupTable(){
         $('#confListDiv').html(html);
         
     }).then(function(){
-        loanFollowupTableOnclick();
+        confirmationTableOnClick();
     })
 }
-function loanFollowupTableOnclick(){
+function confirmationTableOnClick(){
     
 
     //confrimation chart
     $('.conf-chart').off('click').click(function(){
-        let cus_id = $(this).data('cusid');
-        $.post('followupFiles/confirmation/getConfirmationChart.php',{cus_id},function(html){
+        let cus_id = $(this).data('cusid');let req_id = $(this).data('reqid');
+        $.post('followupFiles/confirmation/getConfirmationChart.php',{cus_id,req_id},function(html){
             $('#confChartDiv').empty().html(html);
         })
     })
@@ -126,10 +231,19 @@ function loanFollowupTableOnclick(){
     //add confirmation
     $('.conf-edit').off('click').click(function(){
         //set cus id to hidden input for submit
+        let req_id = $(this).data('reqid');
         let cus_id = $(this).data('cusid');
         let cus_name = $(this).data('cusname');
+        $('#conf_req_id').val(req_id);
         $('#conf_cus_id').val(cus_id);
         $('#conf_cus_name').val(cus_name);
+    })
+
+    //remove confirmation
+    $('.conf-remove').off('click').click(function(){
+        //set cus id to hidden input for submit
+        let req_id = $(this).data('reqid');
+        removeConfirmation(req_id);
     })
 }
 //Code snippet from c:\xampp\htdocs\marudham\js\due_followup.js
@@ -239,6 +353,16 @@ function historyTableContents(req_id,cus_id,type){
         hideOverlay();//loader stop
     },2000)
 
+}
+function removeConfirmation(req_id){
+    $.post('followupFiles/confirmation/removeConfirmation.php',{req_id},function(response){
+        if(response.includes('Successfully')){
+            swarlSuccessAlert('Confirmation Removed Successfully');
+            resetConfirmationFollowupTable();
+        }else{
+            swarlErrorAlert(response);
+        }
+    })
 }
 
 

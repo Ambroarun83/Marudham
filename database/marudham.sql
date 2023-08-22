@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2023 at 03:03 PM
+-- Generation Time: Aug 22, 2023 at 03:40 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1086,11 +1086,26 @@ CREATE TABLE `confirmation_followup` (
   `sub_status` varchar(255) NOT NULL,
   `label` varchar(255) NOT NULL,
   `remark` varchar(255) NOT NULL,
+  `remove_status` varchar(10) NOT NULL DEFAULT '0',
   `insert_login_id` varchar(50) NOT NULL,
   `update_login_id` varchar(50) DEFAULT NULL,
   `created_date` datetime NOT NULL,
   `updated_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `confirmation_followup`
+--
+
+INSERT INTO `confirmation_followup` (`id`, `req_id`, `cus_id`, `person_type`, `person_name`, `relationship`, `mobile`, `upload`, `status`, `sub_status`, `label`, `remark`, `remove_status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(5, '6', '200020002000', '1', 'Aravind', 'NIL', '4345464656', '', '2', '1', '', '', '0', '2', NULL, '2023-08-22 16:10:51', '2023-08-22 16:10:51'),
+(6, '6', '200020002000', '2', 'Ganesan', 'Brother', '1242423233', '', '3', '', 'asf', 'das', '0', '2', NULL, '2023-08-22 16:12:06', '2023-08-22 16:12:06'),
+(7, '6', '200020002000', '3', '4', 'Father', '4645645656', '', '2', '2', '', '', '0', '2', NULL, '2023-08-22 16:12:54', '2023-08-22 16:12:54'),
+(8, '6', '200020002000', '1', 'Aravind', 'NIL', '2345465456', '', '1', '', '', '', '0', '2', NULL, '2023-08-22 16:43:29', '2023-08-22 16:43:29'),
+(9, '6', '200020002000', '2', 'Ganesan', 'Brother', '2424234234', '', '2', '2', '', '', '0', '2', NULL, '2023-08-22 18:10:17', '2023-08-22 18:10:17'),
+(10, '6', '200020002000', '1', 'Aravind', 'NIL', '2423423423', '', '2', '1', '', '', '0', '2', NULL, '2023-08-22 18:12:06', '2023-08-22 18:12:06'),
+(12, '6', '200020002000', '1', 'Aravind', 'NIL', '2142143242', 'sample2.pdf', '1', '', '', '', '1', '2', NULL, '2023-08-22 18:22:19', '2023-08-22 18:22:19'),
+(13, '10', '300030003000', '2', 'Vivek', 'Father', '4546575768', '64e4b0e8333b9.pdf', '2', '2', '', '', '0', '2', NULL, '2023-08-22 18:28:16', '2023-08-22 18:28:16');
 
 -- --------------------------------------------------------
 
@@ -2379,7 +2394,7 @@ INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `
 (10, 'Staff', 'Arun', '', '', 'checking Rakesh', '', 'REQ-108', '2023-07-15', '6', '300030003000', 'Existing', 'Rakesh', '1992-06-09', '31', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '1', 'Personal', '52000', '4000', '7.7', '48000', '1', '4400', '', '14', '0', '2', '2', NULL, '2023-07-15 11:08:11', '2023-07-15 11:08:11'),
 (11, 'Staff', 'Arun', '', '', 'New customer', '', 'REQ-109', '2023-07-21', '7', '500050005000', 'New', 'Manikandan', '1995-03-02', '28', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', 'Harington road', '7888878888', '', 'Mani Kapoor', 'Mani megalai', '2', '', '5', 'Watchman', 'musk.jpg', '1', 'Personal', '28000', '2000', '7.1', '26000', '2', '', '12', '14', '0', '2', '2', NULL, '2023-07-21 11:11:38', '2023-07-21 11:11:38'),
 (12, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-110', '2023-08-02', '8', '400040004000', 'New', 'Bharathi', '1999-01-21', '24', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '17', 'EVR', '9459416164', '994949494', 'Vedha', 'Gayathri', '2', '', '1', 'Watchman', 'images (1).jpg', '5', 'AC', '50000', '0', '0.0', '50000', '1', '1600', '', '14', '0', '2', '2', NULL, '2023-08-02 14:59:57', '2023-08-02 14:59:57'),
-(14, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-112', '2023-08-19', '4', '200020002000', 'Existing', 'Aravind', '1988-03-10', '35', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '7', 'Small Business', '', '', '', '50000', '1', '460', '', '5', '0', '2', '2', NULL, '2023-08-19 09:53:42', '2023-08-19 13:28:32');
+(14, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-112', '2023-08-19', '4', '200020002000', 'Existing', 'Aravind', '1988-03-10', '35', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '7', 'Small Business', '', '', '', '50000', '1', '460', '', '1', '0', '2', '2', NULL, '2023-08-19 09:53:42', '2023-08-19 13:28:32');
 
 -- --------------------------------------------------------
 
@@ -4561,7 +4576,7 @@ ALTER TABLE `concern_subject`
 -- AUTO_INCREMENT for table `confirmation_followup`
 --
 ALTER TABLE `confirmation_followup`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `ct_bank_collection`

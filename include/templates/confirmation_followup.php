@@ -106,7 +106,7 @@ if (sizeof($getUser)>0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Confirmation</h5>
-				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetLoanFollowupTable()">
+				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetConfirmationFollowupTable()">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -115,6 +115,7 @@ if (sizeof($getUser)>0) {
 
 					<div class="col-12">
 						<div class="row">
+							<input type="hidden" name="conf_req_id" id="conf_req_id">
 							<input type="hidden" name="conf_cus_id" id="conf_cus_id">
 							<input type="hidden" name="conf_cus_name" id="conf_cus_name">
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -129,23 +130,27 @@ if (sizeof($getUser)>0) {
 									<option value="2">Guarentor</option>
 									<option value="3">Family Member</option>
 								</select>
+								<span class="text-danger" id="conf_person_typeCheck" style="display:none">Please Select Person Type</span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="conf_person_name">Person Name</label><span class="required">&nbsp;*</span>
-								<input type="text" name="conf_person_name" id="conf_person_name" class='form-control' tabindex="3" >
+								<input type="text" name="conf_person_name" id="conf_person_name" class='form-control' tabindex="3" readonly>
+								<select name="conf_person_name1" id="conf_person_name1" class='form-control' tabindex="3" style="display: none;"></select>
+								<span class="text-danger" id="conf_person_nameCheck" style="display:none">Please Select Person Name</span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="conf_relationship">Relationship</label><span class="required">&nbsp;*</span>
 								<input type="text" name="conf_relationship" id="conf_relationship" class='form-control' tabindex="4" readonly>
+								<span class="text-danger" id="conf_relationshipCheck" style="display:none">Please Select Relationship</span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<label for="conf_mobbile">Mobile</label><span class="required">&nbsp;*</span>
-								<input type="text" name="conf_mobbile" id="conf_mobbile" class='form-control' tabindex="5" readonly>
-								<span class="text-danger" id='conf_mobbileCheck' style="display: none;">Please Enter Mobile Number </span>
+								<label for="conf_mobile">Mobile</label><span class="required">&nbsp;*</span>
+								<input type="text" name="conf_mobile" id="conf_mobile" class='form-control' tabindex="5" placeholder='Enter Mobile Number' onkeypress="if(this.value.length==10) return false;">
+								<span class="text-danger" id='conf_mobileCheck' style="display: none;">Please Enter Mobile Number </span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<label for="conf_upload">User</label><span class="required">&nbsp;*</span>
-								<input type="file" name="conf_upload" id="conf_upload" class='form-control' tabindex="6" >
+								<label for="conf_upload">Upload</label>
+								<input type="file" name="conf_upload" id="conf_upload" class='form-control' tabindex="6" title="Upload Call records">
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="conf_status">Status</label><span class="required">&nbsp;*</span>
@@ -155,21 +160,30 @@ if (sizeof($getUser)>0) {
 									<option value="2">Unavailable</option>
 									<option value="3">Reconfirmation</option>
 								</select>
+								<span class="text-danger" id='conf_statusCheck' style="display: none;">Please Select Status</span>
 							</div>
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 unav-div" style="display: none">
 								<label for="conf_sub_status">Sub Status</label><span class="required">&nbsp;*</span>
 								<select name="conf_sub_status" id="conf_sub_status" class='form-control' tabindex="8">
 									<option value="">Select Sub Status</option>
+									<option value="1">RNR</option>
+									<option value="2">Not Reachable</option>
+									<option value="3">Switch off</option>
+									<option value="4">Blocked</option>
+									<option value="5">Not in use</option>
 								</select>
+								<span class="text-danger" id='conf_sub_statusCheck' style="display: none;">Please Select Sub Status</span>
 							</div>
 
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 reconf-div" style="display: none">
 								<label for="conf_label">Label</label><span class="required">&nbsp;*</span>
-								<input type="text" name="conf_label" id="conf_label" class='form-control' tabindex="9" >
+								<input type="text" name="conf_label" id="conf_label" class='form-control' tabindex="9" placeholder="Enter Label">
+								<span class="text-danger" id='conf_labelCheck' style="display: none;">Please Enter Label</span>
 							</div>
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 reconf-div" style="display: none">
 								<label for="conf_remark">Remark</label><span class="required">&nbsp;*</span>
-								<input type="text" name="conf_remark" id="conf_remark" class='form-control' tabindex="10" >
+								<input type="text" name="conf_remark" id="conf_remark" class='form-control' tabindex="10" placeholder="Enter Remark">
+								<span class="text-danger" id='conf_remarkCheck' style="display: none;">Please Enter Remark</span>
 							</div>
 
 						</div>
@@ -179,7 +193,7 @@ if (sizeof($getUser)>0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="sumit_add_conf" id="sumit_add_conf" tabindex="11">Submit</button>
-				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="12" onclick="resetLoanFollowupTable()">Close</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="12" onclick="resetConfirmationFollowupTable()">Close</button>
 			</div>
 		</div>
 	</div>
