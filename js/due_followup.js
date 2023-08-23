@@ -1,8 +1,5 @@
 $(document).ready(function(){
 
-    //Collection Charge
-    $('#collectionChargeDateCheck').hide();$('#purposeCheck').hide();$('#amntCheck').hide();
-    
     window.onscroll = function () {
         let navbar = document.getElementById("navbar");
         let navAttr = navbar.getAttribute('class')
@@ -17,23 +14,99 @@ $(document).ready(function(){
         }
     };
 
+    $('.back-button').click(function(){
+        window.history.back();
+    })
+
+    $('#comm_ftype').change(function(){
+        let type = $(this).val();
+        let append;
+        if(type == 1){//direct
+            append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='2'>Unavailable</option>`;
+        }else if(type == 2){//mobile
+            append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='2'>RNR</option><option value='3'>Not Reachable</option>
+            <option value='4'>Switch Off</option><option value='5'>Not in Use</option><option value='6'>Blocked</option>`;
+        }else{
+            append = `<option value="">Select Follow Up Status</option>`;
+        }
+        $('#comm_fstatus').empty().append(append);
+    })
+
+    $('#comm_fstatus').change(function(){
+        let status = $(this).val();
+        if(status == 1){//commitment
+            $('.person-div').show();
+        }else {
+            $('.person-div').hide();
+            $('#comm_person_type,#comm_person_name,#comm_person_name1,#comm_relationship').val('');//empty values when hiding person div
+        }
+    })
+
+    $('#comm_person_type').change(function(){
+        let type = $(this).val();
+        let req_id = $('#idupd').val();
+        let cus_id = $('#cusidupd').val();
+        if(type == 1){
+
+            let cus_name = $('#cus_name').val();
+            $('#comm_person_name1').hide();//select box
+            $('#comm_person_name').show();
+            $('#comm_person_name').val(cus_name);//storing customer name in person name
+            $('#comm_relationship').val('NIL');
+
+        }else if(type == 2 ){
+            type=1;//cause in below url garentor is managed as type 1
+            $.post('verificationFile/documentation/check_holder_name.php',{'reqId':req_id,type},function(response){
+                //if guarentor show readonly input box and hide select box
+                $('#comm_person_name').show();
+                $('#comm_person_name1').hide();//select box
+                $('#comm_person_name1').empty();//select box
+                
+                $('#comm_person_name').val(response['name'])
+                $('#comm_relationship').val(response['relationship']);
+            },'json')
+        }else if(type == 3){
+            $.post('verificationFile/verificationFam.php',{cus_id},function(response){
+                //if Family member then show dropdown and hide input box
+                $('#comm_person_name1').show();//select box
+                $('#comm_person_name').hide();
+                $('#comm_person_name').empty();
+                
+                $('#comm_person_name1').empty().append("<option value=''>Select Person Name</option>")
+                for(var i=0;i<response.length-1;i++){
+                    $('#comm_person_name1').append("<option value='"+response[i]['fam_id']+"'>"+response[i]['fam_name']+"</option>")
+                }
+
+                //create onchange event for person name that will bring the relationship of selected customer
+                $('#comm_person_name1').off('change').change(function(){
+                    let person = $(this).val();
+                    for(var i=0;i<response.length-1;i++){
+                        if(person == response[i]['fam_id']){
+                            $('#comm_relationship').val(response[i]['relationship']);
+                        }
+                    }
+                })
+                
+            },'json')
+        }
+    });
+
+    $('#sumit_add_comm').click(function(){
+        if(validateCommitment() == true){
+            submitCommitment();
+        }
+    })
+
 })//Document Ready End
 
 
 //On Load Event
 $(function(){
 
-    $('.loan_history_card').hide(); //Hide loan history window at the starting
-    $('.doc_history_card').hide(); //Hide Document history window at the starting
-    $('#close_collection_card').hide();//Hide collection close button at the starting
-    $('#submit_collection').hide();//Hide Submit button at the starting, because submit is only for collection
-
     var req_id = $('#idupd').val()
     const cus_id = $('#cusidupd').val()
     OnLoadFunctions(req_id,cus_id);
 
-    var cus_pic = $('#cuspicupd').val();
-    $('#imgshow').attr('src','uploads/request/customer/'+cus_pic);
 })
 
 function OnLoadFunctions(req_id,cus_id){
@@ -72,7 +145,7 @@ function OnLoadFunctions(req_id,cus_id){
             }
         }
     }); 
-    $('<div/>', {class: 'overlay'}).appendTo('.loanlist_card').html('<div class="loader"></div><span class="overlay-text">Please Wait</span>');
+    showOverlayWithDelay();//loader start
     setTimeout(()=>{
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
@@ -97,8 +170,8 @@ function OnLoadFunctions(req_id,cus_id){
                     $('.back-button').hide();
                     $('.loan_history_card').show();
                     $('.doc_history_card').hide();
-                    let navbar = document.getElementById('navbar');
-                    navbar.classList.add('collection-card')
+                    // let navbar = document.getElementById('navbar');
+                    // navbar.classList.add('collection-card')
                     $('#close_collection_card').show();
 
                     $.ajax({
@@ -122,8 +195,8 @@ function OnLoadFunctions(req_id,cus_id){
                     $('.back-button').hide();
                     $('.loan_history_card').hide();
                     $('.doc_history_card').show();
-                    let navbar = document.getElementById('navbar');
-                    navbar.classList.add('collection-card')
+                    // let navbar = document.getElementById('navbar');
+                    // navbar.classList.add('collection-card')
                     $('#close_collection_card').show();
 
                     $.ajax({
@@ -210,10 +283,10 @@ function OnLoadFunctions(req_id,cus_id){
                 })
         }
     })
+    hideOverlay();//loader stop
 },2000)
 
 }//Auto Load function END
-
 
 //Due Chart List
 function dueChartList(req_id,cus_id){
@@ -274,3 +347,10 @@ function resetcollCharges(req_id) {
     });
 }
 
+
+function submitCommitment(){
+
+}
+function validateCommitment(){
+
+}

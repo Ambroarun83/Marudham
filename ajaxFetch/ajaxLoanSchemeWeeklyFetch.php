@@ -95,9 +95,9 @@ foreach ($result as $row) {
 
     // //for profit method
     // if( $row["profit_method"] == 'pre_intrest'){
-    //     $sub_array[] = 'Pre Intrest'; 
+    //     $sub_array[] = 'Pre Interest'; 
     // }elseif( $row["profit_method"] == 'after_intrest'){
-    //     $sub_array[] = 'After Intrest'; 
+    //     $sub_array[] = 'After Interest'; 
     // }
 
     $sub_array[] = $row["intrest_rate"] . '%';        
