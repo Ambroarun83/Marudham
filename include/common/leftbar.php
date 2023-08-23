@@ -71,7 +71,7 @@ else if($current_page == 'edit_concern_creation' || $current_page == 'edit_conce
 
 	$current_module = 'accounts';
 
-}else if($current_page == 'promotion_activity' || $current_page == 'loan_followup' || $current_page == 'confirmation_followup' || $current_page == 'due_followup'){
+}else if($current_page == 'promotion_activity' || $current_page == 'loan_followup' || $current_page == 'confirmation_followup' || $current_page == 'due_followup' || $current_page == 'edit_due_followup'){
 
 	$current_module = 'followup';
 

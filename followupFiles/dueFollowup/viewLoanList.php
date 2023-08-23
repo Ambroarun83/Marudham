@@ -137,7 +137,7 @@ function moneyFormatIndia($num) {
                         $action .= "<a><span data-toggle='modal' data-target='.DueChart' class='due-chart' value='".$row['req_id']."' > Due Chart</span></a>
                         <a><span data-toggle='modal' data-target='.PenaltyChart' class='penalty-chart' value='".$row['req_id']."' > Penalty Chart</span></a>
                         <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='".$row['req_id']."' > Fine Chart</span></a>
-                        <a><span data-toggle='modal' data-target='.addcommitmentChart' class='add-commitment-chart' value='".$row['req_id']."' > Commitment Chart </span></a>";
+                        <a><span data-toggle='modal' data-target='#addCommitment' class='add-commitment-chart' value='".$row['req_id']."' > Commitment Chart </span></a>";
                         $action .= "</div></div>";
                         echo $action;
                     ?>
@@ -162,7 +162,7 @@ function moneyFormatIndia($num) {
                         $action="<div class='dropdown' ><button class='btn btn-outline-secondary' ";
                         
                         $action .="><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
-                        $action .= "<a><span data-toggle='modal' data-target='.addcommitmentChart' class='add-commitment-chart' value='".$row['req_id']."' > New Commitment </span></a>";
+                        $action .= "<a><span data-toggle='modal' data-target='#addCommitment' class='add-commitment-chart' value='".$row['req_id']."' > New Commitment </span></a>";
                         $action .= "</div></div>";
                         echo $action;
                     ?>

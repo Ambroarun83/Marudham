@@ -85,12 +85,12 @@ foreach ($result as $row) {
     $sub_array[] = $row['due_method'];
 
     if($row['due_type']=='emi'){$sub_array[] = 'EMI';}else
-    if($row['due_type']=='intrest'){$sub_array[] = 'Intrest';}
+    if($row['due_type']=='intrest'){$sub_array[] = 'Interest';}
     // if($row['due_type']=='emi,intrest'){$sub_array[] = 'EMI, Intrest';}
 
-    if($row['profit_method']=='pre_intrest'){$sub_array[] = 'Pre Intrest';}else
-    if($row['profit_method']=='after_intrest'){$sub_array[] = 'After Intrest';}else
-    if($row['profit_method']=='pre_intrest,after_intrest'){$sub_array[] = 'Pre Intrest, After Intrest';}else{ $sub_array[] = ''; }
+    if($row['profit_method']=='pre_intrest'){$sub_array[] = 'Pre Interest';}else
+    if($row['profit_method']=='after_intrest'){$sub_array[] = 'After Interest';}else
+    if($row['profit_method']=='pre_intrest,after_intrest'){$sub_array[] = 'Pre Interest, After Interest';}else{ $sub_array[] = ''; }
 
     $sub_array[] = ucwords($row['calculate_method']);     
 

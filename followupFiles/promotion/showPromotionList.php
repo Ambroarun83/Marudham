@@ -141,11 +141,12 @@ if($type == 'existing'){
                         $action="<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
                         
                         $action .= "<a class='promo-chart' data-id='".$row['cus_id']."' data-toggle='modal' data-target='#promoChartModal'><span>Promotion Chart</span></a>
-                        <a class='personal-info' data-toggle='modal' data-target='#personalInfoModal' data-cusid='".$row['cus_id']."'><span>Personal Info</span></a>
-                        <a class='cust-profile' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Customer Profile</span></a>
-                        <a class='loan-history' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Loan History</span></a>
-                        <a class='doc-history' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Document History</span></a>";
-
+                        <a class='personal-info' data-toggle='modal' data-target='#personalInfoModal' data-cusid='".$row['cus_id']."'><span>Personal Info</span></a>";
+                        if($type == 'existing'){
+                            $action .="<a class='cust-profile' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Customer Profile</span></a>
+                            <a class='loan-history' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Loan History</span></a>
+                            <a class='doc-history' data-reqid='".$row['req_id']."' data-cusid='".$row['cus_id']."'><span>Document History</span></a>";
+                        }
                         $action .= "</div></div>";
                         echo $action;
                     ?>

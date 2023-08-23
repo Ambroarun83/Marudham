@@ -9,7 +9,7 @@ $(document).ready(function(){
         // Add active class to the clicked button
         $(this).addClass("active");
 
-        const typevalue = this.value;
+        var typevalue = this.value;
         $('.existing_card, .new_card, .new_promo_card, .loan-history-card, .doc-history-card, #close_history_card, .repromotion_card').hide();
         if(typevalue == 'New'){
             $('.new_card').toggle('show')
@@ -363,6 +363,7 @@ function historyTableContents(req_id,cus_id,type){
             $('#close_history_card').show();
             $('.doc-history-card').hide();
             $('.existing_card').hide();
+            $('.repromotion_card').hide();
             
             $.ajax({
                 // Fetching details by customer ID instead of req ID because we need all loans from the customer
@@ -388,6 +389,7 @@ function historyTableContents(req_id,cus_id,type){
             $('#close_history_card').show();
             $('.loan-history-card').hide();
             $('.existing_card').hide();
+            $('.repromotion_card').hide();
     
             $.ajax({
                 // Fetching details by customer ID instead of req ID because we need all loans from the customer
@@ -410,7 +412,9 @@ function historyTableContents(req_id,cus_id,type){
         }
 
         $('#close_history_card').off('click').click(()=>{
-            $('.existing_card').show();//shows existing card
+            let typevalue = $(".toggle-container .active").val();//this will show back active tab's contents
+            if(typevalue == 'Existing') {$('.existing_card').show();}else{$('.repromotion_card').show();}
+
             $('.loan-history-card').hide();//hides loan history card
             $('.doc-history-card').hide();//hides document history card
             $('#close_history_card').hide();// Hides the close button

@@ -241,9 +241,11 @@ function confirmationTableOnClick(){
 
     //remove confirmation
     $('.conf-remove').off('click').click(function(){
-        //set cus id to hidden input for submit
-        let req_id = $(this).data('reqid');
-        removeConfirmation(req_id);
+        if(confirm('Are you sure you want to delete this confirmation?')){
+            //set cus id to hidden input for submit
+            let req_id = $(this).data('reqid');
+            removeConfirmation(req_id);
+        }
     })
 }
 //Code snippet from c:\xampp\htdocs\marudham\js\due_followup.js

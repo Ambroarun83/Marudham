@@ -45,9 +45,9 @@ $sno = 1;
     <tbody>
         <?php while($row =  $sql->fetch_assoc()){
                 $req_id = $row['req_id'];
-                // $qry = $con->query("SELECT remove_status FROM confirmation_followup WHERE req_id = '".$req_id."' ORDER BY created_date DESC limit 1");
-                // $rst = $qry->fetch_assoc()['remove_status']??Null;
-                // if(mysqli_num_rows($qry) > 0 && $rst == 0){//show below contents only if confirmation of the request id is not removed from table already
+                $qry = $con->query("SELECT remove_status FROM confirmation_followup WHERE req_id = '".$req_id."' ORDER BY created_date DESC limit 1");
+                $rst = $qry->fetch_assoc()['remove_status']??Null;
+                if(mysqli_num_rows($qry) == 0 || $rst != 1){//show below contents only if confirmation of the request id is not removed from table already
             ?>
             <tr>
                 <td><?php echo $sno; $sno++; ?></td>
@@ -116,7 +116,7 @@ $sno = 1;
                     ?></td>
 
             </tr>
-        <?php } //} ?>
+        <?php } } ?>
 
     </tbody>
 </table>
