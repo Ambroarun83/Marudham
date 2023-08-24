@@ -13,38 +13,7 @@
 	<div class="row gutters">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="table-container" >
-
 				<div class="table-responsive">
-					<?php
-					$mscid=0;
-					$id=0;
-					if(isset($_GET['msc']))
-					{
-					$mscid=$_GET['msc'];
-					$id=$_GET['id'];
-					if($mscid==1 and $id !='')
-					{?>
-					<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Collection Submitted Successfully! </div>
-						<!-- To show print page and assign id value as collection id from collection.php -->
-						<input type="hidden" id='id' name='id' value=<?php echo $id;?>>
-					</div> 
-					<?php
-					}
-					if($mscid==2)
-					{?>
-						<div class="alert alert-success" role="alert">
-						<div class="alert-text"> Collection Removed Successfully! </div>
-					</div>
-					<?php
-					}
-					
-					}else{ //for print page not to show define id as 0
-						?>
-						<input type="hidden" id='id' name='id' value=<?php echo $id;?>>
-						<?php
-					}
-					?>
 					<table id="due_followup_table" class="table custom-table" >
 						<thead>
 							<tr>
@@ -74,6 +43,33 @@
 <!-- Main container end -->
 <div id="printcollection" style="display: none"></div>
 
+<script>
+	function enableDateColoring(){
+		//for coloring
+		$('#due_followup_table tbody tr').not('th').each(function(){
+			let tddate = $(this).find('td:eq(11)').text(); // Get the text content of the 11th td element (Follow date)
+			let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
+			let values = new Date(datecorrection); // Create a Date object from the corrected date
+			values.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
+
+			let curDate = new Date(); // Get the current date
+			curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
+
+			let colors = {'past':'FireBrick','current':'DarkGreen','future':'CornflowerBlue'}; // Define colors for different date types
+
+			if(tddate != '' && values != 'Invalid Date'){ // Check if the extracted date and the created Date object are valid
+
+				if(values < curDate){ // Compare the extracted date with the current date
+					$(this).find('td:eq(11)').css({'background-color':colors.past, 'color':'white'}); // Apply styling for past dates
+				}else if(values > curDate){
+					$(this).find('td:eq(11)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
+				}else {
+					$(this).find('td:eq(11)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
+				}
+			}
+		});
+	}
+</script>
 
 <script>
 	var sortOrder = 1; // 1 for ascending, -1 for descending
@@ -115,9 +111,9 @@
 
 	function dT() {
 		// Collection datatable
-		var collection_table = $('#collection_table').DataTable();
-		collection_table.destroy();
-		var collection_table = $('#collection_table').DataTable({
+		var due_followup_table = $('#due_followup_table').DataTable();
+		due_followup_table.destroy();
+		var due_followup_table = $('#due_followup_table').DataTable({
 			"order": [[ 0, "desc" ]],
 			"ordering": false,
 			'paging':false,
@@ -125,7 +121,7 @@
 			'serverSide': true,
 			'serverMethod': 'post',
 			'ajax': {
-			'url': 'ajaxFetch/ajaxCollectionFetch.php',
+			'url': 'ajaxFetch/ajaxDueFollowupFetch.php',
 			'data': function(data) {
 				var search = document.querySelector('#search').value;
 				data.search = search;
@@ -135,7 +131,7 @@
 			buttons: [
 			{
 				extend: 'excel',
-				title: "Loan Scheme List"
+				title: "Due Followup"
 			},
 			{
 				extend: 'colvis',

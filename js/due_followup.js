@@ -1,19 +1,5 @@
 $(document).ready(function(){
 
-    window.onscroll = function () {
-        let navbar = document.getElementById("navbar");
-        let navAttr = navbar.getAttribute('class')
-        let stickyHeader = navbar.offsetTop;
-        if (window.pageYOffset > 200 && navAttr.includes('collection-card')) {
-            // navbar.style.display = "block";
-            $('#navbar').fadeIn('fast');
-            navbar.classList.add("stickyHeader")
-        } else {
-            $('#navbar').fadeOut('fast');
-            navbar.classList.remove("stickyHeader");
-        }
-    };
-
     $('.back-button').click(function(){
         window.history.back();
     })
@@ -24,8 +10,8 @@ $(document).ready(function(){
         if(type == 1){//direct
             append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='2'>Unavailable</option>`;
         }else if(type == 2){//mobile
-            append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='2'>RNR</option><option value='3'>Not Reachable</option>
-            <option value='4'>Switch Off</option><option value='5'>Not in Use</option><option value='6'>Blocked</option>`;
+            append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='3'>RNR</option><option value='4'>Not Reachable</option>
+            <option value='5'>Switch Off</option><option value='6'>Not in Use</option><option value='7'>Blocked</option>`;
         }else{
             append = `<option value="">Select Follow Up Status</option>`;
         }
@@ -44,7 +30,7 @@ $(document).ready(function(){
 
     $('#comm_person_type').change(function(){
         let type = $(this).val();
-        let req_id = $('#idupd').val();
+        let req_id = $('#comm_req_id').val();
         let cus_id = $('#cusidupd').val();
         if(type == 1){
 
@@ -162,6 +148,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('.overlay').remove();
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
+                // searchFunction();//this will call search function repair module
 
                 $('.loan-history-window').click(function(e){
                     e.preventDefault();
@@ -281,6 +268,18 @@ function OnLoadFunctions(req_id,cus_id){
                     var req_id = $(this).attr('value');
                     resetcollCharges(req_id);  //Fine
                 })
+
+                $('.add-commitment-chart').click(function(){
+                    let req_id = $(this).data('reqid');
+                    $('#comm_req_id').val(req_id)
+                })
+                //Commitment chart
+                $('.commitment-chart').off('click').click(function(){
+                    let req_id = $(this).data('reqid');let cus_id = $('#cusidupd').val();
+                    $.post('followupFiles/dueFollowup/getCommitmentChart.php',{cus_id,req_id},function(html){
+                        $('#commChartDiv').empty().html(html);
+                    })
+                })
         }
     })
     hideOverlay();//loader stop
@@ -349,8 +348,100 @@ function resetcollCharges(req_id) {
 
 
 function submitCommitment(){
-
+    let req_id = $('#comm_req_id').val();let cus_id = $('#cusidupd').val();
+    let ftype = $('#comm_ftype').val();let fstatus = $('#comm_fstatus').val();
+    let person_type = $('#comm_person_type').val();let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();
+    let relationship = $('#comm_relationship').val();let remark = $('#comm_remark').val();let date = $('#comm_date').val();let hint = $('#comm_hint').val();
+    let args = {cus_id,req_id,ftype,fstatus,person_type,person_name,person_name1,relationship,remark,date,hint};
+    
+    $.post('followupFiles/dueFollowup/submitCommitment.php',args,function(response){
+        if(response.includes('Error')){
+            swarlErrorAlert(response);
+        }else{
+            swarlSuccessAlert(response);
+            $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
+            $('.person-div').hide();
+        }
+    })
 }
 function validateCommitment(){
+    let response = true;
+    let ftype = $('#comm_ftype').val(); let fstatus = $('#comm_fstatus').val(); let person_type = $('#comm_person_type').val();
+    let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();let remark = $('#comm_remark').val();
+    let comm_date = $('#comm_date').val(); let hint = $('#comm_hint').val();
 
+    validateField(ftype, '#comm_ftypeCheck');
+    validateField(fstatus, '#comm_fstatusCheck');
+    if(fstatus == 1){
+
+        validateField(person_type, '#comm_person_typeCheck');
+        if(person_type == 3){
+            validateField(person_name1, '#comm_person_nameCheck');
+        }else{
+            $('#comm_person_nameCheck').hide();
+        }
+        validateField(comm_date, '#comm_dateCheck');
+    }
+    validateField(remark, '#comm_remarkCheck');
+    validateField(hint, '#comm_hintCheck');
+
+    function validateField(value, fieldId) {
+        if (value === '' ) {
+            response = false;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+        
+    }
+
+    return response;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// Improved code snippet
+function swarlErrorAlert(response) {
+    Swal.fire({
+        title: response,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#009688'
+    });
+}
+function swarlInfoAlert(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'info',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#009688',
+        cancelButtonColor: '#cc4444',
+        cancelButtonText: 'No',
+        confirmButtonText: 'Yes'
+    }).then(function(result) {
+        if (result.isConfirmed) {
+        update();
+        }
+    });
+}
+function swarlSuccessAlert(response) {
+    Swal.fire({
+        title: response,
+        icon: 'success',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#009688'
+    });
+}
+

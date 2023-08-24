@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2023 at 02:56 PM
+-- Generation Time: Aug 24, 2023 at 03:38 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -954,6 +954,41 @@ INSERT INTO `collection_charges` (`id`, `req_id`, `cus_id`, `coll_date`, `coll_p
 (4, '5', NULL, NULL, NULL, '0', '2023-03-15', '150', '', NULL, NULL, NULL, NULL, '2023-03-15 11:11:07'),
 (5, '5', '100010001000', '2023-04-15', 'May date exceed', '200', NULL, '0', '0', 0, '2', NULL, '2023-05-15 11:12:43', '2023-05-15 11:12:43'),
 (6, '5', NULL, NULL, NULL, '0', '2023-05-15', '100', '100', NULL, NULL, NULL, NULL, '2023-05-15 11:13:04');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `commitment`
+--
+
+CREATE TABLE `commitment` (
+  `id` int(11) NOT NULL,
+  `req_id` varchar(255) DEFAULT NULL,
+  `cus_id` varchar(255) NOT NULL,
+  `ftype` varchar(10) DEFAULT NULL,
+  `fstatus` varchar(55) DEFAULT NULL,
+  `person_type` varchar(255) DEFAULT NULL,
+  `person_name` varchar(255) DEFAULT NULL,
+  `relationship` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `comm_date` date DEFAULT NULL,
+  `hint` varchar(255) DEFAULT NULL,
+  `insert_login_id` varchar(55) DEFAULT NULL,
+  `updated_login_id` varchar(55) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `commitment`
+--
+
+INSERT INTO `commitment` (`id`, `req_id`, `cus_id`, `ftype`, `fstatus`, `person_type`, `person_name`, `relationship`, `remark`, `comm_date`, `hint`, `insert_login_id`, `updated_login_id`, `created_date`, `updated_date`) VALUES
+(10, '1', '010720232023', '2', '5', '', '', '', 'Switch off', '0000-00-00', 'try again', '2', NULL, '2023-08-24 15:40:10', '2023-08-24 15:40:10'),
+(11, '7', '300030003000', '1', '1', '1', 'Rakesh', 'NIL', 'Commitment', '2023-08-27', 'Commitment', '2', NULL, '2023-08-24 15:40:44', '2023-08-24 15:40:44'),
+(12, '10', '300030003000', '1', '2', '', '', '', 'not in home', '0000-00-00', 'try again tomorrow', '2', NULL, '2023-08-24 15:41:29', '2023-08-24 15:41:29'),
+(13, '10', '300030003000', '1', '1', '3', '7', 'Father', 'family issue', '2023-09-01', 'will pay', '2', NULL, '2023-08-24 15:42:38', '2023-08-24 15:42:38'),
+(14, '1', '010720232023', '1', '1', '1', 'Bharath', 'NIL', '234', '2023-08-27', 'asdf', '2', NULL, '2023-08-24 19:05:28', '2023-08-24 19:05:28');
 
 -- --------------------------------------------------------
 
@@ -3124,8 +3159,8 @@ CREATE TABLE `request_creation` (
 --
 
 INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(1, 'Agent', 'Alaathi Mobiles and Furniture', '1', '0', '', 'New customer for us', 'REQ-101', '2023-07-01', '1', '010720232023', 'New', 'Bharath', '1990-02-03', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '1', '3470', '', '14', '0', '3', '3', NULL, '2023-07-01 13:26:37', '0000-00-00 00:00:00'),
-(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '21', '0', '2', '2', NULL, '2023-07-01 13:36:34', '0000-00-00 00:00:00'),
+(1, 'Agent', 'Alaathi Mobiles and Furniture', '1', '0', '', 'New customer for us', 'REQ-101', '2023-07-01', '1', '010720232023', 'New', 'Bharath', '1990-02-03', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '1', '3470', '', '14', '0', '3', '3', NULL, '2023-07-01 13:26:37', '2023-07-01 13:26:37'),
+(2, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15.0', '17000', '2', '', '12', '21', '0', '2', '2', NULL, '2023-07-01 13:36:34', '2023-07-01 13:36:34'),
 (5, 'Staff', 'Arun', '', '', 'Old customer new prod', '', 'REQ-103', '2023-01-01', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '65000', '5000', '7.7', '60000', '1', '4500', '', '20', '0', '2', '2', NULL, '2023-01-01 16:10:08', '2023-01-01 16:10:08'),
 (6, 'Staff', 'Arun', '', '', 'Relative Customer', '', 'REQ-104', '2023-07-03', '4', '200020002000', 'New', 'Aravind', '1988-03-10', '35', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '6', 'Mobiles', '', '', '', '50000', '1', '4500', '', '21', '0', '2', '2', NULL, '2023-07-03 12:25:41', '2023-07-03 12:25:41'),
 (7, 'Director', 'Will Smith', '', '0', '', 'Just declaration', 'REQ-105', '2023-07-03', '6', '300030003000', 'New', 'Rakesh', '1992-06-09', '31', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '9', 'Education', '', '', '', '56500', '2', '', '24', '14', '0', '5', '5', NULL, '2023-07-03 14:53:00', '2023-07-03 14:53:00'),
@@ -3950,6 +3985,12 @@ ALTER TABLE `collection_charges`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `commitment`
+--
+ALTER TABLE `commitment`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `company_creation`
 --
 ALTER TABLE `company_creation`
@@ -4553,6 +4594,12 @@ ALTER TABLE `collection`
 --
 ALTER TABLE `collection_charges`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `commitment`
+--
+ALTER TABLE `commitment`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `company_creation`

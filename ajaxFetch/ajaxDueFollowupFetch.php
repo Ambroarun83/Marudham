@@ -137,8 +137,16 @@ foreach ($result as $row) {
     }
 
     $sub_array[] = $date_range;
-    $sub_array[] = '';
-    $sub_array[] = '';
+
+    $sql = $con->query("SELECT comm_date, hint from commitment where cus_id = '".$row['cp_cus_id']."' order by id desc limit 1 ");
+    if(mysqli_num_rows($sql)>0){
+        $row1 = $sql->fetch_assoc();
+        $sub_array[] = $row1['hint'];
+        $sub_array[] = $row1['comm_date']!='0000-00-00' ? date('d-m-Y',strtotime($row1['comm_date'])) : '';
+    }else{
+        $sub_array[] = '';
+        $sub_array[] = '';
+    }
     
     $data[]      = $sub_array;
     $sno = $sno+1;
