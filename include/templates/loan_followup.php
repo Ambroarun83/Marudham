@@ -30,48 +30,49 @@ if (sizeof($getUser)>0) {
 		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
 		<input type="hidden" name="closed_sts" id="closed_sts" value="" />
 		
-	<div class="row gutters loan-list-card" >
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header">Loan Followup</div>
-				<div class="card-body">
-					<div id="loanListDiv">
+		<div class="row gutters loan-list-card" >
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Loan Followup</div>
+					<div class="card-body">
+						<div id="loanListDiv">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Loan History START -->
-	<div class="row gutters loan-history-card" style="display:none">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header"> Loan History </div>
-				<div class="card-body">
-					<div id="loanHistoryDiv">
-						
+		<!-- Loan History START -->
+		<div class="row gutters loan-history-card" style="display:none">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header"> Loan History </div>
+					<div class="card-body">
+						<div id="loanHistoryDiv">
+							
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Loan History END -->
+		<!-- Loan History END -->
 
-	<!-- Document History START -->
-	<div class="row gutters doc-history-card" style="display:none">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header"> Document History </div>
-				<div class="card-body">
-					<div id="docHistoryDiv">
-						
+		<!-- Document History START -->
+		<div class="row gutters doc-history-card" style="display:none">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header"> Document History </div>
+					<div class="card-body">
+						<div id="docHistoryDiv">
+							
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Document History END -->
-
+		<!-- Document History END -->
+	</form>
+</div>
 
 <!-- Modal for Loan Follow Chart just view table   -->
 <div class="modal fade" id="loanFollowChartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

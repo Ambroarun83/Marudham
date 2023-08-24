@@ -74,7 +74,7 @@ $(document).ready(function () {
 <?php $current_page = isset($_GET['page']) ? $_GET['page'] : null; ?>
 
 <!-- Required jQuery first, then Bootstrap Bundle JS -->
-<script src="js/jquery.min.js"></script>
+<!-- <script src="js/jquery.min.js"></script> -->
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/jspdf.js"></script>
@@ -1040,6 +1040,7 @@ $(document).ready(function() {
             ],
             'drawCallback':function(){
                 searchFunction();
+                enableDateColoring();
             }
         });
 

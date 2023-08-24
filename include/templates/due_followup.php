@@ -37,19 +37,7 @@ if($idupd>0)
 			$cus_pic					= $getLoanList['cus_pic'];
 	}
 }
-// 	$getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
-// 	if (sizeof($getRequestData) > 0) {
-// 		$user_type = $getRequestData['user_type'];
-// 		if ($user_type == 'Director') { $role = '1'; } else if ($user_type == 'Agent') { $role = '2'; } else if ($user_type == 'Staff') { $role = '3'; }
-// 		$user_name = $getRequestData['user_name'];
-// 		$responsible = $getRequestData['responsible'];
-// 		$declaration = $getRequestData['declaration'];
-// 		$remarks = $getRequestData['remarks'];
-// 	}
 
-// 	$getuser = $userObj->getuser($mysqli,$userid);
-// 	$collection_access = $getuser['collection_access'];
-// }
 
 ?>
 
@@ -99,32 +87,11 @@ if($idupd>0)
 							<!--Fields -->
 							<div class="col-md-12 ">
 								<div class="row">
-
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='loanListTableDiv'>
-											<table class="table custom-table" id='loanListTable'>
-												<thead>
-													<tr>
-														<th width="50">Loan ID</th>
-														<th>Loan Category</th>
-														<th>Sub Category</th>
-														<th>Agent</th>
-														<th>Loan date</th>
-														<th>Loan Amount</th>
-														<th>Banlance Amount</th>
-														<th>Collection Format</th>
-														<th>Status</th>
-														<th>Sub Status</th>
-														<th>Collect</th>
-														<th>Charts</th>
-														<th>Action</th>
-													</tr>
-												</thead>
-												<tbody></tbody>
-											</table>
+											
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -350,7 +317,7 @@ if($idupd>0)
 									<input type="text" name="comm_remark" id="comm_remark" class='form-control' tabindex="7" placeholder="Enter Remark">
 									<span class="text-danger" id='comm_remarkCheck' style="display: none;">Please Enter Remark</span>
 							</div>
-							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 person-div"  style="display:none">
 									<label for="comm_date">Commitment Date</label><span class="required">&nbsp;*</span>
 									<input type="date" name="comm_date" id="comm_date" class='form-control' tabindex="8" >
 									<span class="text-danger" id='comm_dateCheck' style="display: none;">Please Enter Commitment Date</span>
@@ -383,3 +350,30 @@ if($idupd>0)
 </div>
 
 <!-- /////////////////////////////////////////////////////////////////// Commitment Add Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- Modal for Commitment Chart just view table   -->
+<div class="modal fade" id="commitmentChart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg " role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Commitment Chart</h5>
+				<button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					
+					<div class="col-12" >
+						<div class="row">
+							<div class="col-12" id='commChartDiv'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="2">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

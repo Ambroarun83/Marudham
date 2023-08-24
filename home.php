@@ -119,278 +119,283 @@ include('api/main.php'); // Database Connection File
 			
 			<?php if($current_page == 'dashboard') { ?>
 			<?php include "include/templates/dashboard.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Master Module-->
 			<?php if($current_page == 'company_creation') { ?>
 			<?php include "include/templates/company_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_company_creation') { ?>
 			<?php include "include/templates/edit_company_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'branch_creation') { ?>
 			<?php include "include/templates/branch_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'edit_branch_creation') { ?>
 			<?php include "include/templates/edit_branch_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'loan_category') { ?>
 			<?php include "include/templates/loan_category.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_loan_category') { ?>
 			<?php include "include/templates/edit_loan_category.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'loan_calculation') { ?>
 			<?php include "include/templates/loan_calculation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_loan_calculation') { ?>
 			<?php include "include/templates/edit_loan_calculation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'loan_scheme') { ?>
 			<?php include "include/templates/loan_scheme.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'edit_loan_scheme') { ?>
 			<?php include "include/templates/edit_loan_scheme.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'area_creation') { ?>
 			<?php include "include/templates/area_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_area_creation') { ?>
 			<?php include "include/templates/edit_area_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'area_mapping') { ?>
 			<?php include "include/templates/area_mapping.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_area_mapping') { ?>
 			<?php include "include/templates/edit_area_mapping.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'area_status') { ?>
 			<?php include "include/templates/area_status.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Administration Module-->
 			<?php if($current_page == 'director_creation') { ?>
 			<?php include "include/templates/director_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'edit_director_creation') { ?>
 			<?php include "include/templates/edit_director_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'agent_creation') { ?>
 			<?php include "include/templates/agent_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_agent_creation') { ?>
 			<?php include "include/templates/edit_agent_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'staff_creation') { ?>
 			<?php include "include/templates/staff_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_staff_creation') { ?>
 			<?php include "include/templates/edit_staff_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'manage_user') { ?>
 			<?php include "include/templates/manage_user.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_manage_user') { ?>
 			<?php include "include/templates/edit_manage_user.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'doc_mapping') { ?>
 			<?php include "include/templates/doc_mapping.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_doc_mapping') { ?>
 			<?php include "include/templates/edit_doc_mapping.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Request Module -->
 			<?php if($current_page == 'request') { ?>
 			<?php include "include/templates/request.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_request') { ?>
 			<?php include "include/templates/edit_request.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<!-- Verification -->
 			<?php if($current_page == 'verification_list') { ?>
 			<?php include "include/templates/verification_list.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'verification') { ?>
 			<?php include "include/templates/verification.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Approval -->
 			<?php if($current_page == 'approval_list') { ?>
 			<?php include "include/templates/approval_list.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'approval') { ?>
 			<?php include "include/templates/approval.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<!-- Acknowledgement -->
 			<?php if($current_page == 'edit_acknowledgement_list') { ?>
 			<?php include "include/templates/edit_acknowledgement_list.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'acknowledgement_creation') { ?>
 			<?php include "include/templates/acknowledgement_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Loan Issue -->
 			<?php if($current_page == 'edit_loan_issue') { ?>
 			<?php include "include/templates/edit_loan_issue.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'loan_issue') { ?>
 			<?php include "include/templates/loan_issue.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<!-- Collection -->
 			<?php if($current_page == 'edit_collection') { ?>
 			<?php include "include/templates/edit_collection.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'collection') { ?>
 			<?php include "include/templates/collection.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<!-- Closed -->
             <?php if($current_page == 'edit_closed') { ?>
             <?php include "include/templates/edit_closed.php" ?>
-            <?php } ?>
+            <?php }else ?>
             <?php if($current_page == 'closed') { ?>
             <?php include "include/templates/closed.php" ?>
-            <?php } ?>
+            <?php }else ?>
 			
 			<!-- NOC -->
 			<?php if($current_page == 'edit_noc') { ?>
 			<?php include "include/templates/edit_noc.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'noc') { ?>
 			<?php include "include/templates/noc.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Concern Creation -->
 			<?php if($current_page == 'edit_concern_creation') { ?>
 			<?php include "include/templates/edit_concern_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'concern_creation') { ?>
 			<?php include "include/templates/concern_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Concern Solution -->
 			<?php if($current_page == 'edit_concern_solution') { ?>
 			<?php include "include/templates/edit_concern_solution.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'concern_solution') { ?>
 			<?php include "include/templates/concern_solution.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'concern_solution_view') { ?>
 			<?php include "include/templates/concern_solution_view.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_concern_feedback') { ?>
             <?php include "include/templates/edit_concern_feedback.php" ?>
-            <?php } ?>
+            <?php }else ?>
 
             <?php if($current_page == 'concern_feedback') { ?>
             <?php include "include/templates/concern_feedback.php" ?>
-            <?php } ?>
+            <?php }else ?>
 
 			<!-- Document Track Screen -->
             <?php if($current_page == 'document_track') { ?>
             <?php include "include/templates/document_track.php" ?>
-            <?php } ?>
+            <?php }else ?>
 
             <!-- Update Screen -->
             <?php if($current_page == 'edit_update') { ?>
             <?php include "include/templates/edit_update.php" ?>
-            <?php } ?>
+            <?php }else ?>
 
             <?php if($current_page == 'update') { ?>
             <?php include "include/templates/update.php" ?>
-            <?php } ?>
+            <?php }else ?>
 
 			<!-- Bank Creation -->
 			<?php if($current_page == 'bank_creation') { ?>
 			<?php include "include/templates/bank_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'edit_bank_creation') { ?>
 			<?php include "include/templates/edit_bank_creation.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Cash Tally -->
 			<?php if($current_page == 'cash_tally') { ?>
 			<?php include "include/templates/cash_tally.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<!-- Bank Clearance -->
 			<?php if($current_page == 'bank_clearance') { ?>
 			<?php include "include/templates/bank_clearance.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'edit_bank_clearance') { ?>
 			<?php include "include/templates/edit_bank_clearance.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'finance_insight') { ?>
 			<?php include "include/templates/finance_insight.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<!-- Follow up -->
 			<?php if($current_page == 'promotion_activity') { ?>
 			<?php include "include/templates/promotion_activity.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Due Follow up -->
 			<?php if($current_page == 'edit_due_followup') { ?>
 			<?php include "include/templates/edit_due_followup.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<?php if($current_page == 'due_followup') { ?>
 			<?php include "include/templates/due_followup.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<?php if($current_page == 'due_followup_info') { ?>
 			<?php include "include/templates/due_followup_info.php" ?>
-			<?php } ?>
+			<?php }else ?>
 
 			<!-- Loan Follow up -->
 			<?php if($current_page == 'loan_followup') { ?>
 			<?php include "include/templates/loan_followup.php" ?>
-			<?php } ?>
+			<?php }else ?>
 			
 			<!-- Confirmation Follow up -->
 			<?php if($current_page == 'confirmation_followup') { ?>
 			<?php include "include/templates/confirmation_followup.php" ?>
+			<?php }else ?>
+
+			<!-- 404 Not found page -->
+			<?php { ?>
+			<?php 	//include "include/templates/notfound.php" ?>
 			<?php } ?>
 
 		</div>

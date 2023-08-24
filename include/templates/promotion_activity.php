@@ -29,132 +29,132 @@ if (sizeof($getUser)>0) {
 		<input type="hidden" name="od_sts" id="od_sts" value="" />
 		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
 		<input type="hidden" name="closed_sts" id="closed_sts" value="" />
-	<div class="row gutters">
 		
-		<div class="toggle-container col-12">
-			<input type="button" class="toggle-button" value='Existing'>
-			<input type="button" class="toggle-button" value='New'>
-			<input type="button" class="toggle-button" value= 'Repromotion'>
+		<div class="row gutters">
+			<div class="toggle-container col-12">
+				<input type="button" class="toggle-button" value='Existing'>
+				<input type="button" class="toggle-button" value='New'>
+				<input type="button" class="toggle-button" value= 'Repromotion'>
+			</div>
 		</div>
-	</div>
 
-	<div class="row gutters existing_card" style="display:none">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header">Existing Customer</div>
-				<div class="card-body">
-					<div id="exCusDiv">
+		<div class="row gutters existing_card" style="display:none">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Existing Customer</div>
+					<div class="card-body">
+						<div id="exCusDiv">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<!-- Loan History START -->
-	<div class="row gutters loan-history-card" style="display:none">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header"> Loan History </div>
-				<div class="card-body">
-					<div id="loanHistoryDiv">
-						
+		<!-- Loan History START -->
+		<div class="row gutters loan-history-card" style="display:none">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header"> Loan History </div>
+					<div class="card-body">
+						<div id="loanHistoryDiv">
+							
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Loan History END -->
+		<!-- Loan History END -->
 
-	<!-- Document History START -->
-	<div class="row gutters doc-history-card" style="display:none">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header"> Document History </div>
-				<div class="card-body">
-					<div id="docHistoryDiv">
-						
+		<!-- Document History START -->
+		<div class="row gutters doc-history-card" style="display:none">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header"> Document History </div>
+					<div class="card-body">
+						<div id="docHistoryDiv">
+							
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<!-- Document History END -->
+		<!-- Document History END -->
 
 
-	<div class="row gutters new_card" style="display:none">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header">Promotion</div>
-				<div class="card-body">
-					<div class="row">
-						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-							<div class="form-group">
-								<label for="cus_id_search">Customer ID</label><span class="required">&nbsp;*</span>
-								<input type="text" class="form-control" id="cus_id_search" name="cus_id_search" value='' placeholder='Enter Customer ID' onKeyPress="if(this.value.length==14) return false;">
-								<span class="searchDetailsCheck text-danger" style="display: none;">Please enter any of these fields!</span>
+		<div class="row gutters new_card" style="display:none">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Promotion</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+								<div class="form-group">
+									<label for="cus_id_search">Customer ID</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="cus_id_search" name="cus_id_search" value='' placeholder='Enter Customer ID' onKeyPress="if(this.value.length==14) return false;">
+									<span class="searchDetailsCheck text-danger" style="display: none;">Please enter any of these fields!</span>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+								<div class="form-group">
+									<label for="cus_name_search">Customer Name</label><span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="cus_name_search" name="cus_name_search" value='' placeholder='Enter Customer Name'>
+									<span class="searchDetailsCheck text-danger" style="display: none;">Please enter any of these fields!</span>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+								<div class="form-group">
+									<label for="cus_mob_search">Mobile</label><span class="required">&nbsp;*</span>
+									<input type="number" class="form-control" id="cus_mob_search" name="cus_mob_search" value='' placeholder='Enter Mobile Number' onKeyPress="if(this.value.length==10) return false;">
+									<span class="searchDetailsCheck text-danger" style="display: none;">Please enter any of these fields!</span>
+								</div>
+							</div>
+							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+								<div class="form-group">
+									<button class="" id='search_cus' name='search_cus'>Search&nbsp;<i class="fa fa-search"></i>
+								</div>
+							</div>
+
+							<div class="col-12">
+								<div class="alert alert-danger" role="alert" style="display: none;">
+									<div class="alert-text">Customer Already Existing!</div>
+								</div> 
+								<div class="alert alert-success" role="alert" style="display: none;">
+									<div class="alert-text">Customer is New to Promotion!</div>
+								</div> 
 							</div>
 						</div>
-						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-							<div class="form-group">
-								<label for="cus_name_search">Customer Name</label><span class="required">&nbsp;*</span>
-								<input type="text" class="form-control" id="cus_name_search" name="cus_name_search" value='' placeholder='Enter Customer Name'>
-								<span class="searchDetailsCheck text-danger" style="display: none;">Please enter any of these fields!</span>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-							<div class="form-group">
-								<label for="cus_mob_search">Mobile</label><span class="required">&nbsp;*</span>
-								<input type="number" class="form-control" id="cus_mob_search" name="cus_mob_search" value='' placeholder='Enter Mobile Number' onKeyPress="if(this.value.length==10) return false;">
-								<span class="searchDetailsCheck text-danger" style="display: none;">Please enter any of these fields!</span>
-							</div>
-						</div>
-						<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
-							<div class="form-group">
-								<button class="" id='search_cus' name='search_cus'>Search&nbsp;<i class="fa fa-search"></i>
-							</div>
-						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-						<div class="col-12">
-							<div class="alert alert-danger" role="alert" style="display: none;">
-								<div class="alert-text">Customer Already Existing!</div>
-							</div> 
-							<div class="alert alert-success" role="alert" style="display: none;">
-								<div class="alert-text">Customer is New to Promotion!</div>
-							</div> 
+		<div class="row gutters new_promo_card" style="display: none;">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">New Promotion
+						<button class="btn btn-primary add-new-btn" id="add_new_cus" name="add_new_cus" data-toggle="modal" data-target="#addnewcus" tabindex=""><span class="icon-add"></span></button>
+					</div>
+					<div class="card-body">
+						<div id="new_promo_div">
+							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="row gutters new_promo_card" style="display: none;">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header">New Promotion
-					<button class="btn btn-primary add-new-btn" id="add_new_cus" name="add_new_cus" data-toggle="modal" data-target="#addnewcus" tabindex=""><span class="icon-add"></span></button>
-				</div>
-				<div class="card-body">
-					<div id="new_promo_div">
-						
+
+		<div class="row gutters repromotion_card" style="display:none">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Repromotion</div>
+					<div class="card-body">
+						<div id="rePromoCusDiv">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-
-
-	<div class="row gutters repromotion_card" style="display:none">
-		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="card">
-				<div class="card-header">Repromotion</div>
-				<div class="card-body">
-					<div id="rePromoCusDiv">
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	</form>
 </div>

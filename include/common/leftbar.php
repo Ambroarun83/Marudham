@@ -244,7 +244,7 @@ if (sizeof($getUser)>0) {
         width: 24px; /* Set the desired width */
         height: 24px; /* Set the desired height */
 		fill: white;
-      }
+	}
 	/* Fixed sidenav, full height */
 	.sidenav {
 	height: 100%;
