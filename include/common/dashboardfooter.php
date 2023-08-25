@@ -1008,41 +1008,6 @@ $(document).ready(function() {
             }
         });
 
-        // Due Followup List
-        var due_followup_table = $('#due_followup_table').DataTable({
-            "order": [
-                [0, "desc"]
-            ],
-            "ordering": false,
-            'processing': true,
-            'serverSide': true,
-            'serverMethod': 'post',
-            'ajax': {
-                'url': 'ajaxFetch/ajaxDueFollowupFetch.php',
-                'data': function(data) {
-                    var search = $('#search').val();
-                    data.search = search;
-                }
-            },
-            dom: 'lBfrtip',
-            buttons: [{
-                    extend: 'excel',
-                    title: "Collection List"
-                },
-                {
-                    extend: 'colvis',
-                    collectionLayout: 'fixed four-column',
-                }
-            ],
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            'drawCallback':function(){
-                searchFunction();
-                enableDateColoring();
-            }
-        });
 
 });//Document Ready End
 </script>
@@ -1222,6 +1187,10 @@ if($current_page == 'due_followup') { ?>
 
 if($current_page == 'due_followup_info') { ?>
     <script src="js/due_followup_info.js"></script>
+    <?php }
+
+if($current_page == 'edit_due_followup') { ?>
+    <script src="js/edit_due_followup.js"></script>
     <?php }
 
 if($current_page == 'loan_followup') { ?>
@@ -1470,6 +1439,7 @@ if($current_page == 'confirmation_followup') { ?>
             position: 'top-right',
             // background: '#00e2cd',
             timer: 2000,
+            // timer: 2000,
             showConfirmButton: true,
             confirmButtonColor: '#f2372b',
             timerProgressBar: true,

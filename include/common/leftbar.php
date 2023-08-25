@@ -356,10 +356,10 @@ if (sizeof($getUser)>0) {
 		<div class="sidebar-menu">
 			<ul>	
 				<li class="dashboard" >
-					<a href="javascript:void(0)">
+					<!-- <a href="javascript:void(0)"> -->
 						<!-- <span class="menu-text">Dashboard</span> -->
 						<a href="dashboard"><i><img class='svg-icon' src="svg/dashboard.svg"></i>&nbsp;Dashboard</a>
-					</a>
+					<!-- </a> -->
 					<!-- <div class="sidebar-submenu">
 						<ul>
 							<li>

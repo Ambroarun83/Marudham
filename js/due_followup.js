@@ -83,6 +83,10 @@ $(document).ready(function(){
         }
     })
 
+    {
+        let curDate = new Date();
+        $('#comm_date').attr('min', curDate.getFullYear()+'-0'+(curDate.getMonth()+1)+'-'+curDate.getDate()); // setting minimum date for to date, so before start date will be disabled
+    }
 })//Document Ready End
 
 
@@ -131,7 +135,7 @@ function OnLoadFunctions(req_id,cus_id){
             }
         }
     }); 
-    showOverlayWithDelay();//loader start
+    showOverlay();//loader start
     setTimeout(()=>{
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()

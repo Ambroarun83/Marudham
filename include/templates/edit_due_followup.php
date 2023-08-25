@@ -1,3 +1,21 @@
+<script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" integrity="sha384-rOA1PnstxnOBLzCLMcre8ybwbTmemjzdNlILg8O7z1lUkLXozs4DHonlDtnE7fpc" crossorigin="anonymous"></script>
+<style>
+	.filter-btn-div{
+		float:right;
+		padding-bottom: 10px;
+		padding-right: 10px;
+	}
+	.filter-btn{
+		color: #ffffff;
+		background-color: #009688;
+		border-color: #009688;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 3px;
+		border: 1px solid transparent;
+		font-size: 17px;
+		padding: 7px 12px;
+	}
+</style>
 
 <!-- Page header start -->
 <br><br>
@@ -5,35 +23,21 @@
     <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
 		Marudham -  Due Follow Up
 	</div>
-</div><br>
-
+</div>
+<br><br>
 <!-- Main container start -->
 <div class="main-container" >
 	<!-- Row start -->
 	<div class="row gutters">
+		<div class="col-12">
+			<div class="filter-btn-div">
+				<button class="filter-btn" data-target="#filter_modal" data-toggle="modal"><i class="fas fa-filter fa-sm" style="color: #ffffff;"></i>&nbsp;Filter</button>
+			</div>
+		</div>
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="table-container" >
-				<div class="table-responsive">
-					<table id="due_followup_table" class="table custom-table" >
-						<thead>
-							<tr>
-								<th width="50">S.No.</th>
-								<th>Customer ID</th>
-								<th>Customer Name</th>
-								<th>Area</th>
-								<th>Sub Area</th>
-								<th>Branch</th>
-								<th>Line</th>
-								<th>Mobile</th>
-								<th>Action</th>
-								<th>Last Paid Date</th>
-								<th>Hint</th>
-								<th>Commitment Date</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
+			<div class="table-container" ><br>
+				<div class="table-responsive" id='dueFollwupDiv'>
+					
 				</div>
 			</div>
 		</div>
@@ -41,159 +45,149 @@
 	<!-- Row end -->
 </div>
 <!-- Main container end -->
-<div id="printcollection" style="display: none"></div>
 
-<script>
-	function enableDateColoring(){
-		//for coloring
-		$('#due_followup_table tbody tr').not('th').each(function(){
-			let tddate = $(this).find('td:eq(11)').text(); // Get the text content of the 11th td element (Follow date)
-			let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
-			let values = new Date(datecorrection); // Create a Date object from the corrected date
-			values.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
-
-			let curDate = new Date(); // Get the current date
-			curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
-
-			let colors = {'past':'FireBrick','current':'DarkGreen','future':'CornflowerBlue'}; // Define colors for different date types
-
-			if(tddate != '' && values != 'Invalid Date'){ // Check if the extracted date and the created Date object are valid
-
-				if(values < curDate){ // Compare the extracted date with the current date
-					$(this).find('td:eq(11)').css({'background-color':colors.past, 'color':'white'}); // Apply styling for past dates
-				}else if(values > curDate){
-					$(this).find('td:eq(11)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
-				}else {
-					$(this).find('td:eq(11)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
-				}
-			}
-		});
-	}
-</script>
-
-<script>
-	var sortOrder = 1; // 1 for ascending, -1 for descending
-
-	document.querySelectorAll('th').forEach(function(th) {
-	th.addEventListener('click', function() {
-		var columnIndex = this.cellIndex;
-		document.querySelector('tbody').innerHTML = '';
-		dT();
-		setTimeout(function() {
-		var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
-
-		tableRows.sort(function(a, b) {
-			var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
-			var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
-
-			if (textA < textB) {
-			return -1 * sortOrder;
-			}
-			if (textA > textB) {
-			return 1 * sortOrder;
-			}
-			return 0;
-		});
-
-		tableRows.forEach(function(row) {
-			document.querySelector('tbody').appendChild(row);
-		});
-
-		sortOrder = -1 * sortOrder;
-
-		// update the serial numbers
-		document.querySelectorAll('tbody tr').forEach(function(row, index) {
-			row.querySelectorAll('td')[0].textContent = index + 1;
-		});
-		}, 1000);
-	});
-	});
-
-	function dT() {
-		// Collection datatable
-		var due_followup_table = $('#due_followup_table').DataTable();
-		due_followup_table.destroy();
-		var due_followup_table = $('#due_followup_table').DataTable({
-			"order": [[ 0, "desc" ]],
-			"ordering": false,
-			'paging':false,
-			'processing': true,
-			'serverSide': true,
-			'serverMethod': 'post',
-			'ajax': {
-			'url': 'ajaxFetch/ajaxDueFollowupFetch.php',
-			'data': function(data) {
-				var search = document.querySelector('#search').value;
-				data.search = search;
-			}
-			},
-			dom: 'lBfrtip',
-			buttons: [
-			{
-				extend: 'excel',
-				title: "Due Followup"
-			},
-			{
-				extend: 'colvis',
-				collectionLayout: 'fixed four-column',
-			}
-			],
-			"lengthMenu": [
-			[10, 25, 50, -1],
-			[10, 25, 50, "All"]
-			],
-			// "columnDefs": [ {
-			//     "targets": [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
-			//     "orderable": false
-			// } ]
-
-		});
-	}
-	var id = $('#id').val();
-	if(id != 0){
-		setTimeout(()=>{
-			Swal.fire({
-				title: 'Print',
-				text: 'Do you want to print this collection?',
-				// icon: 'question',
-				// showConfirmButton: true,
-				// confirmButtonColor: '#009688',
-				imageUrl: 'img/printer.png',
-				imageWidth: 300,
-				imageHeight: 210,
-				imageAlt: 'Custom image',
-				showCancelButton: true,
-				confirmButtonColor: '#009688',
-				cancelButtonColor: '#d33',
-				cancelButtonText: 'No',
-				confirmButtonText: 'Yes'
-			}).then((result) => {
-				if (result.isConfirmed) {
-					$.ajax({
-						url:'collectionFile/print_collection.php',
-						data:{'coll_id':id},
-						type:'post',
-						cache:false,
-						success:function(html){
-							$('#printcollection').html(html)
-							// Get the content of the div element
-							var content = $("#printcollection").html();
-
-							// Create a new window
-							var w = window.open();
-
-							// Write the content to the new window
-							$(w.document.body).html(content);
-
-							// Print the new window
-							w.print();
-
-							// Close the new window
-							w.close();
-						}
-					})
-				}
-			})
-		},2000)
-	}
-</script>
+<!-- Modal for Filter By contents   -->
+<div class="modal fade" id="filter_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-md modal-dialog-centered" role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Filter By</h5>
+				<button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="filter_form" name="filter_form" method="post" action="">
+				<div class="modal-body">
+					<div class="container-fluid">
+						<div class="col-12" >
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="filter_by" style="float:left"><b>By Area</b></label><br>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_branch" name="by_branch" tabindex='1'>
+											<option value="">Select Branch Name</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_line" name="by_line" tabindex='2'>
+											<option value="">Select Line</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_area" name="by_area" tabindex='3'>
+											<option value="">Select Area Name</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_sub_area" name="by_sub_area" tabindex='4'>
+											<option value="">Select Sub Area Name</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="filter_by" style="float:left"><b>By Loan</b></label><br>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_loan_cat" name="by_loan_cat" tabindex='5'>
+											<option value="">Select Loan Category</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_sub_cat" name="by_sub_cat" tabindex='6'>
+											<option value="">Select Sub Category</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_agent" name="by_agent" tabindex='7'>
+											<option value="">Select Agent</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="filter_by" style="float:left"><b>By Status</b></label><br>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_status" name="by_status" tabindex='8'>
+											<option value="">Select Status</option>
+											<option value="1">Current</option>
+											<option value="2">Pending</option>
+											<option value="3">OD</option>
+											<option value="4">Error</option>
+											<option value="5">Legal</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="filter_by" style="float:left"><b>By Collection Format</b></label><br>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<select class="form-control" id="by_coll_format" name="by_coll_format" tabindex='9'>
+											<option value="">Select Status</option>
+											<option value="1">By Self</option>
+											<option value="2">On Spot</option>
+											<option value="3">ECS</option>
+											<option value="4">Cheque</option>
+										</select>
+									</div>
+								</div>
+								
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group">
+										<label for="filter_by" style="float:left"><b>By Commitment Date</b></label><br>
+									</div>
+								</div>
+								<div class="col-4">
+									<div class="form-group">
+										<input type="date" class="form-control" id="by_comm_date" name="by_comm_date" tabindex='10'>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" >
+					<input type='reset' class="btn btn-secondary-outline " tabindex="11" value="&#10006;&nbsp;Clear Filters">
+					<button class="btn btn-primary" id='apply_filter' tabindex="12">Apply Filters</button>
+					<button class="btn btn-secondary" data-dismiss="modal" tabindex="13">Close</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
