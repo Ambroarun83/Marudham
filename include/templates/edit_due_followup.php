@@ -52,7 +52,7 @@
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Filter By</h5>
-				<button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close">
+				<button type='button' class="close close-modal" data-dismiss="modal" tabindex="1" aria-label="Close" >
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -61,7 +61,11 @@
 					<div class="container-fluid">
 						<div class="col-12" >
 							<div class="row">
+								
 								<div class="col-12">
+									<div class="alert alert-danger" role="alert" id='alert_text' style="display: none;">
+										<div class="alert-text"> Please Select Any one option to Apply Filter! </div>
+									</div>
 									<div class="form-group">
 										<label for="filter_by" style="float:left"><b>By Area</b></label><br>
 									</div>
@@ -183,9 +187,9 @@
 					</div>
 				</div>
 				<div class="modal-footer" >
-					<input type='reset' class="btn btn-secondary-outline " tabindex="11" value="&#10006;&nbsp;Clear Filters">
-					<button class="btn btn-primary" id='apply_filter' tabindex="12">Apply Filters</button>
-					<button class="btn btn-secondary" data-dismiss="modal" tabindex="13">Close</button>
+					<input type='reset' class="btn btn-secondary-outline " id='clear_filter' tabindex="11" value="&#10006;&nbsp;Clear Filters">
+					<input type='button' class="btn btn-primary" id='apply_filter' tabindex="12" value="Apply Filters">
+					<input type='button' class="btn btn-secondary close-modal" data-dismiss="modal" tabindex="13" value="Close">
 				</div>
 			</form>
 		</div>

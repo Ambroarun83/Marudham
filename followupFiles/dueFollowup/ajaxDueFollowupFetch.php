@@ -7,7 +7,7 @@ if(isset($_SESSION["userid"])){
 }
 
 $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
-acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN request_creation rc ON ii.req_id = rc.req_id 
+acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
 where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17)  GROUP BY ii.cus_id ";// 14 and 17 means collection entries, 17 removed from issue list
 
 $statement = $connect->prepare($query);
@@ -36,6 +36,50 @@ $result = $statement->fetchAll();
     <?php
     $sno = 1;
     foreach ($result as $row) {
+        if(isset($_POST['by_area']) && $_POST['by_area'] != ''){
+            $by_area = $_POST['by_area'];
+            if($by_area != $row['area_confirm_area']){continue;}
+        }else
+        if(isset($_POST['by_line']) && $_POST['by_line'] != ''){
+            $by_line = $_POST['by_line'];
+            // $qry = $mysqli->query("SELECT sub_area_id from area_line_mapping where map_id = $by_line");
+            // if($qry->num_rows > 0){
+            //     $sub_area_arr = explode(',',$qry->fetch_assoc()['sub_area_id']);
+            //     if(!in_array($row['area_confirm_subarea'],$sub_area_arr)  ){
+            //         continue;//continue means it will exits the current iteration of foreach loop and go to next iteration
+            //     }
+            // }else{
+            //     //if not even one sub area found then stop iteration and continue with next iteration
+            //     continue;
+            // }
+            $qry = $mysqli->query("SELECT map_id FROM area_line_mapping where FIND_IN_SET('".$row['area_confirm_subarea']."',sub_area_id) ");
+            if($qry->num_rows > 0){
+                $line_map_id = $qry->fetch_assoc()['map_id'];
+                if($by_line != $line_map_id){continue;}
+            }else{continue;}
+        }else
+        if(isset($_POST['by_branch']) && $_POST['by_branch'] != ''){
+            $by_branch = $_POST['by_branch'];
+            // $qry = $mysqli->query("SELECT b.line_name from area_line_mapping b JOIN branch_creation c ON c.branch_id = b.branch_id where c.branch_id = $by_branch");
+            // // echo "SELECT b.map_id from area_line_mapping b JOIN branch_creation c ON c.branch_id = b.branch_id where c.branch_id = $by_branch";
+            // if($qry->num_rows > 0){
+            //     while($br_row =$qry->fetch_assoc()){
+            //         $line_arr[] = $br_row['line_name'];
+            //     }
+            //     // $sub_area_arr = explode(',',$qry->fetch_assoc()['sub_area_id']);
+            //     if(!in_array($row['area_line'],$line_arr)  ){
+            //         continue;//continue means it will exits the current iteration of foreach loop and go to next iteration
+            //     }
+            // }else{
+            //     //if not even one sub area found then stop iteration and continue with next iteration
+            //     continue;
+            // }
+            $qry = $mysqli->query("SELECT b.branch_id FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id where l.line_name = '".$row['area_line']."' ");
+            if($qry->num_rows > 0){
+                $row1 = $qry->fetch_assoc()['branch_id'];
+                if($row1 != $by_branch){continue;}
+            }else{continue;}
+        }
         ?>
         <tr>
             <td> <?php echo $sno; ?> </td><?php

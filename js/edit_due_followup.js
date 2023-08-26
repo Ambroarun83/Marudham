@@ -3,10 +3,21 @@ $(document).ready(function(){
     dueFollowuptableFetch();
     getFilterInputs();
 
-    {
-        let curDate = new Date();
-        $('#by_comm_date').attr('min', curDate.getFullYear()+'-0'+(curDate.getMonth()+1)+'-'+curDate.getDate()); // setting minimum date for to date, so before start date will be disabled
-    }
+    $('#apply_filter').click(function(){
+        if(validateFilters() == true){
+            applyFilters();
+        }
+    })
+    $('#clear_filter').click(function(){
+        //while clearing filters, we need to show the original table , so call following method
+        dueFollowuptableFetch();
+        
+        $('.close-modal').trigger('click');//close the modal while clicking clear to show old table
+
+        //this will clear the dropdowns from previously assigned datas
+        $('#filter_form select').not('#by_branch,#by_loan_cat,#by_agent,#by_status,#by_coll_format').find('option:not(:first)').remove('');
+
+    })
 });
 
 
@@ -81,7 +92,9 @@ function getFilterInputs(){
 
     $.post('followupFiles/dueFollowup/getFilterInputs.php',function(response){
         
-        $('#by_branch,#loan_cat,#agent').empty().append(`<option value="">Select Branch Name</option>`)
+        $('#by_branch').empty().append(`<option value="">Select Branch Name</option>`)
+        $('#loan_cat').empty().append(`<option value="">Select Loan Category</option>`)
+        $('#agent').empty().append(`<option value="">Select Agent Name</option>`)
         for(let i=0; i<response['branch'].length; i++){
             $('#by_branch').append(`<option value="${response['branch'][i].id}">${response['branch'][i].name}</option>`)
         }
@@ -94,11 +107,13 @@ function getFilterInputs(){
 
 
         $('#by_branch').change(function(){
+            $('#by_area').empty().append(`<option value="">Select Area</option>`)
+            $('#by_sub_area').empty().append(`<option value="">Select Sub Area</option>`)
+            $('#by_line').empty().append(`<option value="">Select Line</option>`)
+
             if($(this).val() == ''){
-                $('#by_line').empty().append(`<option value="">Select Line</option>`)
                 return;
             }else{
-                $('#by_line').empty().append(`<option value="">Select Line</option>`)
                 for(let i=0; i<response['line'].length; i++){
                     if(response['line'][i].branch_id == $('#by_branch').val()){
                         $('#by_line').append(`<option value="${response['line'][i].id}">${response['line'][i].name}</option>`)
@@ -109,14 +124,12 @@ function getFilterInputs(){
         });
 
         $('#by_line').change(function(){
+            $('#by_area').empty().append(`<option value="">Select Area Name</option>`)
+            $('#by_sub_area').empty().append(`<option value="">Select Sub Area</option>`)
+
             if($('#by_line').val() == '' || $('#by_branch').val() == ''){
-
-                $('#by_area').empty().append(`<option value="">Select Area Name</option>`)
                 return;
-
             }else{
-                $('#by_area').empty().append(`<option value="">Select Area Name</option>`)
-
                 //this code will first check for selected line id
                 for(let i=0; i<response['line'].length; i++){
 
@@ -139,11 +152,11 @@ function getFilterInputs(){
         });
 
         $('#by_area').change(function(){
+            $('#by_sub_area').empty().append(`<option value="">Select Sub Area Name</option>`)
+            
             if($('#by_area').val() == '' || $('#by_line').val() == '' || $('#by_branch').val() == ''){
-                $('#by_sub_area').empty().append(`<option value="">Select Sub Area Name</option>`)
                 return;
             }else{
-                $('#by_sub_area').empty().append(`<option value="">Select Sub Area Name</option>`)
                 for(let i=0; i<response['sub_area'].length; i++){
                     if(response['sub_area'][i].area_id == $('#by_area').val()){
                         $('#by_sub_area').append(`<option value="${response['sub_area'][i].id}">${response['sub_area'][i].name}</option>`)
@@ -152,10 +165,10 @@ function getFilterInputs(){
             
             }
         });
-
+        // ********************************************************************************************************************************************************
         $('#by_loan_cat').change(function(){
+            $('#by_sub_cat').empty().append(`<option value="">Select Sub Category</option>`);
             if($('#by_loan_cat').val() == ''){
-                $('#by_sub_cat').empty().append(`<option value="">Select Sub Category</option>`)
                 return;
             }else{
                 $('#by_sub_cat').empty().append(`<option value="">Select Sub Category</option>`)
@@ -171,3 +184,39 @@ function getFilterInputs(){
     },'json')
 }
 
+function validateFilters(){
+    let response = true;
+    let by_branch = $('#by_branch').val(); let by_line = $('#by_line').val(); let by_area = $('#by_area').val(); let by_sub_area = $('#by_sub_area').val();
+    let by_loan_cat = $('#by_loan_cat').val(); let by_sub_cat = $('#by_sub_cat').val(); let by_agent = $('#by_agent').val();
+    let by_status = $('#by_status').val(); let by_coll_format = $('#by_coll_format').val(); let by_comm_date = $('#by_comm_date').val();
+
+    if (by_branch == '' && by_line == '' && by_area == '' && by_sub_area == '' && by_loan_cat == '' && by_sub_cat == '' && by_agent == '' && by_status == '' && by_coll_format == '' && by_comm_date == '') {
+        
+        swarlInfoAlert('Fields are Empty!','Please choose any options to Apply filters.')
+        response = false;
+    }else{
+        
+    }
+
+    return response;
+}
+function applyFilters(){
+    $.post('followupFiles/dueFollowup/ajaxDueFollowupFetch.php',$('#filter_form').serialize(),function(response){
+        $('#dueFollwupDiv').empty().html(response);
+        $('.close-modal').trigger('click');
+        event.preventDefault();
+    });
+}
+
+
+
+
+function swarlInfoAlert(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'info',
+        showConfirmButton: true,
+        confirmButtonColor: '#009688',
+    });
+}

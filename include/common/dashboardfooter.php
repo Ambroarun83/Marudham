@@ -74,7 +74,7 @@ $(document).ready(function () {
 <?php $current_page = isset($_GET['page']) ? $_GET['page'] : null; ?>
 
 <!-- Required jQuery first, then Bootstrap Bundle JS -->
-<!-- <script src="js/jquery.min.js"></script> -->
+<script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/jspdf.js"></script>
@@ -1439,7 +1439,6 @@ if($current_page == 'confirmation_followup') { ?>
             position: 'top-right',
             // background: '#00e2cd',
             timer: 2000,
-            // timer: 2000,
             showConfirmButton: true,
             confirmButtonColor: '#f2372b',
             timerProgressBar: true,
