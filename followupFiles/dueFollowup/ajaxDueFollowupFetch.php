@@ -36,22 +36,17 @@ $result = $statement->fetchAll();
     <?php
     $sno = 1;
     foreach ($result as $row) {
+
+        if(isset($_POST['by_sub_area']) && $_POST['by_sub_area'] != ''){
+            $by_sub_area = $_POST['by_sub_area'];
+            if($by_sub_area != $row['area_confirm_subarea']){continue;}
+        }else
         if(isset($_POST['by_area']) && $_POST['by_area'] != ''){
             $by_area = $_POST['by_area'];
             if($by_area != $row['area_confirm_area']){continue;}
         }else
         if(isset($_POST['by_line']) && $_POST['by_line'] != ''){
             $by_line = $_POST['by_line'];
-            // $qry = $mysqli->query("SELECT sub_area_id from area_line_mapping where map_id = $by_line");
-            // if($qry->num_rows > 0){
-            //     $sub_area_arr = explode(',',$qry->fetch_assoc()['sub_area_id']);
-            //     if(!in_array($row['area_confirm_subarea'],$sub_area_arr)  ){
-            //         continue;//continue means it will exits the current iteration of foreach loop and go to next iteration
-            //     }
-            // }else{
-            //     //if not even one sub area found then stop iteration and continue with next iteration
-            //     continue;
-            // }
             $qry = $mysqli->query("SELECT map_id FROM area_line_mapping where FIND_IN_SET('".$row['area_confirm_subarea']."',sub_area_id) ");
             if($qry->num_rows > 0){
                 $line_map_id = $qry->fetch_assoc()['map_id'];
@@ -60,26 +55,46 @@ $result = $statement->fetchAll();
         }else
         if(isset($_POST['by_branch']) && $_POST['by_branch'] != ''){
             $by_branch = $_POST['by_branch'];
-            // $qry = $mysqli->query("SELECT b.line_name from area_line_mapping b JOIN branch_creation c ON c.branch_id = b.branch_id where c.branch_id = $by_branch");
-            // // echo "SELECT b.map_id from area_line_mapping b JOIN branch_creation c ON c.branch_id = b.branch_id where c.branch_id = $by_branch";
-            // if($qry->num_rows > 0){
-            //     while($br_row =$qry->fetch_assoc()){
-            //         $line_arr[] = $br_row['line_name'];
-            //     }
-            //     // $sub_area_arr = explode(',',$qry->fetch_assoc()['sub_area_id']);
-            //     if(!in_array($row['area_line'],$line_arr)  ){
-            //         continue;//continue means it will exits the current iteration of foreach loop and go to next iteration
-            //     }
-            // }else{
-            //     //if not even one sub area found then stop iteration and continue with next iteration
-            //     continue;
-            // }
             $qry = $mysqli->query("SELECT b.branch_id FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id where l.line_name = '".$row['area_line']."' ");
             if($qry->num_rows > 0){
                 $row1 = $qry->fetch_assoc()['branch_id'];
                 if($row1 != $by_branch){continue;}
             }else{continue;}
         }
+
+        if(isset($_POST['by_sub_cat']) && $_POST['by_sub_cat'] != ''){
+            $by_sub_cat = $_POST['by_sub_cat'];
+            $qry = $mysqli->query("SELECT lc.loan_category_id From loan_category lc 
+                    JOIN acknowlegement_loan_calculation alc ON alc.sub_category = lc.sub_category_name and alc.loan_category = lc.loan_category_name
+                    JOIN in_issue ii ON alc.req_id = ii.req_id where alc.cus_id_loan = '".$row['cp_cus_id']."'
+                    and (ii.cus_status >= 14 and ii.cus_status <= 17) ");
+                    //this will check sub category for the customer in his all the request which are currenly under 14 to 17 status
+                    // if that sub category occurs, then availability will becomes true, then this cus id will be considered as under the sub cat selected
+            $available = false;
+            while($row1 = $qry->fetch_assoc()){
+                if($by_sub_cat == $row1['loan_category_id']){
+                    $available = true;
+                }
+            }
+            if(!$available){continue;}//if the availablity is false then no need to show this customer
+        }else
+        // for loan category
+        if(isset($_POST['by_loan_cat']) && $_POST['by_loan_cat'] != ''){
+            $by_loan_cat = $_POST['by_loan_cat'];
+            $qry = $mysqli->query("SELECT lc.loan_category From acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id where lc.cus_id_loan = '".$row['cp_cus_id']."'
+                    and (ii.cus_status >= 14 and ii.cus_status <= 17) ");
+                    //this will check loan category for the customer in his all the request which are currenly under 14 to 17 status
+                    // if that loan category occurs, then availability will becomes true, then this cus id will be considered as under the loan cat selected
+            $available = false;
+            while($row1 = $qry->fetch_assoc()){
+                if($by_loan_cat == $row1['loan_category']){
+                    $available = true;
+                }
+            }
+            //if the availablity is false then no need to show this customer
+            if(!$available){continue;}
+        } 
+        
         ?>
         <tr>
             <td> <?php echo $sno; ?> </td><?php
