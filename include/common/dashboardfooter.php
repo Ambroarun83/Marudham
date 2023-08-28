@@ -74,7 +74,7 @@ $(document).ready(function () {
 <?php $current_page = isset($_GET['page']) ? $_GET['page'] : null; ?>
 
 <!-- Required jQuery first, then Bootstrap Bundle JS -->
-<script src="js/jquery.min.js"></script>
+<scripft src="js/jquery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/moment.js"></script>
 <script src="js/jspdf.js"></script>
@@ -1557,6 +1557,7 @@ if($current_page == 'confirmation_followup') { ?>
     function hideOverlay() {
         clearTimeout(overlayTimer); // Clear the timer if it's still running
         var overlayDiv = document.querySelector('.overlay');
+        console.log("🚀 ~ file: dashboardfooter.php:1560 ~ hideOverlay ~ overlayDiv:", overlayDiv)
         if (overlayDiv) {
             overlayDiv.remove();
         }
