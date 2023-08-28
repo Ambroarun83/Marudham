@@ -6320,4 +6320,175 @@ function updateUser($mysqli,$id,$user_id){
 	// 	}
 	// 	return $detailrecords;
 	// }
+
+//Customer Profile update 
+	public function updateCustomerProfile($mysqli, $userid){
+		if(isset($_POST['cus_id'])){
+			$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);
+		}
+		if(isset($_POST['cus_name'])){
+			$cus_name = $_POST['cus_name'];
+		}
+		if(isset($_POST['dob'])){
+			$dob =  $_POST['dob'];
+		}
+		if(isset($_POST['age'])){
+			$age = $_POST['age'];
+		}
+		if(isset($_POST['gender'])){
+			$gender = $_POST['gender'];
+		}
+		if(isset($_POST['state'])){
+			$state = $_POST['state'];
+		}
+		if(isset($_POST['district'])){
+			$district = $_POST['district'];
+		}
+		if(isset($_POST['taluk'])){
+			$taluk = $_POST['taluk'];
+		}
+		if(isset($_POST['area'])){
+			$area = $_POST['area'];
+		}
+		if(isset($_POST['sub_area'])){
+			$sub_area = $_POST['sub_area'];
+		}
+		if(isset($_POST['cus_address'])){
+			$cus_address = $_POST['cus_address'];
+		}
+		if(isset($_POST['mobile1'])){
+			$mobile1 = $_POST['mobile1'];
+		}
+		$mobile2='';
+		if(isset($_POST['mobile2'])){
+			$mobile2 = $_POST['mobile2'];
+		}
+		if(isset($_POST['father_name'])){
+			$father_name = $_POST['father_name'];
+		}
+		if(isset($_POST['mother_name'])){
+			$mother_name = $_POST['mother_name'];
+		}
+		if(isset($_POST['marital'])){
+			$marital = $_POST['marital'];
+		}
+		$spouse_name = '';
+		if(isset($_POST['spouse_name'])){
+			$spouse_name = $_POST['spouse_name'];
+		}
+		if(isset($_POST['occupation_type'])){
+			$occupation_type = $_POST['occupation_type'];
+		}
+		if(isset($_POST['occupation'])){
+			$occupation = $_POST['occupation'];
+		}
+		if(isset($_POST['cus_res_type'])){
+			$cus_res_type = $_POST['cus_res_type'];
+		}
+		if(isset($_POST['cus_res_details'])){
+			$cus_res_details = $_POST['cus_res_details'];
+		}
+		if(isset($_POST['cus_res_address'])){
+			$cus_res_address = $_POST['cus_res_address'];
+		}
+		if(isset($_POST['cus_res_native'])){
+			$cus_res_native = $_POST['cus_res_native'];
+		}
+		if(isset($_POST['cus_occ_type'])){
+			$cus_occ_type = $_POST['cus_occ_type'];
+		}
+		if(isset($_POST['cus_occ_detail'])){
+			$cus_occ_detail = $_POST['cus_occ_detail'];
+		}
+		if(isset($_POST['cus_occ_income'])){
+			$cus_occ_income = $_POST['cus_occ_income'];
+		}
+		if(isset($_POST['cus_occ_address'])){
+			$cus_occ_address = $_POST['cus_occ_address'];
+		}
+		if(isset($_POST['cus_occ_dow'])){
+			$cus_occ_dow = $_POST['cus_occ_dow'];
+		}
+		if(isset($_POST['cus_occ_abt'])){
+			$cus_occ_abt = $_POST['cus_occ_abt'];
+		}
+		if(isset($_POST['area_cnfrm'])){
+			$area_cnfrm = $_POST['area_cnfrm'];
+		}
+		if(isset($_POST['area_state'])){
+			$area_state = $_POST['area_state'];
+		}
+		if(isset($_POST['area_district'])){
+			$area_district = $_POST['area_district'];
+		}
+		if(isset($_POST['area_taluk'])){
+			$area_taluk = $_POST['area_taluk'];
+		}
+		if(isset($_POST['area_confirm'])){
+			$area_confirm = $_POST['area_confirm'];
+		}
+		if(isset($_POST['area_sub_area'])){
+			$area_sub_area = $_POST['area_sub_area'];
+		}
+		if(isset($_POST['area_group'])){
+			$area_group = $_POST['area_group'];
+		}
+		if(isset($_POST['area_line'])){
+			$area_line = $_POST['area_line'];
+		}
+		if(isset($_POST['cus_how_know'])){
+			$cus_how_know = $_POST['cus_how_know'];
+		}
+		if(isset($_POST['cus_loan_count'])){
+			$cus_loan_count = $_POST['cus_loan_count'];
+		}
+		if(isset($_POST['cus_frst_loanDate'])){
+			$cus_frst_loanDate = $_POST['cus_frst_loanDate'];
+		}
+		if(isset($_POST['cus_travel_cmpy'])){
+			$cus_travel_cmpy = $_POST['cus_travel_cmpy'];
+		}
+		if(isset($_POST['cus_monthly_income'])){
+			$cus_monthly_income = $_POST['cus_monthly_income'];
+		}
+		if(isset($_POST['cus_other_income'])){
+			$cus_other_income = $_POST['cus_other_income'];
+		}
+		if(isset($_POST['cus_support_income'])){
+			$cus_support_income = $_POST['cus_support_income'];
+		}
+		if(isset($_POST['cus_Commitment'])){
+			$cus_Commitment = $_POST['cus_Commitment'];
+		}
+		if(isset($_POST['cus_monDue_capacity'])){
+			$cus_monDue_capacity = $_POST['cus_monDue_capacity'];
+		}
+		if(isset($_POST['cus_loan_limit'])){
+			$cus_loan_limit = $_POST['cus_loan_limit'];
+		}
+		if(isset($_POST['about_cus'])){
+			$about_cus = $_POST['about_cus'];
+		}
+		if(isset($_POST['cus_Tableid'])){
+			$cus_Tableid = $_POST['cus_Tableid'];
+		}
+
+
+		$cusUpd = "UPDATE `customer_profile` SET `cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `cus_id`='".strip_tags($cus_id)."' ";
+		$updateCus = $mysqli->query($cusUpd) or die("Error ".$mysqli->error);
+
+		$insertQry = "UPDATE in_verification set `cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."' where `cus_id`='".strip_tags($cus_id)."' ";
+		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
+
+
+		$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`state`='".strip_tags($state)."',`district`='".strip_tags($district)."',`taluk`='".strip_tags($taluk)."',`area`='".strip_tags($area)."',`sub_area`='".strip_tags($sub_area)."',`address`='".strip_tags($cus_address)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`father_name`='".strip_tags($father_name)."',`mother_name`='".strip_tags($mother_name)."',`marital`='".strip_tags($marital)."',`spouse`='".strip_tags($spouse_name)."',`occupation_type`='".strip_tags($occupation_type)."',`occupation`='".strip_tags($occupation)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_info_occ_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
+		$insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
+
+
+		$updateACkCus = "UPDATE `acknowlegement_customer_profile` SET `cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `cus_id`='".strip_tags($cus_id)."' ";
+		$insresult = $mysqli->query($updateACkCus) or die("Error ".$mysqli->error);
+
+	}
+
+
 }//Class End

@@ -4,6 +4,20 @@ if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd']; //Customer ID.
 }
 
+@session_start();
+if(isset($_SESSION['userid'])){
+	$userid = $_SESSION['userid'];
+}
+
+if (isset($_POST['submit_update_cus_profile']) && $_POST['submit_update_cus_profile'] != '') {
+
+	$updateCustomerProfile = $userObj->updateCustomerProfile($mysqli, $userid);
+?>
+	<script>
+		alert('Customer Profile Updated');
+	</script>
+<?php
+}
 
 // if(isset($_POST['update_mortgage'])){
 
@@ -63,6 +77,8 @@ if (sizeof($getCustomerReg) > 0) {
 		$occupation_details 		= $getCustomerReg['occupation_details'];
 		$occupation_income 			= $getCustomerReg['occupation_income'];
 		$occupation_address 		= $getCustomerReg['occupation_address'];
+		$dow 						= $getCustomerReg['dow'];
+		$abt_occ 					= $getCustomerReg['abt_occ'];
 		$area_confirm_type 			= $getCustomerReg['area_confirm_type'];
 		$area_confirm_state 		= $getCustomerReg['area_confirm_state'];
 		$area_confirm_district 		= $getCustomerReg['area_confirm_district'];
@@ -238,6 +254,8 @@ input:checked + .slider:before {
 			<input type="hidden" name="area_confirm_area" id="area_confirm_area" value="<?php if (isset($area_confirm_area)) {echo $area_confirm_area;} ?>" />
 			<input type="hidden" name="sub_area_confirm" id="sub_area_confirm" value="<?php if (isset($area_confirm_subarea)) {echo $area_confirm_subarea;} ?>" />
 
+			<input type="hidden" class="form-control" value="<?php if(isset($marital)) echo $marital; ?>"  id="marital_upd" name="marital_upd" >
+
 
 			<!-- Row start -->
 			<div class="row gutters">
@@ -343,7 +361,7 @@ input:checked + .slider:before {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="address">Address</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="address" name="address" 
+												<input type="text" class="form-control" id="cus_address" name="cus_address" 
 												value='<?php if (isset($address)) {echo $address;} ?>' tabindex='21' placeholder="Enter Address">
 												<span class="text-danger" style='display:none' id='addressCheck'>Please Enter Address</span>
 											</div>
@@ -568,6 +586,21 @@ input:checked + .slider:before {
 									</div>
 								</div>
 
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="cus_occ_dow"> Duration of Working </label>
+										<input type="text" class="form-control" name="cus_occ_dow" id="cus_occ_dow" placeholder="Enter Duration of Working" 
+										value="<?php if (isset($dow)) {echo $dow;} ?>" tabindex="35">
+									</div>
+								</div>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<div class="form-group">
+										<label for="cus_occ_abt"> About Occupation </label>
+										<input type="text" class="form-control" name="cus_occ_abt" id="cus_occ_abt" placeholder="Enter About Occupation" 
+										value="<?php if (isset($abt_occ)) {echo $abt_occ;} ?>" tabindex="35">
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</div>
@@ -599,7 +632,6 @@ input:checked + .slider:before {
 											<option value="TamilNadu" <?php if (isset($area_confirm_state) and $area_confirm_state == 'TamilNadu') echo 'selected'; ?>>Tamil Nadu</option>
 											<option value="Puducherry" <?php if (isset($area_confirm_state) and $area_confirm_state == 'Puducherry') echo 'selected'; ?>>Puducherry</option>
 										</select>
-										<span class="text-danger" style='display:none' id='stateCheck'>Please Select State</span>
 									</div>
 								</div>
 
@@ -610,7 +642,6 @@ input:checked + .slider:before {
 										<select type="text" class="form-control" id="area_district" name="area_district" tabindex='38'>
 											<option value="Select District">Select District</option>
 										</select>
-										<span class="text-danger" style='display:none' id='districtCheck'>Please Select District</span>
 									</div>
 								</div>
 
@@ -621,7 +652,6 @@ input:checked + .slider:before {
 										<select type="text" class="form-control" id="area_taluk" name="area_taluk" tabindex="39">
 											<option value="Select Taluk">Select Taluk</option>
 										</select>
-										<span class="text-danger" style='display:none' id='talukCheck'>Please Select Taluk</span>
 									</div>
 								</div>
 
@@ -630,9 +660,7 @@ input:checked + .slider:before {
 										<label for="area_confirm">Area</label>&nbsp;<span class="text-danger">*</span>
 										<select tabindex="40" type="text" class="form-control" id="area_confirm" name="area_confirm">
 											<option value="">Select Area</option>
-
 										</select>
-										<span class="text-danger" style='display:none' id='areaCheck'>Please Select Area</span>
 									</div>
 								</div>
 
@@ -642,7 +670,6 @@ input:checked + .slider:before {
 										<select tabindex="41" type="text" class="form-control" id="area_sub_area" name="area_sub_area">
 											<option value=''>Select Sub Area</option>
 										</select>
-										<span class="text-danger" style='display:none' id='subareaCheck'>Please Select Sub Area</span>
 									</div>
 								</div>
 
@@ -1461,7 +1488,7 @@ input:checked + .slider:before {
 
 						<div class="form-group">
 							<label class="label"> Name </label>&nbsp;<span class="text-danger">*</span>
-							<input type="text" class="form-control" name="famname" id="famname" onkeydown="return /[a-z ]/i.test(event.key)">
+							<input type="text" class="form-control" name="famname" id="famname" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Name">
 							<span class="text-danger" id="famnameCheck" style='display:none'>Enter Name</span>
 						</div>
 					</div>
@@ -1487,7 +1514,7 @@ input:checked + .slider:before {
 					<div id="remark" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 						<div class="form-group">
 							<label for="other_remark"> Remark</label>
-							<input type="text" class="form-control" name="other_remark" id="other_remark">
+							<input type="text" class="form-control" name="other_remark" id="other_remark" placeholder="Enter Remark">
 							<span class="text-danger" id="famremarkCheck" style='display:none'>Enter Remark</span>
 						</div>
 					</div>
@@ -1495,7 +1522,7 @@ input:checked + .slider:before {
 					<div id="address" style="display: none" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 						<div class="form-group">
 							<label for="other_address"> Address </label>
-							<input type="text" class="form-control" name="other_address" id="other_address">
+							<input type="text" class="form-control" name="other_address" id="other_address" placeholder="Enter Address">
 							<span class="text-danger" id="famaddressCheck" style='display:none'>Enter Address</span>
 						</div>
 					</div>
@@ -1503,7 +1530,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label class="label"> Age </label>&nbsp;<span class="text-danger">*</span>
-							<input type="number" class="form-control" name="relation_age" id="relation_age">
+							<input type="number" class="form-control" name="relation_age" id="relation_age" placeholder="Enter Age">
 							<span class="text-danger" id="famageCheck" style='display:none'>Enter Age</span>
 						</div>
 					</div>
@@ -1511,7 +1538,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label class="label"> Aadhar No </label>&nbsp;<span class="text-danger">*</span>
-							<input type="text" class="form-control" name="relation_aadhar" id="relation_aadhar" data-type="adhaar-number" maxlength="14">
+							<input type="text" class="form-control" name="relation_aadhar" id="relation_aadhar" data-type="adhaar-number" maxlength="14" placeholder="Enter Aadhar No">
 							<span class="text-danger" id="famaadharCheck" style='display:none'>Enter Aadhar Number</span>
 						</div>
 					</div>
@@ -1519,7 +1546,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label class="label"> Mobile No </label>&nbsp;<span class="text-danger">*</span>
-							<input type="number" class="form-control" name="relation_Mobile" id="relation_Mobile" maxlength="10" onkeypress="if(this.value.length==10) return false;">
+							<input type="number" class="form-control" name="relation_Mobile" id="relation_Mobile" maxlength="10" onkeypress="if(this.value.length==10) return false;" placeholder="Mobile Number">
 							<span class="text-danger" id="fammobileCheck" style='display:none'>Enter Mobile Number</span>
 						</div>
 					</div>
@@ -1527,7 +1554,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label class="label"> Occupation </label>&nbsp;<span class="text-danger">*</span>
-							<input type="text" class="form-control" name="relation_Occupation" id="relation_Occupation" onkeydown="return /[a-z ]/i.test(event.key)">
+							<input type="text" class="form-control" name="relation_Occupation" id="relation_Occupation" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Occupation">
 							<span class="text-danger" id="famoccCheck" style='display:none'>Enter Occupation</span>
 						</div>
 					</div>
@@ -1535,7 +1562,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label class="label"> Income </label>&nbsp;<span class="text-danger">*</span>
-							<input type="number" class="form-control" name="relation_Income" id="relation_Income">
+							<input type="number" class="form-control" name="relation_Income" id="relation_Income" placeholder="Enter Income">
 							<span class="text-danger" id="famincomeCheck" style='display:none'>Enter Income</span>
 						</div>
 					</div>
@@ -1543,7 +1570,7 @@ input:checked + .slider:before {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label class="label"> Blood Group </label>&nbsp;
-							<input type="text" class="form-control" name="relation_Blood" id="relation_Blood">
+							<input type="text" class="form-control" name="relation_Blood" id="relation_Blood" placeholder="Enter Blood Group">
 						</div>
 					</div>
 
