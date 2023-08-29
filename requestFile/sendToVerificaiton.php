@@ -11,12 +11,12 @@ if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
 }
 
-    $selectIC = $con->query("SELECT cus_reg_id FROM customer_register WHERE cus_id = '".$cus_id."' ")or die('Error on Customer Table');
+    $selectIC = $con->query("SELECT cus_reg_id FROM customer_register WHERE cus_id = '".$cus_id."' ")or die('Error on Select Customer Table');
     $row = $selectIC->fetch_assoc();
     $cus_reg_id = $row['cus_reg_id'];
 
     $selectIC = $con->query("UPDATE request_creation set cus_reg_id=$cus_reg_id, cus_status = 1,updated_date = now(), update_login_id = $userid WHERE req_id = '".$req_id."' ") or die('Error on Request Table');
-    $selectIC = $con->query("UPDATE customer_register set cus_status = 1,updated_date = now() WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
+    $selectIC = $con->query("UPDATE customer_register set cus_status = 1,updated_date = now() WHERE req_ref_id = '".$req_id."' ")or die('Error on Update Customer Table');
     
     
     $selectIC = $con->query("INSERT INTO in_verification (`req_id`,`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`,
