@@ -156,6 +156,94 @@ $(document).ready(function(){
         }
     };
 
+    {
+        let curDate = new Date();
+        $('#comm_date').attr('min', curDate.getFullYear()+'-0'+(curDate.getMonth()+1)+'-'+curDate.getDate()); // setting minimum date for to date, so before start date will be disabled
+    }
+    $('#comm_ftype').change(function(){
+        let type = $(this).val();
+        let append;
+        if(type == 1){//direct
+            append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='2'>Unavailable</option>`;
+        }else if(type == 2){//mobile
+            append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='3'>RNR</option><option value='4'>Not Reachable</option>
+            <option value='5'>Switch Off</option><option value='6'>Not in Use</option><option value='7'>Blocked</option>`;
+        }else{
+            append = `<option value="">Select Follow Up Status</option>`;
+        }
+        $('#comm_fstatus').empty().append(append);
+    })
+
+    $('#comm_fstatus').change(function(){
+        let status = $(this).val();
+        if(status == 1){//commitment
+            $('.person-div').show();
+        }else {
+            $('.person-div').hide();
+            $('#comm_person_type,#comm_person_name,#comm_person_name1,#comm_relationship').val('');//empty values when hiding person div
+        }
+    })
+
+    $('#comm_person_type').change(function(){
+        let type = $(this).val();
+        let req_id = $('#comm_req_id').val();
+        let cus_id = $('#cusidupd').val();
+        if(type == 1){
+
+            let cus_name = $('#cus_name').val();
+            $('#comm_person_name1').hide();//select box
+            $('#comm_person_name').show();
+            $('#comm_person_name').val(cus_name);//storing customer name in person name
+            $('#comm_relationship').val('NIL');
+
+        }else if(type == 2 ){
+            type=1;//cause in below url garentor is managed as type 1
+            $.post('verificationFile/documentation/check_holder_name.php',{'reqId':req_id,type},function(response){
+                //if guarentor show readonly input box and hide select box
+                $('#comm_person_name').show();
+                $('#comm_person_name1').hide();//select box
+                $('#comm_person_name1').empty();//select box
+                
+                $('#comm_person_name').val(response['name'])
+                $('#comm_relationship').val(response['relationship']);
+            },'json')
+        }else if(type == 3){
+            $.post('verificationFile/verificationFam.php',{cus_id},function(response){
+                //if Family member then show dropdown and hide input box
+                $('#comm_person_name1').show();//select box
+                $('#comm_person_name').hide();
+                $('#comm_person_name').empty();
+                
+                $('#comm_person_name1').empty().append("<option value=''>Select Person Name</option>")
+                for(var i=0;i<response.length-1;i++){
+                    $('#comm_person_name1').append("<option value='"+response[i]['fam_id']+"'>"+response[i]['fam_name']+"</option>")
+                }
+
+                //create onchange event for person name that will bring the relationship of selected customer
+                $('#comm_person_name1').off('change').change(function(){
+                    let person = $(this).val();
+                    for(var i=0;i<response.length-1;i++){
+                        if(person == response[i]['fam_id']){
+                            $('#comm_relationship').val(response[i]['relationship']);
+                        }
+                    }
+                })
+                
+            },'json')
+        }
+    });
+
+    $('#sumit_add_comm').click(function(){
+        if(validateCommitment() == true){
+            submitCommitment();
+        }
+    })
+
+    $('#addCommitment').find('.closeModal').click(function(){
+        $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
+        $('.person-div').hide();
+    })
+
 })//Document Ready End
 
 
@@ -533,6 +621,16 @@ function OnLoadFunctions(req_id,cus_id){
                     var req_id = $(this).attr('value');
                     resetcollCharges(req_id);  //Fine
                 })
+                $('.add-commitment-chart').click(function(){
+                    let req_id = $(this).data('reqid');
+                    $('#comm_req_id').val(req_id)
+                })
+                $('.commitment-chart').off('click').click(function(){//Commitment chart
+                    let req_id = $(this).data('reqid');let cus_id = $('#cusidupd').val();
+                    $.post('followupFiles/dueFollowup/getCommitmentChart.php',{cus_id,req_id},function(html){
+                        $('#commChartDiv').empty().html(html);
+                    })
+                })
                 $('.move-error').click(function(){
                     if(confirm("Are you Sure To move this Loan to Error?")){
                         let getidupd = $('#idupd').val();let getcusidupd = $('#cusidupd').val();
@@ -802,6 +900,58 @@ function validations(){
     }else{
         $('.totalpaidCheck').hide();
     }
+}
+
+function submitCommitment(){
+    let req_id = $('#comm_req_id').val();let cus_id = $('#cusidupd').val();
+    let ftype = $('#comm_ftype').val();let fstatus = $('#comm_fstatus').val();
+    let person_type = $('#comm_person_type').val();let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();
+    let relationship = $('#comm_relationship').val();let remark = $('#comm_remark').val();let date = $('#comm_date').val();let hint = $('#comm_hint').val();
+    let args = {cus_id,req_id,ftype,fstatus,person_type,person_name,person_name1,relationship,remark,date,hint};
+    
+    $.post('followupFiles/dueFollowup/submitCommitment.php',args,function(response){
+        if(response.includes('Error')){
+            swarlErrorAlert(response);
+        }else{
+            swarlSuccessAlert(response);
+            $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
+            $('.person-div').hide();
+        }
+    })
+}
+function validateCommitment(){
+    let response = true;
+    let ftype = $('#comm_ftype').val(); let fstatus = $('#comm_fstatus').val(); let person_type = $('#comm_person_type').val();
+    let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();let remark = $('#comm_remark').val();
+    let comm_date = $('#comm_date').val(); let hint = $('#comm_hint').val();
+
+    validateField(ftype, '#comm_ftypeCheck');
+    validateField(fstatus, '#comm_fstatusCheck');
+    if(fstatus == 1){
+
+        validateField(person_type, '#comm_person_typeCheck');
+        if(person_type == 3){
+            validateField(person_name1, '#comm_person_nameCheck');
+        }else{
+            $('#comm_person_nameCheck').hide();
+        }
+        validateField(comm_date, '#comm_dateCheck');
+    }
+    validateField(remark, '#comm_remarkCheck');
+    validateField(hint, '#comm_hintCheck');
+
+    function validateField(value, fieldId) {
+        if (value === '' ) {
+            response = false;
+            event.preventDefault();
+            $(fieldId).show();
+        } else {
+            $(fieldId).hide();
+        }
+        
+    }
+
+    return response;
 }
 
 //Due Chart List
