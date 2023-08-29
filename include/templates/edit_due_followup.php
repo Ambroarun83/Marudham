@@ -30,9 +30,9 @@
 	<!-- Row start -->
 	<div class="row gutters">
 		<div class="col-12">
-			<div class="filter-btn-div">
+			<!-- <div class="filter-btn-div">
 				<button class="filter-btn" data-target="#filter_modal" data-toggle="modal"><i class="fas fa-filter fa-sm" style="color: #ffffff;"></i>&nbsp;Filter</button>
-			</div>
+			</div> -->
 		</div>
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 			<div class="table-container" ><br>

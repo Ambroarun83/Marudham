@@ -83,6 +83,11 @@ $(document).ready(function(){
         }
     })
 
+    $('#addCommitment').find('.closeModal').click(function(){
+        $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
+        $('.person-div').hide();
+    })
+
     {
         let curDate = new Date();
         $('#comm_date').attr('min', curDate.getFullYear()+'-0'+(curDate.getMonth()+1)+'-'+curDate.getDate()); // setting minimum date for to date, so before start date will be disabled

@@ -811,72 +811,125 @@ if($idupd>0)
 <!-- /////////////////////////////////////////////////////////////////// Fine Add Modal END ////////////////////////////////////////////////////////////////////// -->
 
 <!-- /////////////////////////////////////////////////////////////////// Commitment Add Modal Start ////////////////////////////////////////////////////////////////////// -->
-<!-- <div class="modal fade collectionCharges" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade" id='addCommitment' tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Commitment</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetCommitment()">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add Commitment</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" >
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				
-				<div id="collChargeInsertOk" class="successalert">Commitment Added Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-				<div id="collChargeNotOk" class="unsuccessalert">Something Went Wrong!
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
-				<br />
-				<div class="row">
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="collectionCharge_date">Date</label> <span class="required">&nbsp;*</span>
-							<input type="hidden" class="form-control" id="cc_req_id" name="cc_req_id">
-							<input type="date" class="form-control" id="collectionCharge_date" name="collectionCharge_date">
-							<span class="text-danger" id="collectionChargeDateCheck">Select Date</span>
+				<div class="container-fluid row">
+
+					<div class="col-12">
+						<div class="row">
+							<input type="hidden" class="form-control" id="comm_req_id" name="comm_req_id">
+							
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<label for="comm_fdate">Follow Up Date</label> <span class="required">&nbsp;*</span>
+									<input type="text" class="form-control" id="comm_fdate" name="comm_fdate" tabindex="1" value="<?php echo date('d-m-Y');?>" readonly>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<label for="comm_ftype">Follow Type</label> <span class="required">&nbsp;*</span>
+									<select class="form-control" id="comm_ftype" name="comm_ftype" tabindex="2" >
+										<option value="">Select Follow Type</option>
+										<option value="1">Direct</option>
+										<option value="2">Mobile</option>
+									</select>
+									<span class="text-danger" id="comm_ftypeCheck" style="display:none">Please Select Follow Type</span>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<label for="comm_fstatus">Follow Up Status</label> <span class="required">&nbsp;*</span>
+									<select class="form-control" id="comm_fstatus" name="comm_fstatus" tabindex="3" >
+										<option value="">Select Follow Up Status</option>
+									</select>
+									<span class="text-danger" id="comm_fstatusCheck" style="display:none">Please Select Follow Up Status</span>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 person-div" style="display:none">
+									<label for="comm_person_type">Follow Person Type</label><span class="required">&nbsp;*</span>
+									<select name="comm_person_type" id="comm_person_type" class='form-control' tabindex="4">
+										<option value="">Select Person Type</option>
+										<option value="1">Customer</option>
+										<option value="2">Guarentor</option>
+										<option value="3">Family Member</option>
+									</select>
+									<span class="text-danger" id="comm_person_typeCheck" style="display:none">Please Select Person Type</span>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 person-div" style="display:none">
+									<label for="comm_person_name">Person Name</label><span class="required">&nbsp;*</span>
+									<input type="text" name="comm_person_name" id="comm_person_name" class='form-control' tabindex="5" readonly>
+									<select name="comm_person_name1" id="comm_person_name1" class='form-control' tabindex="5" style="display: none;"></select>
+									<span class="text-danger" id="comm_person_nameCheck" style="display:none">Please Select Person Name</span>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 person-div" style="display:none">
+									<label for="comm_relationship">Relationship</label><span class="required">&nbsp;*</span>
+									<input type="text" name="comm_relationship" id="comm_relationship" class='form-control' tabindex="6" readonly>
+									<span class="text-danger" id="comm_relationshipCheck" style="display:none">Please Select Relationship</span>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
+									<label for="comm_remark">Remark</label><span class="required">&nbsp;*</span>
+									<input type="text" name="comm_remark" id="comm_remark" class='form-control' tabindex="7" placeholder="Enter Remark">
+									<span class="text-danger" id='comm_remarkCheck' style="display: none;">Please Enter Remark</span>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 person-div"  style="display:none">
+									<label for="comm_date">Commitment Date</label><span class="required">&nbsp;*</span>
+									<input type="date" name="comm_date" id="comm_date" class='form-control' tabindex="8" >
+									<span class="text-danger" id='comm_dateCheck' style="display: none;">Please Enter Commitment Date</span>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<label for="comm_user_type">User Type</label><span class="required">&nbsp;*</span>
+									<input type="text" name="comm_user_type" id="comm_user_type" class='form-control' value='<?php echo $user_type;?>' tabindex="9" readonly>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+									<label for="comm_user">User Name</label><span class="required">&nbsp;*</span>
+									<input type="text" name="comm_user" id="comm_user" class='form-control' value="<?php echo $user_name;?>" tabindex="10" readonly>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
+									<label for="comm_hint">Hint</label><span class="required">&nbsp;*</span>
+									<input type="text" name="comm_hint" id="comm_hint" class='form-control' tabindex="11" placeholder="Enter Hint">
+									<span class="text-danger" id='comm_hintCheck' style="display: none;">Please Enter Hint</span>
+							</div>
+
 						</div>
 					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="collectionCharge_purpose">Purpose</label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="collectionCharge_purpose" name="collectionCharge_purpose" placeholder="Enter Purpose" onkeydown="return /[a-z ]/i.test(event.key)">
-							<span class="text-danger" id="purposeCheck">Enter Purpose</span>
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="collectionCharge_Amnt">Amount</label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="collectionCharge_Amnt" name="collectionCharge_Amnt" placeholder="Enter Amount">
-							<span class="text-danger" id="amntCheck">Enter Amount</span>
-						</div>
-					</div>
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<button type="button" tabindex="2" name="collChargeBtn" id="collChargeBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
-					</div>
 				</div>
-				<br />
-				<div id="collChargeTableDiv">
-					<table class="table custom-table modalTable">
-						<thead>
-							<tr>
-								<th width="15%">S.No</th>
-								<th>Date</th>
-								<th>Purpose</th>
-								<th>Amount</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div>
+
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetCommitment()">Close</button>
+				<button class='btn btn-primary' name="sumit_add_comm" id="sumit_add_comm" tabindex="12">Submit</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="13">Close</button>
 			</div>
 		</div>
 	</div>
-</div> -->
+</div>
 
 <!-- /////////////////////////////////////////////////////////////////// Commitment Add Modal END ////////////////////////////////////////////////////////////////////// -->
+
+<!-- Modal for Commitment Chart just view table   -->
+<div class="modal fade" id="commitmentChart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg " role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Commitment Chart</h5>
+				<button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					
+					<div class="col-12" >
+						<div class="row">
+							<div class="col-12" id='commChartDiv'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="2">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
