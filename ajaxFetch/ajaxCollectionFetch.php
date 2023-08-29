@@ -14,12 +14,14 @@ if($userid != 1){
         $line_id = $rowuser['line_id'];
     }
 
-    $line_id = explode(',',$line_id);
+    $line_id = explode(',',$line_id); 
     $sub_area_list = array();
     foreach($line_id as $line){
         $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
-        $sub_area_list[] = $row_sub['sub_area_id'];
+        if($con->affected_rows > 0 ){
+            $row_sub = $lineQry->fetch_assoc();
+            $sub_area_list[] = $row_sub['sub_area_id'];
+        }
     }
     $sub_area_ids = array();
     foreach ($sub_area_list as $subarray) {
@@ -27,7 +29,8 @@ if($userid != 1){
     }
     $sub_area_list = array();
     $sub_area_list = implode(',',$sub_area_ids);
-}
+
+}    
 
 $column = array(
     'cp.cus_id',
