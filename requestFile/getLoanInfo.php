@@ -33,7 +33,7 @@ if($qry->num_rows > 0){
     // echo "SELECT SUM(alc.tot_amt_cal) as tot_amt_cal from in_issue ii JOIN acknowlegement_loan_calculation alc ON alc.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)  ";
     $row01 = $qry01->fetch_assoc();
     $tot_amt_cal = $row01['tot_amt_cal'];
-    $loan_type = ($row['due_type'] == 'Interest')?'interest':'emi';
+    $loan_type = ($row01['due_type'] == 'Interest')?'interest':'emi';
 
     // take the amount which he paid till now
     $qry02 = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(c.princ_amt_track) as princ_amt_track, SUM(c.int_amt_track) as int_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)");

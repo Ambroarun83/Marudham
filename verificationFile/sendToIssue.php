@@ -16,7 +16,7 @@ if (isset($_POST['cus_id'])) {
 //Move to Issue = 13.
 
     $qry = $con->query("UPDATE request_creation set cus_status = 13,updated_date = now(), update_login_id = $userid WHERE  req_id = '".$req_id."' ") or die('Error on Request Table');
-    $qry = $con->query("UPDATE customer_register set cus_status = 13,updated_date = now(), WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
+    $qry = $con->query("UPDATE customer_register set cus_status = 13,updated_date = now() WHERE req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
     $qry = $con->query("UPDATE in_verification set cus_status = 13,updated_date = now(), update_login_id = $userid WHERE req_id = '".$req_id."' ")or die('Error on inVerification Table');
     $qry = $con->query("UPDATE `in_approval` SET `cus_status`= 13 WHERE  req_id = '".$req_id."' ") or die('Error on in_approval Table');
     $qry = $con->query("UPDATE `in_acknowledgement` SET `cus_status`= 13,updated_date = now() WHERE  req_id = '".$req_id."' and updated_date=now() ") or die('Error on in_acknowledgement Table');

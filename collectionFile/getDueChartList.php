@@ -916,11 +916,11 @@ function calculateOthers($loan_arr,$response,$date,$con){
                     if($checkPenalty->num_rows == 0){
                         if($loan_arr['loan_type'] == 'emi'){
                             //if loan type is emi then directly apply penalty when month crossed and above conditions true
-                            $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_date','$penalty',current_timestamp)");
+                            // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_date','$penalty',current_timestamp)");
                         }else if($loan_arr['loan_type'] == 'interest' and  $count != 0){
                             // if loan type is interest then apply penalty if the loop month is not first
                             // so penalty should not raise, coz a month interest is paid after the month end
-                            $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_date','$penalty',current_timestamp)");
+                            // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_date','$penalty',current_timestamp)");
                         }
                     }
                     $countForPenalty++;
@@ -1108,7 +1108,7 @@ function calculateOthers($loan_arr,$response,$date,$con){
                 if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){
                     $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$penalty_checking_date' and req_id = '$req_id' ");
                     if($checkPenalty->num_rows == 0){
-                        $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
+                        // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
                     }
                     $countForPenalty++;
                 } 
@@ -1214,7 +1214,7 @@ function calculateOthers($loan_arr,$response,$date,$con){
                 if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
                     $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$penalty_checking_date' and req_id = '$req_id' ");
                     if($checkPenalty->num_rows == 0){
-                        $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
+                        // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
                     }
                     $countForPenalty++;
                 } 
