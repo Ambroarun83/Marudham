@@ -67,7 +67,7 @@ else if($current_page == 'edit_concern_creation' || $current_page == 'edit_conce
 
 	$current_module = 'concerncreation';
 
-}else if($current_page == 'cash_tally' || $current_page == 'bank_clearance' || $current_page == 'finance_insight'){
+}else if($current_page == 'cash_tally' || $current_page == 'bank_clearance' || $current_page == 'edit_bank_clearance' || $current_page == 'finance_insight'){
 
 	$current_module = 'accounts';
 
@@ -733,6 +733,7 @@ $role           = '';
 $role_type           = '';
 $dir_name           = '';
 $ag_name           = '';
+$staff_id           = '';
 $staff_name           = '';
 $company_id           = '';
 $branch_id           = '';

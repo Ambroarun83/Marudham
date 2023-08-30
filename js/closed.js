@@ -72,6 +72,13 @@ $(document).ready(function(){
         }
     })
 
+    $('.commitment-chart').click(function(){//Commitment chart
+        let req_id = $('#noc_req_id').val();let cus_id = $('#cusidupd').val();
+        $.post('followupFiles/dueFollowup/getCommitmentChart.php',{cus_id,req_id},function(html){
+            $('#commChartDiv').empty().html(html);
+        })
+    })
+
 })//Document Ready End
 
 
@@ -244,7 +251,10 @@ function OnLoadFunctions(req_id,cus_id){
                 $('.coll-charge').click(function(){
                     var noc_req_id = $('#noc_req_id').val();
                     resetcollCharges(noc_req_id);  //Fine
-                })
+                })   
+                
+                
+                
            }
         })
 

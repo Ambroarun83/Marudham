@@ -65,6 +65,9 @@ if($idupd>0)
 	object-fit: cover;
 	background-color: white;
 }
+.modal-body label {
+    padding: 10px 4px 3px 0px;
+}
 </style>
 
 <!-- Page header start -->

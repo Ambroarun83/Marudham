@@ -312,17 +312,17 @@ if($idupd>0)
                         </div> -->
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12"></div>
                                                 
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-4">
-                        <div class="text-right">
-                            <div>
-                                <button type="submit" tabindex="18" name="submitloan_calculation" id="submitloan_calculation" class="btn btn-primary" value="submit" >Submit</button>&nbsp;&nbsp;&nbsp;
-                                <button type="reset"  tabindex="19" class="btn btn-outline-secondary">Cancel</button> 
-                            </div> <br><br>
-                        </div>
+                        
                     </div>
-
                 </div>
-            </div>
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-4">
+                    <div class="text-right">
+                        <div>
+                            <button type="submit" tabindex="18" name="submitloan_calculation" id="submitloan_calculation" class="btn btn-primary" value="submit" >Submit</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset"  tabindex="19" class="btn btn-outline-secondary">Cancel</button> 
+                        </div> 
+                    </div>
+                </div>
 		</div>
 	</form>
 </div>

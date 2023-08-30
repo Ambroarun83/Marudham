@@ -404,7 +404,7 @@ if($idupd>0)
 
                             <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-center">
 								<div class="form-group">
-									<button type="button" class="btn btn-primary commitment-chart" id="commitment_chart" name="commitment_chart" data-toggle="modal" data-target=".commitmentChart" style="padding: 10px 35px;width: 100%;"> Commitment Chart </button>
+									<button type="button" class="btn btn-primary commitment-chart" data-toggle="modal" data-target="#commitmentChart" style="padding: 10px 35px;width: 100%;"> Commitment Chart </button>
 								</div>
 							</div>
 						</div>
@@ -711,3 +711,30 @@ if($idupd>0)
 	</div>
 </div>
 <!-- END  Add Loan Summary Modal -->
+
+<!-- Modal for Commitment Chart just view table   -->
+<div class="modal fade" id="commitmentChart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg " role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Commitment Chart</h5>
+				<button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					
+					<div class="col-12" >
+						<div class="row">
+							<div class="col-12" id='commChartDiv'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="2">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

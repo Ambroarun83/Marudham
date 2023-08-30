@@ -256,7 +256,7 @@ if($idupd>0)
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-                            <label class="label" style="visibility: hidden;">Category</label>
+                            <label class="label" style="visibility: hidden;">Category</label><br>
                         <button type="button" name="submitLoanCategoryModal" id="submitLoanCategoryModal" class="btn btn-primary">Submit</button>
                     </div>
                 </div>

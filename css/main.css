@@ -5434,8 +5434,8 @@ button:focus {
 
 .custom-control-label::before {
   top: .1rem;
-  border-color: #b5bbc5;
-  background: #edeff3; }
+  /* border-color: #b5bbc5; */
+  background: transparent; }
 
 .custom-control-label::after {
   top: .1rem; }
