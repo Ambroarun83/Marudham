@@ -86,7 +86,7 @@ function getDistrictDropdown(StateSelected){
                 optionsList = Puducherry;
                 break;
             case "SelectState":
-                optionsList = ["Select District"];
+                optionsList = [];
                 break;
         }
 
@@ -274,7 +274,7 @@ function getTalukDropdown(DistSelected){
                 optionsList = Puducherry;
                 break;
             case "Select District":
-                optionsList = ["Select Taluk"];
+                optionsList = [];
                 break;
         }
         var taluk_upd = $('#taluk_upd').val();

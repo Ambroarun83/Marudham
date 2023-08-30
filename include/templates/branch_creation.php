@@ -257,16 +257,15 @@ if($idupd>0)
                                     </div>
                                 </div>
                             </div>  
-                          <div class="col-md-12">
-                            <br><br>
-                            <div class="text-right">
-                                <button type="submit" onclick="submitbranch_creation();" name="submitbranch_creation" id="submitbranch_creation" class="btn btn-primary" value="Submit" tabindex="14">Submit</button>
-                                <button type="reset" class="btn btn-outline-secondary" tabindex="15">Clear</button>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-md-12">
+                    <div class="text-right">
+                        <button type="submit" onclick="submitbranch_creation();" name="submitbranch_creation" id="submitbranch_creation" class="btn btn-primary" value="Submit" tabindex="14">Submit</button>
+                        <button type="reset" class="btn btn-outline-secondary" tabindex="15">Clear</button>
+                    </div>
+                </div>
         </div>
     </form>
 </div>

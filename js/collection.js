@@ -241,6 +241,7 @@ $(document).ready(function(){
 
     $('#addCommitment').find('.closeModal').click(function(){
         $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
+        $('#addCommitment').find('.modal-body span').hide();
         $('.person-div').hide();
     })
 
@@ -1013,3 +1014,38 @@ function resetcollCharges(req_id) {
     });
 }
 
+
+// Improved code snippet
+function swarlErrorAlert(response) {
+    Swal.fire({
+        title: response,
+        icon: 'error',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#009688'
+    });
+}
+function swarlInfoAlert(title, text) {
+    Swal.fire({
+        title: title,
+        text: text,
+        icon: 'info',
+        showConfirmButton: true,
+        showCancelButton: true,
+        confirmButtonColor: '#009688',
+        cancelButtonColor: '#cc4444',
+        cancelButtonText: 'No',
+        confirmButtonText: 'Yes'
+    }).then(function(result) {
+        if (result.isConfirmed) {
+        update();
+        }
+    });
+}
+function swarlSuccessAlert(response) {
+    Swal.fire({
+        title: response,
+        icon: 'success',
+        confirmButtonText: 'Ok',
+        confirmButtonColor: '#009688'
+    });
+}

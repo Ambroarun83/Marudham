@@ -22,7 +22,7 @@ function getCustomer($con,$cus_id){
     return $cus_name;
 }
 function getGarentor($con,$cus_id){
-    $query = "SELECT cp.guarentor_name, vfi.famname, vfi.relationship FROM customer_profile cp JOIN verification_family_info vfi ON cp.guarentor_name = vfi.id WHERE cp.cus_id = '$cus_id' ORDER BY id DESC LIMIT 1 ";
+    $query = "SELECT cp.guarentor_name, vfi.famname, vfi.relationship FROM customer_profile cp JOIN verification_family_info vfi ON cp.guarentor_name = vfi.id WHERE cp.cus_id = '$cus_id' ORDER BY cp.id DESC LIMIT 1 ";
     $result = $con->query($query);
     $row = $result->fetch_assoc();
     

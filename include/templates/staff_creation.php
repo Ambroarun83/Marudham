@@ -40,8 +40,9 @@ if($del>0)
 
 if(isset($_GET['upd']))
 {
-$idupd=$_GET['upd'];
+$idupd = $_GET['upd'];
 }
+// print_r($idupd);die;
 $status =0;
 if($idupd>0)
 {
