@@ -393,7 +393,7 @@ if(isset($_POST['submit_concern']) && $_POST['submit_concern'] != ''){
                         </div>
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-                            <label class="label" style="visibility: hidden;">Submit</label>
+                            <label class="label" style="visibility: hidden;">Submit</label><br>
                         <button type="button" name="submitConSub" id="submitConSub" class="btn btn-primary">Submit</button>
                     </div>
                 </div>

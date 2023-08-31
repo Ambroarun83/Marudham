@@ -1519,13 +1519,13 @@ if($current_page == 'confirmation_followup') { ?>
 
 ////////// Show Loader if ajax function is called inside anywhere in entire project  ////////
     
-    $(document).ajaxStart(function() {
-        showOverlayWithDelay();
-    });
+    // $(document).ajaxStart(function() {
+    //     showOverlayWithDelay();
+    // });
     
-    $(document).ajaxStop(function() {
-        hideOverlay();
-    });
+    // $(document).ajaxStop(function() {
+    //     hideOverlay();
+    // });
     
     
     var overlayTimer; // Variable to store the timer
@@ -1555,7 +1555,7 @@ if($current_page == 'confirmation_followup') { ?>
     
     // Function to remove the overlay and clear the timer
     function hideOverlay() {
-        clearTimeout(overlayTimer); // Clear the timer if it's still running
+        // clearTimeout(overlayTimer); // Clear the timer if it's still running
         var overlayDiv = document.querySelector('.overlay');
         console.log("🚀 ~ file: dashboardfooter.php:1560 ~ hideOverlay ~ overlayDiv:", overlayDiv)
         if (overlayDiv) {
