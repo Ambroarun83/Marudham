@@ -19,7 +19,7 @@ $bank_details = $getuser['bank_details'];
 	
 	<input type="hidden" id='bank_detail' name='bank_detail' value='<?php if(isset($bank_details)) echo $bank_details;?>'><!-- to get user bank detail -->
 		
-	<div class="row gutters">
+	<div class="row gutters" style="margin-left: 0;margin-right: 2px;">
 		
 		<div class="toggle-container col-12">
 			<input type="button" class="toggle-button" data-toggle='modal' data-target='#dayModal' value='Day Wise'>

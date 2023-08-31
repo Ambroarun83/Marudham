@@ -636,7 +636,7 @@ function getTillDateInterest($loan_arr,$response,$con,$data,$count){
             $amtperDay = $response['due_amt_for1'] / intVal($currentMonthCount); 
             
             $st_date = new DateTime(date('Y-m-d',strtotime($loan_arr['due_start_from']))); // start date
-            $tdate = new DateTime(date('Y-m-t',strtotime($loan_arr['due_start_from']))) ;//current date
+            $tdate = new DateTime(date('Y-m-t',strtotime($loan_arr['due_start_from']))) ;//will take last date of mentioned date's month
             // $tdate = $tdate->modify('+1 day');//current date +1
             // Calculate the interval between the two dates
             $date_diff = $st_date->diff($tdate);

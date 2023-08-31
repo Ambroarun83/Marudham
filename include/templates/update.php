@@ -443,6 +443,7 @@ input:checked + .slider:before {
 										<div class="form-group" style="margin-left: 30px;">
 											<label  style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
 											<input type="hidden" class="form-control" id="cus_image" name="cus_image" value='<?php if (isset($pic)) {echo $pic;} ?>'>
+											<input type="file" class="form-control" id="pic" name="pic" tabindex='29' value='<?php if (isset($pic)) {echo $pic;} ?>'>
 											<img id='imgshow' src='img/avatar.png' />
 										</div>
 									</div>
