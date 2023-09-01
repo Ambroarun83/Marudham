@@ -384,7 +384,7 @@ h3.styled {
     color: #ecb76c; }
   .custom-search .search-query {
     padding: 7px 15px;
-    color: #009688;
+    color: #ffffff;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -ms-transition: all 0.5s ease;
@@ -401,6 +401,7 @@ h3.styled {
     border-bottom: 1px solid #d7dbe2; }
     .custom-search .search-query:focus {
       outline: none;
+      color: #009688;
       background: #ffffff;
       width: 280px; }
   .custom-search i {
