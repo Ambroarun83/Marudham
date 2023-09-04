@@ -69,6 +69,15 @@
             line-height: 30px;
         }
 		.table-responsive{overflow-x: unset;}
+		@media (max-width:768px){
+			.table-responsive{overflow-x: scroll;}
+		}
+		/* .dataTables_wrapper{
+			overflow: auto;
+		}
+		.datatable {
+		table-layout: fixed;
+		} */
 		
 		.overlay {
 			position: fixed;

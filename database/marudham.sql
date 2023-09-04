@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2023 at 03:05 PM
+-- Generation Time: Sep 04, 2023 at 03:06 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2836,6 +2836,59 @@ INSERT INTO `loan_summary_feedback` (`id`, `req_id`, `cus_id`, `feedback_label`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `modules`
+--
+
+CREATE TABLE `modules` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `screens` varchar(255) DEFAULT NULL,
+  `modules` varchar(255) DEFAULT NULL,
+  `access` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `modules`
+--
+
+INSERT INTO `modules` (`id`, `screens`, `modules`, `access`) VALUES
+(61, 'Company Creation', 'edit_company_creation', 'company_creation'),
+(62, 'Branch Creation', 'edit_branch_creation', 'branch_creation'),
+(63, 'Loan Category', 'edit_loan_category', 'loan_category'),
+(64, 'Loan Calculation', 'edit_loan_calculation', 'loan_calculation'),
+(65, 'Loan Scheme', 'edit_loan_scheme', 'loan_scheme'),
+(66, 'Area Creation', 'edit_area_creation', 'area_creation'),
+(67, 'Area Mapping', 'edit_area_mapping', 'area_mapping'),
+(68, 'Area Approval', 'area_status', 'area_approval'),
+(69, 'Director Creation', 'edit_director_creation', 'director_creation'),
+(70, 'Agent Creation', 'edit_agent_creation', 'agent_creation'),
+(71, 'Staff Creation', 'edit_staff_creation', 'staff_creation'),
+(72, 'Bank Creation', 'edit_bank_creation', 'bank_creation'),
+(73, 'Manage Users', 'edit_manage_user', 'manage_user'),
+(74, 'Request', 'edit_request', 'request'),
+(75, 'Verification', 'verification_list', 'verification'),
+(76, 'Acknowledgement', 'edit_acknowledgement_list', 'acknowledgement'),
+(77, 'Loan Issue', 'edit_loan_issue', 'loan_issue'),
+(78, 'Collection', 'edit_collection', 'collection'),
+(79, 'Closed', 'edit_closed', 'closed'),
+(80, 'NOC', 'edit_noc', 'noc'),
+(81, 'Update', 'edit_update', 'update_screen'),
+(82, 'Concern Creation', 'edit_concern_creation', 'concern_creation'),
+(83, 'Concern Solution', 'edit_concern_solution', 'concern_solution'),
+(84, 'Concern Feedback', 'edit_concern_feedback', 'concern_feedback'),
+(85, 'Bank Clearance', 'edit_bank_clearance', 'bank_clearance'),
+(86, 'Due Followup', 'edit_due_followup', 'due_followup'),
+(87, 'Approval', 'approval_list', 'approvalmodule'),
+(88, 'Document Track', 'document_track', 'doctrack'),
+(89, 'Cash Tally', 'cash_tally', 'cash_tally'),
+(90, 'Financial Insights', 'finance_insight', 'finance_insight'),
+(91, 'Promotion Activity', 'promotion_activity', 'promotion_activity'),
+(92, 'Loan Followup', 'loan_followup', 'loan_followup'),
+(93, 'Confirmation Followup', 'confirmation_followup', 'confirmation_followup'),
+(94, 'Dashboard', 'dashboard', 'dashboard');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `name_detail_creation`
 --
 
@@ -3046,7 +3099,10 @@ INSERT INTO `penalty_charges` (`req_id`, `penalty_date`, `penalty`, `paid_date`,
 ('10', '2023-09', '14', NULL, '0', '0', '2023-08-10 12:25:50', '2023-08-10 12:25:50'),
 ('10', '2023-10', '14', NULL, '0', '0', '2023-08-10 12:25:50', '2023-08-10 12:25:50'),
 ('10', '2023-12', '14', NULL, '0', '0', '2023-08-10 12:25:50', '2023-08-10 12:25:50'),
-('10', '2023-08', '12', NULL, '0', '0', '2023-12-10 16:30:34', '2023-12-10 16:30:34');
+('10', '2023-08', '12', NULL, '0', '0', '2023-12-10 16:30:34', '2023-12-10 16:30:34'),
+('12', '2023-09', '60', NULL, '0', '0', '2023-12-04 16:48:50', '2023-12-04 16:48:50'),
+('12', '2023-10', '60', NULL, '0', '0', '2023-12-04 16:48:50', '2023-12-04 16:48:50'),
+('12', '2023-11', '60', NULL, '0', '0', '2023-12-04 16:48:50', '2023-12-04 16:48:50');
 
 -- --------------------------------------------------------
 
@@ -4327,6 +4383,12 @@ ALTER TABLE `loan_summary_feedback`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `modules`
+--
+ALTER TABLE `modules`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `name_detail_creation`
 --
 ALTER TABLE `name_detail_creation`
@@ -4930,6 +4992,12 @@ ALTER TABLE `loan_scheme`
 --
 ALTER TABLE `loan_summary_feedback`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `modules`
+--
+ALTER TABLE `modules`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=148;
 
 --
 -- AUTO_INCREMENT for table `name_detail_creation`

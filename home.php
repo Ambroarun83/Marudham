@@ -64,10 +64,23 @@ include('api/main.php'); // Database Connection File
 				</div>
 				<div class="header-items">
 					<!-- Custom search start -->
-					<div class="custom-search">
-						<input type="text" class="search-query" placeholder="Search here ..." >
-						<i class="icon-search1"></i>
-					</div>
+					<ul class="header-actions">
+						<li class="dropdown"></li>
+						<li class="dropdown">
+							<div class="custom-search">
+								<input type="text" id="search_input_" class="search-query" placeholder="Search here ..." >
+								<!-- <i class="icon-search1" id="search_screens" data-toggle="dropdown" aria-haspopup="true"></i> -->
+							</div>
+							<div class="dropdown-menu dropdown-menu-right lrg" aria-labelledby="notifications">
+								<div class="dropdown-menu-header">
+									Results
+								</div>
+								<div class="customScroll5 quickscard">
+									<ul class="header-notifications" id='search_ul'></ul>
+								</div>
+							</div>
+						</li>
+					</ul>
 					<!-- Custom search end -->
 
 					<!-- Header actions start -->
@@ -420,3 +433,22 @@ include('api/main.php'); // Database Connection File
 	
 </body>
 </html>
+
+
+<script>
+	
+	$('#search_input_').keyup(function(){
+		let search_content = $('#search_input_').val();
+		$.post('searchScreens.php',{search_content},function(response){
+			if(response.status == 'Fetched'){
+				let append='';
+				$.each(response,function(index, val){
+					if(val.display_name != undefined){
+						append += "<li class='dropdown-contents'><a href='"+val.module_name+"'>"+val.display_name+"</a></li>";
+					}
+				})
+				$('#search_ul').empty().append(append);
+			}
+		},'json')
+	})
+</script>

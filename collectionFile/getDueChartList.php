@@ -299,9 +299,9 @@ function moneyFormatIndia($num){
                     <?php } ?>
 
                     <td><?php $pendingMinusCollection = ( intVal($row['pending_amt']));
-                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}//else{echo 0;} ?></td>
+                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
                     <td><?php $payableMinusCollection = ( intVal($row['payable_amt']));
-                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}//else{echo 0;} ?></td>
+                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}else{echo 0;} ?></td>
                     <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
                     
                     <!-- for collected amt -->
@@ -438,9 +438,9 @@ function moneyFormatIndia($num){
                         <?php } ?>
                         
                         <td><?php $pendingMinusCollection = ( intVal($row['pending_amt'])  );
-                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}//else{echo 0;} ?></td>
+                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
                         <td><?php $payableMinusCollection = ( intVal($row['payable_amt']));
-                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}//else{echo 0;} ?></td>
+                        if($payableMinusCollection != ''){ echo $payableMinusCollection;}else{echo 0;} ?></td>
                         <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
 
                         <!-- for collected amt -->
@@ -640,7 +640,7 @@ function moneyFormatIndia($num){
                     <?php } ?>
 
                     <td><?php $pendingMinusCollection = ( intVal($row['pending_amt'])  );
-                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}//else{echo 0;} ?></td>
+                        if($pendingMinusCollection != '' ){ echo $pendingMinusCollection;}else{echo 0;} ?></td>
                         <td><?php $payableMinusCollection = ( intVal($row['payable_amt'])  );
                         if($payableMinusCollection != ''){ echo $payableMinusCollection;}//else{echo 0;} ?></td>
                     <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
