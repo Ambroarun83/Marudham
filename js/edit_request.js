@@ -48,7 +48,7 @@ function callOnClickEvents(){
                 data: {"cus_id":cus_id},
                 // dataType: 'json',
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#cusHistoryTable').empty();
                     $('#cusHistoryTable').html(response);
@@ -58,7 +58,7 @@ function callOnClickEvents(){
                 url:'requestFile/getCustomerStatus1.php',
                 data: {"cus_id":cus_id,"req_id":req_id},
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#exist_type').val(response);
                 }
@@ -73,13 +73,71 @@ function callOnClickEvents(){
                 data: {"cus_id":cus_id,"req_id":req_id},
                 // dataType: 'json',
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#loanSummaryTable').empty();
                     $('#loanSummaryTable').html(response);
                 }
             })
         });
+
+        // Request Actions
+        $(document).on("click", '.cancelrequest', function(){
+            var remark = prompt("Do you want to Cancel this Request?");
+            if(remark != null){
+                $.post('requestFile/changeRequestState.php', {req_id:$(this).data('reqid'),state:'cancel',remark,screen:'request'}, function(data){
+                    if(data.includes('Success')){
+                        successSwal('Cancelled!','Request has been Cancelled.');
+                    }else{
+                        warningSwal('Error!','Something went wrong.');
+                    }
+                })
+                return true;
+            }else{
+                return false;
+            }
+        });
+        $(document).on("click", '.revokerequest', function(){
+            var remark = prompt("Do you want to Revoke this Request?");
+            if(remark != null){
+                $.post('requestFile/changeRequestState.php', {req_id:$(this).data('reqid'),state:'revoke',remark,screen:'request'}, function(data){
+                    if(data.includes('Success')){
+                        successSwal('Revoked!','Request has been Revoked.');
+                    }else{
+                        warningSwal('Error!','Something went wrong.');
+                    }
+                })
+                return true;
+            }else{
+                return false;
+            }
+        });
         
     }, 500);
+}
+
+
+function warningSwal(title,text){
+    Swal.fire({
+        title: title,
+        html: text,
+        icon: 'warning',
+        showConfirmButton:false,
+        timerProgressBar:true,
+        timer: 2000
+    });
+}
+
+function successSwal(title,text){
+    Swal.fire({
+        title: title,
+        html: text,
+        icon: 'success',
+        showConfirmButton:false,
+        timerProgressBar:true,
+        timer: 2000
+    })
+    setTimeout(() => {
+        location.reload();
+    }, 2000);
 }

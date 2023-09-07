@@ -8,7 +8,7 @@ $user_id = ($_POST['user_id'] != '') ? $_POST['user_id'] : '';
 
 
 if($type == 'today'){
-    $where = " DATE(updated_date) = CURRENT_DATE ";
+    $where = " DATE(created_date) = CURRENT_DATE ";
 
     if($user_id != ''){$where .= " && insert_login_id = '".$user_id."' " ; }//for user based
 
@@ -19,7 +19,7 @@ if($type == 'today'){
 
     $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
 
-    $where = " (DATE(updated_date) >= DATE('$from_date') && DATE(updated_date) <= DATE('$to_date')) ";
+    $where = " (DATE(created_date) >= DATE('$from_date') && DATE(created_date) <= DATE('$to_date')) ";
     if($user_id != ''){$where .= " && insert_login_id = '".$user_id."' " ; }//for user based
 
     getDetials($con, $where);
@@ -30,7 +30,7 @@ if($type == 'today'){
     $month = date('m',strtotime($_POST['month']));
     $year = date('Y',strtotime($_POST['month']));
 
-    $where = " (MONTH(updated_date) = '$month' && YEAR(updated_date) = '$year') ";
+    $where = " (MONTH(created_date) = '$month' && YEAR(created_date) = '$year') ";
     if($user_id != ''){$where .= " && insert_login_id = '".$user_id."' " ; }//for user based
 
     getDetials($con, $where);

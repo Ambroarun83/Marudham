@@ -1787,7 +1787,7 @@ function getCategoryInfo() {
             data: { 'req_id': req_id, 'sub_category_upd': sub_category_upd },
             dataType: 'json',
             type: 'post',
-            cachec: false,
+            cache: false,
             success: function (response) {
                 var trCount = Math.ceil(response.length / category_count); // number of rows needed
 

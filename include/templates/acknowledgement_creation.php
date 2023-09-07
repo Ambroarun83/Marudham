@@ -5,18 +5,6 @@ if (isset($_GET['upd'])) {
 if (isset($_GET['pge'])) {
     $pge = $_GET['pge']; // 1 = page edit Documentation. // 2 = View Page.
 }
-$can=0;
-if(isset($_GET['can']))//Cancel for Acknowledgement
-{
-$can=$_GET['can'];
-}
-if($can>0)
-{
-    $cancelAcknowledgement = $userObj->cancelAcknowledgement($mysqli,$can, $userid);
-    ?>
-    <script>location.href='<?php echo $HOSTPATH;  ?>edit_acknowledgement_list&msc=1';</script>
-<?php
-}
 $rem=0;
 if(isset($_GET['rem']))//remove for Acknowledgement
 {
