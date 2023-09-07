@@ -3166,14 +3166,14 @@ function updateUser($mysqli,$id,$user_id){
 		}
 	}
 
-	public function cancelRequest($mysqli,$can, $userid){
-		$cancelQry = $mysqli->query("Update request_creation set cus_status = 4,updated_date=now(), update_login_id= $userid where req_id = $can ") or die($mysqli->error());
-		$cancelQry = $mysqli->query("Update customer_register set cus_status = 4,updated_date=now() where req_ref_id = $can ") or die($mysqli->error());
-	}
-	public function revokeRequest($mysqli,$rev, $userid){
-		$revokeQry = $mysqli->query("Update request_creation set cus_status = 8,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
-		$revokeQry = $mysqli->query("Update customer_register set cus_status = 8,updated_date=now() where req_ref_id = $rev ") or die($mysqli->error());
-	}
+	// public function cancelRequest($mysqli,$can, $userid){
+	// 	$cancelQry = $mysqli->query("Update request_creation set cus_status = 4,updated_date=now(), update_login_id= $userid where req_id = $can ") or die($mysqli->error());
+	// 	$cancelQry = $mysqli->query("Update customer_register set cus_status = 4,updated_date=now() where req_ref_id = $can ") or die($mysqli->error());
+	// }
+	// public function revokeRequest($mysqli,$rev, $userid){
+	// 	$revokeQry = $mysqli->query("Update request_creation set cus_status = 8,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
+	// 	$revokeQry = $mysqli->query("Update customer_register set cus_status = 8,updated_date=now() where req_ref_id = $rev ") or die($mysqli->error());
+	// }
 	public function deleteRequest($mysqli,$del, $userid){
 		$deleteQry = $mysqli->query("Update request_creation set status = 1,updated_date=now(), delete_login_id= $userid where req_id = $del ") or die($mysqli->error());
 	}
@@ -3418,15 +3418,15 @@ function updateUser($mysqli,$id,$user_id){
 	}
 
 	//Cancel verification 
-	function cancelVerification($mysqli,$id, $userid){
-		$qry = $mysqli->query("UPDATE request_creation set cus_status = 5,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
-		$qry = $mysqli->query("UPDATE in_verification set cus_status = 5 ,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
-	}
-	// Revoke Verification
-	public function revokeVerification($mysqli,$rev, $userid){
-		$revokeQry = $mysqli->query("Update request_creation set cus_status = 9,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
-		$revokeQry = $mysqli->query("Update in_verification set cus_status = 9,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
-	}
+	// function cancelVerification($mysqli,$id, $userid){
+	// 	$qry = $mysqli->query("UPDATE request_creation set cus_status = 5,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+	// 	$qry = $mysqli->query("UPDATE in_verification set cus_status = 5 ,updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Verification');
+	// }
+	// // Revoke Verification
+	// public function revokeVerification($mysqli,$rev, $userid){
+	// 	$revokeQry = $mysqli->query("Update request_creation set cus_status = 9,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
+	// 	$revokeQry = $mysqli->query("Update in_verification set cus_status = 9,updated_date=now(), update_login_id= $userid where req_id = $rev ") or die($mysqli->error());
+	// }
 	//Delete verification 
 	function deleteVerification($mysqli,$id, $userid){
 		$qry = $mysqli->query("UPDATE request_creation set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id ") or die('Error While Removing Verification');
@@ -5002,12 +5002,12 @@ function updateUser($mysqli,$id,$user_id){
 		}
 		
 		//Cancel Acknowledgement
-		function cancelAcknowledgement($mysqli,$id, $userid){
-			$qry = $mysqli->query("UPDATE request_creation set cus_status = 7, updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_verification set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_approval set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
-			$qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id  ") or die('Error While Cancelling Acknowledgement');
-		}
+		// function cancelAcknowledgement($mysqli,$id, $userid){
+		// 	$qry = $mysqli->query("UPDATE request_creation set cus_status = 7, updated_date=now(), update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+		// 	$qry = $mysqli->query("UPDATE in_verification set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+		// 	$qry = $mysqli->query("UPDATE in_approval set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id ") or die('Error While Cancelling Acknowledgement');
+		// 	$qry = $mysqli->query("UPDATE in_acknowledgement set cus_status = 7, updated_date=now() , update_login_id = $userid where req_id = $id  ") or die('Error While Cancelling Acknowledgement');
+		// }
 		//Delete Acknowledgement
 		function removeAcknowledgement($mysqli,$id, $userid){
 			$qry = $mysqli->query("UPDATE request_creation set status = 1,updated_date=now(), delete_login_id = $userid where req_id = $id ") or die('Error While Removing Acknowledgement');

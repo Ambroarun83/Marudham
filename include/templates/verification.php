@@ -35,44 +35,6 @@ if ($del > 0) {
 	<?php }
 }
 
-$can = 0;
-if (isset($_GET['can'])) {
-	$can = $_GET['can'];
-}
-if ($can > 0) {
-	$cancelVerification = $userObj->cancelVerification($mysqli, $can, $userid);
-	?>
-	<script>
-		location.href = '<?php echo $HOSTPATH;  ?>verification_list&msc=4';
-	</script>
-<?php
-}
-$rev = 0;
-if (isset($_GET['rev'])) {
-	$rev = $_GET['rev'];
-}
-if ($rev > 0) {
-	$revokeVerification = $userObj->revokeVerification($mysqli, $rev, $userid);
-?>
-	<script>
-		location.href = '<?php echo $HOSTPATH;  ?>verification_list&msc=8';
-	</script>
-<?php
-}
-//////////////////////////////////// Verification List Options End
-$cancel = 0;
-if (isset($_GET['cancel'])) {
-	$cancel = $_GET['cancel'];
-}
-if ($cancel > 0) {
-	$cancelApproval = $userObj->cancelApproval($mysqli, $cancel, $userid);
-?>
-	<script>
-		location.href = '<?php echo $HOSTPATH;  ?>approval_list&msc=1';
-	</script>
-<?php
-}
-
 if (isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != '') {
 
 	$addDocVerification = $userObj->addDocumentation($mysqli, $userid);

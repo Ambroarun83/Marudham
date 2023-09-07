@@ -17,7 +17,7 @@ function callOnClickEvents(){
                 data: {"cus_id":cus_id},
                 // dataType: 'json',
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#cusHistoryTable').empty();
                     $('#cusHistoryTable').html(response);
@@ -27,7 +27,7 @@ function callOnClickEvents(){
             //     url:'requestFile/getCustomerStatus1.php',
             //     data: {"cus_id":cus_id,"req_id":req_id},
             //     type:'post',
-            //     cachec: false,
+            //     cache: false,
             //     success: function(response){
             //         $('#exist_type').val(response);
             //     }
@@ -41,7 +41,7 @@ function callOnClickEvents(){
                 data: {"cus_id":cus_id,"req_id":req_id},
                 // dataType: 'json',
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#loanSummaryTable').empty();
                     $('#loanSummaryTable').html(response);

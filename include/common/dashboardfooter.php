@@ -1339,22 +1339,6 @@ if($current_page == 'confirmation_followup') { ?>
     });
     
     // Request Actions
-    $(document).on("click", '.cancelrequest', function(){
-        var dlt = confirm("Do you want to Cancel this Request?");
-        if(dlt){
-                return true;
-            }else{
-                return false;
-            }
-    });
-    $(document).on("click", '.revokerequest', function(){
-        var dlt = confirm("Do you want to Revoke this Request?");
-        if(dlt){
-                return true;
-            }else{
-                return false;
-            }
-    });
     $(document).on("click", '.removerequest', function(){
         var dlt = confirm("Do you want to Remove this Request?");
         if(dlt){
@@ -1363,29 +1347,12 @@ if($current_page == 'confirmation_followup') { ?>
                 return false;
             }
     });
+    
 
     // Verification Actions
-    $(document).on("click", '.cancelverification', function(){
-        var dlt = confirm("Do you want to Cancel this Verification?");
-        if(dlt){
-                return true;
-            }else{
-                return false;
-            }
-    });
     $(document).on("click", '.removeverification', function(){
         var dlt = confirm("Do you want to Remove this Verification?");
         if(dlt){
-                return true;
-            }else{
-                return false;
-            }
-    });
-
-    // Approval Actions
-    $(document).on("click", '.cancelapproval', function(){
-        var aprvedlt = confirm("Do you want to Cancel this Approval?");
-        if(aprvedlt){
                 return true;
             }else{
                 return false;
@@ -1401,14 +1368,6 @@ if($current_page == 'confirmation_followup') { ?>
             }
     });
 
-    $(document).on("click", '.ack-cancel', function(){
-        var appdlt = confirm("Do you want to Cancel this Acknowledgement?");
-        if(appdlt){
-                return true;
-            }else{
-                return false;
-            }
-    });
     $(document).on("click", '.ack-remove', function(){
         var appdlt = confirm("Do you want to remove this Acknowledgement?");
         if(appdlt){
@@ -1426,7 +1385,7 @@ if($current_page == 'confirmation_followup') { ?>
 		$('.alert').fadeOut('slow');
 	}, 2000);
 
-    $('.modal').attr({'data-backdrop':"static",'data-keyboard':"false"})
+    $('.modal').attr({'data-backdrop':"static",'data-keyboard':"false"});//this will disable clicking outside of a modal in overall project
     
     // $('input').attr('autocomplete','off');
 
@@ -1519,13 +1478,13 @@ if($current_page == 'confirmation_followup') { ?>
 
 ////////// Show Loader if ajax function is called inside anywhere in entire project  ////////
     
-    // $(document).ajaxStart(function() {
-    //     showOverlayWithDelay();
-    // });
+    $(document).ajaxStart(function() {
+        showOverlayWithDelay();
+    });
     
-    // $(document).ajaxStop(function() {
-    //     hideOverlay();
-    // });
+    $(document).ajaxStop(function() {
+        hideOverlay();
+    });
     
     
     var overlayTimer; // Variable to store the timer
@@ -1555,7 +1514,7 @@ if($current_page == 'confirmation_followup') { ?>
     
     // Function to remove the overlay and clear the timer
     function hideOverlay() {
-        // clearTimeout(overlayTimer); // Clear the timer if it's still running
+        clearTimeout(overlayTimer); // Clear the timer if it's still running
         var overlayDiv = document.querySelector('.overlay');
         console.log("🚀 ~ file: dashboardfooter.php:1560 ~ hideOverlay ~ overlayDiv:", overlayDiv)
         if (overlayDiv) {

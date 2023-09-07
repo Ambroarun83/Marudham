@@ -4,6 +4,9 @@ include('..\ajaxconfig.php');
 
 if(isset($_SESSION["userid"])){
     $userid = $_SESSION["userid"];
+    $sql = $con->query("SELECT ag_id FROM user where user_id = '$userid'");
+    $login_user_type = $sql->fetch_assoc()['ag_id'];
+    if($login_user_type == null or $login_user_type == '') {$login_user_type = 0;}
 }
 if(isset($_SESSION["request_list_access"])){
     $request_list_access = $_SESSION["request_list_access"];//if request_list_access is granted to the current user, they can access Whole request list
@@ -190,13 +193,14 @@ foreach ($result as $row) {
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
     if($cus_status == '0') {
-        $action .= "<a href='request&upd=$id'>Edit Request</a><a href='request&can=$id' class='cancelrequest'>Cancel Request</a>
-        <a href='request&rev=$id'class='revokerequest'>Revoke Request</a>";
+        $action .= "<a href='request&upd=$id'>Edit Request</a>
+        <a href='#' data-reqId = '$id' class='cancelrequest'>Cancel Request</a>
+        <a href='#' data-reqId = '$id' class='revokerequest'>Revoke Request</a>";
     }
     if($cus_status == '4' or $cus_status == '5' or $cus_status == '6'){
-        $action .= "<a href='request&del=$id'class='removerequest'>Remove Request</a>";
+        $action .= "<a href='request&del=$id' class='removerequest'>Remove Request</a>";
     }
-    if($user_type != 'Agent' or $userid == 1){
+    if($login_user_type == 0 or $userid == 1){
         $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
         // $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='loan-summary' data-toggle='modal' data-target='.loansummary'>Loan Summary</a>";
     }

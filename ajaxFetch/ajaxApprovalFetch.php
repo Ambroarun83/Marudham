@@ -4,6 +4,9 @@ include('..\ajaxconfig.php');
 
 if(isset($_SESSION["userid"])){
     $userid = $_SESSION["userid"];
+    $sql = $con->query("SELECT ag_id FROM user where user_id = '$userid'");
+    $login_user_type = $sql->fetch_assoc()['ag_id'];
+    if($login_user_type == null or $login_user_type == '') {$login_user_type = 0;}
 }
 if($userid != 1){
     
@@ -203,12 +206,12 @@ foreach ($result as $row) {
     <div class='dropdown-content'>";
     if($cus_status == '2') {
         $action .= "<a href='verification&upd=$id&pge=2' class='customer_profile' value='$id' > View Verification</a>
-        <a href='verification&cancel=$id' class='cancelapproval'>Cancel </a>";
+        <a href='#' data-reqid = '$id' class='cancelapproval'>Cancel </a>";
     }
     if($cus_status == '6') {
         $action .= "<a href='verification&del=$id'class='removeapproval'>Remove Verification</a>";
     }
-    if($user_type != 'Agent' or $userid == 1){
+    if($login_user_type == 0 or $userid == 1){
         $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
         // $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='loan-summary' data-toggle='modal' data-target='.loansummary'>Loan Summary</a>";
     }

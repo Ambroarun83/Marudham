@@ -1382,12 +1382,12 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     
     UNION ALL
 
-    -- SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
-    -- FROM loan_issue li JOIN user us 
-    -- ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
-    -- WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE())
+    SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
+    FROM loan_issue li JOIN user us 
+    ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
+    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE())
 
-    -- UNION ALL --issued amount should not be taken from loan issue for agent, coz agant transaction are separate
+    UNION ALL 
 
     SELECT ag_id, created_date AS tdate, '' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_hag 
@@ -1534,12 +1534,12 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     
     UNION ALL
 
-    -- SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
-    -- FROM loan_issue li JOIN user us 
-    -- ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
-    -- WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE()) and li.agent_id = '$ag_name'
+    SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
+    FROM loan_issue li JOIN user us 
+    ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
+    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE()) and li.agent_id = '$ag_name'
 
-    -- UNION ALL --issued amount should not be taken from loan issue for agent, coz agant transaction are separate
+    UNION ALL
 
     SELECT ag_id, created_date AS tdate, '' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_hag 

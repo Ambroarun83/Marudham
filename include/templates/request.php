@@ -47,30 +47,30 @@ if($del>0)
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=3';</script>
 <?php	
 }
-$can=0;
-if(isset($_GET['can']))
-{
-$can=$_GET['can'];
-}
-if($can>0)
-{
-	$cancelRequest = $userObj->cancelRequest($mysqli,$can, $userid);
-	?>
-	<script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=4';</script>
+// $can=0;
+// if(isset($_GET['can']))
+// {
+// $can=$_GET['can'];
+// }
+// if($can>0)
+// {
+// 	$cancelRequest = $userObj->cancelRequest($mysqli,$can, $userid);
+// 	?>
+<!-- // 	<script>location.href='<?php //echo $HOSTPATH;  ?>edit_request&msc=4';</script> -->
 <?php	
-}
-$rev=0;
-if(isset($_GET['rev']))
-{
-$rev=$_GET['rev'];
-}
-if($rev>0)
-{
-	$revokeRequest = $userObj->revokeRequest($mysqli,$rev, $userid);
-	?>
-	<script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=8';</script>
+// }
+// $rev=0;
+// if(isset($_GET['rev']))
+// {
+// $rev=$_GET['rev'];
+// }
+// if($rev>0)
+// {
+// 	$revokeRequest = $userObj->revokeRequest($mysqli,$rev, $userid);
+// 	?>
+<!-- // 	<script>location.href='<?php //echo $HOSTPATH;  ?>edit_request&msc=8';</script> -->
 <?php	
-}
+// }
 $idupd=0;
 // $role=0;
 if(isset($_GET['upd']))

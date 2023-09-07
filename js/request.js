@@ -52,7 +52,7 @@ $(document).ready(function () {
                 data: {"cus_id":cus_id},
                 // dataType: 'json',
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#cusHistoryTable').empty();
                     $('#cusHistoryTable').html(response);

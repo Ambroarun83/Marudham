@@ -17,7 +17,7 @@ function callOnClickEvents() {
                 data: {"cus_id":cus_id},
                 // dataType: 'json',
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#cusHistoryTable').empty();
                     $('#cusHistoryTable').html(response);
@@ -32,7 +32,7 @@ function callOnClickEvents() {
                 data: {"cus_id":cus_id,"req_id":req_id},
                 // dataType: 'json',
                 type:'post',
-                cachec: false,
+                cache: false,
                 success: function(response){
                     $('#loanSummaryTable').empty();
                     $('#loanSummaryTable').html(response);
@@ -66,6 +66,48 @@ function callOnClickEvents() {
                 })
             }
         });
+
+        // Approval list Actions
+        $(document).on("click", '.cancelapproval', function(){
+            var remark = prompt("Do you want to Cancel this Approval?");
+            if(remark != null){
+                $.post('requestFile/changeRequestState.php', {req_id:$(this).data('reqid'),state:'cancel',remark,screen:'approval'}, function(data){
+                    if(data.includes('Success')){
+                        successSwal('Cancelled!','Approval has been Cancelled.');
+                    }else{
+                        warningSwal('Error!','Something went wrong.');
+                    }
+                })
+                return true;
+            }else{
+                return false;
+            }
+        });
         
     }, 1000);
 }
+
+function warningSwal(title,text){
+    Swal.fire({
+        title: title,
+        html: text,
+        icon: 'warning',
+        showConfirmButton:false,
+        timerProgressBar:true,
+        timer: 2000,
+    });
+}
+
+function successSwal(title,text){
+    Swal.fire({
+        title: title,
+        html: text,
+        icon: 'success',
+        showConfirmButton:false,
+        timerProgressBar:true,
+        timer: 2000,
+    })
+    setTimeout(() => {
+        location.reload();
+    }, 2000);
+}   
