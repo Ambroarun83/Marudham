@@ -2913,7 +2913,7 @@ function getFingerPrintDetails(req_id,cus_id,cus_name){
                 }else{
                     $(this).prev().css('border-color','#009688')
                 
-                    $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
+                    showOverlay();//loader start
 
                     $(this).attr('disabled',true);
 
@@ -2948,7 +2948,7 @@ function getFingerPrintDetails(req_id,cus_id,cus_name){
                             alert(res.err);
                         }
                         // Hide the loading animation and remove blur effect from the body
-                        $('.overlay').remove();
+                        hideOverlay();//loader stop
 
                     },700)
                 }

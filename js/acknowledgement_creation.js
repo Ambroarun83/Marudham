@@ -911,7 +911,7 @@ function fingerprintTable(){//To Get family member's name are required for scann
                 }else{
                     $(this).prev().css('border-color','#009688')
                 
-                    $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
+                    showOverlay();//loader start
 
                     $(this).attr('disabled',true);
 
@@ -945,7 +945,7 @@ function fingerprintTable(){//To Get family member's name are required for scann
                             alert(res.err);
                         }
                         // Hide the loading animation and remove blur effect from the body
-                        $('.overlay').remove();
+                        hideOverlay();//loader stop
 
                     },700)
                 }

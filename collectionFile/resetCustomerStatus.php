@@ -13,7 +13,7 @@ if(isset($_SESSION['userid'])){
 if(isset($_POST['cus_id'])){
     $cus_id = $_POST['cus_id'];
 }
-// $cus_id=123456789101;
+// $cus_id=200020002000;
 $req_arr = array();
 $qry=$con->query("SELECT req_id FROM in_issue where cus_id = $cus_id and (cus_status >= 14 and cus_status < 20) ");
 while($row=$qry->fetch_assoc()){

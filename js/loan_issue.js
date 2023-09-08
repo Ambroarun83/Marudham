@@ -172,8 +172,8 @@ $(document).ready(function () {
 
         if(g_name != ''){
 
-            $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
             $(this).attr('disabled',true);
+            showOverlay();//loader start
 
             setTimeout(()=>{ //Set Timeout, because loadin animation will be intrupped by this capture event
                 var quality = 60; //(1 to 100) (recommended minimum 55)
@@ -203,8 +203,6 @@ $(document).ready(function () {
                 else {
                     alert(res.err);
                 }
-                // Hide the loading animation and remove blur effect from the body
-                $('.overlay').remove();
 
                 //Verify the finger is matched with member name
                 var compare_finger = $('#compare_finger').val()
@@ -237,6 +235,8 @@ $(document).ready(function () {
                 }else{
                     alert(res.err)
                 }
+
+                hideOverlay();//loader stop
 
             },700) //Timeout End
 

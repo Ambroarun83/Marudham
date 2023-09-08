@@ -299,7 +299,7 @@ function OnLoadFunctions(req_id,cus_id){
             }
         }
     }); 
-    $('<div/>', {class: 'overlay'}).appendTo('.loanlist_card').html('<div class="loader"></div><span class="overlay-text">Please Wait</span>');
+    showOverlay();//loader start
     setTimeout(()=>{
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
@@ -784,14 +784,11 @@ function OnLoadFunctions(req_id,cus_id){
                         event.preventDefault();
                     }
                 })
-        }
-    })
-},2000)
+            }
+        });
+        hideOverlay();//loader stop
+    },2000)
 
-
-    
-    
-    
 }//Auto Load function END
 
 //to get Cheque Numbers list based on the request id

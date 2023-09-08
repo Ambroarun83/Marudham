@@ -676,7 +676,7 @@ function OnLoadFunctions(req_id,cus_id){
 
                     if(mem_name != ''){
 
-                        $('<div/>', {class: 'overlay'}).appendTo('body').html('<div class="loader"></div><span class="overlay-text">Scanning</span>');
+                        showOverlay();//loader start
                         $(this).attr('disabled',true);
     
                         setTimeout(()=>{ //Set Timeout, because loadin animation will be intrupped by this capture event
@@ -707,8 +707,6 @@ function OnLoadFunctions(req_id,cus_id){
                             else {
                                 alert(res.err);
                             }
-                            // Hide the loading animation and remove blur effect from the body
-                            $('.overlay').remove();
     
                             //Verify the finger is matched with member name
                             var compare_finger = $('#compare_finger').val()
@@ -742,7 +740,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     alert(res.err)
                                 }
                             }
-    
+                            hideOverlay();//loader stop
                         },700) //Timeout End
 
                     }//If End

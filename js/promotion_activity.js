@@ -347,7 +347,7 @@ function historyTableContents(req_id,cus_id,type){
             }
         }
     })
-    showOverlayWithDelay();//loader start
+    showOverlay();//loader start
     setTimeout(()=>{ 
 
         var pending_sts = $('#pending_sts').val()
