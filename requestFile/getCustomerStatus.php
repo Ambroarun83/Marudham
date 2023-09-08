@@ -1,5 +1,9 @@
 <?php 
+session_start();
+$user_id = $_SESSION["userid"];
 include('../ajaxconfig.php');
+
+
 if(isset($_POST['cus_id'])){
     $cus_id = preg_replace('/\D/', '',$_POST['cus_id']);
 }
@@ -22,6 +26,7 @@ if($result->num_rows>0){
         
         $records[$i]['sub_category'] = $row['sub_category'];
         $records[$i]['loan_amt'] = $row['loan_amt'];
+        $records[$i]['remark'] = $row['prompt_remark']??'';
         $cus_status = $row['cus_status']; 
         if($cus_status != '10' and $cus_status != '11'){
             if($cus_status == '0'){$records[$i]['status'] = 'Request'; $records[$i]['sub_status'] = 'Requested';}else
@@ -35,8 +40,8 @@ if($result->num_rows>0){
             if($cus_status == '8'){$records[$i]['status'] = 'Request';$records[$i]['sub_status'] = 'Revoked';}
             if($cus_status == '9'){$records[$i]['status'] = 'Verification';$records[$i]['sub_status'] = 'Revoked';}
             if($cus_status == '13'){$records[$i]['status'] = 'Loan Issue';$records[$i]['sub_status'] = 'In Issue';}
-            if($cus_status == '14' or $cus_status == '17'){$records[$i]['status'] = 'Collection';$records[$i]['sub_status'] = 'Collection';}
-            if($cus_status == '20'){$records[$i]['status'] = 'Closed';$records[$i]['sub_status'] = 'In Closed';}
+            if($cus_status >= '14' and $cus_status <= '17'){$records[$i]['status'] = 'Present';$records[$i]['sub_status'] = getCollectionStatus($con,$cus_id,$user_id);}
+            if($cus_status == '20'){$records[$i]['status'] = 'Closed';$records[$i]['sub_status'] = 'In Closed';} 
             if($cus_status == '21'){//21 means in NOC
                 // if moved from Closed, then sub status will be consider level of closed window
                 $records[$i]['status'] = 'Closed';
@@ -64,6 +69,7 @@ if($result->num_rows>0){
             <th>Amount</th>
             <th>Status</th>
             <th>Sub Status</th>
+            <th>Remark</th>
         </tr>
     </thead>
     <tbody>
@@ -76,6 +82,7 @@ if($result->num_rows>0){
             <td><?php echo $records[$i]['loan_amt'];?></td>
             <td><?php echo $records[$i]['status'];?></td>
             <td><?php echo $records[$i]['sub_status'];?></td>
+            <td><?php echo $records[$i]['remark'];?></td>
         </tr>
         <?php } ?>
     </tbody>
@@ -100,6 +107,74 @@ if($result->num_rows>0){
         });
     </script>
 <?php
+function getCollectionStatus($con,$cus_id,$user_id){
 
+    $pending_sts = isset($_POST["pending_sts"]) ? explode(',', $_POST["pending_sts"]) : null;
+    $od_sts = isset($_POST["od_sts"]) ? explode(',', $_POST["od_sts"]) : null;
+    $due_nil_sts = isset($_POST["due_nil_sts"]) ? explode(',', $_POST["due_nil_sts"]) : null;
+    $closed_sts = isset($_POST["closed_sts"]) ? explode(',', $_POST["closed_sts"]) : null;
+    
+    $retVal = '';
+
+    $run = $con->query("SELECT lc.due_start_from,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
+        rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
+        from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
+        JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
+        WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status < 20)"); //Customer status greater than or equal to 14 because, after issued data only we need
+
+    $curdate = date('Y-m-d');
+    while ($row = $run->fetch_assoc()) {
+        $i = 1;
+        if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate)) ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+            if($row['cus_status'] == '15'){
+                $retVal = 'Error';
+            }elseif($row['cus_status']== '16'){
+                $retVal = 'Legal';
+            }else{
+                $retVal = 'Current';
+            }
+        }else{
+            if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
+                if($row['cus_status'] == '15'){
+                    $retVal = 'Error';
+                }elseif($row['cus_status']== '16'){
+                    $retVal = 'Legal';
+                }else{
+                    $retVal = 'Pending';
+                }
+            }else if($od_sts[$i-1] == 'true' && $due_nil_sts[$i-1] =='false'){
+                if($row['cus_status'] == '15'){
+                    $retVal = 'Error';
+                }elseif($row['cus_status']== '16'){
+                    $retVal = 'Legal';
+                }else{
+                    $retVal = 'OD';
+                }
+            }elseif($due_nil_sts[$i-1] == 'true'){
+                if($row['cus_status'] == '15'){
+                    $retVal = 'Error';
+                }elseif($row['cus_status']== '16'){
+                    $retVal = 'Legal';
+                }else{
+                    $retVal = 'Due Nil';
+                }
+            }elseif($pending_sts[$i-1] == 'false'){
+                if($row['cus_status'] == '15'){
+                    $retVal = 'Error';
+                }elseif($row['cus_status']== '16'){
+                    $retVal = 'Legal';
+                }else{
+                    if($closed_sts[$i-1] == 'true'){
+                        $retVal = "Move To Close";
+                    }else{
+                        $retVal = 'Current';
+                    }
+                }
+            } 
+        }
+        $i++;
+    }
+    return $retVal;
+}
 ?>
 

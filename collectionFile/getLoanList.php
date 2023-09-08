@@ -200,15 +200,7 @@ function moneyFormatIndia($num) {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ],
-            // "createdRow": function(row, data, dataIndex) {
-            //     $(row).find('td:first').html(dataIndex + 1);
-            // },
-            // "drawCallback": function(settings) {
-            //     this.api().column(0).nodes().each(function(cell, i) {
-            //         cell.innerHTML = i + 1;
-            //     });
-            // },
+            ]
         });
     });
     $('.dropdown').click(function(event) {

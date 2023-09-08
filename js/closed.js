@@ -132,7 +132,7 @@ function OnLoadFunctions(req_id,cus_id){
             
         }
     }); 
-    $('<div/>', {class: 'overlay'}).appendTo('.loanlist_card').html('<div class="loader"></div><span class="overlay-text">Please Wait</span>');
+    showOverlay();//loader start
     setTimeout(()=>{
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
@@ -146,7 +146,7 @@ function OnLoadFunctions(req_id,cus_id){
             type:'post',
             cache: false,
             success: function(response){
-                $('.overlay').remove();
+                // $('.overlay').remove();
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
                 
@@ -272,6 +272,7 @@ function OnLoadFunctions(req_id,cus_id){
         })
             
         getCustomerLoanCounts(); // to get customer summary details
+        hideOverlay();//loader stop
     },2000)
 
 }//Auto Load function END
