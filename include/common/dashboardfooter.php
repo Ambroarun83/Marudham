@@ -1479,95 +1479,50 @@ if($current_page == 'confirmation_followup') { ?>
 ////////// Show Loader if ajax function is called inside anywhere in entire project  ////////
     
     $(document).ajaxStart(function() {
-        showOverlayWithDelay();
+        // console.log("🚀 ~ file: dashboardfooter.php:1513 ~ showOverlay")
+        showOverlay();
     });
     
     $(document).ajaxStop(function() {
+        // console.log("🚀 ~ file: dashboardfooter.php:1560 ~ hideOverlay")
         hideOverlay();
     });
     
     
-    var overlayTimer; // Variable to store the timer
+    // var overlayTimer; // Variable to store the timer
     
     // Function to add the overlay after a delay
-    function showOverlayWithDelay() {
-        overlayTimer = setTimeout(function() {
-            showOverlay();
-        }, 500);
-    }
+    // function showOverlayWithDelay() {
+    //     overlayTimer = setTimeout(function() {
+    //         showOverlay();
+    //     }, 500);
+    // }
 
-    // Function to add the overlay
-    function showOverlay() {
-        var overlayDiv = document.createElement('div');
-        overlayDiv.classList.add('overlay');
-        document.body.appendChild(overlayDiv);
+    // // Function to add the overlay
+    // function showOverlay() {
+    //     var overlayDiv = document.createElement('div');
+    //     overlayDiv.classList.add('overlay');
+    //     document.body.appendChild(overlayDiv);
     
-        var loaderDiv = document.createElement('div');
-        loaderDiv.classList.add('loader');
-        overlayDiv.appendChild(loaderDiv);
+    //     var loaderDiv = document.createElement('div');
+    //     loaderDiv.classList.add('loader');
+    //     overlayDiv.appendChild(loaderDiv);
     
-        var overlayText = document.createElement('span');
-        overlayText.classList.add('overlay-text');
-        overlayText.innerText = 'Please Wait';
-        overlayDiv.appendChild(overlayText);
-    }
-    
-    // Function to remove the overlay and clear the timer
-    function hideOverlay() {
-        clearTimeout(overlayTimer); // Clear the timer if it's still running
-        var overlayDiv = document.querySelector('.overlay');
-        console.log("🚀 ~ file: dashboardfooter.php:1560 ~ hideOverlay ~ overlayDiv:", overlayDiv)
-        if (overlayDiv) {
-            overlayDiv.remove();
-        }
-    }
-
-    
-
-    // Function to remove the overlay
-    // function hideOverlay() {
-    //     var overlayDiv = document.querySelector('.overlay');
-    //     if (overlayDiv) {
-    //     overlayDiv.remove();
-    //     }
+    //     var overlayText = document.createElement('span');
+    //     overlayText.classList.add('overlay-text');
+    //     overlayText.innerText = 'Please Wait';
+    //     overlayDiv.appendChild(overlayText);
     // }
     
-// // Function to show the overlay with loader
-//     function showOverlay() {
-//         var overlayDiv = document.createElement('div');
-//         overlayDiv.classList.add('overlay');
-//         document.body.appendChild(overlayDiv);
+    // // Function to remove the overlay and clear the timer
+    // function hideOverlay() {
+    //     // clearTimeout(overlayTimer); // Clear the timer if it's still running
+    //     var overlayDiv = document.querySelector('.overlay');
+    //     // if (overlayDiv) {
+    //         overlayDiv.remove();
+    //     // }
+    // }
+
     
-//         var loaderDiv = document.createElement('div');
-//         loaderDiv.classList.add('loader');
-//         overlayDiv.appendChild(loaderDiv);
-    
-//         var overlayText = document.createElement('span');
-//         overlayText.classList.add('overlay-text');
-//         overlayText.innerText = 'Please Wait';
-//         overlayDiv.appendChild(overlayText);
-//     }
-
-//     // Function to remove the overlay
-//     function hideOverlay() {
-//         var overlayDiv = document.querySelector('.overlay');
-//         if (overlayDiv) {
-//             overlayDiv.remove();
-//         }
-//     }
-
-//     // Show the loader when window is still loading
-//     window.addEventListener('load', function() {
-//         hideOverlay();
-//     });
-
-//     // Show the loader during AJAX requests
-//     $(document).ajaxStart(function() {
-//         showOverlay();
-//     });
-
-//     $(document).ajaxStop(function() {
-//         hideOverlay();
-//     });
 
 </script>

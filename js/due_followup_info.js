@@ -375,7 +375,7 @@ function resetkycinfoList() {
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "req_id": req_id },
+        data: {req_id,cus_id },
         // data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {

@@ -116,6 +116,8 @@ $(document).ready(function(){
     $('#category').on('change', function () {
 
         let category = $('#category').val();
+        $("#check_name, #check_mobileno, #check_aadhar").empty();
+        $("#cus_check, #fam_check, #group_check").empty();
 
         if (category == 0) {
             $('#nameCheck').show();
@@ -151,39 +153,42 @@ $(document).ready(function(){
         let name = $(this).val();
         let category = $('#category').val();
         let req_id = $('#req_id').val();
+        $("#cus_check, #fam_check, #group_check").empty();
 
-        $.ajax({
-            url: 'verificationFile/verification_cus_datacheck.php',
-            type: 'POST',
-            data: { "name": name,"req_id": req_id, "category": category },
-            cache: false,
-            success: function (html) {
-                $("#cus_check").empty();
-                $("#cus_check").html(html);
-            }
-        });
+        if(name != ''){
+            $.ajax({
+                url: 'verificationFile/verification_cus_datacheck.php',
+                type: 'POST',
+                data: { "name": name,"req_id": req_id, "category": category },
+                cache: false,
+                success: function (html) {
+                    $("#cus_check").empty();
+                    $("#cus_check").html(html);
+                }
+            });
 
-        $.ajax({
-            url: 'verificationFile/verification_fam_datacheck.php',
-            type: 'POST',
-            data: { "name": name, "req_id": req_id, "category": category },
-            cache: false,
-            success: function (html) {
-                $("#fam_check").empty();
-                $("#fam_check").html(html);
-            }
-        });
+            $.ajax({
+                url: 'verificationFile/verification_fam_datacheck.php',
+                type: 'POST',
+                data: { "name": name, "req_id": req_id, "category": category },
+                cache: false,
+                success: function (html) {
+                    $("#fam_check").empty();
+                    $("#fam_check").html(html);
+                }
+            });
 
-        $.ajax({
-            url: 'verificationFile/verification_group_datacheck.php',
-            type: 'POST',
-            data: { "name": name, "req_id": req_id, "category": category },
-            cache: false,
-            success: function (html) {
-                $("#group_check").empty();
-                $("#group_check").html(html);
-            }
-        });
+            $.ajax({
+                url: 'verificationFile/verification_group_datacheck.php',
+                type: 'POST',
+                data: { "name": name, "req_id": req_id, "category": category },
+                cache: false,
+                success: function (html) {
+                    $("#group_check").empty();
+                    $("#group_check").html(html);
+                }
+            });
+        }
 
     })
 
@@ -1196,11 +1201,12 @@ function famNameList() {  // To show family name for Data Check.
         success: function (response) {
             $("#check_name").empty();
             $('#check_name').append("<option value=''> Select Name </option>")
-            $('#check_name').append("<option value='" + cus_name + "'> " + cus_name + " </option>");//Current Customer Name
+            $('#check_name').append("<option value='" + cus_name + "'> " + cus_name + " - Customer </option>");//Current Customer Name
             let len = response.length;
             for (let i = 0; i < len; i++) {
                 let name = response[i]['fam_name'];
-                $('#check_name').append("<option value='" + name + "'> " + name + " </option>")
+                let relationship = response[i]['relationship'];
+                $('#check_name').append("<option value='" + name + "'> " + name +" - "+ relationship + " </option>")
             }
 
         }
@@ -1221,11 +1227,12 @@ function mobileList() { // To show Mobile No for Data Checking.
         success: function (response) {
             $("#check_mobileno").empty();
             $('#check_mobileno').append("<option value=''> Select Mobile Number </option>")
-            $('#check_mobileno').append("<option value='" + mobile1 + "'> " + mobile1 + " </option>");//Current Customer Number
+            $('#check_mobileno').append("<option value='" + mobile1 + "'> " + mobile1 +" - Customer  </option>");//Current Customer Number
             let len = response.length;
             for (let i = 0; i < len; i++) {
                 let no = response[i]['mobile'];
-                $('#check_mobileno').append("<option value='" + no + "'> " + no + " </option>")
+                let relationship = response[i]['relationship'];
+                $('#check_mobileno').append("<option value='" + no + "'> " + no +" - "+ relationship + " </option>")
             }
 
         }
@@ -1246,13 +1253,14 @@ function aadharList() {   // To show Aadhar No for Data Checking.
         cache: false,
         success: function (response) {
             $("#check_aadhar").empty();
-            $('#check_aadhar').append("<option value=''> Select Aadhar Number    </option>")
-            $('#check_aadhar').append("<option value='" + cus_id + "'> " + cus_name + " </option>");//Current Customer Adhaar
+            $('#check_aadhar').append("<option value=''> Select Aadhar Number</option>")
+            $('#check_aadhar').append("<option value='" + cus_id + "'> " + cus_name + " - Customer </option>");//Current Customer Adhaar
             let len = response.length;
             for (let i = 0; i < len; i++) {
                 let aadhar = response[i]['aadhar'];
                 let fam_name = response[i]['fam_name'];
-                $('#check_aadhar').append("<option value='" + aadhar + "'> " + fam_name + " </option>")
+                let relationship = response[i]['relationship'];
+                $('#check_aadhar').append("<option value='" + aadhar + "'> " + fam_name +" - "+ relationship + " </option>")
             }
 
         }

@@ -1,5 +1,8 @@
 <?php
 
+//for loan limit access, checking if user has approval screen access
+$approvalaccess = $userObj->getuser($mysqli,$userid)['approval'];
+
 ////////////////////// Verification List Options Start
 if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd'];
@@ -176,44 +179,11 @@ if (sizeof($getCustomerProfile) > 0) {
 	$guarentor_photo = $getCustomerProfile['guarentor_photo'];
 	$cus_type = $getCustomerProfile['cus_type'];
 	$cus_exist_type = $getCustomerProfile['cus_exist_type'];
-	// $residential_type = $getCustomerProfile['residential_type'];
-	// $residential_details = $getCustomerProfile['residential_details'];
-	// $residential_address = $getCustomerProfile['residential_address'];
-	// $residential_native_address = $getCustomerProfile['residential_native_address'];
-	// $cp_occupation_type = $getCustomerProfile['occupation_type'];
-	// $occupation_details = $getCustomerProfile['occupation_details'];
-	// $occupation_income = $getCustomerProfile['occupation_income'];
-	// $occupation_address = $getCustomerProfile['occupation_address'];
-	// $area_confirm_type = $getCustomerProfile['area_confirm_type'];
-	// $area_confirm_state = $getCustomerProfile['area_confirm_state'];
-	// $area_confirm_district = $getCustomerProfile['area_confirm_district'];
-	// $area_confirm_taluk = $getCustomerProfile['area_confirm_taluk'];
-	// $area_confirm_area = $getCustomerProfile['area_confirm_area'];
-	// $area_confirm_subarea = $getCustomerProfile['area_confirm_subarea'];
-	// $area_group = $getCustomerProfile['area_group'];
-	// $area_line = $getCustomerProfile['area_line'];
 	$communication = $getCustomerProfile['communication'];
 	$com_audio = $getCustomerProfile['com_audio'];
 	$verification_person = $getCustomerProfile['verification_person'];
 	$verification_location = $getCustomerProfile['verification_location'];
 	$cp_cus_status = $getCustomerProfile['cus_status'];
-	// $how_to_know = $getCustomerProfile['how_to_know'];
-	// $loan_count = $getCustomerProfile['loan_count'];
-	// $first_loan_date = $getCustomerProfile['first_loan_date'];
-	// $travel_with_company = $getCustomerProfile['travel_with_company'];
-	// $monthly_income = $getCustomerProfile['monthly_income'];
-	// $other_income = $getCustomerProfile['other_income'];
-	// $support_income = $getCustomerProfile['support_income'];
-	// $commitment = $getCustomerProfile['commitment'];
-	// $monthly_due_capacity = $getCustomerProfile['monthly_due_capacity'];
-	// $loan_limit = $getCustomerProfile['loan_limit'];
-	// $cus_character = $getCustomerProfile['cus_character'];
-	// $approach = $getCustomerProfile['approach'];
-	// $relationship = $getCustomerProfile['relationship'] ;
-	// $attitude = $getCustomerProfile['attitude'] ;
-	// $behavior = $getCustomerProfile['behavior'] ;
-	// $incident_remark  = $getCustomerProfile['incident_remark'] ;
-	// $about_customer = $getCustomerProfile['about_customer'];
 	$dow 					= $getCustomerProfile['dow'];
 	$abt_occ 					= $getCustomerProfile['abt_occ'];
 }
@@ -247,12 +217,6 @@ if (sizeof($documentationInfo) > 0) {
 	$doc_property_measurement = $documentationInfo['doc_property_measurement'];
 	$doc_property_location = $documentationInfo['doc_property_location'];
 	$doc_property_value = $documentationInfo['doc_property_value'];
-	// $mortgage_name = $documentationInfo['mortgage_name'];
-	// $mortgage_dsgn = $documentationInfo['mortgage_dsgn'];
-	// $mortgage_nuumber = $documentationInfo['mortgage_nuumber'];
-	// $reg_office = $documentationInfo['reg_office'];
-	// $mortgage_value = $documentationInfo['mortgage_value'];
-	// $mortgage_document = $documentationInfo['mortgage_document'];
 	$endorsement_process = $documentationInfo['endorsement_process'];
 	$owner_type = $documentationInfo['owner_type'];
 	$owner_name = $documentationInfo['owner_name'];
@@ -262,17 +226,6 @@ if (sizeof($documentationInfo) > 0) {
 	$vehicle_process = $documentationInfo['vehicle_process'];
 	$en_Company = $documentationInfo['en_Company'];
 	$en_Model = $documentationInfo['en_Model'];
-	// $vehicle_reg_no = $documentationInfo['vehicle_reg_no'];
-	// $endorsement_name = $documentationInfo['endorsement_name'];
-	// $en_RC = $documentationInfo['en_RC'];
-	// $en_Key = $documentationInfo['en_Key'];
-	// $gold_info = $documentationInfo['gold_info'];
-	// $gold_sts = $documentationInfo['gold_sts'];
-	// $gold_type = $documentationInfo['gold_type'];
-	// $Purity = $documentationInfo['Purity'];
-	// $gold_Count = $documentationInfo['gold_Count'];
-	// $gold_Weight = $documentationInfo['gold_Weight'];
-	// $gold_Value = $documentationInfo['gold_Value'];
 	$document_name = $documentationInfo['document_name'];
 	$document_details = $documentationInfo['document_details'];
 	$document_type = $documentationInfo['document_type'];
@@ -411,6 +364,7 @@ if (sizeof($getLoanCalculation) > 0) {
 			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($area_confirm_subarea)) { echo $area_confirm_subarea; } ?>" />
 			<input type="hidden" name="verification_person_upd" id="verification_person_upd" value="<?php if (isset($verification_person)) { echo $verification_person; } ?>" />
 			<input type="hidden" name="cus_Tableid" id="cus_Tableid" value="<?php if (isset($cus_Tableid)) { echo $cus_Tableid; } ?>" />
+			<input type="hidden" name="approvalaccess" id="approvalaccess" value="<?php if (isset($approvalaccess)) { echo $approvalaccess; } ?>" />
 
 			<!-- Row start -->
 			<div class="row gutters">
@@ -648,9 +602,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="guarentor_relationship"> Guarentor Relationship </label>
-												<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" tabindex="20" value='<?php if (isset($guarentor_relation)) {
-																																								echo $guarentor_relation;
-																																							} ?>' readonly>
+												<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" tabindex="20" value='<?php if (isset($guarentor_relation)) {echo $guarentor_relation;} ?>' readonly>
 											</div>
 										</div>
 									</div>
@@ -660,13 +612,9 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 										<div class="form-group" style="margin-left: 30px;">
 											<label for="pic" style="margin-left: -20px;"> Guarentor Photo </label><span class="required">&nbsp;*</span><br>
-											<input type="hidden" name="guarentor_image" id="guarentor_image" value="<?php if (isset($guarentor_photo)) {
-																														echo $guarentor_photo;
-																													} ?>">
+											<input type="hidden" name="guarentor_image" id="guarentor_image" value="<?php if (isset($guarentor_photo)) {echo $guarentor_photo;} ?>">
 											<img id='imgshows' class="img_show" src='img/avatar.png' />
-											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="21" value="<?php if (isset($guarentor_photo)) {
-																																		echo $guarentor_photo;
-																																	} ?>">
+											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="21" value="<?php if (isset($guarentor_photo)) {echo $guarentor_photo;} ?>">
 											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
 										</div>
 									</div>
