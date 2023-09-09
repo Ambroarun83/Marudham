@@ -79,6 +79,7 @@
 		table-layout: fixed;
 		} */
 		
+		/* Loader Start */
 		.overlay {
 			position: fixed;
 			z-index: 9999;
@@ -86,7 +87,7 @@
 			left: 0;
 			width: 100%;
 			height: 100%;
-			background-color: rgba(0, 0, 0, 0.5); /* Add semi-transparent black background */
+			background-color: rgba(255, 255, 255, 1); /* Add semi-transparent black background */
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -106,10 +107,12 @@
 			100% { transform: rotate(360deg); }
 		}
 		.overlay-text {
-			color: white;
+			color: black;
 			font-size: 1.5rem;
 			margin-left: 10px;
 		}
+		/* Loader end */
+
 		#icon-flipped {
 				-moz-transform: scaleX(-1);
 				-o-transform: scaleX(-1);
@@ -184,22 +187,33 @@
 
 	<link rel="stylesheet" href="vendor/bs-select/bs-select.css" />
 	<script>
-		var overlayDiv = document.createElement('div');
-		overlayDiv.classList.add('overlay');
-		document.body.appendChild(overlayDiv);
 
-		var loaderDiv = document.createElement('div');
-		loaderDiv.classList.add('loader');
-		overlayDiv.appendChild(loaderDiv);
-
-		var overlayText = document.createElement('span');
-		overlayText.classList.add('overlay-text');
-		overlayText.innerText = 'Please Wait';
-		overlayDiv.appendChild(overlayText);
-
+		showOverlay();
 		window.addEventListener('load', function() {
-			overlayDiv.remove();
+			hideOverlay();
 		});
+
+		// Function to add the overlay
+		function showOverlay() {
+			var overlayDiv = document.createElement('div');
+			overlayDiv.classList.add('overlay');
+			document.body.appendChild(overlayDiv);
+		
+			var loaderDiv = document.createElement('div');
+			loaderDiv.classList.add('loader');
+			overlayDiv.appendChild(loaderDiv);
+		
+			var overlayText = document.createElement('span');
+			overlayText.classList.add('overlay-text');
+			overlayText.innerText = 'Please Wait';
+			overlayDiv.appendChild(overlayText);
+		}
+		
+		// Function to remove the overlay and clear the timer
+		function hideOverlay() {
+			var overlayDiv = document.querySelector('.overlay');
+			overlayDiv.remove();
+		}
 
 	</script>
 </head>

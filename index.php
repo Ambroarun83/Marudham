@@ -1,6 +1,14 @@
 <?php	
+//this screen is only for login page*****
 date_default_timezone_set('Asia/Calcutta');
 @session_start();
+
+//below code is for redirecting user to dashboard if already logged in, even directly changes url
+$userid  = isset($_SESSION['userid']) ? $_SESSION['userid'] : "";
+if($userid!=""){
+	echo "<script>/*alert('Please Dont Change the URL!');*/location.href='dashboard'</script>"; 
+}
+
 
 $id=0;
 include("api/main.php");

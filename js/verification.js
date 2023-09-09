@@ -29,9 +29,22 @@ $(document).ready(function () {
 
     });
 
+    {
+        //this code will change customer limit field readonly when user dont have access to approval screen 
+        //or else even access is not there if the customer is new then any one can edit that filed, it will not set to readonly
+        let cus_type = $('#cus_type').val();
+        let approvalaccess = $('#approvalaccess').val();
+
+        if (!(cus_type === 'New' || approvalaccess === '0')) {
+            $('#cus_loan_limit').attr('readonly', true);
+        }
+    }
+
     $('#category').on('change', function () {
 
         let category = $('#category').val();
+        $("#check_name, #check_mobileno, #check_aadhar").empty();
+        $("#cus_check, #fam_check, #group_check").empty();
 
         if (category == 0) {
             $('#nameCheck').show();
@@ -76,11 +89,12 @@ $(document).ready(function () {
             success: function (response) {
                 $("#check_name").empty();
                 $('#check_name').append("<option value=''> Select Name </option>")
-                $('#check_name').append("<option value='" + cus_name + "'> " + cus_name + " </option>");//Current Customer Name
+                $('#check_name').append("<option value='" + cus_name + "'> " + cus_name + " - Customer </option>");//Current Customer Name
                 let len = response.length;
                 for (let i = 0; i < len; i++) {
                     let name = response[i]['fam_name'];
-                    $('#check_name').append("<option value='" + name + "'> " + name + " </option>")
+                    let relationship = response[i]['relationship'];
+                    $('#check_name').append("<option value='" + name + "'> " + name +" - "+ relationship + " </option>")
                 }
 
             }
@@ -101,11 +115,12 @@ $(document).ready(function () {
             success: function (response) {
                 $("#check_mobileno").empty();
                 $('#check_mobileno').append("<option value=''> Select Mobile Number </option>")
-                $('#check_mobileno').append("<option value='" + mobile1 + "'> " + mobile1 + " </option>");//Current Customer Number
+                $('#check_mobileno').append("<option value='" + mobile1 + "'> " + mobile1 + " - Customer </option>");//Current Customer Number
                 let len = response.length;
                 for (let i = 0; i < len; i++) {
                     let no = response[i]['mobile'];
-                    $('#check_mobileno').append("<option value='" + no + "'> " + no + " </option>")
+                    let relationship = response[i]['relationship'];
+                    $('#check_mobileno').append("<option value='" + no + "'> " + no  +" - "+ relationship + " </option>")
                 }
 
             }
@@ -126,13 +141,14 @@ $(document).ready(function () {
             cache: false,
             success: function (response) {
                 $("#check_aadhar").empty();
-                $('#check_aadhar').append("<option value=''> Select Aadhar Number    </option>")
-                $('#check_aadhar').append("<option value='" + cus_id + "'> " + cus_name + " </option>");//Current Customer Adhaar
+                $('#check_aadhar').append("<option value=''> Select Aadhar Number</option>")
+                $('#check_aadhar').append("<option value='" + cus_id + "'> " + cus_name + " - Customer </option>");//Current Customer Adhaar
                 let len = response.length;
                 for (let i = 0; i < len; i++) {
                     let aadhar = response[i]['aadhar'];
                     let fam_name = response[i]['fam_name'];
-                    $('#check_aadhar').append("<option value='" + aadhar + "'> " + fam_name + " </option>")
+                    let relationship = response[i]['relationship'];
+                    $('#check_aadhar').append("<option value='" + aadhar + "'> " + fam_name  +" - "+ relationship + " </option>")
                 }
 
             }
@@ -145,39 +161,42 @@ $(document).ready(function () {
         let name = $(this).val();
         let category = $('#category').val();
         let req_id = $('#req_id').val();
+        $("#cus_check, #fam_check, #group_check").empty();
 
-        $.ajax({
-            url: 'verificationFile/verification_cus_datacheck.php',
-            type: 'POST',
-            data: { "name": name,"req_id": req_id, "category": category },
-            cache: false,
-            success: function (html) {
-                $("#cus_check").empty();
-                $("#cus_check").html(html);
-            }
-        });
+        if(name != ''){
+            $.ajax({
+                url: 'verificationFile/verification_cus_datacheck.php',
+                type: 'POST',
+                data: { "name": name,"req_id": req_id, "category": category },
+                cache: false,
+                success: function (html) {
+                    $("#cus_check").empty();
+                    $("#cus_check").html(html);
+                }
+            });
 
-        $.ajax({
-            url: 'verificationFile/verification_fam_datacheck.php',
-            type: 'POST',
-            data: { "name": name, "req_id": req_id, "category": category },
-            cache: false,
-            success: function (html) {
-                $("#fam_check").empty();
-                $("#fam_check").html(html);
-            }
-        });
+            $.ajax({
+                url: 'verificationFile/verification_fam_datacheck.php',
+                type: 'POST',
+                data: { "name": name, "req_id": req_id, "category": category },
+                cache: false,
+                success: function (html) {
+                    $("#fam_check").empty();
+                    $("#fam_check").html(html);
+                }
+            });
 
-        $.ajax({
-            url: 'verificationFile/verification_group_datacheck.php',
-            type: 'POST',
-            data: { "name": name, "req_id": req_id, "category": category },
-            cache: false,
-            success: function (html) {
-                $("#group_check").empty();
-                $("#group_check").html(html);
-            }
-        });
+            $.ajax({
+                url: 'verificationFile/verification_group_datacheck.php',
+                type: 'POST',
+                data: { "name": name, "req_id": req_id, "category": category },
+                cache: false,
+                success: function (html) {
+                    $("#group_check").empty();
+                    $("#group_check").html(html);
+                }
+            });
+        }
 
     })
 
@@ -846,26 +865,6 @@ $(document).ready(function () {
     });
 
 
-
-    //Document Info 
-    // $('#gold_info').change(function () {
-
-    //     let gold = $(this).val();
-
-    //     if (gold == '0') {
-    //         $('#GoldInfo').show();
-    //     } else {
-    //         $('#GoldInfo').hide();
-
-    //         $('#gold_sts').val('');
-    //         $('#gold_type').val('');
-    //         $('#Purity').val('');
-    //         $('#gold_Count').val('');
-    //         $('#gold_Weight').val('');
-    //         $('#gold_Value').val('');
-    //     }
-    // })
-
     $('#document_holder').change(function () {
         let type = $(this).val();
         let req_id = $('#req_id').val();
@@ -933,42 +932,42 @@ $(document).ready(function () {
         });
     });
 
-//To Show Relationship value on edit page.////
-let mortgage = $('#Propertyholder_type').val();
-if(mortgage == '2'){
-    $('#Propertyholder_name').hide();
-    $('#Propertyholder_relationship_name').show();
-    mortgageHolderName();
-    let mortgageHolder =  $('#mortgage_relation_name').val();
+    //To Show Relationship value on edit page.////
+    let mortgage = $('#Propertyholder_type').val();
+    if(mortgage == '2'){
+        $('#Propertyholder_name').hide();
+        $('#Propertyholder_relationship_name').show();
+        mortgageHolderName();
+        let mortgageHolder =  $('#mortgage_relation_name').val();
 
-    setTimeout(() => {
-        $('#Propertyholder_relationship_name').val(mortgageHolder);
-    }, 500);
-}
+        setTimeout(() => {
+            $('#Propertyholder_relationship_name').val(mortgageHolder);
+        }, 500);
+    }
 
-let ot = $('#owner_type').val();
-if(ot == '2'){
-    $('#owner_name').hide();
-    $('#ownername_relationship_name').show();
-    endorseHolderName();
-    let Endorsename =  $('#en_relation_name').val();
+    let ot = $('#owner_type').val();
+    if(ot == '2'){
+        $('#owner_name').hide();
+        $('#ownername_relationship_name').show();
+        endorseHolderName();
+        let Endorsename =  $('#en_relation_name').val();
 
-    setTimeout(() => {
-        $('#ownername_relationship_name').val(Endorsename);
-    }, 500);
-}
+        setTimeout(() => {
+            $('#ownername_relationship_name').val(Endorsename);
+        }, 500);
+    }
 
-let docHolder = $('#document_holder').val();    
-if(docHolder == '2'){
-    $('#docholder_name').hide();
-    $('#docholder_relationship_name').show();
-    docHolderName();
-    let holder =  $('#docrelation_name').val();
+    let docHolder = $('#document_holder').val();    
+    if(docHolder == '2'){
+        $('#docholder_name').hide();
+        $('#docholder_relationship_name').show();
+        docHolderName();
+        let holder =  $('#docrelation_name').val();
 
-    setTimeout(() => {
-        $('#docholder_relationship_name').val(holder);
-    }, 500);
-}
+        setTimeout(() => {
+            $('#docholder_relationship_name').val(holder);
+        }, 500);
+    }
 
 });   ////////Document Ready End
 
@@ -980,6 +979,8 @@ $(function () {
     resetFamInfo(); //Call Family Info Table Initially.
     resetFamDetails();
     closeFamModal();
+
+    getOldGuarentorImg();//gets the guarentor name if the customer is exist or already uploaded the guarentor pic
 
     resetgroupInfo(); //Group Family Modal Table Reset 
     resetGroupDetails()
@@ -1351,6 +1352,40 @@ function closeFamModal() {
             verificationPerson(); //To Select verification Person in Verification Info.////// 
         }
     });
+}
+
+
+function getOldGuarentorImg(){
+    let cus_id = $('#cus_id').val();
+    $.post('verificationFile/getOldGuarentorImg.php', {"cus_id":cus_id}, function (response) {
+        
+        if(response.length > 0){
+            var img = response[0]['img'];
+            $('#imgshows').attr('src',"uploads/verification/guarentor/"+img);
+            $('#guarentor_image').val(img);
+            $('#guarentorpic').attr('value',img);
+            $('#guarentor_relationship').val(response[0]['relation']);
+
+            
+            $.post('verificationFile/verificationFam.php',{ "cus_id": cus_id },function (data) {
+                
+                $("#guarentor_name").empty().append("<option value=''>" + 'Select Guarantor' + "</option>");
+                for (var i = 0; i < data.length-1; i++) { // -1 because this ajax's response will contain customer value at the last of the response for verification person
+                    var fam_name = data[i]['fam_name'];var fam_id = data[i]['fam_id'];
+                    var selected = '';
+                    if(response[0]['fam_id'] != '' && fam_id == response[0]['fam_id']){
+                        selected = 'selected';
+                    }
+                    $("#guarentor_name").append("<option value='" + fam_id + "' " + selected+ ">" + fam_name + "</option>");
+                }
+                
+            },'json')
+
+        }else{
+            $('#imgshows').attr('src','img/avatar.png');
+        }
+    },'json');
+
 }
 
 // Verification Info Person 
@@ -2296,7 +2331,7 @@ function resetkycinfoList() {
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "req_id": req_id },
+        data: { req_id ,cus_id},
         cache: false,
         success: function (html) {
             $("#kycListTable").empty();
@@ -3032,7 +3067,7 @@ function validation() {
 
     $.ajax({
         url: 'verificationFile/validateModals.php',
-        data: { 'req_id': req_id, 'table': 'verification_family_info' },
+        data: { 'cus_id': cus_id, 'table': 'verification_family_info' },
         type: 'post',
         cache: false,
         success: function (response) {
@@ -3088,7 +3123,7 @@ function validation() {
     // })
     $.ajax({
         url: 'verificationFile/validateModals.php',
-        data: { 'req_id': req_id, 'table': 'verification_kyc_info' },
+        data: { 'cus_id': cus_id, 'table': 'verification_kyc_info' },
         type: 'post',
         cache: false,
         success: function (response) {
