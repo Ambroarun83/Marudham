@@ -222,9 +222,9 @@
 
 	function dT() {
 		// Loan category datatable
-		var verification_table = $('#verification_table').DataTable();
-		verification_table.destroy();
-		var verification_table = $('#verification_table').DataTable({
+		var loanSummaryTable = $('#loanSummaryTable').DataTable();
+		loanSummaryTable.destroy();
+		var loanSummaryTable = $('#loanSummaryTable').DataTable({
 			"order": [[ 0, "desc" ]],
 			"ordering": false,
 			'paging':false,
@@ -242,7 +242,7 @@
 			buttons: [
 			{
 				extend: 'excel',
-				title: "Loan Scheme List"
+				title: "Update List"
 			},
 			{
 				extend: 'colvis',

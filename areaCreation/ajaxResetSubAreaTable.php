@@ -36,21 +36,30 @@ if (isset($_POST['area'])) {
 
 <script type="text/javascript">
 $(function(){
-  $('#subAreaTable').DataTable({
-    'processing': true,
-    'iDisplayLength': 5,
-    "lengthMenu": [
-        [10, 25, 50, -1],
-        [10, 25, 50, "All"]
-    ],
-    "createdRow": function(row, data, dataIndex) {
-        $(row).find('td:first').html(dataIndex + 1);
-    },
-    "drawCallback": function(settings) {
-        this.api().column(0).nodes().each(function(cell, i) {
-            cell.innerHTML = i + 1;
-        });
-    },
-  });
+    $('#subAreaTable').DataTable({
+        'processing': true,
+        'iDisplayLength': 5,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        "createdRow": function(row, data, dataIndex) {
+            $(row).find('td:first').html(dataIndex + 1);
+        },
+        "drawCallback": function(settings) {
+            this.api().column(0).nodes().each(function(cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        },
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
+    });
 });
 </script>

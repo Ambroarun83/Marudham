@@ -39,7 +39,7 @@ function moneyFormatIndia($num) {
     return $thecash;
 }
 ?>
-<table class="table custom-table" id='loanListTable'>
+<table class="table custom-table" id='LoanHistTable'>
     <thead>
         <tr>
             <th>Loan ID</th>
@@ -152,6 +152,23 @@ function moneyFormatIndia($num) {
 
 
 <script>
+    $('#LoanHistTable').dataTable({
+        'processing': true,
+        'iDisplayLength': 5,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
+    })
     $('.dropdown').unbind('click');
     $('.dropdown').click(function(event) {
         event.preventDefault();

@@ -240,7 +240,7 @@
 			buttons: [
 			{
 				extend: 'excel',
-				title: "Loan Scheme List"
+				title: "Loan issue List"
 			},
 			{
 				extend: 'colvis',

@@ -661,6 +661,15 @@ function getSchemeValues(sub_cat){
                     cell.innerHTML = i + 1;
                 });
             },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
     });
 

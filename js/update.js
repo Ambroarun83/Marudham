@@ -528,6 +528,15 @@ $(function () {
                 cell.innerHTML = i + 1;
             });
         },
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
     });
     
 
@@ -2270,6 +2279,15 @@ function resetSignedDocList(req_id,cus_id) {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
         setTempDocumentEvents();//temp document click events
     })
@@ -2306,6 +2324,15 @@ function resetChequeList(req_id,cus_id) {
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
         setTempDocumentEvents();//temp document click events
     })
@@ -2338,7 +2365,16 @@ function resetGoldList(req_id,cus_id) {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
         setTempDocumentEvents();//temp document click events
     })
@@ -2373,7 +2409,16 @@ function resetDocmentList(req_id,cus_id) {
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
         setTempDocumentEvents();//temp document click events
     })

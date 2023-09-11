@@ -78,6 +78,15 @@ $qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposi
                     cell.innerHTML = i + 1;
                 });
             },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
     });
 </script>

@@ -186,4 +186,23 @@ function moneyFormatIndia($num) {
             $('.dropdown').removeClass('active');
         }
     });
+
+    $('#loanListTable').DataTable({
+        'processing': true,
+        'iDisplayLength': 5,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+                title: "Loan History"
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
+    });
 </script>

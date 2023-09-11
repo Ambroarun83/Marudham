@@ -61,7 +61,7 @@ function dT1(){
         buttons: [
             {
                 extend: 'excel',
-                title: "Loan Scheme List"
+                title: "Area Status List"
             },
             {
                 extend:'colvis',
@@ -96,7 +96,7 @@ function dT2(){
         buttons: [
             {
                 extend: 'excel',
-                title: "Loan Scheme List"
+                title: "Sub Area StatusList"
             },
             {
                 extend:'colvis',

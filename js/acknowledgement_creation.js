@@ -839,6 +839,15 @@ $(function () {
                 cell.innerHTML = i + 1;
             });
         },
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
     });
 
     // when Mortgage Doc is YES then Pending is UNCHECKED.

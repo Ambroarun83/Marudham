@@ -133,7 +133,7 @@
 			buttons: [
 			{
 				extend: 'excel',
-				title: "Loan Scheme List"
+				title: "Company List"
 			},
 			{
 				extend: 'colvis',
