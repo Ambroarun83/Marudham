@@ -238,7 +238,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
         $qry = $con->query("SELECT SUM(principal_amt_cal) as principal_amt_cal,SUM(tot_amt_cal) as tot_amt_cal from acknowlegement_loan_calculation WHERE req_id =$req_id");
         $row = $qry->fetch_assoc();
         
-        if($row['tot_amt_cal'] != ''){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
+        if($row['tot_amt_cal'] != 0){$total_for_nil =$row['tot_amt_cal']; }else{$total_for_nil =$row['principal_amt_cal'];}
         $due_nil_check = intVal($total_for_nil) - intVal($due_amt_track);
 
         if($due_nil_check == 0){

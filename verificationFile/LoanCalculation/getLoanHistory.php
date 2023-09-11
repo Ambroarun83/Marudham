@@ -157,7 +157,7 @@ function moneyFormatIndia($num) {
                         $action .= "<a href='' data-reqid='$ii_req_id' data-cusid='$cus_id' data-toggle='modal' data-target='.DueChart' class='due-chart' >Due Chart</a>";
                         $action .= "<a href='' data-reqid='$ii_req_id' data-cusid='$cus_id' data-toggle='modal' data-target='.PenaltyChart' class='penalty-chart' >Penalty Chart</a>";
                         $action .= "<a href='' data-reqid='$ii_req_id' data-cusid='$cus_id' data-toggle='modal' data-target='.collectionChargeChart' class='collcharge-chart' >Fine Chart</a>";
-                        $action .= "<a href='' data-reqid='$ii_req_id' data-cusid='$cus_id' data-toggle='modal' data-target='.commitmentchart' class='commitment-chart' >Commitment Chart</a>";
+                        $action .= "<a href='' data-reqid='$ii_req_id' data-cusid='$cus_id' data-toggle='modal' data-target='#commitmentChart' class='commitment-chart' >Commitment Chart</a>";
                         if($row['cus_status'] > 20) { //if request goes to NOC then noc summary can be fetched
                         $action .= "<a href='' data-reqid='$ii_req_id' data-cusid='$cus_id' data-toggle='modal' data-target='.loansummarychart' class='loansummary-chart' >Loan Summary</a>";
                     }

@@ -765,7 +765,7 @@ if($idupd>0)
                         <div class="form-group">
                             <label for="coll_date "> Date  </label> <span class="required">&nbsp;*</span>
                             <input type="hidden" class="form-control" id="cc_req_id" name="cc_req_id" >
-                            <input type="date" class="form-control" id="collectionCharge_date" name="collectionCharge_date" >
+                            <input type="text" class="form-control" id="collectionCharge_date" name="collectionCharge_date" readonly placeholder="<?php echo date('d-m-Y') ?>" value="<?php echo date('d-m-Y') ?>" >
                             <span class="text-danger" id="collectionChargeDateCheck"> Select Date </span>
                         </div>
                     </div>

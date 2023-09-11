@@ -84,7 +84,7 @@ $(document).ready(function(){
         let req_id = $('#cc_req_id').val();
         let customer_id = $('#cusidupd').val();
         let colluserid = $('#colluserid').val();
-        let collectionCharge_date = $("#collectionCharge_date").val();
+        let collectionCharge_date = $("#collectionCharge_date").attr('value');//coz value inside is not working properly
         let collectionCharge_purpose = $("#collectionCharge_purpose").val();
         let collectionCharge_Amnt = $("#collectionCharge_Amnt").val();
         if (collectionCharge_date != "" && collectionCharge_purpose != "" && collectionCharge_Amnt != "" && req_id != "") {
