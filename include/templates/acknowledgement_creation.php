@@ -1991,6 +1991,36 @@ input:checked + .slider:before {
 							</div>
 						</div>
 					</div>
+					<!-- Possibility info -->
+					<div class="card ">
+						<div class="card-header">Possibilty Info</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
+									<div class="form-group">
+										<label for="" >Possibility<span class="required">&nbsp;*</span></label>
+										<input type="text" class="form-control" id="" name="" readonly value='<?php if(isset($poss_type)) {echo $poss_type=='1'?'Due Amount':'Due Period';}?>' >
+									</div>
+								</div>
+								<?php if(isset($poss_type) and $poss_type== '1') { ?>
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+										<div class="form-group">
+											<label for="">Due Amount</label><span class="required">&nbsp;*</span>
+											<input type="text" class="form-control" id="" name="" value='<?php if(isset($due_amt)) {echo $due_amt;} ?>' tabindex='' readonly>
+										</div>
+									</div>
+								<?php } else { ?>
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
+									<div class="form-group">
+										<label for="">Due Period</label><span class="required">&nbsp;*</span>
+										<input type="text" class="form-control" id="" name="" value='<?php if(isset($due_period)) {echo $due_period;} ?>' tabindex=''>
+									</div>
+								</div>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+					<!-- Possibility info -->
 					<!-- Personal info START -->
 					<!-- <div class="card">
 						<div class="card-header">Personal Info <span style="font-weight:bold" class="" ></span></div>

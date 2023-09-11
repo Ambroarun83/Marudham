@@ -2514,7 +2514,7 @@ $('#due_start_from').change(function(){
 
     if(due_method == 'Monthly' || due_method == '1'){ // if due method is monthly or 1(for scheme) then calculate maturity by month
         
-        var maturityDate = moment(due_start_from, 'YYYY-MM-DD').add(due_period, 'months').format('YYYY-MM-DD');
+        var maturityDate = moment(due_start_from, 'YYYY-MM-DD').add(due_period, 'months').subtract(1, 'month').format('YYYY-MM-DD');
         $('#maturity_month').val(maturityDate);
     
     }else if(due_method == '2'){//if Due method is weekly then calculate maturity by week
@@ -2531,13 +2531,13 @@ $('#due_start_from').change(function(){
             momentStartDate.add(1, 'week'); //If the resulting maturity date is before the start date, add another week.
         }
         
-        var maturityDate = momentStartDate.add(1, 'week').format('YYYY-MM-DD'); //Get the final maturity date as a formatted string.
+        var maturityDate = momentStartDate.format('YYYY-MM-DD'); //Get the final maturity date as a formatted string.
         
         $('#maturity_month').val(maturityDate);
     
     }else if(due_method == '3'){
         var momentStartDate = moment(due_start_from, 'YYYY-MM-DD').startOf('day');
-        var daysToAdd = Math.floor(due_period);
+        var daysToAdd = Math.floor(due_period-1);
         momentStartDate.add(daysToAdd, 'days');
         var maturityDate = momentStartDate.format('YYYY-MM-DD');
         $('#maturity_month').val(maturityDate);

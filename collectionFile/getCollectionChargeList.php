@@ -82,15 +82,15 @@ function moneyFormatIndia($num)
         ?>
     </tbody>
     <tr>
-    <td></td>
-    <td></td>
-    <td><b><?php echo $charges; ?></b></td>
-    <td></td>
-    <td></td>
-    <td><b><?php echo $paid_amt; ?></b></td>
-    <td></td>
-    <td><b><?php echo $charges_waiver; ?></b></td>
-</tr>
+        <td></td>
+        <td></td>
+        <td><b><?php echo $charges; ?></b></td>
+        <td></td>
+        <td></td>
+        <td><b><?php echo $paid_amt; ?></b></td>
+        <td><b><?php echo $bal_amnt; ?></b></td>
+        <td><b><?php echo $charges_waiver; ?></b></td>
+    </tr>
 </table>
 
 <script type="text/javascript">
