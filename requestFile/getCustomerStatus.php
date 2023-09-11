@@ -104,6 +104,15 @@ if($result->num_rows>0){
                     cell.innerHTML = i + 1;
                 });
             },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
     </script>
 <?php

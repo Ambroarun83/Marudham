@@ -87,14 +87,16 @@ function moneyFormatIndia($num)
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
-            // "createdRow": function(row, data, dataIndex) {
-            //     $(row).find('td:first').html(dataIndex + 1);
-            // },
-            // "drawCallback": function(settings) {
-            //     this.api().column(0).nodes().each(function(cell, i) {
-            //         cell.innerHTML = i + 1;
-            //     });
-            // },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                    title: "Loan History"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
     });
 </script>

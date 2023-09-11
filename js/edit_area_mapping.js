@@ -145,7 +145,7 @@ function dT1(){
         buttons: [
             {
                 extend: 'excel',
-                title: "Loan Scheme List"
+                title: "Line List"
             },
             {
                 extend:'colvis',
@@ -186,15 +186,9 @@ function dT2(){
         
         dom: 'lBfrtip',
         buttons: [
-            // {
-            //     extend: 'csv',
-            //     exportOptions: {
-            //         columns: [ 0, 1, 2 ,3,4,5,6,7,8,9,10,11]
-            //     }
-            // },
             {
                 extend: 'excel',
-                title: "Loan Scheme List"
+                title: "Group List"
             },
             {
                 extend:'colvis',

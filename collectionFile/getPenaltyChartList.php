@@ -105,6 +105,15 @@ function moneyFormatIndia($num)
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
             // "createdRow": function(row, data, dataIndex) {
             //     $(row).find('td:first').html(dataIndex + 1);
             // },

@@ -79,6 +79,15 @@ if(isset($_POST['pages'])){
                     cell.innerHTML = i + 1;
                 });
             },
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
     });
 </script>

@@ -128,7 +128,16 @@ $sno = 1;
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
-        ]
+        ],
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
     })
     $('.dropdown').click(function(event) {
         event.preventDefault();

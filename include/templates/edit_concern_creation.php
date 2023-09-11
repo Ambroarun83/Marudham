@@ -162,7 +162,7 @@ if($rowuser > 0){
 			buttons: [
 			{
 				extend: 'excel',
-				title: "Loan Scheme List"
+				title: "Collection List"
 			},
 			{
 				extend: 'colvis',

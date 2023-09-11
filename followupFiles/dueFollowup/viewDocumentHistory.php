@@ -40,10 +40,10 @@ function moneyFormatIndia($num) {
     return $thecash;
 }
 ?>
-<table class="table custom-table" id='loanListTable'>
+<table class="table custom-table" id='DocHistTable'>
     <thead>
         <tr>
-            <th>Loan ID</th>
+            <th width='50'>Loan ID</th>
             <th>Loan Category</th>
             <th>Sub Category</th>
             <th>Agent</th>
@@ -400,4 +400,22 @@ function getDocumentStatus($con,$req_id,$cus_id){
     function remove4columns(tablename){
         $('input[type=checkbox]').attr('disabled',true)
     }
+
+    $('#DocHistTable').dataTable({
+        'processing': true,
+        'iDisplayLength': 5,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
+    })
 </script>

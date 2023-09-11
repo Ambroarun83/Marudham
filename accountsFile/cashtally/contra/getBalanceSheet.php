@@ -1656,6 +1656,15 @@ if($opening_bal != ''){
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
             ],
+            dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
             //To change total amount dynamically
             // "footerCallback": function () {
             //     var api = this.api();

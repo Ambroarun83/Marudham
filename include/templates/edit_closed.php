@@ -126,7 +126,7 @@
 			buttons: [
 			{
 				extend: 'excel',
-				title: "Loan Scheme List"
+				title: "Closed Loan List"
 			},
 			{
 				extend: 'colvis',

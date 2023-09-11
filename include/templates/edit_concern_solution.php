@@ -137,9 +137,9 @@ if($rowuser > 0){
 
 	function dT() {
 		// Collection datatable
-		var collection_table = $('#collection_table').DataTable();
-		collection_table.destroy();
-		var collection_table = $('#collection_table').DataTable({
+		var concern_solution_table = $('#concern_solution_table').DataTable();
+		concern_solution_table.destroy();
+		var concern_solution_table = $('#concern_solution_table').DataTable({
 			"order": [[ 0, "desc" ]],
 			"ordering": false,
 			'paging':false,
@@ -157,7 +157,7 @@ if($rowuser > 0){
 			buttons: [
 			{
 				extend: 'excel',
-				title: "Loan Scheme List"
+				title: "Concern List"
 			},
 			{
 				extend: 'colvis',
