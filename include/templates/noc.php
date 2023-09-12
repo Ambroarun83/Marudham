@@ -299,7 +299,7 @@ if(sizeof($documentationInfo)>0){
 					<div class="card-header">NOC Summary</div>
 					<div class="card-body">
 						<!-- Signed Document start -->
-						<div class="row">
+						<div class="row signedRow">
 							<div class="col-md-12 ">
 								<div class="row">
 									<h5 style='margin-left:18px;margin-bottom:30px;'>Signed Document List</h5>
@@ -315,12 +315,12 @@ if(sizeof($documentationInfo)>0){
 						<!-- Signed Document End -->
 						<hr>
 						<!-- Cheque List Start -->
-						<div class="row">
+						<div class="row chequeRow">
 							<div class="col-md-12 ">
 								<div class="row">
 									<h5 style='margin-left:18px;margin-bottom:30px;'>Cheque List</h5>
 									<span class="text-danger cheque_checklistCheck" style="margin-left:18px;display: none;">Please Select atleast one</span>
-									<div class="cTol-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group" id='chequeDiv'>
 											
 										</div>
@@ -331,7 +331,7 @@ if(sizeof($documentationInfo)>0){
 							<!-- Cheque List End -->
 							<hr>
 							<!-- Mortgage List Start -->
-						<div class="row">
+						<div class="row mortRow">
 							<div class="col-md-12 ">
 								<div class="row">
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -471,7 +471,7 @@ if(sizeof($documentationInfo)>0){
 							<!-- Mortgage List End -->
 							<hr>
 							<!-- Endorsement List Start -->
-						<div class="row">
+						<div class="row endRow">
 							<div class="col-md-12 ">
 								<div class="row">
 
@@ -606,7 +606,7 @@ if(sizeof($documentationInfo)>0){
 							<!-- Endorsement List End -->
 							<hr>
 							<!-- Gold List Start -->
-						<div class="row">
+						<div class="row goldRow">
 							<div class="col-md-12 ">
 								<div class="row">
 									<h5 style='margin-left:18px;margin-bottom:30px;'>Gold List</h5>
@@ -622,7 +622,7 @@ if(sizeof($documentationInfo)>0){
 							<!-- Gold List End -->
 							<hr>
 							<!-- Document Info Start -->
-						<div class="row">
+						<div class="row docRow">
 							<div class="col-md-12 ">
 								<div class="row">
 									<h5 style='margin-left:18px;margin-bottom:30px;'>Document List</h5>

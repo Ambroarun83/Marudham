@@ -107,13 +107,18 @@ foreach ($result as $row) {
     
     $cus_id = $row['cp_cus_id'];
     $id          = $row['req_id'];
+
+    $docToIssue = getNocCompletedStatus($con,$id,$cus_id);
     
     $action ="<div class='dropdown'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
 
         $action .="<a href='noc&upd=$id&cusidupd=$cus_id' title='Edit details' >NOC</a>";
-        $action .="<a href='' title='Remove details' class='remove-noc' data-reqid='$id' data-cusid='$cus_id' >Remove</a>";
+        if($docToIssue == 0){
+            //if this variable contains value 0 then all document are given to customer as noc
+            $action .="<a href='' title='Remove details' class='remove-noc' data-reqid='$id' data-cusid='$cus_id' >Remove</a>";
+        }
     
     $action .= "</div></div>";
 
@@ -140,5 +145,35 @@ $output = array(
 );
 
 echo json_encode($output);
+
+?>
+
+<?php
+
+function getNocCompletedStatus($con,$id,$cus_id){
+    //this function is to find out whether all of the req id's documents are given to customer or not
+    // also it will return values if the document is temporarly taken out for some purpose. they should mark as returned in respective screen and to give noc here
+    $response = 0;
+    
+    $sql = $con->query("SELECT * From signed_doc where req_id = $id and noc_given !='1' ");
+    $response = $response + $sql->num_rows;
+    
+    $sql = $con->query("SELECT * From cheque_no_list where req_id = $id and noc_given !='1' ");
+    $response = $response + $sql->num_rows;
+    
+    $sql = $con->query("SELECT * From acknowlegement_documentation where req_id = $id and mortgage_process = 0 and ( mortgage_process_noc != '1' || (mortgage_document_upd IS NOT NULL and mortgage_document_noc != '1' ) ) ");
+    $response = $response + $sql->num_rows;
+    
+    $sql = $con->query("SELECT * From acknowlegement_documentation where req_id = $id and endorsement_process = 0 and ( (endorsement_process_noc != '1') || (en_RC = 0 && en_RC_noc != '1') || (en_Key = 0 && en_Key_noc != '1')) ");
+    $response = $response + $sql->num_rows;
+    
+    $sql = $con->query("SELECT * From gold_info where req_id = $id and noc_given !='1' ");
+    $response = $response + $sql->num_rows;
+    
+    $sql = $con->query("SELECT * From document_info where req_id = $id and doc_info_upload_noc !='1' ");
+    $response = $response + $sql->num_rows;
+
+    return $response;
+}
 
 ?>

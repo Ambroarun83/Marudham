@@ -1196,6 +1196,7 @@ function resetbankinfoList() {
 $(document).on("click", "#kycInfoBtn", function () {
 
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let proofof = $("#proofof").val();
     let proof_type = $("#proof_type").val();
     let proof_number = $("#proof_number").val();
@@ -1213,6 +1214,7 @@ $(document).on("click", "#kycInfoBtn", function () {
     formdata.append('kycID', kycID)
     formdata.append('kyc_upload', kyc_upload)
     formdata.append('reqId', req_id)
+    formdata.append('cus_id', cus_id)
 
     if (proofof != "" && proof_type != "" && proof_number != "" && file != undefined && req_id != "") {
         $.ajax({
@@ -1283,11 +1285,12 @@ $(document).on("click", "#kycInfoBtn", function () {
 });
 
 function resetkycInfo() {
+    let req_id = $('#req_id').val();
     let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_kyc_reset.php',
         type: 'POST',
-        data: { "cus_id": cus_id },
+        data: { cus_id, req_id },
         cache: false,
         success: function (html) {
             $("#kycTable").empty();
@@ -1365,11 +1368,12 @@ $("body").on("click", "#verification_kyc_delete", function () {
 
 function resetkycinfoList() {
     let cus_id = $('#cus_id').val();
+    let req_id = $('#req_id').val();
 
     $.ajax({
         url: 'verificationFile/verification_kyc_list.php',
         type: 'POST',
-        data: { "cus_id": cus_id },
+        data: { req_id, cus_id },
         cache: false,
         success: function (html) {
             $("#kycListTable").empty();

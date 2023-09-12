@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2023 at 02:49 PM
+-- Generation Time: Sep 12, 2023 at 02:59 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -235,7 +235,7 @@ CREATE TABLE `acknowlegement_documentation` (
 
 INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `mortgage_process_noc`, `mort_noc_date`, `mort_noc_person`, `mort_noc_name`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_noc`, `mort_doc_noc_date`, `mort_doc_noc_person`, `mort_doc_noc_name`, `mortgage_document_used`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `endorsement_process_noc`, `endor_noc_date`, `endor_noc_person`, `endor_noc_name`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `en_RC_noc`, `en_rc_noc_date`, `en_rc_noc_person`, `en_rc_noc_name`, `en_RC_used`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`, `en_Key_noc`, `en_key_noc_date`, `en_key_noc_person`, `en_key_noc_name`, `en_Key_used`, `gold_info`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `document_name`, `document_details`, `document_type`, `doc_info_upload`, `doc_info_upload_noc`, `doc_info_upload_used`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `submitted`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, '2', '100010001000', 'Ganesan', '1', 'DOC-101', '0', '1', '2023-07-17', '1', 'Ganesan', '0', 'Ganesan', '', 'NIL', 'House', '20*10', 'Chennai', '45000', 'Aksha', 'Emp', '123465', 'Chennai', '40000', '', '0', NULL, NULL, NULL, '0', '', 'NO', '0', '0', NULL, NULL, NULL, '1', 'Aravindh', NULL, 'Brother', '0', '0', 'TVS', 'RTR', 'TN47AB1007', 'Aravindh', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, '', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '5', '5', NULL, '2023-07-06 10:14:58', '2023-07-06 10:14:58'),
-(2, '6', '200020002000', 'Aravind', '3', 'DOC-102', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '0', 'Aravind', '', 'NIL', '0', '0', 'TVS', '100', 'TN47AB1005', 'Endore', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-07-10 13:17:40', '2023-07-10 13:17:40'),
+(2, '6', '200020002000', 'Aravind', '3', 'DOC-102', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '1', '2023-09-12', '1', 'Aravind', '0', 'Aravind', '', 'NIL', '0', '0', 'TVS', '100', 'TN47AB1005', 'Endore', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '1', '2023-09-12', '1', 'Aravind', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-07-10 13:17:40', '2023-07-10 13:17:40'),
 (4, '5', '100010001000', 'Ganesan', '4', 'DOC-103', '0', '0', NULL, NULL, NULL, '0', 'Ganesan', '', 'NIL', 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', 'asdf', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '1', 'Aravindh', '', 'Brother', '0', '0', 'TVS', 'RTR', 'TN47AB1006', 'Aravindh', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '0', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-01-13 10:21:06', '2023-07-24 18:56:04'),
 (5, '7', '300030003000', 'Rakesh', '2', 'DOC-104', '0', '0', NULL, NULL, NULL, '0', 'Rakesh', '', 'NIL', 'House', '10*10', 'Vilupuram', '67800', 'Jeevan Shuraksha', 'Manager', '123456', 'Vilupuram', '67800', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '5', '5', NULL, '2023-07-13 13:31:36', '2023-07-13 13:31:36'),
 (6, '8', '200020002000', 'Aravind', '5', 'DOC-105', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-01-01 16:17:35', '2023-01-01 16:17:35'),
@@ -244,7 +244,7 @@ INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `custo
 (9, '9', '100010001000', 'Ganesan', '6', 'DOC-108', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '5', '2', NULL, '2023-07-27 13:18:50', '2023-07-27 13:18:50'),
 (10, '12', '400040004000', 'Bharathi', '9', 'DOC-109', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-08-02 15:06:24', '2023-08-02 15:06:24'),
 (11, '10', '300030003000', 'Rakesh', '10', 'DOC-110', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-08-07 11:07:01', '2023-08-07 11:07:01'),
-(12, '16', '060120230408', 'Gnanasekar', '11', 'DOC-111', '0', '0', NULL, NULL, NULL, '1', 'Senthil raja', '', 'Father', 'Land', '1107*1010', 'Chetpet', '145000', 'Land', 'Land', '123', 'Karur', '200000', '1', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-09-07 15:31:15', '2023-09-07 15:31:15');
+(12, '16', '060120230408', 'Gnanasekar', '11', 'DOC-111', '0', '0', NULL, NULL, NULL, '1', 'Senthil raja', '', 'Father', 'Land', '1107*1010', 'Chetpet', '145000', 'Land', 'Land', '123', 'Karur', '200000', '0', '0', NULL, NULL, NULL, '0', 'Location.png', 'NO', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2023-09-07 15:31:15', '2023-09-07 15:31:15');
 
 -- --------------------------------------------------------
 
@@ -3121,7 +3121,8 @@ CREATE TABLE `noc` (
 --
 
 INSERT INTO `noc` (`noc_id`, `req_id`, `cus_id`, `sign_checklist`, `cheque_checklist`, `gold_checklist`, `mort_checklist`, `endorse_checklist`, `doc_checklist`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '2', '100010001000', '4', '', '', 'Mortgage Process noc', '', '2', '2023-07-17', '1', 'Ganesan', '21', '2', NULL, '2023-07-17 13:19:34', '2023-07-17 13:19:34');
+(1, '2', '100010001000', '4', '', '', 'Mortgage Process noc', '', '2', '2023-07-17', '1', 'Ganesan', '21', '2', NULL, '2023-07-17 13:19:34', '2023-07-17 13:19:34'),
+(2, '6', '200020002000', '', '', '', '', 'Endorsement Process noc,Key noc', '', '2023-09-12', '1', 'Aravind', '21', '2', NULL, '2023-09-12 14:33:19', '2023-09-12 14:33:19');
 
 -- --------------------------------------------------------
 
@@ -3888,7 +3889,8 @@ INSERT INTO `verification_kyc_info` (`id`, `cus_id`, `req_id`, `proofOf`, `fam_m
 (18, '500050005000', 11, '3', '', '1', '123', ''),
 (19, '500050005000', 11, '0', '', '2', '123', ''),
 (20, '400040004000', 12, '0', '', '1', '123', ''),
-(21, '060120230408', 16, '0', '', '2', '123456', '');
+(21, '060120230408', 16, '0', '', '2', '123456', ''),
+(25, '010720232023', 1, '0', '', '2', '232', '7726900d60273ca6bd9ef225e8eb1764.png');
 
 -- --------------------------------------------------------
 
@@ -5147,7 +5149,7 @@ ALTER TABLE `new_promotion`
 -- AUTO_INCREMENT for table `noc`
 --
 ALTER TABLE `noc`
-  MODIFY `noc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=2;
+  MODIFY `noc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `request_category_info`
@@ -5231,7 +5233,7 @@ ALTER TABLE `verification_group_info`
 -- AUTO_INCREMENT for table `verification_kyc_info`
 --
 ALTER TABLE `verification_kyc_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `verification_loan_calculation`
