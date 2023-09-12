@@ -246,6 +246,13 @@ function OnLoadFunctions(req_id,cus_id){
                     success: function(response){
                         $('#signDocDiv').empty()
                         $('#signDocDiv').html(response);
+                        if($('#signDocTable tbody tr').length == 0){ 
+                            $('.signedRow').hide();
+                            $('.signedRow').next().hide();
+                        }else{
+                            $('.signedRow').show();
+                            $('.signedRow').next().show();
+                        }
                     }
                 }).then(function(){
                     var sign_check =[];
@@ -299,7 +306,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     success: function(response){
                                         let element = `<select id='sign_noc_name' name='sign_noc_name' class="form-control sign_noc_name" required><option value=''>Select Type</option>`;
                                         $.each(response,function(index,value){
-                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+` - `+value['relationship']+`</option>`;
                                         })
                                         element += `</select>`;
                                         noc_name.html(element);
@@ -321,6 +328,13 @@ function OnLoadFunctions(req_id,cus_id){
                     success: function(response){
                         $('#chequeDiv').empty()
                         $('#chequeDiv').html(response);
+                        if($('#chequeTable tbody tr').length == 0){
+                            $('.chequeRow').hide();
+                            $('.chequeRow').next().hide();
+                        }else{
+                            $('.chequeRow').show();
+                            $('.chequeRow').next().show();
+                        }
                     }
                 }).then(function(){
                     var cheque_check =[];
@@ -371,7 +385,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     success: function(response){
                                         let element = `<select id='cheque_noc_name' name='cheque_noc_name' class="form-control cheque_noc_name"><option value=''>Select Type</option>`;
                                         $.each(response,function(index,value){
-                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+` - `+value['relationship']+`</option>`;
                                         })
                                         element += `</select>`;
                                         noc_name.html(element);
@@ -393,6 +407,13 @@ function OnLoadFunctions(req_id,cus_id){
                     success: function(response){
                         $('#mortgageDiv').empty()
                         $('#mortgageDiv').html(response);
+                        if($('#mortgageTable tbody tr').length == 0){ 
+                            $('.mortRow').hide();
+                            $('.mortRow').next().hide();
+                        }else{
+                            $('.mortRow').show();
+                            $('.mortRow').next().show();
+                        }
                     }
                 }).then(function(){
                     var mort_check =[];
@@ -447,7 +468,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     success: function(response){
                                         let element = `<select id='mort_noc_name' name='mort_noc_name' class="form-control mort_noc_name"><option value=''>Select Type</option>`;
                                         $.each(response,function(index,value){
-                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+` - `+value['relationship']+`</option>`;
                                         })
                                         element += `</select>`;
                                         noc_name.html(element);
@@ -469,6 +490,13 @@ function OnLoadFunctions(req_id,cus_id){
                     success: function(response){
                         $('#endorsementDiv').empty()
                         $('#endorsementDiv').html(response);
+                        if($('#endorsementTable tbody tr').length == 0){ 
+                            $('.endRow').hide();
+                            $('.endRow').next().hide();
+                        }else{
+                            $('.endRow').show();
+                            $('.endRow').next().show();
+                        }
                     }
                 }).then(function(){
                     var endorse_check =[];
@@ -525,7 +553,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     success: function(response){
                                         let element = `<select id='endorse_noc_name' name='endorse_noc_name' class="form-control endorse_noc_name"><option value=''>Select Type</option>`;
                                         $.each(response,function(index,value){
-                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+` - `+value['relationship']+`</option>`;
                                         })
                                         element += `</select>`;
                                         noc_name.html(element);
@@ -546,6 +574,13 @@ function OnLoadFunctions(req_id,cus_id){
                     success: function(response){
                         $('#goldDiv').empty()
                         $('#goldDiv').html(response);
+                        if($('#goldTable tbody tr').length == 1){
+                            $('.goldRow').hide();
+                            $('.goldRow').next().hide();
+                        }else{
+                            $('.goldRow').show();
+                            $('.goldRow').next().show();
+                        }
                     }
                 }).then(function(){
                     var gold_check =[];
@@ -594,7 +629,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     success: function(response){
                                         let element = `<select id='gold_noc_name' name='gold_noc_name' class="form-control gold_noc_name"><option value=''>Select Type</option>`;
                                         $.each(response,function(index,value){
-                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+` - `+value['relationship']+`</option>`;
                                         })
                                         element += `</select>`;
                                         noc_name.html(element);
@@ -615,6 +650,13 @@ function OnLoadFunctions(req_id,cus_id){
                     success: function(response){
                         $('#documentDiv').empty()
                         $('#documentDiv').html(response);
+                        if($('#documentTable tbody tr').length == 0){
+                            $('.docRow').hide();
+                            $('.docRow').next().hide();
+                        }else{
+                            $('.docRow').show();
+                            $('.docRow').next().show();
+                        }
                     }
                 }).then(function(){
                     var doc_check =[];
@@ -663,7 +705,7 @@ function OnLoadFunctions(req_id,cus_id){
                                     success: function(response){
                                         let element = `<select id='doc_noc_name' name='doc_noc_name' class="form-control doc_noc_name"><option value=''>Select Type</option>`;
                                         $.each(response,function(index,value){
-                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+`</option>`;
+                                            element += `<option value='`+value['fam_id']+`'>`+value['fam_name']+` - `+value['relationship']+`</option>`;
                                         })
                                         element += `</select>`;
                                         noc_name.html(element);

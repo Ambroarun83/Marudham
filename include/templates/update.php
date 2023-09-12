@@ -766,6 +766,38 @@ input:checked + .slider:before {
 					</div>
 					<!-- Bank info END -->
 
+					<!-- KYC info START -->
+					<div class="card">
+						<div class="card-header"> KYC info<span class="required">&nbsp;*</span><span style="font-weight:bold" class=""></span>
+							<button type="button" class="btn btn-primary" id="kyc_add" name="kyc_add" data-toggle="modal" data-target=".addkyc" style="padding: 5px 35px; float: right; "><span class="icon-add"></span></button>
+						</div>
+						<span class="text-danger" style='display:none' id='kyc_infoCheck'>Please Fill KYC Info </span>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="form-group" id="kycListTable">
+										<table class="table custom-table modalTable">
+											<thead>
+												<tr>
+													<th width="50"> S.No </th>
+													<th> Proof of </th>
+													<th> Proof type </th>
+													<th> Proof Number </th>
+													<th> Upload </th>
+												</tr>
+											</thead>
+											<tbody>
+
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+					<!-- KYC info END -->
+
 
 					<!-- ///////////////////////////////////////////////// Customer Summary START ///////////////////////////////////////////////////////////// -->
 					<div class="card">
@@ -2429,6 +2461,135 @@ input:checked + .slider:before {
 </form>
 </div>
 <!-- END  Add Document Info Modal -->
+
+<!-- Add KYC info Modal  START -->
+<div class="modal fade addkyc" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="myLargeModalLabel">Add KYC Info</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetkycinfoList()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<!-- alert messages -->
+
+				<div id="kycInsertOk" class="successalert"> KYC Info Added Succesfully
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="kycUpdateok" class="successalert"> KYC Info Updated Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="kycNotOk" class="unsuccessalert"> Something Went Wrong <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="kycDeleteOk" class="unsuccessalert"> KYC Info Deleted!
+					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<div id="kycDeleteNotOk" class="unsuccessalert"> Kyc Info not Deleted! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				</div>
+
+				<br />
+
+				<div class="row">
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="proofof"> Proof of </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="proofof" name="proofof">
+								<option value=""> Select Proof Of </option>
+								<option value="0"> Customer </option>
+								<option value="1"> Guarantor </option>
+								<option value="2"> Family Members </option>
+								<option value="3"> Group Members </option>
+							</select>
+							<span class="text-danger" id="proofCheck" style="display:none"> Select Proof </span>
+						</div>
+					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 fam_mem_div" style="display:none">
+						<div class="form-group">
+							<label for="fam_mem"> Family Member </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control" id="fam_mem" name="fam_mem">
+								<option value=""> Select Family Member </option>
+							</select>
+							<span class="text-danger" id="fam_memCheck" style="display:none"> Select Family Member </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="proof_type"> Proof Type </label> <span class="required">&nbsp;*</span>
+							<select type="text" class="form-control proofdis" id="proof_type" name="proof_type">
+								<option value=""> Select Proof Type </option>
+								<option value="1"> Aadhar </option>
+								<option value="2"> Smart Card </option>
+								<option value="3"> Voter ID </option>
+								<option value="4"> Driving License </option>
+								<option value="5"> PAN Card </option>
+								<option value="6"> Passport </option>
+								<option value="7"> Occupation ID </option>
+								<option value="8"> Salary Slip </option>
+								<option value="9"> Bank statement </option>
+								<option value="10"> EB Bill </option>
+								<option value="11"> Business Proof </option>
+							</select>
+							<span class="text-danger" id="proofTypeCheck" style="display:none"> Select Proof Type </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="proof_number"> Proof Number </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Number">
+							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Number </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="upload"> Upload </label>
+							<input type="file" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg">
+							<span class="text-danger" id="proofUploadCheck" style="display:none"> Upload </span>
+						</div>
+					</div>
+
+					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+						<input type="hidden" name="kyc_upload" id="kyc_upload">
+						<input type="hidden" name="kycID" id="kycID">
+						<button type="button" name="kycInfoBtn" id="kycInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+					</div>
+
+				</div>
+				</br>
+
+				<div id="kycTable">
+					<table class="table custom-table modalTable">
+						<thead>
+							<tr>
+								<th width="50"> S.No </th>
+								<th> Proof of </th>
+								<th> Proof type </th>
+								<th> Proof Number </th>
+								<th> ACTION </th>
+							</tr>
+						</thead>
+						<tbody>
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetkycinfoList()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- END  Add KYC Info Modal -->
+
 <!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade noc-summary-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" >
