@@ -6376,6 +6376,49 @@ function updateUser($mysqli,$id,$user_id){
 		if(isset($_POST['spouse_name'])){
 			$spouse_name = $_POST['spouse_name'];
 		}
+
+		if(!empty($_FILES['pic']['name']))		
+		{
+			$oldPic = $_POST['cus_image'];
+			unlink("uploads/request/customer/".$oldPic);//delete old pic
+			unlink("uploads/verification/customer/".$oldPic);//delete old pic
+
+			$cus_pic = $_FILES['pic']['name'];
+			$pic_temp = $_FILES['pic']['tmp_name'];
+			
+			$picfolder="uploads/request/customer/".$cus_pic ;
+			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
+			$cus_pic = uniqid() . '.' . $fileExtension;
+			
+			$picfolder="uploads/request/customer/".$cus_pic ;
+			move_uploaded_file($pic_temp, $picfolder);
+		}else{
+			$cus_pic = $_POST['cus_image'];
+		}
+
+		if(isset($_POST['guarentor_name'])){
+			$guarentor_name = $_POST['guarentor_name'];
+		}
+		if(isset($_POST['guarentor_relationship'])){
+			$guarentor_relation = $_POST['guarentor_relationship'];
+		}
+		if(!empty($_FILES['guarentorpic']['name']))		
+		{
+			$oldPic = $_POST['guarentor_image'];
+			unlink("uploads/verification/guarentor/".$oldPic);//delete old pic
+
+			$guarentor_pic = $_FILES['guarentorpic']['name'];
+			$pic_temp = $_FILES['guarentorpic']['tmp_name'];
+			
+			$picfolder="uploads/verification/guarentor/".$guarentor_pic ;
+			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
+			$guarentor_pic = uniqid() . '.' . $fileExtension;
+			
+			$picfolder="uploads/verification/guarentor/".$guarentor_pic ;
+			move_uploaded_file($pic_temp, $picfolder);
+		}else{
+			$guarentor_pic = $_POST['guarentor_image'];
+		}
 		if(isset($_POST['occupation_type'])){
 			$occupation_type = $_POST['occupation_type'];
 		}
@@ -6474,7 +6517,7 @@ function updateUser($mysqli,$id,$user_id){
 		}
 
 
-		$cusUpd = "UPDATE `customer_profile` SET `cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `cus_id`='".strip_tags($cus_id)."' ";
+		$cusUpd = "UPDATE `customer_profile` SET `cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`cus_pic`='".strip_tags($cus_pic)."',`guarentor_name`='".strip_tags($guarentor_name)."',`guarentor_relation`='".strip_tags($guarentor_relation)."',`guarentor_photo`='".strip_tags($guarentor_pic)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `cus_id`='".strip_tags($cus_id)."' ";
 		$updateCus = $mysqli->query($cusUpd) or die("Error ".$mysqli->error);
 
 		$insertQry = "UPDATE in_verification set `cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."' where `cus_id`='".strip_tags($cus_id)."' ";
@@ -6485,10 +6528,24 @@ function updateUser($mysqli,$id,$user_id){
 		$insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
 
 
-		$updateACkCus = "UPDATE `acknowlegement_customer_profile` SET `cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `cus_id`='".strip_tags($cus_id)."' ";
+		$updateACkCus = "UPDATE `acknowlegement_customer_profile` SET `cus_id`='".strip_tags($cus_id)."',`cus_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`mobile1`='".strip_tags($mobile1)."',`mobile2`='".strip_tags($mobile2)."',`cus_pic`='".strip_tags($cus_pic)."',`guarentor_name`='".strip_tags($guarentor_name)."',`guarentor_relation`='".strip_tags($guarentor_relation)."',`guarentor_photo`='".strip_tags($guarentor_pic)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."',`update_login_id`='".$userid."',`updated_date`= now() WHERE `cus_id`='".strip_tags($cus_id)."' ";
 		$insresult = $mysqli->query($updateACkCus) or die("Error ".$mysqli->error);
 
 	}
 
+	public function getGuarantorDetails($mysqli,$cus_id){
+
+		$qry = $mysqli->query("SELECT * FROM `customer_profile` WHERE cus_id='$cus_id' ORDER by id DESC ");
+		$detailrecords = array();
+		$i=0;
+		if($mysqli->affected_rows>0){
+			$row = $qry->fetch_assoc();
+			$detailrecords['guarentor_name'] = $row['guarentor_name'];
+			$detailrecords['guarentor_relation'] = $row['guarentor_relation'];
+			$detailrecords['guarentor_photo'] = $row['guarentor_photo'];
+		}
+
+		return $detailrecords;
+	}
 
 }//Class End

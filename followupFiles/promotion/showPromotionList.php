@@ -92,6 +92,7 @@ if($type == 'existing'){
         <th>Mobile</th>
         <th>Status</th>
         <th>Sub Status</th>
+        <?php if($type != 'existing'){ ?><th>Remarks</th> <?php } ?> <!--show remarks only for repromotion -->
         <th>List Date</th>
         <th>View</th>
         <th>Action</th>
@@ -102,7 +103,7 @@ if($type == 'existing'){
             $sql = $con->query("SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name from customer_profile cp LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
                 LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id)
                 LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
-                WHERE cp.cus_id = ".$val['cus_id']." ORDER BY cp.id DESC");
+                WHERE cp.cus_id = ".$val['cus_id']." ORDER BY cp.id DESC LIMIT 1");
             $row = $sql->fetch_assoc();
         ?>
             <tr>
@@ -134,6 +135,19 @@ if($type == 'existing'){
                 <?php }else{ ?>
                     <td><?php echo $status[$val['sub_status']]; ?></td>
                     <td><?php echo $sub_status[$val['sub_status']]; //fetched from request table above mentioned ?></td>
+                    <?php if($type != 'existing'){?>
+                        <td>
+                            <?php 
+                                $qry = $con->query("SELECT prompt_remark FROM request_creation WHERE cus_id = '".$row['cus_id']."' and prompt_remark != '' ORDER BY updated_date DESC limit 1");
+                                if($qry->num_rows > 0){
+                                    echo $qry->fetch_assoc()['prompt_remark'];
+                                }else{
+                                    echo '';
+                                }
+                            ?>
+                        </td>
+                    <?php } ?>
+
                     <td><?php echo date('d-m-Y',strtotime($last_updated_date)); ?></td>
                 <?php } ?>
                 <td>
@@ -244,6 +258,29 @@ if($type == 'existing'){
                 $(this).find('td:eq(14)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
             }else {
                 $(this).find('td:eq(14)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
+            }
+        }
+    });
+
+    $('#promotion_list tbody tr').not('th').each(function(){
+        let tddate = $(this).find('td:eq(15)').text(); // Get the text content of the 15th td element (Follow date)
+        let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
+        let values = new Date(datecorrection); // Create a Date object from the corrected date
+        values.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
+
+        let curDate = new Date(); // Get the current date
+        curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
+
+        let colors = {'past':'FireBrick','current':'DarkGreen','future':'CornflowerBlue'}; // Define colors for different date types
+
+        if(tddate != '' && values != 'Invalid Date'){ // Check if the extracted date and the created Date object are valid
+
+            if(values < curDate){ // Compare the extracted date with the current date
+                $(this).find('td:eq(15)').css({'background-color':colors.past, 'color':'white'}); // Apply styling for past dates
+            }else if(values > curDate){
+                $(this).find('td:eq(15)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
+            }else {
+                $(this).find('td:eq(15)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
             }
         }
     });

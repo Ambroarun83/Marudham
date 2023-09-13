@@ -155,24 +155,25 @@ function getNocCompletedStatus($con,$id,$cus_id){
     // also it will return values if the document is temporarly taken out for some purpose. they should mark as returned in respective screen and to give noc here
     $response = 0;
     
-    $sql = $con->query("SELECT * From signed_doc where req_id = $id and noc_given !='1' ");
+    $sql = $con->query("SELECT sd.* From signed_doc sd JOIN in_issue ii ON ii.req_id = sd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and sd.noc_given !='1' ");
     $response = $response + $sql->num_rows;
     
-    $sql = $con->query("SELECT * From cheque_no_list where req_id = $id and noc_given !='1' ");
+    $sql = $con->query("SELECT cnl.* From cheque_no_list cnl JOIN in_issue ii ON ii.req_id = cnl.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and cnl.noc_given !='1' ");
     $response = $response + $sql->num_rows;
     
-    $sql = $con->query("SELECT * From acknowlegement_documentation where req_id = $id and mortgage_process = 0 and ( mortgage_process_noc != '1' || (mortgage_document_upd IS NOT NULL and mortgage_document_noc != '1' ) ) ");
+    $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.mortgage_process = 0 and ( ackd.mortgage_process_noc != '1' || (ackd.mortgage_document_upd IS NOT NULL and ackd.mortgage_document_noc != '1' ) ) ");
     $response = $response + $sql->num_rows;
     
-    $sql = $con->query("SELECT * From acknowlegement_documentation where req_id = $id and endorsement_process = 0 and ( (endorsement_process_noc != '1') || (en_RC = 0 && en_RC_noc != '1') || (en_Key = 0 && en_Key_noc != '1')) ");
+    $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.endorsement_process = 0 and ( (ackd.endorsement_process_noc != '1') || (ackd.en_RC = 0 && ackd.en_RC_noc != '1') || (ackd.en_Key = 0 && ackd.en_Key_noc != '1')) ");
     $response = $response + $sql->num_rows;
     
-    $sql = $con->query("SELECT * From gold_info where req_id = $id and noc_given !='1' ");
+    $sql = $con->query("SELECT gi.* From gold_info gi JOIN in_issue ii ON ii.req_id = gi.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and gi.noc_given !='1' ");
     $response = $response + $sql->num_rows;
     
-    $sql = $con->query("SELECT * From document_info where req_id = $id and doc_info_upload_noc !='1' ");
+    $sql = $con->query("SELECT di.* From document_info di JOIN in_issue ii ON ii.req_id = di.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and di.doc_info_upload_noc !='1' ");
     $response = $response + $sql->num_rows;
-
+    
+    // echo $cus_id.' - '.$response.'***';
     return $response;
 }
 
