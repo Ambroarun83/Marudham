@@ -147,8 +147,8 @@ if (sizeof($getUser)>0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="conf_mobile">Mobile</label><span class="required">&nbsp;*</span>
-								<input type="text" name="conf_mobile" id="conf_mobile" class='form-control' tabindex="5" placeholder='Enter Mobile Number' onkeypress="if(this.value.length==10) return false;">
-								<span class="text-danger" id='conf_mobileCheck' style="display: none;">Please Enter Mobile Number </span>
+								<input type="text" name="conf_mobile" id="conf_mobile" class='form-control' tabindex="5" placeholder='Enter Mobile Number'  readonly>
+								<!-- <span class="text-danger" id='conf_mobileCheck' style="display: none;">Please Enter Mobile Number </span> -->
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="conf_upload">Upload</label>

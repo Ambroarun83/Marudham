@@ -234,9 +234,12 @@ function confirmationTableOnClick(){
         let req_id = $(this).data('reqid');
         let cus_id = $(this).data('cusid');
         let cus_name = $(this).data('cusname');
+        let mobile = $(this).closest('td').prev().prev().html();
+
         $('#conf_req_id').val(req_id);
         $('#conf_cus_id').val(cus_id);
         $('#conf_cus_name').val(cus_name);
+        $('#conf_mobile').val(mobile);
     })
 
     //remove confirmation

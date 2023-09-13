@@ -92,6 +92,13 @@ if (sizeof($getCustomerReg) > 0) {
 		// $request_id 					= $getCustomerReg['request_id'];
 	}
 }
+$getGuarantorDetails = $userObj->getGuarantorDetails($mysqli, $idupd);
+
+if (sizeof($getGuarantorDetails) > 0) {
+	$guarentor_name = $getGuarantorDetails['guarentor_name'];
+	$guarentor_relation = $getGuarantorDetails['guarentor_relation'];
+	$guarentor_photo = $getGuarantorDetails['guarentor_photo'];
+}
 //////////////////////// Customer Profile Info END ///////////////////////////////
 
 /////////  Documentation ////////////
@@ -133,7 +140,7 @@ if (sizeof($documentationInfo) > 0) {
 ?>
 
 <style>
-	#imgshow {
+	.imgshow {
 		height: 150px;
 		width: 150px;
 		border-radius: 50%;
@@ -247,6 +254,7 @@ input:checked + .slider:before {
 			<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($taluk)) {echo $taluk;} ?>" />
 			<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area)) {echo $area;} ?>" />
 			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($sub_area)) {echo $sub_area;} ?>" />
+			<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) {echo $guarentor_name;} ?>" />
 
 			<input type="hidden" name="area_state_upd" id="area_state_upd" value="<?php if (isset($area_confirm_state)) {echo $area_confirm_state;} ?>" />
 			<input type="hidden" name="area_district_upd" id="area_district_upd" value="<?php if (isset($area_confirm_district)) {echo $area_confirm_district;} ?>" />
@@ -443,7 +451,7 @@ input:checked + .slider:before {
 										<div class="form-group" style="margin-left: 30px;">
 											<label  style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
 											<input type="hidden" class="form-control" id="cus_image" name="cus_image" value='<?php if (isset($pic)) {echo $pic;} ?>'>
-											<img id='imgshow' src='img/avatar.png' /><br>
+											<img id='imgshow' class="imgshow" src='img/avatar.png' /><br>
 											<input type="file" class="form-control" id="pic" name="pic" tabindex='29' value='<?php if (isset($pic)) {echo $pic;} ?>'>
 										</div>
 									</div>
@@ -490,7 +498,48 @@ input:checked + .slider:before {
 						</div>
 					</div>
 					<!-- Family info END -->
+					<!-- Guarentor info START -->
+					<div class="card">
+						<div class="card-header">Guarentor Info<span class="required">&nbsp;*</span><span style="font-weight:bold" class=""></span></div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-8">
+									<div class="row">
+										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+											<div class="form-group">
+												<label for="guarentor_name"> Guarentor Name </label><span class="required">&nbsp;*</span>
+												<select type="text" class="form-control" id="guarentor_name" name="guarentor_name" tabindex="19">
+													<option> Select Guarantor </option>
+												</select>
+												<span class="text-danger" style='display:none' id='guarentor_nameCheck'>Please Choose Guarentor Name</span>
+											</div>
+										</div>
 
+										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
+											<div class="form-group">
+												<label for="guarentor_relationship"> Guarentor Relationship </label>
+												<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" tabindex="20" value='<?php if (isset($guarentor_relation)) {echo $guarentor_relation;} ?>' readonly>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-4">
+									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+										<div class="form-group" style="margin-left: 30px;">
+											<label for="pic" style="margin-left: -20px;"> Guarentor Photo </label><span class="required">&nbsp;*</span><br>
+											<input type="hidden" name="guarentor_image" id="guarentor_image" value="<?php if (isset($guarentor_photo)) {echo $guarentor_photo;} ?>">
+											<img id='imgshows' class="imgshow" src='img/avatar.png' />
+											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="21" value="<?php if (isset($guarentor_photo)) {echo $guarentor_photo;} ?>">
+											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<!-- Guarentor END -->
 					<!-- Residential  Info START -->
 					<div class="card">
 						<div class="card-header"> Residential Info <span style="font-weight:bold" class=""></span></div>

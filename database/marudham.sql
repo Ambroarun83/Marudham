@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2023 at 02:59 PM
+-- Generation Time: Sep 13, 2023 at 03:07 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2536,7 +2536,8 @@ INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `
 (12, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-110', '2023-08-02', '8', '400040004000', 'New', 'Bharathi', '1999-01-21', '24', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '17', 'EVR', '9459416164', '994949494', 'Vedha', 'Gayathri', '2', '', '1', 'Watchman', 'images (1).jpg', '5', 'AC', '50000', '0', '0.0', '50000', '1', '1600', '', '14', '', '0', '2', '2', NULL, '2023-08-02 14:59:57', '2023-08-02 14:59:57'),
 (14, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-112', '2023-08-19', '4', '200020002000', 'Existing', 'Aravind', '1988-03-10', '35', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '7', 'Small Business', '', '', '', '50000', '1', '460', '', '10', '', '0', '2', '2', NULL, '2023-08-19 09:53:42', '2023-09-09 18:37:00'),
 (16, 'Staff', 'Arun', '', '', 'Check once ', '', 'REQ-113', '2023-09-06', '9', '060120230408', 'New', 'Gnanasekar', '1990-02-14', '33', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '4', '19', 'Purisai', '9790171511', '', 'Sengunthan', 'Aarthi', '2', '', '2', 'Best Opticals', 'person_sample_2.jpg', '8', 'Plot Purchase', '50000', '0', '0.0', '50000', '2', '', '12', '3', '', '0', '2', '2', NULL, '2023-01-07 04:42:25', '2023-09-07 00:00:00'),
-(17, 'Director', 'Will Smith', '', '1', '', 'okok', 'REQ-114', '2023-09-09', '10', '090920230103', 'New', 'Janaki', '2023-09-06', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', '7', 'Small Business', '', '', '', '60000', '1', '5500', '', '1', '', '0', '5', '5', NULL, '2023-09-09 13:15:22', '2023-09-09 13:15:25');
+(17, 'Director', 'Will Smith', '', '1', '', 'okok', 'REQ-114', '2023-09-09', '10', '090920230103', 'New', 'Janaki', '2023-09-06', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', '7', 'Small Business', '', '', '', '60000', '1', '5500', '', '1', '', '0', '5', '5', NULL, '2023-09-09 13:15:22', '2023-09-09 13:15:25'),
+(18, 'Staff', 'Arun', '', '', 'First Bike', '', 'REQ-115', '2023-09-13', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '32000', '5000', '15.6', '27000', '1', '4500', '', '1', '', '0', '2', '2', NULL, '2023-09-13 11:46:44', '2023-09-13 11:46:48');
 
 -- --------------------------------------------------------
 
@@ -2802,7 +2803,8 @@ INSERT INTO `loan_followup` (`id`, `cus_id`, `stage`, `label`, `remark`, `follow
 (1, '100010001000', 'Acknowledgement', 'Check', 'Check', '2023-08-21', '2', NULL, '2023-08-21 12:27:01', '2023-08-21 12:27:01'),
 (2, '100010001000', 'Acknowledgement', 'Check', 'Check', '2023-08-20', '2', NULL, '2023-08-21 12:27:34', '2023-08-21 12:27:34'),
 (3, '100010001000', 'Acknowledgement', 'Check', 'Check', '2023-08-22', '2', NULL, '2023-08-21 12:27:56', '2023-08-21 12:27:56'),
-(4, '200020002000', 'Verification', 'Check', 'Check', '2023-09-05', '2', NULL, '2023-09-05 16:29:23', '2023-09-05 16:29:23');
+(4, '200020002000', 'Verification', 'Check', 'Check', '2023-09-05', '2', NULL, '2023-09-05 16:29:23', '2023-09-05 16:29:23'),
+(5, '200020002000', 'Verification', 'check for future', 'check for future', '2023-09-15', '2', NULL, '2023-09-13 18:37:17', '2023-09-13 18:37:17');
 
 -- --------------------------------------------------------
 
@@ -3262,7 +3264,9 @@ INSERT INTO `request_category_info` (`cat_info`, `req_ref_id`, `category_info`) 
 (40, '16', '5000 sqft'),
 (41, '16', '1680000'),
 (42, '17', 'Coffee shop'),
-(43, '17', 'Franchise');
+(43, '17', 'Franchise'),
+(44, '18', 'Bajaj'),
+(45, '18', 'Pulsar 150');
 
 -- --------------------------------------------------------
 
@@ -3336,10 +3340,11 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (10, 'Staff', 'Arun', '', '', 'checking Rakesh', '', 'REQ-108', '2023-07-15', '6', '300030003000', 'Existing', 'Rakesh', '1992-06-09', '31', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', '78A', '9664565132', '', 'Joshwa', 'Sheethal', '2', '', '3', 'Coconut shop', 'person_sample_4.jpg', '1', 'Personal', '52000', '4000', '7.7', '48000', '1', '4400', '', '14', '', '0', '2', '2', NULL, '2023-07-15 11:08:11', '2023-07-15 11:08:11'),
 (11, 'Staff', 'Arun', '', '', 'New customer', '', 'REQ-109', '2023-07-21', '7', '500050005000', 'New', 'Manikandan', '1995-03-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', 'Harington road', '7888878888', '', 'Mani Kapoor', 'Mani megalai', '2', '', '5', 'Watchman', 'musk.jpg', '1', 'Personal', '28000', '2000', '7.1', '26000', '2', '', '12', '14', '', '0', '2', '2', NULL, '2023-07-21 11:11:38', '2023-07-21 11:11:38'),
 (12, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-110', '2023-08-02', '8', '400040004000', 'New', 'Bharathi', '1999-01-21', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '17', 'EVR', '9459416164', '994949494', 'Vedha', 'Gayathri', '2', '', '1', 'Watchman', 'images (1).jpg', '5', 'AC', '50000', '0', '0.0', '50000', '1', '1600', '', '14', '', '0', '2', '2', NULL, '2023-08-02 14:59:57', '2023-08-02 14:59:57'),
-(13, 'Staff', 'Arun', '', '', 'remark', '', 'REQ-111', '2023-08-03', NULL, '400040004000', 'Existing', 'Bharathi', '1999-01-21', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '17', 'EVR', '9459416164', '994949494', 'Vedha', 'Gayathri', '2', '', '1', 'Watchman', 'images (1).jpg', '5', 'AC', '45000', '3000', '6.7', '42000', '1', '1500', '', '8', '', '0', '2', '2', NULL, '2023-08-03 10:02:48', '2023-08-19 13:25:59'),
+(13, 'Staff', 'Arun', '', '', 'remark', '', 'REQ-111', '2023-08-03', NULL, '400040004000', 'Existing', 'Bharathi', '1999-01-21', '24', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '17', 'EVR', '9459416164', '994949494', 'Vedha', 'Gayathri', '2', '', '1', 'Watchman', 'images (1).jpg', '5', 'AC', '45000', '3000', '6.7', '42000', '1', '1500', '', '8', 'Prompt Remarks', '0', '2', '2', NULL, '2023-08-03 10:02:48', '2023-08-19 13:25:59'),
 (14, 'Staff', 'Arun', '', '', 'Check', '', 'REQ-112', '2023-08-19', '4', '200020002000', 'Existing', 'Aravind', '1988-03-10', '35', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '8', '23', '22', '9794949494', '', 'Vedha', 'Vidhya', '2', '', '4', 'Departmental Store', 'pexels-pixabay-220453.jpg', '7', 'Small Business', '', '', '', '50000', '1', '460', '', '10', '', '0', '2', '2', NULL, '2023-08-19 09:53:42', '2023-09-09 18:37:00'),
 (16, 'Staff', 'Arun', '', '', 'Check once ', '', 'REQ-113', '2023-09-06', '9', '060120230408', 'New', 'Gnanasekar', '1990-02-14', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '4', '19', 'Purisai', '9790171511', '', 'Sengunthan', 'Aarthi', '2', '', '2', 'Best Opticals', 'person_sample_2.jpg', '8', 'Plot Purchase', '50000', '0', '0.0', '50000', '2', '', '12', '3', '', '0', '2', '2', NULL, '2023-01-07 04:42:25', '2023-09-07 00:00:00'),
-(17, 'Director', 'Will Smith', '', '1', '', 'okok', 'REQ-114', '2023-09-09', '10', '090920230103', 'New', 'Janaki', '2023-09-06', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', '7', 'Small Business', '', '', '', '60000', '1', '5500', '', '1', '', '0', '5', '5', NULL, '2023-09-09 13:15:22', '2023-09-09 13:15:25');
+(17, 'Director', 'Will Smith', '', '1', '', 'okok', 'REQ-114', '2023-09-09', '10', '090920230103', 'New', 'Janaki', '2023-09-06', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', '7', 'Small Business', '', '', '', '60000', '1', '5500', '', '1', '', '0', '5', '5', NULL, '2023-09-09 13:15:22', '2023-09-09 13:15:25'),
+(18, 'Staff', 'Arun', '', '', 'First Bike', '', 'REQ-115', '2023-09-13', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '32000', '5000', '15.6', '27000', '1', '4500', '', '1', '', '0', '2', '2', NULL, '2023-09-13 11:46:44', '2023-09-13 11:46:48');
 
 -- --------------------------------------------------------
 
@@ -5101,7 +5106,7 @@ ALTER TABLE `loan_category_ref`
 -- AUTO_INCREMENT for table `loan_followup`
 --
 ALTER TABLE `loan_followup`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `loan_issue`
@@ -5155,13 +5160,13 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `request_category_info`
 --
 ALTER TABLE `request_category_info`
-  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `request_creation`
 --
 ALTER TABLE `request_creation`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `signed_doc`
@@ -5221,7 +5226,7 @@ ALTER TABLE `verification_documentation`
 -- AUTO_INCREMENT for table `verification_family_info`
 --
 ALTER TABLE `verification_family_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `verification_group_info`
