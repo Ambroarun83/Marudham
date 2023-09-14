@@ -137,7 +137,7 @@ function OnLoadFunctions(req_id,cus_id){
                 var closed_sts = closed_arr.join(',');
                 $('#closed_sts').val(closed_sts);
                 balAmnt = balAmnt.join(',');
-                // $('#balAmnt').val(balAmnt);
+                $('#balAmnt').val(balAmnt);
             }
         }
     }); 

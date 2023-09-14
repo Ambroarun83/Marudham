@@ -25,6 +25,14 @@
 	</div>
 </div>
 <br><br>
+
+<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+<input type="hidden" name="od_sts" id="od_sts" value="" />
+<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+<input type="hidden" name="closed_sts" id="closed_sts" value="" />
+<input type="hidden" name="balAmnt" id="balAmnt" value="" />
+
+
 <!-- Main container start -->
 <div class="main-container" >
 	<!-- Row start -->

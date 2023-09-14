@@ -159,6 +159,11 @@ foreach($req_arr as $req_id){
     
     $i++;
 }
+
+//for knowing the customer status for due followup screen
+//this will give the customer's sub status in the order of Legal, Error, OD, Due Nill, Pending, Current
+$response['follow_cus_sts'] = checkStatusOfCustomer($response,$cus_id,$con);
+
 function calculateOthers($loan_arr,$response,$con,$req_id){
     // if(isset($_POST['req_id'])){
     //     $req_id = $_POST['req_id'];
@@ -638,5 +643,37 @@ function getTillDateInterest($loan_arr,$response,$con,$data){
     }
     return $response;
 }
+
+function checkStatusOfCustomer($response,$cus_id, $con){
+    for($i=0;$i < count($response['pending_customer']);$i++){
+
+        $pending_sts = ($response['pending_customer'][$i] == 1) ? "true":"false";
+        $od_sts = ($response['od_customer'][$i] == 1) ? "true":"false";
+        $due_nil_sts = ($response['due_nil_customer'][$i] == 1) ? "true":"false";
+        $closed_sts = ($response['closed_customer'][$i] == 1) ? "true":"false";
+        
+        $query = $con->query("SELECT * FROM in_issue WHERE cus_id = '$cus_id' and cus_status IN('15','16') ORDER BY cus_status DESC LIMIT 1 ");
+        if($query->num_rows > 0){
+            $cus_status = ($query->fetch_assoc()['cus_status'] == '16') ? "Legal":"Error";
+            $response['follow_cus_sts'] = $cus_status;
+        }else
+        if($pending_sts == 'true' && $od_sts == 'false'){
+            $response['follow_cus_sts'] = 'Pending';
+        }else if($od_sts == 'true' && $due_nil_sts =='false'){
+            $response['follow_cus_sts'] = 'OD';
+        }elseif($due_nil_sts == 'true'){
+            $response['follow_cus_sts'] = 'Due Nil';
+        }elseif($pending_sts == 'false'){
+            if($closed_sts == 'true'){
+                $response['follow_cus_sts'] = "Move To Close";
+            }else{
+                $response['follow_cus_sts'] = 'Current';
+            }
+        }
+    }
+    return $response['follow_cus_sts'];
+}
+
+
 echo json_encode($response);
 ?>

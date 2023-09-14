@@ -1,34 +1,89 @@
 $(document).ready(function(){
 
-    dueFollowuptableFetch();
+    OnLoadFunctions();
     getFilterInputs();
 
-    $('#apply_filter').click(function(){
-        if(validateFilters() == true){
-            applyFilters();
-        }
-    })
-    $('#clear_filter').click(function(){
-        //while clearing filters, we need to show the original table , so call following method
-        dueFollowuptableFetch();
+    // $('#apply_filter').click(function(){
+    //     if(validateFilters() == true){
+    //         applyFilters();
+    //     }
+    // })
+    // $('#clear_filter').click(function(){
+    //     //while clearing filters, we need to show the original table , so call following method
+    //     dueFollowuptableFetch();
         
-        $('.close-modal').trigger('click');//close the modal while clicking clear to show old table
+    //     $('.close-modal').trigger('click');//close the modal while clicking clear to show old table
 
-        //this will clear the dropdowns from previously assigned datas
-        $('#filter_form select').not('#by_branch,#by_loan_cat,#by_agent,#by_status,#by_coll_format').find('option:not(:first)').remove('');
+    //     //this will clear the dropdowns from previously assigned datas
+    //     $('#filter_form select').not('#by_branch,#by_loan_cat,#by_agent,#by_status,#by_coll_format').find('option:not(:first)').remove('');
 
-    })
+    // })
 });
+    
+function OnLoadFunctions(){
+
+    var pending = [];var od = [];var due_nil = [];var closed = [];var balAmt = [];
+    
+    $.ajax({
+        url: 'followupFiles/dueFollowup/getDueFollowCus.php',
+        cache: false,
+        dataType:'json',
+        type: 'post',
+        success:function(cus_id_arr){
+            
+        }
+    }).then(function(cus_id_arr){
+        let follow_cus_sts = [];
+
+        $.each(cus_id_arr, function(key, value){
+            cus_id = value;
+
+            $.ajax({
+                url: 'collectionFile/resetCustomerStatus.php',
+                data: {'cus_id':cus_id},
+                dataType:'json',
+                type:'post',
+                cache: false,
+                success: function(response){
+                    if(response.length != 0){
+                        follow_cus_sts.push(response['follow_cus_sts'])
+                        // for(let i=0;i< response['pending_customer'].length;i++){
+                        //     pending_arr[i] = response['pending_customer'][i]
+                        //     od_arr[i] = response['od_customer'][i]
+                        //     due_nil_arr[i] = response['due_nil_customer'][i]
+                        //     closed_arr[i] = response['closed_customer'][i]
+                        //     balAmnt[i] = response['balAmnt'][i]
+                        // }
+                        // pending.push(pending_arr);
+                        // od.push(od_arr);
+                        // due_nil.push(due_nil_arr);
+                        // closed.push(closed_arr);
+                        // balAmt.push(balAmnt);
+                    }
+                }
+            });
+        });
+        // let tester = {
+        //     pending,
+        //     od,
+        //     due_nil,
+        //     closed,
+        //     balAmt
+        // }
+
+        dueFollowuptableFetch(cus_id_arr,follow_cus_sts);
+    }); 
+}
 
 
+function dueFollowuptableFetch(cus_id_arr,follow_cus_sts){
 
-function dueFollowuptableFetch(){
-    showOverlay();
     $.ajax({
 		//in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
 		url: 'followupFiles/dueFollowup/ajaxDueFollowupFetch.php',
-		data: {},
-		type:'post',
+		data: {'cus_id':JSON.Stringify(cus_id_arr), "follow_cus_sts":JSON.Stringify(follow_cus_sts)},
+		contentType: 'application/json',
+        type:'post',
 		cache: false,
 		success: function(response){
 			$('#dueFollwupDiv').empty()
