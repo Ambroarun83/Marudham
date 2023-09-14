@@ -92,43 +92,43 @@ function moneyFormatIndia($num) {
                 <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td>
                 <td><?php if($row["collection_method"] == '1'){ echo 'By Self';}else if($row["collection_method"] == '2'){ echo 'Spot Collection';}else if($row["collection_method"] == '3'){ echo 'Cheque Collection';}else if($row["collection_method"] == '4'){ echo 'ECS';} ?></td>
                 <td><?php echo 'Present'; ?></td>
-                <td><?php if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'Pending';
-                            }
-                        }else if($od_sts[$i-1] == 'true' && $due_nil_sts[$i-1] =='false'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'OD';
-                            }
-                        }elseif($due_nil_sts[$i-1] == 'true'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'Due Nil';
-                            }
-                        }elseif($pending_sts[$i-1] == 'false'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                if($closed_sts[$i-1] == 'true'){
-                                    echo "Move To Close";
+                    <td><?php if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
+                                if($row['cus_status'] == '15'){
+                                    echo 'Error';
+                                }elseif($row['cus_status']== '16'){
+                                    echo 'Legal';
                                 }else{
-                                    echo 'Current';
+                                    echo 'Pending';
                                 }
-                            }
-                        } ?></td>
+                            }else if($od_sts[$i-1] == 'true' && $due_nil_sts[$i-1] =='false'){
+                                if($row['cus_status'] == '15'){
+                                    echo 'Error';
+                                }elseif($row['cus_status']== '16'){
+                                    echo 'Legal';
+                                }else{
+                                    echo 'OD';
+                                }
+                            }elseif($due_nil_sts[$i-1] == 'true'){
+                                if($row['cus_status'] == '15'){
+                                    echo 'Error';
+                                }elseif($row['cus_status']== '16'){
+                                    echo 'Legal';
+                                }else{
+                                    echo 'Due Nil';
+                                }
+                            }elseif($pending_sts[$i-1] == 'false'){
+                                if($row['cus_status'] == '15'){
+                                    echo 'Error';
+                                }elseif($row['cus_status']== '16'){
+                                    echo 'Legal';
+                                }else{
+                                    if($closed_sts[$i-1] == 'true'){
+                                        echo "Move To Close";
+                                    }else{
+                                        echo 'Current';
+                                    }
+                                }
+                            } ?></td>
                 <td>
                     <?php 
                         $action="<div class='dropdown' ><button class='btn btn-outline-secondary' ";
