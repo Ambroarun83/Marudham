@@ -2245,7 +2245,7 @@ function resetkycInfo() {
     $.ajax({
         url: 'verificationFile/verification_kyc_reset.php',
         type: 'POST',
-        data: { "req_id": req_id },
+        data: { "cus_id": cus_id },
         cache: false,
         success: function (html) {
             $("#kycTable").empty();
@@ -2353,6 +2353,7 @@ function resetkycinfoList() {
 
 $('#proofof').change(function () {
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let proof = $('#proofof').val();
 
     if(proof != '2' && proof != ''){ // if proof of is not family members then check for other's proofs entered already 
@@ -2362,7 +2363,7 @@ $('#proofof').change(function () {
         $.ajax({
             url: 'verificationFile/verification_proof_type.php',
             type: 'POST',
-            data: { "reqId": req_id, "proof": proof },
+            data: { "reqId": req_id, "cus_id":cus_id,"proof": proof },
             dataType: 'json',
             cache: false,
             success: function (response) {
