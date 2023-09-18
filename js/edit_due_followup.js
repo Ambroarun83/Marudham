@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
     OnLoadFunctions();
-    getFilterInputs();
+    // getFilterInputs();
 
     // $('#apply_filter').click(function(){
     //     if(validateFilters() == true){
@@ -22,7 +22,6 @@ $(document).ready(function(){
     
 function OnLoadFunctions(){
 
-    var pending = [];var od = [];var due_nil = [];var closed = [];var balAmt = [];
     
     $.ajax({
         url: 'followupFiles/dueFollowup/getDueFollowCus.php',
@@ -34,6 +33,8 @@ function OnLoadFunctions(){
         }
     }).then(function(cus_id_arr){
         let follow_cus_sts = [];
+        let completedRequests = 0;//for checking the each function completion
+        const totalRequests = cus_id_arr.length;
 
         $.each(cus_id_arr, function(key, value){
             cus_id = value;
@@ -46,43 +47,30 @@ function OnLoadFunctions(){
                 cache: false,
                 success: function(response){
                     if(response.length != 0){
-                        follow_cus_sts.push(response['follow_cus_sts'])
-                        // for(let i=0;i< response['pending_customer'].length;i++){
-                        //     pending_arr[i] = response['pending_customer'][i]
-                        //     od_arr[i] = response['od_customer'][i]
-                        //     due_nil_arr[i] = response['due_nil_customer'][i]
-                        //     closed_arr[i] = response['closed_customer'][i]
-                        //     balAmnt[i] = response['balAmnt'][i]
-                        // }
-                        // pending.push(pending_arr);
-                        // od.push(od_arr);
-                        // due_nil.push(due_nil_arr);
-                        // closed.push(closed_arr);
-                        // balAmt.push(balAmnt);
+
+                        follow_cus_sts.push(response['follow_cus_sts']);
+                        completedRequests++;
+
+                        // Check if all requests have completed
+                        if (completedRequests === totalRequests) {
+                            // Call dueFollowuptableFetch when all requests are done
+                            dueFollowuptableFetch(cus_id_arr, follow_cus_sts);
+                        }
                     }
                 }
             });
         });
-        // let tester = {
-        //     pending,
-        //     od,
-        //     due_nil,
-        //     closed,
-        //     balAmt
-        // }
-
-        dueFollowuptableFetch(cus_id_arr,follow_cus_sts);
     }); 
 }
 
 
 function dueFollowuptableFetch(cus_id_arr,follow_cus_sts){
-
+    // cus_id_arr = cus_id_arr.join(',');
+    // follow_cus_sts = follow_cus_sts.join(',');
     $.ajax({
 		//in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
 		url: 'followupFiles/dueFollowup/ajaxDueFollowupFetch.php',
-		data: {'cus_id':JSON.Stringify(cus_id_arr), "follow_cus_sts":JSON.Stringify(follow_cus_sts)},
-		contentType: 'application/json',
+		data: {'cus_id':JSON.stringify(cus_id_arr), "follow_cus_sts":JSON.stringify(follow_cus_sts)},
         type:'post',
 		cache: false,
 		success: function(response){
@@ -119,7 +107,7 @@ function dueFollowuptableFetch(cus_id_arr,follow_cus_sts){
 function enableDateColoring(){
     //for coloring
     $('#due_followup_table tbody tr').not('th').each(function(){
-        let tddate = $(this).find('td:eq(11)').text(); // Get the text content of the 11th td element (Follow date)
+        let tddate = $(this).find('td:eq(12)').text(); // Get the text content of the 12th td element (Follow date)
         let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
         let values = new Date(datecorrection); // Create a Date object from the corrected date
         values.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
@@ -132,11 +120,11 @@ function enableDateColoring(){
         if(tddate != '' && values != 'Invalid Date'){ // Check if the extracted date and the created Date object are valid
 
             if(values < curDate){ // Compare the extracted date with the current date
-                $(this).find('td:eq(11)').css({'background-color':colors.past, 'color':'white'}); // Apply styling for past dates
+                $(this).find('td:eq(12)').css({'background-color':colors.past, 'color':'white'}); // Apply styling for past dates
             }else if(values > curDate){
-                $(this).find('td:eq(11)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
+                $(this).find('td:eq(12)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
             }else {
-                $(this).find('td:eq(11)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
+                $(this).find('td:eq(12)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
             }
         }
     });

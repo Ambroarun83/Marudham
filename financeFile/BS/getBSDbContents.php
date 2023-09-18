@@ -42,9 +42,9 @@ if($type == 'today'){
 function getDetails($con, $where){
     // Issued
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_db_hissued WHERE $where
+        SELECT netcash as amt FROM ct_db_hissued WHERE $where
         UNION ALL
-        SELECT netcash FROM ct_db_bissued WHERE $where
+        SELECT netcash as amt FROM ct_db_bissued WHERE $where
     ) AS combined_table");
 
     $row = $qry->fetch_assoc();

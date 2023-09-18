@@ -7,7 +7,13 @@ if(isset($_SESSION["userid"])){
     $userid = $_SESSION["userid"];
 }
 
-echo $_POST['pending_sts'];
+if(isset($_POST['cus_id'])){
+    $cus_id_arr = json_decode($_POST['cus_id'],true);
+}
+
+if( isset($_POST['follow_cus_sts'])){
+    $follow_cus_sts = json_decode($_POST['follow_cus_sts'],true);
+}
 
 $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
 acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
@@ -28,7 +34,7 @@ $result = $statement->fetchAll();
             <th>Branch</th>
             <th>Line</th>
             <th>Mobile</th>
-            <!-- <th>Sub Status</th> -->
+            <th>Sub Status</th>
             <th>Action</th>
             <th>Last Paid Date</th>
             <th>Hint</th>
@@ -135,8 +141,18 @@ $result = $statement->fetchAll();
             <?php
                 $cus_id = $row['cp_cus_id'];
                 $id = $row['req_id'];
+                
+                $index = array_search($cus_id,$cus_id_arr);//this will find the matching index of the value given inside array
+                if($index !== false){
+                    //pass the index to the follow_cus_sts array to find his exact status
+                    ?>
+                        <td> <?php echo $follow_cus_sts[$index]; ?> </td>
+                    <?php
+                }
+                
+                
+                
             ?>
-
 
             <?php
                 $action="<a href='due_followup&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>View Loans</button></a>";
@@ -159,7 +175,6 @@ $result = $statement->fetchAll();
                     $date_range = $coll_date_qry['date_range'];
                 }else{
                     $date_range = '';
-
                 }
             ?> 
             
@@ -185,32 +200,3 @@ $result = $statement->fetchAll();
     </tbody>
 </table>
 
-
-<script>
-    $('#due_followup_table tbody tr').not('th').each(function(){
-        let tddate = $(this).find('td:eq(11)').text(); // Get the text content of the 11th td element (Follow date)
-        let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
-        let values = new Date(datecorrection); // Create a Date object from the corrected date
-        values.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
-
-        let curDate = new Date(); // Get the current date
-        curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
-
-        let colors = {'past':'FireBrick','current':'DarkGreen','future':'CornflowerBlue'}; // Define colors for different date types
-
-        if(tddate != '' && values != 'Invalid Date'){ // Check if the extracted date and the created Date object are valid
-
-            if(values < curDate){ // Compare the extracted date with the current date
-                $(this).find('td:eq(11)').css({'background-color':colors.past, 'color':'white'}); // Apply styling for past dates
-            }else if(values > curDate){
-                $(this).find('td:eq(11)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
-            }else {
-                $(this).find('td:eq(11)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
-            }
-        }
-    });
-
-
-
-
-</script>

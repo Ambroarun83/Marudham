@@ -28,7 +28,7 @@ if($user_id != ''){//to get user's sub area id based on user's branch assigned i
 $type = $_POST['type'];
 
 if($type == 'today'){
-    $where = " DATE(updated_date) = DATE_SUB(CURRENT_DATE, INTERVAL 1 DAY) and cus_status = 14 ";
+    $where = " DATE(updated_date) <= CURRENT_DATE and cus_status IN (14,15,16,17) ";
     
     $condition = ($user_id != '') ? " and FIND_IN_SET(sub_area ,'".$sub_area_list."') " : '';//this condition will check user based request ids in in_verification table
     
@@ -39,7 +39,7 @@ if($type == 'today'){
 
     $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
     
-    $where = " DATE(updated_date) >= DATE_SUB('$from_date', INTERVAL 1 Day) and cus_status = 14 ";
+    $where = " (DATE(updated_date) >= '$from_date' and DATE(updated_date) <= '$to_date') and cus_status IN (14,15,16,17) ";
     $condition = ($user_id != '') ? " and FIND_IN_SET(sub_area ,'".$sub_area_list."') " : '';//this condition will check user based request ids in in_verification table
     
     getDetials($con,$condition, $where);
@@ -59,7 +59,7 @@ if($type == 'today'){
         $year = date('Y',strtotime($_POST['month']));
     }
     
-    $where = " (MONTH(updated_date) = '$month' && YEAR(updated_date) = '$year') and cus_status = 14 ";
+    $where = " (MONTH(updated_date) <= '$month' && YEAR(updated_date) <= '$year') and cus_status IN (14,15,16,17) ";
     $condition = ($user_id != '') ? " and FIND_IN_SET(sub_area ,'".$sub_area_list."') " : ''; //this condition will check user based request ids in in_verification table
 
     getDetials($con,$condition, $where);
@@ -75,7 +75,10 @@ function getDetials($con,$condition, $where){
     
     $qry1 = $con->query("SELECT req_id from in_acknowledgement where $where ");// >13 means entries moved to collection from issue
     
-    $where = str_replace('>','',rtrim($where,'and cus_status = 14'));
+    // $where = str_replace('>','',rtrim($where,'and cus_status IN (14,15,16,17)'));
+    $pattern = '/and cus_status IN \(14,15,16,17\)/';
+    $where = preg_replace($pattern, '', $where);
+
     //removeing customer status and greater than symbol fo collection table//replace will only work for day type
     //reason to use where condition in collection is , we only need collection on particular date for calculating outstanding amt
 
@@ -86,6 +89,7 @@ function getDetials($con,$condition, $where){
         if($qry->num_rows > 0){
 
             $qry = $con->query("SELECT sum(tot_amt_cal) as tot_amt_cal from acknowlegement_loan_calculation where req_id = '".$row1['req_id']."' ");
+            
             //fetching overall collection amount to be get from customers
             $row = $qry->fetch_assoc();
             $total_outstanding += intVal($row['tot_amt_cal'] ?? 0);
