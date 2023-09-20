@@ -26,6 +26,7 @@ if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''
 <?php
 }
 
+	
 $getRequestData = $userObj->getRequestForVerification($mysqli, $idupd);
 if (sizeof($getRequestData) > 0) {
 	for ($i = 0; $i < sizeof($getRequestData); $i++) {
@@ -201,13 +202,6 @@ if(sizeof($documentationInfo)>0){
 	$Rc_document_upd = $documentationInfo['Rc_document_upd'];
 	$Rc_document_pending = $documentationInfo['Rc_document_pending'];
 	$en_Key = $documentationInfo['en_Key'];
-	// $gold_info = $documentationInfo['gold_info'];
-	// $gold_sts = $documentationInfo['gold_sts'];
-	// $gold_type = $documentationInfo['gold_type'];
-	// $Purity = $documentationInfo['Purity'];
-	// $gold_Count = $documentationInfo['gold_Count'];
-	// $gold_Weight = $documentationInfo['gold_Weight'];
-	// $gold_Value = $documentationInfo['gold_Value'];
 	$document_name = $documentationInfo['document_name'];
 	$document_details = $documentationInfo['document_details'];
 	$document_type = $documentationInfo['document_type'];
@@ -218,6 +212,17 @@ if(sizeof($documentationInfo)>0){
 	$doc_relation = $documentationInfo['doc_relation'];
 	$submitted = $documentationInfo['submitted'];
 
+}
+
+{//to find the documentation has been submitted in acknowledgement screen or not
+	$cus_doc = $mysqli->query("SELECT submitted FROM `acknowlegement_documentation` WHERE `req_id` ='$idupd'");
+	$cus_doc_row =  $cus_doc->fetch_assoc();
+
+	if(isset($cus_doc_row['submitted']) && $cus_doc_row['submitted'] =='1'){
+		$document_sts = 11;
+	}else{
+		$document_sts = '';
+	}
 }
 ////////   Documentation End ////////////
 

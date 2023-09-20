@@ -33,6 +33,7 @@ function moneyFormatIndia($num){
         <?php
         $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
+        $curDateChecker = true;
         if(isset($_POST['closed'])){$closed = $_POST['closed'];}else{ $closed = 'false';}
         $loanStart = $connect->query("SELECT alc.due_start_from,alc.maturity_month,alc.due_method_calc,alc.due_method_scheme FROM acknowlegement_loan_calculation alc WHERE alc.`req_id`= '$req_id' ");
         $loanFrom = $loanStart->fetch();
@@ -535,12 +536,56 @@ function moneyFormatIndia($num){
                         <td><?php echo $last_int_amt; ?></td>
                     <?php } ?>
 
-                    <td>
-                        <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['pending'];?>
-                    </td>
-                    <td>
-                        <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['payable'];?>
-                    </td>
+                    <?php 
+                    if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                        if(date('Y-m', strtotime($cusDueMonth)) <=  date('Y-m')){ ?>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['pending'];?>
+                            </td>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['payable'];?>
+                            </td>
+                        <?php }else if(date('Y-m', strtotime($cusDueMonth)) >  date('Y-m') && $curDateChecker == true){?>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['pending'];?>
+                            </td>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['payable'];?>
+                            </td>
+                        <?php  
+                            $curDateChecker = false;//set to false because, pending and payable only need one month after current month
+                            }else{ 
+                        ?>
+                            <td></td>
+                            <td></td>
+                        <?php  
+                            }
+                    }else{
+                        if(date('Y-m-d', strtotime($cusDueMonth)) <=  date('Y-m-d')){ ?>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['pending'];?>
+                            </td>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['payable'];?>
+                            </td>
+                        <?php }else if(date('Y-m-d', strtotime($cusDueMonth)) >  date('Y-m-d') && $curDateChecker == true){?>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['pending'];?>
+                            </td>
+                            <td>
+                                <?php $response = getNextLoanDetails($con, $req_id,$cusDueMonth);echo $response['payable'];?>
+                            </td>
+                        <?php  
+                            $curDateChecker = false;//set to false because, pending and payable only need one month after current month
+                            }else{ 
+                        ?>
+                            <td></td>
+                            <td></td>
+                        <?php  
+                            }
+                    }
+                        ?>
+
                     <td></td>
                     <!-- for collected amt -->
                     <?php if($loan_type == 'emi'){ ?>
