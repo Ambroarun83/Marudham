@@ -965,7 +965,13 @@ function dueChartList(req_id,cus_id){
             $('#dueChartTableDiv').empty()
             $('#dueChartTableDiv').html(response)
         }
-    });//Ajax End.
+    }).then(function(){
+
+        $.post('collectionFile/getDueMethodName.php',{req_id},function(response){
+            $('#dueChartTitle').text('Due Chart ( '+ response['due_method'] + ' - '+ response['loan_type'] +' )');
+        },'json');
+    })
+
 }
 //Penalty Chart List
 function penaltyChartList(req_id,cus_id){

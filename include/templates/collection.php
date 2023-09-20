@@ -53,8 +53,8 @@ if($idupd>0)
 
 	$getuser = $userObj->getuser($mysqli,$userid);
 	$collection_access = $getuser['collection_access'];
+	
 }
-
 ?>
 
 <style>
@@ -630,7 +630,7 @@ if($idupd>0)
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel"> Due Chart Icon</h5>
+                <h5 class="modal-title" id="dueChartTitle"> Due Chart</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
                     <span aria-hidden="true">&times;</span>
                 </button>

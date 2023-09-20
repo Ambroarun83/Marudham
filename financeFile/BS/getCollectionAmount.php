@@ -11,7 +11,7 @@ if($type == 'today'){
     
     $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,
     SUM(penalty_track) as penalty_track,SUM(coll_charge_track) as coll_charge_track 
-    FROM collection where DATE(created_date) = CURRENT_DATE $where ");
+    FROM collection where DATE(coll_date) = CURRENT_DATE $where ");
 
 
     if($qry->num_rows > 0){
@@ -26,7 +26,7 @@ if($type == 'today'){
     $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
     $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,
     SUM(penalty_track) as penalty_track,SUM(coll_charge_track) as coll_charge_track
-    from collection where (DATE(created_date) >= '$from_date' && DATE(created_date) <= '$to_date' ) $where ");
+    from collection where (DATE(coll_date) >= '$from_date' && DATE(coll_date) <= '$to_date' ) $where ");
 
     if($qry->num_rows > 0){
         $row = $qry->fetch_assoc();
@@ -42,7 +42,7 @@ if($type == 'today'){
 
     $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,
     SUM(penalty_track) as penalty_track,SUM(coll_charge_track) as coll_charge_track
-    from collection where (MONTH(created_date) = '$month' and YEAR(created_date) = $year) $where ");
+    from collection where (MONTH(coll_date) = '$month' and YEAR(coll_date) = $year) $where ");
 
     if($qry->num_rows > 0){
         $row = $qry->fetch_assoc();

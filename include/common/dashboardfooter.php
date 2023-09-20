@@ -1387,7 +1387,8 @@ if($current_page == 'confirmation_followup') { ?>
 
     $('.modal').attr({'data-backdrop':"static",'data-keyboard':"false"});//this will disable clicking outside of a modal in overall project
     
-    // $('input').attr('autocomplete','off');
+    $('input').attr('autocomplete','off');
+
 
     window.alert = function(message) {// this will prevent normal window.alert messages to set it as swal
         

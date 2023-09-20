@@ -171,7 +171,8 @@
 	} */
 
 	.dropdown-content a:hover {
-		background-color: #fafafa;
+		/* background-color: #ffffff; */
+		cursor: pointer;
 	}
 
 	.dropdown.active .dropdown-content {
