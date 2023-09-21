@@ -34,7 +34,7 @@ $(document).ready(function(){
                 
                 $('#conf_person_name1').empty().append("<option value=''>Select Person Name</option>")
                 for(var i=0;i<response.length-1;i++){
-                    $('#conf_person_name1').append("<option value='"+response[i]['fam_id']+"'>"+response[i]['fam_name']+"</option>")
+                    $('#conf_person_name1').append("<option value='"+response[i]['fam_id']+"'>"+response[i]['fam_name']+' - ' + response[i]['relationship'] +"</option>")
                 }
 
                 //create onchange event for person name that will bring the relationship of selected customer
