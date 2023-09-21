@@ -416,7 +416,7 @@ if (sizeof($getUser)>0) {
 				<?php if($adminmodule == 0){?>
 					<li class="sidebar-dropdown administration">
 						<a href="javascript:void(0)">
-							<i class="icon-layers2"></i>
+							<i><img class='svg-icon' src="svg/administration.svg"></i>
 							<span class="menu-text">Administration</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='admin') echo 'style="display:block" '; ?>>
@@ -453,14 +453,14 @@ if (sizeof($getUser)>0) {
 				<?php if($requestmodule == 0){ ?>
 					<li class="sidebar-dropdown request">
 						<a href="javascript:void(0)">
-							<i class="icon-playlist_add"></i>
+							<i><img class='svg-icon' src="svg/request.svg"></i>
 							<span class="menu-text">Request</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='request') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($request == 0){ ?>
 									<li>
-										<a href="edit_request"><i class="icon-playlist_add"></i>Request</a>
+										<a href="edit_request"><i><img class='svg-icon' src="svg/request.svg"></i>Request</a>
 									</li>
 								<?php  } ?>
 
@@ -473,14 +473,14 @@ if (sizeof($getUser)>0) {
 				<?php if($verificationmodule == 0){?>
 					<li class="sidebar-dropdown request">
 						<a href="javascript:void(0)">
-							<i class="icon-recent_actors"></i>
+							<i><img class='svg-icon' src="svg/verification.svg"></i>
 							<span class="menu-text">Verification</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='verification') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($verification == 0){ ?>
 									<li>
-										<a href="verification_list"><i class="icon-recent_actors"></i>Verification</a>
+										<a href="verification_list"><i><img class='svg-icon' src="svg/verification.svg"></i>Verification</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -490,14 +490,14 @@ if (sizeof($getUser)>0) {
 				<?php if($approvalmodule == 0){?>
 					<li class="sidebar-dropdown approve">
 						<a href="javascript:void(0)">
-							<i class="icon-offline_pin"></i>
+							<i><img class='svg-icon' src="svg/approval.svg"></i>
 							<span class="menu-text">Approval</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='approval') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($approval == 0){ ?>
 									<li>
-										<a href="approval_list"><i class="icon-offline_pin"></i>Approval</a>
+										<a href="approval_list"><i><img class='svg-icon' src="svg/approval.svg"></i>Approval</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -514,7 +514,7 @@ if (sizeof($getUser)>0) {
                             <ul>
                                 <?php  if($acknowledgement == 0){ ?>
                                     <li>
-                                        <a href="edit_acknowledgement_list"><i class="icon-accessibility"></i>Acknowledgement</a>
+                                        <a href="edit_acknowledgement_list"><i><img class='svg-icon' src="svg/acknow.svg"></i>Acknowledgement</a>
                                     </li>
                                 <?php  } ?>
                             </ul>

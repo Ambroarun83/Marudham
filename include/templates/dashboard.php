@@ -6,19 +6,25 @@ if(isset($_SESSION["userid"])){
 ?>
 <style>
 .card {
-  height: 80vh;
+	height: 80vh;
 }
+
 
 @media (max-width: 768px) {
-  .card {
-    height: 50vh;
-  }
+	.card {
+		height: 80vh;
+	}
 }
 
-@media (max-width: 576px) {
-  .card {
-    height: 30vh;
-  }
+@media (max-width: 600px) {
+	.card {
+		height: 77vh;
+	}
+}
+@media (max-width: 320px) {
+	.card {
+		height: 65vh;
+	}
 }
 
 
