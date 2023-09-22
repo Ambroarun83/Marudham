@@ -162,7 +162,7 @@ input[type="radio"]{
 									<?php } }?>
 									<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
 										<div class="form-group">
-											<button type="button" name="blnc_sheet_btn" id="blnc_sheet_btn" class="btn btn-primary" data-toggle='modal' data-target='.blncModal' onclick="hideAllCardsfunction()">Balance Sheet</button>
+											<!-- <button type="button" name="blnc_sheet_btn" id="blnc_sheet_btn" class="btn btn-primary" data-toggle='modal' data-target='.blncModal' onclick="hideAllCardsfunction()">Balance Sheet</button> -->
 										</div>
 									</div>
 								</div>
@@ -400,6 +400,7 @@ input[type="radio"]{
 				<!-- Submit Button Start -->
 				<div class="col-md-12 ">
 					<div class="text-right">
+						<button type="button" name="blnc_sheet_btn" id="blnc_sheet_btn" class="btn btn-primary" data-toggle='modal' data-target='.blncModal' onclick="hideAllCardsfunction()">Balance Sheet</button>
 						<button name="submit_cash_tally" id="submit_cash_tally" class="btn btn-primary" value="Submit">Submit</button>
 						<!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
 					</div>

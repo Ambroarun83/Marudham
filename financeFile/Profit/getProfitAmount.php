@@ -94,7 +94,7 @@ function getSubareaList($con,$user_id){
 }
 
 /*** Calculates the principal and interest paid based on the principal amount, interest amount, and the paid amount.*/
-function calculatePrincipalAndInterest(float $principal, float $interest, float $paidAmount): array {
+function calculatePrincipalAndInterest( $principal,  $interest,  $paidAmount): array {
     $principal_paid = 0;
     $interest_paid = 0;
 

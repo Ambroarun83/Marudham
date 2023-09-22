@@ -60,6 +60,7 @@ function moneyFormatIndia($num) {
         <?php
         // $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
+        $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
         $run = $connect->query("SELECT lc.cus_name_loan,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
         rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
         from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
@@ -141,8 +142,10 @@ function moneyFormatIndia($num) {
                     } 
                 }else if($row['cus_status'] > 20){// if status is closed(21) or more than that(22), then show closed status
                     $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
-                    $rclosed = $closedSts->fetch_assoc()['closed_sts'];
-                    if($rclosed == '1'){echo 'Consider';}
+                    $closedStsrow = $closedSts->fetch_assoc();
+                    $rclosed = $closedStsrow['closed_sts'];
+                    $consider_lvl = $closedStsrow['consider_level'];
+                    if($rclosed == '1'){echo 'Consider - '.$consider_lvl_arr[$consider_lvl]; } 
                     if($rclosed == '2'){echo 'Waiting List';}
                     if($rclosed == '3'){echo 'Block List';}
                 }
