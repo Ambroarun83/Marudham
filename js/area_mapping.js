@@ -4,25 +4,29 @@ const areaMultiselect = new Choices('#area_dummy', {
     noChoicesText: null,
     placeholder: true,
     placeholderValue: 'Select Area Name',
-    });
+    allowHTML: true
+});
 const areaMultiselect1 = new Choices('#area_dummy1', {
     removeItemButton: true,
     noChoicesText: null,
     placeholder: true,
     placeholderValue: 'Select Area Name',
-    });
+    allowHTML: true
+});
 const intance = new Choices('#sub_area_dummy', {
     removeItemButton: true,
     noChoicesText: null,
     placeholder: true,
     placeholderValue: 'Select Sub Area Name',
-    });
+    allowHTML: true
+});
 const intance1 = new Choices('#sub_area_dummy1', {
     removeItemButton: true,
     noChoicesText: null,
     placeholder: true,
     placeholderValue: 'Select Sub Area Name',
-    });
+    allowHTML: true
+});
     
 
 // Document is ready

@@ -3,6 +3,7 @@ const branchMultiselect = new Choices('#under_branch_dummy', {
     noChoicesText: null,
     placeholder: true,
     placeholderValue: 'Select Branch Name',
+    allowHTML: true
 });
 
 

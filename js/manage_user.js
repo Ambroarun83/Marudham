@@ -2,26 +2,38 @@
     const branchMultiselect = new Choices('#branch_id1', {
         removeItemButton: true,
         noChoicesText: 'Select Branch Name',
+        allowHTML: true
+
         });
     const agentMultiselect = new Choices('#agent1', {
         removeItemButton: true,
         noChoicesText: 'Select Agent Name',
+        allowHTML: true
+
         });
     const loanCatMultiselect = new Choices('#loan_cat1', {
         removeItemButton: true,
         noChoicesText: 'Select Loan Category',
+        allowHTML: true
+
         });
     const lineMultiselect = new Choices('#line1', {
         removeItemButton: true,
         noChoicesText: 'Select Line Name',
+        allowHTML: true
+
         });
     const groupMultiselect = new Choices('#group1', {
         removeItemButton: true,
         noChoicesText: 'Select Group Name',
+        allowHTML: true
+
         });
     const bankMultiselect = new Choices('#bank_details1', {
         removeItemButton: true,
         noChoicesText: 'Select Bank Name',
+        allowHTML: true
+
     });
 
 // Document is ready

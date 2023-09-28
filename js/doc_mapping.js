@@ -2,6 +2,7 @@ const docMultiselect = new Choices('#doc_creation1',{
     removeItemButton: true,
     noChoicesText: 'Select Documentation',
     shouldSort:false,//remove default asc sorting
+    allowHTML: true
 })
 
 // Document is ready
