@@ -2,15 +2,18 @@
 const loanCatMultiselect = new Choices('#loan_category1', {
     removeItemButton: true,
     noChoicesText: 'Select Loan Category',
-    });
+    allowHTML: true
+});
 const subCatMultiselect = new Choices('#sub_category1', {
     removeItemButton: true,
     noChoicesText: 'Select Sub Category',
-    });
+    allowHTML: true
+});
 const schemeMultiselect = new Choices('#scheme1', {
     removeItemButton: true,
     noChoicesText: 'Select Scheme Name',
-    });
+    allowHTML: true
+});
 
 // Document is ready
 $(document).ready(function () {

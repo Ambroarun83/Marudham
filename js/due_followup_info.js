@@ -3,6 +3,7 @@ const personMultiselect = new Choices('#verification_person', {
     noChoicesText: null,
     placeholder: true,
     placeholderValue: 'Select Verification Person',
+    allowHTML: true
 });
 personMultiselect.disable();// to disable verficiation person dropdown
 

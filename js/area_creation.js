@@ -2,7 +2,8 @@
 const intance = new Choices('#sub_area1', {
     removeItemButton: true,
     noChoicesText: 'Select Sub Area',
-    });
+    allowHTML: true
+});
 
 // Document is ready
 $(document).ready(function () {

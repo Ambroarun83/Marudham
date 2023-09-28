@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 22, 2023 at 03:05 PM
+-- Generation Time: Sep 28, 2023 at 03:36 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2420,26 +2420,27 @@ CREATE TABLE `in_approval` (
   `status` varchar(255) DEFAULT '0',
   `insert_login_id` varchar(255) DEFAULT NULL,
   `update_login_id` varchar(255) DEFAULT NULL,
-  `delete_login_id` varchar(255) DEFAULT NULL
+  `delete_login_id` varchar(255) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `in_approval`
 --
 
-INSERT INTO `in_approval` (`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`) VALUES
-('2', '100010001000', '21', '0', '5', '2', NULL),
-('6', '200020002000', '21', '0', '2', '2', NULL),
-('5', '100010001000', '20', '0', '2', '2', NULL),
-('7', '300030003000', '16', '0', '5', '5', NULL),
-('8', '200020002000', '14', '0', '2', '2', NULL),
-('1', '010720232023', '14', '0', '3', '3', NULL),
-('11', '500050005000', '14', '0', '2', '2', NULL),
-('9', '100010001000', '14', '0', '5', '2', NULL),
-('12', '400040004000', '14', '0', '2', '2', NULL),
-('10', '300030003000', '14', '0', '2', '2', NULL),
-('16', '060120230408', '3', '0', '2', '2', NULL),
-('18', '100010001000', '14', '0', '2', '2', NULL);
+INSERT INTO `in_approval` (`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `updated_date`) VALUES
+('2', '100010001000', '21', '0', '5', '2', NULL, NULL),
+('6', '200020002000', '21', '0', '2', '2', NULL, NULL),
+('5', '100010001000', '20', '0', '2', '2', NULL, NULL),
+('7', '300030003000', '16', '0', '5', '5', NULL, NULL),
+('8', '200020002000', '14', '0', '2', '2', NULL, NULL),
+('1', '010720232023', '14', '0', '3', '3', NULL, NULL),
+('11', '500050005000', '14', '0', '2', '2', NULL, NULL),
+('9', '100010001000', '14', '0', '5', '2', NULL, NULL),
+('12', '400040004000', '14', '0', '2', '2', NULL, NULL),
+('10', '300030003000', '14', '0', '2', '2', NULL, NULL),
+('16', '060120230408', '3', '0', '2', '2', NULL, NULL),
+('18', '100010001000', '14', '0', '2', '2', NULL, NULL);
 
 -- --------------------------------------------------------
 
