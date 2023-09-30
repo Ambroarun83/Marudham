@@ -116,14 +116,18 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $qry = $con->query("SELECT ag.ag_id FROM agent_creation ag JOIN user us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id' ");
-    $ag_ids = $qry->fetch_assoc()['ag_id'];
+    //without while it will not give all the agent ids
+    while($rww = $qry->fetch_assoc()){
+        $ag_ids[] = $rww["ag_id"];
+    }
+    $ag_ids = implode(',',$ag_ids);
 
 
     $agentCollQry = $con->query("SELECT
         SUM(amt) AS agent_coll
         FROM (
             (SELECT COALESCE(SUM(total_paid_track), 0) AS amt FROM collection
-            WHERE date(created_date) = '$op_date' AND FIND_IN_SET(insert_login_id,$ag_ids) ORDER BY created_date DESC LIMIT 1)
+            WHERE date(created_date) = '$op_date' AND FIND_IN_SET(insert_login_id,'$ag_ids') ORDER BY created_date DESC LIMIT 1)
             
         ) AS Agent_Collection_Credit_Opening
     ");
@@ -134,7 +138,7 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
         SUM(amt) AS agent_issue
         FROM (
             (SELECT COALESCE(SUM(cash + cheque_value + transaction_value), 0) AS amt FROM loan_issue
-            WHERE date(created_date) = '$op_date' AND FIND_IN_SET(agent_id,'$ag_ids') ORDER BY created_date DESC LIMIT 1)
+            WHERE date(created_date) = '$op_date' AND FIND_IN_SET(agent_id,''$ag_ids'') ORDER BY created_date DESC LIMIT 1)
             
         ) AS Agent_Issue_Debit_Opening
     ");
@@ -148,7 +152,7 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
     $agentCreditQry = $con->query("SELECT
         SUM(amt) AS agent_credit
         FROM (
-            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_hag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,$ag_ids) and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
+            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_hag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
             
         ) AS Agent_Credit_Opening
     ");
@@ -158,7 +162,7 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
     $agentDebitQry = $con->query("SELECT
         SUM(amt) AS agent_debit
         FROM (
-            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_hag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,$ag_ids) and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
+            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_hag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
             
         ) AS Agent_Debit_Opening
     ");
@@ -172,7 +176,7 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
     $agentCreditQry = $con->query("SELECT
         SUM(amt) AS agent_credit
         FROM (
-            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_bag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,$ag_ids) and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
+            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_bag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
             
         ) AS Agent_Credit_Opening
     ");
@@ -182,7 +186,7 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
     $agentDebitQry = $con->query("SELECT
         SUM(amt) AS agent_debit
         FROM (
-            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_bag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,$ag_ids) and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
+            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_bag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
             
         ) AS Agent_Debit_Opening
     ");

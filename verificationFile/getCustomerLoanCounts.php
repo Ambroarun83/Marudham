@@ -9,13 +9,14 @@ $records = array();
 
 $result = $connect->query("SELECT * FROM `in_issue` where cus_id='$cus_id' and cus_status >= 14 ");
 $records['loan_count'] =  $result->rowCount();
+$records['existing_type'] = '';
 
 while($res = $result->fetch()){
         if($res['cus_status'] >= 14 && $res['cus_status'] < 20){
             $records['existing_type'] = 'Additional';
-        }else{
+        }else if($res['cus_status'] >= 20 && $records['existing_type'] != 'Additional'){
             $records['existing_type'] = 'Renewal';
-    }
+        }
     
 }
 
