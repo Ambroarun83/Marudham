@@ -48,7 +48,7 @@ function moneyFormatIndia($num){
             // Create a DateTime object from the given date
             $maturity_month = new DateTime($maturity_month);
             // Subtract one month from the date
-            $maturity_month->modify('-1 month');
+            // $maturity_month->modify('-1 month');
             // Format the date as a string
             $maturity_month = $maturity_month->format('Y-m-d');
 
@@ -75,7 +75,7 @@ function moneyFormatIndia($num){
             // Create a DateTime object from the given date
             $maturity_month = new DateTime($maturity_month);
             // Subtract one month from the date
-            $maturity_month->modify('-7 days');
+            // $maturity_month->modify('-7 days');
             // Format the date as a string
             $maturity_month = $maturity_month->format('Y-m-d');
 
@@ -100,7 +100,7 @@ function moneyFormatIndia($num){
             // Create a DateTime object from the given date
             $maturity_month = new DateTime($maturity_month);
             // Subtract one month from the date
-            $maturity_month->modify('-1 days');
+            // $maturity_month->modify('-1 days');
             // Format the date as a string
             $maturity_month = $maturity_month->format('Y-m-d');
 
@@ -917,7 +917,7 @@ function calculateOthers($loan_arr,$response,$date,$con){
         // Create a DateTime object from the given date
         $maturity_month = new DateTime($maturity_month);
         // Subtract one month from the date
-        $maturity_month->modify('-1 month');
+        // $maturity_month->modify('-1 month');
         // Format the date as a string
         $maturity_month = $maturity_month->format('Y-m');
 
