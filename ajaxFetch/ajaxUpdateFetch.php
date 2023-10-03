@@ -115,75 +115,127 @@ echo json_encode($output);
 
 function getDocumentStatus($con,$cus_id){
     
-    $response1 = false;
+    $response1 = 'completed';
 
     $sts_qry = $con->query("SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' ");//echo "SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' "; 
     if($sts_qry->num_rows > 0){
         while($sts_row=$sts_qry->fetch_assoc()){
             
             $sts_qry1 = $con->query("SELECT * FROM signed_doc where cus_id = '$cus_id' and signed_doc_id='".$sts_row['id']."' "); //echo ' $sts_qry1->num_rows:',$sts_qry1->num_rows,' docCount:',$sts_row['doc_Count'],'---';
-            if($sts_qry1->num_rows == $sts_row['doc_Count'] ){ // check whether mentioned count of signed document has been collected from customer or not
-                $response1 = true;// if condition true then all documents are collected
+            if($sts_qry1->num_rows == $sts_row['doc_Count'] && $response1 != 'pending' ){ // check whether mentioned count of signed document has been collected from customer or not
+                $response1 = 'completed';// if condition true then all documents are collected
+                //completed
+            }else{
+                $response1= 'pending';
             }
         }
-    }else{
-        $response1 = true;//if there is no cheque then direclty it will be considered as completed
     }
+    // else{
+    //     $response1 = 'completed';//if there is no cheque then direclty it will be considered as completed
+    // }
     
-
-    $response2 = false;
+    
+    $response2 = 'completed';
     $sts_qry = $con->query("SELECT id,cheque_count FROM cheque_info where cus_id = '$cus_id' ");
     if($sts_qry->num_rows > 0){
-
+        
         while($sts_row=$sts_qry->fetch_assoc()){
             
             $sts_qry1 = $con->query("SELECT * FROM cheque_upd where cus_id = '$cus_id' and cheque_table_id='".$sts_row['id']."' ");
-            if($sts_qry1->num_rows == $sts_row['cheque_count']){ // check whether mentioned count of Cheque has been collected from customer or not
-                $response2 = true;// if condition true then all documents are collected
+            if($sts_qry1->num_rows == $sts_row['cheque_count'] && $response2 != 'pending'){ // check whether mentioned count of Cheque has been collected from customer or not
+                $response2 = 'completed';// if condition true then all documents are collected
+            }else{
+                $response2 = 'pending';
             }
         }
-    }else{
-        $response2 = true;//if there is no cheque then direclty it will be considered as completed
     }
+    // else{
+    //     $response2 = true;//if there is no cheque then direclty it will be considered as completed
+    // }
     
 
-    $response3 = false;
-    $sts_qry = $con->query("SELECT mortgage_document_pending,Rc_document_pending FROM acknowlegement_documentation where cus_id_doc = '$cus_id' ");
+    $response3 = 'completed';
+    $sts_qry = $con->query("SELECT mortgage_process,mortgage_document_pending,endorsement_process,Rc_document_pending FROM acknowlegement_documentation where cus_id_doc = '$cus_id' ");
+    // echo "SELECT mortgage_process,mortgage_document_pending,endorsement_process,Rc_document_pending FROM acknowlegement_documentation where cus_id_doc = '$cus_id' ";
 
     if($sts_qry->num_rows > 0){
         while($sts_row=$sts_qry->fetch_assoc()){ //check any one of document for mortgage or endorsement is pending then response will be pending
         
-            if($sts_row['mortgage_document_pending'] == 'YES' || $sts_row['Rc_document_pending'] == 'YES'){
-
-            }elseif($sts_row['mortgage_document_pending'] == 'NO' || $sts_row['Rc_document_pending'] == 'NO'){
-                $response3 = true;// if condition false then all documents are collected
+            if($sts_row['mortgage_process'] == '0'){
+                if($sts_row['mortgage_document_pending'] == 'YES'){
+                    $response3 = 'pending';
+                }
+                
             }
+            if($sts_row['endorsement_process'] == '0'){
+                if($sts_row['Rc_document_pending'] == 'YES'){
+                    $response3 = 'pending';
+                }
+                
+            }
+
+        //     if($sts_row['mortgage_process'] == '0' ){
+
+        //         // if($sts_row['mortgage_document_pending'] == 'YES' || $sts_row['Rc_document_pending'] == 'YES'){
+                    
+        //         // }elseif($sts_row['mortgage_document_pending'] == 'NO' || $sts_row['Rc_document_pending'] == 'NO'){
+        //         //     $response3 = true;// if condition false then all documents are collected
+        //         // }
+
+        //         if($sts_row['mortgage_document_pending'] == 'NO' && $response3 == ""){
+        //             //if mortgage document is not pending then set response to true means completed
+        //             $response3 = true;
+        //         }else{
+        //             $response3 = false;
+        //         }
+        //     }elseif($response3 != false){
+        //         $response3 = true;
+        //     }
+        //     if($sts_row['endorsement_process'] == '0'){
+        //         if($sts_row['Rc_document_pending'] == 'NO'){
+        //             //if mortgage document is not pending then set response to true means completed
+        //             $response3 = true;
+        //         }else{
+        //             $response3 = false;
+        //         }
+        //     }else{
+        //         $response3 = true;
+        //     }
+        //     // }else{
+        //     //     $response3 = true;// if condition false then all documents are collected
+        //     // }
         }
-    }else{
-        $response3 = true;//if there is no cheque then direclty it will be considered as completed
     }
+    // else{
+    //     $response3 = true;//if there is no cheque then direclty it will be considered as completed
+    // }
     
     // var_dump($response3);
+    
 
-    $response4 = true;
+    $response4 = 'completed';
     $sts_qry = $con->query("SELECT * FROM document_info where cus_id = '$cus_id' ");
+    // echo "SELECT * FROM document_info where cus_id = '$cus_id' ";
 
     if($sts_qry->num_rows > 0){
         while($sts_row = $sts_qry->fetch_assoc()){
 
             if($sts_row['doc_upload'] == '' || $sts_row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
-                $response4 = false;
-            }else if($response4 != false){ // in this stage current row of doc has been submitted but need to check the response is pending. if yes it should not changed to completed
-                $response4 = true;
+                $response4 = 'pending';
             }
+            // else if($response4 != false){ // in this stage current row of doc has been submitted but need to check the response is pending. if yes it should not changed to completed
+            //     $response4 = true;
+            // }
         }
-    }else{
-        $response4 = true;//if there is no cheque then direclty it will be considered as completed
     }
+    // else{
+    //     $response4 = 'completed';//if there is no cheque then direclty it will be considered as completed
+    // }
     
+    // var_dump($response4);
     
 
-    if($response1 == true and $response2 == true and $response3 == true and $response4 == true){
+    if($response1 == 'completed' and $response2 == 'completed' and $response3 == 'completed' and $response4 == 'completed'){
         $response = true;
     }else{
         $response = false;
