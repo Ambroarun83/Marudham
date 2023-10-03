@@ -1209,7 +1209,7 @@ function getCashWithdrawalDetails(){
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
             <div class="form-group">
                 <label for="trans_id_cwd">Transaction ID</label>
-                <input type="number" id="trans_id_cwd" name="trans_id_cwd" class="form-control" placeholder="Enter Transaction ID">
+                <input type="text" id="trans_id_cwd" name="trans_id_cwd" class="form-control" placeholder="Enter Transaction ID">
                 <span class="text-danger" id='trans_id_cwdCheck' style="display:none">Please Enter Transaction ID</span>
             </div>
         </div>
@@ -2130,7 +2130,7 @@ function getBotherincomeDetails(){
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
         <div class="form-group">
             <label for="trans_id">Transaction ID</label>
-            <input type='number' id="trans_id" name="trans_id" class="form-control" placeholder="Enter Transaction ID">
+            <input type='text' id="trans_id" name="trans_id" class="form-control" placeholder="Enter Transaction ID">
             <span id='trans_idCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
         </div>
     </div>
@@ -2702,7 +2702,7 @@ function bexpenseModalBtnClick(){
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
                         <div class="form-group">
                             <label for="trans_id_bexp">Transaction ID</label><span class='text-danger'>&nbsp;*</span>
-                            <input type='number' id="trans_id_bexp" name="trans_id_bexp" class="form-control" placeholder="Enter Transaction ID">
+                            <input type='text' id="trans_id_bexp" name="trans_id_bexp" class="form-control" placeholder="Enter Transaction ID">
                             <span id='trans_id_bexpCheck' class="text-danger" style="display:none">Please Enter Transaction ID</span>
                         </div>
                     </div>
