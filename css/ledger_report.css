@@ -1,0 +1,26 @@
+/* Toggle button styles */
+.toggle-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0px;
+    background-color: transparent;
+}
+
+.toggle-button {
+    padding: 12px 20px;
+    background-color: #ccc;
+    border: none;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.toggle-button.active:not(#by_user) {
+    background-color: #009688;
+    color: white;
+}

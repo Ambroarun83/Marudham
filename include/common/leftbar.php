@@ -75,6 +75,11 @@ else if($current_page == 'edit_concern_creation' || $current_page == 'edit_conce
 
 	$current_module = 'followup';
 
+}else if($current_page == 'ledger_report' || $current_page == 'request_report' || $current_page == 'cus_profile_report' || $current_page == 'loan_issue_report' 
+	|| $current_page == 'collection_report' || $current_page == 'balance_report' || $current_page == 'due_list_report' || $current_page == 'closed_report' ){
+
+		$current_module = 'report';
+
 }else{
 	$current_module = '';
 }
@@ -164,6 +169,15 @@ $promotion_activity = '';
 $loan_followup = '';
 $confirmation_followup = '';
 $due_followup = '';
+$reportmodule = '';
+$ledger_report = '';
+$request_report = '';
+$cus_profile_report = '';
+$loan_issue_report = '';
+$collection_report = '';
+$balance_report = '';
+$due_list_report = '';
+$closed_report = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -231,6 +245,16 @@ if (sizeof($getUser)>0) {
 		$loan_followup          		     = $getUser['loan_followup'];
 		$confirmation_followup          		     = $getUser['confirmation_followup'];
 		$due_followup          		     = $getUser['due_followup'];
+		
+		$reportmodule          		     = $getUser['reportmodule'];
+		$ledger_report          		     = $getUser['ledger_report'];
+		$request_report          		     = $getUser['request_report'];
+		$cus_profile_report          		     = $getUser['cus_profile_report'];
+		$loan_issue_report          		     = $getUser['loan_issue_report'];
+		$collection_report          		     = $getUser['collection_report'];
+		$balance_report          		     = $getUser['balance_report'];
+		$due_list_report          		     = $getUser['due_list_report'];
+		$closed_report          		     = $getUser['closed_report'];
 	}
 }
 ?>
@@ -714,6 +738,58 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
+				<?php if($reportmodule == 0){ ?>
+                    <li class="sidebar-dropdown ">
+                        <a href="javascript:void(0)">
+							<i><img class='svg-icon' src="svg/report.svg" ></i>
+                            <span class="menu-text">Reports</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='report') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($ledger_report == 0){ ?>
+                                    <li>
+                                        <a href="ledger_report"><i><img class='svg-icon' src="svg/ledger.svg" ></i>Ledger View</a>
+                                    </li>
+                                <?php  } ?>
+                                <?php  if($request_report == 0){ ?>
+                                    <li>
+                                        <a href="request_report"><i><img class='svg-icon' src="svg/ledger.svg" ></i>Request</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($cus_profile_report == 0){ ?>
+                                    <li>
+                                        <a href="cus_profile_report"><i><img class='svg-icon' src="svg/ledger.svg" ></i>Customer Profile</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($loan_issue_report == 0){ ?>
+                                    <li>
+                                        <a href="loan_issue_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Loan Issue</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($collection_report == 0){ ?>
+                                    <li>
+                                        <a href="collection_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Collection</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($balance_report == 0){ ?>
+                                    <li>
+                                        <a href="balance_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Balance</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($due_list_report == 0){ ?>
+                                    <li>
+                                        <a href="due_list_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Due List</a>
+                                    </li>
+                                <?php  } ?>
+								<?php  if($closed_report == 0){ ?>
+                                    <li>
+                                        <a href="closed_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Closed</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->
@@ -789,4 +865,13 @@ $promotion_activity = '';
 $loan_followup = '';
 $confirmation_followup = '';
 $due_followup = '';
+$reportmodule = '';
+$ledger_report = '';
+$request_report = '';
+$cus_profile_report = '';
+$loan_issue_report = '';
+$collection_report = '';
+$balance_report = '';
+$due_list_report = '';
+$closed_report = '';
 ?>
