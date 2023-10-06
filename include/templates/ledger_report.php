@@ -15,6 +15,7 @@
 <div class="main-container">
 	<!--form start-->
 	<form id = "ledger_report_form" name="ledger_report_form" action="" method="post" enctype="multipart/form-data"> 
+        
         <div class="row gutters">
             <div class="toggle-container col-12">
                 <input type="button" class="toggle-button" value='Daily'>
@@ -22,5 +23,40 @@
                 <input type="button" class="toggle-button" value='Monthly'>
             </div>
         </div>
+        <div class="row gutters" id="daily_card" style="display: none;">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Daily Ledger Report</div>
+					<div class="card-body">
+						<div id="daily_table_div" style="overflow-x:scroll;">
+                            
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="row gutters" id="weekly_card" style="display: none;">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Weekly Ledger Report</div>
+					<div class="card-body">
+						<div id="weekly_table_div" style="overflow-x:scroll;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+        <div class="row gutters" id="monthly_card" style="display: none;">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card">
+					<div class="card-header">Monthly Ledger Report</div>
+					<div class="card-body">
+						<div id="monthly_table_div" style="overflow-x:scroll;">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
     </form>
 </div>
