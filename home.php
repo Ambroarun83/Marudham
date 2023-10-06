@@ -405,6 +405,12 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'confirmation_followup') { ?>
 			<?php include "include/templates/confirmation_followup.php" ?>
 			<?php }else ?>
+			
+			<!-- Reports -->
+			<!-- Ledger Report -->
+			<?php if($current_page == 'ledger_report') { ?>
+			<?php include "include/templates/ledger_report.php" ?>
+			<?php }else ?>
 
 			<!-- 404 Not found page -->
 			<?php { ?>
