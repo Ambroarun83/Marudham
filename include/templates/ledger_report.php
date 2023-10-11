@@ -28,7 +28,7 @@
 				<div class="card">
 					<div class="card-header">Daily Ledger Report</div>
 					<div class="card-body">
-						<div id="daily_table_div" style="overflow-x:scroll;">
+						<div id="daily_table_div" class="table-divs" style="overflow-x:scroll;">
                             
 						</div>
 					</div>
@@ -40,7 +40,10 @@
 				<div class="card">
 					<div class="card-header">Weekly Ledger Report</div>
 					<div class="card-body">
-						<div id="weekly_table_div" style="overflow-x:scroll;">
+						<div class="dd_div">
+							<input type="date" class="date-button" id="weekly_date" name="weekly_date">
+						</div>
+						<div id="weekly_table_div" class="table-divs" style="overflow-x:scroll;">
 						</div>
 					</div>
 				</div>
@@ -51,8 +54,10 @@
 				<div class="card">
 					<div class="card-header">Monthly Ledger Report</div>
 					<div class="card-body">
-						<div id="monthly_table_div" style="overflow-x:scroll;">
+						<div class="dd_div">
+							<input type="date" class="date-button" id="monthly_date" name="monthly_date">
 						</div>
+						<div id="monthly_table_div" class="table-divs" style="overflow-x:scroll;"></div>
 					</div>
 				</div>
 			</div>
