@@ -1,6 +1,8 @@
 <?php
 include '../../ajaxconfig.php';
 
+$monthly_date = date('Y-m-d',strtotime($_POST['monthly_date']));
+
 //below query will get all the data of the customer who has taken daily scheme loans
 //in that query, we will also have the opening balance for this current month based on last paid date
 //collection table takes lasst paid row and subract balance amt with paid amt to get the exact paid amt
@@ -15,12 +17,15 @@ $qry = $con->query("
         lc.loan_category as loan_cat_id,
         lc.sub_category,
         lc.due_amt_cal as due_amt,
+        lc.int_amt_cal as int_amt,
+        lc.tot_amt_cal,
+        lc.principal_amt_cal,
         al.area_name,
         sal.sub_area_name,
         lcc.loan_category_creation_name,
         (SELECT sum(due_amt_track) as due_amt_track FROM collection where req_id = cp.req_id) as total_paid,
-        (SELECT bal_amt - due_amt_track as bal_amt FROM collection where req_id = cp.req_id and (month(date(coll_date)) <= '".date('m')."' 
-        and year(date(coll_date)) <= '".date('Y')."' ) ORDER BY MONTH(coll_date) = '".date('m')."' DESC,coll_id DESC LIMIT 1 ) as opening_balance
+        (SELECT bal_amt - due_amt_track as bal_amt FROM collection where req_id = cp.req_id and (month(date(coll_date)) <= month('$monthly_date') 
+        and year(date(coll_date)) <= year('$monthly_date') ) ORDER BY MONTH(coll_date) = month('$monthly_date') DESC,coll_id DESC LIMIT 1 ) as opening_balance
     FROM 
         acknowlegement_customer_profile cp 
         JOIN acknowlegement_loan_calculation lc ON cp.req_id = lc.req_id 
@@ -30,7 +35,9 @@ $qry = $con->query("
         JOIN sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
     WHERE 
-        (ii.cus_status >= 14 && ii.cus_status < 20) AND lc.due_method_scheme = 3");
+        (ii.cus_status >= 14 && ii.cus_status < 20) 
+        AND (lc.due_method_scheme = 1 or lc.due_method_scheme = null or lc.due_method_scheme = '' )
+        and (month(lc.due_start_from) = month('$monthly_date') and year(lc.due_start_from) = year('$monthly_date') ) ");
         
 
     $rows = array();
@@ -38,9 +45,40 @@ $qry = $con->query("
         $rows[] = $row;
     }
 ?>
+<?php
+// Function to loop through months
+function generateMonths($start, $end) {
+    $months = [];
+    $currentDate = clone $start;
+    
+    while ($currentDate <= $end) {
+        $months[] = $currentDate->format('Y-m-d');
+        $currentDate->modify('+1 month');
+    }
+
+    return $months;
+}
+
+// Input date
+$inputDate = date('Y-m-d',strtotime($_POST['monthly_date']));
+
+// Create DateTime object from input date
+$startDate = new DateTime($inputDate);
+$startDate->modify('first day of this month');
+
+// Calculate end date (10th month)
+$endDate = clone $startDate;
+$endDate->modify('+9 months');
+
+// Generate months between start and end dates
+$months = generateMonths($startDate, $endDate);
+
+// Output months
+// print_r($months);die;
+?>
 
 
-<table class="table custom-table" id="daily_table">
+<table class="table custom-table" id="monthly_table">
     <thead>
         <th>S.No</th>
         <th>Customer Name</th>
@@ -52,21 +90,13 @@ $qry = $con->query("
         <th>Sub Category</th>
         <th>Due Amount</th>
         <th>Opening Balance</th>
-        
-        <?php 
-            $currMonth = new DateTime();
-            $start = new DateTime($currMonth->format('Y-m-01'));
-            $end = new DateTime($currMonth->format('Y-m-t'));
-            for($date = $start; $date <= $end; $date->modify('+1 day')) {
-                ?>
-
-                <th>
-                    <?php echo $date->format('d'); ?>
-                </th>
         <?php
+            for( $i = 0; $i < count($months); $i++ ) {
+                ?>
+                <th><?php echo date('M',strtotime($months[$i]));?></th>
+                <?php
             }
         ?>
-        
         <th>Total Paid</th>
         <th>Closing Balance</th>
     </thead>
@@ -76,6 +106,7 @@ $qry = $con->query("
             
             if($qry->num_rows > 0){
                 foreach($rows as $row) {
+                    $total_paid = 0;
             ?>
                     <tr>
                         <td><?php echo $i++; ?></td>
@@ -86,21 +117,32 @@ $qry = $con->query("
                         <td><?php echo date('d-m-Y', strtotime($row['maturity_date'])); ?></td>
                         <td><?php echo $row['loan_category_creation_name']; ?></td>
                         <td><?php echo $row['sub_category']; ?></td>
-                        <td><?php echo moneyFormatIndia($row['due_amt']); ?></td>
-                        <td><?php echo moneyFormatIndia($row['opening_balance']); ?></td>
+                        <!-- used ternary operator cause monthly loans may not have due amt for interest loans, so showed interest amt instead due amt -->
+                        <td><?php echo moneyFormatIndia($row['due_amt']!=''?$row['due_amt']:$row['int_amt']); ?></td>
+                        <td>
+                            <?php 
+                            if($row['opening_balance'] != ''){
+                                echo moneyFormatIndia($row['opening_balance']); 
+                            }else{
+                                $row['opening_balance'] = $row['tot_amt_cal']!=''?$row['tot_amt_cal']:$row['principal_amt_cal'];
+                                echo moneyFormatIndia($row['opening_balance']); 
+                            }
+                            ?>
+                        </td>
                         <?php
-                            $currMonth = new DateTime();
-                            $start = new DateTime($currMonth->format('Y-m-01'));
-                            $end = new DateTime($currMonth->format('Y-m-t')); 
-                            $total_paid = 0 ;
-                            for($date = $start; $date <= $end; $date->modify('+1 day')) {
-
-                                $coll_qry = $con->query('SELECT due_amt_track FROM collection where req_id = '.$row['req_id'].' and date(coll_date) = "'.date('Y-m-d', strtotime($date->format('Y-m-d'))).'" ORDER BY coll_id DESC ');
-                                $due_amt_track = $coll_qry->fetch_assoc()['due_amt_track']??0;
-                                $total_paid = $total_paid + $due_amt_track;
-                        ?>
-                            <td><?php echo moneyFormatIndia($due_amt_track);?></td>
-                        <?php
+                            for( $j = 0; $j < count($months); $j++ ) {
+                                ?>
+                                <td>
+                                    <?php 
+                                        //this query will get the all paid amt from collection table between the week dated given
+                                        $coll_qry = $con->query("SELECT sum(due_amt_track) as due_amt_track FROM collection where req_id = '".$row['req_id']."' and 
+                                            month(coll_date) = month('".$months[$j]."') and year(coll_date) = year('".$months[$j]."') ");
+                                        $coll_row = $coll_qry->fetch_assoc();
+                                        echo moneyFormatIndia($coll_row['due_amt_track']??0);
+                                        $total_paid += $coll_row['due_amt_track'];
+                                    ?>
+                                </td>
+                                <?php
                             }
                         ?>
                         <td><?php echo moneyFormatIndia($total_paid); ?></td>
@@ -116,14 +158,14 @@ $qry = $con->query("
 
 <script type='text/javascript'>
     $(function() {
-        $('#daily_table').DataTable({
-            "title":"Daily Ledger",
+        $('#monthly_table').DataTable({
+            "title":"Monthly Ledger",
             'processing': true,
             'iDisplayLength': 5,
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ],
+            ]
         });
     });
 </script>
