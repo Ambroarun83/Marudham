@@ -55,7 +55,7 @@
 					<div class="card-header">Monthly Ledger Report</div>
 					<div class="card-body">
 						<div class="dd_div">
-							<input type="date" class="date-button" id="monthly_date" name="monthly_date">
+							<input type="month" class="date-button" id="monthly_date" name="monthly_date">
 						</div>
 						<div id="monthly_table_div" class="table-divs" style="overflow-x:scroll;"></div>
 					</div>

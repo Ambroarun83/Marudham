@@ -1,7 +1,7 @@
 <?php
 include '../../ajaxconfig.php';
 
-$monthly_date = date('Y-m-d',strtotime($_POST['monthly_date']));
+$monthly_date = date('Y-m-01',strtotime($_POST['monthly_date']));
 
 //below query will get all the data of the customer who has taken daily scheme loans
 //in that query, we will also have the opening balance for this current month based on last paid date
@@ -60,11 +60,11 @@ function generateMonths($start, $end) {
 }
 
 // Input date
-$inputDate = date('Y-m-d',strtotime($_POST['monthly_date']));
+$inputDate = date('Y-m-01',strtotime($_POST['monthly_date']));
 
 // Create DateTime object from input date
 $startDate = new DateTime($inputDate);
-$startDate->modify('first day of this month');
+// $startDate->modify('first day of this month');
 
 // Calculate end date (10th month)
 $endDate = clone $startDate;
@@ -165,7 +165,16 @@ $months = generateMonths($startDate, $endDate);
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
-            ]
+            ],
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
         });
     });
 </script>
