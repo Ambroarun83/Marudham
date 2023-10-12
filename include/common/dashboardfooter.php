@@ -1204,6 +1204,9 @@ if($current_page == 'confirmation_followup') { ?>
 if($current_page == 'ledger_report') { ?>
     <script src="js/ledger_report.js"></script>
     <?php }
+if($current_page == 'request_report') { ?>
+    <script src="js/request_report.js"></script>
+    <?php }
 
 ?>
 
