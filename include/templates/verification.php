@@ -750,7 +750,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="form-group">
 										<label for="cus_res_type"> Residential Type </label>
 										<select type="text" class="form-control" name="cus_res_type" id="cus_res_type" tabindex="28">
-											<option> Select Residential Type </option>
+											<option value=''> Select Residential Type </option>
 											<option value="0" <?php if (isset($residential_type) and $residential_type == '0') echo 'selected'; ?>> Own </option>
 											<option value="1" <?php if (isset($residential_type) and $residential_type == '1') echo 'selected'; ?>> Rental </option>
 											<option value="2" <?php if (isset($residential_type) and $residential_type == '2') echo 'selected'; ?>> Lease </option>

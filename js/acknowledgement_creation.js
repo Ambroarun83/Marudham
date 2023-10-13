@@ -929,6 +929,7 @@ function fingerprintTable(){//To Get family member's name are required for scann
                         var quality = 60; //(1 to 100) (recommended minimum 55)
                         var timeout = 10; // seconds (minimum=10(recommended), maximum=60, unlimited=0)
                         var res = CaptureFinger(quality, timeout);
+                        console.log("🚀 ~ file: acknowledgement_creation.js:934 ~ setTimeout ~ (res.data.ErrorCode:", res.data.ErrorCode);
                         if (res.httpStaus) {
                             if (res.data.ErrorCode == "0") {
                                 $(this).next().val(res.data.AnsiTemplate); // Take ansi template that is the unique id which is passed by sensor

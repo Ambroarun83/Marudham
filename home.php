@@ -411,9 +411,15 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'ledger_report') { ?>
 			<?php include "include/templates/ledger_report.php" ?>
 			<?php }else ?>
+			
 			<!-- Request Report -->
 			<?php if($current_page == 'request_report') { ?>
 			<?php include "include/templates/request_report.php" ?>
+			<?php }else ?>
+			
+			<!-- Customer Profile Report -->
+			<?php if($current_page == 'cus_profile_report') { ?>
+			<?php include "include/templates/cus_profile_report.php" ?>
 			<?php }else ?>
 
 			<!-- 404 Not found page -->
