@@ -1207,6 +1207,9 @@ if($current_page == 'ledger_report') { ?>
 if($current_page == 'request_report') { ?>
     <script src="js/request_report.js"></script>
     <?php }
+if($current_page == 'cus_profile_report') { ?>
+    <script src="js/cus_profile_report.js"></script>
+    <?php }
 
 ?>
 
