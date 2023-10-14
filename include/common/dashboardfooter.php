@@ -1210,6 +1210,9 @@ if($current_page == 'request_report') { ?>
 if($current_page == 'cus_profile_report') { ?>
     <script src="js/cus_profile_report.js"></script>
     <?php }
+if($current_page == 'loan_issue_report') { ?>
+    <script src="js/loan_issue_report.js"></script>
+    <?php }
 
 ?>
 
