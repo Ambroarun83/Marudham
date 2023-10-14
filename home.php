@@ -421,6 +421,11 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'cus_profile_report') { ?>
 			<?php include "include/templates/cus_profile_report.php" ?>
 			<?php }else ?>
+			
+			<!-- Loan issue Report -->
+			<?php if($current_page == 'loan_issue_report') { ?>
+			<?php include "include/templates/loan_issue_report.php" ?>
+			<?php }else ?>
 
 			<!-- 404 Not found page -->
 			<?php { ?>
