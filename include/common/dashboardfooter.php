@@ -1213,6 +1213,12 @@ if($current_page == 'cus_profile_report') { ?>
 if($current_page == 'loan_issue_report') { ?>
     <script src="js/loan_issue_report.js"></script>
     <?php }
+if($current_page == 'collection_report') { ?>
+    <script src="js/collection_report.js"></script>
+    <?php }
+if($current_page == 'closed_report') { ?>
+    <script src="js/closed_report.js"></script>
+    <?php }
 
 ?>
 

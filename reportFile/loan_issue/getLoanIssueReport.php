@@ -92,11 +92,13 @@ $qry = $con->query("
                         <td><?php echo moneyFormatIndia($row['net_cash_cal']); ?></td>
                         <?php
                             if($row['rec_relationship'] == 'Customer'){
+                                //if loan issued to customer then direclty place customer name from cp table
                         ?>
                             <td><?php echo $row['cus_name']; ?></td>
                             <td><?php echo 'Customer'; ?></td>
                         <?php 
                             }else{
+                                //else place received by and relation name from fam table
                         ?>
                             <td><?php echo $row['received_by']; ?></td>
                             <td><?php echo $row['rel_name']; ?></td>

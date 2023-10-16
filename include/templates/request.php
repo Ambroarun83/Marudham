@@ -622,7 +622,7 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 								<div class="form-group">
 									<label for="calc_int_rate">Rate of Interest</label>
-									<input type="number" class="form-control" id="calc_int_rate" name="calc_int_rate"  tabindex='105'>
+									<input type="number" class="form-control" id="calc_int_rate" name="calc_int_rate"  tabindex='105' pattern="[0-9]*\.?[0-9]+">
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
