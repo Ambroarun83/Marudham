@@ -426,6 +426,16 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'loan_issue_report') { ?>
 			<?php include "include/templates/loan_issue_report.php" ?>
 			<?php }else ?>
+			
+			<!-- Collection Report -->
+			<?php if($current_page == 'collection_report') { ?>
+			<?php include "include/templates/collection_report.php" ?>
+			<?php }else ?>
+			
+			<!-- Closed Report -->
+			<?php if($current_page == 'closed_report') { ?>
+			<?php include "include/templates/closed_report.php" ?>
+			<?php }else ?>
 
 			<!-- 404 Not found page -->
 			<?php { ?>
