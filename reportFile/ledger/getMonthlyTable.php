@@ -161,7 +161,7 @@ $months = generateMonths($startDate, $endDate);
         $('#monthly_table').DataTable({
             "title":"Monthly Ledger",
             'processing': true,
-            'iDisplayLength': 5,
+            'iDisplayLength': 10,
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -180,8 +180,7 @@ $months = generateMonths($startDate, $endDate);
 </script>
 
 <?php
-function moneyFormatIndia($num)
-{
+function moneyFormatIndia($num){
     $explrestunits = "";
     if (strlen($num) > 3) {
         $lastthree = substr($num, strlen($num) - 3, strlen($num));

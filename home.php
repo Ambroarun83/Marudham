@@ -436,6 +436,11 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'closed_report') { ?>
 			<?php include "include/templates/closed_report.php" ?>
 			<?php }else ?>
+			
+			<!-- Balance Report -->
+			<?php if($current_page == 'balance_report') { ?>
+			<?php include "include/templates/balance_report.php" ?>
+			<?php }else ?>
 
 			<!-- 404 Not found page -->
 			<?php { ?>

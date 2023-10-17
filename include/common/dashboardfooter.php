@@ -1219,6 +1219,9 @@ if($current_page == 'collection_report') { ?>
 if($current_page == 'closed_report') { ?>
     <script src="js/closed_report.js"></script>
     <?php }
+if($current_page == 'balance_report') { ?>
+    <script src="js/balance_report.js"></script>
+    <?php }
 
 ?>
 

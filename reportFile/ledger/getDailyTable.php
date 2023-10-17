@@ -119,7 +119,7 @@ $qry = $con->query("
         $('#daily_table').DataTable({
             "title":"Daily Ledger",
             'processing': true,
-            'iDisplayLength': 5,
+            'iDisplayLength': 10,
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
