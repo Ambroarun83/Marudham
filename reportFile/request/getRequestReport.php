@@ -124,7 +124,7 @@ function moneyFormatIndia($num){
         $('#request_report_table').DataTable({
             "title":"Monthly Ledger",
             'processing': true,
-            'iDisplayLength': 5,
+            'iDisplayLength': 10,
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
