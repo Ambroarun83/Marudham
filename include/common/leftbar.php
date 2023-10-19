@@ -100,7 +100,7 @@ else if($current_page == 'edit_concern_creation' || $current_page == 'edit_conce
 			}
 		});
 		if(currentPage == 'dashboard'){
-			$('.dashboard').css('backgroundColor','#646969d9')
+			$('.dashboard').css('backgroundColor','#f')
 		}
 	}, 1000);
 </script>
@@ -774,11 +774,6 @@ if (sizeof($getUser)>0) {
 								<?php  if($balance_report == 0){ ?>
                                     <li>
                                         <a href="balance_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Balance</a>
-                                    </li>
-                                <?php  } ?>
-								<?php  if($due_list_report == 0){ ?>
-                                    <li>
-                                        <a href="due_list_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Due List</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($closed_report == 0){ ?>
