@@ -2,6 +2,16 @@
 
 include '../../ajaxconfig.php';
 
+$where = "1";
+
+if(isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date'] !='' && $_POST['to_date'] != ''){
+    $from_date = date('Y-m-d',strtotime($_POST['from_date']));
+    $to_date = date('Y-m-d',strtotime($_POST['to_date']));
+    $where  = "(date(cs.created_date) >= '".$from_date."') and (date(cs.created_date) <= '".$to_date."') ";
+
+}
+
+
 $qry = $con->query("
             SELECT 
             cp.area_line as line,
@@ -27,7 +37,7 @@ $qry = $con->query("
             JOIN sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
             JOIN closed_status cs ON ii.req_id = cs.req_id
             
-            WHERE ii.cus_status >= 20
+            WHERE ii.cus_status >= 20 and ".$where."
             ");
 
     $closed_sts_arr = [
