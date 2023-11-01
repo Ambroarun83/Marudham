@@ -2,6 +2,16 @@
 
 include '../../ajaxconfig.php';
 
+$where = "1";
+
+if(isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date'] !='' && $_POST['to_date'] != ''){
+    $from_date = date('Y-m-d',strtotime($_POST['from_date']));
+    $to_date = date('Y-m-d',strtotime($_POST['to_date']));
+    $where  = "(date(coll.coll_date) >= '".$from_date."') and (date(coll.coll_date) <= '".$to_date."') ";
+
+}
+
+
 $qry = $con->query("
             SELECT 
             cp.area_line as line,
@@ -39,7 +49,7 @@ $qry = $con->query("
             JOIN acknowlegement_loan_calculation lc ON coll.req_id = lc.req_id
             JOIN request_creation req ON coll.req_id = req.req_id
             
-            WHERE req.cus_status BETWEEN 14 and 18
+            WHERE req.cus_status >= 14 and ".$where."
             ORDER BY coll.coll_date ASC
             ");
 
@@ -48,6 +58,8 @@ $qry = $con->query("
         '15'=> 'Error',
         '16'=> 'Legal',
         '17'=> 'Current',
+        '20'=> 'In Closed',
+        '21'=> 'Closed',
     ]
 ?>
 

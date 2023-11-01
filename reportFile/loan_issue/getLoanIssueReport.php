@@ -2,6 +2,15 @@
 
 include '../../ajaxconfig.php';
 
+$where = "1";
+
+if(isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date'] !='' && $_POST['to_date'] != ''){
+    $from_date = date('Y-m-d',strtotime($_POST['from_date']));
+    $to_date = date('Y-m-d',strtotime($_POST['to_date']));
+    $where  = "(date(ii.updated_date) >= '".$from_date."') and (date(ii.updated_date) <= '".$to_date."') ";
+
+}
+
 $qry = $con->query("
             SELECT 
             ii.loan_id,
@@ -34,7 +43,7 @@ $qry = $con->query("
             JOIN request_creation req ON ii.req_id = req.req_id
             JOIN loan_issue li ON li.req_id = ii.req_id
             
-            WHERE ii.cus_status >= 14
+            WHERE ii.cus_status >= 14 and ".$where."
             ");
 
     

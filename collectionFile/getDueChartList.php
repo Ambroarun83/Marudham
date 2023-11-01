@@ -118,14 +118,14 @@ function moneyFormatIndia($num){
                 $dueMonth[] = $start_date_obj->format('Y-m-d');
             }
         }
-        if($closed == 'true'){
-            // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by li.id desc limit 1 ");
-            $issueDate = $connect->query("SELECT alc.due_amt_cal,alc.int_amt_cal,alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by alc.loan_cal_id desc limit 1 ");
+        // if($closed == 'true'){
+        //     // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by li.id desc limit 1 ");
+        //     $issueDate = $connect->query("SELECT alc.due_amt_cal,alc.int_amt_cal,alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 20 order by alc.loan_cal_id desc limit 1 ");
 
-        }else{
+        // }else{
             // $issueDate = $connect->query("SELECT li.loan_amt,ii.updated_date FROM in_issue ii JOIN loan_issue li ON li.req_id = ii.req_id  WHERE ii.req_id = '$req_id' and ii.cus_status = 14 order by li.id desc limit 1 ");
             $issueDate = $connect->query("SELECT alc.due_amt_cal,alc.int_amt_cal,alc.tot_amt_cal,alc.principal_amt_cal,ii.updated_date FROM in_issue ii JOIN acknowlegement_loan_calculation alc ON ii.req_id = alc.req_id  WHERE ii.req_id = '$req_id' and (ii.cus_status >= 14 ) order by alc.loan_cal_id desc limit 1 ");
-        }
+        // }
         $loanIssue = $issueDate->fetch();
         //If Due method is Monthly, Calculate penalty by checking the month has ended or not
         if($loanIssue['tot_amt_cal'] == '' || $loanIssue['tot_amt_cal'] == null){
