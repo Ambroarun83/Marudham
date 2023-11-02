@@ -1,13 +1,16 @@
 $(document).ready(function() {
 
-    getBalanceReport();
-
+    getBalanceReport('');
+    $('#reset_btn').click(function(){
+        let to_date = $('#to_date').val();
+        getBalanceReport(to_date);
+    })
 });
 
 
 
-function getBalanceReport(){
-    $.post('reportFile/balance/getBalanceReport.php',{},function(data){
+function getBalanceReport(to_date){
+    $.post('reportFile/balance/getBalanceReport.php',{to_date},function(data){
         $('#balance_table_div').empty().html(data);
         
     });
