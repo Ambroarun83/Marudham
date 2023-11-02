@@ -2,6 +2,14 @@
 
 include '../../ajaxconfig.php';
 
+$where = "";
+
+if(isset($_POST['to_date']) && $_POST['to_date'] != ''){
+    $to_date = date('Y-m-d',strtotime($_POST['to_date']));
+    $where  = "and (date(coll_date) <= '".$to_date."') ";
+
+}
+
 $qry = $con->query("
             SELECT 
             cp.area_line as line,
@@ -23,9 +31,9 @@ $qry = $con->query("
             lc.tot_amt_cal,
             lc.due_type,
             lc.due_period,
-            (SELECT sum(due_amt_track) from collection where req_id = lc.req_id) as due_amt_track ,
-            (SELECT sum(princ_amt_track) from collection where req_id = lc.req_id) as princ_amt_track ,
-            (SELECT sum(int_amt_track) from collection where req_id = lc.req_id) as int_amt_track ,
+            (SELECT sum(due_amt_track) from collection where req_id = lc.req_id ".$where." ) as due_amt_track ,
+            (SELECT sum(princ_amt_track) from collection where req_id = lc.req_id ".$where." ) as princ_amt_track ,
+            (SELECT sum(int_amt_track) from collection where req_id = lc.req_id ".$where." ) as int_amt_track ,
             req.cus_status
 
             FROM acknowlegement_loan_calculation lc
