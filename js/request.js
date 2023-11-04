@@ -197,7 +197,9 @@ $(document).ready(function () {
     })
 
     $('#submit_request').click(function(){
-        validation();
+        var submit_btn = $(this);
+        submit_btn.attr('disabled', true);
+        validation(submit_btn);
     })
 
 });// Document ready end
@@ -968,7 +970,7 @@ function getCategoryInfo(sub_cat){
 }
 
 //Validations
-function validation(){
+function validation(submit_btn){
     var idupd = $('#id').val();
     var role = $('#role_load').val();
     if(role == '1'){
@@ -1185,5 +1187,7 @@ function validation(){
             }
         }
     }
+
+    submit_btn.removeAttr('disabled');
 
 }

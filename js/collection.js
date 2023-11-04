@@ -139,7 +139,9 @@ $(document).ready(function(){
     });
 
     $('#submit_collection').click(function(){ 
-        validations();
+        var submit_btn = $(this);
+        submit_btn.attr('disabled', true);
+        validations(submit_btn);
     })
     
     window.onscroll = function () {
@@ -814,7 +816,7 @@ function getBankNames(){
     })
 }
 
-function validations(){
+function validations(submit_btn){
     var collection_access = $('#collection_access').val();
     var collection_mode = $('#collection_mode').val();var bank_id = $('#bank_id').val();var cheque_no = $('#cheque_no').val();var trans_id = $('#trans_id').val();var trans_date = $('#trans_date').val();
     var collection_loc = $('#collection_loc').val();var due_amt_track = $('#due_amt_track').val();var penalty_track = $('#penalty_track').val();var coll_charge_track = $('#coll_charge_track').val();
@@ -898,6 +900,8 @@ function validations(){
     }else{
         $('.totalpaidCheck').hide();
     }
+
+    submit_btn.removeAttr('disabled');
 }
 
 function submitCommitment(){

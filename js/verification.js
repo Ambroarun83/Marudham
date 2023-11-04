@@ -2848,10 +2848,12 @@ function feedbackList() {
 ////////////////////////////////////////////////Submit Verification //////////////////////////////////////////////////////////////////////////////
 
 $('#submit_verification').click(function () {
-    validation();
+    var submit_btn = $(this);
+    submit_btn.attr('disabled', true);
+    validation(submit_btn);
 });
 
-function validation() {
+function validation(submit_btn) {
     var cus_id = $('#cus_id').val(); var cus_name = $('#cus_name').val(); var dob = $('#dob').val(); var gender = $('#gender').val(); var bloodGroup = $('#bloodGroup').val(); var state = $('#state').val()
     var district = $('#district1').val(); var taluk = $('#taluk1').val(); var area = $('#area').val(); var sub_area = $('#sub_area').val(); var pic = $('#pic').val(); var mobile1 = $('#mobile1').val();
     var guarentor_name = $('#guarentor_name').val();var guarentor_image = $('#guarentor_image').val(); var guarentorpic = $('#guarentorpic').val(); var area_cnfrm = $('#area_cnfrm').val(); var cus_res_type = $('#cus_res_type').val();
@@ -3162,6 +3164,7 @@ function validation() {
     // var sortedStr = arr.join(",");
     // $('#verifyPerson').val(sortedStr);
 
+    submit_btn.removeAttr('disabled');
 }
 
 $('#Communitcation_to_cus').change(function () {
@@ -4018,10 +4021,12 @@ function getDocumentHistory(){
 
 //Documentation Submit Validation
 $('#submit_documentation').click(function () {
-    doc_submit_validation();
+    var submit_btn = $(this);
+    submit_btn.attr('disabled', true);
+    doc_submit_validation(submit_btn);
 });
 
-function doc_submit_validation() {
+function doc_submit_validation(submit_btn) {
 
     var cus_id_doc = $('#cus_id_doc').val(); var mortgage_process = $('#mortgage_process').val(); var Propertyholder_type = $('#Propertyholder_type').val(); var doc_property_pype = $('#doc_property_pype').val(); var doc_property_measurement = $('#doc_property_measurement').val(); var doc_property_location = $('#doc_property_location').val(); var doc_property_value = $('#doc_property_value').val();
     var endorsement_process = $('#endorsement_process').val(); var owner_type = $('#owner_type').val(); var vehicle_type = $('#vehicle_type').val(); var vehicle_process = $('#vehicle_process').val();
@@ -4254,6 +4259,7 @@ function doc_submit_validation() {
     //     }
     // })
 
+    submit_btn.removeAttr('disabled');
 
 }
 //////////////////////////////////////////////////// Documentation  END////////////////////////////////////////
@@ -4357,8 +4363,10 @@ $('#due_start_from').change(function(){
 
 $('#submit_loan_calculation').click(function(){
     $('#refresh_cal').trigger('click'); //For calculate once again if user missed to refresh calculation
-
-    loan_calc_validation(); 
+    
+    var submit_btn = $(this);
+    submit_btn.attr('disabled', true);
+    loan_calc_validation(submit_btn); 
 })
 
 
@@ -5482,7 +5490,7 @@ function getLoanDaily(){
 }
 
 //Validation for Loan calculation
-function loan_calc_validation(){
+function loan_calc_validation(submit_btn){
     var cus_id_loan = $('#cus_id_loan').val(); //if this is empty means , customer profile is not submitted yet
     var loan_category = $('#loan_category').val(); var sub_category = $('#sub_category').val();var tot_value = $('#tot_value').val();var ad_amt = $('#ad_amt').val();
     var loan_amt = $('#loan_amt').val();var due_type = $('#due_type').val();
@@ -5659,7 +5667,8 @@ function loan_calc_validation(){
     }
     
     
-    
+    submit_btn.removeAttr('disabled');
+
 }
 
 //////////////////////////////////////////////////////////////////// Loan Calculation Functions End ///////////////////////////////////////////////////////////////////////////////
