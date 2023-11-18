@@ -130,7 +130,7 @@ $qry = $con->query("
                     <td><?php echo moneyFormatIndia($balance_amt); ?></td>
                     <td><?php echo moneyFormatIndia($response['principal_paid']); ?></td>
                     <td><?php echo moneyFormatIndia($response['interest_paid']); ?></td>
-                    <td><?php echo moneyFormatIndia($bal_due); ?></td>
+                    <td><?php echo $bal_due;//moneyFormatIndia($bal_due); ?></td>
                     <td><?php echo 'Present' ?></td>
                     <td><?php echo $statusObj[$row['cus_status']]; ?></td>
                 </tr>

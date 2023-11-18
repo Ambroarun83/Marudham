@@ -7,12 +7,17 @@ if(isset($_SESSION['userid'])){
 
 if(isset($_POST['submit_collection']) && $_POST['submit_collection'] != ''){
 	if(isset($_POST['req_id'])){$req_id = $_POST['req_id'];}
+	?>
+    <script>$('#submit_collection').attr('disabled', true);</script>
+	
+    <?php
 	if(isset($_POST['collection_id'])){$coll_id = $_POST['collection_id'];}
 	$addCollection = $userObj->addCollection($mysqli,$req_id,$userid);
 	
 	?>
 	<!-- <script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1&id=<?php echo $coll_id ?>';</script> -->
 	<script>location.href='<?php echo $HOSTPATH; ?>collection&upd=<?php echo $_GET['upd'];?>&cusidupd=<?php echo $_GET['cusidupd'];?>';</script>
+	<script>$('#submit_collection').removeAttr('disabled');</script>
 <?php
 }
 

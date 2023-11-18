@@ -21,17 +21,21 @@ $loanCategoryList = $userObj->getloanCategoryList($mysqli);
 
 if(isset($_POST['submit_request']) && $_POST['submit_request'] != '')
 {
-    if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
-        $id = $_POST['id']; 	
-		$updateRequest = $userObj->updateRequest($mysqli,$id, $userid);  
     ?>
+    <script>$('#submit_request').attr('disabled', true);</script>
+	
+    <?php
+    if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
+		$id = $_POST['id']; 	
+		$updateRequest = $userObj->updateRequest($mysqli,$id, $userid);  
+		?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=2';</script>
     <?php	}
     else{   
 		$addRequest = $userObj->addRequest($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=1';</script>
-        <?php
+	<?php
     }
 }
 
