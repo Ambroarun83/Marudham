@@ -1,8 +1,32 @@
 <?php
-
+session_start();
 include('../../ajaxconfig.php');
 
 $type = $_POST['type'];
+
+if(isset($_SESSION["userid"])){
+    $userid = $_SESSION["userid"];
+}
+if($userid != 1){
+    
+    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while($rowuser = $userQry->fetch_assoc()){
+        $group_id = $rowuser['group_id'];
+    }
+    $group_id = explode(',',$group_id);
+    $sub_area_list = array();
+    foreach($group_id as $group){
+        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group "); 
+        $row_sub = $groupQry->fetch_assoc();
+        $sub_area_list[] = $row_sub['sub_area_id'];
+    }
+    $sub_area_ids = array();
+    foreach ($sub_area_list as $subarray) {
+        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+    }
+    $sub_area_list = array();
+    $sub_area_list = implode(',',$sub_area_ids);
+}
 
 // $sql = $con->query("SELECT cs.cus_id
 //     FROM closed_status cs
@@ -19,7 +43,8 @@ if($type == 'existing'){
 
     $sub_status = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
 
-    $sql = $con->query("SELECT cus_id,consider_level,updated_date FROM closed_status WHERE cus_sts >= '20' ");
+    $sql = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cp.area_confirm_subarea IN ($sub_area_list) ");
+
     while($row = $sql->fetch_assoc()){
         
         $last_closed_date = date('Y-m-d',strtotime($row['updated_date']));
@@ -54,7 +79,7 @@ if($type == 'existing'){
     $sub_status = [4=>'Cancel',5=>'Cancel',6=>'Cancel',7=>'Cancel',8=>'Revoke',9=>'Revoke'];
 
     //this will fetch all request which are revoked and cancelled
-    $sql = $con->query("SELECT * FROM request_creation WHERE (cus_status >= 4 and cus_status <= 9 ) ");
+    $sql = $con->query("SELECT * FROM request_creation WHERE (cus_status >= 4 and cus_status <= 9 ) and sub_area IN ($sub_area_list) ");
     while($row = $sql->fetch_assoc()){
         
         $last_updated_date = date('Y-m-d',strtotime($row['updated_date']));

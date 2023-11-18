@@ -20,9 +20,14 @@ if($rem>0)
 
 if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''){
 
+	?>
+    <script>$('#submit_documentation').attr('disabled', true);</script>
+	
+    <?php
 	$addDocVerification = $userObj->addAcknowlegeDocumentation($mysqli, $userid);
 ?>
 	<script> alert('Documentation Details Submitted'); </script>
+    <script>$('#submit_documentation').removeAttr('disabled');</script>
 <?php
 }
 
