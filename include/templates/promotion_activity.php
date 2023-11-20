@@ -168,7 +168,7 @@ if (sizeof($getUser)>0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">New Promotion</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -209,7 +209,7 @@ if (sizeof($getUser)>0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="submit_new_cus" id="submit_new_cus" tabindex="6">Submit</button>
-				<button class="btn btn-secondary" data-dismiss="modal" tabindex="7" onclick="">Close</button>
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="7" onclick="resetNewPromotionTable()">Close</button>
 			</div>
 		</div>
 	</div>
@@ -221,7 +221,7 @@ if (sizeof($getUser)>0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Promotion</h5>
-				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="">
+				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
 				<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -273,7 +273,7 @@ if (sizeof($getUser)>0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="sumit_add_promo" id="sumit_add_promo" tabindex="8">Submit</button>
-				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" onclick="">Close</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" onclick="resetNewPromotionTable()">Close</button>
 			</div>
 		</div>
 	</div>
