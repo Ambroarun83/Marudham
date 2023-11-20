@@ -79,7 +79,13 @@ if($type == 'existing'){
     $sub_status = [4=>'Cancel',5=>'Cancel',6=>'Cancel',7=>'Cancel',8=>'Revoke',9=>'Revoke'];
 
     //this will fetch all request which are revoked and cancelled
-    $sql = $con->query("SELECT * FROM request_creation WHERE (cus_status >= 4 and cus_status <= 9 ) and sub_area IN ($sub_area_list) ");
+    // $sql = $con->query("SELECT * FROM request_creation WHERE (cus_status >= 4 and cus_status <= 9 ) and sub_area IN ($sub_area_list) ");
+    $sql = $con->query("
+        SELECT req.*
+        FROM request_creation req
+        WHERE (req.cus_status >= 4 AND req.cus_status <= 9)
+        AND (req.sub_area IN ( ".$sub_area_list." ) or 
+        (select area_confirm_subarea from customer_profile where req_id = req.req_id) IN ( ".$sub_area_list." ) )");
     while($row = $sql->fetch_assoc()){
         
         $last_updated_date = date('Y-m-d',strtotime($row['updated_date']));

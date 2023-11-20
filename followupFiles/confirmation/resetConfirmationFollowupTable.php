@@ -1,6 +1,30 @@
 <?php
-
+session_start();
 include('../../ajaxconfig.php');
+
+if(isset($_SESSION["userid"])){
+    $userid = $_SESSION["userid"];
+}
+if($userid != 1){
+    
+    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while($rowuser = $userQry->fetch_assoc()){
+        $group_id = $rowuser['group_id'];
+    }
+    $group_id = explode(',',$group_id);
+    $sub_area_list = array();
+    foreach($group_id as $group){
+        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group "); 
+        $row_sub = $groupQry->fetch_assoc();
+        $sub_area_list[] = $row_sub['sub_area_id'];
+    }
+    $sub_area_ids = array();
+    foreach ($sub_area_list as $subarray) {
+        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+    }
+    $sub_area_list = array();
+    $sub_area_list = implode(',',$sub_area_ids);
+}
 
 $sql = $con->query("SELECT rc.*,alc.area_name,salc.sub_area_name,lcc.loan_category_creation_name, ac.ag_name, bc.branch_name,agm.group_name,alm.line_name FROM request_creation rc 
 LEFT JOIN area_list_creation alc ON rc.area = alc.area_id 
@@ -10,7 +34,9 @@ LEFT JOIN agent_creation ac ON rc.agent_id = ac.ag_id
 LEFT JOIN area_group_mapping agm ON FIND_IN_SET(rc.sub_area,agm.sub_area_id)
 LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
 LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area,alm.sub_area_id)
-WHERE rc.cus_status >= 14");
+WHERE rc.cus_status >= 14 and 
+(select area_confirm_subarea from acknowlegement_customer_profile where req_id = rc.req_id) IN (".$sub_area_list.") 
+");
 //this query will get all the request which are raised in request and shows till loan gets issued.
 //this query will not result entries which are cancelled or revoked
 
