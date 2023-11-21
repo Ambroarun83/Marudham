@@ -5,7 +5,7 @@ if (isset($_GET['upd'])) {
 }
 
 @session_start();
-if(isset($_SESSION['userid'])){
+if (isset($_SESSION['userid'])) {
 	$userid = $_SESSION['userid'];
 }
 
@@ -23,13 +23,17 @@ if (isset($_POST['submit_update_cus_profile']) && $_POST['submit_update_cus_prof
 
 // 	$userObj->updateMortEndorse($mysqli, $userid,'mort');
 ?>
-	<script> //alert('Documentation Details Updated'); </script>
+<script>
+	//alert('Documentation Details Updated'); 
+</script>
 <?php
 // }elseif(isset($_POST['update_mortgage'])){
 // 	$userObj->updateMortEndorse($mysqli, $userid,'endor');
-	?>
-		<script> //alert('Documentation Details Updated'); </script>
-	<?php
+?>
+<script>
+	//alert('Documentation Details Updated'); 
+</script>
+<?php
 // }
 
 //////////////////////// Customer Profile Info ///////////////////////////////
@@ -105,7 +109,7 @@ if (sizeof($getGuarantorDetails) > 0) {
 $documentationInfo = $userObj->getDocumentDetails($mysqli, $idupd);
 
 if (sizeof($documentationInfo) > 0) {
-	for($i=0;$i<sizeof($documentationInfo);$i++){
+	for ($i = 0; $i < sizeof($documentationInfo); $i++) {
 		$document_table_id[$i] = $documentationInfo[$i]['doc_Tableid'];
 		$document_sts[$i] = $documentationInfo[$i]['cus_status'];
 		$doc_id[$i] = $documentationInfo[$i]['doc_id'];
@@ -149,66 +153,65 @@ if (sizeof($documentationInfo) > 0) {
 	}
 
 	.switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 34px;
-	left: 10px;
-}
+		position: relative;
+		display: inline-block;
+		width: 60px;
+		height: 34px;
+		left: 10px;
+	}
 
-.switch input { 
-	opacity: 0;
-	width: 0;
-	height: 0;
-}
+	.switch input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+	}
 
-.slider {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: #ccc;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
 
-.slider:before {
-	position: absolute;
-	content: "";
-	height: 26px;
-	width: 26px;
-	left: 4px;
-	bottom: 4px;
-	background-color: white;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 26px;
+		width: 26px;
+		left: 4px;
+		bottom: 4px;
+		background-color: white;
+		-webkit-transition: .4s;
+		transition: .4s;
+	}
 
-input:checked + .slider {
-	background-color: #009688;
-}
+	input:checked+.slider {
+		background-color: #009688;
+	}
 
-input:focus + .slider {
-	box-shadow: 0 0 1px #2196F3;
-}
+	input:focus+.slider {
+		box-shadow: 0 0 1px #2196F3;
+	}
 
-input:checked + .slider:before {
-	-webkit-transform: translateX(26px);
-	-ms-transform: translateX(26px);
-	transform: translateX(26px);
-}
+	input:checked+.slider:before {
+		-webkit-transform: translateX(26px);
+		-ms-transform: translateX(26px);
+		transform: translateX(26px);
+	}
 
-/* Rounded sliders */
-.slider.round {
-	border-radius: 34px;
-}
+	/* Rounded sliders */
+	.slider.round {
+		border-radius: 34px;
+	}
 
-.slider.round:before {
-	border-radius: 50%;
-}
-
+	.slider.round:before {
+		border-radius: 50%;
+	}
 </style>
 
 <!-- Page header start -->
@@ -220,9 +223,15 @@ input:checked + .slider:before {
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
-		Customer Name - <?php if (isset($cus_name)) {echo $cus_name;} ?>
-		,&nbsp;&nbsp;Area - <?php if (isset($area_name)) {echo $area_name;} ?>
-		,&nbsp;&nbsp;Sub Area - <?php if (isset($sub_area_name)) {echo $sub_area_name;} ?>
+		Customer Name - <?php if (isset($cus_name)) {
+							echo $cus_name;
+						} ?>
+		,&nbsp;&nbsp;Area - <?php if (isset($area_name)) {
+								echo $area_name;
+							} ?>
+		,&nbsp;&nbsp;Sub Area - <?php if (isset($sub_area_name)) {
+									echo $sub_area_name;
+								} ?>
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
@@ -241,28 +250,55 @@ input:checked + .slider:before {
 		<div class="form-group" style="text-align:center">
 			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile"></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="radio" name="verification_type" id="documentation" value="documentation"></input><label for='documentation'>&nbsp;&nbsp; Documentation </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<input type="radio" name="verification_type" id="customer_old" value="customer_old"></input><label for='customer_old'>&nbsp;&nbsp; Old Data </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		</div>
 	</div>
 
 	<!-- Customer Profile form start-->
 	<div id="customer_profile" style="display: none;">
 		<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="cus_id_load" id="cus_id_load" value="<?php if (isset($idupd)) {echo $idupd;} ?>" />
-			<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
-			<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($state)) {echo $state;} ?>" />
-			<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($district)) {echo $district;} ?>" />
-			<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($taluk)) {echo $taluk;} ?>" />
-			<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area)) {echo $area;} ?>" />
-			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($sub_area)) {echo $sub_area;} ?>" />
-			<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) {echo $guarentor_name;} ?>" />
+			<input type="hidden" name="cus_id_load" id="cus_id_load" value="<?php if (isset($idupd)) {
+																				echo $idupd;
+																			} ?>" />
+			<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {
+																		echo $req_id;
+																	} ?>" />
+			<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($state)) {
+																			echo $state;
+																		} ?>" />
+			<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($district)) {
+																					echo $district;
+																				} ?>" />
+			<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($taluk)) {
+																			echo $taluk;
+																		} ?>" />
+			<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area)) {
+																			echo $area;
+																		} ?>" />
+			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($sub_area)) {
+																					echo $sub_area;
+																				} ?>" />
+			<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) {
+																								echo $guarentor_name;
+																							} ?>" />
 
-			<input type="hidden" name="area_state_upd" id="area_state_upd" value="<?php if (isset($area_confirm_state)) {echo $area_confirm_state;} ?>" />
-			<input type="hidden" name="area_district_upd" id="area_district_upd" value="<?php if (isset($area_confirm_district)) {echo $area_confirm_district;} ?>" />
-			<input type="hidden" name="area_taluk_upd" id="area_taluk_upd" value="<?php if (isset($area_confirm_taluk)) {echo $area_confirm_taluk;} ?>" />
-			<input type="hidden" name="area_confirm_area" id="area_confirm_area" value="<?php if (isset($area_confirm_area)) {echo $area_confirm_area;} ?>" />
-			<input type="hidden" name="sub_area_confirm" id="sub_area_confirm" value="<?php if (isset($area_confirm_subarea)) {echo $area_confirm_subarea;} ?>" />
+			<input type="hidden" name="area_state_upd" id="area_state_upd" value="<?php if (isset($area_confirm_state)) {
+																						echo $area_confirm_state;
+																					} ?>" />
+			<input type="hidden" name="area_district_upd" id="area_district_upd" value="<?php if (isset($area_confirm_district)) {
+																							echo $area_confirm_district;
+																						} ?>" />
+			<input type="hidden" name="area_taluk_upd" id="area_taluk_upd" value="<?php if (isset($area_confirm_taluk)) {
+																						echo $area_confirm_taluk;
+																					} ?>" />
+			<input type="hidden" name="area_confirm_area" id="area_confirm_area" value="<?php if (isset($area_confirm_area)) {
+																							echo $area_confirm_area;
+																						} ?>" />
+			<input type="hidden" name="sub_area_confirm" id="sub_area_confirm" value="<?php if (isset($area_confirm_subarea)) {
+																							echo $area_confirm_subarea;
+																						} ?>" />
 
-			<input type="hidden" class="form-control" value="<?php if(isset($marital)) echo $marital; ?>"  id="marital_upd" name="marital_upd" >
+			<input type="hidden" class="form-control" value="<?php if (isset($marital)) echo $marital; ?>" id="marital_upd" name="marital_upd">
 
 
 			<!-- Row start -->
@@ -279,28 +315,36 @@ input:checked + .slider:before {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cus_id)) {echo $cus_id;} ?>' tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" readonly>
+												<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cus_id)) {
+																																echo $cus_id;
+																															} ?>' tabindex='9' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" readonly>
 												<span class="text-danger" style='display:none' id='cusidCheck'>Please Enter Customer ID</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="cus_name">Customer Name</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_name" name="cus_name" value='<?php if (isset($cus_name)) {echo $cus_name;} ?>' tabindex='11' placeholder="Enter Customer Name" pattern="[a-zA-Z\s]+">
+												<input type="text" class="form-control" id="cus_name" name="cus_name" value='<?php if (isset($cus_name)) {
+																																	echo $cus_name;
+																																} ?>' tabindex='11' placeholder="Enter Customer Name" pattern="[a-zA-Z\s]+">
 												<span class="text-danger" style='display:none' id='cusnameCheck'>Please Enter Customer Name</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="dob">Date of Birth</label><span class="required">&nbsp;*</span>
-												<input type="date" class="form-control" id="dob" name="dob" value='<?php if (isset($dob)) {echo $dob;} ?>' tabindex='12'>
+												<input type="date" class="form-control" id="dob" name="dob" value='<?php if (isset($dob)) {
+																														echo $dob;
+																													} ?>' tabindex='12'>
 												<span class="text-danger" style='display:none' id='dobCheck'>Please Select DOB</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="age">Age</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="age" name="age" readonly value='<?php if (isset($age)) {echo $age;} ?>' tabindex='13'>
+												<input type="text" class="form-control" id="age" name="age" readonly value='<?php if (isset($age)) {
+																																echo $age;
+																															} ?>' tabindex='13'>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
@@ -369,37 +413,44 @@ input:checked + .slider:before {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="address">Address</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_address" name="cus_address" 
-												value='<?php if (isset($address)) {echo $address;} ?>' tabindex='21' placeholder="Enter Address">
+												<input type="text" class="form-control" id="cus_address" name="cus_address" value='<?php if (isset($address)) {
+																																		echo $address;
+																																	} ?>' tabindex='21' placeholder="Enter Address">
 												<span class="text-danger" style='display:none' id='addressCheck'>Please Enter Address</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="mobile1">Mobile No 1</label><span class="required">&nbsp;*</span>
-												<input type="number" class="form-control" id="mobile1" name="mobile1" onkeypress="if(this.value.length==10) return false;" 
-												value='<?php if (isset($mobile1)) {echo $mobile1;} ?>' tabindex='22' placeholder="Enter Mobile Number">
+												<input type="number" class="form-control" id="mobile1" name="mobile1" onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile1)) {
+																																														echo $mobile1;
+																																													} ?>' tabindex='22' placeholder="Enter Mobile Number">
 												<span class="text-danger" style='display:none' id='mobile1Check'>Please Enter Mobile Number</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="mobile2">Mobile No 2</label>
-												<input type="number" class="form-control" id="mobile2" name="mobile2" onkeypress="if(this.value.length==10) return false;" 
-												value='<?php if (isset($mobile2)) {echo $mobile2;} ?>' tabindex='23' placeholder="Enter Mobile Number">
+												<input type="number" class="form-control" id="mobile2" name="mobile2" onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile2)) {
+																																														echo $mobile2;
+																																													} ?>' tabindex='23' placeholder="Enter Mobile Number">
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="father_name">Father Name</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="father_name" name="father_name" value='<?php if (isset($father_name)) {echo $father_name;} ?>' tabindex='24' placeholder="Enter Father's Name" pattern="[a-zA-Z\s]+">
+												<input type="text" class="form-control" id="father_name" name="father_name" value='<?php if (isset($father_name)) {
+																																		echo $father_name;
+																																	} ?>' tabindex='24' placeholder="Enter Father's Name" pattern="[a-zA-Z\s]+">
 												<span class="text-danger" style='display:none' id='fathernameCheck'>Please Enter Father Name</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="mother_name">Mother Name</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="mother_name" name="mother_name" value='<?php if (isset($mother_name)) {echo $mother_name;} ?>' tabindex='25' placeholder="Enter Mother's Name" pattern="[a-zA-Z\s]+">
+												<input type="text" class="form-control" id="mother_name" name="mother_name" value='<?php if (isset($mother_name)) {
+																																		echo $mother_name;
+																																	} ?>' tabindex='25' placeholder="Enter Mother's Name" pattern="[a-zA-Z\s]+">
 												<span class="text-danger" style='display:none' id='mothernameCheck'>Please Enter Mother Name</span>
 											</div>
 										</div>
@@ -417,7 +468,9 @@ input:checked + .slider:before {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8 spouse" style="display:none">
 											<div class="form-group">
 												<label for="spouse_name">Spouse Name</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="spouse_name" name="spouse_name" value='<?php if (isset($spouse_name)) {echo $spouse_name;} ?>' tabindex='27' placeholder="Enter Spouse Name" pattern="[a-zA-Z\s]+">
+												<input type="text" class="form-control" id="spouse_name" name="spouse_name" value='<?php if (isset($spouse_name)) {
+																																		echo $spouse_name;
+																																	} ?>' tabindex='27' placeholder="Enter Spouse Name" pattern="[a-zA-Z\s]+">
 												<span class="text-danger" style='display:none' id='spousenameCheck'>Please Enter Spouse Name</span>
 											</div>
 										</div>
@@ -440,7 +493,9 @@ input:checked + .slider:before {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="occupation">Occupation</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="occupation" name="occupation" value='<?php if (isset($occupation)) {echo $occupation;} ?>' tabindex='29' placeholder="Enter Occupation" pattern="[a-zA-Z\s]+">
+												<input type="text" class="form-control" id="occupation" name="occupation" value='<?php if (isset($occupation)) {
+																																		echo $occupation;
+																																	} ?>' tabindex='29' placeholder="Enter Occupation" pattern="[a-zA-Z\s]+">
 												<span class="text-danger" style='display:none' id='occupationCheck'>Please Enter Occupation</span>
 											</div>
 										</div>
@@ -449,10 +504,14 @@ input:checked + .slider:before {
 								<div class="col-md-4">
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 										<div class="form-group" style="margin-left: 30px;">
-											<label  style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
-											<input type="hidden" class="form-control" id="cus_image" name="cus_image" value='<?php if (isset($pic)) {echo $pic;} ?>'>
+											<label style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
+											<input type="hidden" class="form-control" id="cus_image" name="cus_image" value='<?php if (isset($pic)) {
+																																	echo $pic;
+																																} ?>'>
 											<img id='imgshow' class="imgshow" src='img/avatar.png' /><br>
-											<input type="file" class="form-control" id="pic" name="pic" tabindex='29' value='<?php if (isset($pic)) {echo $pic;} ?>'>
+											<input type="file" class="form-control" id="pic" name="pic" tabindex='29' value='<?php if (isset($pic)) {
+																																	echo $pic;
+																																} ?>'>
 										</div>
 									</div>
 								</div>
@@ -518,7 +577,9 @@ input:checked + .slider:before {
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="guarentor_relationship"> Guarentor Relationship </label>
-												<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" tabindex="20" value='<?php if (isset($guarentor_relation)) {echo $guarentor_relation;} ?>' readonly>
+												<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" tabindex="20" value='<?php if (isset($guarentor_relation)) {
+																																											echo $guarentor_relation;
+																																										} ?>' readonly>
 											</div>
 										</div>
 									</div>
@@ -528,9 +589,13 @@ input:checked + .slider:before {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
 										<div class="form-group" style="margin-left: 30px;">
 											<label for="pic" style="margin-left: -20px;"> Guarentor Photo </label><span class="required">&nbsp;*</span><br>
-											<input type="hidden" name="guarentor_image" id="guarentor_image" value="<?php if (isset($guarentor_photo)) {echo $guarentor_photo;} ?>">
+											<input type="hidden" name="guarentor_image" id="guarentor_image" value="<?php if (isset($guarentor_photo)) {
+																														echo $guarentor_photo;
+																													} ?>">
 											<img id='imgshows' class="imgshow" src='img/avatar.png' />
-											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="21" value="<?php if (isset($guarentor_photo)) {echo $guarentor_photo;} ?>">
+											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="21" value="<?php if (isset($guarentor_photo)) {
+																																					echo $guarentor_photo;
+																																				} ?>">
 											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
 										</div>
 									</div>
@@ -563,24 +628,27 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_res_details"> Resident Details </label>
-										<input type="text" class="form-control" name="cus_res_details" id="cus_res_details" placeholder="Enter Resident Details" 
-										value="<?php if (isset($residential_details)) {echo $residential_details;} ?>" tabindex="29">
+										<input type="text" class="form-control" name="cus_res_details" id="cus_res_details" placeholder="Enter Resident Details" value="<?php if (isset($residential_details)) {
+																																											echo $residential_details;
+																																										} ?>" tabindex="29">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_res_address"> Address </label>
-										<input type="text" class="form-control" name="cus_res_address" id="cus_res_address" placeholder="Enter Address" 
-										value="<?php if (isset($residential_address)) {echo $residential_address;} ?>" tabindex="30">
+										<input type="text" class="form-control" name="cus_res_address" id="cus_res_address" placeholder="Enter Address" value="<?php if (isset($residential_address)) {
+																																									echo $residential_address;
+																																								} ?>" tabindex="30">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_res_native"> Native Address </label>
-										<input type="text" class="form-control" name="cus_res_native" id="cus_res_native" placeholder="Enter Native Address" 
-										value="<?php if (isset($residential_native_address)) {echo $residential_native_address;} ?>" tabindex="31">
+										<input type="text" class="form-control" name="cus_res_native" id="cus_res_native" placeholder="Enter Native Address" value="<?php if (isset($residential_native_address)) {
+																																										echo $residential_native_address;
+																																									} ?>" tabindex="31">
 									</div>
 								</div>
 
@@ -615,38 +683,44 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_occ_detail"> Occupation Detail </label>
-										<input type="text" class="form-control" name="cus_occ_detail" id="cus_occ_detail" placeholder="Enter Occupation Detail" onkeydown="return /[a-z ]/i.test(event.key)" value="<?php if (isset($occupation_details)) {	echo $occupation_details;} ?>" tabindex="33">
+										<input type="text" class="form-control" name="cus_occ_detail" id="cus_occ_detail" placeholder="Enter Occupation Detail" onkeydown="return /[a-z ]/i.test(event.key)" value="<?php if (isset($occupation_details)) {
+																																																						echo $occupation_details;
+																																																					} ?>" tabindex="33">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_occ_income"> Income </label>
-										<input type="number" class="form-control" name="cus_occ_income" id="cus_occ_income" placeholder="Enter Income" 
-										value="<?php if (isset($occupation_income)) {echo $occupation_income;} ?>" tabindex="34">
+										<input type="number" class="form-control" name="cus_occ_income" id="cus_occ_income" placeholder="Enter Income" value="<?php if (isset($occupation_income)) {
+																																									echo $occupation_income;
+																																								} ?>" tabindex="34">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_occ_address"> Address </label>
-										<input type="text" class="form-control" name="cus_occ_address" id="cus_occ_address" placeholder="Enter Address" 
-										value="<?php if (isset($occupation_address)) {echo $occupation_address;} ?>" tabindex="35">
+										<input type="text" class="form-control" name="cus_occ_address" id="cus_occ_address" placeholder="Enter Address" value="<?php if (isset($occupation_address)) {
+																																									echo $occupation_address;
+																																								} ?>" tabindex="35">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_occ_dow"> Duration of Working </label>
-										<input type="text" class="form-control" name="cus_occ_dow" id="cus_occ_dow" placeholder="Enter Duration of Working" 
-										value="<?php if (isset($dow)) {echo $dow;} ?>" tabindex="35">
+										<input type="text" class="form-control" name="cus_occ_dow" id="cus_occ_dow" placeholder="Enter Duration of Working" value="<?php if (isset($dow)) {
+																																										echo $dow;
+																																									} ?>" tabindex="35">
 									</div>
 								</div>
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_occ_abt"> About Occupation </label>
-										<input type="text" class="form-control" name="cus_occ_abt" id="cus_occ_abt" placeholder="Enter About Occupation" 
-										value="<?php if (isset($abt_occ)) {echo $abt_occ;} ?>" tabindex="35">
+										<input type="text" class="form-control" name="cus_occ_abt" id="cus_occ_abt" placeholder="Enter About Occupation" value="<?php if (isset($abt_occ)) {
+																																									echo $abt_occ;
+																																								} ?>" tabindex="35">
 									</div>
 								</div>
 
@@ -725,16 +799,18 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="area_group">Group</label>
-										<input type="text" class="form-control" name="area_group" id="area_group" 
-										value="<?php if (isset($area_group)) {echo $area_group;} ?>" readonly tabindex="42">
+										<input type="text" class="form-control" name="area_group" id="area_group" value="<?php if (isset($area_group)) {
+																																echo $area_group;
+																															} ?>" readonly tabindex="42">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="area_line">Line</label>
-										<input type="text" class="form-control" name="area_line" id="area_line" 
-										value="<?php if (isset($area_line)) {echo $area_line;} ?>" readonly tabindex="43">
+										<input type="text" class="form-control" name="area_line" id="area_line" value="<?php if (isset($area_line)) {
+																															echo $area_line;
+																														} ?>" readonly tabindex="43">
 									</div>
 								</div>
 
@@ -873,24 +949,27 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_loan_count"> Loan Counts </label>
-										<input type="text" class="form-control" name="cus_loan_count" id="cus_loan_count" 
-										value="<?php if (isset($loan_count)) {echo $loan_count;} ?>" readonly tabindex="45">
+										<input type="text" class="form-control" name="cus_loan_count" id="cus_loan_count" value="<?php if (isset($loan_count)) {
+																																		echo $loan_count;
+																																	} ?>" readonly tabindex="45">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_frst_loanDate"> First Loan Date </label>
-										<input type="text" class="form-control" name="cus_frst_loanDate" id="cus_frst_loanDate" 
-										value="<?php if (isset($first_loan_date)) {echo $first_loan_date;} ?>" readonly tabindex="46">
+										<input type="text" class="form-control" name="cus_frst_loanDate" id="cus_frst_loanDate" value="<?php if (isset($first_loan_date)) {
+																																			echo $first_loan_date;
+																																		} ?>" readonly tabindex="46">
 									</div>
 								</div>
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_travel_cmpy"> Travel with Company </label>
-										<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" 
-										value="<?php if (isset($travel_with_company)) {echo $travel_with_company;} ?>" readonly tabindex="47">
+										<input type="text" class="form-control" name="cus_travel_cmpy" id="cus_travel_cmpy" value="<?php if (isset($travel_with_company)) {
+																																		echo $travel_with_company;
+																																	} ?>" readonly tabindex="47">
 									</div>
 								</div>
 
@@ -903,8 +982,9 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_monthly_income"> Monthly Income </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income" placeholder="Enter Monthly Income" 
-										value="<?php if (isset($monthly_income)) {echo $monthly_income;} ?>" tabindex="48">
+										<input type="number" class="form-control" name="cus_monthly_income" id="cus_monthly_income" placeholder="Enter Monthly Income" value="<?php if (isset($monthly_income)) {
+																																													echo $monthly_income;
+																																												} ?>" tabindex="48">
 										<span class="text-danger" style='display:none' id='monthlyIncomeCheck'>Please Enter Monthly Income </span>
 									</div>
 								</div>
@@ -912,8 +992,9 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_other_income"> Other Income </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_other_income" id="cus_other_income" placeholder="Enter Other Income" 
-										value="<?php if (isset($other_income)) {echo $other_income;} ?>" tabindex="49">
+										<input type="number" class="form-control" name="cus_other_income" id="cus_other_income" placeholder="Enter Other Income" value="<?php if (isset($other_income)) {
+																																											echo $other_income;
+																																										} ?>" tabindex="49">
 										<span class="text-danger" style='display:none' id='otherIncomeCheck'>Please Enter Other Income </span>
 									</div>
 								</div>
@@ -921,8 +1002,9 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_support_income"> Support Income </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_support_income" id="cus_support_income" placeholder="Enter Support Income" 
-										value="<?php if (isset($support_income)) {echo $support_income;} ?>" tabindex="50">
+										<input type="number" class="form-control" name="cus_support_income" id="cus_support_income" placeholder="Enter Support Income" value="<?php if (isset($support_income)) {
+																																													echo $support_income;
+																																												} ?>" tabindex="50">
 										<span class="text-danger" style='display:none' id='supportIncomeCheck'>Please Enter Support Income </span>
 									</div>
 								</div>
@@ -930,8 +1012,9 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_Commitment"> Commitment </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment" placeholder="Enter Commitment" 
-										value="<?php if (isset($commitment)) {echo $commitment;} ?>" tabindex="51">
+										<input type="number" class="form-control" name="cus_Commitment" id="cus_Commitment" placeholder="Enter Commitment" value="<?php if (isset($commitment)) {
+																																										echo $commitment;
+																																									} ?>" tabindex="51">
 										<span class="text-danger" style='display:none' id='commitmentCheck'>Please Enter Commitment </span>
 									</div>
 								</div>
@@ -939,8 +1022,9 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_monDue_capacity"> Monthly Due Capacity </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity" placeholder="Enter Monthly Due Capacity" 
-										value="<?php if (isset($monthly_due_capacity)) {echo $monthly_due_capacity;} ?>" tabindex="52">
+										<input type="number" class="form-control" name="cus_monDue_capacity" id="cus_monDue_capacity" placeholder="Enter Monthly Due Capacity" value="<?php if (isset($monthly_due_capacity)) {
+																																															echo $monthly_due_capacity;
+																																														} ?>" tabindex="52">
 										<span class="text-danger" style='display:none' id='monthlyDueCapacityCheck'> Please Enter Monthly Due Capacity </span>
 									</div>
 								</div>
@@ -948,8 +1032,9 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="cus_loan_limit"> Loan Limit </label> <span class="required">*</span>
-										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit" 
-										value="<?php if (isset($loan_limit)) {echo $loan_limit;} ?>" tabindex="53">
+										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Loan Limit" value="<?php if (isset($loan_limit)) {
+																																										echo $loan_limit;
+																																									} ?>" tabindex="53">
 										<span class="text-danger" style='display:none' id='loanLimitCheck'>Please Enter Loan Limit </span>
 									</div>
 								</div>
@@ -989,7 +1074,9 @@ input:checked + .slider:before {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="about_cus"> About Customer </label> <span class="required">*</span>
-										<textarea class="form-control" name="about_cus" id="about_cus" tabindex="55"><?php if (isset($about_customer)) {echo $about_customer;} ?></textarea>
+										<textarea class="form-control" name="about_cus" id="about_cus" tabindex="55"><?php if (isset($about_customer)) {
+																															echo $about_customer;
+																														} ?></textarea>
 										<span class="text-danger" style='display:none' id='aboutcusCheck'> Please Enter About Customer </span>
 									</div>
 								</div>
@@ -1018,115 +1105,115 @@ input:checked + .slider:before {
 	<!--  ///////////////////////////////////////////////////////////////// Documentation  start ////////////////////////////////////////////////////////// -->
 	<div id="cus_document" style="display: none;">
 		<!-- <form id="cus_doc" name="cus_doc" action="" method="post" enctype="multipart/form-data"> -->
-			<input type="hidden" name="req_id_doc" id="req_id_doc" value="">
-			<input type="hidden" name="pending_sts" id="pending_sts" value="" />
-			<input type="hidden" name="od_sts" id="od_sts" value="" />
-			<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
-			<input type="hidden" name="closed_sts" id="closed_sts" value="" />
+		<input type="hidden" name="req_id_doc" id="req_id_doc" value="">
+		<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+		<input type="hidden" name="od_sts" id="od_sts" value="" />
+		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+		<input type="hidden" name="closed_sts" id="closed_sts" value="" />
 
-			<!-- Row start -->
-			<div class="row gutters">
-				<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+		<!-- Row start -->
+		<div class="row gutters">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 
-					<div class="card documentation-card">
-						<div class="card-header">Documentation Info</div>
-						<div class="card-body">
-							<div class="row">
+				<div class="card documentation-card">
+					<div class="card-header">Documentation Info</div>
+					<div class="card-body">
+						<div class="row">
 
-								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-									<div class="form-group">
-										<label for="cus_id_doc">Customer ID </label> <span class="required">* </span>
-										<input type="text" class="form-control" id="cus_id_doc" name="cus_id_doc" value='<?php if (isset($cus_id)) echo $cus_id; ?>' readonly tabindex="1">
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="Customer_name"> Customer Name </label> <span class="required"> * </span>
-										<input type="text" class="form-control" id="Customer_name" name="Customer_name" value='<?php if (isset($cus_name)) echo $cus_name; ?>' readonly tabindex="2">
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="doc_area"> Area </label> <span class="required"> * </span>
-										<input tabindex="3" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($area_name)) echo $area_name; ?>" readonly>
-									</div>
-								</div>
-
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="doc_Sub_Area"> Sub Area </label> <span class="required"> * </span>
-										<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($sub_area_name)) echo $sub_area_name; ?>' readonly tabindex="4">
-									</div>
-								</div>
-
-
-							</div>
-						</div>
-					</div>
-					<!-- Documentations Info  End-->
-					
-					<!-- Document History START -->
-					<div class="card documentation-card">
-						<div class="card-header"> Documents History </div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="docHistoryDiv">
-										
-									</div>
+							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
+									<label for="cus_id_doc">Customer ID </label> <span class="required">* </span>
+									<input type="text" class="form-control" id="cus_id_doc" name="cus_id_doc" value='<?php if (isset($cus_id)) echo $cus_id; ?>' readonly tabindex="1">
 								</div>
 							</div>
-						</div>
-					</div>
-					<!-- Document History END -->
 
-					<!-- Signed Doc Info START -->
-					<div class="card edit-document-card" style='display:none'>
-						<div class="card-header"> Signed Doc Info
-							<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6" ><span class="icon-add"></span></button>
-						</div>
-						<span class="text-danger" style='display:none' id='signed_infoCheck'>Please Fill Signed Doc Info </span>
-						<div class="card-body">
-
-							<div class="row">
-
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="signDocResetDiv">
-										
-									</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="Customer_name"> Customer Name </label> <span class="required"> * </span>
+									<input type="text" class="form-control" id="Customer_name" name="Customer_name" value='<?php if (isset($cus_name)) echo $cus_name; ?>' readonly tabindex="2">
 								</div>
-
 							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="doc_area"> Area </label> <span class="required"> * </span>
+									<input tabindex="3" type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($area_name)) echo $area_name; ?>" readonly>
+								</div>
+							</div>
+
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="doc_Sub_Area"> Sub Area </label> <span class="required"> * </span>
+									<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($sub_area_name)) echo $sub_area_name; ?>' readonly tabindex="4">
+								</div>
+							</div>
+
 
 						</div>
 					</div>
-					<!-- Signed Doc Info END -->
+				</div>
+				<!-- Documentations Info  End-->
 
-					<!-- Cheque Info START -->
-					<div class="card edit-document-card" style='display:none'>
-						<div class="card-header"> Cheque Info
-							<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7"><span class="icon-add"></span></button>
-						</div>
-						<span class="text-danger" style='display:none' id='Cheque_infoCheck'>Please Fill Cheque Info </span>
-						<div class="card-body">
+				<!-- Document History START -->
+				<div class="card documentation-card">
+					<div class="card-header"> Documents History </div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="docHistoryDiv">
 
-							<div class="row">
-
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="chequeResetDiv">
-										
-									</div>
 								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Document History END -->
 
+				<!-- Signed Doc Info START -->
+				<div class="card edit-document-card" style='display:none'>
+					<div class="card-header"> Signed Doc Info
+						<button type="button" class="btn btn-primary" id="add_sign_doc" name="add_sign_doc" data-toggle="modal" data-target=".addSignDoc" style="padding: 5px 35px;  float: right;" tabindex="6"><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='signed_infoCheck'>Please Fill Signed Doc Info </span>
+					<div class="card-body">
+
+						<div class="row">
+
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="signDocResetDiv">
+
+								</div>
 							</div>
 
 						</div>
-					</div>
-					<!-- Cheque Info END -->
 
-					<!-- Mortgage Info START-->
+					</div>
+				</div>
+				<!-- Signed Doc Info END -->
+
+				<!-- Cheque Info START -->
+				<div class="card edit-document-card" style='display:none'>
+					<div class="card-header"> Cheque Info
+						<button type="button" class="btn btn-primary" id="add_Cheque" name="add_Cheque" data-toggle="modal" data-target=".addCheque" style="padding: 5px 35px;  float: right;" tabindex="7"><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='Cheque_infoCheck'>Please Fill Cheque Info </span>
+					<div class="card-body">
+
+						<div class="row">
+
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="chequeResetDiv">
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<!-- Cheque Info END -->
+
+				<!-- Mortgage Info START-->
 				<form id="mort_form" name="mort_form" action="" method="post" enctype="multipart/form-data">
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Mortgage Info </div>
@@ -1150,12 +1237,12 @@ input:checked + .slider:before {
 								<div class="row">
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label > Property Holder type </label> <span class="required">&nbsp;*</span>
+											<label> Property Holder type </label> <span class="required">&nbsp;*</span>
 											<select type="text" class="form-control" id="Propertyholder_type" name="Propertyholder_type" tabindex="9">
 												<option value=""> Select Holder type </option>
-												<option value="0" > Customer </option>
-												<option value="1" > Guarantor </option>
-												<option value="2" > Family Members </option>
+												<option value="0"> Customer </option>
+												<option value="1"> Guarantor </option>
+												<option value="2"> Family Members </option>
 											</select>
 											<span class="text-danger" id="propertyholdertypeCheck" style='display:none'> Select Property Holder type </span>
 										</div>
@@ -1163,7 +1250,7 @@ input:checked + .slider:before {
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label > Property Holder Name </label>
+											<label> Property Holder Name </label>
 											<input type="text" class="form-control" id="Propertyholder_name" name="Propertyholder_name" value="" readonly tabindex="10">
 
 											<select type="text" class="form-control" id="Propertyholder_relationship_name" name="Propertyholder_relationship_name" style="display: none;">
@@ -1290,19 +1377,19 @@ input:checked + .slider:before {
 								</div>
 
 							</div>
-							
+
 							<div class="col-md-12 ">
 								<div class="text-right">
 									<button type="button" name="update_mortgage" id="update_mortgage" class="btn btn-primary" value="Submit" tabindex="23"><span class="icon-check"></span>&nbsp;Submit</button>
 								</div>
 							</div>
-							
+
 						</div>
 					</div>
 				</form>
-					<!-- Mortgage Info  End-->
+				<!-- Mortgage Info  End-->
 
-					<!-- Endorsement Info START-->
+				<!-- Endorsement Info START-->
 				<form id="end_form" name="end_form" action="" method="post" enctype="multipart/form-data">
 					<div class="card edit-document-card" style='display:none'>
 						<div class="card-header"> Endorsement Info </div>
@@ -1314,8 +1401,8 @@ input:checked + .slider:before {
 										<label for="endorsement_process"> Endorsement Process</label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="endorsement_process" name="endorsement_process" tabindex="24">
 											<option value=""> Select Endorsement Process </option>
-											<option value="0" > YES </option>
-											<option value="1" > NO </option>
+											<option value="0"> YES </option>
+											<option value="1"> NO </option>
 										</select>
 										<span class="text-danger" id="endorsementprocessCheck" style='display:none'> Select Endorsement Process </span>
 									</div>
@@ -1326,12 +1413,12 @@ input:checked + .slider:before {
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
-										<label > Owner Type </label> <span class="required">&nbsp;*</span>
+										<label> Owner Type </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="owner_type" name="owner_type" tabindex="25">
 											<option value=""> Select Holder type </option>
-											<option value="0" > Customer </option>
-											<option value="1" > Guarantor </option>
-											<option value="2" > Family Members </option>
+											<option value="0"> Customer </option>
+											<option value="1"> Guarantor </option>
+											<option value="2"> Family Members </option>
 										</select>
 										<span class="text-danger" id="ownertypeCheck" style='display:none'> Select Owner type </span>
 									</div>
@@ -1418,8 +1505,8 @@ input:checked + .slider:before {
 										<label for="en_Key"> Key </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="en_Key" name="en_Key" tabindex="36">
 											<option value=""> Select Key </option>
-											<option value="0" > YES </option>
-											<option value="1" > NO </option>
+											<option value="0"> YES </option>
+											<option value="1"> NO </option>
 										</select>
 										<span class="text-danger" id="enKeyCheck" style='display:none'> Select Key </span>
 									</div>
@@ -1430,8 +1517,8 @@ input:checked + .slider:before {
 										<label for="en_RC"> RC </label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="en_RC" name="en_RC" tabindex="34">
 											<option value=""> Select RC </option>
-											<option value="0" > YES </option>
-											<option value="1" > NO </option>
+											<option value="0"> YES </option>
+											<option value="1"> NO </option>
 										</select>
 										<span class="text-danger" id="enRCCheck" style='display:none'> Select RC </span>
 									</div>
@@ -1464,67 +1551,90 @@ input:checked + .slider:before {
 								</div>
 							</div>
 
-							
+
 						</div>
 					</div>
 				</form>
-					<!-- Endorsement Info  End-->
-					<!-- Gold Info Start -->
-					<div class="card edit-document-card" style='display:none'>
-						<div class="card-header"> Gold Info
-							<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;" ><span class="icon-add"></span></button>
-						</div>
-						<span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="goldResetDiv">
-										
-									</div>
+				<!-- Endorsement Info  End-->
+				<!-- Gold Info Start -->
+				<div class="card edit-document-card" style='display:none'>
+					<div class="card-header"> Gold Info
+						<button type="button" class="btn btn-primary" id="add_gold" name="add_gold" data-toggle="modal" data-target=".addGold" style="padding: 5px 35px;  float: right;"><span class="icon-add"></span></button>
+					</div>
+					<span class="text-danger" style='display:none' id='Gold_infoCheck'>Please Fill Gold Info </span>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="goldResetDiv">
+
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- Gold Info End -->
-					<!-- Documents Info START-->
-
-					<div class="card edit-document-card" style='display:none'>
-						<div class="card-header"> Documents Info
-							<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25" ><span class="icon-add"></span></button>
-						</div>
-						<div class="card-body">
-							<div class="row">
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="documentResetDiv">
-										
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Document Info End -->
-
-					<!-- Fingerprint Info start-->
-					<div class="card edit-document-card">
-                        <div class="card-header"> Fingerprint Info </div><span class="text-danger fingerSpan" style="margin-left:25px;display: none;">Please Scan Customer Fingerprint</span>
-                        <div class="card-body">
-                            <div class="row">
-								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                                    <div class="form-group fingerprintTable">
-										
-                                    </div>
-                                </div>
-							</div>
-						</div>
-					</div>
-					<!-- Fingerprint Info End-->
-
 				</div>
-			</div> <!-- Row End -->
+				<!-- Gold Info End -->
+				<!-- Documents Info START-->
+
+				<div class="card edit-document-card" style='display:none'>
+					<div class="card-header"> Documents Info
+						<button type="button" class="btn btn-primary" id="add_document" name="add_document" data-toggle="modal" data-target=".addDocument" style="padding: 5px 35px;  float: right;" tabindex="25"><span class="icon-add"></span></button>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="documentResetDiv">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Document Info End -->
+
+				<!-- Fingerprint Info start-->
+				<div class="card edit-document-card">
+					<div class="card-header"> Fingerprint Info </div><span class="text-danger fingerSpan" style="margin-left:25px;display: none;">Please Scan Customer Fingerprint</span>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group fingerprintTable">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Fingerprint Info End-->
+
+			</div>
+		</div> <!-- Row End -->
 		<!-- </form> -->
 	</div>
 
 	<!--  ///////////////////////////////////////////////////////////////// Documentation  End ////////////////////////////////////////////////////////// -->
+
+	<!--  ///////////////////////////////////////////////////////////////// Customer Old Data Start ////////////////////////////////////////////////////////// -->
+	<div id="customer_old_div" style="display: none;">
+		<div class="row gutters">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+				<div class="card documentation-card">
+					<div class="card-header">Old Data
+						<button type="button" class="btn btn-primary" id="add_cus_old_data" name="add_cus_old_data" data-toggle="modal" data-target=".add_cus_old" style="padding: 5px 35px; float: right;"><span class="icon-add"></span></button>
+					</div>
+					<div class="card-body">
+						<div class="row">
+							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+								<div class="form-group" id="oldCusDataDiv">
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--  ///////////////////////////////////////////////////////////////// Customer Old Data End ////////////////////////////////////////////////////////// -->
 
 </div>
 
@@ -1534,7 +1644,7 @@ input:checked + .slider:before {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Family Info</h5>
+				<h5 class="modal-title" id="">Add Family Info</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeFamModal()">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -1693,7 +1803,7 @@ input:checked + .slider:before {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Property Info</h5>
+				<h5 class="modal-title" id="">Add Property Info</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetPropertyinfoList()">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -1794,7 +1904,7 @@ input:checked + .slider:before {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Bank Info</h5>
+				<h5 class="modal-title" id="">Add Bank Info</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetbankinfoList()">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -1899,258 +2009,258 @@ input:checked + .slider:before {
 
 <!-- Add Signed Doc info Modal  START -->
 <div class="modal fade addSignDoc" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="signDocUploads">
-	<input type="hidden" name="doc_req_id" id="doc_req_id" value="" >
-	<input type="hidden" name="doc_cus_id" id="doc_cus_id" value="" >
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Signed Doc Info</h5>
-				<button type="button" class="close closeSignedInfo" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="signInsertOk" class="successalert"> Signed Doc Info Uploaded Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+	<form method="POST" enctype="multipart/form-data" id="signDocUploads">
+		<input type="hidden" name="doc_req_id" id="doc_req_id" value="">
+		<input type="hidden" name="doc_cus_id" id="doc_cus_id" value="">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="background-color: white">
+				<div class="modal-header">
+					<h5 class="modal-title" id="">Add Signed Doc Info</h5>
+					<button type="button" class="close closeSignedInfo" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
+				<div class="modal-body">
+					<!-- alert messages -->
+					<div id="signInsertOk" class="successalert"> Signed Doc Info Uploaded Successfully
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="signUpdateok" class="successalert"> Signed Doc Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="signUpdateok" class="successalert"> Signed Doc Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="signNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="signNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="signDeleteOk" class="unsuccessalert"> Signed Doc Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="signDeleteOk" class="unsuccessalert"> Signed Doc Info Deleted
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="signDeleteNotOk" class="unsuccessalert"> Signed Doc Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="signDeleteNotOk" class="unsuccessalert"> Signed Doc Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<br />
+					<br />
 
-				<div class="row">
+					<div class="row">
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="doc_name" name="doc_name" disabled>
-								<option value=""> Select Doc Name </option>
-								<option value="0"> Promissory Note </option>
-								<option value="1"> Stamp Paper </option>
-								<option value="2"> P Additional </option>
-								<option value="3"> S Additional </option>
-							</select>
-							<span class="text-danger" id="docNameCheck" style='display:none'> Select Doc Name </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
+								<select type="text" class="form-control" id="doc_name" name="doc_name" disabled>
+									<option value=""> Select Doc Name </option>
+									<option value="0"> Promissory Note </option>
+									<option value="1"> Stamp Paper </option>
+									<option value="2"> P Additional </option>
+									<option value="3"> S Additional </option>
+								</select>
+								<span class="text-danger" id="docNameCheck" style='display:none'> Select Doc Name </span>
+							</div>
 						</div>
-					</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="SignType"> Sign Type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="sign_type" name="sign_type" disabled>
-								<option value=""> Select Sign Type </option>
-								<option value="0"> Customer </option>
-								<option value="1"> Guarantor </option>
-								<option value="2"> Combined </option>
-								<option value="3"> Family Members </option>
-							</select>
-							<span class="text-danger" id="signTypeCheck" style='display:none'> Select Sign Type </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="SignType"> Sign Type </label> <span class="required">&nbsp;*</span>
+								<select type="text" class="form-control" id="sign_type" name="sign_type" disabled>
+									<option value=""> Select Sign Type </option>
+									<option value="0"> Customer </option>
+									<option value="1"> Guarantor </option>
+									<option value="2"> Combined </option>
+									<option value="3"> Family Members </option>
+								</select>
+								<span class="text-danger" id="signTypeCheck" style='display:none'> Select Sign Type </span>
+							</div>
 						</div>
-					</div>
 
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
-						<div class="form-group">
-							<label for="signRelationship"> Relationship </label>
-							<select type="text" class="form-control" id="signType_relationship" name="signType_relationship" disabled>
-								<option value=""> Select Relationship </option>
-							</select>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="relation_doc">
+							<div class="form-group">
+								<label for="signRelationship"> Relationship </label>
+								<select type="text" class="form-control" id="signType_relationship" name="signType_relationship" disabled>
+									<option value=""> Select Relationship </option>
+								</select>
+							</div>
 						</div>
-					</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count" readonly>
-							<span class="text-danger" id="docCountCheck" style='display:none'> Enter Count </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="Count"> Count </label> <span class="required">&nbsp;*</span>
+								<input type="number" class="form-control" id="doc_Count" name="doc_Count" placeholder="Enter Count" readonly>
+								<span class="text-danger" id="docCountCheck" style='display:none'> Enter Count </span>
+							</div>
 						</div>
-					</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="upd"> Uploads </label>
-							<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()">
-							<span class="text-danger" id="docupdCheck" style="display: none;"> Upload Document </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="upd"> Uploads </label>
+								<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()">
+								<span class="text-danger" id="docupdCheck" style="display: none;"> Upload Document </span>
+							</div>
 						</div>
-					</div>
 
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="signedID" id="signedID">
-						<button type="button" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;" disabled>Submit</button>
+						<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+							<input type="hidden" name="signedID" id="signedID">
+							<button type="button" name="signInfoBtn" id="signInfoBtn" class="btn btn-primary" style="margin-top: 19px;" disabled>Submit</button>
+						</div>
+
 					</div>
-				
+					</br>
+
+					<div id="signTable" style="overflow-x: auto;">
+						<table class="table custom-table modalTable">
+							<thead>
+								<tr>
+									<th width="50"> S.No </th>
+									<th> Doc Name </th>
+									<th> Sign Type </th>
+									<th> Relationship </th>
+									<th> Count </th>
+									<th> ACTION </th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
 				</div>
-				</br>
-
-				<div id="signTable" style="overflow-x: auto;">
-					<table class="table custom-table modalTable">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Doc Name </th>
-								<th> Sign Type </th>
-								<th> Relationship </th>
-								<th> Count </th>
-								<th> ACTION </th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary closeSignedInfo" data-dismiss="modal">Close</button>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary closeSignedInfo" data-dismiss="modal" >Close</button>
 			</div>
 		</div>
-	</div>
 	</form>
 </div>
 <!-- END  Add Signed Doc Info Modal -->
 
 <!-- Add Cheque info Modal  START -->
 <div class="modal fade addCheque" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="chequeUploads">
-	<input type="hidden" name="cheque_req_id" id="cheque_req_id" value="" >
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Cheque Info</h5>
-				<button type="button" class="close closeChequeInfo" data-dismiss="modal" aria-label="Close" >
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="chequeInsertOk" class="successalert"> Cheque Info Uploaded Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+	<form method="POST" enctype="multipart/form-data" id="chequeUploads">
+		<input type="hidden" name="cheque_req_id" id="cheque_req_id" value="">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="background-color: white">
+				<div class="modal-header">
+					<h5 class="modal-title" id="">Add Cheque Info</h5>
+					<button type="button" class="close closeChequeInfo" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
+				<div class="modal-body">
+					<!-- alert messages -->
+					<div id="chequeInsertOk" class="successalert"> Cheque Info Uploaded Successfully
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="chequeUpdateok" class="successalert"> Cheque Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="chequeUpdateok" class="successalert"> Cheque Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="chequeNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="chequeNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="chequeDeleteOk" class="unsuccessalert"> Cheque Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="chequeDeleteOk" class="unsuccessalert"> Cheque Info Deleted
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="chequeDeleteNotOk" class="unsuccessalert"> Cheque Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="chequeDeleteNotOk" class="unsuccessalert"> Cheque Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<br />
+					<br />
 
-				<div class="row">
+					<div class="row">
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Holdertype "> Holder type </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="holder_type" name="holder_type" disabled>
-								<option value=""> Select Holder type </option>
-								<option value="0"> Customer </option>
-								<option value="1"> Guarantor </option>
-								<option value="2"> Family Members </option>
-							</select>
-							<span class="text-danger" id="holdertypeCheck" style='display:none'> Select Holder type </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="Holdertype "> Holder type </label> <span class="required">&nbsp;*</span>
+								<select type="text" class="form-control" id="holder_type" name="holder_type" disabled>
+									<option value=""> Select Holder type </option>
+									<option value="0"> Customer </option>
+									<option value="1"> Guarantor </option>
+									<option value="2"> Family Members </option>
+								</select>
+								<span class="text-danger" id="holdertypeCheck" style='display:none'> Select Holder type </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="HolderName "> Holder Name </label>
+								<input type="text" class="form-control" id="holder_name" name="holder_name" readonly>
+
+								<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;" disabled>
+									<option value=""> Select Holder Name </option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="chequeRelationship"> Relationship </label>
+								<input type="text" class="form-control" id="cheque_relation" name="cheque_relation" readonly>
+
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="BankName"> Bank Name </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)" readonly>
+								<span class="text-danger" id="chequebankCheck" style='display:none'> Enter Bank Name </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="chequeNo"> Cheque Count </label> <span class="required">&nbsp;*</span>
+								<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count" readonly>
+								<span class="text-danger" id="chequeCountCheck" style='display:none'> Enter Cheque Count </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="upd"> Uploads </label>
+								<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple onchange="chequefilesCount()">
+								<span class="text-danger" id="chequeupdCheck" style='display:none'> Upload Cheque </span>
+							</div>
 						</div>
 					</div>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="HolderName "> Holder Name </label>
-							<input type="text" class="form-control" id="holder_name" name="holder_name" readonly>
+					<div class="row" id="chequeColumnDiv"> </div>
 
-							<select type="text" class="form-control" id="holder_relationship_name" name="holder_relationship_name" style="display: none;" disabled>
-								<option value=""> Select Holder Name </option>
-							</select>
+					<div class="row">
+						<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+							<input type="hidden" name="chequeID" id="chequeID">
+							<button type="button" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;" disabled>Submit</button>
 						</div>
 					</div>
+					</br>
 
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="chequeRelationship"> Relationship </label>
-							<input type="text" class="form-control" id="cheque_relation" name="cheque_relation" readonly>
+					<div id="chequeTable" style="overflow-x: auto;">
+						<table class="table custom-table">
+							<thead>
+								<tr>
+									<th width="50"> S.No </th>
+									<th> Holder type </th>
+									<th> Holder Name </th>
+									<th> Relationship </th>
+									<th> Bank Name </th>
+									<th> Cheque No </th>
+									<th> ACTION </th>
+								</tr>
+							</thead>
+							<tbody>
 
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="BankName"> Bank Name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="chequebank_name" name="chequebank_name" placeholder="Enter Bank Name" onkeydown="return /[a-z ]/i.test(event.key)" readonly>
-							<span class="text-danger" id="chequebankCheck" style='display:none'> Enter Bank Name </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="chequeNo"> Cheque Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="cheque_count" name="cheque_count" placeholder="Enter Cheque Count" readonly>
-							<span class="text-danger" id="chequeCountCheck" style='display:none'> Enter Cheque Count </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="upd"> Uploads </label>
-							<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple  onchange="chequefilesCount()">
-							<span class="text-danger" id="chequeupdCheck" style='display:none'> Upload Cheque </span>
-						</div>
+							</tbody>
+						</table>
 					</div>
 				</div>
-
-				<div class="row" id="chequeColumnDiv">  </div>
-
-				<div class="row">
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="chequeID" id="chequeID">
-						<button type="button" name="chequeInfoBtn" id="chequeInfoBtn" class="btn btn-primary" style="margin-top: 19px;" disabled>Submit</button>
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary closeChequeInfo" data-dismiss="modal">Close</button>
 				</div>
-				</br>
-
-
-				<div id="chequeTable" style="overflow-x: auto;">
-					<table class="table custom-table">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Holder type </th>
-								<th> Holder Name </th>
-								<th> Relationship </th>
-								<th> Bank Name </th>
-								<th> Cheque No </th>
-								<th> ACTION </th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary closeChequeInfo" data-dismiss="modal" >Close</button>
 			</div>
 		</div>
-	</div>
-</form>
+	</form>
 </div>
 <!-- END  Add Cheque Info Modal -->
 
@@ -2159,7 +2269,7 @@ input:checked + .slider:before {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Customer Feedback </h5>
+				<h5 class="modal-title" id="">Add Customer Feedback </h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="feedbackList()">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -2253,261 +2363,261 @@ input:checked + .slider:before {
 
 <!-- Add Gold info Modal  START -->
 <div class="modal fade addGold" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="goldform">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Gold Info</h5>
-				<button type="button" class="close closeGoldInfo" data-dismiss="modal" aria-label="Close" >
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="goldInsertOk" class="successalert"> Gold Info Added Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+	<form method="POST" enctype="multipart/form-data" id="goldform">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="background-color: white">
+				<div class="modal-header">
+					<h5 class="modal-title" id="">Add Gold Info</h5>
+					<button type="button" class="close closeGoldInfo" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
+				<div class="modal-body">
+					<!-- alert messages -->
+					<div id="goldInsertOk" class="successalert"> Gold Info Added Successfully
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="goldUpdateok" class="successalert"> Gold Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="goldUpdateok" class="successalert"> Gold Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="goldNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="goldNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="goldDeleteOk" class="unsuccessalert"> Gold Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="goldDeleteOk" class="unsuccessalert"> Gold Info Deleted
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="goldDeleteNotOk" class="unsuccessalert"> Gold Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="goldDeleteNotOk" class="unsuccessalert"> Gold Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<br />
+					<br />
 
-				<div class="row">
+					<div class="row">
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="gold_sts"> Gold Status </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="gold_sts" name="gold_sts">
-								<option value=""> Select Gold Status </option>
-								<option value="0"> Old </option>
-								<option value="1"> New </option>
-							</select>
-							<span class="text-danger" id="GoldstatusCheck" style='display:none'> Select Gold Status </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="gold_sts"> Gold Status </label> <span class="required">&nbsp;*</span>
+								<select type="text" class="form-control" id="gold_sts" name="gold_sts">
+									<option value=""> Select Gold Status </option>
+									<option value="0"> Old </option>
+									<option value="1"> New </option>
+								</select>
+								<span class="text-danger" id="GoldstatusCheck" style='display:none'> Select Gold Status </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="gold_type"> Gold Type </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type">
+								<span class="text-danger" id="GoldtypeCheck" style='display:none'> Enter Gold Type </span>
+							</div>
+						</div>
+
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="Purity"> Purity </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity">
+								<span class="text-danger" id="purityCheck" style='display:none'> Enter Purity </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="gold_Count"> Count </label> <span class="required">&nbsp;*</span>
+								<input type="number" class="form-control" id="gold_Count" name="gold_Count" placeholder="Enter Count">
+								<span class="text-danger" id="goldCountCheck" style='display:none'> Enter Count </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="gold_Weight"> Weight </label> <span class="required">&nbsp;*</span>
+								<input type="number" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight in Grams">
+								<span class="text-danger" id="goldWeightCheck" style='display:none'> Enter Weight </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="gold_Value"> Value </label> <span class="required">&nbsp;*</span>
+								<input type="number" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value">
+								<span class="text-danger" id="goldValueCheck" style='display:none'> Enter Value </span>
+							</div>
+						</div>
+
+						<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+							<input type="hidden" name="goldID" id="goldID">
+							<button type="button" name="goldInfoBtn" id="goldInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
 						</div>
 					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="gold_type"> Gold Type </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type">
-							<span class="text-danger" id="GoldtypeCheck" style='display:none'> Enter Gold Type </span>
-						</div>
-					</div>
+					</br>
 
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="Purity"> Purity </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity">
-							<span class="text-danger" id="purityCheck" style='display:none'> Enter Purity </span>
-						</div>
-					</div>
+					<div id="goldTable">
+						<table class="table custom-table">
+							<thead>
+								<tr>
+									<th width="50"> S.No </th>
+									<th> Gold Status </th>
+									<th> Purity </th>
+									<th> Count </th>
+									<th> Weight </th>
+									<th> Value </th>
+								</tr>
+							</thead>
+							<tbody>
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="gold_Count"> Count </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="gold_Count" name="gold_Count" placeholder="Enter Count">
-							<span class="text-danger" id="goldCountCheck" style='display:none'> Enter Count </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="gold_Weight"> Weight </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight in Grams">
-							<span class="text-danger" id="goldWeightCheck" style='display:none'> Enter Weight </span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="gold_Value"> Value </label> <span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value">
-							<span class="text-danger" id="goldValueCheck" style='display:none'> Enter Value </span>
-						</div>
-					</div>
-
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="goldID" id="goldID">
-						<button type="button" name="goldInfoBtn" id="goldInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
+							</tbody>
+						</table>
 					</div>
 				</div>
-				</br>
-
-
-				<div id="goldTable">
-					<table class="table custom-table">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Gold Status </th>
-								<th> Purity </th>
-								<th> Count </th>
-								<th> Weight </th>
-								<th> Value </th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary closeGoldInfo" data-dismiss="modal">Close</button>
 				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary closeGoldInfo" data-dismiss="modal">Close</button>
 			</div>
 		</div>
-	</div>
-</form>
+	</form>
 </div>
 <!-- END  Add Gold Info Modal -->
 
 <!-- Add Document info Modal  START -->
 <div class="modal fade addDocument" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="docUploads">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content" style="background-color: white">
-			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add Document Info</h5>
-				<button type="button" class="close closeDocInfo" data-dismiss="modal" aria-label="Close" >
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<!-- alert messages -->
-				<div id="docInsertOk" class="successalert"> Document Info Added Successfully
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+	<form method="POST" enctype="multipart/form-data" id="docUploads">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="background-color: white">
+				<div class="modal-header">
+					<h5 class="modal-title" id="">Add Document Info</h5>
+					<button type="button" class="close closeDocInfo" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
+				<div class="modal-body">
+					<!-- alert messages -->
+					<div id="docInsertOk" class="successalert"> Document Info Added Successfully
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="docUpdateok" class="successalert"> Document Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="docUpdateok" class="successalert"> Document Info Updated Succesfully! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="docNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="docNotOk" class="unsuccessalert"> Something Went Wrong! <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="docDeleteOk" class="unsuccessalert"> Document Info Deleted
-					<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="docDeleteOk" class="unsuccessalert"> Document Info Deleted
+						<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<div id="docDeleteNotOk" class="unsuccessalert"> Document Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
-				</div>
+					<div id="docDeleteNotOk" class="unsuccessalert"> Document Info not Deleted <span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+					</div>
 
-				<br />
+					<br />
 
-				<div class="row">
+					<div class="row">
 
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-					<div class="form-group">
-						<label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
-						<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="" tabindex="1" readonly />
-						<span class="text-danger" id="documentnameCheck" style='display:none'> Enter Document name </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="Documentname "> Document name </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="document_name" name="document_name" placeholder="Enter Document name" value="" tabindex="1" readonly />
+								<span class="text-danger" id="documentnameCheck" style='display:none'> Enter Document name </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="" tabindex="2" readonly />
+								<span class="text-danger" id="documentdetailsCheck" style='display:none'> Enter Document Details </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="Documenttype"> Document Type </label> <span class="required">&nbsp;*</span>
+								<select type="text" class="form-control" id="document_type" name="document_type" tabindex="3" disabled>
+									<option value=''> Select Document Type </option>
+									<option value='0'> Original </option>
+									<option value='1'> Xerox </option>
+								</select>
+								<span class="text-danger" id="documentTypeCheck" style='display:none'> Select Document Type </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="DocumentHolder"> Document Holder </label> <span class="required">&nbsp;*</span>
+								<select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="4" disabled>
+									<option value=""> Select Holder type </option>
+									<option value="0"> Customer </option>
+									<option value="1"> Guarantor </option>
+									<option value="2"> Family Members </option>
+								</select>
+								<span class="text-danger" id="docholderCheck" style='display:none'> Select Document Holder </span>
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="docholdername"> Holder Name </label>
+								<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="" readonly tabindex="5" readonly>
+
+								<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="6" disabled>
+									<option value=""> Select Relationship </option>
+								</select>
+							</div>
+						</div>
+
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="DocRelationship"> Relationship </label>
+								<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="" readonly tabindex="7">
+							</div>
+						</div>
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="DocumentUpd"> Document Uploads </label>
+								<input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="8">
+								<span class="text-danger" id="docinfoupdCheck" style='display:none'> Please Select Document </span>
+							</div>
+						</div>
+
+						<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
+							<input type="hidden" name="doc_info_id" id="doc_info_id" value=''>
+							<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="9">Submit</button>
+						</div>
+					</div>
+					</br>
+
+
+					<div id="docModalDiv" style="overflow-x: auto;">
+						<table class="table custom-table">
+							<thead>
+								<tr>
+									<th width="50"> S.No </th>
+									<th> Document Name </th>
+									<th> Document Details</th>
+									<th> Document Type </th>
+									<th> Document Holder</th>
+									<th> Holder Name</th>
+									<th> Relationship</th>
+								</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+						</table>
 					</div>
 				</div>
-
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-					<div class="form-group">
-						<label for="DocumentDeatails "> Document Details </label> <span class="required">&nbsp;*</span>
-						<input type="text" class="form-control" id="document_details" name="document_details" placeholder="Enter Document Details" value="" tabindex="2" readonly />
-						<span class="text-danger" id="documentdetailsCheck" style='display:none'> Enter Document Details </span>
-					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary closeDocInfo" data-dismiss="modal">Close</button>
 				</div>
-
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-					<div class="form-group">
-						<label for="Documenttype"> Document Type </label> <span class="required">&nbsp;*</span>
-						<select type="text" class="form-control" id="document_type" name="document_type" tabindex="3" disabled>
-							<option value=''> Select Document Type </option>
-							<option value='0' > Original </option>
-							<option value='1' > Xerox </option>
-						</select>
-						<span class="text-danger" id="documentTypeCheck" style='display:none'> Select Document Type </span>
-					</div>
-				</div>
-
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-					<div class="form-group">
-						<label for="DocumentHolder"> Document Holder </label> <span class="required">&nbsp;*</span>
-						<select type="text" class="form-control" id="document_holder" name="document_holder" tabindex="4" disabled>
-							<option value=""> Select Holder type </option>
-							<option value="0" > Customer </option>
-							<option value="1" > Guarantor </option>
-							<option value="2" > Family Members </option>
-						</select>
-						<span class="text-danger" id="docholderCheck" style='display:none'> Select Document Holder </span>
-					</div>
-				</div>
-
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-					<div class="form-group">
-						<label for="docholdername"> Holder Name </label>
-						<input type="text" class="form-control" id="docholder_name" name="docholder_name" value="" readonly tabindex="5" readonly>
-
-						<select type="text" class="form-control" id="docholder_relationship_name" name="docholder_relationship_name" style="display: none;" tabindex="6" disabled>
-							<option value=""> Select Relationship </option>
-						</select>
-					</div>
-				</div>
-
-
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-					<div class="form-group">
-						<label for="DocRelationship"> Relationship </label>
-						<input type="text" class="form-control" id="doc_relation" name="doc_relation" value="" readonly tabindex="7" >
-					</div>
-				</div>
-
-				<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-					<div class="form-group">
-						<label for="DocumentUpd"> Document Uploads </label>
-						<input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]"  multiple tabindex="8">
-						<span class="text-danger" id="docinfoupdCheck" style='display:none'> Please Select Document </span>
-					</div>
-				</div>
-
-					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
-						<input type="hidden" name="doc_info_id" id="doc_info_id" value=''>
-						<button type="button" name="docInfoBtn" id="docInfoBtn" class="btn btn-primary" style="margin-top: 19px;" tabindex="9">Submit</button>
-					</div>
-				</div>
-				</br>
-
-
-				<div id="docModalDiv" style="overflow-x: auto;">
-					<table class="table custom-table">
-						<thead>
-							<tr>
-								<th width="50"> S.No </th>
-								<th> Document Name </th>
-								<th> Document Details</th>
-								<th> Document Type </th>
-								<th> Document Holder</th>
-								<th> Holder Name</th>
-								<th> Relationship</th>
-							</tr>
-						</thead>
-						<tbody>
-
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary closeDocInfo" data-dismiss="modal">Close</button>
 			</div>
 		</div>
-	</div>
-</form>
+	</form>
 </div>
 <!-- END  Add Document Info Modal -->
 
@@ -2516,7 +2626,7 @@ input:checked + .slider:before {
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="myLargeModalLabel">Add KYC Info</h5>
+				<h5 class="modal-title" id="">Add KYC Info</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetkycinfoList()">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -2641,83 +2751,83 @@ input:checked + .slider:before {
 
 <!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade noc-summary-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" >
-        <div class="modal-content" style="background-color: white">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel"> NOC Summary </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id=""> NOC Summary </h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
 				<div id="nocsummaryModal">
 
 				</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
-            </div>
-        </div>
-    </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// NOC Summary Modal END ////////////////////////////////////////////////////////////////////// -->
 
 <!-- /////////////////////////////////////////////////////////////////// Temp document OUT Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade temp-take-out-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="tempoutform">
-    <div class="modal-dialog modal-lg" >
-        <div class="modal-content" style="background-color: white">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel"> Document Take Out </h5>
-                <button type="button" class="close closetempout" data-dismiss="modal" aria-label="Close" onclick="">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-				<div class="row">
+	<form method="POST" enctype="multipart/form-data" id="tempoutform">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="background-color: white">
+				<div class="modal-header">
+					<h5 class="modal-title" id=""> Document Take Out </h5>
+					<button type="button" class="close closetempout" data-dismiss="modal" aria-label="Close" onclick="">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
 
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="doc_name_tempout"> Document name </label>
-							<input type="text" class="form-control" id="doc_name_tempout" name="doc_name_tempout" value="" tabindex="1" readonly />
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="doc_name_tempout"> Document name </label>
+								<input type="text" class="form-control" id="doc_name_tempout" name="doc_name_tempout" value="" tabindex="1" readonly />
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="doc_tempout_link"> Document </label>
-							<a href="" target='_blank'  value="" tabindex="2" >
-								<input type='text' class="form-control" id="doc_tempout_link" name="doc_tempout_link" readonly value="">
-							</a>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="doc_tempout_link"> Document </label>
+								<a href="" target='_blank' value="" tabindex="2">
+									<input type='text' class="form-control" id="doc_tempout_link" name="doc_tempout_link" readonly value="">
+								</a>
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempout_date"> Date </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempout_date" name="tempout_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempout_date"> Date </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempout_date" name="tempout_date" value="<?php echo date('d-m-Y'); ?>" tabindex="3" readonly />
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempout_purpose"> Purpose </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempout_purpose" name="tempout_purpose" value="" tabindex="4" placeholder='Enter Purpose'/>
-							<span class="text-danger" id="tempoutpurposeCheck" style='display:none'> Please Enter Purpose </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempout_purpose"> Purpose </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempout_purpose" name="tempout_purpose" value="" tabindex="4" placeholder='Enter Purpose' />
+								<span class="text-danger" id="tempoutpurposeCheck" style='display:none'> Please Enter Purpose </span>
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempout_person"> Person </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempout_person" name="tempout_person" value="" tabindex="5" placeholder='Enter Person'/>
-							<span class="text-danger" id="tempoutpersonCheck" style='display:none'> Please Enter Person </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempout_person"> Person </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempout_person" name="tempout_person" value="" tabindex="5" placeholder='Enter Person' />
+								<span class="text-danger" id="tempoutpersonCheck" style='display:none'> Please Enter Person </span>
+							</div>
 						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempout_remarks"> Remarks </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempout_remarks" name="tempout_remarks" value="" tabindex="6" placeholder='Enter Remarks'/>
-							<span class="text-danger" id="tempoutremarksCheck" style='display:none'> Please Enter Remarks </span>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempout_remarks"> Remarks </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempout_remarks" name="tempout_remarks" value="" tabindex="6" placeholder='Enter Remarks' />
+								<span class="text-danger" id="tempoutremarksCheck" style='display:none'> Please Enter Remarks </span>
+							</div>
 						</div>
-					</div>
-					<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="tempout_person"> Given to </label> <span class="required">&nbsp;*</span>
 							<select class='form-control' id='tempout_person' name='tempout_person' tabindex="4">
@@ -2736,97 +2846,186 @@ input:checked + .slider:before {
 							<span class="text-danger" id="tempoutrelnameCheck" style='display:none'> Please Select Person name </span>
 						</div>
 					</div> -->
-					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
-						<input type="hidden" name="req_id_tempout" id="req_id_tempout" value=''>
-						<input type="hidden" name="cus_id_tempout" id="cus_id_tempout" value=''>
-						<input type="hidden" name="table_id_tempout" id="table_id_tempout" value=''>
-						<input type="hidden" name="table_name_tempout" id="table_name_tempout" value=''>
-						<button type="button" name="tempout_submit" id="tempout_submit" data-type='take-out' class="btn btn-primary" style="margin-top: 19px;" tabindex="7">Submit</button>
-					</div>
+						<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
+							<input type="hidden" name="req_id_tempout" id="req_id_tempout" value=''>
+							<input type="hidden" name="cus_id_tempout" id="cus_id_tempout" value=''>
+							<input type="hidden" name="table_id_tempout" id="table_id_tempout" value=''>
+							<input type="hidden" name="table_name_tempout" id="table_name_tempout" value=''>
+							<button type="button" name="tempout_submit" id="tempout_submit" data-type='take-out' class="btn btn-primary" style="margin-top: 19px;" tabindex="7">Submit</button>
+						</div>
 
+					</div>
 				</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary closetempout" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary closetempout" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Temp document OUT Modal END ////////////////////////////////////////////////////////////////////// -->
 <!-- /////////////////////////////////////////////////////////////////// Temp document IN Modal START ////////////////////////////////////////////////////////////// -->
 <div class="modal fade temp-take-in-modal " tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-<form method="POST" enctype="multipart/form-data"  id="tempinform">
-    <div class="modal-dialog modal-lg" >
-        <div class="modal-content" style="background-color: white">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myLargeModalLabel"> Document Take In </h5>
-                <button type="button" class="close closetempin" data-dismiss="modal" aria-label="Close" onclick="">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-				<div class="row">
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="doc_name_tempin"> Document name </label>
-							<input type="text" class="form-control" id="doc_name_tempin" name="doc_name_tempin" value="" tabindex="1" readonly />
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="doc_tempin_link"> Document </label>
-							<a href="" target='_blank'  value="" tabindex="2" >
-								<input type='text' class="form-control" id="doc_tempin_link" name="doc_tempin_link" readonly value="">
-							</a>
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempin_date"> Date </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempin_date" name="tempin_date" value="<?php echo date('d-m-Y');?>" tabindex="3" readonly />
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempin_purpose"> Purpose </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempin_purpose" name="tempin_purpose" value="" tabindex="4" placeholder='Enter Purpose'/>
-							<span class="text-danger" id="tempinpurposeCheck" style='display:none'> Please Enter Purpose </span>
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempin_person"> Person </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempin_person" name="tempin_person" value="" tabindex="5" placeholder='Enter Person'/>
-							<span class="text-danger" id="tempinpersonCheck" style='display:none'> Please Enter Person </span>
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempin_remarks"> Remarks </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempin_remarks" name="tempin_remarks" value="" tabindex="6" placeholder='Enter Remarks'/>
-							<span class="text-danger" id="tempinremarksCheck" style='display:none'> Please Enter Remarks </span>
-						</div>
-					</div>
-					<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
-						<input type="hidden" name="req_id_tempin" id="req_id_tempin" value=''>
-						<input type="hidden" name="cus_id_tempin" id="cus_id_tempin" value=''>
-						<input type="hidden" name="table_id_tempin" id="table_id_tempin" value=''>
-						<input type="hidden" name="table_name_tempin" id="table_name_tempin" value=''>
-						<button type="button" name="tempin_submit" id="tempin_submit" data-type='take-in' class="btn btn-primary" style="margin-top: 19px;" tabindex="6">Submit</button>
-					</div>
-
+	<form method="POST" enctype="multipart/form-data" id="tempinform">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="background-color: white">
+				<div class="modal-header">
+					<h5 class="modal-title" id=""> Document Take In </h5>
+					<button type="button" class="close closetempin" data-dismiss="modal" aria-label="Close" onclick="">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary closetempin" data-dismiss="modal" onclick="">Close</button>
-            </div>
-        </div>
-    </div>
-</form>
+				<div class="modal-body">
+					<div class="row">
+
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="doc_name_tempin"> Document name </label>
+								<input type="text" class="form-control" id="doc_name_tempin" name="doc_name_tempin" value="" tabindex="1" readonly />
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="doc_tempin_link"> Document </label>
+								<a href="" target='_blank' value="" tabindex="2">
+									<input type='text' class="form-control" id="doc_tempin_link" name="doc_tempin_link" readonly value="">
+								</a>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempin_date"> Date </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempin_date" name="tempin_date" value="<?php echo date('d-m-Y'); ?>" tabindex="3" readonly />
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempin_purpose"> Purpose </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempin_purpose" name="tempin_purpose" value="" tabindex="4" placeholder='Enter Purpose' />
+								<span class="text-danger" id="tempinpurposeCheck" style='display:none'> Please Enter Purpose </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempin_person"> Person </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempin_person" name="tempin_person" value="" tabindex="5" placeholder='Enter Person' />
+								<span class="text-danger" id="tempinpersonCheck" style='display:none'> Please Enter Person </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="tempin_remarks"> Remarks </label> <span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="tempin_remarks" name="tempin_remarks" value="" tabindex="6" placeholder='Enter Remarks' />
+								<span class="text-danger" id="tempinremarksCheck" style='display:none'> Please Enter Remarks </span>
+							</div>
+						</div>
+						<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
+							<input type="hidden" name="req_id_tempin" id="req_id_tempin" value=''>
+							<input type="hidden" name="cus_id_tempin" id="cus_id_tempin" value=''>
+							<input type="hidden" name="table_id_tempin" id="table_id_tempin" value=''>
+							<input type="hidden" name="table_name_tempin" id="table_name_tempin" value=''>
+							<button type="button" name="tempin_submit" id="tempin_submit" data-type='take-in' class="btn btn-primary" style="margin-top: 19px;" tabindex="6">Submit</button>
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary closetempin" data-dismiss="modal" onclick="">Close</button>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Temp document IN Modal END ////////////////////////////////////////////////////////////////////// -->
+
+
+<!-- Modal for Customer Old Data Adding   -->
+<div class="modal fade add_cus_old" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg " role="document">
+		<div class="modal-content" style="background-color: white">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add Old Data</h5>
+				<button type="button" class="close closeBtn_old" data-dismiss="modal" aria-label="Close" onclick="showCustomerOldData()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="" id="cus_old_form">
+					<div class="row">
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="cus_id_old">Customer ID</label>
+								<input type="text" class="form-control" id="cus_id_old" name="cus_id_old" value="<?php echo $_GET['upd']; ?>" readonly>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="cus_name_old">Customer Name</label>
+								<input type="text" class="form-control" id="cus_name_old" name="cus_name_old" value="<?php echo $cus_name; ?>" readonly>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="mobile_old">Mobile</label><span class="required">&nbsp;*</span>
+								<input type="number" class="form-control" id="mobile_old" name="mobile_old" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Mobile Number" tabindex="1">
+								<span class="text-danger" id="mobile_oldCheck" style='display:none'> Please Enter Mobile Number </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="area_old">Area</label><span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="area_old" name="area_old" value="<?php //echo $area_name;
+																												?>" placeholder="Enter Area Name" tabindex="2">
+								<span class="text-danger" id="area_oldCheck" style='display:none'> Please Enter Area Name </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="sub_area_old">Sub Area</label><span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="sub_area_old" name="sub_area_old" value="<?php //echo $sub_area_name;
+																														?>" placeholder="Enter Sub Area Name" tabindex="3">
+								<span class="text-danger" id="sub_area_oldCheck" style='display:none'> Please Enter Sub Area Name </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="loan_cat_old">Loan Category</label><span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="loan_cat_old" name="loan_cat_old" placeholder="Enter Loan Category" tabindex="4">
+								<span class="text-danger" id="loan_cat_oldCheck" style='display:none'> Please Enter Loan Category </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="sub_cat_old">Sub Category</label><span class="required">&nbsp;*</span>
+								<input type="text" class="form-control" id="sub_cat_old" name="sub_cat_old" placeholder="Enter Sub Category" tabindex="5">
+								<span class="text-danger" id="sub_cat_oldCheck" style='display:none'> Please Enter Sub Category </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="loan_amt_old">Loan Amount</label><span class="required">&nbsp;*</span>
+								<input type="number" class="form-control" id="loan_amt_old" name="loan_amt_old" placeholder="Enter Loan Amount" tabindex="6">
+								<span class="text-danger" id="loan_amt_oldCheck" style='display:none'> Please Enter Loan Amount </span>
+							</div>
+						</div>
+						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+							<div class="form-group">
+								<label for="due_chart_old">Upload Due Chart</label><span class="required">&nbsp;*</span>
+								<input type="file" class="form-control" id="due_chart_old" name="due_chart_old" tabindex="7">
+								<span class="text-danger" id="due_chart_oldCheck" style='display:none'> Please Choose Due Chart File </span>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" id="submit_old_cus_data" name="submit_old_cus_data" tabindex="8">Submit</button>
+				<button class="btn btn-secondary" data-dismiss="modal" tabindex="9" onclick="showCustomerOldData()">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- to get icons like fingerprint -->
