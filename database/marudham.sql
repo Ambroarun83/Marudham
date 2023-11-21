@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2023 at 02:00 PM
+-- Generation Time: Nov 21, 2023 at 02:50 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2131,6 +2131,37 @@ INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer
 (10, '17', '090920230103', 'Janaki', '2023-09-06', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-09-09 13:15:22', '2023-09-09 13:15:25'),
 (23, '19', '600060006000', 'Subramani', '1995-05-02', '28', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-11-06 15:52:43', '2023-11-06 15:52:43'),
 (24, '20', '600060006000', 'Subramani', '1995-05-02', '28', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2023-11-06 15:57:02', '2023-11-06 15:57:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cus_old_data`
+--
+
+CREATE TABLE `cus_old_data` (
+  `id` int(11) NOT NULL COMMENT 'Primary Key',
+  `cus_id` varchar(50) DEFAULT NULL,
+  `cus_name` varchar(200) DEFAULT NULL,
+  `mobile` varchar(50) DEFAULT NULL,
+  `area` varchar(100) DEFAULT NULL,
+  `sub_area` varchar(100) DEFAULT NULL,
+  `loan_cat` varchar(100) DEFAULT NULL,
+  `sub_cat` varchar(100) DEFAULT NULL,
+  `loan_amt` varchar(100) DEFAULT NULL,
+  `due_chart_file` varchar(100) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_date` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cus_old_data`
+--
+
+INSERT INTO `cus_old_data` (`id`, `cus_id`, `cus_name`, `mobile`, `area`, `sub_area`, `loan_cat`, `sub_cat`, `loan_amt`, `due_chart_file`, `created_date`, `updated_date`) VALUES
+(1, '010720232023', 'Bharath', '9846545654', 'Karur', 'Gandigramam', 'Vehicle', 'bike', '35000', '655c9c38e6cea.pdf', '2023-11-21 17:32:00', '2023-11-21 17:32:00'),
+(2, '010720232023', 'Bharath', '3235345345', 'asdfsdfsdf', 'sdf', 'asfd', 'asdf', '234345', '655c9e105f802.pdf', '2023-11-21 17:39:52', '2023-11-21 17:39:52'),
+(3, '010720232023', 'Bharath', '9846546549', 'Trichy', 'Main trichy', 'Electronics', 'Laptop', '75000', '655ca02951355.pdf', '2023-11-21 17:48:49', '2023-11-21 17:48:49'),
+(4, '200020002000', 'Aravind', '9849465465', 'Pondy', 'Bussy st', 'Personal', 'Personal', '45000', '655ca9cb5dd24.jpg', '2023-11-21 18:29:55', '2023-11-21 18:29:55');
 
 -- --------------------------------------------------------
 
@@ -4455,6 +4486,12 @@ ALTER TABLE `customer_register`
   ADD PRIMARY KEY (`cus_reg_id`);
 
 --
+-- Indexes for table `cus_old_data`
+--
+ALTER TABLE `cus_old_data`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `director_creation`
 --
 ALTER TABLE `director_creation`
@@ -5070,6 +5107,12 @@ ALTER TABLE `customer_profile`
 --
 ALTER TABLE `customer_register`
   MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `cus_old_data`
+--
+ALTER TABLE `cus_old_data`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `director_creation`
