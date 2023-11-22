@@ -1224,6 +1224,20 @@ function resetbankinfoList() {
 
 ////////////////////////// KYC Info ////////////////////////////////////////////////
 
+$('#proof_number').keyup(function(){
+    let proof_type = $('#proof_type').val();
+    if(proof_type == 1){
+        var value = $(this).val();
+        value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
+        $(this).val(value);
+        $(this).attr('maxlength','14')
+    }else{
+        $(this).removeAttr('maxlength');//remove maxlength when other than adhar due to unkown count of number 
+    }
+});
+$('#proof_type').change(function(){
+    $('#proof_number').val('')
+})
 
 
 $(document).on("click", "#kycInfoBtn", function () {
