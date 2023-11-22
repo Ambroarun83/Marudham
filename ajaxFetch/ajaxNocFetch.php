@@ -118,6 +118,7 @@ foreach ($result as $row) {
         if($docToIssue == 0){
             //if this variable contains value 0 then all document are given to customer as noc
             $action .="<a href='' title='Remove details' class='remove-noc' data-reqid='$id' data-cusid='$cus_id' >Remove</a>";
+            $action .="<a href='' title='NOC Letter' class='noc-letter' data-reqid='$id' data-cusid='$cus_id' >NOC Letter</a>";
         }
     
     $action .= "</div></div>";
