@@ -61,12 +61,14 @@ function moneyFormatIndia($num)
 
 ?>
 
-<head>
+<!-- <head>
 <style type="text/css">
 	th{
 		text-align: center;
 		font-weight: bold;
 	}
+	@media print {
+        }
 </style>
 </head>
 
@@ -74,7 +76,7 @@ function moneyFormatIndia($num)
 <input type="hidden" name="coll_code" id="coll_code" value="<?php echo $coll_code; ?>">
 
 <div class="approvedtablefield">
-<div id="dettable" style="border:1px solid black;">
+<div id="dettable" style="border:1px solid black;width: 8cm;height: 8cm;margin: 0;padding: 0;">
 <br /><br />
 <div style="width:100%;padding:50px;">
 	<table style="width:87%;">
@@ -98,9 +100,6 @@ function moneyFormatIndia($num)
 			<td style="text-align:left"><p>Mobile: +91 9626370666</p></td>
 			<td style="text-align:right"><p>Mobile: <?php echo $cus_mobile;?></p></td>
 		</tr>
-		<!-- <tr>
-			<td style="text-align:left"><p>Email:marudham@gmail.com</p></td>
-		</tr> -->
 		
 	</table>
 	<br /><br />
@@ -196,19 +195,100 @@ function moneyFormatIndia($num)
 			<b><p align="right"><?php echo 'Date: '.date("d/m/Y"); ?></p></b>
 		</div>
 	</div>
-</div>			
+</div>			 -->
+
+
+<!-- <div class="frame" id="dettable">
+	<div class="captions">
+		<div class="text-wrapper">Receipt No:</div>
+		<div class="div">Date / Time:</div>
+		<div class="text-wrapper-2">Line / Area:</div>
+		<div class="text-wrapper-3">Customer ID:</div>
+		<div class="text-wrapper-4">Loan Category:</div>
+		<div class="text-wrapper-5">Loan No:</div>
+		<div class="text-wrapper-6">Due Receipt:</div>
+		<div class="text-wrapper-7">Penalty:</div>
+		<div class="text-wrapper-8">Due Balance:</div>
+		<div class="text-wrapper-9">Loan Balance:</div>
+		<div class="text-wrapper-10">Net Received:</div>
+		<div class="text-wrapper-11">Customer Name:</div>
+	</div>
+	<div class="data">
+		<div class="text-wrapper-12">COL-101</div>
+		<div class="text-wrapper-13">23/11/2023 11:11AM</div>
+		<div class="text-wrapper-14">AMC</div>
+		<div class="text-wrapper-15">100010001000</div>
+		<div class="text-wrapper-16">Appliance</div>
+		<div class="text-wrapper-17">LID-101</div>
+		<div class="text-wrapper-18">2,610</div>
+		<div class="text-wrapper-19">0</div>
+		<div class="text-wrapper-20">0</div>
+		<div class="text-wrapper-21">45,000</div>
+		<div class="text-wrapper-22">2,610</div>
+		<div class="text-wrapper-11">Kumaresan M</div>
+	</div>
+	<img class="group" src="img/group-9.png" />
+</div> -->
+
+<div class="frame" id="dettable" style="position: relative; width: 302px; height: 500px; background-color: #ffffff;">
+    <div class="overlap-group">
+        <div class="captions" style="position: absolute; width: 112px; height: 278px; top: 136px; left: 51px;font-size: 12px">
+			<!-- <div class="text-wrapper" style="position: absolute; top: 0; left: 30px; font-family: 'Times New Roman-Regular', Helvetica; font-weight: 400; color: #000000; font-size: 12px; text-align: center; letter-spacing: 0; line-height: normal; white-space: nowrap;">Receipt No:</div> -->
+			<!-- Other text-wrapper elements -->
+			<b><div class="text-wrapper" style="text-align:right;" >Receipt No :</div></b>
+			<div class="div"style="text-align:right;" >Date / Time :</div>
+			<div class="text-wrapper-2"style="text-align:right;" >Line / Area :</div>
+			<div class="text-wrapper-3"style="text-align:right;" >Customer ID :</div>
+			<b><div class="text-wrapper-4"style="text-align:right;" >Customer Name :</div></b>
+			<div class="text-wrapper-6"style="text-align:right;" >Loan Category :</div>
+			<div class="text-wrapper-6"style="text-align:right;" >Loan No :</div>
+			<div class="text-wrapper-7"style="text-align:right;" >Due Receipt :</div>
+			<div class="text-wrapper-8"style="text-align:right;" >Penalty :</div>
+			<div class="text-wrapper-9"style="text-align:right;" >Fine :</div><br>
+			<b><div class="text-wrapper-10"style="text-align:right;" >Net Received :</div></b>
+			<div class="text-wrapper-11"style="text-align:right;" >Due Balance :</div>
+			<div class="text-wrapper-12"style="text-align:right;" >Loan Balance :</div>
+		</div>
+		<div class="data" style="position: absolute; width: 128px; height: 278px; top: 136px; left: 164px;font-size: 12px">
+			<!-- <div class="text-wrapper-12" style="position: absolute; top: 0; left: 0; font-family: 'Times New Roman-Regular', Helvetica; font-weight: 400; color: #000000; font-size: 12px; text-align: center; letter-spacing: 0; line-height: normal; white-space: nowrap;">COL-101</div> -->
+			<!-- Other text-wrapper elements -->
+			<b><div class="text-wrapper-13" style="margin-left: 5px;">COL-101</div></b>
+			<div class="text-wrapper-14" style="margin-left: 5px;">23/11/2023 11:11AM</div>
+			<div class="text-wrapper-15" style="margin-left: 5px;">AMC</div>
+			<div class="text-wrapper-16" style="margin-left: 5px;">100010001000</div>
+			<b><div class="text-wrapper-17" style="margin-left: 5px;">Kumaresan M</div></b>
+			<div class="text-wrapper-18" style="margin-left: 5px;">Appliance</div>
+			<div class="text-wrapper-19" style="margin-left: 5px;">LID-101</div>
+			<div class="text-wrapper-20" style="margin-left: 5px;">2,610</div>
+			<div class="text-wrapper-21" style="margin-left: 5px;">0</div>
+			<div class="text-wrapper-22" style="margin-left: 5px;">0</div><br>
+			<b><div class="text-wrapper-23" style="margin-left: 5px;">2,610</div></b>
+			<div class="text-wrapper-24" style="margin-left: 5px;">0</div>
+			<div class="text-wrapper-25" style="margin-left: 5px;">45,000</div>
+		</div>
+	</div>
+    <img class="group" alt="Helo" src="img/group-9.png" style="position: absolute; width: 224px; height: 91px; top: 34px; left: 44px;" />
+</div>
+
+
+
 <button type="button" name="printpurchase" onclick="poprint()" id="printpurchase" class="btn btn-primary">Print</button>
 
 <script type="text/javascript">
 
 function poprint(){
 	var Bill = document.getElementById("dettable").innerHTML;
-	var printWindow = window.open('', '', 'height=1000,width=1000');
+	var printWindow = window.open('', '','height=1000;weight=1000;');
+	printWindow.document.write('<html><head></head><body>');
 	printWindow.document.write(Bill);
+	printWindow.document.write('</body></html>');
 	printWindow.document.close();
 	printWindow.print();
 	printWindow.close();
  }
- document.getElementById("printpurchase").click();
+ setTimeout(() => {
+	 document.getElementById("printpurchase").click();
+	
+ }, 1500);
  
 </script>
