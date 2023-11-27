@@ -66,7 +66,7 @@ function moneyFormatIndia($num) {
 <body >
     <div class="container" id="noc_letter_div" style="font-family: Arial, sans-serif;  max-width: 600px;">
         <div class="header" style="text-align: center; margin-bottom: 20px;">
-            <h2>NOC Letter</h2>
+            <h2>No Objection Certificate</h2>
         </div>
         <div class="date" style="text-align: right; margin-bottom: 20px;">
             <p>Date: <?php echo date('d/m/Y'); ?></p>
@@ -87,6 +87,8 @@ function moneyFormatIndia($num) {
         </div>
         <div class="footer" style="text-align: right;">
             <p>Yours sincerely,</p>
+            <br>
+            <br>
             <p>Manager</p>
         </div>
         <button type="button" name="printletter" onclick="poprint()" id="printletter" class="btn btn-primary" style="display:none">Print</button>

@@ -13,8 +13,21 @@ foreach($row as $key => $val){
 	$$key = $val; 
 }
 
-$sql = $con->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id='".strip_tags($req_id)."' ");
+$sql = $con->query("SELECT 
+		alm.line_name,
+		FROM `acknowlegement_customer_profile` cp
+		LEFT JOIN area_line_mapping alm ON FIND_IN_SET(cp.area_confirm_subarea,alm.sub_area_id)
+		WHERE cp.req_id='".strip_tags($req_id)."' ");
 $rowSql=$sql->fetch_assoc();
+$line_name = $rowSql['line_name'];
+
+$sql = $con->query("SELECT 
+		alc.due_type,alc.loan_category 
+		FROM `acknowlegement_loan_calculation` alc
+		LEFT JOIN loan_category_creation lcc ON alc.loan_category = lcc.loan_category_creation_id
+		WHERE req_id='".strip_tags($req_id)."' ");
+$rowSql=$sql->fetch_assoc();
+$loan_category = $rowSql['loan_category'];
 if($rowSql['due_type'] == 'Interest' ){
 	$loan_type='interest';
 }else{
@@ -23,8 +36,16 @@ if($rowSql['due_type'] == 'Interest' ){
 
 
 //Get customer Details
-$qry=$con->query("SELECT ac.area_name,sac.sub_area_name,cr.address,cr.mobile1,cr.taluk,cr.district FROM area_list_creation ac JOIN sub_area_list_creation sac ON 
-sac.area_id_ref = ac.area_id JOIN customer_register cr ON cr.cus_id = '".strip_tags($cus_id)."' WHERE ac.area_id='".strip_tags($area)."' ");
+$qry=$con->query("SELECT 
+	ac.area_name,
+	sac.sub_area_name,
+	cr.address,
+	cr.mobile1,
+	cr.taluk,
+	cr.district FROM area_list_creation ac 
+	JOIN sub_area_list_creation sac ON sac.area_id_ref = ac.area_id 
+	JOIN customer_register cr ON cr.cus_id = '".strip_tags($cus_id)."' 
+	WHERE ac.area_id='".strip_tags($area)."' ");
 $row=$qry->fetch_assoc();
 $cus_area = $row['area_name'];
 $cus_sub_area = $row['sub_area_name'];
@@ -37,27 +58,6 @@ $cus_district = $row['district'];
 
 // $row = $qry->fetch_assoc();
 // $company_name = $row['company_name'];
-function moneyFormatIndia($num)
-{
-    $explrestunits = "";
-    if (strlen($num) > 3) {
-        $lastthree = substr($num, strlen($num) - 3, strlen($num));
-        $restunits = substr($num, 0, strlen($num) - 3);
-        $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits;
-        $expunit = str_split($restunits, 2);
-        for ($i = 0; $i < sizeof($expunit); $i++) {
-            if ($i == 0) {
-                $explrestunits .= (int)$expunit[$i] . ",";
-            } else {
-                $explrestunits .= $expunit[$i] . ",";
-            }
-        }
-        $thecash = $explrestunits . $lastthree;
-    } else {
-        $thecash = $num;
-    }
-    return $thecash;
-}
 
 ?>
 
@@ -252,12 +252,12 @@ function moneyFormatIndia($num)
 		<div class="data" style="position: absolute; width: 128px; height: 278px; top: 136px; left: 164px;font-size: 12px">
 			<!-- <div class="text-wrapper-12" style="position: absolute; top: 0; left: 0; font-family: 'Times New Roman-Regular', Helvetica; font-weight: 400; color: #000000; font-size: 12px; text-align: center; letter-spacing: 0; line-height: normal; white-space: nowrap;">COL-101</div> -->
 			<!-- Other text-wrapper elements -->
-			<b><div class="text-wrapper-13" style="margin-left: 5px;">COL-101</div></b>
-			<div class="text-wrapper-14" style="margin-left: 5px;">23/11/2023 11:11AM</div>
-			<div class="text-wrapper-15" style="margin-left: 5px;">AMC</div>
-			<div class="text-wrapper-16" style="margin-left: 5px;">100010001000</div>
-			<b><div class="text-wrapper-17" style="margin-left: 5px;">Kumaresan M</div></b>
-			<div class="text-wrapper-18" style="margin-left: 5px;">Appliance</div>
+			<b><div class="text-wrapper-13" style="margin-left: 5px;"><?php echo $coll_code; ?></div></b>
+			<div class="text-wrapper-14" style="margin-left: 5px;"><?php echo date('d-m-Y H:s:i:a',strtotime($coll_date)); ?></div>
+			<div class="text-wrapper-15" style="margin-left: 5px;"><?php echo $line_name; ?></div>
+			<div class="text-wrapper-16" style="margin-left: 5px;"><?php echo $_GET['cusidupd']; ?></div>
+			<b><div class="text-wrapper-17" style="margin-left: 5px;"><?php echo $cus_name;?></div></b>
+			<div class="text-wrapper-18" style="margin-left: 5px;"><?php echo $loan_category; ?></div>
 			<div class="text-wrapper-19" style="margin-left: 5px;">LID-101</div>
 			<div class="text-wrapper-20" style="margin-left: 5px;">2,610</div>
 			<div class="text-wrapper-21" style="margin-left: 5px;">0</div>
@@ -292,3 +292,27 @@ function poprint(){
  }, 1500);
  
 </script>
+
+<?php
+function moneyFormatIndia($num){
+    $explrestunits = "";
+    if (strlen($num) > 3) {
+        $lastthree = substr($num, strlen($num) - 3, strlen($num));
+        $restunits = substr($num, 0, strlen($num) - 3);
+        $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits;
+        $expunit = str_split($restunits, 2);
+        for ($i = 0; $i < sizeof($expunit); $i++) {
+            if ($i == 0) {
+                $explrestunits .= (int)$expunit[$i] . ",";
+            } else {
+                $explrestunits .= $expunit[$i] . ",";
+            }
+        }
+        $thecash = $explrestunits . $lastthree;
+    } else {
+        $thecash = $num;
+    }
+    return $thecash;
+}
+
+?>
