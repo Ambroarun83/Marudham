@@ -1036,7 +1036,7 @@ if (sizeof($getLoanCalculation) > 0) {
 													<th width="50"> S.No </th>
 													<th> Proof of </th>
 													<th> Proof type </th>
-													<th> Proof Number </th>
+													<th> Proof Details </th>
 													<th> Upload </th>
 												</tr>
 											</thead>
@@ -3214,9 +3214,9 @@ if (sizeof($getLoanCalculation) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="proof_number"> Proof Number </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Number">
-							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Number </span>
+							<label for="proof_number"> Proof Details </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Details">
+							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Details </span>
 						</div>
 					</div>
 
@@ -3244,7 +3244,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<th width="50"> S.No </th>
 								<th> Proof of </th>
 								<th> Proof type </th>
-								<th> Proof Number </th>
+								<th> Proof Details </th>
 								<th> ACTION </th>
 							</tr>
 						</thead>
@@ -3716,10 +3716,19 @@ if (sizeof($getLoanCalculation) > 0) {
 						</div>
 					</div>
 
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="gold_upload"> Upload </label>
+							<input type="hidden" name="goldupload" id="goldupload">
+							<input type="file" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg">
+							<span class="text-danger" id="gold_uploadCheck" style="display:none"> Please Upload file </span>
+						</div>
+					</div>
+
 					<div class="col-xl-2 col-lg-2 col-md-6 col-sm-4 col-12">
 						<input type="hidden" name="goldID" id="goldID">
 						<button type="button" name="goldInfoBtn" id="goldInfoBtn" class="btn btn-primary" style="margin-top: 19px;">Submit</button>
-					</div>
+					</div>	
 				</div>
 				</br>
 

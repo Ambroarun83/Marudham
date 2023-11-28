@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 27, 2023 at 02:05 PM
+-- Generation Time: Nov 28, 2023 at 01:15 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2381,6 +2381,7 @@ CREATE TABLE `gold_info` (
   `gold_Count` varchar(255) DEFAULT NULL,
   `gold_Weight` varchar(255) DEFAULT NULL,
   `gold_Value` varchar(255) DEFAULT NULL,
+  `gold_upload` varchar(100) NOT NULL,
   `noc_given` varchar(10) NOT NULL DEFAULT '0',
   `noc_date` varchar(255) DEFAULT NULL,
   `noc_person` varchar(255) DEFAULT NULL,
@@ -2401,12 +2402,14 @@ CREATE TABLE `gold_info` (
 -- Dumping data for table `gold_info`
 --
 
-INSERT INTO `gold_info` (`id`, `cus_id`, `req_id`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `used_status`, `temp_sts`, `temp_date`, `temp_person`, `temp_purpose`, `temp_remarks`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
-(1, '100010001000', '5', '1', 'Ring', '916', '1', '3.146', '21000', '0', '', '', '', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
-(2, '200020002000', '8', '1', 'Ring', '916', '1', '300', '32000', '0', NULL, NULL, NULL, '0', '0', '2023-07-27', '1', 'Aravind', NULL, NULL, '2', NULL, '2023-07-27 15:58:08'),
-(3, '100010001000', '2', '1', 'Chain', '24k', '1', '3.146', '42000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
-(4, '500050005000', '11', '1', 'Metti', '24k916', '2', '290', '42000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
-(6, '500050005000', '11', '0', 'Kammal', '24k', '1', '1.5', '59000', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19');
+INSERT INTO `gold_info` (`id`, `cus_id`, `req_id`, `gold_sts`, `gold_type`, `Purity`, `gold_Count`, `gold_Weight`, `gold_Value`, `gold_upload`, `noc_given`, `noc_date`, `noc_person`, `noc_name`, `used_status`, `temp_sts`, `temp_date`, `temp_person`, `temp_purpose`, `temp_remarks`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date`) VALUES
+(1, '100010001000', '5', '1', 'Ring', '916', '1', '3.146', '22000', '6565c87a7b8f4.png', '0', '', '', '', '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
+(2, '200020002000', '8', '1', 'Ring', '916', '1', '300', '32000', '', '0', NULL, NULL, NULL, '0', '0', '2023-07-27', '1', 'Aravind', NULL, NULL, '2', NULL, '2023-07-27 15:58:08'),
+(3, '100010001000', '2', '1', 'Chain', '24k', '1', '3.146', '25000', '6565cfb5242fe.png', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
+(4, '500050005000', '11', '1', 'Metti', '24k916', '2', '290', '42000', '', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
+(6, '500050005000', '11', '0', 'Kammal', '24k', '1', '1.5', '59000', '', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
+(12, '200020002000', '14', '1', '2', '3', '1', '4', '2', '6565c5fa56fd9.png', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-28 16:19:00'),
+(13, '060120230408', '16', '1', 'check', 'check', '2', '100', '27300', '6565d2c155091.jpg', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-28 17:15:05');
 
 -- --------------------------------------------------------
 
@@ -5154,7 +5157,7 @@ ALTER TABLE `fingerprints`
 -- AUTO_INCREMENT for table `gold_info`
 --
 ALTER TABLE `gold_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `in_acknowledgement`

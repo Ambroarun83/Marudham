@@ -15,6 +15,7 @@ $gold['Purity'] = $goldDetails['Purity'];
 $gold['gold_Count'] = $goldDetails['gold_Count'];
 $gold['gold_Weight'] = $goldDetails['gold_Weight'];
 $gold['gold_Value'] = $goldDetails['gold_Value'];
+$gold['gold_upload'] = $goldDetails['gold_upload'];
 
 echo json_encode($gold);
 ?>

@@ -42,6 +42,7 @@ function getfamName($con,$rel_id){
             <th>Count</th>
             <th>Weight</th>
             <th>Value</th>
+            <th>Upload</th>
         </tr>
     </thead>
     <tbody>
@@ -63,6 +64,7 @@ function getfamName($con,$rel_id){
                 <td><?php echo $row['gold_Count'];?></td>
                 <td><?php echo $row['gold_Weight'];?></td>
                 <td><?php echo moneyFormatIndia($row['gold_Value']);?></td>
+                <td><a href='<?php echo 'uploads/gold_info/'.$row['gold_upload'];?>' target="_blank"><?php echo $row['gold_upload'];?></a></td>
 
                
             </tr>

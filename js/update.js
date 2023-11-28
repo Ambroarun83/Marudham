@@ -3440,6 +3440,7 @@ function resetgoldInfo(req_id, cus_id) {
             $("#gold_Count").val('');
             $("#gold_Weight").val('');
             $("#gold_Value").val('');
+            $("#gold_upload").val('');
             $("#goldID").val('');
         }
     }).then(function () {
@@ -3449,8 +3450,7 @@ function resetgoldInfo(req_id, cus_id) {
 
 //to set on click event for edit of gold 
 function goldInfoEditEvent() {
-    $('.gold_info_edit').off('click')
-    $('.gold_info_edit').click(function () {
+    $('.gold_info_edit').off().click(function () {
         let id = $(this).attr('value');
 
         $.ajax({
@@ -3468,6 +3468,7 @@ function goldInfoEditEvent() {
                 $("#gold_Count").val(result['gold_Count']);
                 $("#gold_Weight").val(result['gold_Weight']);
                 $("#gold_Value").val(result['gold_Value']);
+                $("#goldupload").val(result['gold_upload']);
 
             }
         });
@@ -3479,15 +3480,43 @@ function submitGoldInfo(req_id, cus_id) {
 
     if (goldValidation() == true) {
 
-        let formdata = $('#goldform').serializeArray();
-        formdata.push({ name: 'req_id', value: req_id })
-        formdata.push({ name: 'cus_id', value: cus_id })
+        // let formdata = $('#goldform').serializeArray();
+        // formdata.push({ name: 'req_id', value: req_id })
+        // formdata.push({ name: 'cus_id', value: cus_id })
+
+        // let req_id = $('#req_id').val();
+        // let cus_id = $('#cus_id').val();
+        let gold_sts = $("#gold_sts").val();
+        let gold_type = $("#gold_type").val();
+        let Purity = $("#Purity").val();
+        let gold_Count = $("#gold_Count").val();
+        let gold_Weight = $("#gold_Weight").val();
+        let gold_Value = $("#gold_Value").val();
+        let goldupload = $("#goldupload").val();
+        let gold_upload = $("#gold_upload")[0];
+        gold_upload = gold_upload.files[0];
+        let goldID = $("#goldID").val();
+        
+        let formdata = new FormData();
+        formdata.append('req_id', req_id);
+        formdata.append('cus_id', cus_id);
+        formdata.append('gold_sts', gold_sts);
+        formdata.append('gold_type', gold_type);
+        formdata.append('Purity', Purity);
+        formdata.append('gold_Count', gold_Count);
+        formdata.append('gold_Weight', gold_Weight);
+        formdata.append('gold_Value', gold_Value);
+        formdata.append('goldupload', goldupload);
+        formdata.append('gold_upload', gold_upload);
+        formdata.append('goldID', goldID);
 
         $.ajax({
             url: 'updateFile/gold_info_submit.php',
             type: 'POST',
             data: formdata,
             cache: false,
+            processData: false,
+            contentType: false,
             success: function (response) {
 
                 var insresult = response.includes("Inserted");
