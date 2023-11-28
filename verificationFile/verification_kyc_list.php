@@ -9,7 +9,7 @@ include '../ajaxconfig.php';
             <th> Proof of </th>
             <!-- <th> Family Member </th> -->
             <th> Proof type </th>
-            <th> Proof Number </th>
+            <th> Proof Details </th>
             <th> Upload </th>
         </tr>
     </thead>

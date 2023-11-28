@@ -1001,7 +1001,7 @@ input:checked + .slider:before {
 												<th width="50"> S.No </th>
 												<th> Proof of </th>
 												<th> Proof type </th>
-												<th> Proof Number </th>
+												<th> Proof Details </th>
 												<th> Upload </th>
 											</tr>
 										</thead>
@@ -1766,6 +1766,7 @@ input:checked + .slider:before {
                                                     <th> Count </th>
                                                     <th> Weight </th>
                                                     <th> Value </th>
+                                                    <th> Upload </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -2783,6 +2784,15 @@ input:checked + .slider:before {
 							<label for="Value"> Value </label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="gold_Value" name="gold_Value" placeholder="Enter Value" >
 							<span class="text-danger" id="goldValueCheck"> Enter Value </span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label for="gold_upload"> Upload </label>
+							<input type="hidden" name="goldupload" id="goldupload">
+							<input type="file" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg">
+							<span class="text-danger" id="gold_uploadCheck" style="display:none"> Please Upload file </span>
 						</div>
 					</div>
 

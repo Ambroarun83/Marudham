@@ -636,6 +636,7 @@ $(document).ready(function () {
                 $("#gold_Count").val(result['gold_Count']);
                 $("#gold_Weight").val(result['gold_Weight']);
                 $("#gold_Value").val(result['gold_Value']);
+                $("#goldupload").val(result['gold_upload']);
 
             }
         });
@@ -2123,12 +2124,12 @@ function resetbankinfoList() {
 ////////////////////////// KYC Info ////////////////////////////////////////////////
 
 $('#proof_number').keyup(function(){
-    let proof_type = $('#proof_type').val();
-    if(proof_type == 1){
-        var value = $(this).val();
-        value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
-        $(this).val(value);
-        $(this).attr('maxlength','14')
+    // let proof_type = $('#proof_type').val();
+    // if(proof_type == 1){
+    //     var value = $(this).val();
+    //     value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
+    //     $(this).val(value);
+    //     $(this).attr('maxlength','14')
     // }else if(proof_type == 3){
     //     var value = $(this).val();
     //     value = value.replace(/\D/g, "").match(/.{1,2}/g).join("/"); // Modify this line
@@ -2137,13 +2138,13 @@ $('#proof_number').keyup(function(){
     //     var value = $(this).val();
     //     value = value.replace(/\D/g, "").match(/.{1,2}/g).join("-"); // Modify this line
     //     $(this).val(value);
-    }
-    else{
-        $(this).removeAttr('maxlength');//remove maxlength when other than adhar due to unkown count of number 
-    }
+    // }
+    // else{
+    //     $(this).removeAttr('maxlength');//remove maxlength when other than adhar due to unkown count of number 
+    // }
 });
 $('#proof_type').change(function(){
-    $('#proof_number').val('')
+    // $('#proof_number').val('')
 })
 
 $(document).on("click", "#kycInfoBtn", function () {
@@ -3639,14 +3640,32 @@ $(document).on("click", "#goldInfoBtn", function () {
     let gold_Count = $("#gold_Count").val();
     let gold_Weight = $("#gold_Weight").val();
     let gold_Value = $("#gold_Value").val();
+    let goldupload = $("#goldupload").val();
+    let gold_upload = $("#gold_upload")[0];
+    gold_upload = gold_upload.files[0];
     let goldID = $("#goldID").val();
+    
+    let formdata = new FormData();
+    formdata.append('req_id', req_id);
+    formdata.append('cus_id', cus_id);
+    formdata.append('gold_sts', gold_sts);
+    formdata.append('gold_type', gold_type);
+    formdata.append('Purity', Purity);
+    formdata.append('gold_Count', gold_Count);
+    formdata.append('gold_Weight', gold_Weight);
+    formdata.append('gold_Value', gold_Value);
+    formdata.append('goldupload', goldupload);
+    formdata.append('gold_upload', gold_upload);
+    formdata.append('goldID', goldID);
+    
 
-    if ( gold_sts != "" && gold_type != "" && Purity != "" && gold_Count != "" && gold_Weight != "" && gold_Value != "" && req_id != "") {
+    if ( gold_sts != "" && gold_type != "" && Purity != "" && gold_Count != "" && gold_Weight != "" && gold_Value != "" && req_id != "" && gold_upload != '') {
         $.ajax({
             url: 'verificationFile/documentation/gold_info_submit.php',
             type: 'POST',
-            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id, "cus_id": cus_id },
-            cache: false,
+            data: formdata,
+            processData: false,
+            contentType: false,
             success: function (response) {
 
                 var insresult = response.includes("Inserted");
@@ -3675,7 +3694,7 @@ $(document).on("click", "#goldInfoBtn", function () {
         });
 
         
-    $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
+        $('#GoldstatusCheck, #GoldtypeCheck, #purityCheck, #goldCountCheck, #goldWeightCheck, #goldValueCheck, #gold_uploadCheck').hide();
     }
     else {
 
@@ -3709,6 +3728,11 @@ $(document).on("click", "#goldInfoBtn", function () {
         } else {
             $('#goldValueCheck').hide();
         }
+        if (gold_upload == '') {
+            $('#gold_uploadCheck').show();
+        } else {
+            $('#gold_uploadCheck').hide();
+        }
 
     }
 
@@ -3731,6 +3755,7 @@ function resetgoldInfo() {
             $("#gold_Count").val('');
             $("#gold_Weight").val('');
             $("#gold_Value").val('');
+            $("#gold_upload").val('');
             $("#goldID").val('');
 
         }
@@ -3755,6 +3780,7 @@ function goldinfoList() {
             $("#gold_Count").val('');
             $("#gold_Weight").val('');
             $("#gold_Value").val('');
+            $("#gold_upload").val('');
             $("#goldID").val('');
         }
     });
@@ -3776,7 +3802,7 @@ $('#docInfoBtn').click(function(){
     let holder_name = $("#docholder_name").val();
     let relation_name = $("#docholder_relationship_name").val();
     let relation = $("#doc_relation").val();
-      
+
     if (doc_name !='' && doc_details !='' && doc_type!='' && doc_holder!='' && relation!='') { 
 
         $.ajax({

@@ -958,7 +958,7 @@ input:checked + .slider:before {
 												<th width="50"> S.No </th>
 												<th> Proof of </th>
 												<th> Proof type </th>
-												<th> Proof Number </th>
+												<th> Proof Details </th>
 												<th> Upload </th>
 											</tr>
 										</thead>

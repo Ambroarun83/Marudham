@@ -34,6 +34,7 @@ function moneyFormatIndia($num)
             <th> Count </th>
             <th> Weight </th>
             <th> Value </th>
+            <th> Upload </th>
         </tr>
     </thead>
     <tbody>
@@ -54,6 +55,7 @@ function moneyFormatIndia($num)
                 <td><?php echo $gold["gold_Count"]; ?></td>
                 <td><?php echo $gold["gold_Weight"]; ?></td>
                 <td><?php echo moneyFormatIndia($gold["gold_Value"]); ?></td>
+                <td> <a href="uploads/gold_info/<?php echo $gold['gold_upload']; ?>" target="_blank" style="color: #4ba39b;"> <?php echo $gold['gold_upload']; ?> </a></td>
             </tr>
 
         <?php  } ?>

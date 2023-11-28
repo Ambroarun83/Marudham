@@ -42,6 +42,7 @@ function getfamName($con,$rel_id){
             <th>Count</th>
             <th>Weight</th>
             <th>Value</th>
+            <th>Upload</th>
             <th>Date Of NOC</th>
             <th>NOC Person</th>
             <th>Name</th>
@@ -67,6 +68,7 @@ function getfamName($con,$rel_id){
                 <td><?php echo $row['gold_Count'];?></td>
                 <td><?php echo $row['gold_Weight'];?></td>
                 <td><?php echo moneyFormatIndia($row['gold_Value']);?></td>
+                <td><a href='<?php echo 'uploads/gold_info/'.$row['gold_upload'];?>' target="_blank"><?php echo $row['gold_upload'];?></a></td>
 
                 <td><span id='gold_noc_date' name='gold_noc_date' class="gold_noc_date"><?php if($row['noc_date'] != ''){echo date('d-m-Y',strtotime($row['noc_date']));}?></span></td>
                 <td>

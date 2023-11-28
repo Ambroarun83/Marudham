@@ -722,6 +722,7 @@ $(document).ready(function () {
                 $("#gold_Count").val(result['gold_Count']);
                 $("#gold_Weight").val(result['gold_Weight']);
                 $("#gold_Value").val(result['gold_Value']);
+                $("#goldupload").val(result['gold_upload']);
 
             }
         });
@@ -1800,14 +1801,32 @@ $(document).on("click", "#goldInfoBtn", function () {
     let gold_Count = $("#gold_Count").val();
     let gold_Weight = $("#gold_Weight").val();
     let gold_Value = $("#gold_Value").val();
+    let goldupload = $("#goldupload").val();
+    let gold_upload = $("#gold_upload")[0];
+    gold_upload = gold_upload.files[0];
     let goldID = $("#goldID").val();
+    
+    let formdata = new FormData();
+    formdata.append('req_id', req_id);
+    formdata.append('cus_id', cus_id);
+    formdata.append('gold_sts', gold_sts);
+    formdata.append('gold_type', gold_type);
+    formdata.append('Purity', Purity);
+    formdata.append('gold_Count', gold_Count);
+    formdata.append('gold_Weight', gold_Weight);
+    formdata.append('gold_Value', gold_Value);
+    formdata.append('goldupload', goldupload);
+    formdata.append('gold_upload', gold_upload);
+    formdata.append('goldID', goldID);
 
     if ( gold_sts != "" && gold_type != "" && Purity != "" && gold_Count != "" && gold_Weight != "" && gold_Value != "" && req_id != "") {
         $.ajax({
             url: 'verificationFile/documentation/gold_info_submit.php',
             type: 'POST',
-            data: { "gold_sts": gold_sts,"gold_type": gold_type, "Purity": Purity, "gold_Count": gold_Count, "gold_Weight": gold_Weight, "gold_Value": gold_Value, "goldID": goldID, "reqId": req_id, "cus_id": cus_id },
+            data: formdata,
             cache: false,
+            processData: false,
+            contentType: false,
             success: function (response) {
 
                 var insresult = response.includes("Inserted");
@@ -1836,7 +1855,7 @@ $(document).on("click", "#goldInfoBtn", function () {
         });
 
         
-    $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();
+    $('#GoldstatusCheck').hide(); $('#GoldtypeCheck').hide(); $('#purityCheck').hide(); $('#goldCountCheck').hide(); $('#goldWeightCheck').hide(); $('#goldValueCheck').hide();$('#gold_uploadCheck').hide();
     }
     else {
 
@@ -1870,7 +1889,11 @@ $(document).on("click", "#goldInfoBtn", function () {
         } else {
             $('#goldValueCheck').hide();
         }
-
+        if (gold_upload == '') {
+            $('#gold_uploadCheck').show();
+        } else {
+            $('#gold_uploadCheck').hide();
+        }
     }
 
 });
@@ -1892,6 +1915,7 @@ function resetgoldInfo() {
             $("#gold_Count").val('');
             $("#gold_Weight").val('');
             $("#gold_Value").val('');
+            $("#gold_upload").val('');
             $("#goldID").val('');
 
         }
@@ -1916,6 +1940,7 @@ function goldinfoList() {
             $("#gold_Count").val('');
             $("#gold_Weight").val('');
             $("#gold_Value").val('');
+            $("#gold_upload").val('');
             $("#goldID").val('');
         }
     });
