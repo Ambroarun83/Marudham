@@ -4,7 +4,7 @@ include('../../ajaxconfig.php');
 
 $cus_id = $_POST['cus_id'];
 
-$sql = $con->query("SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name from acknowlegement_customer_profile cp LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
+$sql = $con->query("SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name from customer_profile cp LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
         LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id)
         LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
         WHERE cp.cus_id = ".$cus_id." ORDER BY cp.id DESC LIMIT 1");

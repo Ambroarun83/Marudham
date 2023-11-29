@@ -2565,8 +2565,9 @@ require 'PHPMailerAutoload.php';
 		'".strip_tags($accountsmodule)."','".strip_tags($cash_tally)."','".strip_tags($cash_tally_admin)."','".strip_tags($bank_details)."','".strip_tags($bank_clearance)."','".strip_tags($finance_insight)."',
 		'".strip_tags($followupmodule)."','".strip_tags($promotion_activity)."','".strip_tags($loan_followup)."','".strip_tags($conf_followup)."','".strip_tags($due_followup)."',
 		'".strip_tags($reportmodule)."', '".strip_tags($ledger_report)."', '".strip_tags($request_report)."', '".strip_tags($cus_profile_report)."', '".strip_tags($loan_issue_report)."',
-		'".strip_tags($collection_report)."', '".strip_tags($balance_report)."', '".strip_tags($due_list_report)."', '".strip_tags($closed_report)."'
+		'".strip_tags($collection_report)."', '".strip_tags($balance_report)."', '".strip_tags($due_list_report)."', '".strip_tags($closed_report)."',
 		'".strip_tags($userid)."',now() )";
+		// echo $insertQry;die;
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
 

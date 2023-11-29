@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2023 at 01:15 PM
+-- Generation Time: Nov 29, 2023 at 02:09 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1132,7 +1132,8 @@ CREATE TABLE `concern_creation` (
 --
 
 INSERT INTO `concern_creation` (`id`, `raising_for`, `self_name`, `self_code`, `staff_name`, `staff_dept_name`, `staff_team_name`, `ag_name`, `ag_grp`, `cus_id`, `cus_name`, `cus_area`, `cus_sub_area`, `cus_group`, `cus_line`, `com_date`, `com_code`, `branch_name`, `concern_to`, `to_dept_name`, `to_team_name`, `com_sub`, `com_remark`, `com_priority`, `staff_assign_to`, `status`, `solution_date`, `communication`, `uploads`, `solution_remark`, `feedback_date`, `feedback_rating`, `insert_user_id`, `update_user_id`, `delete_user_id`, `created_date`, `updated_date`) VALUES
-(1, '4', '', '', '', '', '', '', '', '100010001000', 'Ganesan', 'Chetpet', 'EVR road', 'Mango', 'Pine apple 2', '2023-07-19', 'CC-101', '3', '1', 'Development', '', '1', 'Not delivered project', '2', '1', 0, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, NULL, '2023-07-19 11:52:57', NULL);
+(1, '4', '', '', '', '', '', '', '', '100010001000', 'Ganesan', 'Chetpet', 'EVR road', 'Mango', 'Pine apple 2', '2023-07-19', 'CC-101', '3', '1', 'Development', '', '1', 'Not delivered project', '2', '1', 2, '2023-11-29', '2', '', 'Done', '2023-11-29', '1', '2', '2', NULL, '2023-07-19 11:52:57', '2023-11-29 15:10:57'),
+(2, '2', '', '', 'Prakash', 'Sales', 'Kurunji beta ', '', '', '', '', '', '', '', '', '2023-11-29', 'CC-102', '3', '1', 'Sales', '', '1', 'bad words', '1', '2', 1, '2023-11-29', '2', '', 'gadgdg', NULL, NULL, '2', '6', NULL, '2023-11-29 17:21:00', '2023-11-29 17:21:14');
 
 -- --------------------------------------------------------
 
@@ -3734,7 +3735,8 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `em
 (2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '1,2,6,7,8', '1,2', '1,2,3,4,5,6', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2023-11-20 15:04:10'),
 (3, NULL, NULL, 'Alaathi Mobiles and Furniture', NULL, 'alaathi@gmail.com', 'alaathi', '123', '2', '', '', '1', '', '1', '3', '', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-01 12:12:04', '2023-07-21 10:14:54'),
 (4, NULL, NULL, 'Jafar', NULL, '', 'jafar', '123', '3', '1', '', '', '28', '1', '1', '5,7,8', NULL, '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '5', NULL, '2023-07-03 11:59:48', '2023-09-09 13:11:09'),
-(5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1,3', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '', '1', '1', '1', '0', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-03 13:31:46', '2023-11-20 14:56:06');
+(5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1,3', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '', '1', '1', '1', '0', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-03 13:31:46', '2023-11-20 14:56:06'),
+(6, NULL, NULL, 'J Prakash Kumar', NULL, 'hariprakash1292@gmail.com', 'prakash', '123', '3', '1', '', '', '2', '1', '1', '5,10', '', '5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '0', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', NULL, NULL, '2023-11-29 17:20:14', '2023-11-29 17:20:14');
 
 -- --------------------------------------------------------
 
@@ -4887,7 +4889,7 @@ ALTER TABLE `company_creation`
 -- AUTO_INCREMENT for table `concern_creation`
 --
 ALTER TABLE `concern_creation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `concern_subject`
@@ -5295,7 +5297,7 @@ ALTER TABLE `sub_area_list_creation`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `verification_bank_info`
