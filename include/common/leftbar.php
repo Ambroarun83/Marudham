@@ -382,12 +382,12 @@ if (sizeof($getUser)>0) {
 				<li class="dashboard" >
 					<!-- <a href="javascript:void(0)"> -->
 						<!-- <span class="menu-text">Dashboard</span> -->
-						<a href="dashboard"><i><img class='svg-icon' src="svg/dashboard.svg"></i>&nbsp;Dashboard</a>
+						<a href="dashboard"><i class='icon-developer_board'></i>&nbsp;Dashboard</a>
 					<!-- </a> -->
 					<!-- <div class="sidebar-submenu">
 						<ul>
 							<li>
-								<a href="dashboard"><i><img class='svg-icon' src="svg/dashboard.svg"></i>Dashboard</a>
+								<a href="dashboard"><i class='icon-credit-card'></i>Dashboard</a>
 							</li>
 						</ul>
 					</div> -->
@@ -440,7 +440,7 @@ if (sizeof($getUser)>0) {
 				<?php if($adminmodule == 0){?>
 					<li class="sidebar-dropdown administration">
 						<a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/administration.svg"></i>
+							<i class='icon-layers'></i>
 							<span class="menu-text">Administration</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='admin') echo 'style="display:block" '; ?>>
@@ -459,7 +459,7 @@ if (sizeof($getUser)>0) {
 									</li>
 								<?php  }if($bank_creation == 0){ ?>
 									<li>
-										<a href="edit_bank_creation"><i><img class='svg-icon' src="svg/bank.svg"></i>Bank Creation</a>
+										<a href="edit_bank_creation"><i class='icon-save'></i>Bank Creation</a>
 									</li>
 								<?php  }if($manage_user == 0){ ?>
 									<li>
@@ -477,14 +477,14 @@ if (sizeof($getUser)>0) {
 				<?php if($requestmodule == 0){ ?>
 					<li class="sidebar-dropdown request">
 						<a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/request.svg"></i>
+							<i class='icon-upload-to-cloud'></i>
 							<span class="menu-text">Request</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='request') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($request == 0){ ?>
 									<li>
-										<a href="edit_request"><i><img class='svg-icon' src="svg/request.svg"></i>Request</a>
+										<a href="edit_request"><i class='icon-upload-to-cloud'></i>Request</a>
 									</li>
 								<?php  } ?>
 
@@ -497,14 +497,14 @@ if (sizeof($getUser)>0) {
 				<?php if($verificationmodule == 0){?>
 					<li class="sidebar-dropdown request">
 						<a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/verification.svg"></i>
+							<i class='icon-archive'></i>
 							<span class="menu-text">Verification</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='verification') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($verification == 0){ ?>
 									<li>
-										<a href="verification_list"><i><img class='svg-icon' src="svg/verification.svg"></i>Verification</a>
+										<a href="verification_list"><i class='icon-archive'></i>Verification</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -514,14 +514,14 @@ if (sizeof($getUser)>0) {
 				<?php if($approvalmodule == 0){?>
 					<li class="sidebar-dropdown approve">
 						<a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/approval.svg"></i>
+							<i class='icon-check'></i>
 							<span class="menu-text">Approval</span>
 						</a>
 						<div class="sidebar-submenu" <?php if($current_module=='approval') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php  if($approval == 0){ ?>
 									<li>
-										<a href="approval_list"><i><img class='svg-icon' src="svg/approval.svg"></i>Approval</a>
+										<a href="approval_list"><i class='icon-check'></i>Approval</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -531,14 +531,14 @@ if (sizeof($getUser)>0) {
 				<?php if($acknowledgementmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/acknow.svg"></i>
+							<i class='icon-cw'></i>
                             <span class="menu-text">Acknowledgement</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='acknowledgement') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($acknowledgement == 0){ ?>
                                     <li>
-                                        <a href="edit_acknowledgement_list"><i><img class='svg-icon' src="svg/acknow.svg"></i>Acknowledgement</a>
+                                        <a href="edit_acknowledgement_list"><i class='icon-cw'></i>Acknowledgement</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -548,14 +548,14 @@ if (sizeof($getUser)>0) {
 				<?php if($loanissuemodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/issue.svg"></i>
+							<i class='icon-wallet'></i>
                             <span class="menu-text">Loan Issue</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='loanissue') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($loan_issue == 0){ ?>
                                     <li>
-                                        <a href="edit_loan_issue"><i><img class='svg-icon' src="svg/issue.svg"></i>Loan Issue</a>
+                                        <a href="edit_loan_issue"><i class='icon-wallet'></i>Loan Issue</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -565,14 +565,14 @@ if (sizeof($getUser)>0) {
 				<?php if($collectionmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-						<i><img class='svg-icon' src="svg/collection.svg"></i>
+						<i class='icon-credit'></i>
                             <span class="menu-text">Collection</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='collection') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($collection == 0){ ?>
                                     <li>
-                                        <a href="edit_collection"><i><img class='svg-icon' src="svg/collection.svg"></i>Collection</a>
+                                        <a href="edit_collection"><i class='icon-credit'></i>Collection</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -582,14 +582,14 @@ if (sizeof($getUser)>0) {
 				<?php if($closedmodule == 0){?>
                     <li class="sidebar-dropdown closed">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/closed.svg"></i>
+							<i class='icon-uninstall'></i>
                             <span class="menu-text">Closed</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='closed') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($closed == 0){ ?>
                                     <li>
-                                        <a href="edit_closed"><i><img class='svg-icon' src="svg/closed.svg"></i>Closed</a>
+                                        <a href="edit_closed"><i class='icon-uninstall'></i>Closed</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -599,14 +599,14 @@ if (sizeof($getUser)>0) {
 				<?php if($nocmodule == 0){?>
                     <li class="sidebar-dropdown acknowledge">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/noc.svg"></i>
+							<i class='icon-export'></i>
                             <span class="menu-text">NOC</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='noc') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($noc == 0){ ?>
                                     <li>
-                                        <a href="edit_noc"><i><img class='svg-icon' src="svg/noc.svg"></i>NOC</a>
+                                        <a href="edit_noc"><i class='icon-export'></i>NOC</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -616,14 +616,14 @@ if (sizeof($getUser)>0) {
 				<?php if($doctrackmodule == 0){ ?>
                     <!-- <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/track.svg"></i>
+							<i class='icon-credit-card'></i>
                             <span class="menu-text">Document Track</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='doctrack') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($doctrack == 0){ ?>
                                     <li>
-                                        <a href="document_track"><i><img class='svg-icon' src="svg/track.svg"></i>Document Track</a>
+                                        <a href="document_track"><i class='icon-credit-card'></i>Document Track</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -633,19 +633,19 @@ if (sizeof($getUser)>0) {
                 <?php if($updatemodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/update.svg"></i>
+							<i class='icon-arrow_upward'></i>
                             <span class="menu-text">Update</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='update') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($update_screen == 0){ ?>
                                     <li>
-                                        <a href="edit_update"><i><img class='svg-icon' src="svg/update.svg"></i>Update</a>
+                                        <a href="edit_update"><i class='icon-arrow_upward'></i>Update</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($doctrack == 0){ ?>
                                     <li>
-                                        <a href="document_track"><i><img class='svg-icon' src="svg/track.svg"></i>Document Track</a>
+                                        <a href="document_track"><i class='icon-broken_image'></i>Document Track</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -655,24 +655,24 @@ if (sizeof($getUser)>0) {
 				<?php if($concernmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/concern.svg"></i>
+							<i class='icon-help-with-circle'></i>
                             <span class="menu-text">Concern</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='concerncreation') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($concern_creation == 0){ ?>
                                     <li>
-                                        <a href="edit_concern_creation"><i><img class='svg-icon' src="svg/concern.svg"></i>Concern Creation</a>
+                                        <a href="edit_concern_creation"><i class='icon-bug_report'></i>Concern Creation</a>
                                     </li>
                                 <?php  } ?>
                                 <?php  if($concern_solution == 0){ ?>
                                     <li>
-                                        <a href="edit_concern_solution"><i><img class='svg-icon' src="svg/concern.svg"></i>Concern Solution</a>
+                                        <a href="edit_concern_solution"><i class='icon-center_focus_strong'></i>Concern Solution</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($concern_feedback == 0){ ?>
                                     <li>
-                                        <a href="edit_concern_feedback"><i><img class='svg-icon' src="svg/concern.svg"></i>Concern Feedback</a>
+                                        <a href="edit_concern_feedback"><i class='icon-redeem'></i>Concern Feedback</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -682,24 +682,24 @@ if (sizeof($getUser)>0) {
 				<?php if($accountsmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/acc.svg"></i>
+							<i class='icon-domain'></i>
                             <span class="menu-text">Accounts</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='accounts') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($cash_tally == 0){ ?>
                                     <li>
-                                        <a href="cash_tally"><i><img class='svg-icon' src="svg/cash_tally.svg"></i>Cash Tally</a>
+                                        <a href="cash_tally"><i class='icon-shareable'></i>Cash Tally</a>
                                     </li>
                                 <?php  } ?>
                                 <?php  if($bank_clearance == 0){ ?>
                                     <li>
-                                        <a href="edit_bank_clearance"><i><img class='svg-icon' src="svg/bank_clearance.svg"></i>Bank Clearance</a>
+                                        <a href="edit_bank_clearance"><i class='icon-business_center'></i>Bank Clearance</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($finance_insight == 0){ ?>
                                     <li>
-                                        <a href="finance_insight"><i><img class='svg-icon' src="svg/finance_insight.svg"></i>Financial Insights</a>
+                                        <a href="finance_insight"><i class='icon-card_travel'></i>Financial Insights</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -709,29 +709,29 @@ if (sizeof($getUser)>0) {
 				<?php if($followupmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/followup.svg" ></i>
+							<i class='icon-cycle'></i>
                             <span class="menu-text">Follow Up</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='followup') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($promotion_activity == 0){ ?>
                                     <li>
-                                        <a href="promotion_activity"><i><img class='svg-icon' src="svg/promotion.svg" ></i>Promotion Activity</a>
+                                        <a href="promotion_activity"><i class='icon-change_history'></i>Promotion Activity</a>
                                     </li>
                                 <?php  } ?>
                                 <?php  if($loan_followup == 0){ ?>
                                     <li>
-                                        <a href="loan_followup"><i><img class='svg-icon' src="svg/loan_follow.svg" ></i>Loan Follow Up</a>
+                                        <a href="loan_followup"><i class='icon-chat_bubble_outline'></i>Loan Follow Up</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($confirmation_followup == 0){ ?>
                                     <li>
-                                        <a href="confirmation_followup"><i><img class='svg-icon' src="svg/confirmation.svg" ></i>Confirmation Follow Up</a>
+                                        <a href="confirmation_followup"><i class='icon-laptop'></i>Confirmation Follow Up</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($due_followup == 0){ ?>
                                     <li>
-                                        <a href="edit_due_followup"><i><img class="svg-icon" src="svg/due.svg" alt="Due Icon"></i>Due Follow Up</a>
+                                        <a href="edit_due_followup"><i class='icon-confirmation_number'></i>Due Follow Up</a>
                                     </li>
                                 <?php  } ?>
                             </ul>
@@ -741,44 +741,44 @@ if (sizeof($getUser)>0) {
 				<?php if($reportmodule == 0){ ?>
                     <li class="sidebar-dropdown ">
                         <a href="javascript:void(0)">
-							<i><img class='svg-icon' src="svg/report.svg" ></i>
+							<i class='icon-area-graph'></i>
                             <span class="menu-text">Reports</span>
                         </a>
                         <div class="sidebar-submenu" <?php if($current_module=='report') echo 'style="display:block" '; ?>>
                             <ul>
                                 <?php  if($ledger_report == 0){ ?>
                                     <li>
-                                        <a href="ledger_report"><i><img class='svg-icon' src="svg/ledger.svg" ></i>Ledger View</a>
+                                        <a href="ledger_report"><i class='icon-area-graph'></i>Ledger View</a>
                                     </li>
                                 <?php  } ?>
                                 <?php  if($request_report == 0){ ?>
                                     <li>
-                                        <a href="request_report"><i><img class='svg-icon' src="svg/ledger.svg" ></i>Request</a>
+                                        <a href="request_report"><i class='icon-area-graph'></i>Request</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($cus_profile_report == 0){ ?>
                                     <li>
-                                        <a href="cus_profile_report"><i><img class='svg-icon' src="svg/ledger.svg" ></i>Customer Profile</a>
+                                        <a href="cus_profile_report"><i class='icon-area-graph'></i>Customer Profile</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($loan_issue_report == 0){ ?>
                                     <li>
-                                        <a href="loan_issue_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Loan Issue</a>
+                                        <a href="loan_issue_report"><i class='icon-area-graph'></i>Loan Issue</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($collection_report == 0){ ?>
                                     <li>
-                                        <a href="collection_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Collection</a>
+                                        <a href="collection_report"><i class='icon-area-graph'></i>Collection</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($balance_report == 0){ ?>
                                     <li>
-                                        <a href="balance_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Balance</a>
+                                        <a href="balance_report"><i class='icon-area-graph'></i>Balance</a>
                                     </li>
                                 <?php  } ?>
 								<?php  if($closed_report == 0){ ?>
                                     <li>
-                                        <a href="closed_report"><i><img class="svg-icon" src="svg/ledger.svg"></i>Closed</a>
+                                        <a href="closed_report"><i class='icon-area-graph'></i>Closed</a>
                                     </li>
                                 <?php  } ?>
                             </ul>

@@ -77,8 +77,11 @@ $(document).ready(function () {
 <scripft src="js/jquery.min.js"></script>
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/moment.js"></script>
-<script src="js/jspdf.js"></script>
-<script src="js/xlsx.js"></script>
+<!-- <script src="js/jspdf.js"></script>
+<script src="js/xlsx.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
 <script src="vendor/apex/apexcharts.min.js"></script>
 
 <script src="js/logincreation.js"></script>
@@ -105,7 +108,8 @@ $(document).ready(function () {
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.7/dist/sweetalert2.all.min.js"></script>
 
-<script type="text/javascript" src="jsd/datatables.min.js"></script>
+<!-- <script type="text/javascript" src="jsd/datatables.min.js"></script> -->
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript">
 
 $(document).ready(function() {
