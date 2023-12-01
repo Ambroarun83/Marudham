@@ -113,7 +113,7 @@ function OnLoadFunctions(req_id,cus_id){
     var closed_arr = [];
     var balAmnt = [];
     $.ajax({
-        url: 'closedFile/resetCustomerStsForClosed.php',
+        url: 'followupFiles/dueFollowup/resetCustomerStsForFollowup.php',
         data: {'cus_id':cus_id},
         dataType:'json',
         type:'post',
