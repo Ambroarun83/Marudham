@@ -36,30 +36,69 @@ function OnLoadFunctions(){
         let completedRequests = 0;//for checking the each function completion
         const totalRequests = cus_id_arr.length;
 
+        // $.each(cus_id_arr, function(key, value){
+        //     cus_id = value;
+
+        //     $.ajax({
+        //         url: 'collectionFile/resetCustomerStatus.php',
+        //         data: {'cus_id':cus_id},
+        //         dataType:'json',
+        //         type:'post',
+        //         cache: false,
+        //         success: function(response){
+        //             if(response.length != 0){
+
+        //                 follow_cus_sts.push(response['follow_cus_sts']);
+        //                 completedRequests++;
+
+        //                 // Check if all requests have completed
+        //                 if (completedRequests === totalRequests) {
+        //                     // Call dueFollowuptableFetch when all requests are done
+        //                     dueFollowuptableFetch(cus_id_arr, follow_cus_sts);
+        //                 }
+        //             }
+        //         }
+        //     });
+        // }).then(function(){
+            
+        // })
+        var requests = [];
+
         $.each(cus_id_arr, function(key, value){
-            cus_id = value;
-
-            $.ajax({
+            var cus_id = value;
+            var request = $.ajax({
                 url: 'collectionFile/resetCustomerStatus.php',
-                data: {'cus_id':cus_id},
-                dataType:'json',
-                type:'post',
-                cache: false,
-                success: function(response){
-                    if(response.length != 0){
-
-                        follow_cus_sts.push(response['follow_cus_sts']);
-                        completedRequests++;
-
-                        // Check if all requests have completed
-                        if (completedRequests === totalRequests) {
-                            // Call dueFollowuptableFetch when all requests are done
-                            dueFollowuptableFetch(cus_id_arr, follow_cus_sts);
-                        }
-                    }
-                }
+                data: {'cus_id': cus_id},
+                dataType: 'json',
+                type: 'post',
+                cache: false
             });
+
+            requests.push(request);
         });
+
+        $.when.apply($, requests).done(function() {
+            // All AJAX requests are completed
+            var responses = arguments;
+            var follow_cus_sts = [];
+            var completedRequests = 0;
+            var totalRequests = responses.length;
+
+            for (var i = 0; i < responses.length; i++) {
+                var response = responses[i][0]; // Get the response of each AJAX request
+
+                if (response.length !== 0) {
+                    follow_cus_sts.push(response['follow_cus_sts']);
+                    completedRequests++;
+                }
+            }
+
+            if (completedRequests === totalRequests) {
+                // Call dueFollowuptableFetch when all requests are done
+                dueFollowuptableFetch(cus_id_arr, follow_cus_sts);
+            }
+        });
+
     }); 
 }
 

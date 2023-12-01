@@ -114,7 +114,7 @@ function moneyFormatIndia($num) {
                                 echo 'Current';
                             }
                         }else{
-                        if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
+                        if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){//using i as 1 so subract it with 1
                             if($row['cus_status'] == '15'){
                                 echo 'Error';
                             }elseif($row['cus_status']== '16'){
