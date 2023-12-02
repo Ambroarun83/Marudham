@@ -126,10 +126,20 @@ $qry = $con->query("
                             <td><?php echo moneyFormatIndia($row['due_amt_track']); ?></td>
                             <td>
                                 <?php 
-                                    echo moneyFormatIndia($response['principal_paid']); 
+                                    // echo moneyFormatIndia($response['principal_paid']); 
+                                    $rounderd_princ = ceil($response['principal_paid'] / 5) * 5; //to increase principal to nearest multiple of 5
+                                    if ($rounderd_princ < $response['principal_paid']) {
+                                        $rounderd_princ += 5;
+                                    }
+                                    echo moneyFormatIndia($rounderd_princ); 
                                 ?>
                             </td>
-                            <td><?php echo moneyFormatIndia($response['interest_paid']); ?></td>
+                            <td>
+                                <?php 
+                                    $rounderd_int = intVal($row['due_amt_track']) - $rounderd_princ;
+                                    echo moneyFormatIndia($rounderd_int); 
+                                ?>
+                            </td>
                         <?php
                             }else{
                                 //else if its interest loan we can empty due amt coz it will not be paid on that loan, direclty show princ and int

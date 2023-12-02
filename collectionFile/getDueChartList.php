@@ -245,7 +245,7 @@ function moneyFormatIndia($num)
             FROM `collection` c
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
-            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
+            WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='' OR c.princ_amt_track != '')
             AND (
                 (WEEK(c.coll_date) = WEEK('$issued') AND YEAR(c.coll_date) = YEAR('$issued')) OR
                 (WEEK(c.trans_date) = WEEK('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
@@ -272,16 +272,23 @@ function moneyFormatIndia($num)
         if ($run->rowCount() > 0) {
             $due_amt_track = 0;
             $waiver = 0;
+            $last_bal_amt=0;
             while ($row = $run->fetch()) {
                 $role = $row['role'];
                 $collectionAmnt = intVal($row['due_amt_track']);
+                $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
+                $waiver = $waiver + intVal($row['pre_close_waiver']);
                 if ($loan_type == 'interest') {
                     $PcollectionAmnt = intVal($row['princ_amt_track']);
                     $IcollectionAmnt = intVal($row['int_amt_track']);
+                    if($last_bal_amt != 0){
+                        $bal_amt = $last_bal_amt - $PcollectionAmnt - $waiver;
+                    }else{
+                    $bal_amt = $loan_amt - $PcollectionAmnt - $waiver;
+                    }
+                }else{
+                    $bal_amt = $loan_amt - $due_amt_track - $waiver;
                 }
-                $due_amt_track = $due_amt_track + intVal($row['due_amt_track']);
-                $waiver = $waiver + intVal($row['pre_close_waiver']);
-                $bal_amt = $loan_amt - $due_amt_track - $waiver;
         ?>
                 <tr>
                     <td></td>
@@ -370,17 +377,22 @@ function moneyFormatIndia($num)
                 </tr>
 
                 <?php
+                if ($loan_type == 'interest') {
+                    $last_bal_amt = $bal_amt;
+                }
             }
         }
 
         //For showing collection after due start date
         $due_amt_track = 0;
         $waiver = 0;
-        $bal_amt = 0;
         $jj = 0;
         $last_int_amt = $due_amt_1;
         if ($loan_type == 'interest') {
-            $last_princ_amt = $princ_amt_1;
+            $last_princ_amt = $last_bal_amt;
+            // $bal_amt = $last_bal_amt;
+        }else{
+            $bal_amt = 0;
         }
         $lastCusdueMonth = '1970-00-00';
         foreach ($dueMonth as $cusDueMonth) {
@@ -412,7 +424,11 @@ function moneyFormatIndia($num)
                     }
                     // $waiver = $waiver + intVal($row['pre_close_waiver']);
                     $waiver = intVal($row['pre_close_waiver']);
-                    $bal_amt = intVal($row['bal_amt']) - $due_amt_track - $waiver;
+                    if($loan_type == 'emi'){
+                        $bal_amt = intVal($row['bal_amt']) - $due_amt_track - $waiver;
+                    }else{
+                        $bal_amt = intVal($last_princ_amt) - $due_amt_track - $waiver;
+                    }
 
                 ?>
                     <tr>
@@ -448,10 +464,9 @@ function moneyFormatIndia($num)
                             <?php if ($loan_type == 'emi') { ?>
                                 <td><?php echo $row['due_amt']; ?></td>
                             <?php } ?>
-                            <?php if ($loan_type == 'interest') { ?>
-                                <td><?php echo $row['tot_amt']; ?></td>
-                                <td><?php echo $row['due_amt'];
-                                    $last_int_amt = $row['due_amt']; ?></td>
+                            <?php if($loan_type == 'interest'){ ?>
+                                <td><?php echo $last_princ_amt; ?></td>
+                                <td><?php echo $row['due_amt']; $last_int_amt = $row['due_amt'];?></td>
                             <?php } ?>
 
 

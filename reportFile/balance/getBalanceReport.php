@@ -95,6 +95,12 @@ $qry = $con->query("
                     $int_amt = intVal($row['int_amt_cal']/$row['due_period']);
                     $response = calculatePrincipalAndInterest($princ_amt,$int_amt,$balance_amt);//to get the principal and interest amt separate in due amt paid
 
+                    if(intVal($response['principal_paid']) > intVal($row['loan_amt_cal'])){
+                        $diff = intVal($response['principal_paid']) - intVal($row['loan_amt_cal']);
+                        $response['interest_paid'] = intVal($response['interest_paid']) + $diff;
+                        $response['principal_paid'] = intVal($row['loan_amt_cal']);
+                    }
+
                     $bal_due = round($balance_amt / $row['due_amt_cal'],1);
                 }else{
                     $due_amt = $row['int_amt_cal'];
