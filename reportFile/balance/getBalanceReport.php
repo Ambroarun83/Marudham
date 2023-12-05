@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 include '../../ajaxconfig.php';
 
 $where = "";
@@ -9,6 +10,33 @@ if(isset($_POST['to_date']) && $_POST['to_date'] != ''){
     $where  = "and (date(coll_date) <= '".$to_date."') ";
 
 }
+
+if(isset($_SESSION["userid"])){
+    $userid = $_SESSION["userid"];
+}
+if($userid != 1){
+    
+    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while($rowuser = $userQry->fetch_assoc()){
+        $group_id = $rowuser['group_id'];
+        $line_id = $rowuser['line_id'];
+    }
+
+    $line_id = explode(',',$line_id);
+    $sub_area_list = array();
+    foreach($line_id as $line){
+        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
+        $row_sub = $lineQry->fetch_assoc();
+        $sub_area_list[] = $row_sub['sub_area_id'];
+    }
+    $sub_area_ids = array();
+    foreach ($sub_area_list as $subarray) {
+        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+    }
+    $sub_area_list = array();
+    $sub_area_list = implode(',',$sub_area_ids);
+}
+
 
 $qry = $con->query("
             SELECT 
@@ -44,6 +72,7 @@ $qry = $con->query("
             JOIN request_creation req ON lc.req_id = req.req_id
             
             WHERE req.cus_status BETWEEN 14 and 18
+            and cp.area_confirm_subarea IN ($sub_area_list)
             
             ");
 

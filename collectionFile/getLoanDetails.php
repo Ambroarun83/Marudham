@@ -731,7 +731,7 @@ function getTillDateInterest($loan_arr,$response,$con,$data,$count){
                     $start_date = new DateTime(date('Y-m-d',strtotime($start_date))); // taking last collection date from above loop
                     $date_diff = $start_date->diff($end_date);
                     $numberOfDays = $date_diff->days;
-                    echo ceil($amtperDay * $numberOfDays);die;
+                    // echo ceil($amtperDay * $numberOfDays);die;
                     $response = $response + ceil($amtperDay * $numberOfDays);
                 }
             }

@@ -1,5 +1,32 @@
 <?php
+session_start();
 include '../../ajaxconfig.php';
+
+if(isset($_SESSION["userid"])){
+    $userid = $_SESSION["userid"];
+}
+if($userid != 1){
+    
+    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while($rowuser = $userQry->fetch_assoc()){
+        $group_id = $rowuser['group_id'];
+        $line_id = $rowuser['line_id'];
+    }
+
+    $line_id = explode(',',$line_id);
+    $sub_area_list = array();
+    foreach($line_id as $line){
+        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
+        $row_sub = $lineQry->fetch_assoc();
+        $sub_area_list[] = $row_sub['sub_area_id'];
+    }
+    $sub_area_ids = array();
+    foreach ($sub_area_list as $subarray) {
+        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+    }
+    $sub_area_list = array();
+    $sub_area_list = implode(',',$sub_area_ids);
+}
 
 //below query will get all the data of the customer who has taken daily scheme loans
 //in that query, we will also have the opening balance for this current month based on last paid date
@@ -30,7 +57,8 @@ $qry = $con->query("
         JOIN sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
     WHERE 
-        (ii.cus_status >= 14 && ii.cus_status < 20) AND lc.due_method_scheme = 3");
+        (ii.cus_status >= 14 && ii.cus_status < 20) AND lc.due_method_scheme = 3 and 
+        (select area_confirm_subarea from customer_profile where req_id = cp.req_id) IN ($sub_area_list)  ");
         
 
     $rows = array();
