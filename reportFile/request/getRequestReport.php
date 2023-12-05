@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 include '../../ajaxconfig.php';
 
 
@@ -12,6 +12,29 @@ if(isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date']
 
 }
 
+if(isset($_SESSION["userid"])){
+    $userid = $_SESSION["userid"];
+}
+if($userid != 1){
+    
+    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while($rowuser = $userQry->fetch_assoc()){
+        $group_id = $rowuser['group_id'];
+    }
+    $group_id = explode(',',$group_id);
+    $sub_area_list = array();
+    foreach($group_id as $group){
+        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group "); 
+        $row_sub = $groupQry->fetch_assoc();
+        $sub_area_list[] = $row_sub['sub_area_id'];
+    }
+    $sub_area_ids = array();
+    foreach ($sub_area_list as $subarray) {
+        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+    }
+    $sub_area_list = array();
+    $sub_area_list = implode(',',$sub_area_ids);
+}
 
 $qry = $con->query("
             SELECT 
@@ -26,7 +49,11 @@ $qry = $con->query("
             JOIN sub_area_list_creation sal ON req.sub_area = sal.sub_area_id
             JOIN loan_category_creation lcc ON req.loan_category = lcc.loan_category_creation_id
 
-            WHERE ".$where."
+            WHERE ".$where." and 
+            CASE 
+                WHEN req.cus_status >= 10  THEN (select area_confirm_subarea from customer_profile where req_id = req.req_id) IN ($sub_area_list)
+                WHEN req.cus_status < 10  THEN (select sub_area from request_creation where req_id = req.req_id) IN ($sub_area_list)
+            END
         ");
 
     $statusLabels = [

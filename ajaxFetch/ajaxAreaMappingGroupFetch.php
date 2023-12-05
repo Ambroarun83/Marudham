@@ -18,31 +18,31 @@ $column = array(
 
 $query = "SELECT * FROM area_group_mapping ";
 
-if($_POST['search'] != "")
-{
-    if (isset($_POST['search'])) {
+// if($_POST['search'] != "")
+// {
+//     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active")
-        {
-            $query .="WHERE status=0 "; 
-        }
-        else if($_POST['search']=="Inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+//         if($_POST['search']=="Active")
+//         {
+//             $query .="WHERE status=0 "; 
+//         }
+//         else if($_POST['search']=="Inactive")
+//         {
+//             $query .="WHERE status=1 ";
+//         }
 
-        else{	
-            $query .= "WHERE
-            map_id LIKE '%".$_POST['search']."%'
-            OR group_name LIKE '%".$_POST['search']."%'
-            OR company_id LIKE '%".$_POST['search']."%'
-            OR branch_id LIKE '%".$_POST['search']."%'
-            OR area_id LIKE '%".$_POST['search']."%'
-            OR sub_area_id LIKE '%".$_POST['search']."%'
-            OR status LIKE '%".$_POST['search']."%' ";
-        }
-    }
-}
+//         else{	
+//             $query .= "WHERE
+//             map_id LIKE '%".$_POST['search']."%'
+//             OR group_name LIKE '%".$_POST['search']."%'
+//             OR company_id LIKE '%".$_POST['search']."%'
+//             OR branch_id LIKE '%".$_POST['search']."%'
+//             OR area_id LIKE '%".$_POST['search']."%'
+//             OR sub_area_id LIKE '%".$_POST['search']."%'
+//             OR status LIKE '%".$_POST['search']."%' ";
+//         }
+//     }
+// }
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
