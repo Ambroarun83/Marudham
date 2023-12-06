@@ -4,12 +4,27 @@ include('../../ajaxconfig.php');
 
 $cus_id = $_POST['cus_id'];
 
-$sql = $con->query("SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name from customer_profile cp LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
-        LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id)
-        LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
-        WHERE cp.cus_id = ".$cus_id." ORDER BY cp.id DESC LIMIT 1");
-$row = $sql->fetch_assoc();
+$sql ='';
 
+$query1 = $con->query("SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name from customer_profile cp LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
+    LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id)
+    LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
+    WHERE cp.cus_id = ".$cus_id." ORDER BY cp.id DESC LIMIT 1");
+
+$query2 = $con->query("SELECT rc.cus_id, rc.cus_name, rc.mobile1, rc.pic as cus_pic, al.area_name,sl.sub_area_name,alm.line_name as area_line,bc.branch_name FROM request_creation rc
+    JOIN area_list_creation al ON rc.area = al.area_id
+    JOIN sub_area_list_creation sl ON rc.sub_area = sl.sub_area_id
+    LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area, alm.sub_area_id)
+    JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id, agm.sub_area_id)
+    LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
+    WHERE rc.cus_id = '$cus_id' ORDER BY rc.req_id DESC LIMIT 1");
+    
+    if($query1->num_rows > 0){
+        $sql = $query1;
+    }else{
+        $sql = $query2;
+    }
+    $row = $sql->fetch_assoc();
 ?>
     <div class="col-8" >
         <div class="row">

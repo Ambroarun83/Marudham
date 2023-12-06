@@ -16,27 +16,27 @@ $column = array(
 
 $query = "SELECT * FROM loan_category ";
 
-if($_POST['search']!="")
-{
-    if (isset($_POST['search'])) {
+// if($_POST['search']!="")
+// {
+//     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active")
-        {
-            $query .="WHERE status=0 "; 
-        }
-        else if($_POST['search']=="Inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+//         if($_POST['search']=="Active")
+//         {
+//             $query .="WHERE status=0 "; 
+//         }
+//         else if($_POST['search']=="Inactive")
+//         {
+//             $query .="WHERE status=1 ";
+//         }
 
-        else{	
-            $query .= "WHERE
-            loan_category_name LIKE  '%".$_POST['search']."%'
-            loan_limit LIKE  '%".$_POST['search']."%'
-            OR sub_category_name LIKE '%".$_POST['search']."%' ";
-        }
-    }
-}
+//         else{	
+//             $query .= "WHERE
+//             loan_category_name LIKE  '%".$_POST['search']."%'
+//             loan_limit LIKE  '%".$_POST['search']."%'
+//             OR sub_category_name LIKE '%".$_POST['search']."%' ";
+//         }
+//     }
+// }
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';

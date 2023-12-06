@@ -19,32 +19,32 @@ $column = array(
 
 $query = "SELECT * FROM area_creation ";
 
-if($_POST['search'] != "")
-{
+// if($_POST['search'] != "")
+// {
     
-    if (isset($_POST['search'])) {
+//     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active")
-        {
-            $query .="WHERE status=0 "; 
-        }
-        else if($_POST['search']=="Inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+//         if($_POST['search']=="Active")
+//         {
+//             $query .="WHERE status=0 "; 
+//         }
+//         else if($_POST['search']=="Inactive")
+//         {
+//             $query .="WHERE status=1 ";
+//         }
 
-        else{	
-            $query .= "WHERE
-            area_name_id LIKE '%".$_POST['search']."%' 
-            OR sub_area LIKE '%".$_POST['search']."%' 
-            OR taluk LIKE '%".$_POST['search']."%' 
-            OR district LIKE '%".$_POST['search']."%' 
-            OR state LIKE '%".$_POST['search']."%' 
-            OR pincode LIKE '%".$_POST['search']."%' 
-            OR status LIKE '%".$_POST['search']."%' ";
-        }
-    }
-}
+//         else{	
+//             $query .= "WHERE
+//             area_name_id LIKE '%".$_POST['search']."%' 
+//             OR sub_area LIKE '%".$_POST['search']."%' 
+//             OR taluk LIKE '%".$_POST['search']."%' 
+//             OR district LIKE '%".$_POST['search']."%' 
+//             OR state LIKE '%".$_POST['search']."%' 
+//             OR pincode LIKE '%".$_POST['search']."%' 
+//             OR status LIKE '%".$_POST['search']."%' ";
+//         }
+//     }
+// }
 // print_r($query);die;
 
 if (isset($_POST['order'])) {

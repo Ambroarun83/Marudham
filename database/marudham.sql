@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2023 at 01:59 PM
+-- Generation Time: Dec 06, 2023 at 02:13 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -3387,7 +3387,7 @@ CREATE TABLE `request_creation` (
   `update_login_id` varchar(255) DEFAULT NULL,
   `delete_login_id` varchar(255) DEFAULT NULL,
   `created_date` datetime DEFAULT current_timestamp(),
-  `updated_date` datetime DEFAULT current_timestamp()
+  `updated_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -3410,8 +3410,8 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (16, 'Staff', 'Arun', '', '', 'Check once ', '', 'REQ-113', '2023-09-06', '9', '060120230408', 'New', 'Gnanasekar', '1990-02-14', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '4', '19', 'Purisai', '9790171511', '', 'Sengunthan', 'Aarthi', '2', '', '2', 'Best Opticals', 'person_sample_2.jpg', '8', 'Plot Purchase', '50000', '0', '0.0', '50000', '2', '', '12', '3', '', '0', '2', '2', NULL, '2023-01-07 04:42:25', '2023-09-07 00:00:00'),
 (17, 'Director', 'Will Smith', '', '1', '', 'okok', 'REQ-114', '2023-09-09', '10', '090920230103', 'New', 'Janaki', '2023-09-06', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', '7', 'Small Business', '', '', '', '60000', '1', '5500', '', '1', '', '0', '5', '5', NULL, '2023-09-09 13:15:22', '2023-09-09 13:15:25'),
 (18, 'Staff', 'Arun', '', '', 'First Bike', '', 'REQ-115', '2023-09-13', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '32000', '5000', '15.6', '27000', '1', '4500', '', '14', '', '0', '2', '2', NULL, '2023-09-13 11:46:44', '2023-09-06 12:14:25'),
-(19, 'Staff', 'Arun', '2', '', 'Check', '', 'REQ-116', '2023-11-04', NULL, '600060006000', 'New', 'Subramani', '1995-05-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', '5', 'fridge', '', '', '', '28000', '2', '', '30', '0', '', '0', '2', '2', NULL, '2023-11-04 09:42:24', '0000-00-00 00:00:00'),
-(20, 'Staff', 'Arun', '', '', 'sdf', '', 'REQ-117', '2023-11-06', NULL, '600060006000', 'Existing', 'Subramani', '1995-05-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', '6', 'Mobiles', '', '', '', '15000', '1', '1500', '', '0', '', '0', '2', '2', NULL, '2023-11-06 13:03:18', '0000-00-00 00:00:00');
+(19, 'Staff', 'Arun', '2', '', 'Check', '', 'REQ-116', '2023-11-04', NULL, '600060006000', 'New', 'Subramani', '1995-05-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', '5', 'fridge', '', '', '', '28000', '2', '', '30', '0', '', '0', '2', '2', NULL, '2023-11-04 09:42:24', '2023-11-04 09:42:24'),
+(20, 'Staff', 'Arun', '', '', 'sdf', '', 'REQ-117', '2023-11-06', NULL, '600060006000', 'Existing', 'Subramani', '1995-05-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', '6', 'Mobiles', '', '', '', '15000', '1', '1500', '', '0', '', '0', '2', '2', NULL, '2023-11-06 13:03:18', '2023-11-06 13:03:18');
 
 -- --------------------------------------------------------
 

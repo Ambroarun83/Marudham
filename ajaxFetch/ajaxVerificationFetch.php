@@ -73,36 +73,36 @@ if($userid == 1){
 
 }
 // print_r($query);
-if($_POST['search'] != "")
-{
-    if (isset($_POST['search'])) {
+// if($_POST['search'] != "")
+// {
+//     if (isset($_POST['search'])) {
 
-        $query .= "
-            and (req_id LIKE '%".$_POST['search']."%'
-            OR dor LIKE '%".$_POST['search']."%'
-            OR cus_id LIKE '%".$_POST['search']."%'
-            OR cus_name LIKE '%".$_POST['search']."%'
-            OR cus_name LIKE '%".$_POST['search']."%'
-            OR cus_name LIKE '%".$_POST['search']."%'
-            OR cus_name LIKE '%".$_POST['search']."%'
-            OR area LIKE '%".$_POST['search']."%'
-            OR sub_area LIKE '%".$_POST['search']."%'
-            OR loan_category LIKE '%".$_POST['search']."%'
-            OR sub_category LIKE '%".$_POST['search']."%'
-            OR loan_amt LIKE '%".$_POST['search']."%'
-            OR user_type LIKE '%".$_POST['search']."%'
-            OR user_name LIKE '%".$_POST['search']."%'
-            OR agent_id LIKE '%".$_POST['search']."%'
-            OR responsible LIKE '%".$_POST['search']."%'
-            OR cus_data LIKE '%".$_POST['search']."%'
-            OR cus_status LIKE '%".$_POST['search']."%' ) ";
-    }
-}
-if (isset($_POST['order'])) {
-    $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
-} else {
-    $query .= ' ';
-}
+//         $query .= "
+//             and (req_id LIKE '%".$_POST['search']."%'
+//             OR dor LIKE '%".$_POST['search']."%'
+//             OR cus_id LIKE '%".$_POST['search']."%'
+//             OR cus_name LIKE '%".$_POST['search']."%'
+//             OR cus_name LIKE '%".$_POST['search']."%'
+//             OR cus_name LIKE '%".$_POST['search']."%'
+//             OR cus_name LIKE '%".$_POST['search']."%'
+//             OR area LIKE '%".$_POST['search']."%'
+//             OR sub_area LIKE '%".$_POST['search']."%'
+//             OR loan_category LIKE '%".$_POST['search']."%'
+//             OR sub_category LIKE '%".$_POST['search']."%'
+//             OR loan_amt LIKE '%".$_POST['search']."%'
+//             OR user_type LIKE '%".$_POST['search']."%'
+//             OR user_name LIKE '%".$_POST['search']."%'
+//             OR agent_id LIKE '%".$_POST['search']."%'
+//             OR responsible LIKE '%".$_POST['search']."%'
+//             OR cus_data LIKE '%".$_POST['search']."%'
+//             OR cus_status LIKE '%".$_POST['search']."%' ) ";
+//     }
+// }
+// if (isset($_POST['order'])) {
+//     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
+// } else {
+//     $query .= ' ';
+// }
 
 $query1 = '';
 

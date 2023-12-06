@@ -16,28 +16,28 @@ $column = array(
 
 $query = "SELECT * FROM doc_mapping ";
 
-if($_POST['search']!="")
-{
-    if (isset($_POST['search'])) {
+// if($_POST['search']!="")
+// {
+//     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active")
-        {
-            $query .="WHERE status=0 "; 
-        }
-        else if($_POST['search']=="Inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+//         if($_POST['search']=="Active")
+//         {
+//             $query .="WHERE status=0 "; 
+//         }
+//         else if($_POST['search']=="Inactive")
+//         {
+//             $query .="WHERE status=1 ";
+//         }
 
-        else{	
-            $query .= "WHERE
-            doc_map_id LIKE  '%".$_POST['search']."%'
-            OR loan_category LIKE '%".$_POST['search']."%'
-            OR sub_category LIKE '%".$_POST['search']."%'
-            OR doc_creation LIKE '%".$_POST['search']."%' ";
-        }
-    }
-}
+//         else{	
+//             $query .= "WHERE
+//             doc_map_id LIKE  '%".$_POST['search']."%'
+//             OR loan_category LIKE '%".$_POST['search']."%'
+//             OR sub_category LIKE '%".$_POST['search']."%'
+//             OR doc_creation LIKE '%".$_POST['search']."%' ";
+//         }
+//     }
+// }
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';

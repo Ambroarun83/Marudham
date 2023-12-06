@@ -21,30 +21,30 @@ $column = array(
 
 $query = "SELECT * FROM loan_calculation ";
 
-if($_POST['search']!="");
-{
-    if (isset($_POST['search'])) {
+// if($_POST['search']!="");
+// {
+//     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active")
-        {
-            $query .="WHERE status=0 "; 
-        }
-        else if($_POST['search']=="Inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+//         if($_POST['search']=="Active")
+//         {
+//             $query .="WHERE status=0 "; 
+//         }
+//         else if($_POST['search']=="Inactive")
+//         {
+//             $query .="WHERE status=1 ";
+//         }
 
-        else{	
-            $query .= "WHERE
-            loan_category LIKE '%".$_POST['search']."%'
-            OR sub_category LIKE '%".$_POST['search']."%'
-            OR due_method LIKE '%".$_POST['search']."%'
-            OR due_type LIKE '%".$_POST['search']."%'
-            OR profit_method LIKE '%".$_POST['search']."%'
-            OR calculate_method LIKE '%".$_POST['search']."%' ";
-        }
-    }
-}
+//         else{	
+//             $query .= "WHERE
+//             loan_category LIKE '%".$_POST['search']."%'
+//             OR sub_category LIKE '%".$_POST['search']."%'
+//             OR due_method LIKE '%".$_POST['search']."%'
+//             OR due_type LIKE '%".$_POST['search']."%'
+//             OR profit_method LIKE '%".$_POST['search']."%'
+//             OR calculate_method LIKE '%".$_POST['search']."%' ";
+//         }
+//     }
+// }
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
