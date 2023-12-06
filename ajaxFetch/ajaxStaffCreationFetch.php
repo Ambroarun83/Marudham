@@ -16,34 +16,34 @@ $column = array(
 );
 
 $query = "SELECT * FROM staff_creation ";
-if($_POST['search'] != "")
-{
-    if (isset($_POST['search'])) {
+// if($_POST['search'] != "")
+// {
+//     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active" or $_POST['search']=="active")
-        {
-            $query .="WHERE status=0 ";
+//         if($_POST['search']=="Active" or $_POST['search']=="active")
+//         {
+//             $query .="WHERE status=0 ";
             
-        }
-        else if($_POST['search']=="Inactive" or $_POST['search']=="inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+//         }
+//         else if($_POST['search']=="Inactive" or $_POST['search']=="inactive")
+//         {
+//             $query .="WHERE status=1 ";
+//         }
 
-        else{   
-            $query .= "WHERE
-                staff_code LIKE '%".$_POST['search']."%'
-                OR staff_name LIKE '%".$_POST['search']."%'
-                OR staff_type LIKE '%".$_POST['search']."%'
-                OR place LIKE '%".$_POST['search']."%'
-                OR company_id LIKE '%".$_POST['search']."%'
-                OR department LIKE '%".$_POST['search']."%'
-                OR team LIKE '%".$_POST['search']."%'
-                OR designation LIKE '%".$_POST['search']."%' ";
-        }
-    }
-    // print_r($query);
-}
+//         else{   
+//             $query .= "WHERE
+//                 staff_code LIKE '%".$_POST['search']."%'
+//                 OR staff_name LIKE '%".$_POST['search']."%'
+//                 OR staff_type LIKE '%".$_POST['search']."%'
+//                 OR place LIKE '%".$_POST['search']."%'
+//                 OR company_id LIKE '%".$_POST['search']."%'
+//                 OR department LIKE '%".$_POST['search']."%'
+//                 OR team LIKE '%".$_POST['search']."%'
+//                 OR designation LIKE '%".$_POST['search']."%' ";
+//         }
+//     }
+//     // print_r($query);
+// }
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 } else {

@@ -3595,13 +3595,15 @@ function updateUser($mysqli,$id,$user_id){
             $reqToverify['due_amt'] = $row['due_amt'];
             $reqToverify['due_period'] = $row['due_period'];
             $reqToverify['cus_status'] = $row['cus_status'];
+			
+			
+			$areaQry = $mysqli->query("SELECT area_name from area_list_creation where area_id = '".$row['area']."' ");
+			$reqToverify['area_name'] = $areaQry->fetch_assoc()['area_name'];
+			
+			$subareaQry = $mysqli->query("SELECT sub_area_name from sub_area_list_creation where sub_area_id = '".$row['sub_area']."' ");
+			$reqToverify['sub_area_name'] = $subareaQry->fetch_assoc()['sub_area_name'];
         }
 		
-		$areaQry = $mysqli->query("SELECT area_name from area_list_creation where area_id = '".$row['area']."' ");
-		$reqToverify['area_name'] = $areaQry->fetch_assoc()['area_name'];
-		
-		$subareaQry = $mysqli->query("SELECT sub_area_name from sub_area_list_creation where sub_area_id = '".$row['sub_area']."' ");
-		$reqToverify['sub_area_name'] = $subareaQry->fetch_assoc()['sub_area_name'];
 
         return $reqToverify;
     }

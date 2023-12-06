@@ -13,32 +13,32 @@ $column = array(
 );
 
 $query = "SELECT * FROM company_creation ";
-if($_POST['search']!="")
-{
-if (isset($_POST['search'])) {
+// if($_POST['search']!="")
+// {
+// if (isset($_POST['search'])) {
 
-    if($_POST['search']=="Active")
-{
-    $query .="WHERE status=0 ";
+//     if($_POST['search']=="Active")
+// {
+//     $query .="WHERE status=0 ";
     
-}
-else if($_POST['search']=="Inactive")
-{
-    $query .="WHERE status=1 ";
-}
+// }
+// else if($_POST['search']=="Inactive")
+// {
+//     $query .="WHERE status=1 ";
+// }
 
-else{   
-   $query .= "WHERE
-    company_id LIKE  '%".$_POST['search']."%'
-    OR company_name LIKE '%".$_POST['search']."%'
-    OR district LIKE '%".$_POST['search']."%'
-    OR taluk LIKE '%".$_POST['search']."%'
-    OR place LIKE '%".$_POST['search']."%'
-    OR mobile LIKE '%".$_POST['search']."%'
-    OR status LIKE '%".$_POST['search']."%' ";
-}
-}
-}
+// else{   
+//    $query .= "WHERE
+//     company_id LIKE  '%".$_POST['search']."%'
+//     OR company_name LIKE '%".$_POST['search']."%'
+//     OR district LIKE '%".$_POST['search']."%'
+//     OR taluk LIKE '%".$_POST['search']."%'
+//     OR place LIKE '%".$_POST['search']."%'
+//     OR mobile LIKE '%".$_POST['search']."%'
+//     OR status LIKE '%".$_POST['search']."%' ";
+// }
+// }
+// }
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';

@@ -26,6 +26,29 @@ if($userid != 1){
     $sub_area_list = implode(',',$sub_area_ids);
 }
 
+// $sql = $con->query("SELECT cp.*, rc.updated_date, alc.area_name, salc.sub_area_name, lcc.loan_category_creation_name, lcc2.loan_category_creation_name AS loan_cat2,rc.sub_category,vlc.sub_category, ac.ag_name, bc.branch_name, agm.group_name, alm.line_name
+//     FROM customer_profile cp
+//     LEFT JOIN area_list_creation alc ON cp.area_confirm_area = alc.area_id
+//     LEFT JOIN sub_area_list_creation salc ON cp.area_confirm_subarea = salc.sub_area_id
+//     LEFT JOIN request_creation rc ON cp.req_id = rc.req_id
+//     LEFT JOIN loan_category_creation lcc ON rc.loan_category = lcc.loan_category_creation_id
+//     LEFT JOIN verification_loan_calculation vlc ON cp.req_id = vlc.req_id
+//     LEFT JOIN loan_category_creation lcc2 ON vlc.loan_category = lcc2.loan_category_creation_id
+//     LEFT JOIN agent_creation ac ON rc.agent_id = ac.ag_id
+//     LEFT JOIN area_group_mapping agm ON FIND_IN_SET(rc.sub_area, agm.sub_area_id)
+//     LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
+//     LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area, alm.sub_area_id)
+//     WHERE
+//     (
+//         cp.cus_status > 1 AND cp.cus_status NOT IN(4, 5, 6, 7, 8, 9) AND cp.cus_status < 14
+//     ) AND(
+//         CASE WHEN lcc2.loan_category_creation_name IS NULL THEN rc.sub_area IN($sub_area_list) else cp.area_confirm_subarea IN($sub_area_list)
+//         END
+//     )");
+// $req_ids = $qry->fetch_assoc();
+
+
+
 $sql = $con->query("SELECT rc.*,alc.area_name,salc.sub_area_name,lcc.loan_category_creation_name, ac.ag_name, bc.branch_name,agm.group_name,alm.line_name FROM request_creation rc 
 LEFT JOIN area_list_creation alc ON rc.area = alc.area_id 
 LEFT JOIN sub_area_list_creation salc ON rc.sub_area = salc.sub_area_id 
@@ -34,7 +57,7 @@ LEFT JOIN agent_creation ac ON rc.agent_id = ac.ag_id
 LEFT JOIN area_group_mapping agm ON FIND_IN_SET(rc.sub_area,agm.sub_area_id)
 LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
 LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area,alm.sub_area_id)
-WHERE (rc.cus_status >= 0 and rc.cus_status NOT IN (4,5,6,7,8,9) and rc.cus_status < 14 ) and
+WHERE (rc.cus_status >= 0 AND rc.cus_status NOT IN(4, 5, 6, 7, 8, 9) AND rc.cus_status < 14 ) and
 ( rc.sub_area IN (".$sub_area_list.") or 
 (select area_confirm_subarea from customer_profile where req_id = rc.req_id) IN (".$sub_area_list.") )
 ");
@@ -133,7 +156,7 @@ $sno = 1;
 <script>
     $('#loan_follow_table').dataTable({
         'processing': true,
-        'iDisplayLength': 5,
+        'iDisplayLength': 10,
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]

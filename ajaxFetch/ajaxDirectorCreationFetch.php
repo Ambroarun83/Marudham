@@ -17,35 +17,35 @@ $column = array(
 );
 
 $query = "SELECT * FROM director_creation ";
-if($_POST['search'] != "")
-{
-if (isset($_POST['search'])) {
+// if($_POST['search'] != "")
+// {
+// if (isset($_POST['search'])) {
 
-    if($_POST['search']=="Active")
-{
-    $query .="WHERE status=0 ";
+//     if($_POST['search']=="Active")
+// {
+//     $query .="WHERE status=0 ";
     
-}
-else if($_POST['search']=="Inactive")
-{
-    $query .="WHERE status=1 ";
-}
+// }
+// else if($_POST['search']=="Inactive")
+// {
+//     $query .="WHERE status=1 ";
+// }
 
-// OR branch_id LIKE '%".$_POST['search']."%'
-else{   
-    $query .= "WHERE
-        dir_code LIKE '%".$_POST['search']."%'
-        OR dir_name LIKE '%".$_POST['search']."%'
-        OR dir_type LIKE '%".$_POST['search']."%'
-        OR company_id LIKE '%".$_POST['search']."%'
-        OR place LIKE '%".$_POST['search']."%'
-        OR taluk LIKE '%".$_POST['search']."%'
-        OR district LIKE '%".$_POST['search']."%'
-        OR mobile_no LIKE '%".$_POST['search']."%'
-        OR status LIKE '%".$_POST['search']."%' ";
-}
-}
-}
+// // OR branch_id LIKE '%".$_POST['search']."%'
+// else{   
+//     $query .= "WHERE
+//         dir_code LIKE '%".$_POST['search']."%'
+//         OR dir_name LIKE '%".$_POST['search']."%'
+//         OR dir_type LIKE '%".$_POST['search']."%'
+//         OR company_id LIKE '%".$_POST['search']."%'
+//         OR place LIKE '%".$_POST['search']."%'
+//         OR taluk LIKE '%".$_POST['search']."%'
+//         OR district LIKE '%".$_POST['search']."%'
+//         OR mobile_no LIKE '%".$_POST['search']."%'
+//         OR status LIKE '%".$_POST['search']."%' ";
+// }
+// }
+// }
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';

@@ -16,45 +16,45 @@ $column = array(
 );
 
 $query = "SELECT * FROM agent_creation ";
-if($_POST['search'] != "")
-{
-    if (isset($_POST['search'])) {
+// if($_POST['search'] != "")
+// {
+//     if (isset($_POST['search'])) {
 
-        if($_POST['search']=="Active" or $_POST['search']=="active")
-        {
-            $query .="WHERE status=0 ";
+//         if($_POST['search']=="Active" or $_POST['search']=="active")
+//         {
+//             $query .="WHERE status=0 ";
             
-        }
-        else if($_POST['search']=="Inactive" or $_POST['search']=="inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
+//         }
+//         else if($_POST['search']=="Inactive" or $_POST['search']=="inactive")
+//         {
+//             $query .="WHERE status=1 ";
+//         }
 
-        else{   
-            // $branch_name = $_POST['search'];
-            // $getbranchQry = "SELECT * from branch_creation where branch_name LIKE '%".$branch_name."%' and status = 0 ";
-            // $res=$con->query($getbranchQry);
-            // if($con->affected_rows > 0){
-            //     while($row1=$res->fetch_assoc())
-            //     {
-            //         $branch_search = $row1["branch_id"];        
-            //     }
-            // }else{$branch_search = '';}
+//         else{   
+//             // $branch_name = $_POST['search'];
+//             // $getbranchQry = "SELECT * from branch_creation where branch_name LIKE '%".$branch_name."%' and status = 0 ";
+//             // $res=$con->query($getbranchQry);
+//             // if($con->affected_rows > 0){
+//             //     while($row1=$res->fetch_assoc())
+//             //     {
+//             //         $branch_search = $row1["branch_id"];        
+//             //     }
+//             // }else{$branch_search = '';}
 
-            // OR branch_id LIKE '%".$_POST['search']."%'
-            $query .= "WHERE
-                ag_name LIKE '%".$_POST['search']."%'
-                OR company_id LIKE '%".$_POST['search']."%'
-                OR ag_group_id LIKE '%".$_POST['search']."%'
-                OR place LIKE '%".$_POST['search']."%'
-                OR district LIKE '%".$_POST['search']."%'
-                OR loan_category LIKE '%".$_POST['search']."%'
-                OR sub_category LIKE '%".$_POST['search']."%'
-                OR status LIKE '%".$_POST['search']."%' ";
-        }
-    }
-    // print_r($query);
-}
+//             // OR branch_id LIKE '%".$_POST['search']."%'
+//             $query .= "WHERE
+//                 ag_name LIKE '%".$_POST['search']."%'
+//                 OR company_id LIKE '%".$_POST['search']."%'
+//                 OR ag_group_id LIKE '%".$_POST['search']."%'
+//                 OR place LIKE '%".$_POST['search']."%'
+//                 OR district LIKE '%".$_POST['search']."%'
+//                 OR loan_category LIKE '%".$_POST['search']."%'
+//                 OR sub_category LIKE '%".$_POST['search']."%'
+//                 OR status LIKE '%".$_POST['search']."%' ";
+//         }
+//     }
+//     // print_r($query);
+// }
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 } else {

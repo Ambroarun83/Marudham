@@ -15,28 +15,28 @@ $column = array(
 
 $query = "SELECT * FROM  sub_area_list_creation WHERE status=0 ";
 
-if($_POST['search'] != "")
-{
+// if($_POST['search'] != "")
+// {
     
-    if (isset($_POST['search'])) {
+//     if (isset($_POST['search'])) {
 
-        // if($_POST['search']=="Active")
-        // {
-        //     $query .="WHERE status=0 "; 
-        // }
-        // else if($_POST['search']=="Inactive")
-        // {
-        //     $query .="WHERE status=1 ";
-        // }
+//         // if($_POST['search']=="Active")
+//         // {
+//         //     $query .="WHERE status=0 "; 
+//         // }
+//         // else if($_POST['search']=="Inactive")
+//         // {
+//         //     $query .="WHERE status=1 ";
+//         // }
 
-        // else{	
-            $query .= "and
-            (sub_area_id LIKE '%".$_POST['search']."%' 
-            OR sub_area_name LIKE '%".$_POST['search']."%'
-            OR area_id_ref LIKE '%".$_POST['search']."%' ) ";
-        // }
-    }
-}
+//         // else{	
+//             $query .= "and
+//             (sub_area_id LIKE '%".$_POST['search']."%' 
+//             OR sub_area_name LIKE '%".$_POST['search']."%'
+//             OR area_id_ref LIKE '%".$_POST['search']."%' ) ";
+//         // }
+//     }
+// }
 // print_r($query);die;
 
 if (isset($_POST['order'])) {
