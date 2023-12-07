@@ -26,7 +26,7 @@ foreach($user_group as $group_id){
     $user_area[] = explode(',',$run['area_id']);
 }
 
-$result=$con->query("SELECT * FROM area_list_creation where taluk= '".$taluk."' and status=0 and area_enable = 0");
+$result=$con->query("SELECT * FROM area_list_creation where taluk LIKE '%".$taluk."%' and status=0 and area_enable = 0");
 
 while( $row = $result->fetch_assoc()){
     $area_id = $row['area_id'];

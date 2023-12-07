@@ -355,10 +355,10 @@ function getCustomerDetails(cus_id){
                     $('#area').val(response['area']);
                     var areaselected = $('#area').val();
                     getAreaBasedSubArea(areaselected);
-                },100);
-                setTimeout(function(){
-                    $('#sub_area').val(response['sub_area']);
-                },500);
+                    setTimeout(function(){
+                        $('#sub_area').val(response['sub_area']);
+                    },1000);
+                },1000);
                 $('#address').val(response['address']);
                 $('#mobile1').val(response['mobile1']);
                 $('#mobile2').val(response['mobile2']);
