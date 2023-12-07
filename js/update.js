@@ -89,7 +89,7 @@ $(document).ready(function () {
         getTalukBasedArea(talukselected, area_upd, '#area_confirm');
     })
 
-    $('#area').change(function () {
+    $('#area_confirm').change(function () {
         var areaselected = $(this).val();
         var sub_area_upd = '';
         getAreaBasedSubArea(areaselected, sub_area_upd, '#area_sub_area');

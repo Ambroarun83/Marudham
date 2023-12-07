@@ -600,11 +600,11 @@ function moneyFormatIndia($num)
                         <?php } else if (date('Y-m', strtotime($cusDueMonth)) >  date('Y-m') && $curDateChecker == true) { ?>
                             <td>
                                 <?php $response = getNextLoanDetails($con, $req_id, $cusDueMonth);
-                                echo $response['pending']; ?>
+                                //echo $response['pending']; ?>
                             </td>
                             <td>
                                 <?php $response = getNextLoanDetails($con, $req_id, $cusDueMonth);
-                                echo $response['payable']; ?>
+                                //echo $response['payable']; ?>
                             </td>
                         <?php
                             $curDateChecker = false; //set to false because, pending and payable only need one month after current month
