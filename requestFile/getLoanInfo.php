@@ -36,15 +36,16 @@ if($qry->num_rows > 0){
     $loan_type = ($row01['due_type'] == 'Interest')?'interest':'emi';
 
     // take the amount which he paid till now
-    $qry02 = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(c.princ_amt_track) as princ_amt_track, SUM(c.int_amt_track) as int_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)");
+    $qry02 = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(c.pre_close_waiver) as pre_close_waiver, SUM(c.princ_amt_track) as princ_amt_track, SUM(c.int_amt_track) as int_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)");
     // echo "SELECT SUM(c.due_amt_track) as due_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20);";
     $row02 = $qry02->fetch_assoc();
     $due_amt_track = $row02['due_amt_track'];
+    $pre_close_waiver = $row02['pre_close_waiver'];
     $princ_amt_track = $row02['princ_amt_track'];
     $int_amt_track = $row02['int_amt_track'];
     
     // to get exact amount balance of customer current loan
-    $cus_balance = intVal($tot_amt_cal) - intVal($due_amt_track);
+    $cus_balance = intVal($tot_amt_cal) - intVal($due_amt_track) - intVal($pre_close_waiver);
     
     if($loan_type == 'interest'){
         $cus_balance = intVal($tot_amt_cal) - intVal($princ_amt_track);

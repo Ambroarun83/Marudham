@@ -94,7 +94,6 @@ $sno = 1;
         <th>View</th>
         <th>Action</th>
         <th>Follow Date</th>
-        <th>Follow Date</th>
     </thead>
     <tbody>
         <?php while($row =  $sql1->fetch_assoc()){?>
@@ -145,7 +144,6 @@ $sno = 1;
                         echo '';
                     }
                     ?></td>
-                <td><?php echo $row['cus_status']; ?></td>
 
             </tr>
         <?php } ?>
@@ -197,7 +195,6 @@ $sno = 1;
                         echo '';
                     }
                     ?></td>
-                <td><?php echo $row['cus_status']; ?></td>
 
             </tr>
         <?php } ?>
