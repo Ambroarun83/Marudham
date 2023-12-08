@@ -152,26 +152,28 @@ function OnLoadFunctions(req_id,cus_id){
                 
                 $('.noc-window').click(function(){
                     let req_id = $(this).data('value');
+                    checkDocumentsStatus(req_id,(result)=>{result=='completed'? checkit = 'completed':checkit = 'pending';});
+                    setTimeout(()=>{
+                        if(checkit == 'completed'){//this function will check if the particular loan is completed all the document upload
 
-                    if(checkDocumentsStatus(req_id) == 'completed'){//this function will check if the particular loan is completed all the document upload
-
-                        $('.loanlist_card').hide();
-                        $('.datachecking_card').hide();
-                        $('.customersummary_card').hide();
-                        $('.back-button').hide();
-                        $('.noc_window').show();
-                        $('#close_noc_card').show();
-                        $('#submit_closed').show();
-                        
-                        var reqID = $(this).attr('data-value');
-                        $('#noc_req_id').val(reqID);
-                        
-                        resetfeedback(); //Reset Feedback Modal Table.
-                        feedbackList(); // Feedback List.
-                    }else{//else prevent closing the document due to not completing documents
-                        event.preventDefault();
-                        alert('Please complete pending documents to Close!')
-                    }
+                            $('.loanlist_card').hide();
+                            $('.datachecking_card').hide();
+                            $('.customersummary_card').hide();
+                            $('.back-button').hide();
+                            $('.noc_window').show();
+                            $('#close_noc_card').show();
+                            $('#submit_closed').show();
+                            
+                            var reqID = $(this).attr('data-value');
+                            $('#noc_req_id').val(reqID);
+                            
+                            resetfeedback(); //Reset Feedback Modal Table.
+                            feedbackList(); // Feedback List.
+                        }else{//else prevent closing the document due to not completing documents
+                            event.preventDefault();
+                            alert('Please complete pending documents to Close!')
+                        }
+                    },1000)
                 });
                 
                 $('#close_noc_card').click(function(){
@@ -515,12 +517,14 @@ function feedbackList() {
 }
 //Loan Summary Modal End
 
-function checkDocumentsStatus(req_id){
-    $.post('closedFile/checkDocumentsStatus.php',{req_id},function(response){
+function checkDocumentsStatus(req_id,callback){
+    let val;
+    $.post('closedFile/checkDocumentsStatus.php',{req_id},(response)=>{
         if(response == 'true'){
-            return 'completed';
+            val =  'completed';
         }else{
-            return 'pending';
+            val =  'pending';
         }
+        callback(val);
     })
 }

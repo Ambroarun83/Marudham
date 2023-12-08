@@ -309,6 +309,9 @@ if(sizeof($getLoanCalculation)>0){
 
 ///////// Loan Calculation End ///////////////
 
+$area_topbar = isset($doc_area_name)&& $doc_area_name != '' ? $doc_area_name:$area_nameforhead;
+$sub_area_topbar = isset($doc_sub_area_name)&& $doc_sub_area_name != '' ? $doc_sub_area_name:$sub_area_nameforhead;
+
 ?>
 
 
@@ -394,8 +397,8 @@ input:checked + .slider:before {
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px; margin-top:50px;">
 	Customer Name - <?php if (isset($cus_name)) {echo $cus_name;} ?>
-		,&nbsp;&nbsp;Area - <?php if (isset($doc_area_name)) {echo $doc_area_name;} ?>
-		,&nbsp;&nbsp;Sub Area - <?php if (isset($doc_sub_area_name)) {echo $doc_sub_area_name;} ?>
+		,&nbsp;&nbsp;Area - <?php echo $area_topbar; ?>
+		,&nbsp;&nbsp;Sub Area - <?php echo $sub_area_topbar; ?>
 	</div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">
