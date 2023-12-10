@@ -13,6 +13,14 @@ foreach($row as $key => $val){
 	$$key = $val; 
 }
 
+$sql = $con->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id='".strip_tags($req_id)."' ");
+$rowSql=$sql->fetch_assoc();
+if($rowSql['due_type'] == 'Interest' ){
+	$loan_type='interest';
+}else{
+	$loan_type='emi';
+}
+
 
 //Get customer Details
 $qry=$con->query("SELECT ac.area_name,sac.sub_area_name,cr.address,cr.mobile1,cr.taluk,cr.district FROM area_list_creation ac JOIN sub_area_list_creation sac ON 
@@ -101,8 +109,14 @@ function moneyFormatIndia($num)
 		<tr>
 			<th style="background-color: white;color: black;" width="100">Date</th>
 			<th style="background-color: white;color: black" width="100">Reference ID</th>
-			<th style="background-color: white;color: black" width="50">Due Amount</th>
-			<th style="background-color: white;color: black" width="50">Paid Due</th>
+			<?php if($loan_type == 'interest'){?>
+				<th style="background-color: white;color: black" width="50">Interest Amount</th>
+				<th style="background-color: white;color: black" width="50">Paid Principal</th>
+				<th style="background-color: white;color: black" width="50">Paid Interest</th>
+			<?php }else{ ?>
+				<th style="background-color: white;color: black" width="50">Due Amount</th>
+				<th style="background-color: white;color: black" width="50">Paid Due</th>
+			<?php }?>
 			<th style="background-color: white;color: black" width="50">Paid Penalty</th>
 			<th style="background-color: white;color: black" width="50">Paid Charges</th>
 			<th style="background-color: white;color: black" width="50">Pre Closure</th>
@@ -119,9 +133,24 @@ function moneyFormatIndia($num)
 			<td style="padding:5px;text-align:center;">
 				<?php echo moneyFormatIndia($due_amt);?>
 			</td>
-			<td style="padding:5px;text-align:center;">
-				<?php if($due_amt_track !=''){echo moneyFormatIndia($due_amt_track);}else{echo '0';} ?>
-			</td>
+			
+			<?php if($loan_type == 'interest'){?>
+				
+				<td style="padding:5px;text-align:center;">
+					<?php if($princ_amt_track !=''){echo moneyFormatIndia($princ_amt_track);}else{echo '0';} ?>
+				</td>
+				<td style="padding:5px;text-align:center;">
+					<?php if($int_amt_track !=''){echo moneyFormatIndia($int_amt_track);}else{echo '0';} ?>
+				</td>
+				
+			<?php }else{ ?>
+				
+				<td style="padding:5px;text-align:center;">
+					<?php if($due_amt_track !=''){echo moneyFormatIndia($due_amt_track);}else{echo '0';} ?>
+				</td>
+				
+			<?php }?>
+
 			<td style="padding:5px;text-align:center;">
 				<?php if($penalty_track !=''){echo moneyFormatIndia($penalty_track);}else{echo '0';} ?>
 			</td>
@@ -142,9 +171,17 @@ function moneyFormatIndia($num)
 			<td></td>
 			<td></td>
 			<td></td>
-			<td colspan="3" style="padding:5px;text-align:center;"><b>
-				Total Paid: <?php if($total_paid_track !=''){echo moneyFormatIndia($total_paid_track);}else{echo '0';} ?></b>
-			</td>
+			
+			<?php if($loan_type == 'interest'){?>
+				<td colspan="4" style="padding:5px;text-align:center;"><b>
+					Total Paid: <?php if($total_paid_track !=''){echo moneyFormatIndia($total_paid_track);}else{echo '0';} ?></b>
+				</td>
+			<?php }else{ ?>
+				<td colspan="3" style="padding:5px;text-align:center;"><b>
+					Total Paid: <?php if($total_paid_track !=''){echo moneyFormatIndia($total_paid_track);}else{echo '0';} ?></b>
+				</td>
+			<?php }?>
+
 			<td colspan="3" style="padding:5px;text-align:center;"><b>
 				Total Waiver: <?php if($total_waiver !=''){echo moneyFormatIndia($total_waiver);}else{echo '0';} ?></b>
 			</td>

@@ -29,19 +29,26 @@ if($qry->num_rows > 0){
     $cus_limit = intVal($row['loan_limit']); 
 
     // take customer's loan amount that he started to pay
-    $qry01 = $con->query("SELECT SUM(alc.tot_amt_cal) as tot_amt_cal from in_issue ii JOIN acknowlegement_loan_calculation alc ON alc.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)  ");
+    $qry01 = $con->query("SELECT SUM(alc.tot_amt_cal) as tot_amt_cal, due_type from in_issue ii JOIN acknowlegement_loan_calculation alc ON alc.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)  ");
     // echo "SELECT SUM(alc.tot_amt_cal) as tot_amt_cal from in_issue ii JOIN acknowlegement_loan_calculation alc ON alc.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)  ";
     $row01 = $qry01->fetch_assoc();
     $tot_amt_cal = $row01['tot_amt_cal'];
+    $loan_type = ($row['due_type'] == 'Interest')?'interest':'emi';
 
     // take the amount which he paid till now
-    $qry02 = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)");
+    $qry02 = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(c.princ_amt_track) as princ_amt_track, SUM(c.int_amt_track) as int_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)");
     // echo "SELECT SUM(c.due_amt_track) as due_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20);";
     $row02 = $qry02->fetch_assoc();
     $due_amt_track = $row02['due_amt_track'];
+    $princ_amt_track = $row02['princ_amt_track'];
+    $int_amt_track = $row02['int_amt_track'];
     
     // to get exact amount balance of customer current loan
     $cus_balance = intVal($tot_amt_cal) - intVal($due_amt_track);
+    
+    if($loan_type == 'interest'){
+        $cus_balance = intVal($tot_amt_cal) - intVal($princ_amt_track);
+    }
     
     // subract amount with customer loan limit to check exact customer limit// check which is bigger then put it in first, becoz may return negative value
     if($cus_balance > $cus_limit){

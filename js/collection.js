@@ -494,16 +494,16 @@ function OnLoadFunctions(req_id,cus_id){
                                             var content = $("#printcollection").html();
                 
                                             // Create a new window
-                                            var w = window.open();
+                                            // var w = window.open();
                 
                                             // Write the content to the new window
-                                            $(w.document.body).html(content);
+                                            // $(document.body).html(content);
                 
                                             // Print the new window
-                                            w.print();
+                                            // w.print();
                 
                                             // Close the new window
-                                            w.close();
+                                            // w.close();
                                         }
                                     })
                                 }

@@ -9,13 +9,13 @@ $user_id = ($_POST['user_id'] != '') ? $where = " and insert_login_id = '".$_POS
 
 if($type == 'today'){
     
-    $qry = $con->query("SELECT SUM(due_amt_track) as total_collection,SUM(pre_close_waiver) as total_waiver from collection where DATE(created_date) = CURRENT_DATE $where ");
+    $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,SUM(pre_close_waiver) as total_waiver from collection where DATE(created_date) = CURRENT_DATE $where ");
     
 
 
     if($qry->num_rows > 0){
         $row = $qry->fetch_assoc();
-        $response['collection'] = ($row['total_collection'] ?? 0) + ($row['total_waiver'] ?? 0);
+        $response['collection'] = ($row['due_amt_track'] ?? 0 + $row['princ_amt_track'] ?? 0 + $row['int_amt_track'] ?? 0) + ($row['total_waiver'] ?? 0);
     }else{
         $response['collection'] = 0;
     }
@@ -23,11 +23,11 @@ if($type == 'today'){
 }else if($type == 'day'){
 
     $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
-    $qry = $con->query("SELECT SUM(due_amt_track) as total_collection,SUM(pre_close_waiver) as total_waiver from collection where (DATE(created_date) >= '$from_date' && DATE(created_date) <= '$to_date' ) $where ");
+    $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,SUM(pre_close_waiver) as total_waiver from collection where (DATE(created_date) >= '$from_date' && DATE(created_date) <= '$to_date' ) $where ");
 
     if($qry->num_rows > 0){
         $row = $qry->fetch_assoc();
-        $response['collection'] = ($row['total_collection'] ?? 0) + ($row['total_waiver'] ?? 0);
+        $response['collection'] = ($row['due_amt_track'] ?? 0 + $row['princ_amt_track'] ?? 0 + $row['int_amt_track'] ?? 0) + ($row['total_waiver'] ?? 0);
     }else{
         $response['collection'] = 0;
     }
@@ -37,11 +37,11 @@ if($type == 'today'){
     $month = date('m',strtotime($_POST['month']));
     $year = date('Y',strtotime($_POST['month']));
 
-    $qry = $con->query("SELECT SUM(due_amt_track) as total_collection,SUM(pre_close_waiver) as total_waiver from collection where (MONTH(created_date) = '$month' and YEAR(created_date) = $year) $where ");
+    $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,SUM(pre_close_waiver) as total_waiver from collection where (MONTH(created_date) = '$month' and YEAR(created_date) = $year) $where ");
 
     if($qry->num_rows > 0){
         $row = $qry->fetch_assoc();
-        $response['collection'] = ($row['total_collection'] ?? 0) + ($row['total_waiver'] ?? 0);
+        $response['collection'] = ($row['due_amt_track'] ?? 0 + $row['princ_amt_track'] ?? 0 + $row['int_amt_track'] ?? 0) + ($row['total_waiver'] ?? 0);
     }else{
         $response['collection'] = 0;
     }

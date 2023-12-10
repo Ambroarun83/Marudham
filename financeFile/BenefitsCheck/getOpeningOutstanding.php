@@ -90,10 +90,10 @@ function getDetials($con,$condition, $where){
             $row = $qry->fetch_assoc();
             $total_outstanding += intVal($row['tot_amt_cal'] ?? 0);
 
-            $qry = $con->query("SELECT sum(due_amt_track) as due_amt_track from collection where req_id = '".$row1['req_id']."' and $where ");
+            $qry = $con->query("SELECT sum(due_amt_track) as due_amt_track,sum(princ_amt_track) as princ_amt_track from collection where req_id = '".$row1['req_id']."' and $where ");
             //getting collected amount till mentioned date
             $row = $qry->fetch_assoc();
-            $collected_outstanding += intVal($row['due_amt_track'] ?? 0);
+            $collected_outstanding += intVal($row['due_amt_track'] ?? 0) + intVal($row['princ_amt_track'] ?? 0);
         }
     }
 
