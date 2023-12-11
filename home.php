@@ -441,6 +441,12 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'balance_report') { ?>
 			<?php include "include/templates/balance_report.php" ?>
 			<?php }else ?>
+			
+			
+			<!-- Search Module -->
+			<?php if($current_page == 'search_module') { ?>
+			<?php include "include/templates/search_module.php" ?>
+			<?php }else ?>
 
 			<!-- 404 Not found page -->
 			<?php { ?>

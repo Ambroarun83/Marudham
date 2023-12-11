@@ -91,6 +91,9 @@ require 'PHPMailerAutoload.php';
 				$detailrecords['due_list_report'] = strip_tags($row->due_list_report);
 				$detailrecords['closed_report'] = strip_tags($row->closed_report);
 				
+				$detailrecords['search_module'] = strip_tags($row->search_module);
+				$detailrecords['search'] = strip_tags($row->search);
+
                 $detailrecords['status']                     = strip_tags($row->status);
             }
             return $detailrecords;
