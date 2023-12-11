@@ -80,7 +80,12 @@ else if($current_page == 'edit_concern_creation' || $current_page == 'edit_conce
 
 		$current_module = 'report';
 
-}else{
+}else if($current_page == 'search_module'){
+
+	$current_module = 'search_module';
+
+}
+else{
 	$current_module = '';
 }
 ?>
@@ -178,6 +183,8 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$search_module = '';
+$search = '';
 
 $getUser = $userObj->getUser($mysqli,$userid); 
 if (sizeof($getUser)>0) {
@@ -255,6 +262,9 @@ if (sizeof($getUser)>0) {
 		$balance_report          		     = $getUser['balance_report'];
 		$due_list_report          		     = $getUser['due_list_report'];
 		$closed_report          		     = $getUser['closed_report'];
+		
+		$search_module          		     = $getUser['search_module'];
+		$search          		     = $getUser['search'];
 	}
 }
 ?>
@@ -785,6 +795,23 @@ if (sizeof($getUser)>0) {
                         </div>
                     </li>
                 <?php  } ?>
+				<?php if($search_module == 0){?>
+                    <li class="sidebar-dropdown">
+                        <a href="javascript:void(0)">
+							<i class='icon-search'></i>
+                            <span class="menu-text">Search</span>
+                        </a>
+                        <div class="sidebar-submenu" <?php if($current_module=='search_module') echo 'style="display:block" '; ?>>
+                            <ul>
+                                <?php  if($search == 0){ ?>
+                                    <li>
+                                        <a href="search_module"><i class='icon-search'></i>Search</a>
+                                    </li>
+                                <?php  } ?>
+                            </ul>
+                        </div>
+                    </li>
+                <?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->
@@ -869,4 +896,6 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$search_module = '';
+$search = '';
 ?>
