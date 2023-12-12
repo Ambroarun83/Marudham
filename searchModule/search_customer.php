@@ -41,44 +41,33 @@ $statusLabels = [
 //             WHEN '$mobile' != '' THEN cr.mobile1 LIKE '%$mobile%' or cr.mobile2 LIKE '%$mobile%'
 //             END";
 if ($cus_id != '') {
-
     $sql = "SELECT cus_id from customer_register WHERE cus_id LIKE '%$cus_id%' ";
 } else if ($cus_name != '') {
-    $sql = "SELECT cus_id from customer_register WHERE cus_name LIKE '%$cus_name%' ";
+    $sql = "SELECT cus_id from customer_register WHERE customer_name LIKE '%$cus_name%' ";
 } else if ($mobile != '') {
     $sql = "SELECT cus_id from customer_register WHERE mobile1 LIKE '%$mobile%' or mobile2 LIKE '%$mobile%' ";
 } else if ($area != '') {
-    $sql = "SELECT cr.cus_id from area_list_creation ac JOIN customer_register cr ON ac.area_id = cr.area WHERE ac.area_name LIKE '%$area%' ";
+    $sql = "SELECT cr.cus_id from area_list_creation ac JOIN customer_register cr ON ac.area_id = cr.area WHERE ac.area_name LIKE '%$area%' GROUP BY cr.cus_id ";
 } else if ($sub_area != '') {
-    $sql = "SELECT cr.cus_id from sub_area_list_creation sac JOIN customer_register cr ON sac.sub_area_id = cr.sub_area WHERE sac.sub_area_name LIKE '%$sub_area%' ";
+    $sql = "SELECT cr.cus_id from sub_area_list_creation sac JOIN customer_register cr ON sac.sub_area_id = cr.sub_area WHERE sac.sub_area_name LIKE '%$sub_area%' GROUP BY cr.cus_id ";
 }
 
+// echo $sql;
 $runSql = $con->query($sql);
 if ($runSql->num_rows > 0) {
-    $cus_id_fetched = $runSql->fetch_assoc()['cus_id'];
+    while ($row = $runSql->fetch_assoc())
+        $cus_id_fetched[] = $row['cus_id'];
 } else {
-    $cus_id_fetched = '';
+    $cus_id_fetched = [];
 }
 
-if ($cus_id_fetched != '') {
-
-    $sql = "SELECT req_id,cus_status From request_creation where cus_id = $cus_id_fetched";
-    $runSql = $con->query($sql);
-    // while($row = $runSql->fetch_assoc()){
-    //     $cus_status = $row['cus_status'];
-    //     $req_id = $row['req_id'];
-    //     if($cus_status == '0' || $cus_status == '1'){
-    //         $sql = "SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
-    //             From request_creation req 
-    //             LEFT JOIN area_list_creation ac ON req.area = ac.area_id 
-    //             LEFT JOIN sub_area_list_creation sac ON req.sub_area = sac.sub_area_id 
-    //             LEFT JOIN area_line_mapping alm ON FIND_IN_SET(sac.sub_area_id,alm.sub_area_id)
-    //             LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sac.sub_area_id,agm.sub_area_id)
-    //             LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id 
-    //             where req_id = $req_id ";
-    //     }
-    // }
-
+if (!empty($cus_id_fetched)) {
+    foreach ($cus_id_fetched as $cus_id) {
+        $sql = $con->query("SELECT req_id,cus_id,cus_status From request_creation where cus_id = $cus_id GROUP BY cus_id ORDER BY req_id DESC ");
+        $row = $sql->fetch_assoc();
+        $req_id[] = $row['req_id'];
+        $cus_status[] = $row['cus_status'];
+    }
 }
 ?>
 
@@ -100,36 +89,47 @@ if ($cus_id_fetched != '') {
     </thead>
     <tbody>
         <?php
-        $i = 0;
-        while ($row = $runSql->fetch_assoc()) {
-            $cus_status = $row['cus_status'];
-            $req_id = $row['req_id'];
-            if ($cus_status == '0' || $cus_status == '1') {
-                $sql1 = "SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
-                    From request_creation req 
-                    LEFT JOIN area_list_creation ac ON req.area = ac.area_id 
-                    LEFT JOIN sub_area_list_creation sac ON req.sub_area = sac.sub_area_id 
+        $i = 1;
+        $x = 0;
+        if (!empty($req_id)) {
+            foreach ($req_id as $req) {
+                if ($cus_status[$x] == '0' || $cus_status[$x] == '1') {
+                    $req_sql = $con->query("SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
+                        From request_creation req 
+                        LEFT JOIN area_list_creation ac ON req.area = ac.area_id 
+                        LEFT JOIN sub_area_list_creation sac ON req.sub_area = sac.sub_area_id 
+                        LEFT JOIN area_line_mapping alm ON FIND_IN_SET(sac.sub_area_id,alm.sub_area_id)
+                        LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sac.sub_area_id,agm.sub_area_id)
+                        LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id 
+                        where req.req_id = $req ");
+                } else {
+                    $req_sql = $con->query("SELECT cp.cus_id,cp.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,cp.mobile1,cp.mobile2 
+                    FROM customer_profile cp
+                    LEFT JOIN area_list_creation ac ON cp.area_confirm_area = ac.area_id 
+                    LEFT JOIN sub_area_list_creation sac ON cp.area_confirm_subarea = sac.sub_area_id 
                     LEFT JOIN area_line_mapping alm ON FIND_IN_SET(sac.sub_area_id,alm.sub_area_id)
                     LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sac.sub_area_id,agm.sub_area_id)
                     LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id 
-                    where req_id = $req_id ";
-            }
-            while ($req_row = $con->query($sql1)->fetch_assoc()) {
+                    WHERE cp.req_id = $req  ");
+                }
+                $x++;
+                while ($req_row = $req_sql->fetch_assoc()) {
         ?>
-                <tr>
-                    <td><?php echo $i++; ?></td>
-                    <td><?php echo $req_row['cus_id']; ?></td>
-                    <td><?php echo $req_row['cus_name']; ?></td>
-                    <td><?php echo $req_row['area_name']; ?></td>
-                    <td><?php echo $req_row['sub_area_name']; ?></td>
-                    <td><?php echo $req_row['branch_name']; ?></td>
-                    <td><?php echo $req_row['line_name']; ?></td>
-                    <td><?php echo $req_row['group_name']; ?></td>
-                    <td><?php echo $req_row['mobile1']; ?></td>
-                    <td><?php echo $req_row['mobile2']; ?></td>
-                    <td><input type="button" class="view_cust btn btn-primary" value="View" data-toggle="modal" data-target="#customerDetailModal" data-reqId="<?php echo $req_id; ?>"></td>
-                </tr>
+                    <tr>
+                        <td><?php echo $i++; ?></td>
+                        <td><?php echo $req_row['cus_id']; ?></td>
+                        <td><?php echo $req_row['cus_name']; ?></td>
+                        <td><?php echo $req_row['area_name']; ?></td>
+                        <td><?php echo $req_row['sub_area_name']; ?></td>
+                        <td><?php echo $req_row['branch_name']; ?></td>
+                        <td><?php echo $req_row['line_name']; ?></td>
+                        <td><?php echo $req_row['group_name']; ?></td>
+                        <td><?php echo $req_row['mobile1']; ?></td>
+                        <td><?php echo $req_row['mobile2']; ?></td>
+                        <td><input type="button" class="view_cust btn btn-primary" value="View" data-toggle="modal" data-target="#customerDetailModal" data-cusid="<?php echo $req_row['cus_id']; ?>"></td>
+                    </tr>
         <?php
+                }
             }
         }
         ?>

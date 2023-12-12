@@ -31,7 +31,7 @@
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="cus_id">Customer ID</label>
-											<input type="text" class="form-control" id="cus_id" name="cus_id" placeholder="Enter Customer ID">
+											<input type="text" class="form-control" id="cus_id" name="cus_id" placeholder="Enter Customer ID" maxlength="14">
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -70,7 +70,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="card">
+				<div class="card " id="customer_list_card" style="display: none;">
 					<div class="card-header">Customer List</div>
 					<div class="card-body">
 						<div id="customer_list" style="overflow-x:auto">
