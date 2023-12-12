@@ -93,7 +93,7 @@ function moneyFormatIndia($num) {
                 <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td>
                 <td><?php if($row["collection_method"] == '1'){ echo 'By Self';}else if($row["collection_method"] == '2'){ echo 'Spot Collection';}else if($row["collection_method"] == '3'){ echo 'Cheque Collection';}else if($row["collection_method"] == '4'){ echo 'ECS';} ?></td>
                 <td><?php echo 'Present'; ?></td>
-                    <td><?php if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate)) ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+                    <td><?php if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0 ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
                                 if($row['cus_status'] == '15'){
                                     echo 'Error';
                                 }elseif($row['cus_status']== '16'){
