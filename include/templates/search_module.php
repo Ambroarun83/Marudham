@@ -101,18 +101,18 @@
 </div>
 
 
-<!-- Modal for Customer Detail   -->
-<div class="modal fade" id="customerDetailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal for Customer Status   -->
+<div class="modal fade" id="customerStatusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-lg " role="document">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Customer Detail</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Customer Status</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="container-fluid row" id='customerDetailDiv'>
+				<div class="container-fluid" id='customerStatusDiv'>
 					<table class="table table-bordered">
 						<thead>
 							<tr>

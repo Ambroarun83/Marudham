@@ -30,16 +30,6 @@ $statusLabels = [
     '21' => 'NOC',
 ];
 
-// $sql = "SELECT cus_id from customer_register cr
-//         JOIN area_list_creation ac ON 1
-//         JOIN sub_area_list_creation sac ON 1
-//         WHERE CASE 
-//             WHEN '$cus_id' != '' THEN cr.cus_id LIKE '%$cus_id%'
-//             WHEN '$cus_name' != '' THEN cr.customer_name LIKE '%$cus_name%'
-//             WHEN '$area' != '' THEN ac.area_name LIKE '%$area%'
-//             WHEN '$sub_area' != '' THEN sac.sub_area_name LIKE '%$sub_area%'
-//             WHEN '$mobile' != '' THEN cr.mobile1 LIKE '%$mobile%' or cr.mobile2 LIKE '%$mobile%'
-//             END";
 if ($cus_id != '') {
     $sql = "SELECT cus_id from customer_register WHERE cus_id LIKE '%$cus_id%' ";
 } else if ($cus_name != '') {
@@ -47,9 +37,21 @@ if ($cus_id != '') {
 } else if ($mobile != '') {
     $sql = "SELECT cus_id from customer_register WHERE mobile1 LIKE '%$mobile%' or mobile2 LIKE '%$mobile%' ";
 } else if ($area != '') {
-    $sql = "SELECT cr.cus_id from area_list_creation ac JOIN customer_register cr ON ac.area_id = cr.area WHERE ac.area_name LIKE '%$area%' GROUP BY cr.cus_id ";
+    $sql = "SELECT cr.cus_id from area_list_creation ac 
+        JOIN customer_register cr ON 
+        CASE 
+        WHEN (cr.area_confirm_area IS NOT NULL OR cr.area_confirm_area != '') THEN ac.area_id = cr.area_confirm_area 
+        ELSE ac.area_id = cr.area 
+        END
+        WHERE ac.area_name LIKE '%$area%' GROUP BY cr.cus_id ";
 } else if ($sub_area != '') {
-    $sql = "SELECT cr.cus_id from sub_area_list_creation sac JOIN customer_register cr ON sac.sub_area_id = cr.sub_area WHERE sac.sub_area_name LIKE '%$sub_area%' GROUP BY cr.cus_id ";
+    $sql = "SELECT cr.cus_id from sub_area_list_creation sac 
+        JOIN customer_register cr ON 
+        CASE 
+        WHEN (cr.area_confirm_subarea IS NOT NULL OR cr.area_confirm_subarea != '') THEN sac.sub_area_id = cr.area_confirm_subarea 
+        ELSE sac.sub_area_id = cr.sub_area
+        END
+        WHERE sac.sub_area_name LIKE '%$sub_area%' GROUP BY cr.cus_id ";
 }
 
 // echo $sql;
@@ -126,7 +128,7 @@ if (!empty($cus_id_fetched)) {
                         <td><?php echo $req_row['group_name']; ?></td>
                         <td><?php echo $req_row['mobile1']; ?></td>
                         <td><?php echo $req_row['mobile2']; ?></td>
-                        <td><input type="button" class="view_cust btn btn-primary" value="View" data-toggle="modal" data-target="#customerDetailModal" data-cusid="<?php echo $req_row['cus_id']; ?>"></td>
+                        <td><input type="button" class="view_cust btn btn-primary" value="View" data-toggle="modal" data-target="#customerStatusModal" data-cusid="<?php echo $req_row['cus_id']; ?>"></td>
                     </tr>
         <?php
                 }
@@ -135,3 +137,65 @@ if (!empty($cus_id_fetched)) {
         ?>
     </tbody>
 </table>
+<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+<input type="hidden" name="od_sts" id="od_sts" value="" />
+<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+<input type="hidden" name="closed_sts" id="closed_sts" value="" />
+<script>
+    // $(document).ready(function() {
+    //     $('.view_cust').off().click(function() {
+    //         $('#customerStatusDiv').empty();
+    //         let cus_id = $(this).data('cusid');
+    //         callresetCustomerStatus(cus_id); //this function will give the customer's status like pending od current
+    //         showOverlay(); //loader start
+    //         setTimeout(() => {
+    //             var pending_sts = $('#pending_sts').val();
+    //             var od_sts = $('#od_sts').val();
+    //             var due_nil_sts = $('#due_nil_sts').val();
+    //             var closed_sts = $('#closed_sts').val()
+    //             $.post("searchModule/getCustomerStatus.php", {cus_id,pending_sts,od_sts,due_nil_sts,closed_sts}, function(response) {
+    //                 $('#customerStatusDiv').html(response);
+    //             });
+    //             hideOverlay();
+    //         }, 1000);
+    //     });
+    // })
+
+    // function callresetCustomerStatus(cus_id) {
+    //     //To get loan sub Status
+    //     var pending_arr = [];
+    //     var od_arr = [];
+    //     var due_nil_arr = [];
+    //     var closed_arr = [];
+    //     var balAmnt = [];
+    //     $.ajax({
+    //         url: 'collectionFile/resetCustomerStatus.php',
+    //         data: {
+    //             'cus_id': cus_id
+    //         },
+    //         dataType: 'json',
+    //         type: 'post',
+    //         cache: false,
+    //         success: function(response) {
+    //             if (response.length != 0) {
+
+    //                 for (var i = 0; i < response['pending_customer'].length; i++) {
+    //                     pending_arr[i] = response['pending_customer'][i]
+    //                     od_arr[i] = response['od_customer'][i]
+    //                     due_nil_arr[i] = response['due_nil_customer'][i]
+    //                     closed_arr[i] = response['closed_customer'][i]
+    //                     balAmnt[i] = response['balAmnt'][i]
+    //                 }
+    //                 var pending_sts = pending_arr.join(',');
+    //                 $('#pending_sts').val(pending_sts);
+    //                 var od_sts = od_arr.join(',');
+    //                 $('#od_sts').val(od_sts);
+    //                 var due_nil_sts = due_nil_arr.join(',');
+    //                 $('#due_nil_sts').val(due_nil_sts);
+    //                 var closed_sts = closed_arr.join(',');
+    //                 $('#closed_sts').val(closed_sts);
+    //             };
+    //         }
+    //     });
+    // }
+</script>

@@ -1,0 +1,328 @@
+<?php
+session_start();
+$user_id = $_SESSION["userid"];
+include('../ajaxconfig.php');
+
+
+if (isset($_POST['cus_id'])) {
+    $cus_id = $_POST['cus_id'];
+}
+
+$records = array();
+
+$result = $con->query("SELECT req.req_id,req.prompt_remark,req.cus_status,
+    CASE WHEN req.cus_status >= 14 THEN ii.updated_date ELSE req.dor END AS `updated_date`,
+    CASE WHEN req.cus_status >= 14 THEN ii.loan_id ELSE req.req_code END AS `code`,
+    CASE WHEN req.cus_status IN (12,2,6,7) THEN vlc.loan_category WHEN req.cus_status IN (3,13,14,15,16,17,20,21) THEN alc.loan_category ELSE req.loan_category END AS loan_category,
+    CASE WHEN req.cus_status IN (12,2,6,7) THEN vlc.sub_category WHEN req.cus_status IN (3,13,14,15,16,17,20,21) THEN alc.sub_category ELSE req.sub_category END AS sub_category,
+    CASE WHEN req.cus_status IN (12,2,6,7) THEN vlc.loan_amt WHEN req.cus_status IN (3,13,14,15,16,17,20,21) THEN alc.loan_amt ELSE req.loan_amt END AS loan_amt
+    FROM request_creation req
+    LEFT JOIN customer_profile cp ON req.req_id = cp.req_id
+    LEFT JOIN verification_loan_calculation vlc ON req.req_id = vlc.req_id
+    LEFT JOIN acknowlegement_loan_calculation alc ON req.req_id = alc.req_id
+    LEFT JOIN in_issue ii ON req.req_id = ii.req_id
+    where req.cus_id = $cus_id and (req.cus_status <= 21) ORDER BY req.created_date DESC");
+
+if ($result->num_rows > 0) {
+    $i = 0;
+    while ($row = $result->fetch_assoc()) {
+
+        $records[$i]['updated_date'] = date('d-m-Y', strtotime($row['updated_date']));
+        $records[$i]['code'] = $row['code'];
+
+        $loan_category = $row['loan_category'] ?? '';
+        $req_id = $row['req_id'];
+        $qry = $con->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
+        $row1 = $qry->fetch_assoc();
+        $records[$i]['loan_category'] = $row1['loan_category_creation_name'];
+
+        $records[$i]['sub_category'] = $row['sub_category'];
+        $records[$i]['loan_amt'] = $row['loan_amt'];
+        $records[$i]['remark'] = $row['prompt_remark'] ?? '';
+        $cus_status = $row['cus_status'];
+        $statusMapping = [
+            '0' => ['status' => 'Request', 'sub_status' => 'Requested'],
+            '1' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
+            '2' => ['status' => 'Approval', 'sub_status' => 'In Approval'],
+            '3' => ['status' => 'Acknowledgement', 'sub_status' => 'In Acknowledgement'],
+            '4' => ['status' => 'Request', 'sub_status' => 'Cancelled'],
+            '5' => ['status' => 'Verification', 'sub_status' => 'Cancelled'],
+            '6' => ['status' => 'Approval', 'sub_status' => 'Cancelled'],
+            '7' => ['status' => 'Issue', 'sub_status' => 'Issued'],
+            '8' => ['status' => 'Request', 'sub_status' => 'Revoked'],
+            '9' => ['status' => 'Verification', 'sub_status' => 'Revoked'],
+            '13' => ['status' => 'Loan Issue', 'sub_status' => 'In Issue'],
+            '14' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
+            '15' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
+            '16' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
+            '17' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
+            '20' => ['status' => 'Closed', 'sub_status' => 'In Closed'],
+            '21' => ['status' => 'Closed', 'sub_status' => 'In Closed']
+        ];
+
+        if ($cus_status != '10' && $cus_status != '11') {
+            if (array_key_exists($cus_status, $statusMapping)) {
+                $records[$i]['status'] = $statusMapping[$cus_status]['status'];
+                $records[$i]['sub_status'] = $statusMapping[$cus_status]['sub_status'];
+
+                if ($cus_status == '21') {
+                    $Qry = $con->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
+                    $closed_status = ['', 'Consider', 'Waiting List', 'Block List'];
+                    $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts']];
+                }
+            }
+        }
+
+        //for document status
+        if ($cus_status >= 14 && $cus_status < 21) {
+            $records[$i]['doc_status'] = getDocumentStatus($con,$req_id)=='pending'?'Document Pending':'Document Completed';
+        }elseif($cus_status >= 21){
+            $records[$i]['doc_status'] = getNOCDocDetails($con,$req_id,$cus_id)=='pending'?'NOC Pending':'NOC Completed';
+        }else{
+            $records[$i]['doc_status'] = '';
+        }
+
+        //for info 
+
+        $i++;
+    }
+}
+
+?>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th rowspan="2">S.No</th>
+            <th rowspan="2">Date</th>
+            <th rowspan="2">Req ID/Loan ID</th>
+            <th rowspan="2">Loan Category</th>
+            <th rowspan="2">Sub Category</th>
+            <th rowspan="2">Loan Amount</th>
+            <th colspan="2">Loan Status</th>
+            <th colspan="4">Document Status</th>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <th>Sub Status</th>
+            <th>Status</th>
+            <th>Info</th>
+            <th>Chart</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php for ($i = 0; $i < sizeof($records); $i++) { ?>
+            <tr>
+                <td><?php echo $i + 1; ?></td>
+                <td><?php echo $records[$i]['updated_date']; ?></td>
+                <td><?php echo $records[$i]['code']; ?></td>
+                <td><?php echo $records[$i]['loan_category']; ?></td>
+                <td><?php echo $records[$i]['sub_category']; ?></td>
+                <td><?php echo $records[$i]['loan_amt']; ?></td>
+                <td><?php echo $records[$i]['status']; ?></td>
+                <td><?php echo $records[$i]['sub_status']; ?></td>
+                <td><?php echo $records[$i]['doc_status']; ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        <?php } ?>
+    </tbody>
+</table>
+<input type="hidden" name="docSts" id="docSts">
+<?php
+function getCollectionStatus($con, $cus_id, $user_id)
+{
+
+    $pending_sts = isset($_POST["pending_sts"]) ? explode(',', $_POST["pending_sts"]) : null;
+    $od_sts = isset($_POST["od_sts"]) ? explode(',', $_POST["od_sts"]) : null;
+    $due_nil_sts = isset($_POST["due_nil_sts"]) ? explode(',', $_POST["due_nil_sts"]) : null;
+    $closed_sts = isset($_POST["closed_sts"]) ? explode(',', $_POST["closed_sts"]) : null;
+
+    $retVal = '';
+
+    $run = $con->query("SELECT lc.due_start_from,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
+        rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
+        from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
+        JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
+        WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status < 20)"); //Customer status greater than or equal to 14 because, after issued data only we need
+
+    $curdate = date('Y-m-d');
+    while ($row = $run->fetch_assoc()) {
+        $i = 1;
+        if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate))) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+            if ($row['cus_status'] == '15') {
+                $retVal = 'Error';
+            } elseif ($row['cus_status'] == '16') {
+                $retVal = 'Legal';
+            } else {
+                $retVal = 'Current';
+            }
+        } else {
+            if ($pending_sts[$i - 1] == 'true' && $od_sts[$i - 1] == 'false') {
+                if ($row['cus_status'] == '15') {
+                    $retVal = 'Error';
+                } elseif ($row['cus_status'] == '16') {
+                    $retVal = 'Legal';
+                } else {
+                    $retVal = 'Pending';
+                }
+            } else if ($od_sts[$i - 1] == 'true' && $due_nil_sts[$i - 1] == 'false') {
+                if ($row['cus_status'] == '15') {
+                    $retVal = 'Error';
+                } elseif ($row['cus_status'] == '16') {
+                    $retVal = 'Legal';
+                } else {
+                    $retVal = 'OD';
+                }
+            } elseif ($due_nil_sts[$i - 1] == 'true') {
+                if ($row['cus_status'] == '15') {
+                    $retVal = 'Error';
+                } elseif ($row['cus_status'] == '16') {
+                    $retVal = 'Legal';
+                } else {
+                    $retVal = 'Due Nil';
+                }
+            } elseif ($pending_sts[$i - 1] == 'false') {
+                if ($row['cus_status'] == '15') {
+                    $retVal = 'Error';
+                } elseif ($row['cus_status'] == '16') {
+                    $retVal = 'Legal';
+                } else {
+                    if ($closed_sts[$i - 1] == 'true') {
+                        $retVal = "Move To Close";
+                    } else {
+                        $retVal = 'Current';
+                    }
+                }
+            }
+        }
+        $i++;
+    }
+    return $retVal;
+}
+
+function getDocumentStatus($con,$req_id) {
+
+    $response1 = 'completed';
+
+    $sts_qry = $con -> query("SELECT id, doc_Count FROM signed_doc_info WHERE req_id = '$req_id'");
+    if ($sts_qry -> num_rows > 0) {
+        while ($sts_row = $sts_qry -> fetch_assoc()) {
+            $sts_qry1 = $con -> query("SELECT * FROM signed_doc WHERE req_id = '$req_id' AND signed_doc_id = '".$sts_row['id'].
+                "'");
+            if ($sts_qry1 -> num_rows == $sts_row['doc_Count'] && $response1 != 'pending') {
+                $response1 = 'completed';
+            } else {
+                $response1 = 'pending';
+            }
+        }
+    }
+
+    $response2 = 'completed';
+    $sts_qry = $con -> query("SELECT id, cheque_count FROM cheque_info WHERE req_id = '$req_id'");
+    if ($sts_qry -> num_rows > 0) {
+        while ($sts_row = $sts_qry -> fetch_assoc()) {
+            $sts_qry1 = $con -> query("SELECT * FROM cheque_upd WHERE req_id = '$req_id' AND cheque_table_id = '".$sts_row['id'].
+                "'");
+            if ($sts_qry1 -> num_rows == $sts_row['cheque_count'] && $response2 != 'pending') {
+                $response2 = 'completed';
+            } else {
+                $response2 = 'pending';
+            }
+        }
+    }
+
+    $response3 = 'completed';
+    $sts_qry = $con -> query("SELECT mortgage_process, mortgage_document_pending, endorsement_process, Rc_document_pending FROM acknowlegement_documentation WHERE req_id = '$req_id'");
+    if ($sts_qry -> num_rows > 0) {
+        while ($sts_row = $sts_qry -> fetch_assoc()) {
+            if ($sts_row['mortgage_process'] == '0') {
+                if ($sts_row['mortgage_document_pending'] == 'YES') {
+                    $response3 = 'pending';
+                }
+            }
+            if ($sts_row['endorsement_process'] == '0') {
+                if ($sts_row['Rc_document_pending'] == 'YES') {
+                    $response3 = 'pending';
+                }
+            }
+        }
+    }
+
+    $response4 = 'completed';
+    $sts_qry = $con -> query("SELECT * FROM document_info WHERE req_id = '$req_id'");
+    if ($sts_qry -> num_rows > 0) {
+        while ($sts_row = $sts_qry -> fetch_assoc()) {
+            if ($sts_row['doc_upload'] == '' || $sts_row['doc_upload'] == null) {
+                $response4 = 'pending';
+            }
+        }
+    }
+
+    if ($response1 == 'completed' && $response2 == 'completed' && $response3 == 'completed' && $response4 == 'completed') {
+        $response = 'true';
+    } else {
+        $response = 'false';
+    }
+
+    return $response;
+}
+
+function getNOCDocDetails($con,$req_id,$cus_id){
+
+    $response = 'completed';
+
+    $qry = $con->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then signed doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM cheque_no_list where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then Cheque doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' and (mortgage_process_noc = 0 or mortgage_document_noc = 0 or endorsement_process_noc = 0 or en_RC_noc = 0 or en_Key_noc = 0 ) ");
+    if($qry->num_rows > 0){ // if condition true, then acknowlegement documentation any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM gold_info where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then Gold doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    $qry = $con->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' and doc_info_upload_noc = 0 ");
+    if($qry->num_rows > 0){ // if condition true, then Document doc any one is given other may be pending to give
+        $response = 'pending';
+    }
+
+    return $response;
+}
+?>
+
+
+<script>//datatable initialization
+    var table = $('#custStatusTable').DataTable();
+    table.destroy();
+    $('#custStatusTable').DataTable({
+        'processing': true,
+        'iDisplayLength': 5,
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
+    });
+
+    
+</script>
