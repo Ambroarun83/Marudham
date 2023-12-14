@@ -52,6 +52,7 @@ function moneyFormatIndia($num)
         $charge = 0;
         $paid = 0;
         $waiver = 0;
+        $bal_amnt = 0;
         while ($row = $run->fetch()) {
             $collCharges = ($row['coll_charge']) ? $row['coll_charge'] : '0';
             $charge = $charge + $collCharges; 

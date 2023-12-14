@@ -269,10 +269,11 @@ function moneyFormatIndia($num)
         }
 
         //For showing data before due start date
+        $due_amt_track = 0;
+        $waiver = 0;
+        $last_bal_amt=0;
+        $bal_amt = 0;
         if ($run->rowCount() > 0) {
-            $due_amt_track = 0;
-            $waiver = 0;
-            $last_bal_amt=0;
             while ($row = $run->fetch()) {
                 $role = $row['role'];
                 $collectionAmnt = intVal($row['due_amt_track']);
