@@ -19,11 +19,27 @@ $(document).ready(function () {
                     $('#customer_list').empty().html(data);
                 }
             }).then(function () {
-                viewCusOnClick();
+                // viewCusOnClick();
             })
         } else {
             $('#customer_list_card').hide();
         }
+    })
+
+    $('#searchbox').keyup(function(){
+        // Retrieve the input field text and reset the count to zero
+        var filter = $(this).val(), count = 0;
+        // Loop through the comment list
+        $("#custListTable tbody tr").each(function(){
+            // If the list item does not contain the text phrase fade it out
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).fadeOut();
+            // Show the list item if the phrase matches and increase the count by 1
+            } else {
+                $(this).show();
+                count++;
+            }
+        })
     })
 })
 
@@ -42,7 +58,7 @@ function validate() {
 }
 
 function viewCusOnClick() {
-    $('.view_cust').off().click(function () {
+    $('.view_cust').off('click').click(function () {
         $('#customerStatusDiv').empty();
         let cus_id = $(this).data('cusid');
         callresetCustomerStatus(cus_id); //this function will give the customer's status like pending od current
@@ -59,6 +75,7 @@ function viewCusOnClick() {
         }, 1000);
     });
 }
+
 function callresetCustomerStatus(cus_id) {
     //To get loan sub Status
     var pending_arr = [];
@@ -93,6 +110,280 @@ function callresetCustomerStatus(cus_id) {
                 var closed_sts = closed_arr.join(',');
                 $('#closed_sts').val(closed_sts);
             };
+        }
+    });
+}
+
+function customerStatusOnClickEvents(){
+    $('.dropdown').off('click').click(function(event) {
+        event.preventDefault();
+        $('.dropdown').not(this).removeClass('active');
+        $(this).toggleClass('active');
+    });
+
+    $(document).off('click').click(function(event) {
+        var target = $(event.target);
+        if (!target.closest('.dropdown').length) {
+            $('.dropdown').removeClass('active');
+        }
+    });
+
+    $('.personal-info').off('click').click(function() {
+        let cus_id = $(this).data('cusid');
+        $.post('followupFiles/promotion/getPersonalInfo.php', {
+            cus_id
+        }, function(html) {
+            $('#personalInfoDiv').empty().html(html);
+        })
+    })
+    $('.cust-profile').off('click').click(function() {
+        let req_id = $(this).data('reqid');
+        // window.location.href = 'due_followup_info&upd='+req_id+'&pgeView=1';
+        window.open('due_followup_info&upd=' + req_id + '&pgeView=1', '_blank');
+    })
+    //Documentaion
+    $('.documentation').off('click').click(function() {
+        let req_id = $(this).data('reqid');
+        // window.location.href = 'due_followup_info&upd='+req_id+'&pgeView=2';
+        window.open('due_followup_info&upd=' + req_id + '&pgeView=2', '_blank');
+    })
+    //Loan Calculation
+    $('.loan-calc').off('click').click(function() {
+        let req_id = $(this).data('reqid');
+        window.open('due_followup_info&upd=' + req_id + '&pgeView=3', '_blank');
+    })
+
+    $('.due-chart').off('click').click(function() {
+        let req_id = $(this).attr('value');
+        let cus_id = $(this).data('cusid');
+        dueChartList(req_id, cus_id); // To show Due Chart List.
+        setTimeout(() => {
+            $('.print_due_coll').off('click').click(function() {
+                var id = $(this).attr('value');
+                Swal.fire({
+                    title: 'Print',
+                    text: 'Do you want to print this collection?',
+                    imageUrl: 'img/printer.png',
+                    imageWidth: 300,
+                    imageHeight: 210,
+                    imageAlt: 'Custom image',
+                    showCancelButton: true,
+                    confirmButtonColor: '#009688',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'No',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: 'collectionFile/print_collection.php',
+                            data: {
+                                'coll_id': id
+                            },
+                            type: 'post',
+                            cache: false,
+                            success: function(html) {
+                                $('#printcollection').html(html)
+                            }
+                        })
+                    }
+                })
+            })
+        }, 1000)
+    })
+    $('.penalty-chart').off('click').click(function() {
+        let req_id = $(this).attr('value');
+        let cus_id = $(this).data('cusid');
+        $.ajax({
+            //to insert penalty by on click
+            url: 'collectionFile/getLoanDetails.php',
+            data: {req_id,cus_id},
+            dataType: 'json',
+            type: 'post',
+            cache: false,
+            success: function(response) {
+                penaltyChartList(req_id, cus_id); //To show Penalty List.
+            }
+        })
+    })
+
+    $('.coll-charge-chart').off('click').click(function() {
+        var req_id = $(this).attr('value');
+        collectionChargeChartList(req_id) //To Show Fine Chart List
+    })
+    //Commitment chart
+    $('.commitment-chart').off('click').click(function() {
+        let req_id = $(this).data('reqid');
+        let cus_id = $(this).data('cusid');
+        $.post('followupFiles/dueFollowup/getCommitmentChart.php', {cus_id,req_id}, function(html) {
+            $('#commChartDiv').empty().html(html);
+        })
+    })
+
+    $('.noc-summary').off('click').click(function(){
+        let req_id = $(this).data('reqid');
+        let cus_id = $(this).data('cusid');
+        var cus_name = $(this).data('cusname');
+
+        $.ajax({
+            url: 'verificationFile/documentation/getNOCSummary.php',
+            data: {'req_id':req_id,'cus_id':cus_id},
+            type: 'post',
+            cache: false,
+            success: function(html){
+                $('#nocsummaryModal').empty();
+                $('#nocsummaryModal').html(html);
+            }
+        }).then(function(){
+            
+            // To get the Signed Document List on Checklist
+            $.ajax({
+                url:'nocFile/getSignedDocList.php',
+                data: {'req_id':req_id,'cus_name':cus_name},
+                type: 'post',
+                cache:false,
+                success: function(response){
+                    
+                    $('#signDocDiv').empty()
+                    $('#signDocDiv').html(response);
+                    
+                }
+            }).then(function(){remove4columns('signDocTable');})
+
+
+            // To get the unused Cheque List on Checklist
+            $.ajax({
+                url:'nocFile/getChequeDocList.php',
+                data: {'req_id':req_id,'cus_name':cus_name},
+                type: 'post',
+                cache:false,
+                success: function(response){
+                    
+                    $('#chequeDiv').empty()
+                    $('#chequeDiv').html(response);
+                }
+            }).then(function(){remove4columns('chequeTable');})
+
+            // To get the Mortgage List on Checklist
+            $.ajax({
+                url:'nocFile/getMortgageList.php',
+                data: {'req_id':req_id,'cus_name':cus_name},
+                type: 'post',
+                cache:false,
+                success: function(response){
+                    
+                    $('#mortgageDiv').empty()
+                    $('#mortgageDiv').html(response);
+                }
+            }).then(function(){remove4columns('mortgageTable');})
+
+            // To get the Endorsement List on Checklist
+            $.ajax({
+                url:'nocFile/getEndorsementList.php',
+                data: {'req_id':req_id,'cus_name':cus_name},
+                type: 'post',
+                cache:false,
+                success: function(response){
+                    
+                    $('#endorsementDiv').empty()
+                    $('#endorsementDiv').html(response);
+                }
+            }).then(function(){remove4columns('endorsementTable');})
+
+            // To get the Gold List on Checklist
+            $.ajax({
+                url:'nocFile/getGoldList.php',
+                data: {'req_id':req_id,'cus_name':cus_name},
+                type: 'post',
+                cache:false,
+                success: function(response){
+                    
+                    $('#goldDiv').empty()
+                    $('#goldDiv').html(response);
+                }
+            }).then(function(){remove4columns('goldTable');})
+
+            // To get the Document List on Checklist
+            $.ajax({
+                url:'nocFile/getDocumentList.php',
+                data: {'req_id':req_id,'cus_name':cus_name},
+                type: 'post',
+                cache:false,
+                success: function(response){
+                    
+                    $('#documentDiv').empty()
+                    $('#documentDiv').html(response);
+                }
+            }).then(function(){remove4columns('documentTable');})
+        })
+    })
+    function remove4columns(tablename){
+        $('input[type=checkbox]').attr('disabled',true)
+    }
+
+    $('.loansummary-chart').off('click').click(function(){
+        var req_id = $(this).data('reqid');var cus_id = $(this).data('cusid');
+        loanSummaryList(req_id,cus_id);
+    })
+}
+
+//Due Chart List
+function dueChartList(req_id,cus_id){
+    // var req_id = $('#idupd').val()
+    // const cus_id = $('#cusidupd').val()
+    $.ajax({
+        url: 'collectionFile/getDueChartList.php',
+        data: {'req_id':req_id,'cus_id':cus_id},
+        type:'post',
+        cache: false,
+        success: function(response){
+            $('#dueChartTableDiv').empty()
+            $('#dueChartTableDiv').html(response)
+        }
+    }).then(function(){
+
+        $.post('collectionFile/getDueMethodName.php',{req_id},function(response){
+            $('#dueChartTitle').text('Due Chart ( '+ response['due_method'] + ' - '+ response['loan_type'] +' )');
+        },'json');
+    })
+
+}
+//Penalty Chart List
+function penaltyChartList(req_id,cus_id){
+    $.ajax({
+        url: 'collectionFile/getPenaltyChartList.php',
+        data: {'req_id':req_id,'cus_id':cus_id},
+        type:'post',
+        cache: false,
+        success: function(response){
+            $('#penaltyChartTableDiv').empty()
+            $('#penaltyChartTableDiv').html(response)
+        }
+    });//Ajax End.
+}
+//Fine Chart
+function collectionChargeChartList(req_id){
+    $.ajax({
+        url: 'collectionFile/getCollectionChargeList.php',
+        data: {'req_id':req_id},
+        type:'post',
+        cache: false,
+        success: function(response){
+            $('#collectionChargeDiv').empty()
+            $('#collectionChargeDiv').html(response)
+        }
+    });//Ajax End.
+}
+
+//Loan Summary Chart List
+function loanSummaryList(req_id,cus_id) {
+    $.ajax({
+        url: 'closedFile/loan_summary_list.php',
+        type: 'POST',
+        data: { "reqId": req_id },
+        cache: false,
+        success: function (html) {
+            $("#loanSummaryDiv").empty();
+            $("#loanSummaryDiv").html(html);
         }
     });
 }
