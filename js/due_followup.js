@@ -366,8 +366,8 @@ function submitCommitment(){
     let req_id = $('#comm_req_id').val();let cus_id = $('#cusidupd').val();
     let ftype = $('#comm_ftype').val();let fstatus = $('#comm_fstatus').val();
     let person_type = $('#comm_person_type').val();let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();
-    let relationship = $('#comm_relationship').val();let remark = $('#comm_remark').val();let date = $('#comm_date').val();let hint = $('#comm_hint').val();
-    let args = {cus_id,req_id,ftype,fstatus,person_type,person_name,person_name1,relationship,remark,date,hint};
+    let relationship = $('#comm_relationship').val();let remark = $('#comm_remark').val();let date = $('#comm_date').val();let hint = $('#comm_hint').val();let err = $('#comm_err').val();
+    let args = {cus_id,req_id,ftype,fstatus,person_type,person_name,person_name1,relationship,remark,date,hint,err};
     
     $.post('followupFiles/dueFollowup/submitCommitment.php',args,function(response){
         if(response.includes('Error')){
@@ -383,7 +383,7 @@ function validateCommitment(){
     let response = true;
     let ftype = $('#comm_ftype').val(); let fstatus = $('#comm_fstatus').val(); let person_type = $('#comm_person_type').val();
     let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();let remark = $('#comm_remark').val();
-    let comm_date = $('#comm_date').val(); let hint = $('#comm_hint').val();
+    let comm_date = $('#comm_date').val(); let hint = $('#comm_hint').val();let err = $('#comm_err').val();
 
     validateField(ftype, '#comm_ftypeCheck');
     validateField(fstatus, '#comm_fstatusCheck');
@@ -399,6 +399,7 @@ function validateCommitment(){
     }
     validateField(remark, '#comm_remarkCheck');
     validateField(hint, '#comm_hintCheck');
+    validateField(err, '#comm_errCheck');
 
     function validateField(value, fieldId) {
         if (value === '' ) {

@@ -3202,7 +3202,13 @@ function updateUser($mysqli,$id,$user_id){
 			$pic = $_FILES['pic']['name'];
 			$pic_temp = $_FILES['pic']['tmp_name'];
 			$picfolder="uploads/request/customer/".$pic ;
-			move_uploaded_file($pic_temp, $picfolder);
+			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
+			$pic = uniqid() . '.' . $fileExtension;
+			while(file_exists("uploads/request/customer/".$pic)){
+				//this loop will continue until it generates a unique file name
+				$pic = uniqid() . '.' . $fileExtension;
+			}
+			move_uploaded_file($pic_temp, "uploads/request/customer/".$pic);
 		}else{
 			$pic = $_POST['img_exist'];
 		}
@@ -3453,7 +3459,15 @@ function updateUser($mysqli,$id,$user_id){
 			$pic = $_FILES['pic']['name'];
 			$pic_temp = $_FILES['pic']['tmp_name'];
 			$picfolder="uploads/request/customer/".$pic ;
-			move_uploaded_file($pic_temp, $picfolder);
+
+			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
+			$pic = uniqid() . '.' . $fileExtension;
+			while(file_exists("uploads/request/customer/".$pic)){
+				//this loop will continue until it generates a unique file name
+				$pic = uniqid() . '.' . $fileExtension;
+			}
+			move_uploaded_file($pic_temp, "uploads/request/customer/".$pic);
+
 		}elseif(isset($_POST['pic_upd']) and $_POST['pic_upd'] != ''){
 			$pic = $_POST['pic_upd'];
 		}
@@ -3651,8 +3665,24 @@ function updateUser($mysqli,$id,$user_id){
                 $pic_temp = $_FILES['pic']['tmp_name'];
                 $picfolderreq="uploads/request/customer/".$pic ;
                 $picfolder="uploads/verification/customer/".$pic ;
-                move_uploaded_file($pic_temp, $picfolderreq);
-                move_uploaded_file($pic_temp, $picfolder);
+
+				$fileExtension = pathinfo($picfolderreq, PATHINFO_EXTENSION);//get the file extention
+				$pic = uniqid() . '.' . $fileExtension;
+				while(file_exists("uploads/request/customer/".$pic)){
+					//this loop will continue until it generates a unique file name
+					$pic = uniqid() . '.' . $fileExtension;
+				}
+				move_uploaded_file($pic_temp, "uploads/request/customer/".$pic);
+				
+				$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
+				$pic = uniqid() . '.' . $fileExtension;
+				while(file_exists("uploads/verification/customer/".$pic)){
+					//this loop will continue until it generates a unique file name
+					$pic = uniqid() . '.' . $fileExtension;
+				}
+				
+				move_uploaded_file($pic_temp, "uploads/verification/customer/".$pic);
+
             }else{
 				$pic = $_POST['cus_image'];
 			}
@@ -3667,7 +3697,15 @@ function updateUser($mysqli,$id,$user_id){
                 $guarentor = $_FILES['guarentorpic']['name'];
                 $pic_temp = $_FILES['guarentorpic']['tmp_name'];
                 $picfolder="uploads/verification/guarentor/".$guarentor ;
-                move_uploaded_file($pic_temp, $picfolder);
+
+                $fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
+				$guarentor = uniqid() . '.' . $fileExtension;
+				while(file_exists("uploads/verification/guarentor/".$guarentor)){
+					//this loop will continue until it generates a unique file name
+					$guarentor = uniqid() . '.' . $fileExtension;
+				}
+				move_uploaded_file($pic_temp, "uploads/verification/guarentor/".$guarentor);
+
             }else{
 				$guarentor = $_POST['guarentor_image'];
             }
@@ -4333,7 +4371,15 @@ function updateUser($mysqli,$id,$user_id){
 			$verify_audio = $_FILES['verification_audio']['name'];
 			$audio_temp = $_FILES['verification_audio']['tmp_name'];
 			$audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
-			move_uploaded_file($audio_temp, $audiofolder);
+
+			$fileExtension = pathinfo($audiofolder, PATHINFO_EXTENSION);//get the file extention
+			$verify_audio = uniqid() . '.' . $fileExtension;
+			while(file_exists("uploads/verification/verifyInfo_audio/".$verify_audio)){
+				//this loop will continue until it generates a unique file name
+				$verify_audio = uniqid() . '.' . $fileExtension;
+			}
+			move_uploaded_file($audio_temp, "uploads/verification/verifyInfo_audio/".$verify_audio);
+
 		}else{
 			$verify_audio = $_POST['verification_audio_upd'];
 		}
@@ -4598,7 +4644,15 @@ function updateUser($mysqli,$id,$user_id){
                 $mortgage_document_upd = $_FILES['mortgage_document_upd']['name'];
                 $upd_temp = $_FILES['mortgage_document_upd']['tmp_name'];
                 $folder="uploads/verification/mortgage_doc/".$mortgage_document_upd ;
-                move_uploaded_file($upd_temp, $folder);
+                
+				$fileExtension = pathinfo($folder, PATHINFO_EXTENSION);//get the file extention
+				$mortgage_document_upd = uniqid() . '.' . $fileExtension;
+				while(file_exists("uploads/verification/mortgage_doc/".$mortgage_document_upd)){
+					//this loop will continue until it generates a unique file name
+					$mortgage_document_upd = uniqid() . '.' . $fileExtension;
+				}
+				move_uploaded_file($upd_temp, "uploads/verification/mortgage_doc/".$mortgage_document_upd);
+				
             }else if(isset($_POST['mortgage_doc_upd']) and $_POST['mortgage_doc_upd'] != ''){
 				$mortgage_document_upd = $_POST['mortgage_doc_upd']; 
 			}else{
@@ -4658,7 +4712,15 @@ function updateUser($mysqli,$id,$user_id){
                 $Rc_document_upd = $_FILES['Rc_document_upd']['name'];
                 $upd_temp = $_FILES['Rc_document_upd']['tmp_name'];
                 $folder="uploads/verification/endorsement_doc/".$Rc_document_upd ;
-                move_uploaded_file($upd_temp, $folder);
+                
+				$fileExtension = pathinfo($folder, PATHINFO_EXTENSION);//get the file extention
+				$Rc_document_upd = uniqid() . '.' . $fileExtension;
+				while(file_exists("uploads/verification/endorsement_doc/".$Rc_document_upd)){
+					//this loop will continue until it generates a unique file name
+					$Rc_document_upd = uniqid() . '.' . $fileExtension;
+				}
+				move_uploaded_file($upd_temp, "uploads/verification/endorsement_doc/".$Rc_document_upd);
+
             }else if(isset($_POST['rc_doc_upd']) and $_POST['rc_doc_upd'] != ''){
 				$Rc_document_upd = $_POST['rc_doc_upd']; 
 			}else{
@@ -4989,7 +5051,16 @@ function updateUser($mysqli,$id,$user_id){
 					$verify_audio = $_FILES['verification_audio']['name'];
 					$audio_temp = $_FILES['verification_audio']['tmp_name'];
 					$audiofolder="uploads/verification/verifyInfo_audio/".$verify_audio ;
-					move_uploaded_file($audio_temp, $audiofolder);
+
+					$fileExtension = pathinfo($audiofolder, PATHINFO_EXTENSION);//get the file extention
+					$verify_audio = uniqid() . '.' . $fileExtension;
+					while(file_exists("uploads/verification/verifyInfo_audio/".$verify_audio)){
+						//this loop will continue until it generates a unique file name
+						$verify_audio = uniqid() . '.' . $fileExtension;
+					}
+					
+					move_uploaded_file($audio_temp, "uploads/verification/verifyInfo_audio/".$verify_audio);
+
 				}else{
 					$verify_audio = $_POST['verification_audio_upd'];
 				}
@@ -5786,26 +5857,50 @@ function updateUser($mysqli,$id,$user_id){
 				}
 				
 				$concern_upload ='';
-				if(isset($_FILES['concern_upload']) && $_POST['Com_for_solution'] == '1'){
+				// if(isset($_FILES['concern_upload']) && $_POST['Com_for_solution'] == '1'){
 
+				// 	$filesArr3 = $_FILES['concern_upload'];
+				// 	$concern_upload = ''; 
+				// 	$uploadDir = "uploads/concern/";
+				// 	// File upload path  
+				// 	foreach($filesArr3['name'] as $key=>$val)
+				// 	{
+				// 		$fileName = basename($filesArr3['name'][$key]);  
+				// 		$targetFilePath = $uploadDir . $fileName; 
+						
+				// 		// Check whether file type is valid  
+				// 		$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);  
+						
+				// 			// Upload file to server  
+				// 			if(move_uploaded_file($filesArr3["tmp_name"][$key], $targetFilePath)){  
+				// 				$concern_upload .= $fileName.',';  
+				// 		}
+				// 	}
+				// }
+				if(isset($_FILES['concern_upload']) && $_POST['Com_for_solution'] == '1'){
 					$filesArr3 = $_FILES['concern_upload'];
-					$concern_upload = ''; 
 					$uploadDir = "uploads/concern/";
-					// File upload path  
-					foreach($filesArr3['name'] as $key=>$val)
-					{
+				
+					foreach($filesArr3['name'] as $key=>$val) {
 						$fileName = basename($filesArr3['name'][$key]);  
 						$targetFilePath = $uploadDir . $fileName; 
 						
-						// Check whether file type is valid  
-						$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);  
+						$fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+				
+						$uniqueFileName = uniqid() . '.' . $fileType;
+						while(file_exists($uploadDir . $uniqueFileName)){
+							$uniqueFileName = uniqid() . '.' . $fileType;
+						}
 						
-							// Upload file to server  
-							if(move_uploaded_file($filesArr3["tmp_name"][$key], $targetFilePath)){  
-								$concern_upload .= $fileName.',';  
+						if(move_uploaded_file($filesArr3["tmp_name"][$key], $uploadDir . $uniqueFileName)){  
+							$concern_upload .= $uniqueFileName.',';  
 						}
 					}
+				
+					// Use $concern_uploads array containing the unique file names uploaded
+					// Do something with $concern_uploads as needed
 				}
+				
 
 				if(isset($_POST['solution_remark'])){
 					$solution_remark = $_POST['solution_remark'];
@@ -5813,6 +5908,8 @@ function updateUser($mysqli,$id,$user_id){
 				if(isset($_POST['id'])){
 					$id = $_POST['id'];
 				}
+
+				$concern_upload = rtrim($concern_upload,',');//trims the comma at right last
 
 				$updConcern = $mysqli->query("UPDATE `concern_creation` SET `status`= 1 ,`solution_date`='".strip_tags($solution_date)."',`communication`='".strip_tags($Com_for_solution)."',`uploads`='".strip_tags($concern_upload)."',`solution_remark`='".strip_tags($solution_remark)."',`update_user_id`='".strip_tags($userid)."',`updated_date`= now() WHERE `id`='".strip_tags($id)."' ");
 
@@ -5991,7 +6088,15 @@ function updateUser($mysqli,$id,$user_id){
 				$qr_code = $_FILES['qr_code']['name'];
 				$qr_code_temp = $_FILES['qr_code']['tmp_name'];
 				$qr_codefolder="uploads/bank/".$qr_code ;
-				move_uploaded_file($qr_code_temp, $qr_codefolder);
+				
+				$fileExtension = pathinfo($qr_codefolder, PATHINFO_EXTENSION);//get the file extention
+				$qr_code = uniqid() . '.' . $fileExtension;
+				while(file_exists("uploads/bank/".$qr_code)){
+					//this loop will continue until it generates a unique file name
+					$qr_code = uniqid() . '.' . $fileExtension;
+				}
+				
+				move_uploaded_file($qr_code_temp, "uploads/bank/".$qr_code);
 			}
 			if(isset($_POST['gpay'])){
 				$gpay = $_POST['gpay'];
@@ -6035,7 +6140,15 @@ function updateUser($mysqli,$id,$user_id){
 				$qr_code = $_FILES['qr_code']['name'];
 				$qr_code_temp = $_FILES['qr_code']['tmp_name'];
 				$qr_codefolder="uploads/bank/".$qr_code ;
-				move_uploaded_file($qr_code_temp, $qr_codefolder);
+								
+				$fileExtension = pathinfo($qr_codefolder, PATHINFO_EXTENSION);//get the file extention
+				$qr_code = uniqid() . '.' . $fileExtension;
+				while(file_exists("uploads/bank/".$qr_code)){
+					//this loop will continue until it generates a unique file name
+					$qr_code = uniqid() . '.' . $fileExtension;
+				}
+				
+				move_uploaded_file($qr_code_temp, "uploads/bank/".$qr_code);
 			}else{
 				$qr_code = $_POST['qr_code_name'];
 			}
@@ -6295,7 +6408,15 @@ function updateUser($mysqli,$id,$user_id){
 					$mortgage_doc_upd = $_FILES['mortgage_document_upd']['name'];
 					$upd_temp = $_FILES['mortgage_document_upd']['tmp_name'];
 					$folder="uploads/verification/mortgage_doc/".$mortgage_doc_upd ;
-					move_uploaded_file($upd_temp, $folder);
+									
+					$fileExtension = pathinfo($folder, PATHINFO_EXTENSION);//get the file extention
+					$mortgage_doc_upd = uniqid() . '.' . $fileExtension;
+					while(file_exists("uploads/verification/mortgage_doc/".$mortgage_doc_upd)){
+						//this loop will continue until it generates a unique file name
+						$mortgage_doc_upd = uniqid() . '.' . $fileExtension;
+					}
+					
+					move_uploaded_file($upd_temp, "uploads/verification/mortgage_doc/".$mortgage_doc_upd);
 				}else{
 					if(isset($_POST['pendingchk'])){
 						$pendingchk = $_POST['pendingchk'];
@@ -6351,7 +6472,15 @@ function updateUser($mysqli,$id,$user_id){
 					$Rc_document_upd = $_FILES['Rc_document_upd']['name'];
 					$upd_temp = $_FILES['Rc_document_upd']['tmp_name'];
 					$folder="uploads/verification/endorsement_doc/".$Rc_document_upd ;
-					move_uploaded_file($upd_temp, $folder);
+									
+					$fileExtension = pathinfo($folder, PATHINFO_EXTENSION);//get the file extention
+					$Rc_document_upd = uniqid() . '.' . $fileExtension;
+					while(file_exists("uploads/verification/endorsement_doc/".$Rc_document_upd)){
+						//this loop will continue until it generates a unique file name
+						$Rc_document_upd = uniqid() . '.' . $fileExtension;
+					}
+					
+					move_uploaded_file($upd_temp, "uploads/verification/endorsement_doc/".$Rc_document_upd);
 				}else{
 					if(isset($_POST['endorsependingchk'])){
 						$endorsependingchk = $_POST['endorsependingchk']; 
@@ -6500,13 +6629,22 @@ function updateUser($mysqli,$id,$user_id){
 
 			$cus_pic = $_FILES['pic']['name'];
 			$pic_temp = $_FILES['pic']['tmp_name'];
-			
 			$picfolder="uploads/request/customer/".$cus_pic ;
+
 			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
 			$cus_pic = uniqid() . '.' . $fileExtension;
+			while(file_exists("uploads/request/customer/".$cus_pic)){
+				//this loop will continue until it generates a unique file name
+				$cus_pic = uniqid() . '.' . $fileExtension;
+			}
+			move_uploaded_file($pic_temp, "uploads/request/customer/".$cus_pic);
+
+			while(file_exists("uploads/verification/customer/".$cus_pic)){
+				//this loop will continue until it generates a unique file name
+				$cus_pic = uniqid() . '.' . $fileExtension;
+			}
 			
-			$picfolder="uploads/request/customer/".$cus_pic ;
-			move_uploaded_file($pic_temp, $picfolder);
+			move_uploaded_file($pic_temp, "uploads/verification/customer/".$cus_pic);
 		}else{
 			$cus_pic = $_POST['cus_image'];
 		}
@@ -6524,13 +6662,17 @@ function updateUser($mysqli,$id,$user_id){
 
 			$guarentor_pic = $_FILES['guarentorpic']['name'];
 			$pic_temp = $_FILES['guarentorpic']['tmp_name'];
-			
 			$picfolder="uploads/verification/guarentor/".$guarentor_pic ;
+			
 			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
 			$guarentor_pic = uniqid() . '.' . $fileExtension;
+			while(file_exists("uploads/verification/guarentor/".$guarentor_pic)){
+				//this loop will continue until it generates a unique file name
+				$guarentor_pic = uniqid() . '.' . $fileExtension;
+			}
 			
-			$picfolder="uploads/verification/guarentor/".$guarentor_pic ;
-			move_uploaded_file($pic_temp, $picfolder);
+			move_uploaded_file($pic_temp, "uploads/verification/guarentor/".$guarentor_pic);
+
 		}else{
 			$guarentor_pic = $_POST['guarentor_image'];
 		}

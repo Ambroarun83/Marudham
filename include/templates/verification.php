@@ -546,6 +546,21 @@ $sub_area_topbar = isset($sub_area_name)&& $sub_area_name != '' ? $sub_area_name
 					</div>
 					<!-- Personal info END -->
 
+					<!-- Customer Old Data START -->
+					<div class="card">
+						<div class="card-header"> Customer Old Data </div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+									<div class="form-group" id="cusOldDataDiv">
+										
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Customer Old Data END -->
+
 					<!-- Family info START -->
 					<div class="card">
 						<div class="card-header">Family Info<span class="required">&nbsp;*</span><span style="font-weight:bold" class=""></span>

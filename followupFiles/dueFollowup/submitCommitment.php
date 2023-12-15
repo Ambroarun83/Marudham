@@ -20,10 +20,11 @@ $relationship = $_POST['relationship'];
 $remark = $_POST['remark'];
 $date = $_POST['date'];//commitement date
 $hint = $_POST['hint'];
+$err = $_POST['err'];
 
 
-    $sql = $con->query("INSERT INTO `commitment`(`req_id`,`cus_id`, `ftype`, `fstatus`, `person_type`, `person_name`, `relationship`, `remark`, `comm_date`, `hint`, `insert_login_id`,`created_date`)
-            VALUES ('$req_id','$cus_id','$ftype','$fstatus','$person_type','$person_name','$relationship','$remark','$date','$hint','$userid',NOW())");
+    $sql = $con->query("INSERT INTO `commitment`(`req_id`,`cus_id`, `ftype`, `fstatus`, `person_type`, `person_name`, `relationship`, `remark`, `comm_date`, `hint`, `comm_err`, `insert_login_id`,`created_date`)
+            VALUES ('$req_id','$cus_id','$ftype','$fstatus','$person_type','$person_name','$relationship','$remark','$date','$hint','$err','$userid',NOW())");
     
     if($sql){
         $response = 'Inserted Successfully';

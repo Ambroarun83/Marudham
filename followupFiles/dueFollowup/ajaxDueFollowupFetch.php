@@ -62,6 +62,7 @@ $result = $statement->fetchAll();
             <th>Action</th>
             <th>Last Paid Date</th>
             <th>Hint</th>
+            <th>Communication Error</th>
             <th>Commitment Date</th>
         </tr>
     </thead>
@@ -205,12 +206,14 @@ $result = $statement->fetchAll();
             <td> <?php echo $date_range; ?> </td>
             
             <?php
-                $sql = $con->query("SELECT comm_date, hint from commitment where cus_id = '".$row['cp_cus_id']."' order by id desc limit 1 ");
+                $sql = $con->query("SELECT comm_date, hint, comm_err from commitment where cus_id = '".$row['cp_cus_id']."' order by id desc limit 1 ");
                 if(mysqli_num_rows($sql)>0){
                     $row1 = $sql->fetch_assoc();
                     ?> <td> <?php echo $row1['hint']; ?> </td><?php
+                    ?> <td> <?php echo $row1['comm_err']=='1'?'Yes':($row1['comm_err']=='2'?'No':'Clear'); ?> </td><?php
                     ?> <td> <?php echo $row1['comm_date']!='0000-00-00' ? date('d-m-Y',strtotime($row1['comm_date'])) : ''; ?> </td><?php
                 }else{
+                    ?> <td> <?php echo ''; ?> </td><?php
                     ?> <td> <?php echo ''; ?> </td><?php
                     ?> <td> <?php echo ''; ?> </td><?php
                 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 14, 2023 at 02:04 PM
+-- Generation Time: Dec 15, 2023 at 12:20 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -1027,6 +1027,7 @@ CREATE TABLE `commitment` (
   `remark` varchar(255) DEFAULT NULL,
   `comm_date` date DEFAULT NULL,
   `hint` varchar(255) DEFAULT NULL,
+  `comm_err` varchar(10) NOT NULL,
   `insert_login_id` varchar(55) DEFAULT NULL,
   `updated_login_id` varchar(55) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
@@ -1037,14 +1038,15 @@ CREATE TABLE `commitment` (
 -- Dumping data for table `commitment`
 --
 
-INSERT INTO `commitment` (`id`, `req_id`, `cus_id`, `ftype`, `fstatus`, `person_type`, `person_name`, `relationship`, `remark`, `comm_date`, `hint`, `insert_login_id`, `updated_login_id`, `created_date`, `updated_date`) VALUES
-(10, '1', '010720232023', '2', '5', '', '', '', 'Switch off', '0000-00-00', 'try again', '2', NULL, '2023-08-24 15:40:10', '2023-08-24 15:40:10'),
-(11, '7', '300030003000', '1', '1', '1', 'Rakesh', 'NIL', 'Commitment', '2023-08-27', 'Commitment', '2', NULL, '2023-08-24 15:40:44', '2023-08-24 15:40:44'),
-(12, '10', '300030003000', '1', '2', '', '', '', 'not in home', '0000-00-00', 'try again tomorrow', '2', NULL, '2023-08-24 15:41:29', '2023-08-24 15:41:29'),
-(13, '10', '300030003000', '1', '1', '3', '7', 'Father', 'family issue', '2023-09-01', 'will pay', '2', NULL, '2023-08-24 15:42:38', '2023-08-24 15:42:38'),
-(14, '1', '010720232023', '1', '1', '1', 'Bharath', 'NIL', '234', '2023-08-27', 'asdf', '2', NULL, '2023-08-24 19:05:28', '2023-08-24 19:05:28'),
-(15, '1', '010720232023', '1', '2', '', '', '', 'Not available', '0000-00-00', '123', '2', NULL, '2023-08-30 09:57:14', '2023-08-30 09:57:14'),
-(16, '1', '010720232023', '1', '1', '2', 'Senthil kumar', 'Father', 'Checked', '2023-09-03', 'Checked', '2', NULL, '2023-08-30 09:58:08', '2023-08-30 09:58:08');
+INSERT INTO `commitment` (`id`, `req_id`, `cus_id`, `ftype`, `fstatus`, `person_type`, `person_name`, `relationship`, `remark`, `comm_date`, `hint`, `comm_err`, `insert_login_id`, `updated_login_id`, `created_date`, `updated_date`) VALUES
+(10, '1', '010720232023', '2', '5', '', '', '', 'Switch off', '0000-00-00', 'try again', '2', '2', NULL, '2023-08-24 15:40:10', '2023-08-24 15:40:10'),
+(11, '7', '300030003000', '1', '1', '1', 'Rakesh', 'NIL', 'Commitment', '2023-08-27', 'Commitment', '1', '2', NULL, '2023-08-24 15:40:44', '2023-08-24 15:40:44'),
+(12, '10', '300030003000', '1', '2', '', '', '', 'not in home', '0000-00-00', 'try again tomorrow', '3', '2', NULL, '2023-08-24 15:41:29', '2023-08-24 15:41:29'),
+(13, '10', '300030003000', '1', '1', '3', '7', 'Father', 'family issue', '2023-09-01', 'will pay', '2', '2', NULL, '2023-08-24 15:42:38', '2023-08-24 15:42:38'),
+(14, '1', '010720232023', '1', '1', '1', 'Bharath', 'NIL', '234', '2023-08-27', 'asdf', '3', '2', NULL, '2023-08-24 19:05:28', '2023-08-24 19:05:28'),
+(15, '1', '010720232023', '1', '2', '', '', '', 'Not available', '0000-00-00', '123', '1', '2', NULL, '2023-08-30 09:57:14', '2023-08-30 09:57:14'),
+(16, '1', '010720232023', '1', '1', '2', 'Senthil kumar', 'Father', 'Checked', '2023-09-03', 'Checked', '2', '2', NULL, '2023-08-30 09:58:08', '2023-08-30 09:58:08'),
+(17, '9', '100010001000', '1', '1', '1', 'Ganesan', 'NIL', 'aa', '2023-12-16', 'OK', '3', '2', NULL, '2023-12-15 11:15:27', '2023-12-15 11:15:27');
 
 -- --------------------------------------------------------
 
@@ -4881,7 +4883,7 @@ ALTER TABLE `collection_charges`
 -- AUTO_INCREMENT for table `commitment`
 --
 ALTER TABLE `commitment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `company_creation`

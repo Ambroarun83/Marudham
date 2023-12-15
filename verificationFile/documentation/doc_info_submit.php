@@ -43,21 +43,25 @@ if(isset($_FILES['document_info_upd'])){
 
     $filesArr3 = $_FILES['document_info_upd'];
     $uploadDir = "../../uploads/verification/doc_info/";
-    // File upload path  
-    foreach($filesArr3['name'] as $key=>$val)
-    {
-        $fileName = basename($filesArr3['name'][$key]);  
-        $targetFilePath = $uploadDir . $fileName; 
-        
-        // Check whether file type is valid  
-        $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);  
-        
-            // Upload file to server  
-            if(move_uploaded_file($filesArr3["tmp_name"][$key], $targetFilePath)){  
-                $doc_upload .= $fileName.',';  
+    $doc_upload = '';
+
+    foreach ($filesArr3['name'] as $key => $val) {
+        $fileName = basename($filesArr3['name'][$key]);
+        $targetFilePath = $uploadDir . $fileName;
+
+        $fileExtension = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+        $uniqueFileName = uniqid() . '.' . $fileExtension;
+        while (file_exists($uploadDir . $uniqueFileName)) {
+            $uniqueFileName = uniqid() . '.' . $fileExtension;
+        }
+
+        if (move_uploaded_file($filesArr3["tmp_name"][$key], $uploadDir . $uniqueFileName)) {
+            $doc_upload .= $uniqueFileName . ',';
         }
     }
-    $doc_upload = rtrim($doc_upload,',');
+    $doc_upload = rtrim($doc_upload, ',');
+
 }
 
 
