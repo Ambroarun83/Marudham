@@ -345,7 +345,7 @@ $(document).ready(function () {
 
         if (verify == 'cus_profile') {
             $('#customer_profile').show(); $('#cus_document').hide(); $('#customer_loan_calc').hide();
-
+            getCustomerOldData();
         }
         if (verify == 'documentation') {
             $('#customer_profile').hide(); $('#cus_document').show(); $('#customer_loan_calc').hide();
@@ -369,6 +369,13 @@ $(document).ready(function () {
     // $('.icon-chevron-down1').click(function(){ //$('.card-header').click(function(){
     //     $(this).parent().next('div').slideToggle(); //$(this).next('div').slideToggle();
     // })
+
+    function getCustomerOldData(){
+        let cus_id = $('#cus_id').val();
+        $.post('updateFile/showCustomerOldData.php', { cus_id }, function (html) {
+            $('#cusOldDataDiv').empty().html(html);
+        })
+    }
 
 ///Documentation 
 

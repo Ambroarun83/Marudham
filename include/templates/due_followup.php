@@ -335,6 +335,16 @@ if($idupd>0)
 									<input type="text" name="comm_hint" id="comm_hint" class='form-control' tabindex="11" placeholder="Enter Hint">
 									<span class="text-danger" id='comm_hintCheck' style="display: none;">Please Enter Hint</span>
 							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
+									<label for="comm_err">Communication Error</label><span class="required">&nbsp;*</span>
+									<select name="comm_err" id="comm_err" class='form-control' tabindex="12" >
+										<option value="">Select Communication Error</option>
+										<option value="1">Yes</option>
+										<option value="2">No</option>
+										<option value="3">Clear</option>
+									</select>
+									<span class="text-danger" id='comm_errCheck' style="display: none;">Please Enter Communication Error</span>
+							</div>
 
 						</div>
 					</div>
@@ -342,8 +352,8 @@ if($idupd>0)
 
 			</div>
 			<div class="modal-footer">
-				<button class='btn btn-primary' name="sumit_add_comm" id="sumit_add_comm" tabindex="12">Submit</button>
-				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="13">Close</button>
+				<button class='btn btn-primary' name="sumit_add_comm" id="sumit_add_comm" tabindex="13">Submit</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="14">Close</button>
 			</div>
 		</div>
 	</div>

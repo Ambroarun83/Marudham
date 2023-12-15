@@ -19,15 +19,22 @@ if($holder_type == '0' || $holder_type == '1'){
 // $connect->query("DELETE FROM `cheque_no_list` WHERE `cheque_table_id`='$chequeID'");
 
 $filesArray = $_FILES['cheque_upd'];//files passed as array
+
 foreach($filesArray['name'] as $key=>$val)
 {
     $fileName = basename($filesArray['name'][$key]);  
     $targetFilePath = "../uploads/verification/cheque_upd/".$fileName; 
 
-    // Upload file to server  
-    if(move_uploaded_file($filesArray["tmp_name"][$key], $targetFilePath)){  
+    $fileExtension = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+    
+    $uniqueFileName = uniqid() . '.' . $fileExtension;
+    while(file_exists("../uploads/verification/cheque_upd/".$uniqueFileName)){
+        $uniqueFileName = uniqid() . '.' . $fileExtension;
+    }
 
-        $update =  $connect->query("INSERT INTO `cheque_upd`(`cus_id`,`req_id`, `cheque_table_id`, `upload_cheque_name`) VALUES ('$cus_id','$req_id','$chequeID','$fileName')");
+    // Upload file to server  
+    if(move_uploaded_file($filesArray["tmp_name"][$key], "../uploads/verification/cheque_upd/" . $uniqueFileName)){  
+        $update =  $connect->query("INSERT INTO `cheque_upd`(`cus_id`,`req_id`, `cheque_table_id`, `upload_cheque_name`) VALUES ('$cus_id','$req_id','$chequeID','$uniqueFileName')");
     }
 }
 

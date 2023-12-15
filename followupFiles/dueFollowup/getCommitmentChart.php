@@ -61,6 +61,7 @@ function getFamilyMember($con,$fam_id){
         <th>User Type</th>
         <th>User Name</th>
         <th>Hint</th>
+        <th>Communication Error</th>
     </thead>
     <tbody>
         <?php while($row =  $sql->fetch_assoc()){?>
@@ -90,6 +91,7 @@ function getFamilyMember($con,$fam_id){
                 <td><?php echo $row['role']; ?></td>
                 <td><?php echo $row['fullname']; ?></td>
                 <td><?php echo $row['hint']; ?></td>
+                <td><?php echo $row['comm_err']=='1'?'Yes':($row['comm_err']=='2'?'No':'Clear'); ?></td>
                 
             </tr>
         <?php } ?>

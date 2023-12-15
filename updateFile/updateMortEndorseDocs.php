@@ -23,7 +23,15 @@ if($id == 'update_mortgage'){
     $mortgage_doc_upd = $_FILES['mortgage_document_upd']['name'];
     $upd_temp = $_FILES['mortgage_document_upd']['tmp_name'];
     $folder="../uploads/verification/mortgage_doc/".$mortgage_doc_upd ;
-    move_uploaded_file($upd_temp, $folder);
+    
+    $fileExtension = pathinfo($folder, PATHINFO_EXTENSION);//get the file extention
+    $mortgage_doc_upd = uniqid() . '.' . $fileExtension;
+    while(file_exists("../uploads/verification/mortgage_doc/".$mortgage_doc_upd)){
+        //this loop will continue until it generates a unique file name
+        $mortgage_doc_upd = uniqid() . '.' . $fileExtension;
+    }
+    move_uploaded_file($upd_temp, "../uploads/verification/mortgage_doc/".$mortgage_doc_upd);
+    
 
     $qry .= " `mortgage_document_upd`='".strip_tags($mortgage_doc_upd)."',`update_login_id`='$userid',`updated_date`=now() ";
 
@@ -32,7 +40,14 @@ if($id == 'update_mortgage'){
     $Rc_document_upd = $_FILES['RC_document_upd']['name'];
     $upd_temp = $_FILES['RC_document_upd']['tmp_name'];
     $folder="../uploads/verification/endorsement_doc/".$Rc_document_upd ;
-    move_uploaded_file($upd_temp, $folder);
+    
+    $fileExtension = pathinfo($folder, PATHINFO_EXTENSION);//get the file extention
+    $Rc_document_upd = uniqid() . '.' . $fileExtension;
+    while(file_exists("../uploads/verification/endorsement_doc/".$Rc_document_upd)){
+        //this loop will continue until it generates a unique file name
+        $Rc_document_upd = uniqid() . '.' . $fileExtension;
+    }
+    move_uploaded_file($upd_temp, "../uploads/verification/endorsement_doc/".$Rc_document_upd);
     
     $qry .= " `Rc_document_upd`='".strip_tags($Rc_document_upd)."',`update_login_id`='$userid',`updated_date`=now() ";
 }

@@ -31,15 +31,14 @@ if(isset($_FILES['file'])){
     $picfolder="../../uploads/confirmation_followup/".$file ;
     $fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION);//get the file extention
     
-    if(!file_exists($picfolder)){
-        move_uploaded_file($pic_temp, $picfolder);
-    }else{
-        // File already exists
-        // Generate a new file name
+    $file = uniqid() . '.' . $fileExtension;
+    while(file_exists("../../uploads/confirmation_followup/".$file)){
+        //this loop will continue until it generates a unique file name
         $file = uniqid() . '.' . $fileExtension;
-        // Move the file to the new file name
-        move_uploaded_file($pic_temp, "../../uploads/confirmation_followup/" . $file);
     }
+    // Move the file to the new file name
+    move_uploaded_file($pic_temp, "../../uploads/confirmation_followup/" . $file);
+
 }else{
     $file='';
 }
