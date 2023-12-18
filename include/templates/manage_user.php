@@ -80,6 +80,8 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$search_module = '';
+$search_screen = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -203,6 +205,9 @@ if($idupd>0)
 			$balance_report          		     = $getUser['balance_report'];
 			$due_list_report          		     = $getUser['due_list_report'];
 			$closed_report          		     = $getUser['closed_report'];
+
+			$search_module = $getUser['search_module'];
+			$search_screen = $getUser['search'];
 		}
 	}
 }
@@ -963,6 +968,25 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($closed_report==0){ echo'checked'; }} ?> tabindex="61" class="report-checkbox" id="closed_report" name="closed_report" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="closed_report">Closed</label>
+                            </div>
+                        </div>
+					</div>
+
+					
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($search_module==0){ echo'checked'; }} ?> tabindex="63" class="" id="searchmodule" name="searchmodule" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="searchmodule">
+							<h5>Search</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($search_screen==0){ echo'checked'; }} ?> tabindex="64" class="search-checkbox" id="search_screen" name="search_screen" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="search_screen">Search</label>
                             </div>
                         </div>
 					</div>
