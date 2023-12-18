@@ -2545,6 +2545,16 @@ require 'PHPMailerAutoload.php';
 		}else{
 			$closed_report=1;
 		}
+		if(isset($_POST['searchmodule']) &&    $_POST['searchmodule'] == 'Yes'){
+			$searchmodule=0;
+		}else{
+			$searchmodule=1;
+		}
+		if(isset($_POST['search_screen']) &&    $_POST['search_screen'] == 'Yes'){
+			$search_screen=0;
+		}else{
+			$search_screen=1;
+		}
         $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`,`loan_cat`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`bank_creation`,`requestmodule`,
@@ -2553,8 +2563,8 @@ require 'PHPMailerAutoload.php';
 		`doctrackmodule`,`doctrack`,`doc_rec_access`,`updatemodule`,`update_screen`,`concernmodule`, `concern_creation`, `concern_solution`,`concern_feedback`,
 		`accountsmodule`,`cash_tally`,`cash_tally_admin`,`bank_details`,`bank_clearance`,`finance_insight`,
 		`followupmodule`, `promotion_activity`, `loan_followup`, `confirmation_followup`, `due_followup`, `reportmodule`, `ledger_report`, 
-		`request_report`, `cus_profile_report`, `loan_issue_report`, `collection_report`, `balance_report`, `due_list_report`, 
-		`closed_report`,`insert_login_id`,`created_date`)
+		`request_report`, `cus_profile_report`, `loan_issue_report`, `collection_report`, `balance_report`, `due_list_report`, `closed_report`,
+		`search_module`,`search`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($loan_cat)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
@@ -2569,7 +2579,7 @@ require 'PHPMailerAutoload.php';
 		'".strip_tags($followupmodule)."','".strip_tags($promotion_activity)."','".strip_tags($loan_followup)."','".strip_tags($conf_followup)."','".strip_tags($due_followup)."',
 		'".strip_tags($reportmodule)."', '".strip_tags($ledger_report)."', '".strip_tags($request_report)."', '".strip_tags($cus_profile_report)."', '".strip_tags($loan_issue_report)."',
 		'".strip_tags($collection_report)."', '".strip_tags($balance_report)."', '".strip_tags($due_list_report)."', '".strip_tags($closed_report)."',
-		'".strip_tags($userid)."',now() )";
+		'".strip_tags($searchmodule)."', '".strip_tags($search_screen)."','".strip_tags($userid)."',now() )";
 		// echo $insertQry;die;
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
@@ -2990,6 +3000,16 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$closed_report=1;
 	}
+	if(isset($_POST['searchmodule']) &&    $_POST['searchmodule'] == 'Yes'){
+		$searchmodule=0;
+	}else{
+		$searchmodule=1;
+	}
+	if(isset($_POST['search_screen']) &&    $_POST['search_screen'] == 'Yes'){
+		$search_screen=0;
+	}else{
+		$search_screen=1;
+	}
 	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
 	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
 	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
@@ -3015,6 +3035,7 @@ function updateUser($mysqli,$id,$user_id){
 	`cus_profile_report` = '".strip_tags($cus_profile_report)."', `loan_issue_report` = '".strip_tags($loan_issue_report)."', 
 	`collection_report` = '".strip_tags($collection_report)."', `balance_report` = '".strip_tags($balance_report)."', 
 	`due_list_report` = '".strip_tags($due_list_report)."', `closed_report` = '".strip_tags($closed_report)."',
+	`search_module` = '".strip_tags($searchmodule)."', `search` = '".strip_tags($search_screen)."',
 	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = current_timestamp() WHERE user_id = '".strip_tags($id)."' ";
 	$result = $mysqli->query($updateQry) or die;
 }
@@ -6803,6 +6824,38 @@ function updateUser($mysqli,$id,$user_id){
 		}
 
 		return $detailrecords;
+	}
+
+	public function getDataForDashboard($mysqli,$userid){
+
+		$today = date('Y-m-d');
+		$data = array();
+		// $sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid and date(created_date) = date('$today') ");
+		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid ");
+		if($mysqli->affected_rows>0){
+			$row = $sql->fetch_assoc();
+			$data['today_request'] = $row['count(*)'];
+		}
+		// $sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid and ( month(created_date) = month('$today') and year(created_date) = year('$today') ) ");
+		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid  ");
+		if($mysqli->affected_rows>0){
+			$row = $sql->fetch_assoc();
+			$data['month_request'] = $row['count(*)'];
+		}
+		// $sql = $mysqli->query("SELECT count(*) FROM `loan_issue` WHERE insert_login_id = $userid and date(created_date) = date('$today') ");
+		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid ");
+		if($mysqli->affected_rows>0){
+			$row = $sql->fetch_assoc();
+			$data['today_request'] = $row['count(*)'];
+		}
+		// $sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid and ( month(created_date) = month('$today') and year(created_date) = year('$today') ) ");
+		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid  ");
+		if($mysqli->affected_rows>0){
+			$row = $sql->fetch_assoc();
+			$data['month_request'] = $row['count(*)'];
+		}
+		
+		return $data;
 	}
 
 }//Class End

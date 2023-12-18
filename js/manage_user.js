@@ -270,6 +270,11 @@ $(document).ready(function () {
         var reportmodule = document.querySelector('#reportmodule');
         checkbox(checkboxesToEnable,reportmodule);
     });
+    $("#searchmodule").on("change", function() {
+        const checkboxesToEnable = document.querySelectorAll("input.search-checkbox");
+        var searchmodule = document.querySelector('#searchmodule');
+        checkbox(checkboxesToEnable,searchmodule);
+    });
 
     $('#cash_tally').click(function(){
         var cash_tally = document.querySelector('#cash_tally');
@@ -337,6 +342,7 @@ $(function(){
         var accountsmodule = document.getElementById('accountsmodule');
         var followupmodule = document.getElementById('followupmodule');
         var reportmodule = document.getElementById('reportmodule');
+        var searchmodule = document.getElementById('searchmodule');
         if(mastermodule.checked){const checkboxesToEnable = document.querySelectorAll("input.master-checkbox");var mastermodule = document.querySelector('#mastermodule');checkbox(checkboxesToEnable,mastermodule);}
         if(adminmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.admin-checkbox");var adminmodule = document.querySelector('#adminmodule');checkbox(checkboxesToEnable,adminmodule);}
         if(requestmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.request-checkbox");var requestmodule = document.querySelector('#requestmodule');checkbox(checkboxesToEnable,requestmodule);}
@@ -353,6 +359,7 @@ $(function(){
         if(accountsmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.accounts-checkbox");var accountsmodule = document.querySelector('#accountsmodule');checkbox(checkboxesToEnable,accountsmodule);}
         if(followupmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.followup-checkbox");var followupmodule = document.querySelector('#followupmodule');checkbox(checkboxesToEnable,followupmodule);}
         if(reportmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.report-checkbox");var reportmodule = document.querySelector('#reportmodule');checkbox(checkboxesToEnable,reportmodule);}
+        if(searchmodule.checked){const checkboxesToEnable = document.querySelectorAll("input.search-checkbox");var searchmodule = document.querySelector('#searchmodule');checkbox(checkboxesToEnable,searchmodule);}
     }
 })
 
