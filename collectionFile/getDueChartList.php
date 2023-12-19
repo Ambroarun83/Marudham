@@ -234,7 +234,7 @@ function moneyFormatIndia($num)
                 (MONTH(DATE(c.coll_date)) = MONTH('$issued') AND YEAR(DATE(c.coll_date)) = YEAR('$issued')) OR
                 (MONTH(DATE(c.trans_date)) = MONTH('$issued') AND YEAR(DATE(c.trans_date)) = YEAR('$issued'))
             )
-            AND (
+            OR (
                 (MONTH(DATE(c.coll_date)) >= MONTH('$issued') AND MONTH(DATE(c.coll_date)) < MONTH('$due_start_from') ) OR
                 (MONTH(DATE(c.trans_date)) >= MONTH('$issued') AND MONTH(DATE(c.trans_date)) < MONTH('$due_start_from') )
             )");
@@ -250,7 +250,7 @@ function moneyFormatIndia($num)
                 (WEEK(c.coll_date) = WEEK('$issued') AND YEAR(c.coll_date) = YEAR('$issued')) OR
                 (WEEK(c.trans_date) = WEEK('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
             )
-            AND (
+            OR (
                 (c.coll_date >= WEEK('$issued') AND c.coll_date < WEEK('$due_start_from') ) OR
                 (c.trans_date >= WEEK('$issued') AND c.trans_date < WEEK('$due_start_from') )
             ) ");

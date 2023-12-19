@@ -105,7 +105,7 @@ else{
 			}
 		});
 		if(currentPage == 'dashboard'){
-			$('.dashboard').css('backgroundColor','#f')
+			$('.dashboard').css('backgroundColor', '#646969d9');
 		}
 	}, 1000);
 </script>

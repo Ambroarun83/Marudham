@@ -123,7 +123,7 @@ $(document).ready(function() {
 			'ajax': {
 				'url':'ajaxFetch/ajaxCompanyCreationFetch.php',
 				'data': function(data){
-					var search = $('#search').val();
+					var search = $('input[type=search]').val();
 					data.search = search;
 				}
 			},
@@ -160,7 +160,7 @@ $(document).ready(function() {
 			'ajax': {
 				'url':'ajaxFetch/ajaxLoanCategoryFetch.php',
 				'data': function(data){
-					var search = $('#search').val();
+					var search = $('input[type=search]').val();
 					data.search = search;
 				}
 			},
@@ -202,7 +202,7 @@ $(document).ready(function() {
 			'ajax': {
 				'url':'ajaxFetch/ajaxBranchCreationFetch.php',
 				'data': function(data){
-					var search = $('#search').val();
+					var search = $('input[type=search]').val();
 					data.search = search;
 				}
 			},
@@ -244,7 +244,7 @@ $(document).ready(function() {
 			'ajax': {
 				'url':'ajaxFetch/ajaxAreaCreationFetch.php',
 				'data': function(data){
-					var search = $('#search').val();
+					var search = $('input[type=search]').val();
 					data.search = search;
 				}
 			},
@@ -287,7 +287,7 @@ $(document).ready(function() {
             'ajax': {
                 'url':'ajaxFetch/ajaxLoanCalculationFetch.php',
                 'data': function(data){
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     // Append to data
                     data.search      = search;
                 }
@@ -337,7 +337,7 @@ $(document).ready(function() {
             'ajax': {
                 'url':'ajaxFetch/ajaxDirectorCreationFetch.php',
                 'data': function(data){
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search      = search;
                 }
             },
@@ -376,7 +376,7 @@ $(document).ready(function() {
             'ajax': {
                 'url':'ajaxFetch/ajaxAgentCreationFetch.php',
                 'data': function(data){
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search      = search;
                 }
             },
@@ -415,7 +415,7 @@ $(document).ready(function() {
             'ajax': {
                 'url':'ajaxFetch/ajaxStaffCreationFetch.php',
                 'data': function(data){
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search      = search;
                 }
             },
@@ -455,7 +455,7 @@ $(document).ready(function() {
             'ajax': {
                 'url':'ajaxFetch/ajaxManageUserFetch.php',
                 'data': function(data){
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search      = search;
                 }
             },
@@ -494,7 +494,7 @@ $(document).ready(function() {
             'ajax': {
                 'url':'ajaxFetch/ajaxDocumentationMappingFetch.php',
                 'data': function(data){
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search      = search;
                 }
             },
@@ -527,7 +527,7 @@ $(document).ready(function() {
             'ajax': {
                 'url':'ajaxFetch/ajaxRequestFetch.php',
                 'data': function(data){
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search      = search;
                 }
             },
@@ -569,7 +569,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxVerificationFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -606,7 +606,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxApprovalFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -642,7 +642,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxAcknowledgementFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -678,7 +678,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxLoanIssueFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -713,7 +713,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxCollectionFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -748,7 +748,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxClosedFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -783,7 +783,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxNocFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -818,7 +818,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxConcernFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -853,7 +853,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxConcernSolutionFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -887,7 +887,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxConcernFeedbackFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -921,7 +921,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxDocumentTrackFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -955,7 +955,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxUpdateFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -989,7 +989,7 @@ $(document).ready(function() {
             'ajax': {
                 'url': 'ajaxFetch/ajaxBankCreationFetch.php',
                 'data': function(data) {
-                    var search = $('#search').val();
+                    var search = $('input[type=search]').val();
                     data.search = search;
                 }
             },
@@ -1509,12 +1509,10 @@ if($current_page == 'search_module') { ?>
 ////////// Show Loader if ajax function is called inside anywhere in entire project  ////////
     
     $(document).ajaxStart(function() {
-        // console.log("🚀 ~ file: dashboardfooter.php:1513 ~ showOverlay")
         showOverlay();
     });
     
     $(document).ajaxStop(function() {
-        // console.log("🚀 ~ file: dashboardfooter.php:1560 ~ hideOverlay")
         hideOverlay();
     });
     
