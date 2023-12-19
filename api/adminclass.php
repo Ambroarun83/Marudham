@@ -1,5 +1,6 @@
 <?php
 require 'PHPMailerAutoload.php';	
+require 'moneyFormatIndia.php';	
   class admin 
 	{ 
 
@@ -6830,31 +6831,49 @@ function updateUser($mysqli,$id,$user_id){
 
 		$today = date('Y-m-d');
 		$data = array();
+
 		// $sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid and date(created_date) = date('$today') ");
 		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid ");
-		if($mysqli->affected_rows>0){
-			$row = $sql->fetch_assoc();
-			$data['today_request'] = $row['count(*)'];
-		}
+		$row = $sql->fetch_assoc();
+		$data['today_request'] = $row['count(*)']??0;
 		// $sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid and ( month(created_date) = month('$today') and year(created_date) = year('$today') ) ");
 		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid  ");
-		if($mysqli->affected_rows>0){
-			$row = $sql->fetch_assoc();
-			$data['month_request'] = $row['count(*)'];
-		}
-		// $sql = $mysqli->query("SELECT count(*) FROM `loan_issue` WHERE insert_login_id = $userid and date(created_date) = date('$today') ");
-		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid ");
-		if($mysqli->affected_rows>0){
-			$row = $sql->fetch_assoc();
-			$data['today_request'] = $row['count(*)'];
-		}
-		// $sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid and ( month(created_date) = month('$today') and year(created_date) = year('$today') ) ");
-		$sql = $mysqli->query("SELECT count(*) FROM `request_creation` WHERE insert_login_id = $userid  ");
-		if($mysqli->affected_rows>0){
-			$row = $sql->fetch_assoc();
-			$data['month_request'] = $row['count(*)'];
-		}
+		$row = $sql->fetch_assoc();
+		$data['month_request'] = $row['count(*)']??0;
 		
+		
+		// $sql = $mysqli->query("SELECT count(*) FROM ( SELECT MAX(id) AS last_id FROM loan_issue WHERE insert_login_id = $userid and balance_amount = '0' and date(created_date) = date('$today') GROUP BY req_id ) AS subquery ");
+		$sql = $mysqli->query("SELECT count(*) FROM ( SELECT MAX(id) AS last_id FROM loan_issue WHERE insert_login_id = $userid and balance_amount = '0' GROUP BY req_id ) AS subquery;");
+		$row = $sql->fetch_assoc();
+		$data['today_loan'] = $row['count(*)']??0;
+		// $sql = $mysqli->query("SELECT count(*) FROM ( SELECT MAX(id) AS last_id FROM loan_issue WHERE insert_login_id = $userid and balance_amount = '0' and ( month(created_date) = month('$today') and year(created_date) = year('$today') ) GROUP BY req_id ) AS subquery");
+		$sql = $mysqli->query("SELECT count(*) FROM ( SELECT MAX(id) AS last_id FROM loan_issue WHERE insert_login_id = $userid and balance_amount = '0' GROUP BY req_id ) AS subquery;");
+		$row = $sql->fetch_assoc();
+		$data['month_loan'] = $row['count(*)']??0;
+		
+
+		// $sql = $mysqli->query("SELECT count(*) FROM `collection` WHERE insert_login_id = $userid and date(created_date) = date('$today') ");
+		$sql = $mysqli->query("SELECT count(*) FROM `collection` WHERE insert_login_id = $userid ");
+		$row = $sql->fetch_assoc();
+		$data['today_collection_no'] = $row['count(*)']??0;
+		// $sql = $mysqli->query("SELECT count(*) FROM `collection` WHERE insert_login_id = $userid and ( month(created_date) = month('$today') and year(created_date) = year('$today') )");
+		$sql = $mysqli->query("SELECT count(*) FROM `collection` WHERE insert_login_id = $userid ");
+		$row = $sql->fetch_assoc();
+		$data['month_collection_no'] = $row['count(*)']??0;
+
+
+		// $sql = $mysqli->query("SELECT sum(total_paid_track) as total_paid FROM `collection` WHERE insert_login_id = $userid and date(created_date) = date('$today') ");
+		$sql = $mysqli->query("SELECT sum(total_paid_track) as total_paid FROM `collection` WHERE insert_login_id = $userid ");
+		$row = $sql->fetch_assoc();
+		$data['today_collection'] = moneyFormatIndia($row['total_paid'])??0;
+		
+		// $sql = $mysqli->query("SELECT sum(total_paid_track) as total_paid FROM `collection` WHERE insert_login_id = $userid and ( month(created_date) = month('$today') and year(created_date) = year('$today') ) ");
+		$sql = $mysqli->query("SELECT sum(total_paid_track) as total_paid FROM `collection` WHERE insert_login_id = $userid ");
+		$row = $sql->fetch_assoc();
+		$data['month_collection'] = moneyFormatIndia($row['total_paid'])??0;
+
+		
+
 		return $data;
 	}
 

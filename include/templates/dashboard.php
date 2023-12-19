@@ -4,6 +4,8 @@ if (isset($_SESSION["userid"])) {
 	$userid = $_SESSION["userid"];
 }
 
+$userRole = $userObj->getuser($mysqli,$userid)['role'];
+
 $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 
 ?>
@@ -14,10 +16,14 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
 
 <style>
+	.card{
+		/* background-color: #02c7b5;
+		color: white; */
+	}
 	.heading-list {
 		font-size: 2rem;
 		font-weight: bold;
-		text-align: center;
+		/* text-align: center; */
 	}
 
 	.counter-head {
@@ -76,10 +82,12 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 	<!--form start-->
 	<form id="dashboard_form" name="dashboard_form" action="" method="post" enctype="multipart/form-data">
 
+		<?php if($userRole == 2) { ?>
 		<!-- Row start -->
 		<p class="heading-list wow fadeInUp">Request</p>
+		
 		<div class="row gutters">
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card  wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -97,7 +105,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 				</div>
 			</div>
 
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card  wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -118,7 +126,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 		<!-- Row start -->
 		<p class="heading-list wow fadeInUp">Loan</p>
 		<div class="row gutters">
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card  wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -128,7 +136,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 							<div class="col-12">
 								<div class="form-group text-center">
 									<p class='counter-head wow fadeIn'>Today's Issued Loan</p>
-									<p class="counter wow fadeInUp">8</p>
+									<p class="counter wow fadeInUp"><?php echo $getValues['today_loan']; ?></p>
 								</div>
 							</div>
 						</div>
@@ -136,7 +144,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 				</div>
 			</div>
 
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card  wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -146,7 +154,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 							<div class="col-12">
 								<div class="form-group text-center">
 									<p class='counter-head wow fadeIn'>Month's Issued Loan</p>
-									<p class="counter wow fadeInUp">40</p>
+									<p class="counter wow fadeInUp"><?php echo $getValues['month_loan']; ?></p>
 								</div>
 							</div>
 						</div>
@@ -157,7 +165,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 		<!-- Row start -->
 		<p class="heading-list wow fadeInUp">Collection</p>
 		<div class="row gutters">
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -167,7 +175,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 							<div class="col-12">
 								<div class="form-group text-center">
 									<p class='counter-head wow fadeIn'>Today's No of Collection</p>
-									<p class="counter wow fadeInUp">12</p>
+									<p class="counter wow fadeInUp"><?php echo $getValues['today_collection_no']; ?></p>
 								</div>
 							</div>
 						</div>
@@ -175,7 +183,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 				</div>
 			</div>
 
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -185,14 +193,14 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 							<div class="col-12">
 								<div class="form-group text-center">
 									<p class='counter-head wow fadeIn'>Month's No of Collection</p>
-									<p class="counter wow fadeInUp">115</p>
+									<p class="counter wow fadeInUp"><?php echo $getValues['month_collection_no']; ?></p>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -202,7 +210,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 							<div class="col-12">
 								<div class="form-group text-center">
 									<p class='counter-head wow fadeIn'>Today's Collection</p>
-									<p class="counter wow fadeInUp">15,750</p>
+									<p class="counter wow fadeInUp"><?php echo $getValues['today_collection']; ?></p>
 								</div>
 							</div>
 						</div>
@@ -210,7 +218,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 				</div>
 			</div>
 
-			<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
 				<div class="card wow">
 					<div class="card-header">
 						<div class="card-title"></div>
@@ -220,7 +228,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 							<div class="col-12">
 								<div class="form-group text-center">
 									<p class='counter-head wow fadeIn'>Month's Collection</p>
-									<p class="counter wow fadeInUp">48,100</p>
+									<p class="counter wow fadeInUp"><?php echo $getValues['month_collection']; ?></p>
 								</div>
 							</div>
 						</div>
@@ -228,7 +236,7 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 				</div>
 			</div>
 		</div>
-
+		<?php } ?>
 	</form>
 </div>
 
