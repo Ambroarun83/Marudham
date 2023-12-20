@@ -63,8 +63,18 @@ if (isset($_POST['search'])) {
 
         $query .= "
         and (cp.cus_id LIKE '%" . $_POST['search'] . "%'
-            OR cp.cus_name LIKE '%" . $_POST['search'] . "%'
-            OR cp.mobile1 LIKE '%" . $_POST['search'] . "%' ) ";
+            OR cp.cus_name LIKE '%" . $_POST['search'] . "%' ";
+            
+        // $qry = $mysqli->query("SELECT area_id FROM area_list_creation where area_name LIKE '%".$_POST['search']."%' ");
+        // $search1 = $qry->fetch_assoc()['area_id']??'';
+        // $qry = $mysqli->query("SELECT sub_area_id FROM sub_area_list_creation where sub_area_name LIKE '%".$_POST['search']."%' ");
+        // $search2 = $qry->fetch_assoc()['sub_area_id']??'';
+
+        // if($search1 !=''){$query .= " OR cp.area_confirm_area LIKE '%" . $search1 . "%' ";}
+        // if($search2 !=''){$query .= " OR cp.area_confirm_subarea LIKE '%" . $search2 . "%' ";}
+        
+        $query .= " OR cp.mobile1 LIKE '%" . $_POST['search'] . "%' ) ";
+
     }
 }
 if ($userid == 1 || $role != '2') {

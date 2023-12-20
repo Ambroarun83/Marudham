@@ -21,6 +21,15 @@ if($doc_rec_access == '0'){
     $query = "SELECT * FROM document_track where track_status != 5 ";
 }
 
+if(isset($_POST['search']) && $_POST['search'] != "")
+{
+
+    $qry = $con->query("SELECT cus_id from customer_register where customer_name LIKe '%".$_POST['search']."%' ");
+    $search1 = $qry->fetch_assoc()['cus_id'];
+    $query .= "
+        and (cus_id LIKE '%".$_POST['search']."%' OR cus_id LIKE '%".$search1."%') ";
+}
+
 $query1 = '';
 
 if ($_POST['length'] != -1) {

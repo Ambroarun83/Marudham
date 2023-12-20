@@ -2,31 +2,33 @@
 @session_start();
 include('..\ajaxconfig.php');
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
     $sql = $con->query("SELECT ag_id FROM user where user_id = '$userid'");
     $login_user_type = $sql->fetch_assoc()['ag_id'];
-    if($login_user_type == null or $login_user_type == '') {$login_user_type = 0;}
+    if ($login_user_type == null or $login_user_type == '') {
+        $login_user_type = 0;
+    }
 }
-if($userid != 1){
-    
+if ($userid != 1) {
+
     $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while($rowuser = $userQry->fetch_assoc()){
+    while ($rowuser = $userQry->fetch_assoc()) {
         $group_id = $rowuser['group_id'];
     }
-    $group_id = explode(',',$group_id);
+    $group_id = explode(',', $group_id);
     $sub_area_list = array();
-    foreach($group_id as $group){
+    foreach ($group_id as $group) {
         $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
         $row_sub = $groupQry->fetch_assoc();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
     foreach ($sub_area_list as $subarray) {
-        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+        $sub_area_ids = array_merge($sub_area_ids, explode(',', $subarray));
     }
     $sub_area_list = array();
-    $sub_area_list = implode(',',$sub_area_ids);
+    $sub_area_list = implode(',', $sub_area_ids);
 }
 
 $column = array(
@@ -34,9 +36,9 @@ $column = array(
     'dor',
     'cus_id',
     'cus_name',
-    'cus_name',//for branch
-    'cus_name',//for group
-    'cus_name',//for line
+    'cus_name', //for branch
+    'cus_name', //for group
+    'cus_name', //for line
     'area',
     'sub_area',
     'loan_category',
@@ -51,37 +53,34 @@ $column = array(
     'status'
 );
 
-if($userid == 1){
+if ($userid == 1) {
     $query = 'SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13 )'; //2-in approval, 3-in ack,6-cancel approval, 7-cancel_ack,13-in issue.
-}else{
-    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13) and sub_area IN ($sub_area_list) ";//show only moved to Approval list and Approve the verification.
+} else {
+    $query = "SELECT * FROM in_verification where status = 0 and (cus_status = 2 or cus_status = 3 or cus_status = 6 or cus_status = 7 or cus_status = 13) and sub_area IN ($sub_area_list) "; //show only moved to Approval list and Approve the verification.
 }
 
-// if($_POST['search'] != "")
-// {
-//     if (isset($_POST['search'])) {
+if (isset($_POST['search']) && $_POST['search'] != "") {
 
-//         $query .= "
-//             and (req_id LIKE '%".$_POST['search']."%'
-//             OR dor LIKE '%".$_POST['search']."%'
-//             OR cus_id LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR area LIKE '%".$_POST['search']."%'
-//             OR sub_area LIKE '%".$_POST['search']."%'
-//             OR loan_category LIKE '%".$_POST['search']."%'
-//             OR sub_category LIKE '%".$_POST['search']."%'
-//             OR loan_amt LIKE '%".$_POST['search']."%'
-//             OR user_type LIKE '%".$_POST['search']."%'
-//             OR user_name LIKE '%".$_POST['search']."%'
-//             OR agent_id LIKE '%".$_POST['search']."%'
-//             OR responsible LIKE '%".$_POST['search']."%'
-//             OR cus_data LIKE '%".$_POST['search']."%'
-//             OR cus_status LIKE '%".$_POST['search']."%' ) ";
-//     }
-// }
+    $query .= "
+            and (req_id LIKE '%" . $_POST['search'] . "%'
+            OR dor LIKE '%" . $_POST['search'] . "%'
+            OR cus_id LIKE '%" . $_POST['search'] . "%'
+            OR cus_name LIKE '%" . $_POST['search'] . "%'
+            OR cus_name LIKE '%" . $_POST['search'] . "%'
+            OR cus_name LIKE '%" . $_POST['search'] . "%'
+            OR cus_name LIKE '%" . $_POST['search'] . "%'
+            OR area LIKE '%" . $_POST['search'] . "%'
+            OR sub_area LIKE '%" . $_POST['search'] . "%'
+            OR loan_category LIKE '%" . $_POST['search'] . "%'
+            OR sub_category LIKE '%" . $_POST['search'] . "%'
+            OR loan_amt LIKE '%" . $_POST['search'] . "%'
+            OR user_type LIKE '%" . $_POST['search'] . "%'
+            OR user_name LIKE '%" . $_POST['search'] . "%'
+            OR agent_id LIKE '%" . $_POST['search'] . "%'
+            OR responsible LIKE '%" . $_POST['search'] . "%'
+            OR cus_data LIKE '%" . $_POST['search'] . "%'
+            OR cus_status LIKE '%" . $_POST['search'] . "%' ) ";
+}
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 } else {
@@ -112,9 +111,9 @@ foreach ($result as $row) {
     $sub_array   = array();
 
     $sub_array[] = $sno;
-    
-    $sub_array[] = date('d-m-Y',strtotime($row['dor']));
-    
+
+    $sub_array[] = date('d-m-Y', strtotime($row['dor']));
+
     // $cus_id = $row['cus_id'];
     // $cus_id = preg_replace('/\D/', '', $cus_id);
     // $cus_id = implode(' ', str_split($cus_id, 4));
@@ -122,19 +121,19 @@ foreach ($result as $row) {
 
     $sub_array[] = $row['cus_id'];
     $sub_array[] = $row['cus_name'];
-    
+
     //Area Name fetch
     $area_id = $row['area'];
     $qry = $mysqli->query("SELECT * FROM area_list_creation where area_id = $area_id ");
     $row1 = $qry->fetch_assoc();
     $area_name = $row1['area_name'];
-    
+
     //Sub Area Name Fetch
     $sub_area_id = $row['sub_area'];
     $qry = $mysqli->query("SELECT * FROM sub_area_list_creation where sub_area_id = $sub_area_id ");
     $row1 = $qry->fetch_assoc();
     $sub_area_name = $row1['sub_area_name'];
-    
+
     //Group name Fetch
     $qry = $mysqli->query("SELECT * FROM area_group_mapping where FIND_IN_SET($sub_area_id,sub_area_id)");
     $row1 = $qry->fetch_assoc();
@@ -142,10 +141,10 @@ foreach ($result as $row) {
     $branch_id = $row1['branch_id'];
 
     //Branch name Fetch
-    $getbranchQry = "SELECT * from branch_creation where branch_id = '".$branch_id."' and status = 0 ";
-    $res=$con->query($getbranchQry);
-    $row1=$res->fetch_assoc();
-    $branch_name = $row1["branch_name"];        
+    $getbranchQry = "SELECT * from branch_creation where branch_id = '" . $branch_id . "' and status = 0 ";
+    $res = $con->query($getbranchQry);
+    $row1 = $res->fetch_assoc();
+    $branch_name = $row1["branch_name"];
 
     //Line name Fetch
     $qry = $mysqli->query("SELECT * FROM area_line_mapping where FIND_IN_SET($sub_area_id,sub_area_id)");
@@ -157,74 +156,88 @@ foreach ($result as $row) {
     $sub_array[] = $line_name;
     $sub_array[] = $area_name;
     $sub_array[] = $sub_area_name;
-    
 
-    $loanCategoryName = $row['loan_category'];   
-    $getqry = "SELECT * FROM loan_category_creation WHERE loan_category_creation_id ='".strip_tags($loanCategoryName)."' ";
+
+    $loanCategoryName = $row['loan_category'];
+    $getqry = "SELECT * FROM loan_category_creation WHERE loan_category_creation_id ='" . strip_tags($loanCategoryName) . "' ";
     $res12 = $con->query($getqry);
     $row12 = $res12->fetch_assoc();
-    $sub_array[] = $row12["loan_category_creation_name"];      
+    $sub_array[] = $row12["loan_category_creation_name"];
 
     $sub_array[] = $row['sub_category'];
-    
+
     $sub_array[] = moneyFormatIndia($row['loan_amt']);
     $sub_array[] = $row['user_type'];
     $sub_array[] = $row['user_name'];
-    
+
     $ag_id = $row['agent_id'];
-    if($ag_id != ''){
+    if ($ag_id != '') {
 
         $qry = $mysqli->query("SELECT * FROM agent_creation where ag_id = $ag_id ");
         $row1 = $qry->fetch_assoc();
         $sub_array[] = $row1['ag_name'];
-    }else{
+    } else {
         $sub_array[] = '';
     }
 
-    if($row['responsible'] == '0'){$sub_array[] = 'Yes';}else{$sub_array[] = '';}
+    if ($row['responsible'] == '0') {
+        $sub_array[] = 'Yes';
+    } else {
+        $sub_array[] = '';
+    }
 
     $sub_array[] = $row['cus_data'];
     $id = $row['req_id'];
-    
-    $cus_status = $row['cus_status'];
-    if($cus_status == '2'){
-       
-        $sub_array[] = "<button class='btn btn-outline-secondary move_acknowledgement' value='$id'><span class = 'icon-arrow_forward'></span></button>";
 
-    }elseif($cus_status == '3'){$sub_array[] = 'In Acknowledgement';}else
-    if($cus_status == '13'){$sub_array[] = 'In Issue';}else
-    if($cus_status == '6'){$sub_array[] = 'Cancel - Approval';}else
-    if($cus_status == '7'){$sub_array[] = 'Cancel - Acknowledgement';}else
-    if($cus_status == '14'){$sub_array[] = 'Issued';}
+    $cus_status = $row['cus_status'];
+    if ($cus_status == '2') {
+
+        $sub_array[] = "<button class='btn btn-outline-secondary move_acknowledgement' value='$id'><span class = 'icon-arrow_forward'></span></button>";
+    } elseif ($cus_status == '3') {
+        $sub_array[] = 'In Acknowledgement';
+    } else
+    if ($cus_status == '13') {
+        $sub_array[] = 'In Issue';
+    } else
+    if ($cus_status == '6') {
+        $sub_array[] = 'Cancel - Approval';
+    } else
+    if ($cus_status == '7') {
+        $sub_array[] = 'Cancel - Acknowledgement';
+    } else
+    if ($cus_status == '14') {
+        $sub_array[] = 'Issued';
+    }
 
     $id          = $row['req_id'];
     $user_type = $row['user_type'];
     $cus_id = $row['cus_id'];
-    
-    $action="<div class='dropdown'>
+
+    $action = "<div class='dropdown'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
     <div class='dropdown-content'>";
-    if($cus_status == '2') {
+    if ($cus_status == '2') {
         $action .= "<a href='verification&upd=$id&pge=2' class='customer_profile' value='$id' > View Verification</a>
         <a href='#' data-reqid = '$id' class='cancelapproval'>Cancel </a>";
     }
-    if($cus_status == '6') {
+    if ($cus_status == '6') {
         $action .= "<a href='verification&del=$id'class='removeapproval'>Remove Verification</a>";
     }
-    if($login_user_type == 0 or $userid == 1){
-        $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
+    if ($login_user_type == 0 or $userid == 1) {
+        $action .= "<a href='' data-value ='" . $cus_id . "' data-value1 = '$id' class='customer-status' data-toggle='modal' data-target='.customerstatus'>Customer Status</a>";
         // $action .= "<a href='' data-value ='".$cus_id."' data-value1 = '$id' class='loan-summary' data-toggle='modal' data-target='.loansummary'>Loan Summary</a>";
     }
 
-    
+
     $action .= "</div></div>";
-    
+
     $sub_array[] = $action;
     $data[]      = $sub_array;
-    $sno = $sno+1;
+    $sno = $sno + 1;
 }
 //Format number in Indian Format
-function moneyFormatIndia($num) {
+function moneyFormatIndia($num)
+{
     $explrestunits = "";
     if (strlen($num) > 3) {
         $lastthree = substr($num, strlen($num) - 3, strlen($num));
@@ -261,5 +274,3 @@ $output = array(
 );
 
 echo json_encode($output);
-
-?>

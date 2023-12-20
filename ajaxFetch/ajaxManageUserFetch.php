@@ -16,34 +16,32 @@ $column = array(
 );
 
 $query = "SELECT * FROM user WHERE user_id != 1 ";
-// if($_POST['search'] != "")
-// {
-//     if (isset($_POST['search'])) {
+if(isset($_POST['search']) && $_POST['search'] != "")
+{
 
-//         if($_POST['search']=="Active" or $_POST['search']=="active")
-//         {
-//             $query .="and status=0 ";
+        if($_POST['search']=="Active" or $_POST['search']=="active")
+        {
+            $query .="and status=0 ";
             
-//         }
-//         else if($_POST['search']=="Inactive" or $_POST['search']=="inactive")
-//         {
-//             $query .="and status=1 ";
-//         }
+        }
+        else if($_POST['search']=="Inactive" or $_POST['search']=="inactive")
+        {
+            $query .="and status=1 ";
+        }
 
-//         else{   
-//             $query .= "
-//                 and (role LIKE '%".$_POST['search']."%'
-//                 OR role_type LIKE '%".$_POST['search']."%'
-//                 OR fullname LIKE '%".$_POST['search']."%'
-//                 OR user_name LIKE '%".$_POST['search']."%'
-//                 OR company_id LIKE '%".$_POST['search']."%'
-//                 OR branch_id LIKE '%".$_POST['search']."%'
-//                 OR line_id LIKE '%".$_POST['search']."%'
-//                 OR group_id LIKE '%".$_POST['search']."%') ";
-//         }
-//     }
-//     // print_r($query);
-// }
+        else{   
+            $query .= "
+                and (role LIKE '%".$_POST['search']."%'
+                OR role_type LIKE '%".$_POST['search']."%'
+                OR fullname LIKE '%".$_POST['search']."%'
+                OR user_name LIKE '%".$_POST['search']."%'
+                OR company_id LIKE '%".$_POST['search']."%'
+                OR branch_id LIKE '%".$_POST['search']."%'
+                OR line_id LIKE '%".$_POST['search']."%'
+                OR group_id LIKE '%".$_POST['search']."%') ";
+        }
+    // print_r($query);
+}
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 } else {

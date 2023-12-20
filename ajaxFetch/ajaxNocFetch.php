@@ -50,7 +50,15 @@ if($userid == 1){
     where ii.status = 0 and ii.cus_status = 21 and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";//show only issued customers within the same lines of user. 
 }
 
+if(isset($_POST['search']) && $_POST['search'] != "")
+{
 
+    $query .= "
+        and (cp.cus_id LIKE '%".$_POST['search']."%'
+        OR cp.cus_name LIKE '%".$_POST['search']."%'
+        OR cp.area_line LIKE '%".$_POST['search']."%'
+        OR cp.mobile1 LIKE '%".$_POST['search']."%' ) ";
+}
 $query1 = '';
 
 if ($_POST['length'] != -1) {

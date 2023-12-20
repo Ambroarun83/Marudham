@@ -21,35 +21,32 @@ $column = array(
 
 $query = "SELECT * FROM branch_creation ";
 
-// if($_POST['search']!="")
-// {
-//     if (isset($_POST['search'])) {
+if(isset($_POST['search']) && $_POST['search']!="")
+{
+        if($_POST['search']=="Active")
+        {
+            $query .="WHERE status=0 "; 
+        }
+        else if($_POST['search']=="Inactive")
+        {
+            $query .="WHERE status=1 ";
+        }
 
-//         if($_POST['search']=="Active")
-//         {
-//             $query .="WHERE status=0 "; 
-//         }
-//         else if($_POST['search']=="Inactive")
-//         {
-//             $query .="WHERE status=1 ";
-//         }
-
-//         else{	
-//             $query .= "WHERE
+        else{	
+            $query .= "WHERE
             
-//             branch_id LIKE  '%".$_POST['search']."%'
-//             OR branch_code LIKE '%".$_POST['search']."%'
-//             OR company_name LIKE '%".$_POST['search']."%'
-//             OR branch_name LIKE '%".$_POST['search']."%'
-//             OR place LIKE '%".$_POST['search']."%'
-//             OR state LIKE '%".$_POST['search']."%'
-//             OR district LIKE '%".$_POST['search']."%'
-//             OR mobile_number LIKE '%".$_POST['search']."%'
-//             OR email_id LIKE '%".$_POST['search']."%'
-//             OR status LIKE '%".$_POST['search']."%' ";
-//         }
-//     }
-// }
+            branch_id LIKE  '%".$_POST['search']."%'
+            OR branch_code LIKE '%".$_POST['search']."%'
+            OR company_name LIKE '%".$_POST['search']."%'
+            OR branch_name LIKE '%".$_POST['search']."%'
+            OR place LIKE '%".$_POST['search']."%'
+            OR state LIKE '%".$_POST['search']."%'
+            OR district LIKE '%".$_POST['search']."%'
+            OR mobile_number LIKE '%".$_POST['search']."%'
+            OR email_id LIKE '%".$_POST['search']."%'
+            OR status LIKE '%".$_POST['search']."%' ";
+        }
+}
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
