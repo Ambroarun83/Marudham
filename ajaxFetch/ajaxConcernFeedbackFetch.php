@@ -47,6 +47,16 @@ if($userid == 1){
     $query = "SELECT * FROM `concern_creation` WHERE status = 1 ";// 
 }
 
+if (isset($_POST['search']) && $_POST['search'] != "") {
+
+    if (strtolower($_POST['search']) == 'pending') {$search1 = 'OR status = 0';}else if (strtolower($_POST['search']) == 'resolved') {$search1 = 'OR status = 1';}else{$search1 ='';}
+    $query .= "
+            and (com_code LIKE '%" . $_POST['search'] . "%'
+            OR com_date LIKE '%" . date('Y-m-d',strtotime($_POST['search'])) . "%' 
+            $search1 ) ";
+
+}
+
 $query1 = '';
 
 if ($_POST['length'] != -1) {

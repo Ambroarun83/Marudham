@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 19, 2023 at 02:17 PM
+-- Generation Time: Dec 20, 2023 at 01:52 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -656,9 +656,9 @@ INSERT INTO `branch_creation` (`branch_id`, `branch_code`, `branch_name`, `compa
 (1, 'M-101', 'Chetpet', '1', '9944430311', 'Chetpet', '', '', 'Chetpet', '606801', 'mcchetpet@gmail.com', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', 0, 1, NULL, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34'),
 (2, 'M-102', 'Uthiramerur', '1', '9944430322', 'No 26', '', '', 'Uthiramerur', '603406', 'mcuthiramerur@gmail.com', '', 'TamilNadu', 'Kancheepuram', 'Kancheepuram', 0, 1, 1, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34'),
 (3, 'M-103', 'Vandavasi', '1', '9944430300', 'NO.25', '', '', 'Vandavasi', '604408', 'marudhamcapitals@gmail.com', '', 'TamilNadu', 'Tiruvannamalai', 'Thiruvannamalai', 0, 1, 1, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34'),
-(4, 'M-104', 'Polur', '2', '9842398422', 'Polur', '', '984398422', 'Tiruvannamalai road', '632601', 'polur@marudhamcapitals.com', '0442102103', 'TamilNadu', 'Tiruvannamalai', 'Polur', 0, 1, 1, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34'),
-(6, 'R-106', 'R Uzhavan Vsi', '4', '994430300', '25 Gandhi road Vandavasi', '', '994430300', 'vandavasi', '604408', 'Ruzhavan@gmail.com', '0418222222', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 0, 1, 1, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34'),
-(7, 'M-107', 'Vandavasi', '5', '9944430300', '25 Gandhi road Vandavasi', '', '9944430300', 'Vandavasi', '604408', 'www.vsimarudhamgolds.com', '0418222222', 'TamilNadu', 'Tiruvannamalai', 'Thiruvannamalai', 0, 1, NULL, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34');
+(4, 'M-104', 'Polur', '1', '9842398422', 'Polur', '', '984398422', 'Tiruvannamalai road', '632601', 'polur@marudhamcapitals.com', '0442102103', 'TamilNadu', 'Tiruvannamalai', 'Polur', 0, 1, 1, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34'),
+(6, 'R-106', 'R Uzhavan Vsi', '1', '994430300', '25 Gandhi road Vandavasi', '', '994430300', 'vandavasi', '604408', 'Ruzhavan@gmail.com', '0418222222', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', 0, 1, 1, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34'),
+(7, 'M-107', 'Vandavasi', '1', '9944430300', '25 Gandhi road Vandavasi', '', '9944430300', 'Vandavasi', '604408', 'www.vsimarudhamgolds.com', '0418222222', 'TamilNadu', 'Tiruvannamalai', 'Thiruvannamalai', 0, 1, NULL, NULL, '2023-06-30 10:25:34', '2023-06-30 10:25:34');
 
 -- --------------------------------------------------------
 

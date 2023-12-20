@@ -2,31 +2,31 @@
 @session_start();
 include('..\ajaxconfig.php');
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
 }
-if($userid != 1){
-    
+if ($userid != 1) {
+
     $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while($rowuser = $userQry->fetch_assoc()){
+    while ($rowuser = $userQry->fetch_assoc()) {
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
         $staff_id = $rowuser['staff_id'];
     }
 
-    $line_id = explode(',',$line_id);
+    $line_id = explode(',', $line_id);
     $sub_area_list = array();
-    foreach($line_id as $line){
+    foreach ($line_id as $line) {
         $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
         $row_sub = $lineQry->fetch_assoc();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
     foreach ($sub_area_list as $subarray) {
-        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+        $sub_area_ids = array_merge($sub_area_ids, explode(',', $subarray));
     }
     $sub_area_list = array();
-    $sub_area_list = implode(',',$sub_area_ids);
+    $sub_area_list = implode(',', $sub_area_ids);
 }
 
 $column = array(
@@ -41,43 +41,27 @@ $column = array(
     'cp.status'
 );
 
-if($userid == 1){
+if ($userid == 1) {
     $query = 'SELECT * FROM `concern_creation` WHERE status != 2'; // 
-}else{
-    $query = "SELECT * FROM `concern_creation` WHERE  status != 2 && staff_assign_to = '".strip_tags($staff_id)."'";// 
+} else {
+    $query = "SELECT * FROM `concern_creation` WHERE  status != 2 && staff_assign_to = '" . strip_tags($staff_id) . "'"; // 
 }
 // echo $query;
 
-// if($_POST['search'] != "")
-// {
-//     if (isset($_POST['search'])) {
+if (isset($_POST['search']) && $_POST['search'] != "") {
 
-//         $query .= "
-//             and (req_id LIKE '%".$_POST['search']."%'
-//             OR dor LIKE '%".$_POST['search']."%'
-//             OR cus_id LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR cus_name LIKE '%".$_POST['search']."%'
-//             OR area LIKE '%".$_POST['search']."%'
-//             OR sub_area LIKE '%".$_POST['search']."%'
-//             OR loan_category LIKE '%".$_POST['search']."%'
-//             OR sub_category LIKE '%".$_POST['search']."%'
-//             OR loan_amt LIKE '%".$_POST['search']."%'
-//             OR user_type LIKE '%".$_POST['search']."%'
-//             OR user_name LIKE '%".$_POST['search']."%'
-//             OR agent_id LIKE '%".$_POST['search']."%'
-//             OR responsible LIKE '%".$_POST['search']."%'
-//             OR cus_data LIKE '%".$_POST['search']."%'
-//             OR cus_status LIKE '%".$_POST['search']."%' ) ";
-//     }
-// }
-// if (isset($_POST['order'])) {
-//     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
-// } else {
-//     $query .= ' ';
-// }
+    if (strtolower($_POST['search']) == 'pending') {$search1 = 'OR status = 0';}else if (strtolower($_POST['search']) == 'resolved') {$search1 = 'OR status = 1';}else{$search1 ='';}
+    $query .= "
+            and (com_code LIKE '%" . $_POST['search'] . "%'
+            OR com_date LIKE '%" . date('Y-m-d',strtotime($_POST['search'])) . "%' 
+            $search1 ) ";
+
+}
+if (isset($_POST['order'])) {
+    $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
+} else {
+    $query .= ' ';
+}
 
 $query1 = '';
 
@@ -103,21 +87,21 @@ foreach ($result as $row) {
     $sub_array   = array();
 
     $sub_array[] = $sno;
-    
+
     $sub_array[] = $row['com_code'];
-    $sub_array[] = date('d-m-Y',strtotime($row['com_date']));
-    
+    $sub_array[] = date('d-m-Y', strtotime($row['com_date']));
+
     $branch_id = $row['branch_name'];
-    $qry = $mysqli->query("SELECT b.branch_name FROM branch_creation b  where b.branch_id = '".$branch_id."' ");
+    $qry = $mysqli->query("SELECT b.branch_name FROM branch_creation b  where b.branch_id = '" . $branch_id . "' ");
     $row1 = $qry->fetch_assoc();
     $sub_array[] = $row1['branch_name'];
-    
+
     //Staff Name fetch
     $staff_id = $row['staff_assign_to'];
     $qry = $mysqli->query("SELECT staff_name FROM staff_creation where staff_id = $staff_id ");
     $row1 = $qry->fetch_assoc();
     $staff_name = $row1['staff_name'];
-    
+
     $sub_array[] = $staff_name;
 
     //Concern Subject Name Fetch
@@ -125,28 +109,30 @@ foreach ($result as $row) {
     $qry = $mysqli->query("SELECT concern_subject FROM concern_subject where concern_sub_id = $com_sub_id ");
     $row1 = $qry->fetch_assoc();
     $con_sub = $row1['concern_subject'];
-    
+
     $sub_array[] = $con_sub;
 
     //Status
     $con_sts = $row['status'];
-    if($con_sts == 0){  $sub_array[] = 'Pending'; }
-    if($con_sts == 1){  $sub_array[] = 'Resolved'; }
-
-    $id= $row['id'];
-
-    if($con_sts == 0){
-        $action="<a href='concern_solution&upd=$id' title='Add Solution' >  <span class='icon-border_color' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
+    if ($con_sts == 0) {
+        $sub_array[] = 'Pending';
     }
-    else if($con_sts == 1){
-        $action="<a href='concern_solution_view&upd=$id&pageId=2' title='View Solution' >  <span class='icon-eye' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
-        
+    if ($con_sts == 1) {
+        $sub_array[] = 'Resolved';
+    }
+
+    $id = $row['id'];
+
+    if ($con_sts == 0) {
+        $action = "<a href='concern_solution&upd=$id' title='Add Solution' >  <span class='icon-border_color' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
+    } else if ($con_sts == 1) {
+        $action = "<a href='concern_solution_view&upd=$id&pageId=2' title='View Solution' >  <span class='icon-eye' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
     }
 
     $sub_array[] = $action;
 
     $data[]      = $sub_array;
-    $sno = $sno+1;
+    $sno = $sno + 1;
 }
 
 function count_all_data($connect)
@@ -167,5 +153,3 @@ $output = array(
 );
 
 echo json_encode($output);
-
-?>

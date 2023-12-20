@@ -31,6 +31,18 @@ if($userid == 1){
 }else{
     $query = "SELECT * FROM customer_register  WHERE cus_status >= 13 && sub_area IN ($sub_area_list)";
 }
+
+if(isset($_POST['search']) && $_POST['search'] != "")
+{
+
+    $query .= "
+        and (cus_id LIKE '%".$_POST['search']."%'
+        OR customer_name LIKE '%".$_POST['search']."%'
+        OR area_group LIKE '%".$_POST['search']."%'
+        OR area_line LIKE '%".$_POST['search']."%'
+        OR mobile1 LIKE '%".$_POST['search']."%' ) ";
+}
+
 $query .= " GROUP BY cus_id ";
 
 $query1 = '';
