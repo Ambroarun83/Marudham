@@ -122,7 +122,7 @@
 </div>
 <!-- Modal for Personal Info   -->
 <div class="modal fade" id="personalInfoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-lg " role="document">
+	<div class="modal-dialog modal-lg " role="document" style="height: 90vh;width:300vh;">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Personal Info</h5>
@@ -146,6 +146,9 @@
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="dueChartTitle"> Due Chart</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<div id="dueChartTableDiv">
@@ -159,10 +162,13 @@
 </div>
 <!-- Modal for Penalty Chart -->
 <div class="modal fade PenaltyChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg" style="height: 90vh;width:300vh;">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title"> Penalty Chart</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<div id="penaltyChartTableDiv">
@@ -176,10 +182,13 @@
 </div>
 <!-- Modal for Fine Chart -->
 <div class="modal fade collectionChargeChart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg" style="height: 90vh;width:300vh;">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title"> Fine Chart</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
 			<div class="modal-body">
 				<div id="collectionChargeDiv">
@@ -193,7 +202,7 @@
 </div>
 <!-- Modal for Commitment Chart -->
 <div class="modal fade" id="commitmentChart" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-lg " role="document">
+	<div class="modal-dialog modal-lg " role="document" style="height: 90vh;width:300vh;">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title">Commitment Chart</h5>
@@ -211,7 +220,7 @@
 
 <!-- Modal for Loan Summary -->
 <div class="modal fade loansummarychart" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
+	<div class="modal-dialog modal-lg" style="height: 90vh;width:300vh;">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="myLargeModalLabel"> Loan Summary </h5>

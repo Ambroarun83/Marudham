@@ -121,7 +121,7 @@
 			'ajax': {
 			'url': 'ajaxFetch/ajaxDocumentTrackFetch.php',
 			'data': function(data) {
-				var search = document.querySelector('#search').value;
+				var search = $('input[type=search]').val();
 				data.search = search;
 			}
 			},
