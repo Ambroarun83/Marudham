@@ -998,6 +998,15 @@ function getRoleBasedDetails(role){
         $('.director').hide();
 
         getStaffTypeDropdown();
+    }else{
+        $(".role_type").hide();
+        $('.agent').hide();
+        $('.staff').hide();
+        $('.director').hide();
+        $(".loancat_div").hide();
+        $('.line_div').hide();
+        $('.agent_div').hide();
+        $("#role_type").empty();
     }
 }
 

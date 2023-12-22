@@ -230,13 +230,18 @@ function moneyFormatIndia($num)
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
             WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
-            AND (
-                (MONTH(DATE(c.coll_date)) = MONTH('$issued') AND YEAR(DATE(c.coll_date)) = YEAR('$issued')) OR
-                (MONTH(DATE(c.trans_date)) = MONTH('$issued') AND YEAR(DATE(c.trans_date)) = YEAR('$issued'))
-            )
-            OR (
-                (MONTH(DATE(c.coll_date)) >= MONTH('$issued') AND MONTH(DATE(c.coll_date)) < MONTH('$due_start_from') ) OR
-                (MONTH(DATE(c.trans_date)) >= MONTH('$issued') AND MONTH(DATE(c.trans_date)) < MONTH('$due_start_from') )
+            AND(
+                (
+                    ( MONTH(c.coll_date) >= MONTH('$issued') AND YEAR(c.coll_date) = YEAR('$issued') )
+                    AND 
+                    ( MONTH(c.coll_date) < MONTH('$due_start_from') AND YEAR(c.coll_date) = YEAR('$due_start_from') )
+                ) 
+                OR
+                (
+                    ( MONTH(c.trans_date) >= MONTH('$issued') AND YEAR(c.coll_date) = YEAR('$issued') )
+                    AND 
+                    ( MONTH(c.trans_date) < MONTH('$due_start_from') AND YEAR(c.coll_date) = YEAR('$due_start_from') )
+                )
             )");
         } else
         if ($loanFrom['due_method_scheme'] == '2') {

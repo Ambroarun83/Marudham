@@ -16,10 +16,10 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
 
 <style>
-	.card{
-		/* background-color: #02c7b5;
-		color: white; */
-	}
+	/* .card{
+		background-color: #02c7b5;
+		color: white; 
+	} */
 	.heading-list {
 		font-size: 2rem;
 		font-weight: bold;
