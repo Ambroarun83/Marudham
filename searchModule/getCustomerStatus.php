@@ -54,6 +54,9 @@ if ($result->num_rows > 0) {
             '7' => ['status' => 'Issue', 'sub_status' => 'Issued'],
             '8' => ['status' => 'Request', 'sub_status' => 'Revoked'],
             '9' => ['status' => 'Verification', 'sub_status' => 'Revoked'],
+            '10' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
+            '11' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
+            '12' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
             '13' => ['status' => 'Loan Issue', 'sub_status' => 'In Issue'],
             '14' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
             '15' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
@@ -63,7 +66,7 @@ if ($result->num_rows > 0) {
             '21' => ['status' => 'Closed', 'sub_status' => 'In Closed']
         ];
 
-        if ($cus_status != '10' && $cus_status != '11') {
+        // if ($cus_status != '10' && $cus_status != '11') {
             if (array_key_exists($cus_status, $statusMapping)) {
                 $records[$i]['status'] = $statusMapping[$cus_status]['status'];
                 $records[$i]['sub_status'] = $statusMapping[$cus_status]['sub_status'];
@@ -74,7 +77,7 @@ if ($result->num_rows > 0) {
                     $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts']];
                 }
             }
-        }
+        // }
 
         //for document status
         if ($cus_status >= 14 && $cus_status < 21) {

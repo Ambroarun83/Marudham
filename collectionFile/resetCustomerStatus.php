@@ -127,7 +127,7 @@ foreach ($req_arr as $req_id) {
     }
 
     //Pending Check
-    if ($response['pending'] > 0) {
+    if ($response['pending'] > 0 && $response['count_of_month'] != 0) {
         $response['pending_customer'][$i] = true;
     } else {
         $response['pending_customer'][$i] = false;
@@ -209,6 +209,8 @@ function calculateOthers($loan_arr, $response, $con, $req_id)
             $start_date_obj->add($interval);
             $count++; //Count represents how many months are exceeded
         }
+
+        $response['count_of_month'] = $count;
         //To check over due, if current date is greater than maturity minth, then i will be OD
         if ($current_date_obj > $end_date_obj) {
             $response['od'] = true;

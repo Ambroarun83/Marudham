@@ -17,6 +17,9 @@ if(isset($_POST["due_nil_sts"])){
 if(isset($_POST["closed_sts"])){
     $closed_sts = explode(',',$_POST["closed_sts"]);
 }
+if(isset($_POST["bal_amt"])){
+    $bal_amt = explode(',',$_POST["bal_amt"]);
+}
 
 function moneyFormatIndia($num) {
     $explrestunits = "";

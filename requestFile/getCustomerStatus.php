@@ -122,6 +122,7 @@ function getCollectionStatus($con,$cus_id,$user_id){
     $od_sts = isset($_POST["od_sts"]) ? explode(',', $_POST["od_sts"]) : null;
     $due_nil_sts = isset($_POST["due_nil_sts"]) ? explode(',', $_POST["due_nil_sts"]) : null;
     $closed_sts = isset($_POST["closed_sts"]) ? explode(',', $_POST["closed_sts"]) : null;
+    $bal_amt = isset($_POST["bal_amt"]) ? explode(',', $_POST["bal_amt"]) : null;
     
     $retVal = '';
 
@@ -134,7 +135,7 @@ function getCollectionStatus($con,$cus_id,$user_id){
     $curdate = date('Y-m-d');
     while ($row = $run->fetch_assoc()) {
         $i = 1;
-        if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate)) ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+        if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
             if($row['cus_status'] == '15'){
                 $retVal = 'Error';
             }elseif($row['cus_status']== '16'){

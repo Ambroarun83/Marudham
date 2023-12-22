@@ -111,7 +111,7 @@ function moneyFormatIndia($num) {
             </td> <!-- Status -->
             <td>
                 <?php 
-                if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate)) ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+                if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
                             if($row['cus_status'] == '15'){
                                 echo 'Error';
                             }elseif($row['cus_status']== '16'){
