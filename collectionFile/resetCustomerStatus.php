@@ -322,7 +322,7 @@ function calculateOthers($loan_arr, $response, $con, $req_id)
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = 0;
 
             if ($loan_arr['loan_type'] == 'interest') { //for first month payable will be zero in interest loan
                 $response['payable'] =  0;
@@ -362,6 +362,7 @@ function calculateOthers($loan_arr, $response, $con, $req_id)
             $start_date_obj->add($interval);
             $count++; //Count represents how many months are exceeded
         }
+        $response['count_of_month'] = $count;
         //To check over due, if current date is greater than maturity minth, then i will be OD
         if ($current_date_obj > $end_date_obj) {
             $response['od'] = true;
@@ -447,7 +448,7 @@ function calculateOthers($loan_arr, $response, $con, $req_id)
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = 0;
         }
     } elseif ($loan_arr['due_method_scheme'] == '3') {
         //If Due method is Daily, Calculate penalty by checking the month has ended or not
@@ -481,6 +482,8 @@ function calculateOthers($loan_arr, $response, $con, $req_id)
             $start_date_obj->add($interval);
             $count++; //Count represents how many months are exceeded
         }
+        $response['count_of_month'] = $count;
+        
         //To check over due, if current date is greater than maturity minth, then i will be OD
         if ($current_date_obj > $end_date_obj) {
             $response['od'] = true;
@@ -566,7 +569,7 @@ function calculateOthers($loan_arr, $response, $con, $req_id)
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = 0;
         }
     }
     if ($response['pending'] < 0) {
@@ -755,7 +758,7 @@ function checkStatusOfCustomer($response, $loan_arr, $cus_id, $con)
                     if ($response['closed_customer'][$i] == true) {
                         $response['follow_cus_sts'] = "Move To Close";
                     } else {
-                        $response['follow_cus_sts'] = 'Currents';
+                        $response['follow_cus_sts'] = 'Current';
                     }
                 }
             }
