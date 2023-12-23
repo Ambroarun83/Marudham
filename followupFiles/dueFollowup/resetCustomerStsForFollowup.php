@@ -129,10 +129,10 @@ foreach($req_arr as $req_id){
     }
     
     //Pending Check
-    if($response['pending'] > 0){
-        $response['pending_customer'][$i]=true;
-    }else{
-        $response['pending_customer'][$i]=false;
+    if ($response['pending'] > 0 && $response['count_of_month'] != 0) {
+        $response['pending_customer'][$i] = true;
+    } else {
+        $response['pending_customer'][$i] = false;
     }
     //OD check
     if( $response['od'] == true){
@@ -206,6 +206,8 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             $start_date_obj->add($interval);
             $count++; //Count represents how many months are exceeded
         }
+
+        $response['count_of_month'] = $count;
         //To check over due, if current date is greater than maturity minth, then i will be OD
         if($current_date_obj > $end_date_obj){
             $response['od'] = true;
@@ -303,7 +305,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = 0;
 
             if($loan_arr['loan_type'] == 'interest'){//for first month payable will be zero in interest loan
                 $response['payable'] =  0;
@@ -345,6 +347,8 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             $start_date_obj->add($interval);
             $count++; //Count represents how many months are exceeded
         }
+        $response['count_of_month'] = $count;
+
         //To check over due, if current date is greater than maturity minth, then i will be OD
         if($current_date_obj > $end_date_obj){
             $response['od'] = true;
@@ -415,7 +419,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = 0;
         }
 
     }elseif($loan_arr['due_method_scheme'] == '3'){
@@ -451,6 +455,8 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             $start_date_obj->add($interval);
             $count++; //Count represents how many months are exceeded
         }
+        $response['count_of_month'] = $count;
+        
         //To check over due, if current date is greater than maturity minth, then i will be OD
         if($current_date_obj > $end_date_obj){
             $response['od'] = true;
@@ -521,7 +527,7 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'];
+            $response['payable'] = 0;
         }
     }
     if($response['pending'] < 0){

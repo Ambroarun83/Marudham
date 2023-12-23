@@ -314,7 +314,7 @@ function calculateOthers($loan_arr,$response,$con){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
+            $response['payable'] = 0 ;
 
             if($loan_arr['loan_type'] == 'interest'){
                 $response['payable'] =  0;
@@ -429,7 +429,7 @@ function calculateOthers($loan_arr,$response,$con){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
+            $response['payable'] = 0 ;
         }
 
     }elseif($loan_arr['due_method_scheme'] == '3'){
@@ -534,7 +534,7 @@ function calculateOthers($loan_arr,$response,$con){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'] ;
+            $response['payable'] = 0;
         }
     }
 

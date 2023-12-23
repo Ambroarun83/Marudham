@@ -252,13 +252,19 @@ function moneyFormatIndia($num)
             LEFT JOIN user u ON c.insert_login_id = u.user_id
             WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='' OR c.princ_amt_track != '')
             AND (
-                (WEEK(c.coll_date) = WEEK('$issued') AND YEAR(c.coll_date) = YEAR('$issued')) OR
-                (WEEK(c.trans_date) = WEEK('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
-            )
-            OR (
-                (c.coll_date >= WEEK('$issued') AND c.coll_date < WEEK('$due_start_from') ) OR
-                (c.trans_date >= WEEK('$issued') AND c.trans_date < WEEK('$due_start_from') )
-            ) ");
+                    (
+                        (WEEK(c.coll_date) >= WEEK('$issued') AND YEAR(c.coll_date) = YEAR('$issued'))
+                        AND 
+                        (WEEK(c.coll_date) < WEEK('$due_start_from') AND YEAR(c.coll_date) = YEAR('$due_start_from'))
+                    ) 
+                    OR
+                    (
+                        (WEEK(c.trans_date) >= WEEK('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
+                        AND 
+                        (WEEK(c.trans_date) < WEEK('$due_start_from') AND YEAR(c.trans_date) = YEAR('$due_start_from'))
+                    )
+                )
+            ");
         } else
         if ($loanFrom['due_method_scheme'] == '3') {
             //Query For Day.
@@ -268,8 +274,8 @@ function moneyFormatIndia($num)
             LEFT JOIN user u ON c.insert_login_id = u.user_id
             WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
             AND (
-                (c.coll_date >= '$issued' AND c.coll_date < '$due_start_from' AND c.coll_date != '0000-00-00' ) OR
-                (c.trans_date >= '$issued' AND c.trans_date < '$due_start_from' AND c.trans_date != '0000-00-00' )
+                (DATE(c.coll_date) >= DATE('$issued') AND DATE(c.coll_date) < DATE('$due_start_from') AND DATE(c.coll_date) != '0000-00-00' ) OR
+                (DATE(c.trans_date) >= DATE('$issued') AND DATE(c.trans_date) < DATE('$due_start_from') AND DATE(c.trans_date) != '0000-00-00' )
             ) ");
         }
 

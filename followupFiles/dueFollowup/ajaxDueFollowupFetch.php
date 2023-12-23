@@ -34,14 +34,42 @@ if($userid != 1){
 if(isset($_POST['cus_id'])){
     $cus_id_arr = json_decode($_POST['cus_id'],true);
 }
-
 if( isset($_POST['follow_cus_sts'])){
     $follow_cus_sts = json_decode($_POST['follow_cus_sts'],true);
 }
+if( isset($_POST['payable'])){
+    $payable = json_decode($_POST['payable'],true);
+    $negativeIndexes = [];
+
+    if (is_array($payable)) {
+        foreach ($payable as $index => $value) {
+            if ($value <= 0) {
+                $negativeIndexes[] = $index;
+            }
+        }
+    }
+
+    // $negativeIndexes now contains the indexes of elements with values 0 or less than 0
+    // print_r($negativeIndexes);
+
+   // Remove the values at the negative indexes in the cus_id_arr
+    foreach ($negativeIndexes as $index) {
+        if (isset($cus_id_arr[$index])) {
+            unset($cus_id_arr[$index]);
+        }
+    }
+
+    // Re-index the array to reorder the keys after unset
+    $cus_id_arr = array_values($cus_id_arr);
+
+    // print_r($cus_id_arr);
+}
+
+
 
 $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
 acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id ";// 14 and 17 means collection entries, 17 removed from issue list
+where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and cp.area_confirm_subarea IN ($sub_area_list) and cp.cus_id IN (".implode(',',$cus_id_arr).") GROUP BY ii.cus_id ";// 14 and 17 means collection entries, 17 removed from issue list
 
 $statement = $connect->prepare($query);
 $statement->execute();
