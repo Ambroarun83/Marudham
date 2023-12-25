@@ -119,6 +119,7 @@ $qry = $con->query("
     <tbody>
         <?php
                 $i=1;
+                $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
                 while ($row = $qry->fetch_assoc()){
                     ?>
                     <tr>
@@ -180,8 +181,25 @@ $qry = $con->query("
                         <td><?php echo moneyFormatIndia($row['penalty_track']); ?></td>
                         <td><?php echo moneyFormatIndia($row['coll_charge_track']); ?></td>
                         <td><?php echo moneyFormatIndia($row['total_paid_track']); ?></td>
-                        <td><?php echo 'Present'; ?></td>
-                        <td><?php echo $statusObj[$row['cus_status']]; ?></td>
+
+                        <?php if($row['cus_status'] >= '20'){ ?>
+                            <td><?php echo 'Closed'; ?></td>
+                            <td><?php
+                                $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($row['req_id'])."' ");
+                                if($closedSts->num_rows > 0){
+                                    $closedStsrow = $closedSts->fetch_assoc();
+                                    $rclosed = $closedStsrow['closed_sts'];
+                                    $consider_lvl = $closedStsrow['consider_level'];
+                                    if($rclosed == '1'){echo 'Consider - '.$consider_lvl_arr[$consider_lvl]; }else
+                                    if($rclosed == '2'){echo 'Waiting List';}else
+                                    if($rclosed == '3'){echo 'Block List';}
+
+                                }else{ echo $statusObj[$row['cus_status']]; }
+                            ?></td>
+                        <?php }else{ ?>
+                            <td><?php echo 'Present'; ?></td>
+                            <td><?php echo $statusObj[$row['cus_status']]; ?></td>
+                        <?php } ?>
                     </tr>
                     <?php
                 }

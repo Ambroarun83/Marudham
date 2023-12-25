@@ -70,6 +70,7 @@ function moneyFormatIndia($num) {
 
         $i = 1;
         $curdate = date('Y-m-d');
+        $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
         while ($row = $run->fetch()) {
             //Show NOC button until closed_status submit so we check the count of closed status against the request id.
             $ii_req_id = $row["req_id"];
@@ -94,7 +95,9 @@ function moneyFormatIndia($num) {
             <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td> <!-- Balance Amount -->
             <td><?php if($row['cus_status'] < 20){echo 'Present';}else if($row['cus_status'] >= 20){ echo 'Closed';} ?>
             </td> <!-- Status -->
-            <td><?php if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0 ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+            <td><?php 
+                    if($row['cus_status'] <= '20'){
+                        if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0 ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
                             if($row['cus_status'] == '15'){
                                 echo 'Error';
                             }elseif($row['cus_status']== '16'){
@@ -140,7 +143,16 @@ function moneyFormatIndia($num) {
                                     }
                                 }
                             }
-                        } ?></td> <!-- Sub status -->
+                        }
+                    }else if($row['cus_status'] > 20){// if status is closed(21) or more than that(22), then show closed status
+                        $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
+                        $closedStsrow = $closedSts->fetch_assoc();
+                        $rclosed = $closedStsrow['closed_sts'];
+                        $consider_lvl = $closedStsrow['consider_level'];
+                        if($rclosed == '1'){echo 'Consider - '.$consider_lvl_arr[$consider_lvl]; } 
+                        if($rclosed == '2'){echo 'Waiting List';}
+                        if($rclosed == '3'){echo 'Block List';}
+                    } ?></td> <!-- Sub status -->
             <td>
                 <?php
                     if($closed_cnt== '0'){

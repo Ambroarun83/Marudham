@@ -168,7 +168,7 @@ function calculateOthers($loan_arr,$response,$con){
             $count = 0;
             $loandate_tillnow = 0;
             $countForPenalty = 0;
-
+            $penalty = 0;
             $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
             $start = DateTime::createFromFormat('Y-m', $due_start_from);
             $current = DateTime::createFromFormat('Y-m', $current_date);
@@ -195,7 +195,6 @@ function calculateOthers($loan_arr,$response,$con){
                 }
                 $row = $result->fetch_assoc();
                 $penalty_per = $row['overdue'] ; //get penalty percentage to insert
-                $penalty = round(($response['due_amt'] * $penalty_per) / 100 );
 
 
                 if($loan_arr['loan_type'] == 'interest' and $count == 0){ 
@@ -211,6 +210,7 @@ function calculateOthers($loan_arr,$response,$con){
                 if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
                     $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$penalty_date' and req_id = '$req_id' ");
                     if($checkPenalty->num_rows == 0){
+                        $penalty = round( ( ($response['due_amt'] * $penalty_per) / 100) + $penalty );
                         if($loan_arr['loan_type'] == 'emi'){
                             //if loan type is emi then directly apply penalty when month crossed and above conditions true
                             $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_date','$penalty',current_timestamp)");
@@ -341,6 +341,7 @@ function calculateOthers($loan_arr,$response,$con){
             $count = 0;
             $loandate_tillnow = 0;
             $countForPenalty = 0;
+            $penalty = 0;
 
             $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
             $start = DateTime::createFromFormat('Y-m-d', $due_start_from);
@@ -366,12 +367,12 @@ function calculateOthers($loan_arr,$response,$con){
                 }
                 $row = $result->fetch_assoc();
                 $penalty_per = $row['overdue'] ; //get penalty percentage to insert
-                $penalty = round(($response['due_amt'] * $penalty_per) / 100);
                 $count++; //Count represents how many months are exceeded
-
+                
                 if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){
                     $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$penalty_checking_date' and req_id = '$req_id' ");
                     if($checkPenalty->num_rows == 0){
+                        $penalty = round( ( ($response['due_amt'] * $penalty_per) / 100) + $penalty );
                         $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
                     }
                     $countForPenalty++;
@@ -448,6 +449,7 @@ function calculateOthers($loan_arr,$response,$con){
             $count = 0;
             $loandate_tillnow = 0;
             $countForPenalty = 0;
+            $penalty = 0;
 
             $dueCharge = ($due_amt) ? $due_amt : $int_amt_cal;
             $start = DateTime::createFromFormat('Y-m-d', $due_start_from);
@@ -472,12 +474,12 @@ function calculateOthers($loan_arr,$response,$con){
                 }
                 $row = $result->fetch_assoc();
                 $penalty_per = $row['overdue'] ; //get penalty percentage to insert
-                $penalty = round(($response['due_amt'] * $penalty_per) / 100);
                 $count++; //Count represents how many months are exceeded
-
+                
                 if($totalPaidAmt < $toPaytilldate && $collectioncount == 0 ){ 
                     $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$penalty_checking_date' and req_id = '$req_id' ");
                     if($checkPenalty->num_rows == 0){
+                        $penalty = round( ( ($response['due_amt'] * $penalty_per) / 100) + $penalty );
                         $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_checking_date','$penalty',current_timestamp)");
                     }
                     $countForPenalty++;
