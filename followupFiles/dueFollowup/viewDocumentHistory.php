@@ -233,35 +233,35 @@ function getDocumentStatus($con,$req_id,$cus_id){
     
     $response1 = 'completed';
 
-    $sts_qry = $con->query("SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' ");//echo "SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' "; 
-    if($sts_qry->num_rows > 0){
-        while($sts_row=$sts_qry->fetch_assoc()){
+    // $sts_qry = $con->query("SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' ");//echo "SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' "; 
+    // if($sts_qry->num_rows > 0){
+    //     while($sts_row=$sts_qry->fetch_assoc()){
             
-            $sts_qry1 = $con->query("SELECT * FROM signed_doc where cus_id = '$cus_id' and req_id = '$req_id' and signed_doc_id='".$sts_row['id']."' "); //echo ' $sts_qry1->num_rows:',$sts_qry1->num_rows,' docCount:',$sts_row['doc_Count'],'---';
-            if($sts_qry1->num_rows == $sts_row['doc_Count'] && $response1 != 'pending' ){ // check whether mentioned count of signed document has been collected from customer or not
-                $response1 = 'completed';// if condition true then all documents are collected
-                //completed
-            }else{
-                $response1= 'pending';
-            }
-        }
-    }
+    //         $sts_qry1 = $con->query("SELECT * FROM signed_doc where cus_id = '$cus_id' and req_id = '$req_id' and signed_doc_id='".$sts_row['id']."' "); //echo ' $sts_qry1->num_rows:',$sts_qry1->num_rows,' docCount:',$sts_row['doc_Count'],'---';
+    //         if($sts_qry1->num_rows == $sts_row['doc_Count'] && $response1 != 'pending' ){ // check whether mentioned count of signed document has been collected from customer or not
+    //             $response1 = 'completed';// if condition true then all documents are collected
+    //             //completed
+    //         }else{
+    //             $response1= 'pending';
+    //         }
+    //     }
+    // }
     
     
     $response2 = 'completed';
-    $sts_qry = $con->query("SELECT id,cheque_count FROM cheque_info where cus_id = '$cus_id' and req_id = '$req_id' ");
-    if($sts_qry->num_rows > 0){
+    // $sts_qry = $con->query("SELECT id,cheque_count FROM cheque_info where cus_id = '$cus_id' and req_id = '$req_id' ");
+    // if($sts_qry->num_rows > 0){
         
-        while($sts_row=$sts_qry->fetch_assoc()){
+    //     while($sts_row=$sts_qry->fetch_assoc()){
             
-            $sts_qry1 = $con->query("SELECT * FROM cheque_upd where cus_id = '$cus_id' and req_id = '$req_id' and cheque_table_id='".$sts_row['id']."' ");
-            if($sts_qry1->num_rows == $sts_row['cheque_count'] && $response2 != 'pending'){ // check whether mentioned count of Cheque has been collected from customer or not
-                $response2 = 'completed';// if condition true then all documents are collected
-            }else{
-                $response2 = 'pending';
-            }
-        }
-    }
+    //         $sts_qry1 = $con->query("SELECT * FROM cheque_upd where cus_id = '$cus_id' and req_id = '$req_id' and cheque_table_id='".$sts_row['id']."' ");
+    //         if($sts_qry1->num_rows == $sts_row['cheque_count'] && $response2 != 'pending'){ // check whether mentioned count of Cheque has been collected from customer or not
+    //             $response2 = 'completed';// if condition true then all documents are collected
+    //         }else{
+    //             $response2 = 'pending';
+    //         }
+    //     }
+    // }
     
 
     $response3 = 'completed';
@@ -287,16 +287,16 @@ function getDocumentStatus($con,$req_id,$cus_id){
     
 
     $response4 = 'completed';
-    $sts_qry = $con->query("SELECT * FROM document_info where cus_id = '$cus_id' and req_id = '$req_id' ");
+    // $sts_qry = $con->query("SELECT * FROM document_info where cus_id = '$cus_id' and req_id = '$req_id' ");
 
-    if($sts_qry->num_rows > 0){
-        while($sts_row = $sts_qry->fetch_assoc()){
+    // if($sts_qry->num_rows > 0){
+    //     while($sts_row = $sts_qry->fetch_assoc()){
 
-            if($sts_row['doc_upload'] == '' || $sts_row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
-                $response4 = 'pending';
-            }
-        }
-    }
+    //         if($sts_row['doc_upload'] == '' || $sts_row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
+    //             $response4 = 'pending';
+    //         }
+    //     }
+    // }
     
 
     if($response1 == 'completed' and $response2 == 'completed' and $response3 == 'completed' and $response4 == 'completed'){

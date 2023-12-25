@@ -82,6 +82,7 @@ function OnLoadFunctions(){
             var responses = arguments;
             var follow_cus_sts = [];
             var payable = [];
+            var req_of_cus = [];
             var completedRequests = 0;
             var totalRequests = responses.length;
 
@@ -90,14 +91,20 @@ function OnLoadFunctions(){
 
                 if (response.length !== 0) {
                     follow_cus_sts.push(response['follow_cus_sts']);
-                    payable.push(response['payable']);
+
+                    response['payable_as_req'].forEach(e => {
+                        payable.push(e);
+                    });
+                    response['req_id'].forEach(e => {
+                        req_of_cus.push(e);
+                    });
                     completedRequests++;
                 }
             }
 
             if (completedRequests === totalRequests) {
                 // Call dueFollowuptableFetch when all requests are done
-                dueFollowuptableFetch(cus_id_arr, follow_cus_sts, payable);
+                dueFollowuptableFetch(cus_id_arr, follow_cus_sts, payable, req_of_cus);
             }
         });
 
@@ -105,13 +112,13 @@ function OnLoadFunctions(){
 }
 
 
-function dueFollowuptableFetch(cus_id_arr,follow_cus_sts,payable){
+function dueFollowuptableFetch(cus_id_arr,follow_cus_sts, payable, req_of_cus){
     // cus_id_arr = cus_id_arr.join(',');
     // follow_cus_sts = follow_cus_sts.join(',');
     $.ajax({
 		//in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
 		url: 'followupFiles/dueFollowup/ajaxDueFollowupFetch.php',
-		data: {'cus_id':JSON.stringify(cus_id_arr), "follow_cus_sts":JSON.stringify(follow_cus_sts), "payable":JSON.stringify(payable)},
+		data: {'cus_id':JSON.stringify(cus_id_arr), "follow_cus_sts":JSON.stringify(follow_cus_sts), "payable":JSON.stringify(payable), "req_of_cus":JSON.stringify(req_of_cus)},
         type:'post',
 		cache: false,
 		success: function(response){

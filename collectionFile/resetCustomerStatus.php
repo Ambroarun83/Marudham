@@ -36,7 +36,10 @@ $response = array(); //Final array to return
 $req_id = 0;
 $i = 0;
 foreach ($req_arr as $req_id) {
-    $result = $con->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id = $req_id ");
+        
+        $response['req_id'][$i] = $req_id;
+
+        $result = $con->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id = $req_id ");
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $loan_arr = $row;
@@ -125,6 +128,8 @@ foreach ($req_arr as $req_id) {
     } else {
         $response['coll_charge'] = 0;
     }
+    
+    $response['payable_as_req'][$i] = $response['payable'];
 
     //Pending Check
     if ($response['pending'] > 0 && $response['count_of_month'] != 0) {
