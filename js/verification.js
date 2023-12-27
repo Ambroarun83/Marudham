@@ -8,7 +8,7 @@ const personMultiselect = new Choices('#verification_person', {
 
 $(document).ready(function () {
 
-    $('input[data-type="adhaar-number"]').keyup(function () { /// AAdhar Validation 
+    $('input[data-type="adhaar-number"]:not(#cus_id)').keyup(function () { /// AAdhar Validation 
         var value = $(this).val();
         value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
         $(this).val(value);
@@ -345,16 +345,16 @@ $(document).ready(function () {
 
         if (verify == 'cus_profile') {
             $('#customer_profile').show(); $('#cus_document').hide(); $('#customer_loan_calc').hide();
-            getCustomerOldData();
         }
         if (verify == 'documentation') {
             $('#customer_profile').hide(); $('#cus_document').show(); $('#customer_loan_calc').hide();
             getDocumentHistory();
-
+            
         }
         if (verify == 'loan_calc') {
             $('#customer_profile').hide(); $('#cus_document').hide(); $('#customer_loan_calc').show();
             onLoadEditFunction();
+            getCustomerOldData();
             getUserBasedLoanCategory();
             setTimeout(()=>{
                 getCategoryInfo();
@@ -2418,9 +2418,10 @@ $('#proofof').change(function () {
 
 function getfamilyforKyc(){
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     $.ajax({
         url: 'verificationFile/verification_proof_fam.php',
-        data: {"reqId": req_id},
+        data: {"reqId": req_id,cus_id},
         dataType: 'json',
         type: 'post',
         cache: false,
@@ -4520,11 +4521,11 @@ function getCategoryInfo(){
             $('#moduleTable').empty();
             $('#moduleTable').append('<tbody><tr>');
             if(response.length != 0){
-                var tb = 35;
+                var tb = 19;
                 for(var i=0;i<response.length;i++){
                     $('#moduleTable tbody tr').append( `<td><label for="disabledInput">`+response[i]['loan_category_ref_name']+`</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
                     value='`+category_info+`' tabindex='`+tb+`' required placeholder='Enter `+response[i]['loan_category_ref_name']+`'></td>`);
-                    tb++;
+                    // tb++;
                 }
                 $('#moduleTable tbody tr').append(`<td><button type="button" tabindex='`+tb+`' id="add_category_info[]" name="add_category_info" 
                 class="btn btn-primary add_category_info">Add</button> </td><td><span class='icon-trash-2 deleterow' id='deleterow' tabindex='`+tb+`'></span></td>

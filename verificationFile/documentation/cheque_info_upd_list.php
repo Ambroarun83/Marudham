@@ -68,7 +68,7 @@ include '../../ajaxconfig.php';
                 <td><?php echo $cheque["cheque_relation"]; ?></td>
                 <td><?php echo $cheque["chequebank_name"]; ?></td>
                 <td><?php echo $cheque["cheque_count"]; ?></td>
-                <td><?php echo $cheque_no; ?></td>
+                <td><?php echo rtrim($cheque_no,','); ?></td>
                 <td><?php echo $doc_upd_name; ?></td>
 
             </tr>

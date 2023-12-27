@@ -13,7 +13,7 @@ include '../ajaxconfig.php';
     </thead>
     <tbody>
         <?php
-        $cus_id = $_POST['cus_id'];
+        $cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
         $famInfo = $connect -> query("SELECT * FROM `verification_family_info` where cus_id = '$cus_id' order by id desc");
 
             $i = 1;

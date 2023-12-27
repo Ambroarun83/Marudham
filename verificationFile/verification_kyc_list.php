@@ -7,7 +7,8 @@ include '../ajaxconfig.php';
         <tr>
             <th width="20%"> S.No </th>
             <th> Proof of </th>
-            <!-- <th> Family Member </th> -->
+            <th> Name </th>
+            <th> Relatioship </th>
             <th> Proof type </th>
             <th> Proof Details </th>
             <th> Upload </th>
@@ -22,11 +23,10 @@ include '../ajaxconfig.php';
 
         $i = 1;
         while ($kyc = $KYCInfo->fetch()) {
-            if($kyc['proofOf'] == '0'){$proof_Of = "Applicant";}else
+            if($kyc['proofOf'] == '0'){$proof_Of = "Customer";}else
             if($kyc['proofOf'] == '1'){$proof_Of = "Guarantor";}else
             if($kyc['proofOf'] == '2'){$proof_Of = "Family Members";}else
             if($kyc['proofOf'] == '3'){$proof_Of = "Group Members";}
-            // $fam_mem = $kyc['fam_mem'];
             
             if($kyc['proof_type'] == '1'){$proof_type = "Adhar";}else
             if($kyc['proof_type'] == '2'){$proof_type = "Smart Card";}else
@@ -39,11 +39,19 @@ include '../ajaxconfig.php';
             if($kyc['proof_type'] == '9'){$proof_type = "Bank statement";}else
             if($kyc['proof_type'] == '10'){$proof_type = "EB Bill";}else
             if($kyc['proof_type'] == '11'){$proof_type = "Business Proof";}
+            
+            $fam_mem = $kyc['fam_mem'];
+            $relationship = '';
+            if($kyc['proofOf']=='2'){
+                $sql = $con->query("SELECT relationship FROM `verification_family_info` where famname = '$fam_mem'");
+                $relationship = $sql->fetch_assoc()['relationship'];
+            }
             ?>
             <tr>
                 <td> <?php echo $i++; ?></td>
                 <td> <?php echo $proof_Of; ?></td>
-                <!-- <td><?php echo $fam_mem; ?></td> -->
+                <td><?php echo $fam_mem; ?></td>
+                <td><?php echo $relationship; ?></td>
                 <td> <?php echo $proof_type; ?></td>
                 <td> <?php echo $kyc['proof_no']; ?></td>
                 <td> <a href="verificationFile/kycUploads/<?php echo $kyc['upload']; ?>" target="_blank" style="color: #4ba39b;"> <?php echo $kyc['upload']; ?> </a></td>

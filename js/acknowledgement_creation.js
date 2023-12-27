@@ -300,7 +300,7 @@ $(document).ready(function () {
                 $("#chequebank_name").val(result['chequebank_name']);
                 $("#cheque_count").val(result['cheque_count']);
                 
-                getChequeColumn(result['cheque_count']); // show input to insert Cheque No.
+                getChequeColumn(result['cheque_count'],result['cheque_no']); // show input to insert Cheque No.
             }
         });
 
@@ -1774,11 +1774,11 @@ function chequefilesCount() {
 }
 
 //Cheque No 
-function getChequeColumn(cnt){
+function getChequeColumn(cnt,nos){
 
     $.ajax({
         type: 'post',
-        data: {"count": cnt},
+        data: {"count": cnt,"cheque_nos":JSON.stringify(nos)},
         url: 'verificationFile/documentation/cheque_info_upd_column.php',
         success:function(result){
             $('#chequeColumnDiv').empty();
@@ -2683,11 +2683,11 @@ function getCategoryInfo() {
             $('#moduleTable').empty();
             $('#moduleTable').append('<tbody><tr>');
             if (response.length != 0) {
-                var tb = 35;
+                var tb = 18;
                 for (var i = 0; i < response.length; i++) {
                     $('#moduleTable tbody tr').append(`<td><label for="disabledInput">` + response[i]['loan_category_ref_name'] + `</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
                     value='`+ category_info + `' tabindex='` + tb + `' placeholder='Enter ` + response[i]['loan_category_ref_name'] + `'readonly ></td>`);
-                    tb++;
+                    // tb++;
                 }
                 $('#moduleTable tbody tr').append(`<td><button type="button" tabindex='` + tb + `' id="add_category_info[]" name="add_category_info" 
                 class="btn btn-primary add_category_info" disabled>Add</button> </td><td><span class='icon-trash-2 ' id='' tabindex='`+ tb + `'></span></td>
