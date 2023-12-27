@@ -178,7 +178,7 @@ function moneyFormatIndia($num)
             <th> Pre Closure </th>
             <th> Role </th>
             <th width="8%"> User ID </th>
-            <th> Collection Location </th>
+            <th> Collection Method </th>
             <th> ACTION </th>
         </tr>
     </thead>
@@ -225,7 +225,7 @@ function moneyFormatIndia($num)
         $issued = date('Y-m-d', strtotime($issue_date));
         if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
             //Query for Monthly.
-            $run = $connect->query("SELECT c.coll_code, c.due_amt,c.tot_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track,c.princ_amt_track,c.int_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            $run = $connect->query("SELECT c.coll_code, c.due_amt,c.tot_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track,c.princ_amt_track,c.int_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
@@ -246,7 +246,7 @@ function moneyFormatIndia($num)
         } else
         if ($loanFrom['due_method_scheme'] == '2') {
             //Query For Weekly.
-            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
@@ -268,7 +268,7 @@ function moneyFormatIndia($num)
         } else
         if ($loanFrom['due_method_scheme'] == '3') {
             //Query For Day.
-            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
@@ -335,7 +335,7 @@ function moneyFormatIndia($num)
                         // } else {
                         //     echo 0;
                         // } ?></td>
-                    <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
+                    <td><?php echo date('d-m-Y', strtotime($row['trans_date']!='0000-00-00'?$row['trans_date']:$row['coll_date'])); ?></td>
 
                     <!-- for collected amt -->
                     <?php if ($loan_type == 'emi') { ?>
@@ -379,7 +379,7 @@ function moneyFormatIndia($num)
                     </td>
                     <td><?php echo $row['fullname']; ?></td>
                     <td><?php if ($row['coll_location'] == '1') {
-                            echo 'Office';
+                            echo 'By Self';
                         } elseif ($row['coll_location'] == '2') {
                             echo 'On Spot';
                         } elseif ($row['coll_location'] == '3') {
@@ -391,6 +391,8 @@ function moneyFormatIndia($num)
                 <?php
                 if ($loan_type == 'interest') {
                     $last_bal_amt = $bal_amt;
+                }else{
+
                 }
             }
         }
@@ -410,13 +412,13 @@ function moneyFormatIndia($num)
         foreach ($dueMonth as $cusDueMonth) {
             if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
                 //Query for Monthly.
-                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.tot_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.princ_amt_track,c.int_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.princ_amt_track!='' or c.int_amt_track!='' or c.pre_close_waiver!='') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.tot_amt,c.pending_amt,c.payable_amt,c.coll_date, c.trans_date,c.due_amt_track,c.princ_amt_track,c.int_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.princ_amt_track!='' or c.int_amt_track!='' or c.pre_close_waiver!='') && ((MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
             } elseif ($loanFrom['due_method_scheme'] == '2') {
                 //Query For Weekly.
-                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((WEEK(coll_date)= WEEK('$cusDueMonth') || WEEK(trans_date)= WEEK('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
+                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date, c.trans_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && ((WEEK(coll_date)= WEEK('$cusDueMonth') || WEEK(trans_date)= WEEK('$cusDueMonth')) && (YEAR(coll_date)= YEAR('$cusDueMonth') || YEAR(trans_date)= YEAR('$cusDueMonth')) )");
             } elseif ($loanFrom['due_method_scheme'] == '3') {
                 //Query For Day.
-                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && 
+                $run = $connect->query("SELECT c.coll_code,c.due_amt,c.pending_amt,c.payable_amt,c.coll_date, c.trans_date,c.due_amt_track,c.bal_amt,c.coll_charge_track,c.coll_location,c.pre_close_waiver,alc.due_start_from,alc.maturity_month,alc.due_method_calc,u.fullname,u.role FROM `collection` c LEFT JOIN acknowlegement_loan_calculation alc on c.req_id = alc.req_id LEFT JOIN user u on c.insert_login_id = u.user_id WHERE (c.`req_id`= $req_id) and (c.due_amt_track != '' or c.pre_close_waiver!='') && 
                 ( 
                     ( DAY(coll_date)= DAY('$cusDueMonth') || DAY(trans_date)= DAY('$cusDueMonth') ) && 
                     ( MONTH(coll_date)= MONTH('$cusDueMonth') || MONTH(trans_date)= MONTH('$cusDueMonth') ) && 
@@ -501,7 +503,7 @@ function moneyFormatIndia($num)
                             } else {
                                 echo 0;
                             } ?></td>
-                        <td><?php echo date('d-m-Y', strtotime($row['coll_date'])); ?></td>
+                        <td><?php echo date('d-m-Y', strtotime($row['trans_date']!='0000-00-00'?$row['trans_date']:$row['coll_date'])); ?></td>
 
                         <!-- for collected amt -->
                         <?php if ($loan_type == 'emi') { ?>
@@ -549,7 +551,7 @@ function moneyFormatIndia($num)
                         </td>
                         <td><?php echo $row['fullname']; ?></td>
                         <td><?php if ($row['coll_location'] == '1') {
-                                echo 'Office';
+                                echo 'By Self';
                             } elseif ($row['coll_location'] == '2') {
                                 echo 'On Spot';
                             } elseif ($row['coll_location'] == '3') {
@@ -682,7 +684,7 @@ function moneyFormatIndia($num)
         $currentMonth = date('Y-m-d');
         if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
             //Query for Monthly.
-            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.princ_amt_track,c.int_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.princ_amt_track,c.int_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
@@ -694,7 +696,7 @@ function moneyFormatIndia($num)
         } else
         if ($loanFrom['due_method_scheme'] == '2') {
             //Query For Weekly.
-            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
@@ -706,7 +708,7 @@ function moneyFormatIndia($num)
         } else
         if ($loanFrom['due_method_scheme'] == '3') {
             //Query For Day.
-            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
+            $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
             LEFT JOIN acknowlegement_loan_calculation alc ON c.req_id = alc.req_id
             LEFT JOIN user u ON c.insert_login_id = u.user_id
@@ -735,7 +737,7 @@ function moneyFormatIndia($num)
                             echo date('m-Y', strtotime($issue_date));
                         } else {
                             //For Weekly && Day.
-                            echo date('d-m-Y', strtotime($row['coll_date']));
+                            echo date('d-m-Y', strtotime($row['trans_date']!='0000-00-00'?$row['trans_date']:$row['coll_date']));
                         }
                         ?></td>
                     <td><?php echo date('M', strtotime($issue_date)); ?></td>
@@ -806,7 +808,7 @@ function moneyFormatIndia($num)
                     </td>
                     <td><?php echo $row['fullname']; ?></td>
                     <td><?php if ($row['coll_location'] == '1') {
-                            echo 'Office';
+                            echo 'By Self';
                         } elseif ($row['coll_location'] == '2') {
                             echo 'On Spot';
                         } elseif ($row['coll_location'] == '3') {

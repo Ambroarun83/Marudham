@@ -3,7 +3,7 @@ include('../ajaxconfig.php');
 
 $famList_arr = array();
 
-$cus_id = $_POST['cus_id'];
+$cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
 $result = $connect->query("SELECT id,famname,relationship FROM `verification_family_info` where cus_id='$cus_id'");
 
 while( $row = $result->fetch()){
