@@ -9,6 +9,14 @@ personMultiselect.disable();// to disable verficiation person dropdown
 
 $(document).ready(function () {
 
+    {
+        // Get today's date
+        var today = new Date().toISOString().split('T')[0];
+
+        // Set the minimum date in the date input to today
+        $('#due_start_from').attr('min', today);
+    }
+
     window.onscroll = function () {
         var navbar = document.getElementById("navbar");
         var stickyHeader = navbar.offsetTop;

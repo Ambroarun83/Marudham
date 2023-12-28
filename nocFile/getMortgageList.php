@@ -51,7 +51,7 @@ function getfamName($con,$rel_id){
                         <?php } ?>
                     </td>
 
-                    <td><input type='checkbox' id='mort_check' name='mort_check' class="form-control mort_check" <?php if($row['mortgage_process_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation list table?>' data-thing='process'></td>
+                    <td><input type='checkbox' id='mort_check' name='mort_check' class="form-control mort_check" <?php if($row['mortgage_process_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation list table?>' data-thing='process' tabindex='26'></td>
                 </tr>
                     <?php
                 }?>
@@ -76,7 +76,7 @@ function getfamName($con,$rel_id){
                     </td>
 
                     
-                    <td><input type='checkbox' id='mort_check' name='mort_check' class="form-control mort_check" <?php if($row['mortgage_document_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation list table?>' data-thing='document'></td>
+                    <td><input type='checkbox' id='mort_check' name='mort_check' class="form-control mort_check" <?php if($row['mortgage_document_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation list table?>' data-thing='document' tabindex='26'></td>
                 </tr>
                     <?php
                 }?>

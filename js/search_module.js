@@ -68,7 +68,8 @@ function viewCusOnClick() {
             var od_sts = $('#od_sts').val();
             var due_nil_sts = $('#due_nil_sts').val();
             var closed_sts = $('#closed_sts').val()
-            $.post("searchModule/getCustomerStatus.php", { cus_id, pending_sts, od_sts, due_nil_sts, closed_sts }, function (response) {
+            var bal_amt = $('#bal_amt').val()
+            $.post("searchModule/getCustomerStatus.php", { cus_id, pending_sts, od_sts, due_nil_sts, closed_sts,bal_amt }, function (response) {
                 $('#customerStatusDiv').html(response);
             });
             hideOverlay();
@@ -109,6 +110,8 @@ function callresetCustomerStatus(cus_id) {
                 $('#due_nil_sts').val(due_nil_sts);
                 var closed_sts = closed_arr.join(',');
                 $('#closed_sts').val(closed_sts);
+                var bal_amt = balAmnt.join(',');
+                $('#bal_amt').val(bal_amt);
             };
         }
     });

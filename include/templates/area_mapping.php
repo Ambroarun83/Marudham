@@ -13,12 +13,12 @@ if(isset($_POST['submit_area_mapping_line']) && $_POST['submit_area_mapping_line
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$bankupdatedetails = $userObj->updateAreaMappingLine($mysqli,$id, $userid);  
+		$userObj->updateAreaMappingLine($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_area_mapping&msc=2&type=line';</script>
     <?php	}
     else{ 
-		$addAreaMappingLine = $userObj->addAreaMappingLine($mysqli, $userid);   
+		$userObj->addAreaMappingLine($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_area_mapping&msc=1&type=line';</script>
         <?php
@@ -28,12 +28,12 @@ if(isset($_POST['submit_area_mapping_group']) && $_POST['submit_area_mapping_gro
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$bankupdatedetails = $userObj->updateAreaMappingGroup($mysqli,$id, $userid);  
+		$userObj->updateAreaMappingGroup($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_area_mapping&msc=2&type=group';</script>
     <?php	}
     else{   
-		$addAreaMappingGroup = $userObj->addAreaMappingGroup($mysqli, $userid);   
+		$userObj->addAreaMappingGroup($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_area_mapping&msc=1&type=group';</script>
         <?php
@@ -51,12 +51,12 @@ if(isset($_GET['del']))
 if($del>0)
 {
 	if($type == 'line'){
-		$deleteAreaMappingLine = $userObj->deleteAreaMappingLine($mysqli,$del, $userid); 
+		$userObj->deleteAreaMappingLine($mysqli,$del, $userid); 
 		?>
 		<script>location.href='<?php echo $HOSTPATH;  ?>edit_area_mapping&msc=3&type=line';</script>
 	<?php
 	}if($type == 'group'){
-		$deleteAreaMappingGroup = $userObj->deleteAreaMappingGroup($mysqli,$del, $userid); 
+		$userObj->deleteAreaMappingGroup($mysqli,$del, $userid); 
 		?>
 		<script>location.href='<?php echo $HOSTPATH;  ?>edit_area_mapping&msc=3&type=group';</script>
 	<?php
@@ -128,7 +128,6 @@ if(isset($_GET['type'])){
 <div class="text-right" style="margin-right: 25px;">
     <a href="edit_area_mapping">
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-    <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <head>
@@ -187,22 +186,14 @@ if(isset($_GET['type'])){
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
-											<!-- <select tabindex="1" type="text" class="form-control" id="company_id" name="company_id"  >
-												<option value="">Select Company Name</option>   
-												<?php if (sizeof($companyName)>0) { 
-												for($j=0;$j<count($companyName);$j++) { ?>
-												<option <?php if(isset($company_id)) { if($companyName[$j]['company_id'] == $company_id)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
-												<?php echo $companyName[$j]['company_name'];?></option>
-												<?php }} ?>  
-											</select> -->
 											<input type="hidden" id='company_id' name="company_id" value='<?php echo $companyName[0]['company_id'] ?>' >
-											<input type="text" class="form-control" id='company_name' name="company_name" value='<?php echo $companyName[0]['company_name'] ?>' readonly> 
+											<input type="text" class="form-control" id='company_name' name="company_name" value='<?php echo $companyName[0]['company_name'] ?>' readonly tabindex='2'> 
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Branch Name</label>&nbsp;<span class="text-danger">*</span>
-                                            <select tabindex="2" type="text" class="form-control" id="branch" name="branch" >
+                                            <select type="text" class="form-control" id="branch" name="branch" tabindex='3' >
 												<option value="">Select Branch</option>
 											</select> 
                                         </div>
@@ -211,17 +202,8 @@ if(isset($_GET['type'])){
                                         <div class="form-group">
                                             <label for="disabledInput">Area</label>&nbsp;<span class="text-danger">*</span>
 											<input type="hidden" id="area" name="area" value="">
-                                            <select tabindex="2" type="text" class="form-control" id="area_dummy" name="area_dummy" multiple>
+                                            <select type="text" class="form-control" id="area_dummy" name="area_dummy" multiple tabindex='4'>
 												<option value="">Select Area</option>   
-												<!-- <?php if (sizeof($areaList)>0) { 
-												for($j=0;$j<count($areaList);$j++) { ?>
-												<option <?php if(isset($area_id)) { 
-													for($i=0;$i<sizeof($area_array);$i++){
-														
-														if($areaList[$j]['area_id'] == $area_array[$i] )  echo 'selected'; }} ?> value="<?php echo $areaList[$j]['area_id']; ?>">
-													
-												<?php  echo $areaList[$j]['area_name'];?></option>
-												<?php }} ?>   -->
 											</select> 
                                         </div>
                                     </div>
@@ -229,7 +211,7 @@ if(isset($_GET['type'])){
                                         <div class="form-group">
                                             <label for="disabledInput">Sub Area</label>&nbsp;<span class="text-danger" >*</span>
 											<input type="hidden" id="sub_area" name="sub_area" value="">
-                                            <select tabindex="2" type="text" class="form-control" id="sub_area_dummy" name="sub_area_dummy"  multiple>
+                                            <select type="text" class="form-control" id="sub_area_dummy" name="sub_area_dummy"  multiple tabindex='5'>
 												
 											</select> 
                                         </div>
@@ -240,7 +222,7 @@ if(isset($_GET['type'])){
 						</div>
 						<div class="col-md-12 ">
 							<div class="text-right">
-								<button type="submit" name="submit_area_mapping_line" id="submit_area_mapping_line" class="btn btn-primary" value="Submit" tabindex="15"><span class="icon-check"></span>&nbsp;Submit</button>
+								<button type="submit" name="submit_area_mapping_line" id="submit_area_mapping_line" class="btn btn-primary" value="Submit" tabindex="6"><span class="icon-check"></span>&nbsp;Submit</button>
 								<button type="reset" class="btn btn-outline-secondary" tabindex="7" >Clear</button>
 							</div>
 						</div>
@@ -267,16 +249,8 @@ if(isset($_GET['type'])){
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
-											<!-- <select tabindex="1" type="text" class="form-control" id="company_id1" name="company_id1" >
-												<option value="">Select Company Name</option>   
-												<?php if (sizeof($companyName)>0) { 
-												for($j=0;$j<count($companyName);$j++) { ?>
-												<option <?php if(isset($company_id1)) { if($companyName[$j]['company_id'] == $company_id1)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
-												<?php echo $companyName[$j]['company_name'];?></option>
-												<?php }} ?>  
-											</select>  -->
 											<input type="hidden" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_id'] ?>' >
-											<input type="text" class="form-control" id='company_name1' name="company_name1" value='<?php echo $companyName[0]['company_name'] ?>' readonly> 
+											<input type="text" class="form-control" id='company_name1' name="company_name1" value='<?php echo $companyName[0]['company_name'] ?>' readonly tabindex='1'> 
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -291,7 +265,7 @@ if(isset($_GET['type'])){
                                         <div class="form-group">
                                             <label for="disabledInput">Area</label>&nbsp;<span class="text-danger">*</span>
 											<input type="hidden" id="area1" name="area1" value="">
-                                            <select tabindex="2" type="text" class="form-control" id="area_dummy1" name="area_dummy1" multiple>
+                                            <select tabindex="3" type="text" class="form-control" id="area_dummy1" name="area_dummy1" multiple>
 												<option value="">Select Area</option>   
 												<?php if (sizeof($areaList)>0) { 
 												for($j=0;$j<count($areaList);$j++) { ?>
@@ -307,7 +281,7 @@ if(isset($_GET['type'])){
                                         <div class="form-group">
                                             <label for="disabledInput">Sub Area</label>&nbsp;<span class="text-danger" >*</span>
 											<input type="hidden" id="sub_area1" name="sub_area1" value="">
-                                            <select tabindex="2" type="text" class="form-control" id="sub_area_dummy1" name="sub_area_dummy1"  multiple>
+                                            <select tabindex="4" type="text" class="form-control" id="sub_area_dummy1" name="sub_area_dummy1"  multiple>
 												
 											</select> 
                                         </div>
@@ -318,8 +292,8 @@ if(isset($_GET['type'])){
 						</div>
 						<div class="col-md-12 ">
 							<div class="text-right">
-								<button type="submit" name="submit_area_mapping_group" id="submit_area_mapping_group" class="btn btn-primary" value="Submit" tabindex="15"><span class="icon-check"></span>&nbsp;Submit</button>
-								<button type="reset" class="btn btn-outline-secondary" tabindex="7" >Clear</button>
+								<button type="submit" name="submit_area_mapping_group" id="submit_area_mapping_group" class="btn btn-primary" value="Submit" tabindex="5"><span class="icon-check"></span>&nbsp;Submit</button>
+								<button type="reset" class="btn btn-outline-secondary" tabindex="6" >Clear</button>
 							</div>
 						</div>
 

@@ -5,7 +5,7 @@ if (isset($_GET['upd'])) {
 
 if(isset($_POST['submit_loanIssue']) && $_POST['submit_loanIssue'] != ''){
 
-	$addDocVerification = $userObj->addloanIssue($mysqli, $userid);
+	$userObj->addloanIssue($mysqli, $userid);
 ?>
 	<!-- <script> alert('Loan Issued Details Submitted'); </script> -->
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_issue&msc=1';</script>
@@ -437,63 +437,63 @@ input:checked + .slider:before {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cp_cus_id)) {echo $cp_cus_id;} ?>' readonly>
+											<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cp_cus_id)) {echo $cp_cus_id;} ?>' readonly tabindex='1'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_name">Customer Name</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="cus_name" name="cus_name" value='<?php if (isset($cp_cus_name)) {echo $cp_cus_name;} ?>' readonly >
+											<input type="text" class="form-control" id="cus_name" name="cus_name" value='<?php if (isset($cp_cus_name)) {echo $cp_cus_name;} ?>' readonly tabindex='2'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="name"> Customer Type </label>
-											<input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_type)) { echo $cus_type; } ?>" readonly>
+											<input type="text" class="form-control" name="cus_type" id="cus_type" value="<?php if (isset($cus_type)) { echo $cus_type; } ?>" readonly tabindex='3'>
 										</div>
 									</div>
 
 									<div id="exist_type" <?php if (isset($cus_type)) {	if ($cus_type != 'Existing') { ?> style="display: none" <?php } } ?> class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="ExistType"> Exist Type </label>
-											<input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" value="<?php if (isset($cus_exist_type)) { echo $cus_exist_type; } ?>" readonly>
+											<input type="text" class="form-control" name="cus_exist_type" id="cus_exist_type" value="<?php if (isset($cus_exist_type)) { echo $cus_exist_type; } ?>" readonly tabindex='4'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="mobile1">Mobile No 1</label><span class="required">&nbsp;*</span>
-											<input type="number" class="form-control" id="mobile1" name="mobile1" value='<?php if (isset($cp_mobile1)) {echo $cp_mobile1;} ?>' readonly>
+											<input type="number" class="form-control" id="mobile1" name="mobile1" value='<?php if (isset($cp_mobile1)) {echo $cp_mobile1;} ?>' readonly tabindex='5'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="mobile2">Mobile No 2</label>
-											<input type="number" class="form-control" id="mobile2" name="mobile2" value='<?php if (isset($cp_mobile2)) {echo $cp_mobile2;} ?>' readonly>
+											<input type="number" class="form-control" id="mobile2" name="mobile2" value='<?php if (isset($cp_mobile2)) {echo $cp_mobile2;} ?>' readonly tabindex='6'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="whatsapp">Whatsapp No </label>
-											<input type="number" class="form-control" id="whatsapp_no" name="whatsapp_no" value="<?php if(isset($cp_whatsapp)){echo $cp_whatsapp; }?>" readonly>
+											<input type="number" class="form-control" id="whatsapp_no" name="whatsapp_no" value="<?php if(isset($cp_whatsapp)){echo $cp_whatsapp; }?>" readonly tabindex='7'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="DocArea"> Area </label> <span class="required"> * </span>
-											<input  type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly>
+											<input  type="text" class="form-control" id="doc_area" name="doc_area" value="<?php if (isset($doc_area_name)) echo $doc_area_name; ?>" readonly tabindex='8'>
 										</div>
 									</div>
 
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
                                           <label for="DocSubArea"> Sub Area </label> <span class="required"> * </span>
-											<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly>
+											<input type="text" class="form-control" id="doc_Sub_Area" name="doc_Sub_Area" value='<?php if (isset($doc_sub_area_name)) echo $doc_sub_area_name; ?>' readonly tabindex='9'>
 										</div>
 									</div>
 
@@ -525,7 +525,7 @@ input:checked + .slider:before {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="GuarentorName"> Guarentor Name </label><span class="required">&nbsp;*</span>
-											<select type="text" class="form-control" id="guarentor_name" name="guarentor_name" disabled>
+											<select type="text" class="form-control" id="guarentor_name" name="guarentor_name" disabled tabindex='10'>
 												<option> Select Guarantor </option>
 											</select>
 										</div>
@@ -534,7 +534,7 @@ input:checked + .slider:before {
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="GuarentorRelationship"> Guarentor Relationship </label>
-											<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" value='<?php if (isset($guarentor_relation)) {echo $guarentor_relation;} ?>' readonly>
+											<input type="text" class="form-control" id="guarentor_relationship" name="guarentor_relationship" value='<?php if (isset($guarentor_relation)) {echo $guarentor_relation;} ?>' readonly tabindex='11'>
 										</div>
 									</div>
 								</div>
@@ -564,21 +564,21 @@ input:checked + .slider:before {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="LoanCategory"> Loan Category </label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="loan_category" name="loan_category" readonly>
+											<input type="text" class="form-control" id="loan_category" name="loan_category" readonly tabindex='12'>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="Subcategory"> Sub category </label>
-											<input type="text" class="form-control" id="sub_category" name="sub_category" value="<?php if (isset($sub_category_lc)) {echo $sub_category_lc;} ?>" readonly>
+											<input type="text" class="form-control" id="sub_category" name="sub_category" value="<?php if (isset($sub_category_lc)) {echo $sub_category_lc;} ?>" readonly tabindex='13'>
 										</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="Agent"> Agent </label>
-											<input type="text" class="form-control" id="agent" name="agent"  readonly>
+											<input type="text" class="form-control" id="agent" name="agent"  readonly tabindex='14'>
 										</div>
 									</div>
 
@@ -593,21 +593,21 @@ input:checked + .slider:before {
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" > <!--style="display:none" -->
 											<div class="form-group">
 												<label for="disabledInput">Total Value</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" id="tot_value" name="tot_value" value='<?php if (isset($tot_value_lc)) {echo $tot_value_lc;}elseif(isset($tot_value)) {echo $tot_value;}?>' readonly>
+												<input type="text" class="form-control" id="tot_value" name="tot_value" value='<?php if (isset($tot_value_lc)) {echo $tot_value_lc;}elseif(isset($tot_value)) {echo $tot_value;}?>' readonly tabindex='15'>
 											</div>
 									</div>
                                         
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" > <!-- style="display:none"-->
 											<div class="form-group">
 												<label for="disabledInput">Advance Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" id="ad_amt" name="ad_amt" value='<?php if (isset($ad_amt_lc)) {echo $ad_amt_lc;}elseif(isset($ad_amt)) {echo $ad_amt;}?>' readonly>
+												<input type="text" class="form-control" id="ad_amt" name="ad_amt" value='<?php if (isset($ad_amt_lc)) {echo $ad_amt_lc;}elseif(isset($ad_amt)) {echo $ad_amt;}?>' readonly tabindex='16'>
 											</div>
 									</div>
 
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Loan Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" id="loan_amt" name="loan_amt" value='<?php if (isset($loan_amt_lc)) {echo $loan_amt_lc;}elseif(isset($loan_amt)) {echo $loan_amt;}?>' readonly>
+												<input type="text" class="form-control" id="loan_amt" name="loan_amt" value='<?php if (isset($loan_amt_lc)) {echo $loan_amt_lc;}elseif(isset($loan_amt)) {echo $loan_amt;}?>' readonly tabindex='17'>
 											</div>
 									</div>
 
@@ -626,49 +626,49 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Loan Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="loan_amt_cal" name="loan_amt_cal" value='<?php if(isset($loan_amt_cal)) echo $loan_amt_cal;?>'>
+												<input type="text" class="form-control" readonly id="loan_amt_cal" name="loan_amt_cal" value='<?php if(isset($loan_amt_cal)) echo $loan_amt_cal;?>' tabindex='18'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Principal Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="principal_amt_cal" name="principal_amt_cal" value='<?php if(isset($principal_amt_cal)) echo $principal_amt_cal;?>'>
+												<input type="text" class="form-control" readonly id="principal_amt_cal" name="principal_amt_cal" value='<?php if(isset($principal_amt_cal)) echo $principal_amt_cal;?>' tabindex='19'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Interest Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="int_amt_cal" name="int_amt_cal" value='<?php if(isset($int_amt_cal)) echo $int_amt_cal;?>'>
+												<input type="text" class="form-control" readonly id="int_amt_cal" name="int_amt_cal" value='<?php if(isset($int_amt_cal)) echo $int_amt_cal;?>' tabindex='20'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Total Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="tot_amt_cal" name="tot_amt_cal" value='<?php if(isset($tot_amt_cal)) echo $tot_amt_cal;?>'>
+												<input type="text" class="form-control" readonly id="tot_amt_cal" name="tot_amt_cal" value='<?php if(isset($tot_amt_cal)) echo $tot_amt_cal;?>' tabindex='21'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Due Amount</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="due_amt_cal" name="due_amt_cal" value='<?php if(isset($due_amt_cal)) echo $due_amt_cal;?>'>
+												<input type="text" class="form-control" readonly id="due_amt_cal" name="due_amt_cal" value='<?php if(isset($due_amt_cal)) echo $due_amt_cal;?>' tabindex='22'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Document Charges</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="doc_charge_cal" name="doc_charge_cal" value='<?php if(isset($doc_charge_cal)) echo $doc_charge_cal;?>'>
+												<input type="text" class="form-control" readonly id="doc_charge_cal" name="doc_charge_cal" value='<?php if(isset($doc_charge_cal)) echo $doc_charge_cal;?>' tabindex='23'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Processing Fee</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="proc_fee_cal" name="proc_fee_cal" value='<?php if(isset($proc_fee_cal)) echo $proc_fee_cal;?>'>
+												<input type="text" class="form-control" readonly id="proc_fee_cal" name="proc_fee_cal" value='<?php if(isset($proc_fee_cal)) echo $proc_fee_cal;?>' tabindex='24'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Net Cash</label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control" readonly id="net_cash_cal" name="net_cash_cal" value='<?php if(isset($net_cash_cal)) echo $net_cash_cal;?>'>
+												<input type="text" class="form-control" readonly id="net_cash_cal" name="net_cash_cal" value='<?php if(isset($net_cash_cal)) echo $net_cash_cal;?>' tabindex='25'>
 												<!-- <input type="hidden" class="form-control"  id="net_cash" name="net_cash" > -->
 											</div>
 										</div>
@@ -696,19 +696,19 @@ input:checked + .slider:before {
 												<input  type="hidden" class="form-control" id="due_method_scheme" name="due_method_scheme" value='<?php if(isset($due_method_scheme_lc)) echo $due_method_scheme_lc;?>' >
 												<input  type="hidden" class="form-control" id="day_scheme" name="day_scheme" value='<?php if(isset($day_scheme_lc)) echo $day_scheme_lc;?>' >
 												
-												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>' tabindex="1">
+												<input type="date" class="form-control" id="due_start_from" name="due_start_from" value='<?php if(isset($due_start_from)) echo $due_start_from;?>' tabindex="26">
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Maturity Month</label>&nbsp;<span class="text-danger">*</span>
-												<input type="date" class="form-control" id="maturity_month" name="maturity_month" value='<?php if(isset($maturity_month)) echo $maturity_month;?>' readonly>
+												<input type="date" class="form-control" id="maturity_month" name="maturity_month" value='<?php if(isset($maturity_month)) echo $maturity_month;?>' readonly tabindex='27'>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Collection Method</label>&nbsp;<span class="text-danger">*</span>
-												<select type="text" class="form-control" id="collection_method" name="collection_method" disabled>
+												<select type="text" class="form-control" id="collection_method" name="collection_method" disabled tabindex='28'>
 													<option value="">Select Collection Method</option> 
 													<option value="1" <?php if(isset($collection_method) and $collection_method == '1') echo 'selected';?>>BySelf</option> 
 													<option value="2" <?php if(isset($collection_method) and $collection_method == '2') echo 'selected';?>>Spot Collection</option> 
@@ -736,14 +736,14 @@ input:checked + .slider:before {
 									   <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput"> Balance To Issue </label>&nbsp;<span class="text-danger">*</span>
-												<input type="text" class="form-control"  id="net_cash" name="net_cash" readonly>
+												<input type="text" class="form-control"  id="net_cash" name="net_cash" readonly tabindex='29'>
 											</div>
 										</div>
 
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="disabledInput">Issued to </label>&nbsp;<span class="text-danger issued_to_type">*</span>
-												<input type="text" class="form-control" id="issue_to" name="issue_to" readonly>
+												<input type="text" class="form-control" id="issue_to" name="issue_to" readonly tabindex='30'>
 												<input type="hidden" class="form-control" id="agent_id" name="agent_id">
 											</div>
 										</div>
@@ -751,7 +751,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 											<div class="form-group">
 												<label for="disabledInput">Issued mode</label>&nbsp;<span class="text-danger">*</span>
-												<select type="text" class="form-control" id="issued_mode" name="issued_mode" tabindex="2">
+												<select type="text" class="form-control" id="issued_mode" name="issued_mode" tabindex="31">
                                                 <option value=""> Select Issued Mood</option>
                                                 <option value="0"> Split Payment </option>
                                                 <option value="1"> Single Payment </option>
@@ -763,7 +763,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 paymentType" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Payment Type </label>&nbsp;<span class="text-danger">*</span>
-												<select type="text" class="form-control" id="payment_type" name="payment_type" tabindex="3">
+												<select type="text" class="form-control" id="payment_type" name="payment_type" tabindex="32">
                                                 <option value=""> Select Payment Type</option>
                                                 <option value="0"> Cash </option>
                                                 <option value="1"> Cheque </option>
@@ -775,7 +775,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="bankDiv" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Bank Name </label>&nbsp;<span class="text-danger">*</span>
-												<select type="text" class="form-control" id="bank_id" name="bank_id" tabindex="3">
+												<select type="text" class="form-control" id="bank_id" name="bank_id" tabindex="33">
                                                 <option value=""> Select Bank Name</option>
 												<?php if (sizeof($getBankDetails) > 0) {
 														for ($i = 0; $i < sizeof($getBankDetails); $i++) 
@@ -799,7 +799,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 cash_issue" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Cash</label>
-												<input type="number" class="form-control" id="cash" name="cash" tabindex="4">
+												<input type="number" class="form-control" id="cash" name="cash" tabindex="34">
 												<span class="text-danger" style="display: none;" id="cash_amnt"> Please Enter Cash </span>
 											</div>
 										</div>
@@ -810,7 +810,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Cheque number</label>
-												<input type="number" class="form-control" id="chequeno" name="chequeno" tabindex="5">
+												<input type="number" class="form-control" id="chequeno" name="chequeno" tabindex="35">
 												<span class="text-danger" style="display: none;" id="cheque_num"> Please Enter Cheque Number </span>
 											</div>
 										</div>
@@ -818,14 +818,14 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Cheque Value</label>
-												<input type="number" class="form-control" id="chequeValue" name="chequeValue" tabindex="6">
+												<input type="number" class="form-control" id="chequeValue" name="chequeValue" tabindex="36">
 												<span class="text-danger" style="display: none;" id="cheque_val"> Please Enter Cheque Value </span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 checque" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Cheque Remark</label>
-												<input type="text" class="form-control" id="chequeRemark" name="chequeRemark" tabindex="7">
+												<input type="text" class="form-control" id="chequeRemark" name="chequeRemark" tabindex="37">
 												<span class="text-danger" style="display: none;" id="cheque_remark"> Please Enter Cheque Remark </span>
 											</div>
 										</div>
@@ -837,7 +837,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none">  
 											<div class="form-group">
 												<label for="disabledInput">Transaction ID</label>
-												<input type="number" class="form-control" id="transaction_id" name="transaction_id" tabindex="8">
+												<input type="number" class="form-control" id="transaction_id" name="transaction_id" tabindex="38">
 												<span class="text-danger" style="display: none;" id="transact_id"> Please Enter Transaction ID </span>
 											</div>
 										</div>
@@ -845,14 +845,14 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Transaction Value </label>
-												<input type="number" class="form-control" id="transaction_value" name="transaction_value" tabindex="9">
+												<input type="number" class="form-control" id="transaction_value" name="transaction_value" tabindex="39">
 												<span class="text-danger" style="display: none;" id="transact_val"> Please Enter Transaction Value </span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Transaction Remark </label>
-												<input type="text" class="form-control" id="transaction_remark" name="transaction_remark" tabindex="10">
+												<input type="text" class="form-control" id="transaction_remark" name="transaction_remark" tabindex="40">
 												<span class="text-danger" style="display: none;" id="transact_remark"> Please Enter Transaction Remark </span>
 											</div>
 										</div>
@@ -860,7 +860,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 balance" style="display:none"> 
 											<div class="form-group">
 												<label for="disabledInput">Balance Amount </label>
-												<input type="text" class="form-control" id="balance" name="balance" readonly >
+												<input type="text" class="form-control" id="balance" name="balance" readonly tabindex='41' >
 											</div>
 										</div>
 
@@ -884,7 +884,7 @@ input:checked + .slider:before {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="GuarentorName"> Name </label><span class="required">&nbsp;*</span>
-											<select type="text" class="form-control" id="cash_guarentor_name" name="cash_guarentor_name" tabindex="11">
+											<select type="text" class="form-control" id="cash_guarentor_name" name="cash_guarentor_name" tabindex="42">
 												<option> Select Guarantor </option>
 											</select>
 											<span class="text-danger" style="display: none;" id="cash_guarentor"> Please Select the Name </span>
@@ -894,7 +894,7 @@ input:checked + .slider:before {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="GuarentorRelationship">  Relationship </label>
-											<input type="text" class="form-control" id="relationship" name="relationship" readonly tabindex="12">
+											<input type="text" class="form-control" id="relationship" name="relationship" readonly tabindex="43">
 										</div>
 									</div>
 									
@@ -903,7 +903,7 @@ input:checked + .slider:before {
 											<input type="hidden" class="form-control" id="compare_finger" name="compare_finger" > <!--Already Store in Finger Print Table... when select fam name above the finger print will be shown here to compare. -->
 											<input type="hidden" class="form-control" id="ack_fingerprint" name="ack_fingerprint" > <!-- finger print value from Device when scanning.-->
 											<input type="hidden" class="form-control" id="fingerValidation" name="fingerValidation" > <!-- set val as 1 when finger Print Matching becuz to use for finger print validation if submit click.-->
-											<button type="button" class='btn btn-success scanBtn' style='background-color: #009688;margin-top: 19px;' onclick="event.preventDefault()" title='Put Your Thumb'><i class="material-icons" id="icon-flipped"> &#xe90d; </i>&nbsp;Scan</button>
+											<button type="button" class='btn btn-success scanBtn' style='background-color: #009688;margin-top: 19px;' onclick="event.preventDefault()" title='Put Your Thumb' tabindex='44'><i class="material-icons" id="icon-flipped"> &#xe90d; </i>&nbsp;Scan</button>
 											<span class="text-danger" id="hand_type" style="position: relative;top: 12px;"> </span>
 										</div>
 									</div>
@@ -919,7 +919,7 @@ input:checked + .slider:before {
 					<!-- Submit Button Start -->
 					<div class="col-md-12 ">
                         <div class="text-right">
-                            <button type="submit" name="submit_loanIssue" id="submit_loanIssue" class="btn btn-primary" value="Submit" tabindex="13"><span class="icon-check"></span>&nbsp;Submit</button>
+                            <button type="submit" name="submit_loanIssue" id="submit_loanIssue" class="btn btn-primary" value="Submit" tabindex="45"><span class="icon-check"></span>&nbsp;Submit</button>
                             <!-- <button type="reset" class="btn btn-outline-secondary" tabindex="20">Clear</button> -->
                         </div>
                     </div>

@@ -115,7 +115,13 @@ $(document).ready(function () {
         hideCheckSpan();
     })
 
-    
+    {
+        // Get today's date
+        var today = new Date().toISOString().split('T')[0];
+
+        // Set the minimum date in the date input to today
+        $('#due_start_from').attr('min', today);
+    }
 
     //when cash enter the cash acknowledgement card will be show.
     $('#cash').keyup(function () {
@@ -422,11 +428,11 @@ function getCategoryInfo() {
             $('#moduleTable').empty();
             $('#moduleTable').append('<tbody><tr>');
             if (response.length != 0) {
-                var tb = 35;
+                var tb = 14;
                 for (var i = 0; i < response.length; i++) {
                     $('#moduleTable tbody tr').append(`<td><label for="disabledInput">` + response[i]['loan_category_ref_name'] + `</label><span class="required">&nbsp;*</span><input type="text" class="form-control" id="category_info" name="category_info[]" 
                     value='`+ category_info + `' tabindex='` + tb + `'readonly required placeholder='Enter ` + response[i]['loan_category_ref_name'] + `'></td>`);
-                    tb++;
+                    // tb++;
                 }
                 $('#moduleTable').append(`</tr></tbody>`);
 

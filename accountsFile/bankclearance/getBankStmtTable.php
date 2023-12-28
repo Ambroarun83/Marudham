@@ -39,7 +39,7 @@ $qry = $con->query("SELECT * from bank_stmt where bank_id = '$bank_id' and (date
         while($row = $qry->fetch_assoc()){ ?>
             <tr>
                 <td><?php echo $i;?></td>
-                <td><?php echo $row['trans_date'];?></td>
+                <td><?php echo date('d-m-Y',strtotime($row['trans_date']));?></td>
                 <td><?php echo $row['trans_id'];?></td>
                 <td><?php echo $row['credit'];?></td>
                 <td><?php echo $row['debit'];?></td>

@@ -11,12 +11,12 @@ if(isset($_POST['submit_director_creation']) && $_POST['submit_director_creation
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$updateDirectorCreation = $userObj->updateDirectorCreation($mysqli,$id, $userid);  
+		$userObj->updateDirectorCreation($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_director_creation&msc=2';</script>
     <?php	}
     else{   
-		$addDirectorCreation = $userObj->addDirectorCreation($mysqli, $userid);   
+		$userObj->addDirectorCreation($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_director_creation&msc=1';</script>
         <?php
@@ -31,7 +31,7 @@ $del=$_GET['del'];
 }
 if($del>0)
 {
-	$deleteDirectorCreation = $userObj->deleteDirectorCreation($mysqli,$del, $userid); 
+	$userObj->deleteDirectorCreation($mysqli,$del, $userid); 
 	//die;
 	?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_director_creation&msc=3';</script>
@@ -112,26 +112,10 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
-                                                <!-- <select tabindex="1" type="text" class="form-control" id="company_id" name="company_id"  >
-                                                    <option value="">Select Company Name</option>   
-                                                    <?php if (sizeof($companyName)>0) { 
-                                                    for($j=0;$j<count($companyName);$j++) { ?>
-                                                    <option <?php if(isset($company_id)) { if($companyName[$j]['company_id'] == $company_id)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
-                                                    <?php echo $companyName[$j]['company_name'];?></option>
-                                                    <?php }} ?>  
-                                                </select>  -->
 												<input type="hidden" id='company_id' name="company_id" value='<?php echo $companyName[0]['company_id'] ?>' >
-                                            	<input type="text" class="form-control" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_name'] ?>' readonly>
+												<input type="text" class="form-control" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_name'] ?>' readonly tabindex='1'>
                                         </div>
                                     </div>
-									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                        <div class="form-group">
-                                            <label for="disabledInput">Branch Name</label>&nbsp;<span class="text-danger">*</span>
-                                            <select tabindex="2" type="text" class="form-control" id="branch_id" name="branch_id" >
-												<option value="">Select Branch</option>
-											</select> 
-                                        </div>
-                                    </div> -->
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group" >
 											<label for="disabledInput">Director Type</label>&nbsp;<span class="text-danger">*</span>

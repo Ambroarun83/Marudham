@@ -81,7 +81,7 @@ function getfamName($con,$rel_id){
 
                         <td>
                             <?php if($row['temp_sts'] == '0'){ ?>
-                                <input type='checkbox' id='doc_check' name='doc_check' class="form-control doc_check"  <?php if($row['doc_info_upload_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['doc_id'];//name of uploaded document?>'></td>
+                                <input type='checkbox' id='doc_check' name='doc_check' class="form-control doc_check"  <?php if($row['doc_info_upload_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['doc_id'];//name of uploaded document?>' tabindex='38'></td>
                             <?php }else if($row['temp_sts'] == '1'){?>
                                 <label>Not Available</label>
                             <?php } ?>

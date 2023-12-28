@@ -50,7 +50,7 @@ function getfamName($con,$rel_id){
                         <?php } ?>
                     </td>
 
-                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['endorsement_process_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_process'></td>
+                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['endorsement_process_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_process' tabindex='38'></td>
                 </tr>
                     <?php
                 }?>
@@ -74,7 +74,7 @@ function getfamName($con,$rel_id){
                         <?php } ?>
                     </td>
 
-                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_RC_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_rc'></td>
+                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_RC_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_rc' tabindex='38'></td>
                 </tr>
                     <?php
                 }?>
@@ -98,7 +98,7 @@ function getfamName($con,$rel_id){
                         <?php } ?>
                     </td>
 
-                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_Key_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_key'></td>
+                    <td><input type='checkbox' id='endorse_check' name='endorse_check' class="form-control endorse_check" <?php if($row['en_Key_noc'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of ack_documentation table?>' data-thing='en_key' tabindex='38'></td>
                 </tr>
                     <?php
                 }?>

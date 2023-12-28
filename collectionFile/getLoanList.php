@@ -154,7 +154,7 @@ function moneyFormatIndia($num) {
                     } ?></td>
                 <td><?php echo "<span class='btn btn-success collection-window' style='font-size: 17px;position: relative;top: 0px; background-color:#009688;";
                             if($row['cus_status']== '16' ){echo 'display:none';} //|| $row['cus_status']== '15' || $closed_sts[$i-1] == 'true'
-                echo " ' data-value='".$row['req_id']."''>$</span>"; ?></td>
+                echo " ' data-value='".$row['req_id']."'' tabindex='0'>$</span>"; ?></td>
                 <td>
                     <?php 
                         $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary' ";
@@ -196,7 +196,7 @@ function moneyFormatIndia($num) {
     $(function() {
         $('#loanListTable').DataTable({
             'processing': true,
-            'iDisplayLength': 5,
+            'iDisplayLength': 10,
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -212,13 +212,13 @@ function moneyFormatIndia($num) {
             ],
         });
     });
-    $('.dropdown').click(function(event) {
+    $('.dropdown').off().click(function(event) {
         event.preventDefault();
         $('.dropdown').not(this).removeClass('active');
         $(this).toggleClass('active');
     });
 
-    $(document).click(function(event) {
+    $(document).off().click(function(event) {
         var target = $(event.target);
         if (!target.closest('.dropdown').length) {
             $('.dropdown').removeClass('active');

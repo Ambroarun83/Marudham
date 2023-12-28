@@ -27,12 +27,12 @@ if(isset($_POST['submit_request']) && $_POST['submit_request'] != '')
     <?php
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
 		$id = $_POST['id']; 	
-		$updateRequest = $userObj->updateRequest($mysqli,$id, $userid);  
+		$userObj->updateRequest($mysqli,$id, $userid);  
 		?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=2';</script>
     <?php	}
     else{   
-		$addRequest = $userObj->addRequest($mysqli, $userid);   
+		$userObj->addRequest($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=1';</script>
 	<?php
@@ -46,7 +46,7 @@ $del=$_GET['del'];
 }
 if($del>0)
 {
-	$deleteRequest = $userObj->deleteRequest($mysqli,$del, $userid); 
+	$userObj->deleteRequest($mysqli,$del, $userid); 
 	?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_request&msc=3';</script>
 <?php	
@@ -170,7 +170,6 @@ if($idupd>0)
 <div class="text-right" style="margin-right: 25px;">
     <a href="edit_request">
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-    <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <!-- Page header end -->
@@ -179,6 +178,7 @@ if($idupd>0)
 <div class="main-container">
 	<!--form start-->
 	<form id = "request" name="request" action="" method="post" enctype="multipart/form-data"> 
+	<input type="hidden" id="pending_sts"> <input type="hidden" id="od_sts"> <input type="hidden" id="due_nil_sts"> <input type="hidden" id="closed_sts"><input type="hidden" id="bal_amt">
 		<?php if($idupd == 0){ ?>
 			<input type="hidden" class="form-control" value="<?php if(isset($user_id)) echo $user_id; ?>"  id="user_id_load" name="user_id_load" aria-describedby="id" placeholder="Enter id">
 			<input type="hidden" class="form-control" value="<?php if(isset($role)) echo $role; ?>"  id="role_load" name="role_load" aria-describedby="id" placeholder="Enter id">
@@ -325,40 +325,40 @@ if($idupd>0)
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<br>
-											<input type="button" class="btn btn-outline-secondary text-right" id="cus_status" name="cus_status" value="Customer Status" >
+											<input type="button" class="btn btn-outline-secondary text-right" id="cus_status" name="cus_status" value="Customer Status" tabindex='10'>
 										</div>
 									</div>
 									<?php } ?>
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_data">Customer Data</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="cus_data" name="cus_data" readonly value='<?php if(isset($cus_data)) {echo $cus_data;} ?>' tabindex='10' >
+											<input type="text" class="form-control" id="cus_data" name="cus_data" readonly value='<?php if(isset($cus_data)) {echo $cus_data;} ?>' tabindex='11' >
 										</div>
 									</div>
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="cus_name">Customer Name</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="cus_name" name="cus_name" value='<?php if(isset($cus_name)) {echo $cus_name;} ?>' tabindex='11' placeholder="Enter Customer Name"  pattern="[a-zA-Z\s]+">
+											<input type="text" class="form-control" id="cus_name" name="cus_name" value='<?php if(isset($cus_name)) {echo $cus_name;} ?>' tabindex='12' placeholder="Enter Customer Name"  pattern="[a-zA-Z\s]+">
 											<span class="text-danger" style='display:none' id='cusnameCheck'>Please Enter Customer Name</span>
 										</div>
 									</div>
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="dob">Date of Birth</label><span class="required">&nbsp;*</span>
-											<input type="date" class="form-control" id="dob" name="dob" value='<?php if(isset($dob)) {echo $dob;} ?>' tabindex='12'>
+											<input type="date" class="form-control" id="dob" name="dob" value='<?php if(isset($dob)) {echo $dob;} ?>' tabindex='13'>
 											<span class="text-danger" style='display:none' id='dobCheck'>Please Select DOB</span>
 										</div>
 									</div>
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 										<div class="form-group">
 											<label for="age">Age</label><span class="required">&nbsp;*</span>
-											<input type="text" class="form-control" id="age" name="age" readonly value='<?php if(isset($age)) {echo $age;} ?>' tabindex='13' >
+											<input type="text" class="form-control" id="age" name="age" readonly value='<?php if(isset($age)) {echo $age;} ?>' tabindex='14' >
 										</div>
 									</div>
 									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8" >
 										<div class="form-group">
 											<label for="gender" >Gender&nbsp;<span class="required">&nbsp;*</span></label>
-											<select tabindex="14" type="text" class="form-control" id="gender" name="gender" >
+											<select tabindex="15" type="text" class="form-control" id="gender" name="gender" >
 												<option value="">Select Gender</option>
 												<option value="1" <?php if(isset($gender) and $gender == '1') echo 'selected'; ?>>Male</option>
 												<option value="2" <?php if(isset($gender) and $gender == '2') echo 'selected'; ?>>Female</option>
@@ -588,7 +588,7 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 								<div class="form-group">
 									<label for="poss_type" >Possibility<span class="required">&nbsp;*</span></label>
-									<select tabindex="101" type="text" class="form-control" id="poss_type" name="poss_type" >
+									<select tabindex="37" type="text" class="form-control" id="poss_type" name="poss_type" >
 										<option value="">Select Possibility</option>
 										<option value="1" <?php if(isset($poss_type) and $poss_type == '1') echo 'selected'; ?>>Due Amount</option>
 										<option value="2" <?php if(isset($poss_type) and $poss_type == '2') echo 'selected'; ?>>Due Period</option>
@@ -599,14 +599,14 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 due_amt" style="display:none">
 								<div class="form-group">
 									<label for="due_amt">Due Amount</label><span class="required">&nbsp;*</span>
-									<input type="number" class="form-control" id="due_amt" name="due_amt" value='<?php if(isset($due_amt)) {echo $due_amt;} ?>' tabindex='102'>
+									<input type="number" class="form-control" id="due_amt" name="due_amt" value='<?php if(isset($due_amt)) {echo $due_amt;} ?>' tabindex='38'>
 									<span class="text-danger" style='display:none' id='dueamtCheck'>Please Enter Due Amount</span>
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 due_period" style="display:none">
 								<div class="form-group">
 									<label for="due_period">Due Period</label><span class="required">&nbsp;*</span>
-									<input type="number" class="form-control" id="due_period" name="due_period" value='<?php if(isset($due_period)) {echo $due_period;} ?>' tabindex='103'>
+									<input type="number" class="form-control" id="due_period" name="due_period" value='<?php if(isset($due_period)) {echo $due_period;} ?>' tabindex='39'>
 									<span class="text-danger" style='display:none' id='dueperiodCheck'>Please Enter Due Period</span>
 								</div>
 							</div>
@@ -620,26 +620,26 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 								<div class="form-group">
 									<label for="calc_loan_amt">Loan Amount</label>
-									<input type="number" class="form-control" id="calc_loan_amt" name="calc_loan_amt"  tabindex='104'>
+									<input type="number" class="form-control" id="calc_loan_amt" name="calc_loan_amt"  tabindex='40'>
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 								<div class="form-group">
 									<label for="calc_int_rate">Rate of Interest</label>
-									<input type="number" class="form-control" id="calc_int_rate" name="calc_int_rate"  tabindex='105' pattern="[0-9]*\.?[0-9]+">
+									<input type="number" class="form-control" id="calc_int_rate" name="calc_int_rate"  tabindex='41' pattern="[0-9]*\.?[0-9]+">
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 								<div class="form-group">
 									<label for="calc_due_period">Due Period</label>
-									<input type="number" class="form-control" id="calc_due_period" name="calc_due_period"  tabindex='106'>
+									<input type="number" class="form-control" id="calc_due_period" name="calc_due_period"  tabindex='42'>
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" ></div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 								<div class="form-group" style="text-align:center">
 									<span class="text-danger" style='display:none' id='calcCheck'>Please Fill All<br><br></span>
-									<button type="button" class="btn btn-primary" id="get_emi" name="get_emi" tabindex='107'>Get Due Amount&nbsp;<span class="icon-arrow-down-circle"></span></button>
+									<button type="button" class="btn btn-primary" id="get_emi" name="get_emi" tabindex='43'>Get Due Amount&nbsp;<span class="icon-arrow-down-circle"></span></button>
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" ></div>
@@ -659,7 +659,7 @@ if($idupd>0)
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
 								<div class="form-group">
 									<label for="calc_due_amt">Due Amount</label>
-									<input type="text" class="form-control" id="calc_due_amt" name="calc_due_amt" readonly>
+									<input type="text" class="form-control" id="calc_due_amt" name="calc_due_amt" readonly tabindex="44">
 								</div>
 							</div>
 						</div>
@@ -667,8 +667,8 @@ if($idupd>0)
 				</div>
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_request" id="submit_request" class="btn btn-primary" value="Submit" tabindex="108"><span class="icon-check"></span>&nbsp;Submit</button>
-						<button type="reset" class="btn btn-outline-secondary" tabindex="109" >Clear</button>
+						<button type="submit" name="submit_request" id="submit_request" class="btn btn-primary" value="Submit" tabindex="45"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="reset" class="btn btn-outline-secondary" tabindex="46" >Clear</button>
 					</div>
 				</div>
 

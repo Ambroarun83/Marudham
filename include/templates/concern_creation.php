@@ -18,7 +18,7 @@ if($getUserDetails){
 
 
 if(isset($_POST['submit_concern']) && $_POST['submit_concern'] != ''){
-	$addConcern = $userObj->addConcern($mysqli,$userid);
+	$userObj->addConcern($mysqli,$userid);
 	
 ?>
 	<script>location.href='<?php echo $HOSTPATH; ?>edit_concern_creation&msc=1';</script>
@@ -296,7 +296,7 @@ if(isset($_POST['submit_concern']) && $_POST['submit_concern'] != ''){
 
                                 <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
                                     <div class="form-group">
-                                        <button type="button" class="btn btn-primary" id="add_complaint" name="add_complaint" data-toggle="modal" data-target=".addComplaint" style="padding: 5px 35px; margin-top: 20px;"><span class="icon-add"></span></button>
+                                        <button type="button" class="btn btn-primary" id="add_complaint" name="add_complaint" data-toggle="modal" data-target=".addComplaint" style="padding: 5px 35px; margin-top: 20px;" tabindex='16'><span class="icon-add"></span></button>
                                     </div>
                                 </div>
 

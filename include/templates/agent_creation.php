@@ -12,12 +12,12 @@ if(isset($_POST['submit_agent_creation']) && $_POST['submit_agent_creation'] != 
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$updateAgentCreation = $userObj->updateAgentCreation($mysqli,$id, $userid);  
+		$userObj->updateAgentCreation($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_agent_creation&msc=2';</script>
     <?php	}
     else{  
-		$addAgentCreation = $userObj->addAgentCreation($mysqli, $userid);   
+		$userObj->addAgentCreation($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_agent_creation&msc=1';</script>
         <?php
@@ -32,7 +32,7 @@ $del=$_GET['del'];
 }
 if($del>0)
 {
-	$deleteAgentCreation = $userObj->deleteAgentCreation($mysqli,$del, $userid); 
+	$userObj->deleteAgentCreation($mysqli,$del, $userid); 
 	//die;
 	?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_agent_creation&msc=3';</script>
@@ -129,61 +129,45 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
-											<!-- <select tabindex="1" type="text" class="form-control" id="company_id" name="company_id"  >
-												<option value="">Select Company Name</option>   
-												<?php if (sizeof($companyName)>0) { 
-												for($j=0;$j<count($companyName);$j++) { ?>
-												<option <?php if(isset($company_id)) { if($companyName[$j]['company_id'] == $company_id)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
-												<?php echo $companyName[$j]['company_name'];?></option>
-												<?php }} ?>  
-											</select>  -->
 											<input type="hidden" id='company_id' name="company_id" value='<?php echo $companyName[0]['company_id'] ?>' >
-                                            <input type="text" class="form-control" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_name'] ?>' readonly>
+                                            <input type="text" class="form-control" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_name'] ?>' readonly tabindex='1'>
                                         </div>
                                     </div>
-									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                        <div class="form-group">
-                                            <label for="disabledInput">Branch Name</label>&nbsp;<span class="text-danger">*</span>
-                                            <select tabindex="2" type="text" class="form-control" id="branch_id" name="branch_id" >
-												<option value="">Select Branch</option>
-											</select> 
-                                        </div>
-                                    </div> -->
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Agent ID</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="ag_code" name="ag_code" value="<?php if(isset($ag_code)) echo $ag_code; ?>"  readonly tabindex="1">
+                                            <input type="text" class="form-control" id="ag_code" name="ag_code" value="<?php if(isset($ag_code)) echo $ag_code; ?>"  readonly tabindex="2">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Agent Name</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="ag_name" name="ag_name" value="<?php if(isset($ag_name)) echo $ag_name; ?>"placeholder="Enter Agent Name" pattern="[a-zA-Z\s&]+" tabindex="2">
+                                            <input type="text" class="form-control" id="ag_name" name="ag_name" value="<?php if(isset($ag_name)) echo $ag_name; ?>"placeholder="Enter Agent Name" pattern="[a-zA-Z\s&]+" tabindex="3">
                                         </div>
                                     </div>
 									<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Agent Group</label>&nbsp;<span class="text-danger">*</span>
-                                            <select type="text" class="form-control" id="ag_group" name="ag_group" tabindex="3">
+                                            <select type="text" class="form-control" id="ag_group" name="ag_group" tabindex="4">
 												<option value=""> Select Agent Group</option>
 											</select>
                                         </div>
                                     </div>
 									<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12" style="margin-top: 19px;">
                                         <div class="form-group float-right">
-                                            <button type="button" tabindex="" class="btn btn-primary" id="add_group" name="add_group" data-toggle="modal" data-target=".addGroup" style="padding: 5px 35px;" ><span class="icon-add"></span></button>
+                                            <button type="button" tabindex="5" class="btn btn-primary" id="add_group" name="add_group" data-toggle="modal" data-target=".addGroup" style="padding: 5px 35px;" ><span class="icon-add"></span></button>
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Email ID</label>
-                                            <input type="email" class="form-control" id="mail" name="mail" value="<?php if(isset($mail)) echo $mail; ?>"  placeholder="Enter Email ID" tabindex="4">
+                                            <input type="email" class="form-control" id="mail" name="mail" value="<?php if(isset($mail)) echo $mail; ?>"  placeholder="Enter Email ID" tabindex="6">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">State</label>&nbsp;<span class="text-danger">*</span>
-                                            <select type="text" class="form-control" id="state" name="state" tabindex="5" >
+                                            <select type="text" class="form-control" id="state" name="state" tabindex="7" >
 												<option value="SelectState">Select State</option>
 												<option value="TamilNadu" <?php if(isset($state) && $state == 'TamilNadu') echo 'selected' ?>>Tamil Nadu</option>
 												<option value="Puducherry"  <?php if(isset($state) && $state == 'Puducherry') echo 'selected' ?> >Puducherry</option>
@@ -194,7 +178,7 @@ if($idupd>0)
                                         <div class="form-group">
 											<label for="disabledInput">District</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="district1" name="district1" >
-                                            <select type="text" class="form-control" id="district" name="district" tabindex="6">
+                                            <select type="text" class="form-control" id="district" name="district" tabindex="8">
 												<option value="Select District">Select District</option>
 											</select>	
                                         </div>
@@ -203,7 +187,7 @@ if($idupd>0)
                                         <div class="form-group">
                                             <label for="disabledInput">Taluk</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="taluk1" name="taluk1" >
-                                            <select type="text" class="form-control" id="taluk" name="taluk" tabindex="7">
+                                            <select type="text" class="form-control" id="taluk" name="taluk" tabindex="9">
 												<option value="Select Taluk">Select Taluk</option>
 											</select>
                                         </div>
@@ -211,13 +195,13 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Place</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="place" name="place" value="<?php if(isset($place)) echo $place; ?>" pattern="[a-zA-Z\s]+" placeholder="Enter Place" tabindex="8">
+                                            <input type="text" class="form-control" id="place" name="place" value="<?php if(isset($place)) echo $place; ?>" pattern="[a-zA-Z\s]+" placeholder="Enter Place" tabindex="10">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Pincode</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="number" onKeyPress="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>" placeholder="Enter Pincode" tabindex="9">
+                                            <input type="number" onKeyPress="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>" placeholder="Enter Pincode" tabindex="11">
                                         </div>
                                     </div>
 								</div>
@@ -249,22 +233,22 @@ if($idupd>0)
 											<tbody>
 												<tr>
 													<td>
-														<input type="text" tabindex="10" name="name[]" id="name" class="form-control" pattern="[a-zA-Z\s]+" >
+														<input type="text" tabindex="12" name="name[]" id="name" class="form-control" pattern="[a-zA-Z\s]+" >
 													</td>
 													<td>
-														<input type="text" tabindex="11" name="designation[]" id="designation" class="form-control" pattern="[a-zA-Z\s]+">
+														<input type="text" tabindex="13" name="designation[]" id="designation" class="form-control" pattern="[a-zA-Z\s]+">
 													</td>
 													<td>
-														<input type="number" tabindex="12" name="mobile[]" id="mobile" class="form-control" onKeyPress="if(this.value.length==10) return false;" >
+														<input type="number" tabindex="14" name="mobile[]" id="mobile" class="form-control" onKeyPress="if(this.value.length==10) return false;" >
 													</td>
 													<td>
-														<input type="number" tabindex="13" name="whatsapp[]" id="whatsapp" class="form-control" onKeyPress="if(this.value.length==10) return false;" >
+														<input type="number" tabindex="15" name="whatsapp[]" id="whatsapp" class="form-control" onKeyPress="if(this.value.length==10) return false;" >
 													</td>
 													<td>
-														<button type="button" tabindex="14" id="add_comm[]" name="add_comm" value="Submit" class="btn btn-primary add_comm">Add</button> 
+														<button type="button" tabindex="16" id="add_comm[]" name="add_comm" value="Submit" class="btn btn-primary add_comm">Add</button> 
 													</td>
 													<td>
-														<span class='icon-trash-2' tabindex="15"></span>
+														<span class='icon-trash-2' tabindex="17"></span>
 													</td>
 												</tr>
 											</tbody>

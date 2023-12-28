@@ -14,6 +14,14 @@ $(document).ready(function () {
         $(this).val(value);
     });
 
+    {
+        // Get today's date
+        var today = new Date().toISOString().split('T')[0];
+
+        // Set the minimum date in the date input to today
+        $('#due_start_from').attr('min', today);
+    }
+
     //Show Remark and Address when select other in Relationship.
     $('#relationship').on('change', function () {
 
