@@ -47,17 +47,46 @@ $(document).ready(function () {
             $(this).removeAttr('data-toggle').removeAttr('data-target')
         }else{
             $(this).attr('data-toggle','modal').attr('data-target','.customerstatus')
-            $.ajax({
-                url:'requestFile/getCustomerStatus.php',
-                data: {"cus_id":cus_id},
-                // dataType: 'json',
-                type:'post',
-                cache: false,
-                success: function(response){
-                    $('#cusHistoryTable').empty();
-                    $('#cusHistoryTable').html(response);
-                }
-            })
+            // $.ajax({
+            //     url:'requestFile/getCustomerStatus.php',
+            //     data: {"cus_id":cus_id},
+            //     // dataType: 'json',
+            //     type:'post',
+            //     cache: false,
+            //     success: function(response){
+            //         $('#cusHistoryTable').empty();
+            //         $('#cusHistoryTable').html(response);
+            //     }
+            // })
+            callresetCustomerStatus(cus_id);//this function will give the customer's status like pending od current
+            showOverlay();//loader start
+            setTimeout(() => {
+                //take all the values from the function then send to customer status file to fetch details
+                var pending_sts = $('#pending_sts').val();var od_sts = $('#od_sts').val();var due_nil_sts = $('#due_nil_sts').val();var closed_sts = $('#closed_sts').val();var bal_amt = $('#bal_amt').val()
+                $.ajax({
+                    url:'requestFile/getCustomerStatus.php',
+                    data: {cus_id,pending_sts,od_sts,due_nil_sts,closed_sts,bal_amt},
+                    // dataType: 'json',
+                    type:'post',
+                    cache: false,
+                    success: function(response){
+                        $('#cusHistoryTable').empty();
+                        $('#cusHistoryTable').html(response);
+                        $('#cusHistoryTable tbody tr').each(function(){
+                            var val = $(this).find('td:nth-child(6)').html();
+                            if(['Request','Verification','Approval','Acknowledgement','Issue'].includes(val)){
+                                $(this).find('td:nth-child(6)').css({'backgroundColor':'rgba(240, 0, 0, 0.8)','color':'white','fontWeight':'Bolder'});
+                            }else if(val == 'Present'){
+                                $(this).find('td:nth-child(6)').css({'backgroundColor':'rgba(0, 160, 0, 0.8)','color':'white','fontWeight':'Bolder'});
+                            }else if(val == 'Closed'){
+                                $(this).find('td:nth-child(6)').css({'backgroundColor':'rgba(0, 0, 255, 0.8)','color':'white','fontWeight':'Bolder'});
+                            }
+                            
+                        });
+                    }
+                })
+                hideOverlay();
+            },1500)
         }
     })
 
@@ -925,12 +954,12 @@ function getCategoryInfo(sub_cat){
                     // if(getCategoryInfo != undefined){
                     //     category_info = getCategoryInfo[i];
                     // }
-                    $('.category_info .card-body .row table tbody tr').append( "<td><label for='disabledInput'>"+response[i]['loan_category_ref_name']+"</label><span class='required'>&nbsp;*</span><input type='text' class='form-control' id='category_info' name='category_info[]' pattern='[A-Za-z0-9\\s]*' value='"+category_info+"' tabindex='40' required placeholder='Enter "+response[i]['loan_category_ref_name']+"'></td>");
+                    $('.category_info .card-body .row table tbody tr').append( "<td><label for='disabledInput'>"+response[i]['loan_category_ref_name']+"</label><span class='required'>&nbsp;*</span><input type='text' class='form-control' id='category_info' name='category_info[]' pattern='[A-Za-z0-9\\s]*' value='"+category_info+"' tabindex='37' required placeholder='Enter "+response[i]['loan_category_ref_name']+"'></td>");
                     $('.category_info').show();
                     
                 }
                 $('.category_info .card-body .row table tbody tr').append(`<td><button type="button" id="add_category_info[]" name="add_category_info" 
-                class="btn btn-primary add_category_info">Add</button> </td><td><span class='icon-trash-2 deleterow' id='deleterow' </span></td>
+                class="btn btn-primary add_category_info" tabindex='37'>Add</button> </td><td><span class='icon-trash-2 deleterow' id='deleterow' tabindex='37'> </span></td>
                 </tr></tbody></table>`);
                 
                 category_content = $('#moduleTable tbody').html(); //To get the appended category list
@@ -967,6 +996,44 @@ function getCategoryInfo(sub_cat){
             }
         }
     })
+}
+
+function callresetCustomerStatus(cus_id){
+    //To get loan sub Status
+    var pending_arr = [];
+    var od_arr = [];
+    var due_nil_arr = [];
+    var closed_arr = [];
+    var balAmnt = [];
+    $.ajax({
+        url: 'collectionFile/resetCustomerStatus.php',
+        data: {'cus_id':cus_id},
+        dataType:'json',
+        type:'post',
+        cache: false,
+        success: function(response){
+            if(response.length != 0){
+
+                for(var i=0;i< response['pending_customer'].length;i++){
+                    pending_arr[i] = response['pending_customer'][i]
+                    od_arr[i] = response['od_customer'][i]
+                    due_nil_arr[i] = response['due_nil_customer'][i]
+                    closed_arr[i] = response['closed_customer'][i]
+                    balAmnt[i] = response['balAmnt'][i]
+                }
+                var pending_sts = pending_arr.join(',');
+                $('#pending_sts').val(pending_sts);
+                var od_sts = od_arr.join(',');
+                $('#od_sts').val(od_sts);
+                var due_nil_sts = due_nil_arr.join(',');
+                $('#due_nil_sts').val(due_nil_sts);
+                var closed_sts = closed_arr.join(',');
+                $('#closed_sts').val(closed_sts);
+                var bal_amt = balAmnt.join(',');
+                $('#bal_amt').val(bal_amt);
+            };
+        }
+    }); 
 }
 
 //Validations

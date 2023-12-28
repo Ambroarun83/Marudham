@@ -15,12 +15,12 @@ if(isset($_POST['submitloan_calculation']) && $_POST['submitloan_calculation'] !
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){     
         $id = $_POST['id'];     
-    $updateLoanCalculationmaster = $userObj->updateLoanCalculation($mysqli,$id,$userid);  
+    $userObj->updateLoanCalculation($mysqli,$id,$userid);  
     ?>
     <script>location.href='<?php echo $HOSTPATH; ?>edit_loan_calculation&msc=2';</script> 
     <?php   }
     else{   
-        $addLoanCalculation = $userObj->addLoanCalculation($mysqli,$userid);   
+        $userObj->addLoanCalculation($mysqli,$userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH; ?>edit_loan_calculation&msc=1';</script>
         <?php
@@ -34,7 +34,7 @@ $del=$_GET['del'];
 }
 if($del>0)
 {
-    $deleteLoanCalculation = $userObj->deleteLoanCalculation($mysqli,$del,$userid); 
+    $userObj->deleteLoanCalculation($mysqli,$del,$userid); 
     ?>
     <script>location.href='<?php echo $HOSTPATH; ?>edit_loan_calculation&msc=3';</script>
 <?php   
@@ -75,14 +75,11 @@ if($idupd>0)
 			$collection_info        = $getLoanCalculation['collection_info']; 
         }
     }
-    // $req_array='';
-    // $req_array = explode(',',$due_type); 
     $emicheck = strpos($due_type,'emi') !== false;
     $calcheck = strpos($due_type,'intrest') !== false;
     
     
     $profit_method = explode(',',$profit_method);
-    // print_r($profit_method);
 
 }
 ?>
@@ -96,7 +93,6 @@ if($idupd>0)
 <div class="text-right" style="margin-right: 25px;">
     <a href="edit_loan_calculation">
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-    <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <!-- Page header end -->
@@ -143,7 +139,7 @@ if($idupd>0)
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="disabledInput">Due Method</label>
-                                <input type="text" readonly id="due_method" name="due_method" class="form-control"  value="Monthly">
+                                <input type="text" readonly id="due_method" name="due_method" class="form-control"  value="Monthly" tabindex='3'>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -183,11 +179,6 @@ if($idupd>0)
                             <div class="form-group">
                                 <label for="inputReadOnly">Calculate Method</label>
                                     <input tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" value="Monthly" readonly>
-                                    <!-- <select tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" >
-                                        <option value="">Select Calculate Method</option> 
-                                        <option <?php  if(isset($calculate_method)) { if($calculate_method == "day") echo 'selected'; }?> value="day">Day</option> 
-                                        <option <?php  if(isset($calculate_method)) { if($calculate_method == "monthly") echo 'selected'; }?> value="monthly">Monthly</option> 
-                                    </select>  -->
                             </div>
                         </div>
                     </div>
@@ -196,7 +187,6 @@ if($idupd>0)
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                             <div class="card-header">Interest Rate %</div>
-                                <!-- <input type="text" tabindex="3" id="intrest_rate" name="intrest_rate" class="form-control" placeholder="Rate Of Intrest"  value=""> -->
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -216,7 +206,6 @@ if($idupd>0)
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                             <div class="card-header">Due Period %</div>
-                                <!-- <input type="number" tabindex="3" id="intrest_rate" name="intrest_rate" class="form-control" placeholder="Rate Of Intrest"  value=""> -->
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -237,7 +226,6 @@ if($idupd>0)
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                             <div class="card-header">Document Charge %</div>
-                                <!-- <input type="number" tabindex="3" id="intrest_rate" name="intrest_rate" class="form-control" placeholder="Rate Of Intrest"  value=""> -->
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -257,7 +245,6 @@ if($idupd>0)
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                             <div class="card-header">Processing Fee %</div>
-                                <!-- <input type="number" tabindex="3" id="intrest_rate" name="intrest_rate" class="form-control" placeholder="Rate Of Intrest"  value=""> -->
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
@@ -276,40 +263,22 @@ if($idupd>0)
                                 </div>
                         </div>
 
-                        <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="disabledInput">Loan Limit</label><span class="required">&nbsp;*</span>
-                                <input type="text" tabindex="15" id="loan_limit" name="loan_limit" class="form-control" placeholder="Enter Loan Limit" value="<?php if(isset($loan_limit)) echo $loan_limit; ?>" required>
-                            </div>
-                        </div> -->
                         <br><br><br><br><br><br>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
-                                <input type="number" step="0.01 " tabindex="16" id="overdue" name="overdue" class="form-control" placeholder="Enter Overdue"   value="<?php if(isset($overdue)) echo $overdue; ?>" required>
+                                <input type="number" step="0.01 " tabindex="15" id="overdue" name="overdue" class="form-control" placeholder="Enter Overdue"   value="<?php if(isset($overdue)) echo $overdue; ?>" required>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group"><br>
                             <label for="disabledInput">Advance</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input checked readonly type="radio" tabindex="17" name="collection_info" id="yes" value="Yes" <?php if(isset($collection_info))
+                                <input checked readonly type="radio" tabindex="16" name="collection_info" id="yes" value="Yes" <?php if(isset($collection_info))
                                     echo ($collection_info=='yes')?'checked':'' ?>> &nbsp;&nbsp; <label for="yes">Yes </label> &nbsp;&nbsp;&nbsp;&nbsp;
-                                <input readonly type="radio" name="collection_info" id="no"  value="No" <?php if(isset($collection_info))
+                                <input readonly type="radio" tabindex='17' name="collection_info" id="no"  value="No" <?php if(isset($collection_info))
                                     echo ($collection_info=='No')?'checked':'' ?>> &nbsp;&nbsp; <label for="no">No </label>
                             </div>
                         </div>
-                        <!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="disabledInput">Grace Period</label><span class="required">&nbsp;*</span>
-                                <input type="number" tabindex="16" id="grace_period" name="grace_period" class="form-control" placeholder="Grace Period" required  value="<?php if(isset($grace_period)) echo $grace_period ; ?>">
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="disabledInput">Penalty %</label><span class='text-danger' style="font-size:11px">  ( If Exceeded Grace Period)</span>
-                                <input type="number" tabindex="17" id="penalty" name="penalty" class="form-control" placeholder="Enter Penalty"   value="<?php if(isset($penalty)) echo $penalty; ?>">
-                            </div>
-                        </div> -->
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12"></div>
                                                 
                         

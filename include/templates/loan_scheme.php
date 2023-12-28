@@ -12,12 +12,12 @@ if(isset($_POST['submit_loan_scheme_monthly']) && $_POST['submit_loan_scheme_mon
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$updateMonthlyLoanScheme = $userObj->updateMonthlyLoanScheme($mysqli,$id, $userid);  
+		$userObj->updateMonthlyLoanScheme($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_scheme&msc=2&type=monthly';</script>
     <?php	}
     else{   
-		$addMonthlyLoanScheme = $userObj->addMonthlyLoanScheme($mysqli, $userid);   
+		$userObj->addMonthlyLoanScheme($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_scheme&msc=1&type=monthly';</script>
         <?php
@@ -27,12 +27,12 @@ if(isset($_POST['submit_loan_scheme_weekly']) && $_POST['submit_loan_scheme_week
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$updateWeeklyLoanScheme = $userObj->updateWeeklyLoanScheme($mysqli,$id, $userid);  
+		$userObj->updateWeeklyLoanScheme($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_scheme&msc=2&type=weekly';</script>
     <?php	}
     else{   
-		$addWeeklyLoanScheme = $userObj->addWeeklyLoanScheme($mysqli, $userid);   
+		$userObj->addWeeklyLoanScheme($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_scheme&msc=1&type=weekly';</script>
         <?php
@@ -42,12 +42,12 @@ if(isset($_POST['submit_loan_scheme_daily']) && $_POST['submit_loan_scheme_daily
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$updateDailyLoanScheme = $userObj->updateDailyLoanScheme($mysqli,$id, $userid);  
+		$userObj->updateDailyLoanScheme($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_scheme&msc=2&type=daily';</script>
     <?php	}
     else{   
-		$addDailyLoanScheme = $userObj->addDailyLoanScheme($mysqli, $userid);   
+		$userObj->addDailyLoanScheme($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_scheme&msc=1&type=daily';</script>
         <?php
@@ -64,7 +64,7 @@ if(isset($_GET['del']))
 }
 if($del>0)
 {
-	$deleteLoanScheme = $userObj->deleteLoanScheme($mysqli,$del, $userid); 
+	$userObj->deleteLoanScheme($mysqli,$del, $userid); 
 	if($type == 'monthly'){
 	?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_scheme&msc=3&type=monthly';</script>
@@ -178,7 +178,6 @@ if(isset($_GET['type'])){
 <div class="text-right" style="margin-right: 25px;">
     <a href="edit_loan_scheme">
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-    <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <head>
@@ -370,12 +369,6 @@ if(isset($_GET['type'])){
 										</div>
 									</div>
 									<br><br><br><br><br><br><br><br>
-									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Due Date</label>&nbsp;<span class="text-danger">*</span>
-											<input type="number" tabindex="19" id="due_date" name="due_date" class="form-control" placeholder="Enter Due Date" value="<?php if(isset($due_date)) echo $due_date; ?>" >
-										</div>
-									</div> -->
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Overdue Penalty %</label><span class='text-danger' style="font-size:11px">&nbsp;*</span>
@@ -383,20 +376,7 @@ if(isset($_GET['type'])){
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12"></div>
-									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Grace Period</label>&nbsp;<span class="text-danger">*</span>
-											<input type="number" tabindex="21" id="grace_period" name="grace_period" class="form-control" placeholder="Enter Grace Period"   value="<?php if(isset($grace_period)) echo $grace_period ; ?>">
-										</div>
-									</div>
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-										<div class="form-group">
-											<label for="disabledInput">Penalty %</label><span class='text-danger' style="font-size:11px">  ( If Exceeded Grace Period)</span>
-											<input type="number" tabindex="22" id="penalty" name="penalty" class="form-control" placeholder="Enter Penalty"   value="<?php if(isset($penalty)) echo $penalty; ?>" title="Penalty if Exceeded Grace Period">
-										</div>
-									</div> -->
 									
-
 								</div>
 							</div>
 						</div>

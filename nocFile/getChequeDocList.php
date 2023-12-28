@@ -65,7 +65,7 @@ function getfamName($con,$rel_id){
 
                 <td>
                     <?php if($row['temp_sts'] == '0'){ ?>
-                        <input type='checkbox' id='cheque_check' name='cheque_check' class="form-control cheque_check" <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of cheque list table?>'>
+                        <input type='checkbox' id='cheque_check' name='cheque_check' class="form-control cheque_check" <?php if($row['noc_given'] == '1') echo 'checked disabled';?> data-value='<?php echo $row['id'];//id of cheque list table?>' tabindex='8'>
                     <?php }else if($row['temp_sts'] == '1'){?>
                         <label>Not Available</label>
                     <?php } ?>

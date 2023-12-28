@@ -13,12 +13,12 @@ if(isset($_POST['submitLoanCategory']) && $_POST['submitLoanCategory'] != '')
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$updateLoanCategoryDetails = $userObj->updateLoanCategoryDetails($mysqli,$id, $userid);  
+		$userObj->updateLoanCategoryDetails($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_category&msc=2';</script>
     <?php	}
     else{   
-		$addLoanCategoryDetails = $userObj->addLoanCategoryDetails($mysqli, $userid);   
+		$userObj->addLoanCategoryDetails($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_category&msc=1';</script>
         <?php
@@ -33,7 +33,7 @@ $del=$_GET['del'];
 }
 if($del>0)
 {
-	$deleteLoanCategoryDetails = $userObj->deleteLoanCategoryDetails($mysqli,$del, $userid); 
+	$userObj->deleteLoanCategoryDetails($mysqli,$del, $userid); 
 	//die;
 	?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_loan_category&msc=3';</script>
@@ -73,7 +73,6 @@ if($idupd>0)
 <div class="text-right" style="margin-right: 25px;">
     <a href="edit_loan_category">
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-    <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <!-- Page header end -->
@@ -129,7 +128,7 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Loan Limit</label><span class="required">&nbsp;*</span>
-											<input type="text" tabindex="15" id="loan_limit" name="loan_limit" class="form-control" placeholder="Enter Loan Limit" value="<?php if(isset($loan_limit)) echo $loan_limit; ?>">
+											<input type="text" tabindex="4" id="loan_limit" name="loan_limit" class="form-control" placeholder="Enter Loan Limit" value="<?php if(isset($loan_limit)) echo $loan_limit; ?>">
 											<span id="loan_limitCheck" class="text-danger" style="display: none;">Enter Loan limit</span>
 										</div>
 									</div>
@@ -161,13 +160,13 @@ if($idupd>0)
 												<tbody>
 													<tr>
 														<td>
-															<input type="text" tabindex="4" name="loan_category_ref_name[]" id="loan_category_ref_name" class="form-control" value="<?php if(isset($loan_category_ref_name)){ echo $loan_category_ref_name[$i]; } ?>">
+															<input type="text" tabindex="5" name="loan_category_ref_name[]" id="loan_category_ref_name" class="form-control" value="<?php if(isset($loan_category_ref_name)){ echo $loan_category_ref_name[$i]; } ?>">
 														</td>
 														<td>
-															<button type="button" tabindex="4" id="add_category_ref[]" name="add_category_ref" value="Submit" class="btn btn-primary add_category_ref">Add</button> 
+															<button type="button" tabindex="5" id="add_category_ref[]" name="add_category_ref" value="Submit" class="btn btn-primary add_category_ref">Add</button> 
 														</td>
 														<td>
-															<span class='icon-trash-2' tabindex="4"></span>
+															<span class='icon-trash-2' tabindex="5"></span>
 														</td>
 													</tr>
 												</tbody>

@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
 
         $req_id = $row['req_id'];
         $cus_name = $row['cus_name'];
-        
+
         $loan_category = $row['loan_category'] ?? '';
         $qry = $con->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
         $row1 = $qry->fetch_assoc();
@@ -58,25 +58,25 @@ if ($result->num_rows > 0) {
             '11' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
             '12' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
             '13' => ['status' => 'Loan Issue', 'sub_status' => 'In Issue'],
-            '14' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
-            '15' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
-            '16' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
-            '17' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id)],
+            '14' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
+            '15' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
+            '16' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
+            '17' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
             '20' => ['status' => 'Closed', 'sub_status' => 'In Closed'],
             '21' => ['status' => 'Closed', 'sub_status' => 'In Closed']
         ];
 
         // if ($cus_status != '10' && $cus_status != '11') {
-            if (array_key_exists($cus_status, $statusMapping)) {
-                $records[$i]['status'] = $statusMapping[$cus_status]['status'];
-                $records[$i]['sub_status'] = $statusMapping[$cus_status]['sub_status'];
+        if (array_key_exists($cus_status, $statusMapping)) {
+            $records[$i]['status'] = $statusMapping[$cus_status]['status'];
+            $records[$i]['sub_status'] = $statusMapping[$cus_status]['sub_status'];
 
-                if ($cus_status == '21') {
-                    $Qry = $con->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
-                    $closed_status = ['', 'Consider', 'Waiting List', 'Block List'];
-                    $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts']];
-                }
+            if ($cus_status == '21') {
+                $Qry = $con->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
+                $closed_status = ['', 'Consider', 'Waiting List', 'Block List'];
+                $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts']];
             }
+        }
         // }
 
         //for document status
@@ -169,13 +169,15 @@ if ($result->num_rows > 0) {
 <input type="hidden" name="docSts" id="docSts">
 <div id="printcollection" style="display: none"></div>
 <?php
-function getCollectionStatus($con, $cus_id, $user_id)
+function getCollectionStatus($con, $cus_id, $user_id, $req_id)
 {
 
     $pending_sts = isset($_POST["pending_sts"]) ? explode(',', $_POST["pending_sts"]) : null;
     $od_sts = isset($_POST["od_sts"]) ? explode(',', $_POST["od_sts"]) : null;
     $due_nil_sts = isset($_POST["due_nil_sts"]) ? explode(',', $_POST["due_nil_sts"]) : null;
+    $bal_amt = isset($_POST["bal_amt"]) ? explode(',', $_POST["bal_amt"]) : null;
     $closed_sts = isset($_POST["closed_sts"]) ? explode(',', $_POST["closed_sts"]) : null;
+    $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
 
     $retVal = '';
 
@@ -188,7 +190,7 @@ function getCollectionStatus($con, $cus_id, $user_id)
     $curdate = date('Y-m-d');
     while ($row = $run->fetch_assoc()) {
         $i = 1;
-        if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate))) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+        if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate)) and $bal_amt[$i - 1] != 0) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
             if ($row['cus_status'] == '15') {
                 $retVal = 'Error';
             } elseif ($row['cus_status'] == '16') {
@@ -197,41 +199,57 @@ function getCollectionStatus($con, $cus_id, $user_id)
                 $retVal = 'Current';
             }
         } else {
-            if ($pending_sts[$i - 1] == 'true' && $od_sts[$i - 1] == 'false') {
-                if ($row['cus_status'] == '15') {
-                    $retVal = 'Error';
-                } elseif ($row['cus_status'] == '16') {
-                    $retVal = 'Legal';
-                } else {
-                    $retVal = 'Pending';
-                }
-            } else if ($od_sts[$i - 1] == 'true' && $due_nil_sts[$i - 1] == 'false') {
-                if ($row['cus_status'] == '15') {
-                    $retVal = 'Error';
-                } elseif ($row['cus_status'] == '16') {
-                    $retVal = 'Legal';
-                } else {
-                    $retVal = 'OD';
-                }
-            } elseif ($due_nil_sts[$i - 1] == 'true') {
-                if ($row['cus_status'] == '15') {
-                    $retVal = 'Error';
-                } elseif ($row['cus_status'] == '16') {
-                    $retVal = 'Legal';
-                } else {
-                    $retVal = 'Due Nil';
-                }
-            } elseif ($pending_sts[$i - 1] == 'false') {
-                if ($row['cus_status'] == '15') {
-                    $retVal = 'Error';
-                } elseif ($row['cus_status'] == '16') {
-                    $retVal = 'Legal';
-                } else {
-                    if ($closed_sts[$i - 1] == 'true') {
-                        $retVal = "Move To Close";
+            if ($row['cus_status'] <= 20) {
+                if ($pending_sts[$i - 1] == 'true' && $od_sts[$i - 1] == 'false') {
+                    if ($row['cus_status'] == '15') {
+                        $retVal = 'Error';
+                    } elseif ($row['cus_status'] == '16') {
+                        $retVal = 'Legal';
                     } else {
-                        $retVal = 'Current';
+                        $retVal = 'Pending';
                     }
+                } else if ($od_sts[$i - 1] == 'true' && $due_nil_sts[$i - 1] == 'false') {
+                    if ($row['cus_status'] == '15') {
+                        $retVal = 'Error';
+                    } elseif ($row['cus_status'] == '16') {
+                        $retVal = 'Legal';
+                    } else {
+                        $retVal = 'OD';
+                    }
+                } elseif ($due_nil_sts[$i - 1] == 'true') {
+                    if ($row['cus_status'] == '15') {
+                        $retVal = 'Error';
+                    } elseif ($row['cus_status'] == '16') {
+                        $retVal = 'Legal';
+                    } else {
+                        $retVal = 'Due Nil';
+                    }
+                } elseif ($pending_sts[$i - 1] == 'false') {
+                    if ($row['cus_status'] == '15') {
+                        $retVal = 'Error';
+                    } elseif ($row['cus_status'] == '16') {
+                        $retVal = 'Legal';
+                    } else {
+                        if ($closed_sts[$i - 1] == 'true') {
+                            $retVal = "Move To Close";
+                        } else {
+                            $retVal = 'Current';
+                        }
+                    }
+                }
+            } else if ($row['cus_status'] > 20) { // if status is closed(21) or more than that(22), then show closed status
+                $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($req_id) . "' ");
+                $closedStsrow = $closedSts->fetch_assoc();
+                $rclosed = $closedStsrow['closed_sts'];
+                $consider_lvl = $closedStsrow['consider_level'];
+                if ($rclosed == '1') {
+                    $retVal = 'Consider - ' . $consider_lvl_arr[$consider_lvl];
+                }
+                if ($rclosed == '2') {
+                    $retVal = 'Waiting List';
+                }
+                if ($rclosed == '3') {
+                    $retVal = 'Block List';
                 }
             }
         }
@@ -362,7 +380,7 @@ function getNOCDocDetails($con, $req_id, $cus_id)
     table.destroy();
     $('#custStatusTable').DataTable({
         'processing': true,
-        'iDisplayLength': 5,
+        'iDisplayLength': 10,
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
@@ -378,5 +396,4 @@ function getNOCDocDetails($con, $req_id, $cus_id)
         ],
     });
     customerStatusOnClickEvents();
-
 </script>

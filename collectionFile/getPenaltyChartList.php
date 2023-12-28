@@ -45,7 +45,7 @@ function moneyFormatIndia($num)
         <?php
         $req_id = $_POST['req_id'];
         $cus_id = $_POST['cus_id'];
-        $run = $connect->query("SELECT * FROM `penalty_charges` WHERE `req_id`= '$req_id' ");
+        $run = $connect->query("SELECT * FROM `penalty_charges` WHERE `req_id`= '$req_id' ORDER BY created_date ");
 
         $i = 1;
         $penalt = 0;
@@ -62,9 +62,9 @@ function moneyFormatIndia($num)
         ?>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php echo $row['penalty_date']; ?></td>
+                <td><?php echo $row['penalty_date']!=''?date('d-m-Y',strtotime($row['penalty_date'])):''; ?></td>
                 <td><?php echo $penaltys; ?></td>
-                <td><?php echo $row['paid_date']; ?></td>
+                <td><?php echo $row['paid_date']!=''?date('d-m-Y',strtotime($row['paid_date'])):''; ?></td>
                 <td><?php echo $paid_amount; ?></td>
                 <td><?php echo $bal_amnt; ?></td>
                 <td><?php echo $waivers; ?></td>
@@ -85,11 +85,11 @@ function moneyFormatIndia($num)
 <tr>
     <td></td>
     <td></td>
-    <td><b><?php echo number_format($penalty,1); ?></b></td>
+    <td><b><?php echo moneyFormatIndia($penalty); ?></b></td>
     <td></td>
-    <td><b><?php echo number_format($paid_amt,1); ?></b></td>
+    <td><b><?php echo moneyFormatIndia($paid_amt); ?></b></td>
     <td></td>
-    <td><b><?php echo number_format($penalty_waiver,1); ?></b></td>
+    <td><b><?php echo moneyFormatIndia($penalty_waiver); ?></b></td>
 </tr>
 </table>
 

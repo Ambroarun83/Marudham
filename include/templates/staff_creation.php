@@ -11,12 +11,12 @@ if(isset($_POST['submit_staff_creation']) && $_POST['submit_staff_creation'] != 
 {
     if(isset($_POST['id']) && $_POST['id'] >0 && is_numeric($_POST['id'])){		
         $id = $_POST['id']; 	
-		$updateStaffCreation = $userObj->updateStaffCreation($mysqli,$id, $userid);  
+		$userObj->updateStaffCreation($mysqli,$id, $userid);  
     ?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_staff_creation&msc=2';</script>
     <?php	}
     else{   
-		$addStaffCreation = $userObj->addStaffCreation($mysqli, $userid);   
+		$userObj->addStaffCreation($mysqli, $userid);   
         ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_staff_creation&msc=1';</script>
         <?php
@@ -31,7 +31,7 @@ $del=$_GET['del'];
 }
 if($del>0)
 {
-	$deleteStaffCreation = $userObj->deleteStaffCreation($mysqli,$del, $userid); 
+	$userObj->deleteStaffCreation($mysqli,$del, $userid); 
 	//die;
 	?>
 	<script>location.href='<?php echo $HOSTPATH;  ?>edit_staff_creation&msc=3';</script>
@@ -85,7 +85,6 @@ if($idupd>0)
 <div class="text-right" style="margin-right: 25px;">
     <a href="edit_staff_creation">
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-    <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <!-- Page header end -->
@@ -141,13 +140,13 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Address</label>
-                                            <input type="text" class="form-control" id="address" name="address" value="<?php if(isset($address)) echo $address; ?>" placeholder="Enter Address" tabindex="4">
+                                            <input type="text" class="form-control" id="address" name="address" value="<?php if(isset($address)) echo $address; ?>" placeholder="Enter Address" tabindex="5">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">State</label>&nbsp;<span class="text-danger">*</span>
-                                            <select type="text" class="form-control" id="state" name="state" tabindex="5" >
+                                            <select type="text" class="form-control" id="state" name="state" tabindex="6" >
 												<option value="SelectState">Select State</option>
 												<option value="TamilNadu" <?php if(isset($state) && $state == 'TamilNadu') echo 'selected' ?>>Tamil Nadu</option>
 												<option value="Puducherry"  <?php if(isset($state) && $state == 'Puducherry') echo 'selected' ?> >Puducherry</option>
@@ -158,7 +157,7 @@ if($idupd>0)
                                         <div class="form-group">
 											<label for="disabledInput">District</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="district1" name="district1" >
-                                            <select type="text" class="form-control" id="district" name="district" tabindex="6">
+                                            <select type="text" class="form-control" id="district" name="district" tabindex="7">
 												<option value="Select District">Select District</option>
 											</select>	
                                         </div>
@@ -167,7 +166,7 @@ if($idupd>0)
                                         <div class="form-group">
                                             <label for="disabledInput">Taluk</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" class="form-control" id="taluk1" name="taluk1" >
-                                            <select type="text" class="form-control" id="taluk" name="taluk" tabindex="7">
+                                            <select type="text" class="form-control" id="taluk" name="taluk" tabindex="8">
 												<option value="Select Taluk">Select Taluk</option>
 											</select>
                                         </div>
@@ -175,13 +174,13 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Place</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="text" class="form-control" id="place" name="place" value="<?php if(isset($place)) echo $place; ?>" pattern="[a-zA-Z\s]+" placeholder="Enter Place" tabindex="8">
+                                            <input type="text" class="form-control" id="place" name="place" value="<?php if(isset($place)) echo $place; ?>" pattern="[a-zA-Z\s]+" placeholder="Enter Place" tabindex="9">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Pincode</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="number" onKeyPress="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>" placeholder="Enter Pincode" tabindex="9">
+                                            <input type="number" onKeyPress="if(this.value.length==6) return false;" class="form-control" id="pincode" name="pincode" value="<?php if(isset($pincode)) echo $pincode; ?>" placeholder="Enter Pincode" tabindex="10">
                                         </div>
                                     </div>
 									
@@ -202,31 +201,31 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Mail ID</label>
-                                            <input type="email" class="form-control" id="mail" name="mail" value="<?php if(isset($mail)) echo $mail; ?>" placeholder="Enter Mail ID" tabindex="10">
+                                            <input type="email" class="form-control" id="mail" name="mail" value="<?php if(isset($mail)) echo $mail; ?>" placeholder="Enter Mail ID" tabindex="11">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Mobile No. 1</label>
-                                            <input type="number" class="form-control" id="mobile1" name="mobile1" value="<?php if(isset($mobile1)) echo $mobile1; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Mobile Number" tabindex="11">
+                                            <input type="number" class="form-control" id="mobile1" name="mobile1" value="<?php if(isset($mobile1)) echo $mobile1; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Mobile Number" tabindex="12">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Mobile No. 2</label>
-                                            <input type="number" class="form-control" id="mobile2" name="mobile2" value="<?php if(isset($mobile2)) echo $mobile2; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Mobile Number" tabindex="12">
+                                            <input type="number" class="form-control" id="mobile2" name="mobile2" value="<?php if(isset($mobile2)) echo $mobile2; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Mobile Number" tabindex="13">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Whatsapp No.</label>
-                                            <input type="number" class="form-control" id="whatsapp" name="whatsapp" value="<?php if(isset($whatsapp)) echo $whatsapp; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Whatsapp Number" tabindex="13">
+                                            <input type="number" class="form-control" id="whatsapp" name="whatsapp" value="<?php if(isset($whatsapp)) echo $whatsapp; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter Whatsapp Number" tabindex="14">
                                         </div>
                                     </div>	
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">CUG No.</label>
-                                            <input type="number" class="form-control" id="cug_no" name="cug_no" value="<?php if(isset($cug_no)) echo $cug_no; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter CUG Number" tabindex="14">
+                                            <input type="number" class="form-control" id="cug_no" name="cug_no" value="<?php if(isset($cug_no)) echo $cug_no; ?>" onKeyPress="if(this.value.length==10) return false;" placeholder="Enter CUG Number" tabindex="15">
                                         </div>
                                     </div>	
 								</div>
@@ -246,34 +245,26 @@ if($idupd>0)
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
-											<!-- <select tabindex="15" type="text" class="form-control" id="company_id" name="company_id"  >
-												<option value="">Select Company Name</option>   
-												<?php if (sizeof($companyName)>0) { 
-												for($j=0;$j<count($companyName);$j++) { ?>
-												<option <?php if(isset($company_id)) { if($companyName[$j]['company_id'] == $company_id)  echo 'selected'; }  ?> value="<?php echo $companyName[$j]['company_id']; ?>">
-												<?php echo $companyName[$j]['company_name'];?></option>
-												<?php }} ?>  
-											</select>  -->
 											<input type="hidden" id='company_id' name="company_id" value='<?php echo $companyName[0]['company_id'] ?>' >
-                                            <input type="text" class="form-control" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_name'] ?>' readonly>
+                                            <input type="text" class="form-control" id='company_id1' name="company_id1" value='<?php echo $companyName[0]['company_name'] ?>' readonly tabindex='16'>
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Department</label>
-                                            <input type="text" class="form-control" id="department" name="department" value="<?php if(isset($department)) echo $department; ?>" placeholder="Enter Department Name" tabindex="16">
+                                            <input type="text" class="form-control" id="department" name="department" value="<?php if(isset($department)) echo $department; ?>" placeholder="Enter Department Name" tabindex="17">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Team</label>
-                                            <input type="text" class="form-control" id="team" name="team" value="<?php if(isset($team)) echo $team; ?>" placeholder="Enter Team Name" tabindex="17">
+                                            <input type="text" class="form-control" id="team" name="team" value="<?php if(isset($team)) echo $team; ?>" placeholder="Enter Team Name" tabindex="18">
                                         </div>
                                     </div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Designation</label>
-                                            <input type="text" class="form-control" id="designation" name="designation" value="<?php if(isset($designation)) echo $designation; ?>" placeholder="Enter Designation Name" tabindex="18">
+                                            <input type="text" class="form-control" id="designation" name="designation" value="<?php if(isset($designation)) echo $designation; ?>" placeholder="Enter Designation Name" tabindex="19">
                                         </div>
                                     </div>
 								</div>
@@ -283,8 +274,8 @@ if($idupd>0)
 				</div>
 				<div class="col-md-12 ">
 					<div class="text-right">
-						<button type="submit" name="submit_staff_creation" id="submit_staff_creation" class="btn btn-primary" value="Submit" tabindex="19"><span class="icon-check"></span>&nbsp;Submit</button>
-						<button type="reset" class="btn btn-outline-secondary" tabindex="20" >Clear</button>
+						<button type="submit" name="submit_staff_creation" id="submit_staff_creation" class="btn btn-primary" value="Submit" tabindex="20"><span class="icon-check"></span>&nbsp;Submit</button>
+						<button type="reset" class="btn btn-outline-secondary" tabindex="21" >Clear</button>
 					</div>
 				</div>
 

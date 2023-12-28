@@ -159,8 +159,11 @@ $(document).ready(function(){
     };
 
     {
-        let curDate = new Date();
-        $('#comm_date').attr('min', curDate.getFullYear()+'-0'+(curDate.getMonth()+1)+'-'+curDate.getDate()); // setting minimum date for to date, so before start date will be disabled
+        // Get today's date
+        var today = new Date().toISOString().split('T')[0];
+
+        // Set the minimum date in the date input to today
+        $('#comm_date').attr('min', today);
     }
     $('#comm_ftype').change(function(){
         let type = $(this).val();

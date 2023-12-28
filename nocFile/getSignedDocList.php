@@ -66,7 +66,7 @@ function getGuarentorName($con,$req_id){
                 
                 <td>
                     <?php if($row['temp_sts'] == '0'){ ?>
-                        <input type='checkbox' id='sign_check' name='sign_check' class="form-control sign_check" <?php if($row['noc_given'] == '1') {echo 'checked disabled';}?> data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'></td>
+                        <input type='checkbox' id='sign_check' name='sign_check' class="form-control sign_check" <?php if($row['noc_given'] == '1') {echo 'checked disabled';}?> data-value='<?php echo $row['id'];//id of docuemnts uploaded table?>'  tabindex='8'></td>
                     <?php }else if($row['temp_sts'] == '1'){?>
                         <label>Not Available</label>
                     <?php } ?>

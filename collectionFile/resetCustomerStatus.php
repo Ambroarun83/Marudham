@@ -6,14 +6,11 @@ if (isset($_SESSION['userid'])) {
     $user_id = $_SESSION['userid'];
 }
 
-// if(isset($_POST['req_id'])){
-//     $req_id = $_POST['req_id'];
-// }
-// $req_id = '11';//****************************************************************************************************************************************
 if (isset($_POST['cus_id'])) {
-    $cus_id = $_POST['cus_id'];
+    $cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
+    // $cus_id = $_POST['cus_id'];
 }
-// $cus_id=200020002000;
+
 $req_arr = array();
 $qry = $con->query("SELECT req_id FROM in_issue where cus_id = $cus_id and (cus_status >= 14 and cus_status < 20) ");
 while ($row = $qry->fetch_assoc()) {
