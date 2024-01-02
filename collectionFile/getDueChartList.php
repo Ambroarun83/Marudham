@@ -234,13 +234,26 @@ function moneyFormatIndia($num)
                 (
                     ( MONTH(c.coll_date) >= MONTH('$issued') AND YEAR(c.coll_date) = YEAR('$issued') )
                     AND 
-                    ( MONTH(c.coll_date) < MONTH('$due_start_from') AND YEAR(c.coll_date) = YEAR('$due_start_from') )
+                    ( 
+                        (
+                            YEAR(c.coll_date) = YEAR('$due_start_from') AND MONTH(c.coll_date) < MONTH('$due_start_from')
+                        ) OR (
+                            YEAR(c.coll_date) < YEAR('$due_start_from')
+                        )
+                    )
                 ) 
                 OR
                 (
-                    ( MONTH(c.trans_date) >= MONTH('$issued') AND YEAR(c.coll_date) = YEAR('$issued') )
+                    ( MONTH(c.trans_date) >= MONTH('$issued') AND YEAR(c.trans_date) = YEAR('$issued') )
                     AND 
-                    ( MONTH(c.trans_date) < MONTH('$due_start_from') AND YEAR(c.coll_date) = YEAR('$due_start_from') )
+                    ( 
+                        (
+                            YEAR(c.trans_date) = YEAR('$due_start_from') AND MONTH(c.trans_date) < MONTH('$due_start_from')
+                        ) OR (
+                            YEAR(c.trans_date) < YEAR('$due_start_from')
+                        )
+                            AND c.trans_date != '0000-00-00'
+                    )
                 )
             )");
         } else
@@ -255,13 +268,27 @@ function moneyFormatIndia($num)
                     (
                         (WEEK(c.coll_date) >= WEEK('$issued') AND YEAR(c.coll_date) = YEAR('$issued'))
                         AND 
-                        (WEEK(c.coll_date) < WEEK('$due_start_from') AND YEAR(c.coll_date) = YEAR('$due_start_from'))
+                        (
+                            (
+                                YEAR(c.coll_date) = YEAR('$due_start_from') AND WEEK(c.coll_date) < WEEK('$due_start_from')
+                            ) OR (
+                                YEAR(c.coll_date) < YEAR('$due_start_from')
+                            )
+                        )
                     ) 
                     OR
                     (
                         (WEEK(c.trans_date) >= WEEK('$issued') AND YEAR(c.trans_date) = YEAR('$issued'))
                         AND 
-                        (WEEK(c.trans_date) < WEEK('$due_start_from') AND YEAR(c.trans_date) = YEAR('$due_start_from'))
+                        (
+                            (
+                                YEAR(c.trans_date) = YEAR('$due_start_from') AND WEEK(c.trans_date) < WEEK('$due_start_from')
+                            ) OR (
+                                YEAR(c.trans_date) < YEAR('$due_start_from')
+                            )
+                            AND c.trans_date != '0000-00-00'
+
+                        )
                     )
                 )
             ");

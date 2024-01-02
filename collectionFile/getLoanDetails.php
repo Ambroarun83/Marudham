@@ -536,7 +536,7 @@ function calculateOthers($loan_arr,$response,$con){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = 0;
+            $response['payable'] = $response['due_amt'];
         }
     }
 
