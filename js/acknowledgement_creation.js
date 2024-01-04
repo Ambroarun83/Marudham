@@ -2308,12 +2308,12 @@ function doc_submit_validation(submit_btn) {
         } else {
             $('#enModelCheck').hide();
         }
-        if (vehicle_reg_no == '') {
-            event.preventDefault();
-            $('#vehicle_reg_noCheck').show();
-        } else {
-            $('#vehicle_reg_noCheck').hide();
-        }
+        // if (vehicle_reg_no == '') {
+        //     event.preventDefault();
+        //     $('#vehicle_reg_noCheck').show();
+        // } else {
+        //     $('#vehicle_reg_noCheck').hide();
+        // }
         if (endorsement_name == '') {
             event.preventDefault();
             $('#endorsementnameCheck').show();

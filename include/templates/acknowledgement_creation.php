@@ -12,7 +12,7 @@ $rem=$_GET['rem'];
 }
 if($rem>0)
 {
-    $removeAcknowledgement = $userObj->removeAcknowledgement($mysqli,$rem, $userid);
+    $userObj->removeAcknowledgement($mysqli,$rem, $userid);
     ?>
     <script>location.href='<?php echo $HOSTPATH;  ?>edit_acknowledgement_list&msc=2';</script>
 <?php
@@ -24,7 +24,7 @@ if(isset($_POST['submit_documentation']) && $_POST['submit_documentation'] != ''
     <script>$('#submit_documentation').attr('disabled', true);</script>
 	
     <?php
-	$addDocVerification = $userObj->addAcknowlegeDocumentation($mysqli, $userid);
+	$userObj->addAcknowlegeDocumentation($mysqli, $userid);
 ?>
 	<script> alert('Documentation Details Submitted'); </script>
     <script>$('#submit_documentation').removeAttr('disabled');</script>
@@ -1625,7 +1625,7 @@ input:checked + .slider:before {
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
-                                        <label for="VehicleRegNo"> Vehicle Reg No. </label> <span class="required">&nbsp;*</span>
+                                        <label for="VehicleRegNo"> Vehicle Reg No. </label> 
                                         <input type="text" class="form-control" id="vehicle_reg_no" name="vehicle_reg_no" placeholder="Enter Vehicle No" value="<?php if(isset($vehicle_reg_no)) echo $vehicle_reg_no; ?>" tabindex="35">
                                         <span class="text-danger" id="vehicle_reg_noCheck"> Enter Vehicle No </span>
                                     </div>

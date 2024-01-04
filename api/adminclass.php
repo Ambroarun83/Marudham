@@ -4720,9 +4720,10 @@ function updateUser($mysqli,$id,$user_id){
             if(isset($_POST['en_Model'])){
                 $en_Model = $_POST['en_Model'];
             }
+			$vehicle_reg_no = '';
             if(isset($_POST['vehicle_reg_no'])){
                 $vehicle_reg_no = $_POST['vehicle_reg_no'];
-            }
+			}
             if(isset($_POST['endorsement_name'])){
                 $endorsement_name = $_POST['endorsement_name'];
             }
@@ -6480,6 +6481,7 @@ function updateUser($mysqli,$id,$user_id){
 				if(isset($_POST['en_Model'])){
 					$en_Model = $_POST['en_Model'];
 				}
+				$vehicle_reg_no = '';
 				if(isset($_POST['vehicle_reg_no'])){
 					$vehicle_reg_no = $_POST['vehicle_reg_no'];
 				}

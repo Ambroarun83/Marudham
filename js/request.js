@@ -954,7 +954,7 @@ function getCategoryInfo(sub_cat){
                     // if(getCategoryInfo != undefined){
                     //     category_info = getCategoryInfo[i];
                     // }
-                    $('.category_info .card-body .row table tbody tr').append( "<td><label for='disabledInput'>"+response[i]['loan_category_ref_name']+"</label><span class='required'>&nbsp;*</span><input type='text' class='form-control' id='category_info' name='category_info[]' pattern='[A-Za-z0-9\\s]*' value='"+category_info+"' tabindex='37' required placeholder='Enter "+response[i]['loan_category_ref_name']+"'></td>");
+                    $('.category_info .card-body .row table tbody tr').append( "<td><label for='disabledInput'>"+response[i]['loan_category_ref_name']+"</label><span class='required'>&nbsp;*</span><input type='text' class='form-control' id='category_info' name='category_info[]' pattern='[A-Za-z0-9\\s\\W]*' value='"+category_info+"' tabindex='37' required placeholder='Enter "+response[i]['loan_category_ref_name']+"'></td>");
                     $('.category_info').show();
                     
                 }

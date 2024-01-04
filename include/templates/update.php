@@ -1458,7 +1458,7 @@ if (sizeof($documentationInfo) > 0) {
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
-										<label for="vehicle_reg_no"> Vehicle Reg No. </label> <span class="required">&nbsp;*</span>
+										<label for="vehicle_reg_no"> Vehicle Reg No. </label> 
 										<input type="text" class="form-control" id="vehicle_reg_no" name="vehicle_reg_no" placeholder="Enter Vehicle No" value="" tabindex="32">
 										<span class="text-danger" id="vehicle_reg_noCheck" style='display:none'> Enter Vehicle No </span>
 									</div>

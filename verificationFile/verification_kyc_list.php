@@ -40,11 +40,20 @@ include '../ajaxconfig.php';
             if($kyc['proof_type'] == '10'){$proof_type = "EB Bill";}else
             if($kyc['proof_type'] == '11'){$proof_type = "Business Proof";}
             
-            $fam_mem = $kyc['fam_mem'];
-            $relationship = '';
+            
+            $relationship = $proof_Of;
             if($kyc['proofOf']=='2'){
+                $fam_mem = $kyc['fam_mem'];
                 $sql = $con->query("SELECT relationship FROM `verification_family_info` where famname = '$fam_mem'");
                 $relationship = $sql->fetch_assoc()['relationship'];
+            }elseif ($kyc['proofOf'] == '1') {
+                $qry = $con->query("CALL get_kyc_guarentor('$req_id')");
+                $fam_mem = $qry->fetch_assoc()['famname'] ?? '';
+                mysqli_next_result($con); // Move to the next query
+            } elseif ($kyc['proofOf'] == '0') {
+                $qry = $con->query("CALL get_cus_name('$cus_id')");
+                $fam_mem = $qry->fetch_assoc()['customer_name'] ?? '';
+                mysqli_next_result($con); // Move to the next query
             }
             ?>
             <tr>
