@@ -15,7 +15,7 @@ if(isset($_POST['cus_id'])){
 }
 // $cus_id=123456789101;
 $req_arr = array();
-$qry=$con->query("SELECT req_id FROM in_issue where cus_id = $cus_id ");// and (cus_status < 21 and cus_status >= 14)"); //and (cus_status = 20)
+$qry=$con->query("SELECT req_id FROM in_issue where cus_id = $cus_id ORDER By req_id ASC ");// and (cus_status < 21 and cus_status >= 14)"); //and (cus_status = 20)
 while($row=$qry->fetch_assoc()){
     $req_arr[] = $row['req_id'];
 }
@@ -304,7 +304,8 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            // $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            $response['payable'] =  0;
 
             if($loan_arr['loan_type'] == 'interest'){//for first month payable will be zero in interest loan
                 $response['payable'] =  0;
@@ -418,7 +419,8 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            // $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            $response['payable'] =  0;
         }
 
     }elseif($loan_arr['due_method_scheme'] == '3'){
@@ -525,7 +527,8 @@ function calculateOthers($loan_arr,$response,$con,$req_id){
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            // $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            $response['payable'] =  0;
         }
     }
     if($response['pending'] < 0){

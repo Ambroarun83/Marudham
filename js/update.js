@@ -3007,7 +3007,7 @@ function MEValidation(id) {
                 validateField(vehicle_process, '#vehicleprocessCheck');
                 validateField(en_Company, '#enCompanyCheck');
                 validateField(en_Model, '#enModelCheck');
-                validateField(vehicle_reg_no, '#vehicle_reg_noCheck');
+                // validateField(vehicle_reg_no, '#vehicle_reg_noCheck');
                 validateField(endorsement_name, '#endorsementnameCheck');
                 validateField(en_Key, '#enKeyCheck');
                 validateField(en_RC, '#enRCCheck');

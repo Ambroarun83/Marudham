@@ -1465,6 +1465,22 @@ $('#guarentor_name').change(function () { //Select Guarantor Name relationship w
 
             $("#guarentor_relationship").val(result['relation']);
 
+            // $('#kyc_dataTable tbody tr').each(function(){
+            //     var proofof = $(this).find('td:nth-child(2)').text();
+            //     let famname = $('#guarentor_name option:selected').text();
+            //     if(proofof.trim() == 'Guarantor' && famname != 'Select Guarantor'){//trim removes whitespaces
+            //         $(this).find('td:nth-child(3)').html(famname);
+            //         $(this).find('td:nth-child(4)').html(result['relation']);
+            //     }
+            // })
+            // $('#kyc_data_table tbody tr').each(function(){
+            //     var proofof = $(this).find('td:nth-child(2)').text();
+            //     let famname = $('#guarentor_name option:selected').text();
+            //     if(proofof.trim() == 'Guarantor' && famname != 'Select Guarantor'){//trim removes whitespaces
+            //         $(this).find('td:nth-child(3)').html(famname);
+            //         $(this).find('td:nth-child(4)').html(result['relation']);
+            //     }
+            // })
         }
     });
 
@@ -2284,7 +2300,7 @@ function resetkycInfo() {
     $.ajax({
         url: 'verificationFile/verification_kyc_reset.php',
         type: 'POST',
-        data: { "cus_id": cus_id },
+        data: { "cus_id": cus_id,req_id },
         cache: false,
         success: function (html) {
             $("#kycTable").empty();

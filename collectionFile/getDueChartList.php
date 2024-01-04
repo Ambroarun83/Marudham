@@ -473,50 +473,80 @@ function moneyFormatIndia($num)
 
                 ?>
                     <tr>
-                        <?php // this condition is to check whether the same month has collection again. if yes the no need to show month name and due amount and serial number
-                        if (date('Y-m', strtotime($lastCusdueMonth)) != date('Y-m', strtotime($row['coll_date']))) { ?>
-                            <td><?php echo $i;
-                                $i++; ?></td>
-                            <td><?php
-                                if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
-                                    //For Monthly.
-                                    // if($loan_type == 'interest'){
-                                    //     echo date('m-Y', strtotime($cusDueMonth.'-1 month'));
-                                    // }else{
-                                    echo date('m-Y', strtotime($cusDueMonth));
-                                    // }
-                                } else {
-                                    //For Weekly && Day.
-                                    echo date('d-m-Y', strtotime($cusDueMonth));
-                                }
-                                ?></td>
-                            <td>
-                                <?php
-                                // if($loan_type == 'interest'){
-                                //     echo date('M', strtotime($cusDueMonth.'-1 month')); 
-                                // }else{
-                                echo date('M', strtotime($cusDueMonth));
-                                // }
-                                ?>
+                        <?php 
+                        if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {//this is for monthly loan to check lastcusduemonth comparision
+                            if (date('Y-m', strtotime($lastCusdueMonth)) != date('Y-m', strtotime($row['coll_date']))) { 
+                            // this condition is to check whether the same month has collection again. if yes the no need to show month name and due amount and serial number
+                            ?>
+                                <td><?php echo $i;
+                                    $i++; ?></td>
+                                <td><?php
+                                    if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                                        //For Monthly.
+                                        echo date('m-Y', strtotime($cusDueMonth));
+                                    } else {
+                                        //For Weekly && Day.
+                                        echo date('d-m-Y', strtotime($cusDueMonth));
+                                    }
+                                    ?></td>
+                                <td>
+                                    <?php
+                                    echo date('M', strtotime($cusDueMonth));
+                                    ?>
+                                </td>
 
-                            </td>
-
-
-                            <?php if ($loan_type == 'emi') { ?>
-                                <td><?php echo $row['due_amt']; ?></td>
-                            <?php } ?>
-                            <?php if($loan_type == 'interest'){ ?>
-                                <td><?php echo $last_princ_amt; ?></td>
-                                <td><?php echo $row['due_amt']; $last_int_amt = $row['due_amt'];?></td>
-                            <?php } ?>
+                                <?php if ($loan_type == 'emi') { ?>
+                                    <td><?php echo $row['due_amt']; ?></td>
+                                <?php } ?>
+                                <?php if($loan_type == 'interest'){ ?>
+                                    <td><?php echo $last_princ_amt; ?></td>
+                                    <td><?php echo $row['due_amt']; $last_int_amt = $row['due_amt'];?></td>
+                                <?php } ?>
 
 
-                        <?php } else { ?>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        <?php } ?>
+                                <?php } else { ?>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                <?php }
+                        }else{//this is for weekly and daily loan to check lastcusduemonth comparision
+                            if (date('Y-m-d', strtotime($lastCusdueMonth)) != date('Y-m-d', strtotime($row['coll_date']))) {
+                            // this condition is to check whether the same month has collection again. if yes the no need to show month name and due amount and serial number
+                            ?>
+                                <td><?php echo $i;
+                                    $i++; ?></td>
+                                <td><?php
+                                    if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
+                                        //For Monthly.
+                                        echo date('m-Y', strtotime($cusDueMonth));
+                                    } else {
+                                        //For Weekly && Day.
+                                        echo date('d-m-Y', strtotime($cusDueMonth));
+                                    }
+                                    ?></td>
+                                <td>
+                                    <?php
+                                    echo date('M', strtotime($cusDueMonth));
+                                    ?>
+                                </td>
+    
+                                <?php if ($loan_type == 'emi') { ?>
+                                    <td><?php echo $row['due_amt']; ?></td>
+                                <?php } ?>
+                                <?php if($loan_type == 'interest'){ ?>
+                                    <td><?php echo $last_princ_amt; ?></td>
+                                    <td><?php echo $row['due_amt']; $last_int_amt = $row['due_amt'];?></td>
+                                <?php } ?>
+    
+    
+                            <?php } else { ?>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            <?php }
+                        } ?>
 
                         <td><?php $pendingMinusCollection = (intVal($row['pending_amt']));
                             if ($pendingMinusCollection != '') {
@@ -1205,7 +1235,7 @@ function calculateOthers($loan_arr, $response, $date, $con)
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            $response['payable'] = $response['due_amt'] ;
 
             if ($loan_arr['loan_type'] == 'interest') {
                 $response['payable'] =  0;
@@ -1318,7 +1348,7 @@ function calculateOthers($loan_arr, $response, $date, $con)
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            $response['payable'] = $response['due_amt'] ;
         }
     } elseif ($loan_arr['due_method_scheme'] == '3') {
         //If Due method is Daily, Calculate penalty by checking the month has ended or not
@@ -1421,7 +1451,7 @@ function calculateOthers($loan_arr, $response, $date, $con)
             //If still current month is not ended, then penalty will be 0
             $response['penalty'] = 0;
             //If still current month is not ended, then payable will be due amt
-            $response['payable'] = $response['due_amt'] - $response['total_paid'] - $response['pre_closure'];
+            $response['payable'] = $response['due_amt'] ;
         }
     }
 
