@@ -1026,6 +1026,7 @@ function calculateOthers($loan_arr, $response, $date, $con)
     $due_start_from = $loan_arr['due_start_from'];
     $maturity_month = $loan_arr['maturity_month'];
 
+    $tot_paid_tilldate = 0; $preclose_tilldate=0;
 
 
     $checkcollection = $con->query("SELECT SUM(`due_amt_track`) as totalPaidAmt FROM `collection` WHERE `req_id` = '$req_id'"); // To Find total paid amount till Now.
@@ -1120,6 +1121,30 @@ function calculateOthers($loan_arr, $response, $date, $con)
 
         if ($count > 0) {
 
+            //this collection query for taking the paid amount until the looping date ($current_date) , to calculate dynamically for due chart
+            $qry = $con->query("SELECT sum(due_amt_track) as due_amt_track, sum(pre_close_waiver) as pre_close_waiver from `collection` 
+            where req_id = $req_id 
+            AND 
+            (
+                (
+                    YEAR(trans_date) = YEAR('$current_date') AND MONTH(trans_date) <= MONTH('$current_date')
+                ) OR (
+                    YEAR(trans_date) < YEAR('$current_date')
+                )
+            )
+            OR
+            (
+                (
+                    YEAR(coll_date) = YEAR('$current_date') AND MONTH(coll_date) <= MONTH('$current_date')
+                ) OR (
+                    YEAR(coll_date) < YEAR('$current_date')
+                )
+            ) ");
+            if($qry->num_rows > 0){
+            $rowss = $qry->fetch_assoc();
+            $tot_paid_tilldate = intVal($rowss['due_amt_track']);
+            $preclose_tilldate = intVal($rowss['pre_close_waiver']);
+            }
 
             if ($loan_arr['loan_type'] == 'interest') {
 
@@ -1127,7 +1152,7 @@ function calculateOthers($loan_arr, $response, $date, $con)
             } else {
 
                 //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
-                $response['pending'] = ($response['due_amt'] * ($count)) - $response['total_paid'] - $response['pre_closure'];
+                $response['pending'] = ($response['due_amt'] * ($count)) - $tot_paid_tilldate - $preclose_tilldate;
             }
 
             // If due month exceeded
@@ -1198,25 +1223,7 @@ function calculateOthers($loan_arr, $response, $date, $con)
                     // }
 
                     if ($count >= 2) {
-                        //if condition is true then this is , 2 months has been completed.
-                        //so the pending amt will be only the first month's complete interest amount
-                        // if($response['total_paid'] != 0){
-                        //     $response['pending'] =  $response['total_paid'] - getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
-                        // }else{
-                        //     if($response['total_paid_int'] != 0){
-                        //         $response['pending'] = $response['total_paid_int'] - getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
-                        //     }else{
-                        //         $response['pending'] =  getTillDateInterest($loan_arr,$response,$con,'fullstartmonth');
-                        //     }
-                        // }
                         $response['pending'] =  $response['pending'] - $response['due_amt'];
-                    } else {
-                        // //else means, month crossed is more than 2 or less than 2 means the pending amount will remain same with above calculated pending amt
-                        // if($response['total_paid_int'] != 0){
-                        //     $response['pending'] =  $response['pending'] - $response['due_amt'] ;
-                        // }else{
-                        //     echo $response['pending'] =  $response['pending'] - $response['due_amt'] ;
-                        // }
                     }
                 }
             }
@@ -1275,7 +1282,7 @@ function calculateOthers($loan_arr, $response, $date, $con)
 
             $penalty_checking_date  = $start_date_obj->format('Y-m-d'); // This format is for query.. month , year function accept only if (Y-m-d).
             $start_date_obj->add($interval);
-
+            
             $checkcollection = $con->query("SELECT * FROM `collection` WHERE `req_id` = '$req_id' && ((WEEK(coll_date)= WEEK('$penalty_checking_date') || WEEK(trans_date)= WEEK('$penalty_checking_date')) && (YEAR(coll_date)= YEAR('$penalty_checking_date') || YEAR(trans_date)= YEAR('$penalty_checking_date')))");
             $collectioncount = mysqli_num_rows($checkcollection); // Checking whether the collection are inserted on date or not by using penalty_raised_date.
 
@@ -1301,8 +1308,33 @@ function calculateOthers($loan_arr, $response, $date, $con)
 
         if ($count > 0) {
 
+            //this collection query for taking the paid amount until the looping date ($current_date) , to calculate dynamically for due chart
+            $qry = $con->query("SELECT sum(due_amt_track) as due_amt_track, sum(pre_close_waiver) as pre_close_waiver from `collection` 
+                where req_id = $req_id 
+                AND
+                (
+                    (
+                        YEAR(trans_date) = YEAR('$current_date') AND WEEK(trans_date) <= WEEK('$current_date')
+                    ) OR (
+                        YEAR(trans_date) < YEAR('$current_date')
+                    )
+                )
+                OR
+                (
+                    (
+                        YEAR(coll_date) = YEAR('$current_date') AND WEEK(coll_date) <= WEEK('$current_date')
+                    ) OR (
+                        YEAR(coll_date) < YEAR('$current_date')
+                    )
+                ) ");
+            if($qry->num_rows > 0){
+                $rowss = $qry->fetch_assoc();
+                $tot_paid_tilldate = intVal($rowss['due_amt_track']);
+                $preclose_tilldate = intVal($rowss['pre_close_waiver']);
+            }
+
             //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'];
+            $response['pending'] = ($response['due_amt'] * $count) - $tot_paid_tilldate - $preclose_tilldate;
 
             // If due month exceeded
             if ($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null) {
@@ -1404,8 +1436,18 @@ function calculateOthers($loan_arr, $response, $date, $con)
         //condition END
 
         if ($count > 0) {
+
+            //this collection query for taking the paid amount until the looping date ($current_date) , to calculate dynamically for due chart
+            $qry = $con->query("SELECT sum(due_amt_track) as due_amt_track, sum(pre_close_waiver) as pre_close_waiver from `collection` 
+                where req_id = $req_id and (date(coll_date) <= date('$current_date') or date(trans_date) <= date('$current_date')) ");
+            if($qry->num_rows > 0){
+                $rowss = $qry->fetch_assoc();
+                $tot_paid_tilldate = intVal($rowss['due_amt_track']);
+                $preclose_tilldate = intVal($rowss['pre_close_waiver']);
+            }
+
             //if Due month exceeded due amount will be as pending with how many months are exceeded and subract pre closure amount if available
-            $response['pending'] = ($response['due_amt'] * $count) - $response['total_paid'] - $response['pre_closure'];
+            $response['pending'] = ($response['due_amt'] * $count) - $tot_paid_tilldate - $preclose_tilldate;
 
             // If due month exceeded
             if ($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null) {
