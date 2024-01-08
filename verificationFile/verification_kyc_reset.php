@@ -42,17 +42,20 @@ include '../ajaxconfig.php';
             
             $fam_mem = $kyc['fam_mem'];
             
-            $relationship = $proof_Of;
+            $relationship = 'NIL';
             if($kyc['proofOf']=='2'){
                 $sql = $con->query("SELECT relationship FROM `verification_family_info` where famname = '$fam_mem'");
                 $relationship = $sql->fetch_assoc()['relationship'];
             }elseif ($kyc['proofOf'] == '1') {
                 $qry = $con->query("CALL get_kyc_guarentor('$req_id')");
-                $fam_mem = $qry->fetch_assoc()['famname'] ?? '';
+                $rw = $qry->fetch_assoc();
+                $fam_mem = $rw['famname'] ?? '';
+                $relationship = $rw['relationship'] ?? '';
                 mysqli_next_result($con); // Move to the next query
             } elseif ($kyc['proofOf'] == '0') {
                 $qry = $con->query("CALL get_cus_name('$cus_id')");
                 $fam_mem = $qry->fetch_assoc()['customer_name'] ?? '';
+                $relationship = 'NIL';
                 mysqli_next_result($con); // Move to the next query
             }
         ?>
