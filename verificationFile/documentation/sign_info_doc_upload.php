@@ -20,7 +20,7 @@ foreach($filesArr3['name'] as $key => $val) {
     }
     
     if(move_uploaded_file($filesArr3["tmp_name"][$key], "../../uploads/verification/signed_doc/" . $uniqueFileName)){  
-        $update =  $connect->query("INSERT INTO `signed_doc`(`cus_id`,`req_id`,`signed_doc_id`, `upload_doc_name`) VALUES ('$cus_id','$req_id','$signedID','$fileName')");
+        $update =  $connect->query("INSERT INTO `signed_doc`(`cus_id`,`req_id`,`signed_doc_id`, `upload_doc_name`) VALUES ('$cus_id','$req_id','$signedID','$uniqueFileName')");
     }
 }
 

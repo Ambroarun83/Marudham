@@ -8,8 +8,8 @@ include '../ajaxconfig.php';
             <th style="width: 5px;">S.No</th>
             <th>Name</th>
             <th>Relationship</th>
-            <th>Remark</th>
-            <th>Address</th>
+            <!-- <th>Remark</th> -->
+            <!-- <th>Address</th> -->
             <th>Age</th>
             <th>Aadhar No</th>
             <th>Mobile No</th>
@@ -30,8 +30,8 @@ include '../ajaxconfig.php';
                 <td> <?php echo $i++; ?></td>
                 <td> <?php echo $fam['famname']; ?></td>
                 <td> <?php echo $fam['relationship']; ?></td>
-                <td> <?php echo ($fam['relationship'] =='Other') ? $fam['other_remark'] : '---'; ?></td>
-                <td> <?php echo ($fam['relationship'] =='Other') ? $fam['other_address'] : '---' ; ?></td>
+                <!-- <td> <?php echo ($fam['relationship'] =='Other') ? $fam['other_remark'] : '---'; ?></td>
+                <td> <?php echo ($fam['relationship'] =='Other') ? $fam['other_address'] : '---' ; ?></td> -->
                 <td> <?php echo $fam['relation_age']; ?></td>
                 <td> <?php echo $fam['relation_aadhar']; ?></td>
                 <td> <?php echo $fam['relation_Mobile']; ?></td>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 06, 2024 at 01:24 PM
+-- Generation Time: Jan 08, 2024 at 02:26 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -27,7 +27,7 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_cus_name` (IN `cusid` VARCHAR(20))  NO SQL SELECT customer_name from customer_register WHERE cus_id = cusid$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `get_kyc_guarentor` (IN `reqid` VARCHAR(20))  NO SQL SELECT a.famname from verification_family_info a 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_kyc_guarentor` (IN `reqid` VARCHAR(20))  NO SQL SELECT a.famname,a.relationship from verification_family_info a 
 LEFT JOIN customer_profile b ON a.id = b.guarentor_name
 where b.req_id = reqid$$
 
@@ -2176,7 +2176,7 @@ INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer
 (10, '17', '090920230103', 'Janaki', '2023-09-06', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-09-09 13:15:22', '2023-09-09 13:15:25'),
 (25, '21', '261910026191', 'Leo Das', '1999-04-27', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '16', 'MGR Salai', '2619100261', '', 'Anthony', 'Unknown', '1', 'Sathya', '1', 'Undercover Agent', '658bc19b427cb.jpg', '5', '0', '', '', '150000', '0', '0', '0', '8000', '78000', 'Just good', '0', 'Own', 'Bussy street', 'pondicherry', '', '', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', '13', '2023-12-27 11:48:03', '2023-12-28 10:53:27'),
 (26, '22', '000000000001', 'Senthil kumaran', '1999-02-02', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '4', '1', '02-01-2024', '0 Months,0 Years.', '1', '1', '1', '1', '5000', '78000', '11', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', '14', '2024-01-02 15:43:12', '2024-01-02 15:50:15'),
-(27, '19', '600060006000', 'Subramani', '1995-05-02', '28', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2024-01-04 11:20:13', '2024-01-04 11:20:13');
+(30, '19', '600060006000', 'Subramani', '1995-05-02', '28', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2024-01-08 17:05:46', '2024-01-08 17:05:46');
 
 -- --------------------------------------------------------
 
@@ -3423,8 +3423,9 @@ INSERT INTO `request_category_info` (`cat_info`, `req_ref_id`, `category_info`) 
 (83, '24', '1'),
 (84, '24', '1'),
 (85, '24', '1'),
-(86, '19', 'Haier'),
-(87, '19', '3.2');
+(94, '19', 'Haier'),
+(95, '19', '3.2'),
+(96, '19', '3.3');
 
 -- --------------------------------------------------------
 
@@ -3503,7 +3504,7 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (16, 'Staff', 'Arun', '', '', 'Check once ', '', 'REQ-113', '2023-09-06', '9', '060120230408', 'New', 'Gnanasekar', '1990-02-14', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '4', '19', 'Purisai', '9790171511', '', 'Sengunthan', 'Aarthi', '2', '', '2', 'Best Opticals', 'person_sample_2.jpg', '8', 'Plot Purchase', '50000', '0', '0.0', '50000', '2', '', '12', '3', '', '0', '2', '2', NULL, '2023-01-07 04:42:25', '2023-09-07 00:00:00'),
 (17, 'Director', 'Will Smith', '', '1', '', 'okok', 'REQ-114', '2023-09-09', '10', '090920230103', 'New', 'Janaki', '2023-09-06', '0', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', '7', 'Small Business', '', '', '', '60000', '1', '5500', '', '1', '', '0', '5', '5', NULL, '2023-09-09 13:15:22', '2023-09-09 13:15:25'),
 (18, 'Staff', 'Arun', '', '', 'First Bike', '', 'REQ-115', '2023-09-13', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '32000', '5000', '15.6', '27000', '1', '4500', '', '14', '', '0', '2', '2', NULL, '2023-09-13 11:46:44', '2023-09-06 12:14:25'),
-(19, 'Staff', 'Arun', '2', '', 'Check', '', 'REQ-116', '2023-11-04', NULL, '600060006000', 'New', 'Subramani', '1995-05-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', '5', 'fridge', '', '', '', '28000', '2', '', '30', '0', '', '0', '2', '2', NULL, '2023-11-04 09:42:24', '0000-00-00 00:00:00'),
+(19, 'Staff', 'Arun', '1', '', 'Check', '', 'REQ-116', '2023-11-04', NULL, '600060006000', 'New', 'Subramani', '1995-05-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', '5', 'AC Pre R ', '15000', '0', '0.0', '15000', '2', '', '30', '0', '', '0', '2', '2', NULL, '2023-11-04 09:42:24', '0000-00-00 00:00:00'),
 (20, 'Staff', 'Arun', '', '', 'sdf', '', 'REQ-117', '2023-11-06', NULL, '600060006000', 'Existing', 'Subramani', '1995-05-02', '28', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', '6', 'Mobiles', '', '', '', '15000', '1', '1500', '', '0', '', '0', '2', '2', NULL, '2023-11-06 13:03:18', '2023-11-06 13:03:18'),
 (21, 'Staff', 'Jafar', '', '', 'Personal friend', '', 'REQ-118', '2023-12-27', '25', '261910026191', 'New', 'Arjun Das', '1999-04-27', '25', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '16', 'MGR Salai', '2619100261', '', 'Anthony', 'Unknown', '1', 'Sathya', '1', 'Undercover Agent', '658bc19b427cb.jpg', '6', 'Mobiles', '', '', '', '45000', '1', '4000', '', '13', '', '0', '4', '4', NULL, '2023-12-27 11:48:03', '2023-12-28 10:53:27'),
 (22, 'Staff', 'Arun', '', '', 'c', '', 'REQ-119', '2024-01-02', '26', '000000000001', 'New', 'Senthil kumaran', '1999-02-02', '25', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '11', 'Interest R', '', '', '', '54000', '1', '5400', '', '14', '', '0', '2', '2', NULL, '2024-01-02 15:43:12', '2024-01-02 15:50:15'),
@@ -4989,7 +4990,7 @@ ALTER TABLE `closed_status`
 -- AUTO_INCREMENT for table `collection`
 --
 ALTER TABLE `collection`
-  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=761;
+  MODIFY `coll_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=762;
 
 --
 -- AUTO_INCREMENT for table `collection_charges`
@@ -5235,7 +5236,7 @@ ALTER TABLE `customer_profile`
 -- AUTO_INCREMENT for table `customer_register`
 --
 ALTER TABLE `customer_register`
-  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=28;
+  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `cus_old_data`
@@ -5379,7 +5380,7 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `request_category_info`
 --
 ALTER TABLE `request_category_info`
-  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT for table `request_creation`
