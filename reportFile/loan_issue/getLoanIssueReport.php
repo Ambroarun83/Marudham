@@ -85,7 +85,7 @@ $qry = $con->query("
         <th>Loan ID</th>
         <th>Cust. ID</th>
         <th>Cust. Name</th>
-        <th>Guarentor Name</th>
+        <th>Guarantor Name</th>
         <th>Relationship</th>
         <th>Area</th>
         <th>Sub Area</th>

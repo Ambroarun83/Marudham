@@ -4412,7 +4412,7 @@ function updateUser($mysqli,$id,$user_id){
 			$verification_location = $_POST['verification_location'];
 		}
 
-		if($loan_cal_id > 0 or $loan_cal_id != ''){
+		if($loan_cal_id > 0 and $loan_cal_id != ''){
 			$updateQry = $mysqli->query("UPDATE verification_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
 				cus_data_loan = '".strip_tags($cus_data_loan)."', mobile_loan = '".strip_tags($mobile_loan)."', pic_loan = '".strip_tags($pic_loan)."', 
 				loan_category = '".strip_tags($loan_category)."', sub_category = '".strip_tags($sub_category)."', tot_value = '".strip_tags($tot_value)."', ad_amt = '".strip_tags($ad_amt)."',
@@ -5098,7 +5098,7 @@ function updateUser($mysqli,$id,$user_id){
 					$cus_profile_id = $_POST['cus_profile_id'];
 				}
 		
-				if($loan_cal_id > 0 or $loan_cal_id != ''){
+				if($loan_cal_id > 0 and $loan_cal_id != ''){
 					$updateQry = $mysqli->query("UPDATE acknowlegement_loan_calculation SET cus_id_loan = '".strip_tags($cus_id_loan)."', cus_name_loan = '".strip_tags($cus_name_loan)."', 
 						cus_data_loan = '".strip_tags($cus_data_loan)."', mobile_loan = '".strip_tags($mobile_loan)."', pic_loan = '".strip_tags($pic_loan)."', 
 						loan_category = '".strip_tags($loan_category)."', sub_category = '".strip_tags($sub_category)."', tot_value = '".strip_tags($tot_value)."', ad_amt = '".strip_tags($ad_amt)."',

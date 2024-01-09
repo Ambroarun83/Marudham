@@ -21,7 +21,7 @@ if(isset($_POST['req_id'])){
             <th> Holder Name</th>
             <th> Relationship</th>
             <th> Document </th>
-            <th> Availablity </th>
+            <th> Availability </th>
             <th> Action </th>
         </tr>
     </thead>

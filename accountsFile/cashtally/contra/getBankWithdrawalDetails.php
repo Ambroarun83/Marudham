@@ -18,7 +18,7 @@ $qry = $con->query("SELECT bwed.*,bc.short_name,bc.acc_no from ct_db_cash_withdr
         <tr>
             <th width='50'>S.No</th>
             <th>Ref ID</th>
-            <th>Tansaction ID</th>
+            <th>Transaction ID</th>
             <th>Bank</th>
             <th>Account No</th>
             <th>Amount</th>

@@ -65,7 +65,7 @@ if($rowuser > 0){
 								<th>Concern Code</th>
 								<th>Concern Date</th>
 								<th>Branch Name</th>
-								<th>Staff Asign</th>
+								<th>Staff Assign</th>
 								<th>Subject</th>
 								<th>Status</th>
 								<th>Action</th>

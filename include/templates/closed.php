@@ -197,7 +197,7 @@ if($idupd>0)
 														<th>Agent</th>
 														<th>Loan date</th>
 														<th>Loan Amount</th>
-														<th>Banlance Amount</th>
+														<th>Balance Amount</th>
 														<!-- <th>Collection Method</th> -->
 														<th>Status</th>
 														<th>Sub Status</th>
@@ -228,9 +228,9 @@ if($idupd>0)
 							<tr>
 								<th>S.No</th>
 								<th>Customer ID</th>
-								<th>Custommer Name</th>            
+								<th>Customer Name</th>            
 								<th>Mobile Number</th>
-								<th>Guarentor Name</th>
+								<th>Guarantor Name</th>
 								<th>Status</th>
 								<th>Sub Status</th>
 							</tr>
