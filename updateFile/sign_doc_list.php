@@ -11,7 +11,7 @@ include '../ajaxconfig.php';
 		<th> Relationship </th>
 		<th> Count </th>
 		<th> Document </th>
-		<th> Availablity </th>
+		<th> Availability </th>
 		<th> Action </th>
 		<!-- <th> NOC Status </th> -->
         </tr>

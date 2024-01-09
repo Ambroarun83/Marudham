@@ -590,14 +590,14 @@ input:checked + .slider:before {
 										<br><br>
 									</div>
 
-                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" > <!--style="display:none" -->
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" <?php if(isset($tot_value_lc) and $tot_value_lc==''){?>style="display: none;"<?php } ?>> 
 											<div class="form-group">
 												<label for="disabledInput">Total Value</label>&nbsp;<span class="text-danger">*</span>
 												<input type="text" class="form-control" id="tot_value" name="tot_value" value='<?php if (isset($tot_value_lc)) {echo $tot_value_lc;}elseif(isset($tot_value)) {echo $tot_value;}?>' readonly tabindex='15'>
 											</div>
 									</div>
                                         
-									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" > <!-- style="display:none"-->
+									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 advance_yes" <?php if(isset($ad_amt_lc) and $ad_amt_lc==''){ ?>style="display: none;"<?php } ?> > 
 											<div class="form-group">
 												<label for="disabledInput">Advance Amount</label>&nbsp;<span class="text-danger">*</span>
 												<input type="text" class="form-control" id="ad_amt" name="ad_amt" value='<?php if (isset($ad_amt_lc)) {echo $ad_amt_lc;}elseif(isset($ad_amt)) {echo $ad_amt;}?>' readonly tabindex='16'>

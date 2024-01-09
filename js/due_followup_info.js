@@ -1222,7 +1222,7 @@ function getCategoryInfo() {
     var sub_cat = $('#sub_category').val();
     $.ajax({
         url: 'requestFile/getCategoryInfo.php',
-        data: { 'sub_cat': sub_cat },
+        data: { 'sub_cat': sub_category_upd },
         dataType: 'json',
         type: 'post',
         cache: false,
@@ -1397,7 +1397,7 @@ function getLoaninfo(sub_cat_id) {
 
 //to fetch Calculation based inputs
 function profitCalculationInfo() {
-    var sub_cat = $('#sub_category').val();
+    var sub_cat = $('#sub_category_upd').val();
     var profit_type = $('#profit_type').val();
     var due_method = $('#due_method_scheme').val();
     if (profit_type != '') { //Call only if profit type autamatically set

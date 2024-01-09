@@ -51,8 +51,8 @@ function getFamilyMember($con,$fam_id){
     <thead>
         <th width='20'>S No</th>
         <th>Date</th>
-        <th>Follwup Type</th>
-        <th>Follwup Status</th>
+        <th>Followup Type</th>
+        <th>Followup Status</th>
         <th>Person Type</th>
         <th>Person Name</th>
         <th>Relationship</th>

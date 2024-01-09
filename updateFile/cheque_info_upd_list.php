@@ -13,7 +13,7 @@ include '../ajaxconfig.php';
             <th> Cheque Count </th>
             <th> Cheque No </th>
             <th> Document </th>
-            <th> Availablity </th>
+            <th> Availability </th>
             <th> Action </th>
             
         </tr>

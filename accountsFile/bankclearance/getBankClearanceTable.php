@@ -32,7 +32,7 @@ $qry = $con->query("SELECT * from bank_stmt where bank_id = '$bank_id' and (date
     <thead>
         <th width='50'>S.No</th>
         <th>Date</th>
-        <th>Tansaction ID</th>
+        <th>Transaction ID</th>
         <th>Credit</th>
         <th>Debit</th>
         <th>Balance</th>

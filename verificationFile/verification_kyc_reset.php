@@ -9,7 +9,7 @@ include '../ajaxconfig.php';
             <th width="20%"> S.No </th>
             <th> Proof of </th>
             <th> Name </th>
-            <th> Relatioship </th>
+            <th> Relationship </th>
             <th> Proof type </th>
             <th> Proof Details </th>
             <th> ACTION </th>

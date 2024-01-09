@@ -8,7 +8,7 @@ include '../ajaxconfig.php';
         <tr>
             <th width='50'>S.No</th>
             <th>Customer ID</th>
-            <th>Custommer Name</th>            
+            <th>Customer Name</th>            
             <th>Mobile Number</th>
         </tr>
     </thead>

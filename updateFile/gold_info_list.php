@@ -35,7 +35,7 @@ function moneyFormatIndia($num)
             <th> Weight </th>
             <th> Value </th>
             <th> Upload </th>
-            <th> Availablity </th>
+            <th> Availability </th>
             <th> Action </th>
         </tr>
     </thead>

@@ -6,7 +6,7 @@ include '../ajaxconfig.php';
     <thead>
         <tr>
             <th width="25%">S. NO</th>
-            <th>Agen Group</th>
+            <th>Agent Group</th>
             <th>ACTION</th>
         </tr>
     </thead>
