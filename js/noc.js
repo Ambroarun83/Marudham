@@ -226,7 +226,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('#loanListTableDiv').html(response);
             }
         }).done(function(){
-            $('.noc-window').click(function(){
+            $(document).on('click', '.noc-window', function(event){
                 $('.noc-card').show(); //Show NOC window 
                 $('#close-noc-card').show();// Show Cancel button
                 $('#back-button').hide();// Hide Back button

@@ -141,7 +141,7 @@ foreach ($result as $row) {
     
     if($doc_rec_access == '0'){
 
-        if($track_status == '1'){//1 means submitted in ack
+        if($track_status == '1' and $userid != $row['insert_login_id']){//1 means submitted in ack
             //show receive track when sent from ack
             $action .="<a href='' title='Receive Documents' class='receive-track' data-id='$id' data-reqid='$req_id' >Receive</a>";
 
