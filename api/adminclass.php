@@ -3549,7 +3549,7 @@ function updateUser($mysqli,$id,$user_id){
 		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
 
-		$CustomerDelete = $mysqli->query("DELETE From customer_register where cus_id = '".strip_tags($cus_id)."' and req_ref_id = '".strip_tags($id)."' and cus_status= 0");
+		$CustomerDelete = $mysqli->query("DELETE From customer_register where cus_id = '".strip_tags($cus_id)."' and cus_status= 0");
 
 		$CustomerInsert="INSERT INTO customer_register (`cus_id`,`req_ref_id`, `customer_name`, `dob`, `age`, `gender`, `state`, `district`,
 			`taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`,`pic`)

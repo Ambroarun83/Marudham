@@ -150,7 +150,7 @@ function OnLoadFunctions(req_id,cus_id){
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
                 
-                $('.noc-window').click(function(event){
+                $(document).on('click', '.noc-window', function(event){
                     let req_id = $(this).data('value');
                     checkDocumentsStatus(req_id,(result)=>{result=='completed'? checkit = 'completed':checkit = 'pending';});
                     setTimeout(()=>{
