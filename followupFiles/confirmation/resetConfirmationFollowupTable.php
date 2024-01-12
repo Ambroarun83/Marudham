@@ -35,7 +35,7 @@ LEFT JOIN area_group_mapping agm ON FIND_IN_SET(rc.sub_area,agm.sub_area_id)
 LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
 LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area,alm.sub_area_id)
 WHERE rc.cus_status >= 14 and 
-(select area_confirm_subarea from acknowlegement_customer_profile where req_id = rc.req_id) IN (".$sub_area_list.") 
+(select area_confirm_subarea from acknowlegement_customer_profile where req_id = rc.req_id LIMIT 1) IN (".$sub_area_list.") 
 ");
 //this query will get all the request which are raised in request and shows till loan gets issued.
 //this query will not result entries which are cancelled or revoked

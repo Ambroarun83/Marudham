@@ -108,8 +108,8 @@ $(document).ready(function () {
 <!-- SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.7/dist/sweetalert2.all.min.js"></script>
 
-<!-- <script type="text/javascript" src="jsd/datatables.min.js"></script> -->
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="jsd/datatables.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script> -->
 <script type="text/javascript" language="javascript">
 
 $(document).ready(function() {
