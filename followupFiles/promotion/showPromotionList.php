@@ -131,21 +131,34 @@ if($type == 'existing'){
     </thead>
     <tbody>
         <?php foreach($arr as $val){
-            $sql = $con->query("SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name from customer_profile cp LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
-                LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id)
+            $sql = $con->query(
+                "SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name from customer_profile cp 
+                LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
+                LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id 
+                LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id)
                 LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
-                WHERE cp.cus_id = ".$val['cus_id']." ORDER BY cp.id DESC LIMIT 1");
+                WHERE cp.cus_id = " . $val['cus_id'] . " ORDER BY cp.id DESC LIMIT 1"
+            );
+            if ($sql->num_rows == '0') {
+                $sql = $con->query("SELECT cp.*,al.area_name,sl.sub_area_name,bc.branch_name,agm.group_name,alm.line_name from customer_register cp 
+                        LEFT JOIN area_list_creation al ON cp.area = al.area_id 
+                        LEFT JOIN sub_area_list_creation sl ON cp.sub_area = sl.sub_area_id 
+                        LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id)
+                        LEFT JOIN area_line_mapping alm ON FIND_IN_SET(sl.sub_area_id,alm.sub_area_id)
+                        LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
+                        WHERE cp.cus_id = " . $val['cus_id'] . " ORDER BY cp.cus_reg_id DESC LIMIT 1");
+            }
             $row = $sql->fetch_assoc();
         ?>
             <tr>
                 <td><?php echo $sno;$sno++; ?></td>
                 <td><?php echo $row['cus_id'] ; ?></td>
-                <td><?php echo $row['cus_name']; ?></td>
+                <td><?php echo $row['cus_name']??$row['customer_name']; ?></td>
                 <td><?php echo $row['area_name']; ?></td>
                 <td><?php echo $row['sub_area_name']; ?></td>
                 <td><?php echo $row['branch_name']; ?></td>
-                <td><?php echo $row['area_group']; ?></td>
-                <td><?php echo $row['area_line']; ?></td>
+                <td><?php echo $row['area_group']??$row['group_name']; ?></td>
+                <td><?php echo $row['area_line']??$row['line_name']; ?></td>
                 <td><?php echo $row['mobile1']; ?></td>
                 
                 <?php if($type == 'existing'){ ?>

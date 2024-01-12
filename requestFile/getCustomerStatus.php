@@ -85,9 +85,15 @@ if ($result->num_rows > 0) {
             // if moved from Closed, then sub status will be consider level of closed window
             $records[$i]['status'] = 'Closed';
 
-            $Qry = $con->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
+            $Qry = $con->query("SELECT closed_sts,consider_level from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
             $closed_status = ['', 'Consider', 'Waiting List', 'Block List']; // first one is empty because select value of consider sts is starting at 1
-            $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts']];
+            $consider_level = ['', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']; // first one is empty because select value of consider sts is starting at 1
+            $runqry = $Qry->fetch_assoc();
+            $substatuslocal = $closed_status[$runqry['closed_sts']];
+            if($runqry['closed_sts'] == '1'){
+                $substatuslocal .= ' - ' . $consider_level[$runqry['consider_level']];
+            }
+            $records[$i]['sub_status'] = $substatuslocal;
         }
         // }
 
