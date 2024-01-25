@@ -1230,6 +1230,10 @@ if($current_page == 'search_module') { ?>
     <script src="js/search_module.js"></script>
     <?php }
 
+if($current_page == 'bulk_upload') { ?>
+    <script src="js/bulk_upload.js"></script>
+    <?php }
+
 ?>
 
 

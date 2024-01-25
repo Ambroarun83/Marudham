@@ -447,6 +447,11 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'search_module') { ?>
 			<?php include "include/templates/search_module.php" ?>
 			<?php }else ?>
+			
+			<!-- Bulk Upload Module -->
+			<?php if($current_page == 'bulk_upload') { ?>
+			<?php include "include/templates/bulk_upload.php" ?>
+			<?php }else ?>
 
 			<!-- 404 Not found page -->
 			<?php { ?>

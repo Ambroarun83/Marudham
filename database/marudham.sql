@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 19, 2024 at 01:47 PM
+-- Generation Time: Jan 25, 2024 at 02:04 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -3489,7 +3489,6 @@ CREATE TABLE `request_creation` (
 --
 
 INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `prompt_remark`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
-(25, 'user_type', 'user_name', 'agent_id', 'responsible', 'remarks', 'declaration', 'req_code', '0000-00-00', 'cus_reg_id', 'cus_id', 'cus_data', 'cus_name', '0000-00-00', 'age', 'gender', 'state', 'district', 'taluk', 'area', 'sub_area', 'address', 'mobile1', 'mobile2', 'father_name', 'mother_name', 'marital', 'spouse_name', 'occupation_type', 'occupation', 'pic', 'loan_category', 'sub_category', 'tot_value', 'ad_amt', 'ad_perc', 'loan_amt', 'poss_type', 'due_amt', 'due_period', 'cus_status', 'prompt_remark', 'status', 'insert_login_id', 'update_login_id', 'delete_login_id', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (26, 'Agent', 'Alaathi Mobiles and Furniture', '1', '0', '', 'New customer for us', 'REQ-101', '2023-07-01', '1', '010720232023', 'New', 'Bharath', '1990-02-03', '33', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '1', '4', '46', '9846546546', '', 'Sugumar', 'Seetha', '2', '', '2', 'Supervisor', 'cute-cool-baby-holding-teddy-bear-doll-cartoon-vector-icon-illustration-people-holiday-isolated_138676-5356.avif', '5', 'AC', '35000', '3000', '8.6', '32000', '1', '3470', '', '14', '', '0', '3', '3', NULL, '2023-07-01 00:00:00', '2023-07-01 00:00:00'),
 (27, 'Staff', 'Arun', '2', '', 'Customer for laxhmi', '', 'REQ-102', '2023-07-01', '3', '100010001000', 'New', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '5', 'TV', '20000', '3000', '15', '17000', '2', '', '12', '21', '', '0', '2', '2', NULL, '2023-07-01 00:00:00', '2023-07-01 00:00:00'),
 (28, 'Staff', 'Arun', '', '', 'Old customer new prod', '', 'REQ-103', '2023-01-01', '3', '100010001000', 'Existing', 'Ganesan', '1996-06-01', '27', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'EVR', '6465465464', '', 'Gurumoorthi', 'Gayathri', '2', '', '4', 'Departmental Store', 'monkey1.avif', '2', 'Bike', '65000', '5000', '7.7', '60000', '1', '4500', '', '20', '', '0', '2', '2', NULL, '2023-01-01 00:00:00', '2023-01-01 00:00:00'),

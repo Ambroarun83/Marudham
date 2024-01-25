@@ -71,9 +71,12 @@ function moneyFormatIndia($num) {
         $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
         $run = $connect->query("SELECT lc.due_start_from,lc.cus_name_loan,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
         rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
-        from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
-        JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
-        WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 13 and ii.cus_status <= 22)"); //Customer status greater than or equal to 14 because, after issued data only we need  
+        from acknowlegement_loan_calculation lc 
+        LEFT JOIN in_issue ii ON lc.req_id = ii.req_id 
+        LEFT JOIN request_creation rc ON ii.req_id = rc.req_id 
+        LEFT JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id 
+        LEFT JOIN user us ON us.user_id = '$user_id'
+        WHERE lc.cus_id_loan = '$cus_id' and (ii.cus_status >= 13 and ii.cus_status <= 22)"); //Customer status greater than or equal to 14 because, after issued data only we need  
 
         $i = 1;
         $curdate = date('Y-m-d');
