@@ -2,16 +2,16 @@
 
 @session_start();
 include '../ajaxconfig.php';
-$otherData = getOtherNecessaryData($con);
+$userData = getUserDetails($con);
 
 require_once('../vendor/csvreader/php-excel-reader/excel_reader2.php');
 require_once('../vendor/csvreader/SpreadsheetReader.php');
 
-$allowedFileType = ['application/vnd.ms-excel', 'text/xls', 'text/xlsx','text/csv', 'text/xml', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) { 
-    
+$allowedFileType = ['application/vnd.ms-excel', 'text/xls', 'text/xlsx', 'text/csv', 'text/xml', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
+
     $excelfolder = uploadFiletoFolder();
-    
+
     $Reader = new SpreadsheetReader($excelfolder);
     $sheetCount = count($Reader->sheets());
 
@@ -23,8 +23,22 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
             if ($rowChange != 0) { // omitted 0 to avoid headers
 
                 $data = fetchAllRowData($con, $Row);
+                $req_code = getRequestCode($con);
+                $data['area_id'] = getAreaId($con, $data['area']);
+                $data['sub_area_id'] = getSubAreaId($con, $data['sub_area']);
+                $data['loan_cat_id'] = getLoanCategoryId($con, $data['loan_category']);
+                $data['sub_categoryCheck'] = checkSubCategory($con, $data['sub_category']);
+                $data['agent_id'] = checkAgent($con, $data['agent_id']);
 
-                $insertQry = "INSERT INTO `request_creation`(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `prompt_remark`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES ('".$otherData['user_type']."', '".$otherData['user_name']."', '".$data['agent_id']."', '".$data['responsible']."') ";
+                if ($data['cus_id'] != 'Invalid' && $data['guarantor_adhar'] != 'Invalid' && $data['mobile1'] != 'Invalid' && $data['agent_id'] != 'Not Found' && $data['dor'] != 'Invalid Date' && $data['gender'] != 'Not Found' && $data['area_id'] != 'Not Found' && $data['sub_area_id'] != 'Not Found' && $data['marital'] != 'Not Found' && $data['occupation_type'] != 'Not Found' && $data['loan_cat_id'] != 'Not Found' && $data['sub_categoryCheck'] != 'Not Found' && $data['poss_type'] != 'Not Found'
+                ) {
+
+                    $insertQry = "INSERT INTO `request_creation`(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `prompt_remark`, `status`, `insert_login_id`, `created_date` ) VALUES ( '" . $userData['user_type'] . "', '" . $userData['user_name'] . "', '" . $data['agent_id'] . "', '', '' , '' , '$req_code', '" . $data['dor'] . "', '',  '" . $data['cus_id'] . "', '" . $data['cus_data'] . "', '" . $data['cus_name'] . "', '" . $data['dob'] . "', '" . $data['age'] . "', '" . $data['gender'] . "', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['address'] . "', '" . $data['mobile1'] . "', '', '" . $data['father_name'] . "', '" . $data['mother_name'] . "', '" . $data['marital'] . "', '" . $data['spouse'] . "', '" . $data['occupation_type'] . "', '" . $data['occupation_details'] . "', '', '" . $data['loan_cat_id'] . "', '" . $data['sub_category'] . "', '" . $data['tot_amt'] . "', '" . $data['adv_amt'] . "', '', '" . $data['loan_amt'] . "', '" . $data['poss_type'] . "', '" . $data['poss_due_amt'] . "', '" . $data['poss_due_period'] . "', '0', '', '0', '" . $userData['user_id'] . "', '" . $data['dor'] . "'  ) ";
+
+                    echo $insertQry;
+                } else {
+                    handleError($data, $rowChange);
+                }
             }
 
             $rowChange++;
@@ -40,16 +54,17 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
     $message = 'File is not in Excel Format!';
 }
 
-echo $message;
+// echo $message;
 
 
-function getOtherNecessaryData($con){
-    
+function getUserDetails($con)
+{
+
     //get User Data
     $data['user_id'] = $_SESSION["userid"];
-    $qry = $con->query("SELECT user_name,role from user where user_id = '".$data['user_id']."' ");
+    $qry = $con->query("SELECT fullname,role from user where user_id = '" . $data['user_id'] . "' ");
     $row = $qry->fetch_assoc();
-    $data['user_name'] = $row['user_name'];
+    $data['user_name'] = $row['fullname'];
     if ($row['role'] == '1') {
         $data['user_type'] = 'Director';
     } elseif ($row['role'] == '2') {
@@ -58,11 +73,12 @@ function getOtherNecessaryData($con){
         $data['user_type'] = 'Staff';
     }
 
-    
+
 
     return $data;
 }
-function uploadFiletoFolder(){
+function uploadFiletoFolder()
+{
     $excel = $_FILES['excelFile']['name'];
     $excel_temp = $_FILES['excelFile']['tmp_name'];
     $excelfolder = "../uploads/bulk_upload/" . $excel;
@@ -174,6 +190,215 @@ function fetchAllRowData($con, $Row)
         'cash_guarantor_rel' => isset($Row[92]) ? mysqli_real_escape_string($con, $Row[92]) : ""
     );
 
+    $dataArray['cus_id'] = strlen($dataArray['cus_id']) == 12 ? $dataArray['cus_id'] : 'Invalid';
+    $dataArray['guarantor_adhar'] = strlen($dataArray['guarantor_adhar']) == 12 ? $dataArray['guarantor_adhar'] : 'Invalid';
+    
+    $dataArray['mobile1'] = strlen($dataArray['mobile1']) == 10 ? $dataArray['mobile1'] : 'Invalid';
+
+    $dataArray['dor'] = dateFormatChecker($dataArray['dor']);
+
+    $dob = dateFormatChecker($dataArray['dob']);
+    $dataArray['dob'] = ($dob == 'Invalid Date') ? '' : $dob; //cause dob may not be available
+
+    $genderArray = ['Male' => '1', 'Female' => '2', 'Others' => '3'];
+    $dataArray['gender'] = arrayItemChecker($genderArray, $dataArray['gender']);
+
+    $maritalArray = ['Yes' => '1', 'No' => '2'];
+    $dataArray['marital'] = arrayItemChecker($maritalArray, $dataArray['marital']);
+
+    $occupationArray = ['Govt Job' => '1', 'Pvt Job' => '2', 'Business' => '3', 'Self Employed' => '4', 'Daily wages' => '5', 'Agriculture' => '6', 'Others' => '7'];
+    $dataArray['occupation_type'] = arrayItemChecker($occupationArray, $dataArray['occupation_type']);
+
+    $poss_typeArray = ['Due Amount' => '1', 'Due Period' => '2'];
+    $dataArray['poss_type'] = arrayItemChecker($poss_typeArray, $dataArray['poss_type']);
 
     return $dataArray;
+}
+
+
+function getRequestCode($con)
+{
+    $myStr = "REQ";
+    $selectIC = $con->query("SELECT req_code FROM request_creation WHERE req_code != '' ");
+    if ($selectIC->num_rows > 0) {
+        $codeAvailable = $con->query("SELECT req_code FROM request_creation WHERE req_code != '' ORDER BY req_id DESC LIMIT 1");
+        while ($row = $codeAvailable->fetch_assoc()) {
+            $ac2 = $row["req_code"];
+        }
+        $appno2 = ltrim(strstr($ac2, '-'), '-');
+        $appno2 = $appno2 + 1;
+        $req_code = $myStr . "-" . "$appno2";
+    } else {
+        $initialapp = $myStr . "-101";
+        $req_code = $initialapp;
+    }
+    return $req_code;
+}
+function dateFormatChecker($checkdate)
+{
+    // Attempt to create a DateTime object from the provided date
+    $dateTime = DateTime::createFromFormat('Y-m-d', $checkdate);
+
+    // Check if the date is in the correct format
+    if ($dateTime !== false && $dateTime->format('Y-m-d') === $checkdate) {
+        // Date is in the correct format, no need to change anything
+        return $checkdate;
+    } else {
+        // Date is not in the correct format, reformat it
+        $formattedDor = date('Y-m-d', strtotime($checkdate));
+        return $formattedDor;
+    }
+}
+function arrayItemChecker($arrayList, $arrayItem)
+{
+    if (array_key_exists($arrayItem, $arrayList)) {
+        $arrayItem = $arrayList[$arrayItem];
+    } else {
+        $arrayItem = 'Not Found';
+    }
+    return $arrayItem;
+}
+function getAreaId($con, $area_name)
+{
+    $query = "SELECT * FROM area_list_creation where area_name = '" . $area_name . "' ";
+    $result1 = $con->query($query) or die("Error ");
+    if ($con->affected_rows > 0) {
+        $row = $result1->fetch_assoc();
+        $area_id = $row["area_id"];
+    } else {
+        $area_id = 'Not Found';
+    }
+    return $area_id;
+}
+function getSubAreaId($con, $sub_area_name)
+{
+    $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $sub_area_name . "' ";
+    $result1 = $con->query($query) or die("Error ");
+    if ($con->affected_rows > 0) {
+        $row = $result1->fetch_assoc();
+        $sub_area_id = $row["sub_area_id"];
+    } else {
+        $sub_area_id = 'Not Found';
+    }
+    return $sub_area_id;
+}
+function getLoanCategoryId($con, $loan_category_name)
+{
+    $query = "SELECT * FROM loan_category_creation where loan_category_creation_name = '" . $loan_category_name . "' ";
+    $result1 = $con->query($query) or die("Error ");
+    if ($con->affected_rows > 0) {
+        $row = $result1->fetch_assoc();
+        $loan_cat_id = $row["loan_category_creation_id"];
+    } else {
+        $loan_cat_id = 'Not Found';
+    }
+    return $loan_cat_id;
+}
+function checkSubCategory($con, $sub_cat_name)
+{
+    $query = "SELECT * FROM loan_category where sub_category_name = '" . $sub_cat_name . "' ";
+    $result1 = $con->query($query) or die("Error ");
+    if ($con->affected_rows > 0) {
+        $sub_categoryCheck = 'Available';
+    } else {
+        $sub_categoryCheck = 'Not Found';
+    }
+    return $sub_categoryCheck;
+}
+function checkAgent($con, $agent_name)
+{
+    //check if agent available
+    if ($agent_name != '') { //because its not mandatory
+
+        $query = "SELECT * FROM agent_creation where ag_name = '" . $agent_name . "' ";
+        $result1 = $con->query($query) or die("Error ");
+        if ($con->affected_rows > 0) {
+            $row = $result1->fetch_assoc();
+            $agentCheck = $row["ag_id"];
+        } else {
+            $agentCheck = 'Not Found';
+        }
+    } else {
+        $agentCheck = '';
+    }
+    return $agentCheck;
+}
+
+
+function handleError($data, $rownum)
+{
+    $errcolumns = array();
+
+    if ($data['cus_id'] == 'Invalid') {
+        // Condition 1 is true
+        $errcolumns[] = 'Customer ID';
+    }
+
+    if ($data['guarantor_adhar'] == 'Invalid') {
+        // Condition 1 is true
+        $errcolumns[] = 'Guarantor Adhar';
+    }
+
+    if ($data['mobile1'] == 'Invalid') {
+        // Condition 1 is true
+        $errcolumns[] = 'Mobile Number';
+    }
+
+    if ($data['agent_id'] == 'Not Found') {
+        // Condition 1 is true
+        $errcolumns[] = 'Agent Name';
+    }
+
+    if ($data['dor'] == 'Invalid Date') {
+        // Condition 2 is true
+        $errcolumns[] = 'Date of Request';
+    }
+
+    if ($data['gender'] == 'Not Found') {
+        // Condition 3 is true
+        $errcolumns[] = 'Gender';
+    }
+
+    if ($data['area_id'] == 'Not Found') {
+        // Condition 4 is true
+        $errcolumns[] = 'Area';
+    }
+
+    if ($data['sub_area_id'] == 'Not Found') {
+        // Condition 5 is true
+        $errcolumns[] = 'Sub Area';
+    }
+
+    if ($data['marital'] == 'Not Found') {
+        // Condition 6 is true
+        $errcolumns[] = 'Marital Status';
+    }
+
+    if ($data['occupation_type'] == 'Not Found') {
+        // Condition 7 is true
+        $errcolumns[] = 'Occupation Type';
+    }
+
+    if ($data['loan_cat_id'] == 'Not Found') {
+        // Condition 8 is true
+        $errcolumns[] = 'Loan Category';
+    }
+
+    if ($data['sub_categoryCheck'] == 'Not Found') {
+        // Condition 9 is true
+        $errcolumns[] = 'Sub Category';
+    }
+
+    if ($data['poss_type'] == 'Not Found') {
+        // Condition 10 is true
+        $errcolumns[] = 'Possibility Type';
+    }
+
+    echo "Please Check the input given in Line no: " . ($rownum + 1) . " on below Columns. <br>";
+    echo "<ul>";
+    foreach ($errcolumns as $columns) {
+        echo "<li>$columns</li>";
+    }
+    echo "</ul><br>";
+    echo "From Line no: " . ($rownum + 1) . " insertion stopped";
 }

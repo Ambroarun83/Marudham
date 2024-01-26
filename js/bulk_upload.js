@@ -39,7 +39,7 @@ function uploadExcelToDB() {
         processData: false,
         contentType: false,
         success: function(response){
-
+            $('#responseCard').empty().html(response)
         }
 
     }).then(function(){
