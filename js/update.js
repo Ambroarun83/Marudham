@@ -556,11 +556,15 @@ $(function () {
 
 function getImage() { // Cus img show onload.
     let imgName = $('#cus_image').val();
-    $('#imgshow').attr('src', "uploads/request/customer/" + imgName + " ");
+    if(imgName != ''){
+        $('#imgshow').attr('src', "uploads/request/customer/" + imgName + " ");
+    }else{$('#imgshow').attr('src', 'img/avatar.png');}
 
     var guarentorimg = $('#guarentor_image').val();
     if (guarentorimg != '') {
         $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
+    }else{
+        $('#imgshows').attr('src', 'img/avatar.png');
     }
 
     closeFamModal();
