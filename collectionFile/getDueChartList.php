@@ -1308,21 +1308,21 @@ function calculateOthers($loan_arr, $response, $date, $con)
 
         //this collection query for taking the paid amount until the looping date ($current_date) , to calculate dynamically for due chart
         $qry = $con->query("SELECT sum(due_amt_track) as due_amt_track, sum(pre_close_waiver) as pre_close_waiver from `collection` 
-            where req_id = $req_id 
+            where req_id = '$req_id' 
             AND
             (
                 (
-                    YEAR(trans_date) = YEAR('$current_date') AND WEEK(trans_date) <= WEEK('$current_date')
+                    YEAR(trans_date) = YEAR($current_date) AND WEEK(trans_date) <= WEEK($current_date)
                 ) OR (
-                    YEAR(trans_date) < YEAR('$current_date')
+                    YEAR(trans_date) < YEAR($current_date)
                 )
             )
             OR
             (
                 (
-                    YEAR(coll_date) = YEAR('$current_date') AND WEEK(coll_date) <= WEEK('$current_date')
+                    YEAR(coll_date) = YEAR($current_date) AND WEEK(coll_date) <= WEEK($current_date)
                 ) OR (
-                    YEAR(coll_date) < YEAR('$current_date')
+                    YEAR(coll_date) < YEAR($current_date)
                 )
             ) ");
         if($qry->num_rows > 0){
