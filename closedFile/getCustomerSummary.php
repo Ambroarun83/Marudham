@@ -13,7 +13,7 @@ $how_to_know_obj = [
     '2' => 'Promotion Activity',
     '3' => 'Agent Reference',
     '4' => 'Staff Reference',
-    '5' => 'Other Reference',
+    '5' => 'Other Reference'
 ];
 
 $qry = $con->query("SELECT * FROM customer_register where cus_id = $cus_id");

@@ -3414,7 +3414,7 @@ function updateUser($mysqli,$id,$user_id){
 			$dor = $_POST['dor'];
 		}
 		if(isset($_POST['cus_id'])){
-			$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);;
+			$cus_id =  preg_replace('/\s+/', '', $_POST['cus_id']);
 		}
 		if(isset($_POST['cus_data'])){
 			$cus_data = $_POST['cus_data'];
