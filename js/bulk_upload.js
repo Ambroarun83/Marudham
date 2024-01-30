@@ -32,14 +32,38 @@ function uploadExcelToDB() {
     formData.append('excelFile', excelFile);
 
     $.ajax({
-        url: 'bulk_uploadFile/uploadExcelToDB.php',
+        url: 'bulk_uploadFile/OldCustDataBulkUpload.php',
         data: formData,
         type: 'post',
         cache: false,
         processData: false,
         contentType: false,
         success: function(response){
-            $('#responseCard').empty().html(response)
+            // $('#responseCard').empty().html(response)
+            if (response.includes('Bulk')) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: response,
+                    icon: 'success',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#009688'
+                });
+            }else if (response.includes('completed')){
+                Swal.fire({
+                    html: response,
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#009688'
+                });
+            }else if(response.includes('Format')){
+                Swal.fire({
+                    title: 'Error!',
+                    text: response,
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#009688'
+                });
+            }
         }
 
     }).then(function(){
