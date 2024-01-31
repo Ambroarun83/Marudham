@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 30, 2024 at 02:01 PM
+-- Generation Time: Jan 31, 2024 at 01:47 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -559,7 +559,7 @@ INSERT INTO `area_line_mapping` (`map_id`, `line_name`, `area_id`, `sub_area_id`
 (3, 'Jackfruit', '2', '6,7,8,9,10', '1', '2', '0', '1', '1', NULL, '2023-05-11 18:21:27', '2023-05-12 12:36:02'),
 (4, 'Pine apple 1', '3', '15,16', '1', '1', '0', '1', '1', NULL, '2023-05-11 18:22:00', '2023-05-12 12:36:48'),
 (5, 'Pine apple 2', '3', '11,12,13,14', '1', '1', '0', '1', '1', NULL, '2023-05-11 18:22:28', '2023-05-12 12:37:02'),
-(6, 'LA1', '4,5,6,7,8', '19,20,21,22,23,24,25,26', '1', '3', '0', '1', '2', NULL, '2023-05-12 16:21:49', '2024-01-26 17:55:47');
+(6, 'LA 1', '4,5,6,7,8', '19,20,21,22,23,24,25,26', '1', '3', '0', '1', '2', NULL, '2023-05-12 16:21:49', '2024-01-26 17:55:47');
 
 -- --------------------------------------------------------
 
@@ -4020,7 +4020,8 @@ INSERT INTO `verification_family_info` (`id`, `cus_id`, `req_id`, `famname`, `re
 (11, '400040004000', 12, 'Vedha', 'Father', '', ' ', 45, '400140014001', 98465, 'NIL', 0, '', 0),
 (12, '060120230408', 16, 'Senthil raja', 'Father', '', ' ', 55, '070920230325', 9382964883, 'Mechanic', 15000, '', 0),
 (14, '261910026191', 21, 'Antony Das', 'Father', '', ' ', 55, '261910026192', 2619100262, 'Rowdy', 0, '', 0),
-(15, '000000000001', 22, 'Kumaran', 'Father', '', ' ', 45, '100000000001', 7646540213, 'VIP', 0, '', 0);
+(15, '000000000001', 22, 'Kumaran', 'Father', '', ' ', 45, '100000000001', 7646540213, 'VIP', 0, '', 0),
+(17, '123412341234', 71, 'Sowmiya', 'Spouse', NULL, NULL, 25, '123123000000', 9952741651, 'NO', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -5231,13 +5232,13 @@ ALTER TABLE `ct_hand_collection`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `customer_register`
 --
 ALTER TABLE `customer_register`
-  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=35;
+  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `cus_old_data`
@@ -5381,13 +5382,13 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `request_category_info`
 --
 ALTER TABLE `request_category_info`
-  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
+  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
 
 --
 -- AUTO_INCREMENT for table `request_creation`
 --
 ALTER TABLE `request_creation`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `signed_doc`
@@ -5441,13 +5442,13 @@ ALTER TABLE `verification_cus_feedback`
 -- AUTO_INCREMENT for table `verification_documentation`
 --
 ALTER TABLE `verification_documentation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `verification_family_info`
 --
 ALTER TABLE `verification_family_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `verification_group_info`
@@ -5465,7 +5466,7 @@ ALTER TABLE `verification_kyc_info`
 -- AUTO_INCREMENT for table `verification_loan_calculation`
 --
 ALTER TABLE `verification_loan_calculation`
-  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `verification_property_info`
@@ -5477,7 +5478,7 @@ ALTER TABLE `verification_property_info`
 -- AUTO_INCREMENT for table `verif_loan_cal_category`
 --
 ALTER TABLE `verif_loan_cal_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
