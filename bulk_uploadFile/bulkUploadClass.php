@@ -125,6 +125,10 @@ class bulkUploadClass
         $cus_dataArray = ['New' => 'New', 'Existing' => 'Existing'];
         $dataArray['cus_data'] = $this->arrayItemChecker($cus_dataArray, $dataArray['cus_data']);
 
+        $cus_exist_typeArray = ['Additional' => 'Additional', 'Renewal' => 'Renewal'];
+        $cus_exist_type = $this->arrayItemChecker($cus_exist_typeArray, $dataArray['cus_exist_type']);
+        $dataArray['cus_exist_type'] = ($cus_exist_type == 'Not Found') ? '' : $cus_exist_type; //cause cus_exist_type may not be available
+
         $dataArray['mobile1'] = strlen($dataArray['mobile1']) == 10 ? $dataArray['mobile1'] : 'Invalid';
 
         $dataArray['dor'] = $this->dateFormatChecker($dataArray['dor']);
@@ -159,13 +163,15 @@ class bulkUploadClass
         $dataArray['poss_type'] = $this->arrayItemChecker($poss_typeArray, $dataArray['poss_type']);
 
         $occupationArray = ['Govt Job' => '1', 'Pvt Job' => '2', 'Business' => '3', 'Self Employed' => '4', 'Daily wages' => '5', 'Agriculture' => '6', 'Others' => '7'];
-        $dataArray['occupation_type'] = $this->arrayItemChecker($occupationArray, $dataArray['occupation_type']);
+        $occupation_type = $this->arrayItemChecker($occupationArray, $dataArray['occupation_type']);
+        $dataArray['occupation_type'] = ($occupation_type == 'Not Found') ? '' : $occupation_type; //cause occupation_type may not be available
 
         $how_to_know_Array = ['Customer Reference' => '0', 'Advertisement' => '1', 'Promotion Activity' => '2', 'Agent Reference' => '3', 'Staff Reference' => '4', 'Other Reference' => '5'];
         $dataArray['how_to_know'] = $this->arrayItemChecker($how_to_know_Array, $dataArray['how_to_know']);
 
         $residential_typeArray = ['Own' => '0', 'Rental' => '1', 'Lease' => '2', 'Quarters' => '3'];
-        $dataArray['residential_type'] = $this->arrayItemChecker($residential_typeArray, $dataArray['residential_type']);
+        $residential_type = $this->arrayItemChecker($residential_typeArray, $dataArray['residential_type']);
+        $dataArray['residential_type'] = ($residential_type == 'Not Found') ? '' : $residential_type; //cause residential_type may not be available
 
         $area_confirm_typeArray = ['Resident' => '0', 'Occupation' => '1'];
         $dataArray['area_confirm_type'] = $this->arrayItemChecker($area_confirm_typeArray, $dataArray['area_confirm_type']);
@@ -185,11 +191,12 @@ class bulkUploadClass
         $due_typeArray = ['EMI' => 'EMI', 'Interest' => 'Interest'];
         $dataArray['due_type'] = $this->arrayItemChecker($due_typeArray, $dataArray['due_type']);
 
-        $profit_methodArray = ['Pre Interest' => 'Pre Interest', 'After Interest' => 'After Interest'];
+        $profit_methodArray = ['Pre Interest' => 'pre_interest', 'After Interest' => 'after_interest'];
         $dataArray['profit_method'] = $this->arrayItemChecker($profit_methodArray, $dataArray['profit_method']);
 
         $due_method_schemeArray = ['Monthly' => '1', 'Weekly' => '2', 'Daily' => '3'];
-        $dataArray['due_method_scheme'] = $this->arrayItemChecker($due_method_schemeArray, $dataArray['due_method_scheme']);
+        $due_method_scheme = $this->arrayItemChecker($due_method_schemeArray, $dataArray['due_method_scheme']);
+        $dataArray['due_method_scheme'] = ($due_method_scheme == 'Not Found') ? '' : $due_method_scheme; //cause due_method_scheme may not be available
 
         $dataArray['loan_date'] = $this->dateFormatChecker($dataArray['loan_date']);
 
@@ -285,6 +292,24 @@ class bulkUploadClass
         }
         return $req_code;
     }
+    function getDocumentCode($con)
+    {
+        $myStr = "DOC";
+        $selectIC = $con->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ");
+        if ($selectIC->num_rows > 0) {
+            $codeAvailable = $con->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ORDER BY id DESC LIMIT 1");
+            while ($row = $codeAvailable->fetch_assoc()) {
+                $ac2 = $row["doc_id"];
+            }
+            $appno2 = ltrim(strstr($ac2, '-'), '-');
+            $appno2 = $appno2 + 1;
+            $doc_code = $myStr . "-" . "$appno2";
+        } else {
+            $initialapp = $myStr . "-101";
+            $doc_code = $initialapp;
+        }
+        return $doc_code;
+    }
 
     //Data Checking Part
     function checkCustomerData($con, $cus_id)
@@ -351,21 +376,24 @@ class bulkUploadClass
     }
     function getAreaGroup($con, $sub_area_id)
     {
-        $qry = $con->query("SELECT group_name from area_group_mapping where FIND_IN_SET($sub_area_id, sub_area_id) ");
-        if ($qry->num_rows > 0) {
-            $group_name = $qry->fetch_assoc()['group_name'];
-        } else {
-            $group_name = 'Invalid';
+        $group_name = 'Invalid';
+        if ($sub_area_id != 'Not Found') {
+
+            $qry = $con->query("SELECT group_name from area_group_mapping where FIND_IN_SET($sub_area_id, sub_area_id) ");
+            if ($qry->num_rows > 0) {
+                $group_name = $qry->fetch_assoc()['group_name'];
+            }
         }
         return $group_name;
     }
     function getAreaLine($con, $sub_area_id)
     {
-        $qry = $con->query("SELECT line_name from area_line_mapping where FIND_IN_SET($sub_area_id, sub_area_id) ");
-        if ($qry->num_rows > 0) {
-            $line_name = $qry->fetch_assoc()['line_name'];
-        } else {
-            $line_name = 'Invalid';
+        $line_name = 'Invalid';
+        if ($sub_area_id != 'Not Found') {
+            $qry = $con->query("SELECT line_name from area_line_mapping where FIND_IN_SET($sub_area_id, sub_area_id) ");
+            if ($qry->num_rows > 0) {
+                $line_name = $qry->fetch_assoc()['line_name'];
+            }
         }
         return $line_name;
     }
@@ -394,7 +422,7 @@ class bulkUploadClass
         if ($qry->num_rows > 0) {
             $scheme_id = $qry->fetch_assoc()['scheme_id'];
         } else {
-            $scheme_id = 'Not Found';
+            $scheme_id = '';
         }
         return $scheme_id;
     }
@@ -403,7 +431,7 @@ class bulkUploadClass
     //Query Part
     function raiseRequest($con, $data, $userData)
     {
-        $reqQry = "INSERT INTO `request_creation`(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `prompt_remark`, `status`, `insert_login_id`, `created_date` ) VALUES ( '" . $userData['user_type'] . "', '" . $userData['user_name'] . "', '" . $data['agent_id'] . "', '', '' , '' , '" . $data['req_code'] . "', '" . $data['dor'] . "', '',  '" . $data['cus_id'] . "', '" . $data['cus_data'] . "', '" . $data['cus_name'] . "', '" . $data['dob'] . "', '" . $data['age'] . "', '" . $data['gender'] . "', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['address'] . "', '" . $data['mobile1'] . "', '', '" . $data['father_name'] . "', '" . $data['mother_name'] . "', '" . $data['marital'] . "', '" . $data['spouse'] . "', '" . $data['occupation_type'] . "', '" . $data['occupation_details'] . "', '', '" . $data['loan_cat_id'] . "', '" . $data['sub_category'] . "', '" . $data['tot_amt'] . "', '" . $data['adv_amt'] . "', '', '" . $data['loan_amt'] . "', '" . $data['poss_type'] . "', '" . $data['poss_due_amt'] . "', '" . $data['poss_due_period'] . "', '0', '', '0', '" . $userData['user_id'] . "', '" . $data['dor'] . "'  ) ";
+        $reqQry = "INSERT INTO `request_creation`(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `prompt_remark`, `status`, `insert_login_id`, `created_date`, `updated_date` ) VALUES ( '" . $userData['user_type'] . "', '" . $userData['user_name'] . "', '" . $data['agent_id'] . "', '', '' , '' , '" . $data['req_code'] . "', '" . $data['dor'] . "', '',  '" . $data['cus_id'] . "', '" . $data['cus_data'] . "', '" . $data['cus_name'] . "', '" . $data['dob'] . "', '" . $data['age'] . "', '" . $data['gender'] . "', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['address'] . "', '" . $data['mobile1'] . "', '', '" . $data['father_name'] . "', '" . $data['mother_name'] . "', '" . $data['marital'] . "', '" . $data['spouse'] . "', '" . $data['occupation_type'] . "', '" . $data['occupation_details'] . "', '', '" . $data['loan_cat_id'] . "', '" . $data['sub_category'] . "', '" . $data['tot_amt'] . "', '" . $data['adv_amt'] . "', '', '" . $data['loan_amt'] . "', '" . $data['poss_type'] . "', '" . $data['poss_due_amt'] . "', '" . $data['poss_due_period'] . "', '" . $data['cus_status'] . "', '', '0', '" . $userData['user_id'] . "', '" . $data['dor'] . "', '" . $data['dor'] . "'  ) ";
         $con->query($reqQry);
         $req_id = $con->insert_id;
 
@@ -423,7 +451,7 @@ class bulkUploadClass
 
 
         if ($data['cus_data'] == 'New') {
-            $crQry = "INSERT INTO `customer_register`( `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `about_customer`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_info_occ_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `cus_status`, `create_time` ) VALUES ('$req_id','" . $data['cus_id'] . "', '" . $data['cus_name'] . "', '" . $data['dob'] . "', '" . $data['age'] . "', '" . $data['gender'] . "', '', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['address'] . "', '" . $data['mobile1'] . "', '', '" . $data['father_name'] . "', '" . $data['mother_name'] . "', '" . $data['marital'] . "', '" . $data['spouse'] . "', '" . $data['occupation_type'] . "', '" . $data['occupation_details'] . "', '','" . $data['how_to_know'] . "','" . $data['loan_count'] . "','" . $data['first_loan_date'] . "','" . $data['travel_with_company'] . "','" . $data['monthly_income'] . "','" . $data['other_income'] . "','" . $data['support_income'] . "','" . $data['commitment'] . "','" . $data['monthly_due_capacity'] . "','" . $data['loan_limit'] . "','" . $data['about_customer'] . "','" . $data['residential_type'] . "','" . $data['residential_details'] . "','" . $data['residential_address'] . "','" . $data['residential_native_address'] . "','" . $data['occupation_type'] . "','" . $data['occupation_details'] . "', '', '', '', '','" . $data['area_confirm_type'] . "', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['area_group'] . "', '" . $data['area_line'] . "', '0', '" . $data['dor'] . "' )";
+            $crQry = "INSERT INTO `customer_register`( `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `about_customer`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_info_occ_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `cus_status`, `create_time`,`updated_date` ) VALUES ('$req_id','" . $data['cus_id'] . "', '" . $data['cus_name'] . "', '" . $data['dob'] . "', '" . $data['age'] . "', '" . $data['gender'] . "', '', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['address'] . "', '" . $data['mobile1'] . "', '', '" . $data['father_name'] . "', '" . $data['mother_name'] . "', '" . $data['marital'] . "', '" . $data['spouse'] . "', '" . $data['occupation_type'] . "', '" . $data['occupation_details'] . "', '','" . $data['how_to_know'] . "','" . $data['loan_count'] . "','" . $data['first_loan_date'] . "','" . $data['travel_with_company'] . "','" . $data['monthly_income'] . "','" . $data['other_income'] . "','" . $data['support_income'] . "','" . $data['commitment'] . "','" . $data['monthly_due_capacity'] . "','" . $data['loan_limit'] . "','" . $data['about_customer'] . "','" . $data['residential_type'] . "','" . $data['residential_details'] . "','" . $data['residential_address'] . "','" . $data['residential_native_address'] . "','" . $data['occupation_type'] . "','" . $data['occupation_details'] . "', '', '', '', '','" . $data['area_confirm_type'] . "', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['area_group'] . "', '" . $data['area_line'] . "', '" . $data['cus_status'] . "', '" . $data['dor'] . "', '" . $data['dor'] . "' )";
 
             $con->query($crQry);
             $data['cus_reg_id'] = $con->insert_id;
@@ -431,41 +459,71 @@ class bulkUploadClass
 
         $updateQry = "UPDATE `request_creation` SET `cus_reg_id`='" . $data['cus_reg_id'] . "' where req_id = '$req_id' ";
         $con->query($updateQry);
+
+        return $req_id;
+    }
+
+    function verificationTables($con, $data, $userData, $req_id)
+    {
+        $insert_inv = $con->query("INSERT INTO in_verification (`req_id`,`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`,`req_code`, `dor`,`cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`,`mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`,`prompt_remark`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date` ) SELECT * from request_creation where req_id = '" . $req_id . "' ");
+
+        $insert_fam = $con->query("INSERT INTO `verification_family_info`(`cus_id`,`req_id`, `famname`, `relationship`, `relation_age`, `relation_aadhar`, `relation_Mobile`, `relation_Occupation`, `relation_Income`, `relation_Blood`) VALUES ('" . $data['cus_id'] . "','$req_id','" . $data['guarantor_name'] . "','" . $data['guarantor_relationship'] . "','" . $data['guarantor_age'] . "','" . $data['guarantor_adhar'] . "','" . $data['guarantor_mobile'] . "','" . $data['guarantor_occupation'] . "','" . $data['guarantor_income'] . "','')");
+        $guarantor_id = $con->insert_id;
+
+        $insert_cp = $con->query("INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`, `cus_status`, `insert_login_id`,`created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['cus_name']) . "','" . strip_tags($data['gender']) . "','" . strip_tags($data['dob']) . "', '" . strip_tags($data['age']) . "', '', '" . strip_tags($data['mobile1']) . "','','" . strip_tags($data['mobile1']) . "','','" . strip_tags($guarantor_id) . "', '" . strip_tags($data['guarantor_relationship']) . "', '', '" . strip_tags($data['cus_data']) . "','" . strip_tags($data['cus_exist_type']) . "','" . strip_tags($data['residential_type']) . "','" . strip_tags($data['residential_details']) . "','" . strip_tags($data['residential_address']) . "', '', '" . strip_tags($data['occupation_type']) . "','" . strip_tags($data['occupation_details']) . "','','','','','" . strip_tags($data['area_confirm_type']) . "','" . strip_tags($data['state']) . "','" . strip_tags($data['district']) . "','" . strip_tags($data['taluk']) . "','" . strip_tags($data['area_id']) . "','" . strip_tags($data['sub_area_id']) . "','" . strip_tags($data['group_name']) . "','" . strip_tags($data['line_name']) . "','10','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "' )");
+        $cus_profile_id = $con->insert_id;
+
+        $insert_vdoc = $con->query("INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `endorsement_process`, `cus_status`, `insert_login_id`,`created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['cus_name']) . "','" . strip_tags($cus_profile_id) . "','" . strip_tags($data['doc_code']) . "', '" . strip_tags($data['mortgage_process']) . "', '" . strip_tags($data['endorsement_process']) . "', '11','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "' )");
+
+        //checking verification person if its customer or not //if yes directly can place cus_id into table else need to set the fam_id from veri_fam_info
+        $verification_person = $data['verification_person'] == $data['cus_id'] ? $data['verification_person'] : $guarantor_id;
+
+        $insert_vlc = $con->query("INSERT INTO verification_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`,  `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`,`create_date`, `update_date`)  VALUES ('" . strip_tags($req_id) . "', '" . strip_tags($data['cus_id']) . "',  '" . strip_tags($data['cus_name']) . "', '" . strip_tags($data['cus_data']) . "','" . strip_tags($data['mobile1']) . "', '', '" . strip_tags($data['loan_cat_id']) . "',  '" . strip_tags($data['sub_category']) . "', '" . strip_tags($data['tot_amt']) . "', '" . strip_tags($data['adv_amt']) . "', '" . strip_tags($data['loan_amt']) . "', '" . strip_tags($data['profit_type']) . "',  '" . strip_tags($data['due_method_calc']) . "', '" . strip_tags($data['due_type']) . "', '" . strip_tags($data['profit_method']) . "', '', '" . strip_tags($data['due_method_scheme']) . "',  '', '" . strip_tags($data['scheme_id']) . "', '" . strip_tags($data['int_rate']) . "', '" . strip_tags($data['due_period']) . "', '" . strip_tags($data['doc_charge']) . "',  '" . strip_tags($data['proc_fee']) . "', '" . strip_tags($data['loan_amt_cal']) . "', '" . strip_tags($data['principal_amt_cal']) . "', '" . strip_tags($data['int_amt_cal']) . "', '" . strip_tags($data['tot_amt_cal']) . "',  '" . strip_tags($data['due_amt_cal']) . "', '" . strip_tags($data['doc_charge_cal']) . "', '" . strip_tags($data['proc_fee_cal']) . "', '" . strip_tags($data['net_cash_cal']) . "', '" . strip_tags($data['due_start_from']) . "',  '" . strip_tags($data['maturity_month']) . "', '" . strip_tags($data['collection_method']) . "', '" . strip_tags($data['communication']) . "','','" . strip_tags($verification_person) . "','" . strip_tags($data['verification_location']) . "', 12, '" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "'  ) ");
+
+        $loan_cal_id = $con->insert_id;
+
+        $categoryArray = [$data['cal_category1'], $data['cal_category2'], $data['cal_category3']];
+
+        foreach ($categoryArray as $category) {
+            if (!empty($category)) {
+                $insert_vcat = $con->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('" . strip_tags($req_id) . "','" . strip_tags($loan_cal_id) . "','" . strip_tags($category) . "' )");
+            }
+        }
     }
 
 
     //Error Handling Part
-    function handleError($data, $rownum)
+    function handleError($data)
     {
         $errcolumns = array();
 
-        if ($data['cus_id'] == 'Invalid') {
-            $errcolumns[] = 'Customer ID';
+        if ($data['dor'] == 'Invalid Date') {
+            $errcolumns[] = 'Date of Request';
         }
 
-        if (!preg_match('/^[A-Za-z]+$/', $data['cus_name'])) {
-            $errcolumns[] = 'Customer Name';
+        if ($data['cus_id'] == 'Invalid') {
+            $errcolumns[] = 'Customer ID';
         }
 
         if ($data['cus_data'] == 'Not Found') {
             $errcolumns[] = 'Customer Data';
         }
 
-        if (!preg_match('/^[A-Za-z]*$/', $data['cus_exist_type'])) {
+        if ($data['cus_data'] == 'Existing' && (!preg_match('/^[A-Za-z]+$/', $data['cus_exist_type']) || $data['cus_exist_type'] == '')) {
             $errcolumns[] = 'Customer Existence Type';
         }
 
-        if ($data['guarantor_adhar'] == 'Invalid') {
-            $errcolumns[] = 'Guarantor Aadhar';
+        if (!preg_match('/^[A-Za-z]+$/', $data['cus_name'])) {
+            $errcolumns[] = 'Customer Name';
         }
 
-        if ($data['mobile1'] == 'Invalid') {
-            $errcolumns[] = 'Mobile Number';
-        }
+        // if ($data['dob'] == 'Invalid Date') {
+        //     $errcolumns[] = 'Date of Birth';
+        // }
 
-        if ($data['dor'] == 'Invalid Date') {
-            $errcolumns[] = 'Date of Registration';
-        }
+        // if (!preg_match('/^[0-9]+$/', $data['age'])) {
+        //     $errcolumns[] = 'Age';
+        // }
 
         if ($data['gender'] == 'Not Found') {
             $errcolumns[] = 'Gender';
@@ -487,16 +545,36 @@ class bulkUploadClass
             $errcolumns[] = 'Sub Area ID';
         }
 
+        if (!preg_match('/^[A-Za-z0-9]+$/', $data['address'])) {
+            $errcolumns[] = 'Address';
+        }
+
+        if ($data['mobile1'] == 'Invalid') {
+            $errcolumns[] = 'Mobile Number';
+        }
+
+        if (!preg_match('/^[A-Za-z]+$/', $data['father_name'])) {
+            $errcolumns[] = 'Father Name';
+        }
+
+        if (!preg_match('/^[A-Za-z]+$/', $data['mother_name'])) {
+            $errcolumns[] = 'Mother Name';
+        }
+
         if ($data['marital'] == 'Not Found') {
             $errcolumns[] = 'Marital Status';
         }
 
-        if ($data['marital'] == 'Yes' && empty($data['spouse'])) {
+        if ($data['marital'] == '1' && !preg_match('/^[A-Za-z]+$/', $data['spouse'])) {
             $errcolumns[] = 'Spouse Name';
         }
 
         if (!preg_match('/^[A-Za-z]+$/', $data['guarantor_name'])) {
             $errcolumns[] = 'Guarantor Name';
+        }
+
+        if ($data['guarantor_adhar'] == 'Invalid') {
+            $errcolumns[] = 'Guarantor Aadhar';
         }
 
         if (!preg_match('/^[0-9]+$/', $data['guarantor_age'])) {
@@ -543,7 +621,7 @@ class bulkUploadClass
             $errcolumns[] = 'Possibility Due Amount';
         }
 
-        if ($data['poss_type'] != '1' && !preg_match('/^[0-9]+$/', $data['poss_due_period'])) {
+        if ($data['poss_type'] == '2' && !preg_match('/^[0-9]+$/', $data['poss_due_period'])) {
             $errcolumns[] = 'Possibility Due Period';
         }
 
@@ -560,31 +638,32 @@ class bulkUploadClass
             // Subcondition 1.1
             if ($data['area_confirm_type'] == '0') {
                 if (
-                    $data['residential_type'] == 'Not Found'
-                    && $data['residential_details'] == ''
-                    && $data['residential_address'] == ''
+                    $data['residential_type'] == ''
+                    || $data['residential_details'] == ''
+                    || $data['residential_address'] == ''
                 ) {
                     $errcolumns[] = 'Residential Type or Details or Address';
-                }
-            }
-
-            // Subcondition 1.2
-            if ($data['area_confirm_type'] == '1') {
-                if ($data['occupation_type'] == 'Not Found' && $data['occupation_details'] == '') {
-                    $errcolumns[] = 'Occupation Type or Details';
                 }
             }
         } else {
             $errcolumns[] = 'Area Confirm Type';
         }
 
+        if ($data['occupation_type'] == 'Not Found') {
+            $errcolumns[] = 'Occupation Type';
+        }
+
+        if ($data['occupation_details'] == '') {
+            $errcolumns[] = 'Occupation Details';
+        }
+
         // Condition 2
-        if ($data['group_name'] == 'Invalid') {
+        if ($data['sub_area_id'] != 'Not Found' && $data['group_name'] == 'Invalid') {
             $errcolumns[] = 'Group Name';
         }
 
         // Condition 3
-        if ($data['line_name'] == 'Invalid') {
+        if ($data['sub_area_id'] != 'Not Found' && $data['line_name'] == 'Invalid') {
             $errcolumns[] = 'Line Name';
         }
 
@@ -609,8 +688,8 @@ class bulkUploadClass
             if ($data['profit_type'] == '1') {
                 if (
                     $data['due_method_calc'] == 'Not Found'
-                    && $data['due_type'] == 'Not Found'
-                    && $data['profit_method'] == 'Not Found'
+                    || $data['due_type'] == 'Not Found'
+                    || $data['profit_method'] == 'Not Found'
                 ) {
                     $errcolumns[] = 'Due Method Calc or Due Type or Profit Method';
                 }
@@ -618,7 +697,7 @@ class bulkUploadClass
 
             // Subcondition 7.2
             if ($data['profit_type'] == '2') {
-                if ($data['due_method_scheme'] == 'Not Found' && $data['scheme_id'] == 'Not Found') {
+                if ($data['due_method_scheme'] == '' || $data['scheme_id'] == '') {
                     $errcolumns[] = 'Due Method Scheme or Scheme Name';
                 }
             }
@@ -682,8 +761,20 @@ class bulkUploadClass
             $errcolumns[] = 'Maturity Month';
         }
 
+        if ($data['collection_method'] == 'Not Found') {
+            $errcolumns[] = 'Collection Method';
+        }
+
+        if ($data['communication'] == 'Not Found') {
+            $errcolumns[] = 'Communication';
+        }
+
         if ($data['verification_person'] == 'Invalid') {
             $errcolumns[] = 'Verification Person';
+        }
+
+        if ($data['verification_location'] == 'Not Found') {
+            $errcolumns[] = 'Verification Location';
         }
 
         if (!preg_match('/^[A-Za-z]+$/', $data['issued_to'])) {
@@ -702,7 +793,11 @@ class bulkUploadClass
             $errcolumns[] = 'Payment Type';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['balance_amount'])) {
+        if (!preg_match('/^[0-9]+$/', $data['cash'])) {
+            $errcolumns[] = 'Cash';
+        }
+
+        if (!preg_match('/^[0-9]+$/', $data['balance_amt'])) {
             $errcolumns[] = 'Balance Amount';
         }
 
@@ -716,282 +811,5 @@ class bulkUploadClass
 
 
         return $errcolumns;
-    }
-    function handleError1($data, $rownum)
-    {
-        $errcolumns = array();
-
-        if ($data['cus_id'] == 'Invalid') {
-            // Condition 1 is true
-            $errcolumns[] = 'Customer ID';
-        }
-
-        if (preg_match('/^\s*$/', $data['cus_name'])) {
-            // Condition 1 is true
-            $errcolumns[] = 'Customer Name';
-        }
-
-        if ($data['cus_data'] == 'Not Found') {
-            // Condition 1 is true
-            $errcolumns[] = 'Customer Data';
-        }
-
-        if ($data['guarantor_adhar'] == 'Invalid') {
-            // Condition 1 is true
-            $errcolumns[] = 'Guarantor Adhar';
-        }
-
-        if ($data['mobile1'] == 'Invalid') {
-            // Condition 1 is true
-            $errcolumns[] = 'Mobile Number';
-        }
-
-        if ($data['agent_id'] == 'Not Found') {
-            // Condition 1 is true
-            $errcolumns[] = 'Agent Name';
-        }
-
-        if ($data['dor'] == 'Invalid Date') {
-            // Condition 2 is true
-            $errcolumns[] = 'Date of Request';
-        }
-
-        if ($data['gender'] == 'Not Found') {
-            // Condition 3 is true
-            $errcolumns[] = 'Gender';
-        }
-
-        if ($data['area_id'] == 'Not Found') {
-            // Condition 4 is true
-            $errcolumns[] = 'Area';
-        }
-
-        if ($data['sub_area_id'] == 'Not Found') {
-            // Condition 5 is true
-            $errcolumns[] = 'Sub Area';
-        }
-
-        if ($data['area_group'] == '') {
-            // Condition 5 is true
-            $errcolumns[] = 'Area Group';
-        }
-
-        if ($data['area_line'] == '') {
-            // Condition 5 is true
-            $errcolumns[] = 'Area Line';
-        }
-
-        if ($data['marital'] == 'Not Found') {
-            // Condition 6 is true
-            $errcolumns[] = 'Marital Status';
-        }
-
-        if ($data['marital'] == 'Yes') {
-            //
-            if ($data['spouse'] == '') {
-                $errcolumns[] = 'Spouse Name';
-            }
-        }
-
-        if ($data['residential_type'] == 'Not Found') {
-            // Condition 7 is true
-            $errcolumns[] = 'Residential Type';
-        }
-
-        if ($data['occupation_type'] == 'Not Found') {
-            // Condition 7 is true
-            $errcolumns[] = 'Occupation Type';
-        }
-
-        if ($data['loan_cat_id'] == 'Not Found') {
-            // Condition 8 is true
-            $errcolumns[] = 'Loan Category';
-        }
-
-        if ($data['sub_categoryCheck'] == 'Not Found') {
-            // Condition 9 is true
-            $errcolumns[] = 'Sub Category';
-        }
-
-        if ($data['poss_type'] == 'Not Found') {
-            // Condition 10 is true
-            $errcolumns[] = 'Possibility Type';
-        }
-
-        if ($data['cal_category1'] == '' && $data['cal_category2'] == '' && $data['cal_category3'] == '') {
-            // Condition 10 is true
-            $errcolumns[] = 'Enter Atlease 1 Category info';
-        }
-
-        $errtxt = "Please Check the input given in Line no: " . ($rownum + 1) . " on below. <br><br>";
-        $errtxt .= "<ul>";
-        foreach ($errcolumns as $columns) {
-            $errtxt .= "<li>$columns</li>";
-        }
-        $errtxt .= "</ul><br>";
-        $errtxt .= "Insertion completed till Line No: " . $rownum;
-        return $errtxt;
-    }
-
-    function ifconditions($data)
-    {
-        if (
-            $data['cus_id'] != 'Invalid'
-            &&
-            preg_match('/^[A-Za-z]+$/', $data['cus_name'])
-            &&
-            $data['cus_data'] != 'Not Found'
-            &&
-            preg_match('/^[A-Za-z]*$/', $data['cus_exist_type'])
-            &&
-            $data['guarantor_adhar'] != 'Invalid'
-            &&
-            $data['mobile1'] != 'Invalid'
-            &&
-            $data['dor'] != 'Invalid Date'
-            &&
-            $data['gender'] != 'Not Found'
-            &&
-            $data['state'] != 'Not Found'
-            &&
-            $data['district'] != 'Not Found'
-            &&
-            $data['area_id'] != 'Not Found'
-            &&
-            $data['sub_area_id'] != 'Not Found'
-            &&
-            $data['marital'] != 'Not Found'
-            &&
-            ($data['marital'] == 'Yes' ? !empty($data['spouse']) : true)
-            &&
-            preg_match('/^[A-Za-z]+$/', $data['guarantor_name'])
-            &&
-            preg_match('/^[0-9]+$/', $data['guarantor_age'])
-            &&
-            $data['guarantor_mobile'] != 'Invalid'
-            &&
-            preg_match('/^[A-Za-z0-9]+$/', $data['guarantor_occupation'])
-            &&
-            preg_match('/^[0-9]+$/', $data['guarantor_income'])
-            &&
-            $data['loan_cat_id'] != 'Not Found'
-            &&
-            $data['sub_categoryCheck'] != 'Not Found'
-            &&
-            preg_match('/^[0-9]*$/', $data['tot_amt'])
-            &&
-            preg_match('/^[0-9]*$/', $data['adv_amt'])
-            &&
-            preg_match('/^[0-9]+$/', $data['loan_amt'])
-            &&
-            $data['poss_type'] != 'Not Found'
-            &&
-            ($data['poss_type'] == '1' ? preg_match('/^[0-9]+$/', $data['poss_due_amt']) : preg_match('/^[0-9]+$/', $data['poss_due_period']))
-            &&
-            ($data['cal_category1'] != '' || $data['cal_category2'] != '' || $data['cal_category3'] != '')
-            &&
-            preg_match('/^[0-9]+$/', $data['loan_limit'])
-            &&
-            $data['area_confirm_type'] != 'Not Found'
-            &&
-            (
-                (
-                    $data['area_confirm_type'] == '0' ?
-                    (
-                        $data['residential_type'] != 'Not Found'
-                        &&
-                        $data['residential_details'] != ''
-                        &&
-                        $data['residential_address'] != ''
-                    ) : true
-                )
-                &&
-                (
-                    $data['area_confirm_type'] == '1' ? (
-                        $data['occupation_type'] != 'Not Found'
-                        &&
-                        $data['occupation_details'] != ''
-                    ) : true
-                )
-            )
-            &&
-            $data['group_name'] != 'Invalid'
-            &&
-            $data['line_name'] != 'Invalid'
-            &&
-            $data['mortgage_process'] != 'Not Found'
-            &&
-            $data['endorsement_process'] != 'Not Found'
-            &&
-            $data['loan_date'] != 'Invalid Date'
-            &&
-            $data['profit_type'] != 'Not Found'
-            &&
-            (
-                (
-                    $data['profit_type'] == '1' ?
-                    (
-                        $data['due_method_calc'] != 'Not Found'
-                        &&
-                        $data['due_type'] != 'Not Found'
-                        &&
-                        $data['profit_method'] != 'Not Found'
-                    ) : true
-                )
-                &&
-                (
-                    $data['profit_type'] == '2' ? (
-                        $data['due_method_scheme'] != 'Not Found'
-                        &&
-                        $data['scheme_id'] != 'Not Found'
-                    ) : true
-                )
-            )
-            &&
-            preg_match('/^[0-9]+$/', $data['int_rate'])
-            &&
-            preg_match('/^[0-9]+$/', $data['due_period'])
-            &&
-            preg_match('/^[0-9]+$/', $data['doc_charge'])
-            &&
-            preg_match('/^[0-9]+$/', $data['proc_fee'])
-            &&
-            preg_match('/^[0-9]+$/', $data['loan_amt_cal'])
-            &&
-            preg_match('/^[0-9]+$/', $data['principal_amt_cal'])
-            &&
-            preg_match('/^[0-9]+$/', $data['int_amt_cal'])
-            &&
-            preg_match('/^[0-9]+$/', $data['tot_amt_cal'])
-            &&
-            preg_match('/^[0-9]+$/', $data['due_amt_cal'])
-            &&
-            preg_match('/^[0-9]+$/', $data['doc_charge_cal'])
-            &&
-            preg_match('/^[0-9]+$/', $data['proc_fee_cal'])
-            &&
-            preg_match('/^[0-9]+$/', $data['net_cash_cal'])
-            &&
-            $data['due_start_from'] != 'Invalid Date'
-            &&
-            $data['maturity_month'] != 'Invalid Date'
-            &&
-            $data['verification_person'] != 'Invalid'
-            &&
-            preg_match('/^[A-Za-z]+$/', $data['issued_to'])
-            &&
-            $data['agent_id'] != 'Not Found'
-            &&
-            $data['issued_mode'] != 'Not Found'
-            &&
-            $data['payment_type'] != 'Not Found'
-            &&
-            preg_match('/^[0-9]+$/', $data['balance_amount'])
-            &&
-            $data['cash_guarantor_id'] != 'Invalid'
-            &&
-            preg_match('/^[A-Za-z]+$/', $data['cash_guarantor_rel'])
-        ) {
-        }
     }
 }
