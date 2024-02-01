@@ -19,12 +19,13 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
         $Reader->ChangeSheet($i);
         $rowChange = 0;
         foreach ($Reader as $Row) {
-            
+
             if ($rowChange != 0) { // omitted 0 to avoid headers
 
                 $data = $obj->fetchAllRowData($con, $Row);
                 $data['req_code'] = $obj->getRequestCode($con);
                 $data['doc_code'] = $obj->getDocumentCode($con);
+                $data['loan_id'] = $obj->getLoanCode($con);
                 $data['area_id'] = $obj->getAreaId($con, $data['area']);
                 $data['sub_area_id'] = $obj->getSubAreaId($con, $data['sub_area']);
                 $data['loan_cat_id'] = $obj->getLoanCategoryId($con, $data['loan_category']);
@@ -36,13 +37,16 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                 $data['cus_data'] = $checkCustomerData['cus_data'];
                 $data['cus_reg_id'] = $checkCustomerData['cus_reg_id'];
                 $data['scheme_id'] = $obj->getSchemeId($con, $data['scheme_name']);
-                $data['cus_status'] = '12';
+                $data['cus_status'] = '14';
 
                 $err_columns = $obj->handleError($data);
                 if (empty($err_columns)) {
 
-                    // $req_id = $obj->raiseRequest($con, $data, $userData);
-                    // $obj->verificationTables($con, $data, $userData, $req_id);
+                    $req_id = $obj->raiseRequest($con, $data, $userData);
+                    $obj->verificationTables($con, $data, $userData, $req_id);
+                    $obj->approvalTables($con, $req_id);
+                    $obj->acknowledgementTables($con,$data, $req_id);
+                    $obj->loanIssueTables($con, $data, $userData, $req_id);
 
                     // echo $insertQry;
                 } else {
