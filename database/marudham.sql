@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 31, 2024 at 01:47 PM
+-- Generation Time: Feb 01, 2024 at 01:14 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -25,6 +25,27 @@ DELIMITER $$
 --
 -- Procedures
 --
+CREATE DEFINER=`root`@`localhost` PROCEDURE `delete_till_collection` (IN `reqid` VARCHAR(20))   BEGIN
+    DELETE FROM `request_creation` WHERE req_id = reqid;
+    DELETE FROM `request_category_info` WHERE req_ref_id = reqid;
+    DELETE FROM `customer_register` WHERE req_ref_id = reqid;
+    DELETE FROM `in_verification` WHERE req_id = reqid;
+    DELETE FROM `verification_family_info` WHERE req_id = reqid;
+    DELETE FROM `customer_profile` WHERE req_id = reqid;
+    DELETE FROM `verification_documentation` WHERE req_id = reqid;
+    DELETE FROM `verification_loan_calculation` WHERE req_id = reqid;
+    DELETE FROM `verif_loan_cal_category` WHERE req_id = reqid;
+    DELETE FROM `in_approval` WHERE req_id = reqid;
+    DELETE FROM `in_acknowledgement` WHERE req_id = reqid;
+    DELETE FROM `acknowlegement_customer_profile` WHERE req_id = reqid;
+    DELETE FROM `acknowlegement_documentation` WHERE req_id = reqid;
+    DELETE FROM `acknowlegement_loan_calculation` WHERE req_id = reqid;
+    DELETE FROM `acknowledgement_loan_cal_category` WHERE req_id = reqid;
+    DELETE FROM `in_issue` WHERE req_id = reqid;
+    DELETE FROM `document_track` WHERE req_id = reqid;
+    DELETE FROM `loan_issue` WHERE req_id = reqid;
+END$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_cus_name` (IN `cusid` VARCHAR(20))  NO SQL SELECT customer_name from customer_register WHERE cus_id = cusid$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_kyc_guarentor` (IN `reqid` VARCHAR(20))  NO SQL SELECT a.famname,a.relationship from verification_family_info a 
@@ -85,7 +106,8 @@ INSERT INTO `acknowledgement_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_i
 (54, '24', '24', 'Check'),
 (55, '24', '24', 'Check'),
 (57, '23', '23', 'Check'),
-(58, '23', '23', 'Check');
+(58, '23', '23', 'Check'),
+(62, '75', '30', '10000');
 
 -- --------------------------------------------------------
 
@@ -162,7 +184,8 @@ INSERT INTO `acknowlegement_customer_profile` (`id`, `req_id`, `cus_id`, `cus_na
 (14, '21', '261910026191', 'Leo Das', '1', '1999-04-27', '25', '', '2619100261', '', '', '658bc19b427cb.jpg', '14', 'Father', '658d05aa0f542.jpg', 'New', '', '0', 'Own', 'Bussy street', 'pondicherry', '', '', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2023-12-28 10:50:42', '2023-12-28 10:50:42'),
 (15, '22', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'New', '', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-02 15:46:51', '2024-01-02 15:46:51'),
 (16, '23', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'Existing', 'Additional', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-06 11:28:43', '2024-01-06 11:28:43'),
-(17, '24', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'Existing', 'Additional', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-06 11:30:07', '2024-01-06 11:30:07');
+(17, '24', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'Existing', 'Additional', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-06 11:30:07', '2024-01-06 11:30:07'),
+(23, '75', '123412341234', 'Rajesh', '1', '1994-02-20', '29', '', '7708261661', '', '7708261661', '', '21', 'Spouse', '', 'New', '', '0', 'Illam', '25, Gandhi  road', '', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -279,7 +302,8 @@ INSERT INTO `acknowlegement_documentation` (`id`, `req_id`, `cus_id_doc`, `custo
 (14, '21', '261910026191', 'Leo Das', '14', 'DOC-113', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '4', NULL, '2023-12-28 10:50:58', '2023-12-28 10:50:58'),
 (15, '22', '000000000001', 'Senthil kumaran', '15', 'DOC-114', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2024-01-02 15:47:01', '2024-01-02 15:47:01'),
 (16, '23', '000000000001', 'Senthil kumaran', '16', 'DOC-115', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2024-01-06 11:28:54', '2024-01-06 11:28:54'),
-(17, '24', '000000000001', 'Senthil kumaran', '17', 'DOC-116', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2024-01-06 11:30:16', '2024-01-06 11:30:16');
+(17, '24', '000000000001', 'Senthil kumaran', '17', 'DOC-116', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '1', '0', NULL, NULL, NULL, '', '', '', '', '', '', '', '', '', '', '', '0', NULL, NULL, NULL, '0', '', 'YES', '', '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', '0', '1', '2', '2', NULL, '2024-01-06 11:30:16', '2024-01-06 11:30:16'),
+(23, '75', '123412341234', 'Rajesh', '23', 'DOC-117', '1', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, '0', NULL, '', '1', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', NULL, NULL, NULL, '0', NULL, '', NULL, '0', NULL, NULL, NULL, '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, '11', NULL, NULL, '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -354,7 +378,8 @@ INSERT INTO `acknowlegement_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_
 (21, '21', '261910026191', 'Leo Das', 'New', '2619100261', '658bc19b427cb.jpg', '6', 'Mobiles', '', '', '45000', '1', 'Monthly', 'EMI', 'pre_intrest', '', '', '', '', '1', '10', '1', '1', '45000', '40500', '4500', '45000', '4500', '450', '450', '39600', '2024-01-01', '2024-10-01', '2', '1', '', '14', '0', '12', '2', NULL, '2023-12-28 10:51:52', '2023-12-28 10:51:52'),
 (22, '22', '000000000001', 'Senthil kumaran', 'New', '7526312546', '6593e1b875db5.png', '11', 'Interest R', '', '', '54000', '2', '', '', '', '', '3', '', '26', '1', '45', '100', '100', '54000', '53460', '540', '54000', '1200', '100', '100', '53260', '2024-01-03', '2024-02-16', '1', '1', '', '15', '0', '12', '2', '2', '2024-01-02 15:49:20', '2024-01-02 15:51:11'),
 (23, '23', '000000000001', 'Senthil kumaran', 'Existing', '7526312546', '6593e1b875db5.png', '7', 'Small Business', '', '', '11000', '1', 'Monthly', 'EMI', 'pre_intrest', '', '', '', '', '2', '12', '1', '1', '11000', '8360', '2680', '11040', '920', '110', '110', '8140', '2024-01-07', '2024-12-07', '1', '1', '', '000000000001', '0', '12', '2', '2', '2024-01-06 11:29:51', '2024-01-06 11:34:50'),
-(24, '24', '000000000001', 'Senthil kumaran', 'Existing', '7526312546', '6593e1b875db5.png', '7', 'Small Business', '', '', '25000', '2', '', '', '', '', '2', '6', '13', '12', '10', '1', '1', '25000', '22000', '3000', '25000', '2500', '250', '5', '21749', '2024-01-13', '2024-03-16', '1', '1', '', '15', '0', '12', '2', '2', '2024-01-06 11:32:03', '2024-01-06 11:34:23');
+(24, '24', '000000000001', 'Senthil kumaran', 'Existing', '7526312546', '6593e1b875db5.png', '7', 'Small Business', '', '', '25000', '2', '', '', '', '', '2', '6', '13', '12', '10', '1', '1', '25000', '22000', '3000', '25000', '2500', '250', '5', '21749', '2024-01-13', '2024-03-16', '1', '1', '', '15', '0', '12', '2', '2', '2024-01-06 11:32:03', '2024-01-06 11:34:23'),
+(30, '75', '123412341234', 'Rajesh', 'New', '7708261661', '', '1', 'Personal', '', '', '25000', '1', 'Monthly', 'EMI', 'after_interest', '', '', '', '', '2', '10', '2', '0', '25000', '25000', '5000', '30000', '3000', '500', '0', '24500', '2024-02-01', '2024-11-01', '1', '1', '', '123412341234', '1', '12', '2', '2', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -525,7 +550,7 @@ INSERT INTO `area_group_mapping` (`map_id`, `group_name`, `area_id`, `sub_area_i
 (1, 'Apple', '1', '1,2,3,4,5', '1', '3', '0', '1', '1', NULL, '2023-05-10 15:30:27', '2023-05-12 12:31:25'),
 (2, 'Watermelon', '2', '6,7,9', '1', '2', '0', '1', '1', NULL, '2023-05-11 18:14:02', '2023-05-12 12:32:33'),
 (3, 'Watermelon 2', '2', '8,10', '1', '2', '0', '1', '1', NULL, '2023-05-11 18:14:20', '2023-05-12 12:33:08'),
-(4, 'Mango', '3', '11,12,13,14,15,16', '1', '1', '0', '1', '1', NULL, '2023-05-11 18:14:49', '2023-05-12 12:33:38'),
+(4, 'Mango', '3', '13,14,15,16,18', '1', '1', '0', '1', '2', NULL, '2023-05-11 18:14:49', '2024-02-01 15:38:37'),
 (5, 'GA 1', '4,5,6,7,8', '19,20,21,22,23,24,25,26', '1', '3', '0', '1', '2', NULL, '2023-05-12 16:22:16', '2024-01-26 17:55:02');
 
 -- --------------------------------------------------------
@@ -557,9 +582,9 @@ INSERT INTO `area_line_mapping` (`map_id`, `line_name`, `area_id`, `sub_area_id`
 (1, 'Banana 1', '1', '1,5', '1', '3', '0', '1', '1', NULL, '2023-05-11 18:12:10', '2023-05-12 12:34:15'),
 (2, 'Banana 2', '1', '2,3,4', '1', '3', '0', '1', '1', NULL, '2023-05-11 18:12:41', '2023-05-12 12:35:03'),
 (3, 'Jackfruit', '2', '6,7,8,9,10', '1', '2', '0', '1', '1', NULL, '2023-05-11 18:21:27', '2023-05-12 12:36:02'),
-(4, 'Pine apple 1', '3', '15,16', '1', '1', '0', '1', '1', NULL, '2023-05-11 18:22:00', '2023-05-12 12:36:48'),
+(4, 'Pine apple 1', '3', '15,16,18', '1', '1', '0', '1', '2', NULL, '2023-05-11 18:22:00', '2024-02-01 15:38:07'),
 (5, 'Pine apple 2', '3', '11,12,13,14', '1', '1', '0', '1', '1', NULL, '2023-05-11 18:22:28', '2023-05-12 12:37:02'),
-(6, 'LA 1', '4,5,6,7,8', '19,20,21,22,23,24,25,26', '1', '3', '0', '1', '2', NULL, '2023-05-12 16:21:49', '2024-01-26 17:55:47');
+(6, 'LA1', '4,5,6,7,8', '19,20,21,22,23,24,25,26', '1', '3', '0', '1', '2', NULL, '2023-05-12 16:21:49', '2024-01-26 17:55:47');
 
 -- --------------------------------------------------------
 
@@ -2094,7 +2119,8 @@ INSERT INTO `customer_profile` (`id`, `req_id`, `cus_id`, `cus_name`, `gender`, 
 (14, '21', '261910026191', 'Leo Das', '1', '1999-04-27', '25', '', '2619100261', '', '', '658bc19b427cb.jpg', '14', 'Father', '658d05aa0f542.jpg', 'New', '', '0', 'Own', 'Bussy street', 'pondicherry', '', '', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2023-12-28 10:50:42', '2023-12-28 10:50:42'),
 (15, '22', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'New', '', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-02 15:46:51', '2024-01-02 15:46:51'),
 (16, '23', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'Existing', 'Additional', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-06 11:28:43', '2024-01-06 11:28:43'),
-(17, '24', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'Existing', 'Additional', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-06 11:30:07', '2024-01-06 11:30:07');
+(17, '24', '000000000001', 'Senthil kumaran', '1', '1999-02-02', '25', '', '7526312546', '', '', '6593e1b875db5.png', '15', 'Father', '6593e293c4e64.jpg', 'Existing', 'Additional', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-06 11:30:07', '2024-01-06 11:30:07'),
+(23, '75', '123412341234', 'Rajesh', '1', '1994-02-20', '29', '', '7708261661', '', '7708261661', '', '21', 'Spouse', '', 'New', '', '0', 'Illam', '25, Gandhi  road', '', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', NULL, NULL, NULL, NULL, '10', NULL, '2', NULL, NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2176,7 +2202,8 @@ INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer
 (10, '17', '090920230103', 'Janaki', '2023-09-06', '0', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '14', 'MRS', '9002777732', '', 'Dineshkumar', 'Dineshi', '2', '', '2', 'IT', 'download.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2023-09-09 13:15:22', '2023-09-09 13:15:25'),
 (25, '21', '261910026191', 'Leo Das', '1999-04-27', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '16', 'MGR Salai', '2619100261', '', 'Anthony', 'Unknown', '1', 'Sathya', '1', 'Undercover Agent', '658bc19b427cb.jpg', '5', '0', '', '', '150000', '0', '0', '0', '8000', '78000', 'Just good', '0', 'Own', 'Bussy street', 'pondicherry', '', '', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', '13', '2023-12-27 11:48:03', '2023-12-28 10:53:27'),
 (26, '22', '000000000001', 'Senthil kumaran', '1999-02-02', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '4', '1', '02-01-2024', '0 Months,0 Years.', '1', '1', '1', '1', '5000', '78000', '11', '', '', '', '', '1', 'VAO', '1', 'CT', '1', 'VAo', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'GA 1', 'LA1', '14', '2024-01-02 15:43:12', '2024-01-02 15:50:15'),
-(30, '19', '600060006000', 'Subramani', '1995-05-02', '28', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2024-01-08 17:05:46', '2024-01-08 17:05:46');
+(30, '19', '600060006000', 'Subramani', '1995-05-02', '28', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '13', 'Check', '2619002619', '', 'Leo', 'Trisha', '2', '', '4', 'Bite', 'subramani.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2024-01-08 17:05:46', '2024-01-08 17:05:46'),
+(43, '75', '123412341234', 'Rajesh', '1994-02-20', '29', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '2', '0', '0', '0', '18000', '0', '0', '0', '3000', '100000', 'xxx', '0', 'Illam', '25, Gandhi  road', 'Echur', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', '14', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2329,7 +2356,8 @@ INSERT INTO `document_track` (`id`, `req_id`, `cus_id`, `sign_doc_id`, `cheque_d
 (7, '21', '261910026191', '', '', '', '', '', '2', '4', '2', '2023-12-28 10:53:27', '2024-01-11 16:00:59'),
 (8, '22', '000000000001', '', '', '', '', '', '1', '2', '', '2024-01-02 15:50:15', '0000-00-00 00:00:00'),
 (9, '24', '000000000001', '', '', '', '', '', '1', '2', '', '2024-01-06 11:33:26', '0000-00-00 00:00:00'),
-(10, '23', '000000000001', '', '', '', '', '', '1', '2', '', '2024-01-06 11:33:31', '0000-00-00 00:00:00');
+(10, '23', '000000000001', '', '', '', '', '', '1', '2', '', '2024-01-06 11:33:31', '0000-00-00 00:00:00'),
+(14, '75', '123412341234', '', '', '', '', '', '1', '2', '', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2502,7 +2530,8 @@ INSERT INTO `in_acknowledgement` (`id`, `req_id`, `cus_id`, `cus_status`, `statu
 (16, '21', '261910026191', '13', '0', '2', NULL, NULL, '2023-12-28 10:52:10', '2023-12-28 10:53:27'),
 (17, '22', '000000000001', '14', '0', '2', '0', NULL, '2024-01-02 15:49:33', '2024-01-02 15:50:15'),
 (18, '24', '000000000001', '14', '0', '2', '0', NULL, '2024-01-06 11:32:16', '2024-01-06 11:33:26'),
-(19, '23', '000000000001', '14', '0', '2', '0', NULL, '2024-01-06 11:32:21', '2024-01-06 11:33:31');
+(19, '23', '000000000001', '14', '0', '2', '0', NULL, '2024-01-06 11:32:21', '2024-01-06 11:33:31'),
+(23, '75', '123412341234', '14', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-10 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2541,7 +2570,8 @@ INSERT INTO `in_approval` (`req_id`, `cus_id`, `cus_status`, `status`, `insert_l
 ('21', '261910026191', '13', '0', '2', NULL, NULL, NULL),
 ('22', '000000000001', '14', '0', '2', '2', NULL, NULL),
 ('23', '000000000001', '14', '0', '2', '2', NULL, NULL),
-('24', '000000000001', '14', '0', '2', '2', NULL, NULL);
+('24', '000000000001', '14', '0', '2', '2', NULL, NULL),
+('75', '123412341234', '14', '0', '2', '2', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -2582,7 +2612,8 @@ INSERT INTO `in_issue` (`id`, `loan_id`, `req_id`, `cus_id`, `cus_status`, `stat
 (12, NULL, '21', '261910026191', '13', '0', '4', NULL, NULL, '2023-12-28 10:53:27', '2023-12-28 10:53:27'),
 (13, 'LID-115', '22', '000000000001', '14', '0', '2', '2', NULL, '2024-01-02 15:50:15', '2024-01-02 15:51:18'),
 (14, 'LID-117', '24', '000000000001', '14', '0', '2', '2', NULL, '2024-01-06 11:33:26', '2024-01-06 11:35:03'),
-(15, 'LID-116', '23', '000000000001', '14', '0', '2', '2', NULL, '2024-01-06 11:33:31', '2024-01-06 11:34:56');
+(15, 'LID-116', '23', '000000000001', '14', '0', '2', '2', NULL, '2024-01-06 11:33:31', '2024-01-06 11:34:56'),
+(19, 'LID-117', '75', '123412341234', '14', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-10 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2664,7 +2695,8 @@ INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `
 (21, 'Staff', 'Jafar', '', '', 'Personal friend', '', 'REQ-118', '2023-12-27', '25', '261910026191', 'New', 'Leo Das', '1999-04-27', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '16', 'MGR Salai', '2619100261', '', 'Anthony', 'Unknown', '1', 'Sathya', '1', 'Undercover Agent', '658bc19b427cb.jpg', '6', 'Mobiles', '', '', '', '45000', '1', '4000', '', '13', '', '0', '4', '4', NULL, '2023-12-27 11:48:03', '2023-12-28 10:53:27'),
 (22, 'Staff', 'Arun', '', '', 'c', '', 'REQ-119', '2024-01-02', '26', '000000000001', 'New', 'Senthil kumaran', '1999-02-02', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '11', 'Interest R', '', '', '', '54000', '1', '5400', '', '14', '', '0', '2', '2', NULL, '2024-01-02 15:43:12', '2024-01-02 15:50:15'),
 (23, 'Staff', 'Arun', '', '', 'c', '', 'REQ-120', '2024-01-06', '26', '000000000001', 'Existing', 'Senthil kumaran', '1999-02-02', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '7', 'Small Business', '', '', '', '11000', '2', '', '11', '14', '', '0', '2', '2', NULL, '2024-01-06 11:26:58', '2024-01-06 11:33:31'),
-(24, 'Staff', 'Arun', '', '', 'c', '', 'REQ-121', '2024-01-06', '26', '000000000001', 'Existing', 'Senthil kumaran', '1999-02-02', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '8', 'Plot Purchase', '15000', '2000', '13.3', '13000', '2', '', '11', '14', '', '0', '2', '2', NULL, '2024-01-06 11:27:55', '2024-01-06 11:33:26');
+(24, 'Staff', 'Arun', '', '', 'c', '', 'REQ-121', '2024-01-06', '26', '000000000001', 'Existing', 'Senthil kumaran', '1999-02-02', '25', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '8', 'Plot Purchase', '15000', '2000', '13.3', '13000', '2', '', '11', '14', '', '0', '2', '2', NULL, '2024-01-06 11:27:55', '2024-01-06 11:33:26'),
+(75, 'Staff', 'Arun', '1', '', '', '', 'REQ-122', '2024-01-01', '43', '123412341234', 'New', 'Rajesh', '1994-02-20', '29', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '14', '', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -2983,7 +3015,8 @@ INSERT INTO `loan_issue` (`id`, `req_id`, `cus_id`, `issued_to`, `agent_id`, `is
 (12, '18', '100010001000', 'Ganesan', '', '1', '0', '23760', '', '', '', '', '', '', '', '0', '27000', '23760', '100010001000', 'Customer', '0', '2', NULL, '2023-09-06 12:16:40'),
 (13, '22', '000000000001', 'Senthil kumaran', '', '1', '0', '53260', '', '', '', '', '', '', '', '0', '54000', '53260', '000000000001', '', '0', '2', NULL, '2024-01-02 15:51:11'),
 (14, '24', '000000000001', 'Senthil kumaran', '', '1', '0', '21749', '', '', '', '', '', '', '', '0', '25000', '21749', '000000000001', '', '0', '2', NULL, '2024-01-06 11:34:23'),
-(15, '23', '000000000001', 'Senthil kumaran', '', '1', '0', '8140', '', '', '', '', '', '', '', '0', '11000', '8140', '000000000001', '', '0', '2', NULL, '2024-01-06 11:34:50');
+(15, '23', '000000000001', 'Senthil kumaran', '', '1', '0', '8140', '', '', '', '', '', '', '', '0', '11000', '8140', '000000000001', '', '0', '2', NULL, '2024-01-06 11:34:50'),
+(19, '75', '123412341234', 'Agent', '1', '', '', '24500', '', '', '', '', '', '', '', '0', '25000', '24500', '', '', NULL, '2', NULL, '2024-01-10 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3425,7 +3458,8 @@ INSERT INTO `request_category_info` (`cat_info`, `req_ref_id`, `category_info`) 
 (85, '24', '1'),
 (94, '19', 'Haier'),
 (95, '19', '3.2'),
-(96, '19', '3.3');
+(96, '19', '3.3'),
+(124, '75', '10000');
 
 -- --------------------------------------------------------
 
@@ -3509,7 +3543,8 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (43, 'Staff', 'Jafar', '', '', 'Personal friend', '', 'REQ-118', '2023-12-27', '25', '261910026191', 'New', 'Arjun Das', '1999-04-27', '25', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '16', 'MGR Salai', '2619100261', '', 'Anthony', 'Unknown', '1', 'Sathya', '1', 'Undercover Agent', '658bc19b427cb.jpg', '6', 'Mobiles', '', '', '', '45000', '1', '4000', '', '13', '', '0', '4', '4', NULL, '2023-12-27 00:00:00', '2023-12-28 00:00:00'),
 (44, 'Staff', 'Arun', '', '', 'c', '', 'REQ-119', '2024-01-02', '26', '000000000001', 'New', 'Senthil kumaran', '1999-02-02', '25', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '11', 'Interest R', '', '', '', '54000', '1', '5400', '', '14', '', '0', '2', '2', NULL, '2024-01-02 00:00:00', '2024-01-02 00:00:00'),
 (45, 'Staff', 'Arun', '', '', 'c', '', 'REQ-120', '2024-01-06', '26', '000000000001', 'Existing', 'Senthil kumaran', '1999-02-02', '25', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '7', 'Small Business', '', '', '', '11000', '2', '', '11', '14', '', '0', '2', '2', NULL, '2024-01-06 00:00:00', '2024-01-06 00:00:00'),
-(46, 'Staff', 'Arun', '', '', 'c', '', 'REQ-121', '2024-01-06', '26', '000000000001', 'Existing', 'Senthil kumaran', '1999-02-02', '25', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '8', 'Plot Purchase', '15000', '2000', '13.3', '13000', '2', '', '11', '14', '', '0', '2', '2', NULL, '2024-01-06 00:00:00', '2024-01-06 00:00:00');
+(46, 'Staff', 'Arun', '', '', 'c', '', 'REQ-121', '2024-01-06', '26', '000000000001', 'Existing', 'Senthil kumaran', '1999-02-02', '25', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '18', 'CT', '7526312546', '', 'Kumaran', 'Kumari', '2', '', '1', 'VAO', '6593e1b875db5.png', '8', 'Plot Purchase', '15000', '2000', '13.3', '13000', '2', '', '11', '14', '', '0', '2', '2', NULL, '2024-01-06 00:00:00', '2024-01-06 00:00:00'),
+(75, 'Staff', 'Arun', '1', '', '', '', 'REQ-122', '2024-01-01', '43', '123412341234', 'New', 'Rajesh', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '14', '', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -3833,8 +3868,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `fullname`, `title`, `emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`, `ag_id`, `staff_id`, `company_id`, `branch_id`, `loan_cat`, `agentforstaff`, `line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`, `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`, `doc_mapping`, `bank_creation`, `requestmodule`, `request`, `request_list_access`, `verificationmodule`, `verification`, `approvalmodule`, `approval`, `acknowledgementmodule`, `acknowledgement`, `loanissuemodule`, `loan_issue`, `collectionmodule`, `collection`, `collection_access`, `closedmodule`, `closed`, `nocmodule`, `noc`, `doctrackmodule`, `doctrack`, `doc_rec_access`, `updatemodule`, `update_screen`, `concernmodule`, `concern_creation`, `concern_solution`, `concern_feedback`, `accountsmodule`, `cash_tally`, `bank_details`, `cash_tally_admin`, `bank_clearance`, `finance_insight`, `followupmodule`, `promotion_activity`, `loan_followup`, `confirmation_followup`, `due_followup`, `reportmodule`, `ledger_report`, `request_report`, `cus_profile_report`, `loan_issue_report`, `collection_report`, `balance_report`, `due_list_report`, `closed_report`, `search_module`, `search`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) VALUES
 (1, 'Super', 'Admin', 'Super Admin', 'Super Admin', 'support@feathertechnology.in', 'support@feathertechnology.in', 'admin@123', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', NULL, '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', NULL, NULL, NULL, '2021-04-17 17:08:00', '2023-03-21 09:51:34'),
-(2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '1,2,6,7,8,11', '1,2', '1,2,3,4,5', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2024-01-02 15:44:51'),
-(3, NULL, NULL, 'Alaathi Mobiles and Furniture', NULL, 'alaathi@gmail.com', 'alaathi', '123', '2', '', '', '1', '', '1', '3', '', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-01 12:12:04', '2023-07-21 10:14:54'),
+(2, NULL, NULL, 'Arun', NULL, 'arunfeather27@gmail.com', 'arun', '123', '3', '4', '', '', '1', '1', '1,2,3', '1,2,6,7,8,11', '1,2', '1,2,3,4,5', '1,2,3,4,5', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '2', NULL, '2023-07-01 12:10:48', '2024-02-01 15:34:06'),
+(3, NULL, NULL, 'Alaathi Mobiles and Furniture', NULL, 'alaathi@gmail.com', 'alaathi', '123', '2', '', '', '1', '', '1', '3', '', '', '1,6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-01 12:12:04', '2024-02-01 15:17:15'),
 (4, NULL, NULL, 'Jafar', NULL, '', 'jafar', '123', '3', '1', '', '', '28', '1', '1', '5,7,8', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '0', '0', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '0', '1', '1', '1', '1', '1', '1', '1', '', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-03 11:59:48', '2024-01-11 16:01:41'),
 (5, NULL, NULL, 'Will Smith', NULL, 'www.saravanan@gmail.com', 'will', '123', '1', '11', '1', '', '', '1', '1,3', '', '', '4,5', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '0', '0', '1', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '', '1', '1', '1', '0', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-07-03 13:31:46', '2023-11-20 14:56:06'),
 (6, NULL, NULL, 'J Prakash Kumar', NULL, 'hariprakash1292@gmail.com', 'prakash', '123', '3', '1', '', '', '2', '1', '1,3', '5,10,11', '', '4,6', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '1', '0', '1', '1', '1', '', '1', '1', '1', '0', '1', '1', '1', '0', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '0', '2', '2', NULL, '2023-11-29 17:20:14', '2024-01-06 15:42:29');
@@ -3977,7 +4012,8 @@ INSERT INTO `verification_documentation` (`id`, `req_id`, `cus_id_doc`, `custome
 (14, '21', '261910026191', 'Leo Das', '14', 'DOC-113', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', NULL, NULL, '2023-12-28 10:50:58', '2023-12-28 10:50:58'),
 (15, '22', '000000000001', 'Senthil kumaran', '15', 'DOC-114', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', NULL, NULL, '2024-01-02 15:47:01', '2024-01-02 15:47:01'),
 (16, '23', '000000000001', 'Senthil kumaran', '16', 'DOC-115', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', NULL, NULL, '2024-01-06 11:28:54', '2024-01-06 11:28:54'),
-(17, '24', '000000000001', 'Senthil kumaran', '17', 'DOC-116', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', NULL, NULL, '2024-01-06 11:30:16', '2024-01-06 11:30:16');
+(17, '24', '000000000001', 'Senthil kumaran', '17', 'DOC-116', '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', '', '', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', NULL, NULL, '2024-01-06 11:30:16', '2024-01-06 11:30:16'),
+(23, '75', '123412341234', 'Rajesh', '23', 'DOC-117', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4021,7 +4057,8 @@ INSERT INTO `verification_family_info` (`id`, `cus_id`, `req_id`, `famname`, `re
 (12, '060120230408', 16, 'Senthil raja', 'Father', '', ' ', 55, '070920230325', 9382964883, 'Mechanic', 15000, '', 0),
 (14, '261910026191', 21, 'Antony Das', 'Father', '', ' ', 55, '261910026192', 2619100262, 'Rowdy', 0, '', 0),
 (15, '000000000001', 22, 'Kumaran', 'Father', '', ' ', 45, '100000000001', 7646540213, 'VIP', 0, '', 0),
-(17, '123412341234', 71, 'Sowmiya', 'Spouse', NULL, NULL, 25, '123123000000', 9952741651, 'NO', 0, '', 0);
+(17, '123412341234', 71, 'Sowmiya', 'Spouse', NULL, NULL, 25, '123123000000', 9952741651, 'NO', 0, '', 0),
+(21, '123412341234', 75, 'Sowmiya', 'Spouse', NULL, NULL, 25, '123123000000', 9952741651, 'NO', 0, '', 0);
 
 -- --------------------------------------------------------
 
@@ -4164,7 +4201,8 @@ INSERT INTO `verification_loan_calculation` (`loan_cal_id`, `req_id`, `cus_id_lo
 (21, '21', '261910026191', 'Leo Das', 'New', '2619100261', '658bc19b427cb.jpg', '6', 'Mobiles', '', '', '45000', '1', 'Monthly', 'EMI', 'pre_intrest', '', '', '', '', '1', '10', '1', '1', '45000', '40500', '4500', '45000', '4500', '450', '450', '39600', '2024-01-01', '2024-10-01', '2', '1', '', '14', '0', '12', '2', NULL, '2023-12-28 10:51:52', '2023-12-28 10:51:52'),
 (22, '22', '000000000001', 'Senthil kumaran', 'New', '7526312546', '6593e1b875db5.png', '11', 'Interest R', '', '', '54000', '2', '', '', '', '', '3', '', '26', '1', '45', '100', '100', '54000', '53460', '540', '54000', '1200', '100', '100', '53260', '2024-01-03', '2024-02-16', '1', '1', '', '15', '0', '12', '2', NULL, '2024-01-02 15:49:20', '2024-01-02 15:49:20'),
 (23, '23', '000000000001', 'Senthil kumaran', 'Existing', '7526312546', '6593e1b875db5.png', '7', 'Small Business', '', '', '11000', '1', 'Monthly', 'EMI', 'pre_intrest', '', '', '', '', '2', '12', '1', '1', '11000', '8360', '2680', '11040', '920', '110', '110', '8140', '2024-01-07', '2024-12-07', '1', '1', '', '000000000001', '0', '12', '2', NULL, '2024-01-06 11:29:51', '2024-01-06 11:29:51'),
-(24, '24', '000000000001', 'Senthil kumaran', 'Existing', '7526312546', '6593e1b875db5.png', '7', 'Small Business', '', '', '25000', '2', '', '', '', '', '2', '6', '13', '12', '10', '1', '1', '25000', '22000', '3000', '25000', '2500', '250', '5', '21749', '2024-01-13', '2024-03-16', '1', '1', '', '15', '0', '12', '2', NULL, '2024-01-06 11:32:03', '2024-01-06 11:32:03');
+(24, '24', '000000000001', 'Senthil kumaran', 'Existing', '7526312546', '6593e1b875db5.png', '7', 'Small Business', '', '', '25000', '2', '', '', '', '', '2', '6', '13', '12', '10', '1', '1', '25000', '22000', '3000', '25000', '2500', '250', '5', '21749', '2024-01-13', '2024-03-16', '1', '1', '', '15', '0', '12', '2', NULL, '2024-01-06 11:32:03', '2024-01-06 11:32:03'),
+(30, '75', '123412341234', 'Rajesh', 'New', '7708261661', '', '1', 'Personal', '', '', '25000', '1', 'Monthly', 'EMI', 'after_interest', '', '', '', '', '2', '10', '2', '0', '25000', '25000', '5000', '30000', '3000', '500', '0', '24500', '2024-02-01', '2024-11-01', '1', '1', '', '123412341234', '1', '12', '2', '2', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4239,7 +4277,8 @@ INSERT INTO `verif_loan_cal_category` (`cat_id`, `req_id`, `loan_cal_id`, `categ
 (66, '23', '23', 'Check'),
 (67, '23', '23', 'Check'),
 (68, '24', '24', 'Check'),
-(69, '24', '24', 'Check');
+(69, '24', '24', 'Check'),
+(75, '75', '30', '10000');
 
 --
 -- Indexes for dumped tables
@@ -4872,25 +4911,25 @@ ALTER TABLE `verif_loan_cal_category`
 -- AUTO_INCREMENT for table `acknowledgement_loan_cal_category`
 --
 ALTER TABLE `acknowledgement_loan_cal_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT for table `acknowlegement_customer_profile`
 --
 ALTER TABLE `acknowlegement_customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `acknowlegement_documentation`
 --
 ALTER TABLE `acknowlegement_documentation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `acknowlegement_loan_calculation`
 --
 ALTER TABLE `acknowlegement_loan_calculation`
-  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `agent_communication_details`
@@ -5232,13 +5271,13 @@ ALTER TABLE `ct_hand_collection`
 -- AUTO_INCREMENT for table `customer_profile`
 --
 ALTER TABLE `customer_profile`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `customer_register`
 --
 ALTER TABLE `customer_register`
-  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=40;
+  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `cus_old_data`
@@ -5262,7 +5301,7 @@ ALTER TABLE `document_info`
 -- AUTO_INCREMENT for table `document_track`
 --
 ALTER TABLE `document_track`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `doc_mapping`
@@ -5292,13 +5331,13 @@ ALTER TABLE `gold_info`
 -- AUTO_INCREMENT for table `in_acknowledgement`
 --
 ALTER TABLE `in_acknowledgement`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `in_issue`
 --
 ALTER TABLE `in_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `loan_calculation`
@@ -5334,7 +5373,7 @@ ALTER TABLE `loan_followup`
 -- AUTO_INCREMENT for table `loan_issue`
 --
 ALTER TABLE `loan_issue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `loan_scheme`
@@ -5382,13 +5421,13 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `request_category_info`
 --
 ALTER TABLE `request_category_info`
-  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT for table `request_creation`
 --
 ALTER TABLE `request_creation`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT for table `signed_doc`
@@ -5442,13 +5481,13 @@ ALTER TABLE `verification_cus_feedback`
 -- AUTO_INCREMENT for table `verification_documentation`
 --
 ALTER TABLE `verification_documentation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `verification_family_info`
 --
 ALTER TABLE `verification_family_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `verification_group_info`
@@ -5466,7 +5505,7 @@ ALTER TABLE `verification_kyc_info`
 -- AUTO_INCREMENT for table `verification_loan_calculation`
 --
 ALTER TABLE `verification_loan_calculation`
-  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `loan_cal_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `verification_property_info`
@@ -5478,7 +5517,7 @@ ALTER TABLE `verification_property_info`
 -- AUTO_INCREMENT for table `verif_loan_cal_category`
 --
 ALTER TABLE `verif_loan_cal_category`
-  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `cat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
