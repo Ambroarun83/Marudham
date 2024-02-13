@@ -23,7 +23,7 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE 1 ");
     <tbody>
         <?php while($row =  $sql->fetch_assoc()){?>
             <tr>
-                <td><?php echo date('d-m-Y',strtotime($row['created_date'])); ?></td>
+                <td width="10%"><?php echo date('d-m-Y',strtotime($row['created_date'])); ?></td>
                 <td><?php echo $row['cus_id'] ; ?></td>
                 <td><?php echo $row['cus_name']; ?></td>
                 <td><?php echo $row['mobile']; ?></td>
@@ -72,8 +72,8 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE 1 ");
 
 <script>
     $('#new_promo_table').dataTable({
-        'processing': true,
-        'iDisplayLength': 5,
+        // 'processing': true,
+        'iDisplayLength': 10,
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]

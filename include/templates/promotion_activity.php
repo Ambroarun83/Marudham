@@ -85,6 +85,14 @@ if (sizeof($getUser)>0) {
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="card">
 					<div class="card-header">Promotion</div>
+					<div class="col-12">
+						<div class="alert alert-danger" role="alert" style="display: none;">
+							<div class="alert-text">Customer Already Existing!</div>
+						</div> 
+						<div class="alert alert-success" role="alert" style="display: none;">
+							<div class="alert-text">Customer is New to Promotion!</div>
+						</div> 
+					</div>
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
@@ -114,14 +122,6 @@ if (sizeof($getUser)>0) {
 								</div>
 							</div>
 
-							<div class="col-12">
-								<div class="alert alert-danger" role="alert" style="display: none;">
-									<div class="alert-text">Customer Already Existing!</div>
-								</div> 
-								<div class="alert alert-success" role="alert" style="display: none;">
-									<div class="alert-text">Customer is New to Promotion!</div>
-								</div> 
-							</div>
 						</div>
 					</div>
 				</div>

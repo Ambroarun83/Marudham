@@ -12,7 +12,8 @@ $(document).ready(function(){
         var typevalue = this.value;
         $('.existing_card, .new_card, .new_promo_card, .loan-history-card, .doc-history-card, #close_history_card, .repromotion_card').hide();
         if(typevalue == 'New'){
-            $('.new_card').toggle('show')
+            $('.new_card, .new_promo_card').toggle('show')
+            resetNewPromotionTable();
         }else if(typevalue == 'Existing'){
             $('.existing_card').toggle('show');
             showPromotionList('existing');
@@ -129,11 +130,9 @@ function validateCustSearch(){
 
 function resetNewPromotionTable(){
     $.post('followupFiles/promotion/resetNewPromotionTable.php',{},function(html){
-        $('#new_promo_div').empty();
-        $('#new_promo_div').html(html);
+        $('#new_promo_div').empty().html(html);
         
         intNotintOnclick();
-
         
     }).then(function(){
         promoChartOnclick();
@@ -286,7 +285,6 @@ function showPromotionList(type){
         promoChartOnclick();
 
         promotionListOnclick();
-        
     })
 }
 function promotionListOnclick(){
