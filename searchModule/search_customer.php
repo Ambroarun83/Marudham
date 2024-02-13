@@ -95,7 +95,7 @@ if (!empty($cus_id_fetched)) {
         $x = 0;
         if (!empty($req_id)) {
             foreach ($req_id as $req) {
-                if ($cus_status[$x] == '0' || $cus_status[$x] == '1') {
+                if ($cus_status[$x] == '0' || $cus_status[$x] == '1' || $cus_status[$x] == '4' || $cus_status[$x] == '5' || $cus_status[$x] == '8' || $cus_status[$x] == '9') {
                     $req_sql = $con->query("SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
                         From request_creation req 
                         LEFT JOIN area_list_creation ac ON req.area = ac.area_id 

@@ -38,7 +38,7 @@ if($userid != 1){
 $arr = array();$sno=1;
 
 if($type == 'existing'){
-    
+     //only closed customers who dont have any loans in current.
     $orgin_table_id = 'existing';
 
     $sub_status = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
@@ -92,6 +92,7 @@ if($type == 'existing'){
         $last_closed_date = '';
 
         $sql1 = $con->query("SELECT created_date FROM closed_status WHERE cus_sts >= 20 and cus_id ='".$row['cus_id']."' ORDER BY id DESC LIMIT 1");
+        $sql2 = $con->query("SELECT updated_date FROM request_creation WHERE NOT(cus_status >= 4 AND cus_status <= 9) and cus_id ='".$row['cus_id']."' ORDER BY req_id DESC LIMIT 1");
         if($sql1->num_rows > 0){
             
             //this condition will filter only if the revoked/cancelled date is higher than the closed date of customer
@@ -100,7 +101,17 @@ if($type == 'existing'){
             if($last_updated_date > $last_closed_date){
                 $arr[] = array('cus_id' => $row['cus_id'],'sub_status' => $row['cus_status']);
             }
-        }else{
+        }elseif($sql2->num_rows > 0){
+            //this condition will filter only if the revoked/cancelled date is higher than the recent request date of customer 
+            //which will avoid showing the customer who has other requests other than 
+            $last_requested_date = date('Y-m-d',strtotime($sql2->fetch_assoc()['updated_date']));
+            
+            if($last_updated_date > $last_requested_date){
+                $arr[] = array('cus_id' => $row['cus_id'],'sub_status' => $row['cus_status']);
+            }
+        }
+        else{
+                
             $arr[] = array('cus_id' => $row['cus_id'],'sub_status' => $row['cus_status']);
         }
 
@@ -242,7 +253,7 @@ if($type == 'existing'){
 <script>
     $('#promotion_list').dataTable({
         'processing': true,
-        'iDisplayLength': 5,
+        'iDisplayLength': 10,
         "lengthMenu": [
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
