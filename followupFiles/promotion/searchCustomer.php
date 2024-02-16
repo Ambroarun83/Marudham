@@ -1,6 +1,7 @@
 <?php
 
 include('../../ajaxconfig.php');
+include("./promotionListClass.php");
 
 
 if(isset($_POST['cus_id'])){
@@ -12,6 +13,9 @@ if(isset($_POST['cus_name'])){
 if(isset($_POST['cus_mob'])){
     $cus_mob = $_POST['cus_mob'];
 }
+
+$Obj = new promotionListClass($con);
+$arr = $Obj->getCustomerPromotionType($con,$cus_id,$cus_mob,$cus_name);
 
 if($cus_id != ''){
     $sql = $con->query("SELECT a.cus_id,a.customer_name,a.mobile1,b.area_name,c.sub_area_name FROM customer_register a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE a.cus_id = '$cus_id' ");
