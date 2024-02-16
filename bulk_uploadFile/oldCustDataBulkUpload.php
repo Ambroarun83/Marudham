@@ -56,7 +56,7 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                         $errtxt .= "<li>$columns</li>";
                     }
                     $errtxt .= "</ul><br>";
-                    $errtxt .= "Insertion completed till Seiral No: " . $rowChange - 1;
+                    $errtxt .= "Insertion completed till Seiral No: " . ($rowChange - 1);   
                     echo $errtxt;
                     exit();
                 }
