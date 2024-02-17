@@ -3,7 +3,7 @@
 include('../../ajaxconfig.php');
 
 // $sql = $con->query("SELECT a.*,b.area_name,c.sub_area_name  FROM new_promotion a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE 1 ");
-$sql = $con->query("SELECT * FROM new_cus_promo WHERE 1 ");
+$sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_id from customer_register) ");
 
 ?>
 
