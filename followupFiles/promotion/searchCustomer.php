@@ -15,17 +15,18 @@ if(isset($_POST['cus_mob'])){
 }
 
 $Obj = new promotionListClass($con);
-$arr = $Obj->getCustomerPromotionType($con,$cus_id,$cus_mob,$cus_name);
+$response['cusPromotionType'] = 'New Promotion';
 
 if($cus_id != ''){
     $sql = $con->query("SELECT a.cus_id,a.customer_name,a.mobile1,b.area_name,c.sub_area_name FROM customer_register a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE a.cus_id = '$cus_id' ");
-
+    
     if($sql->num_rows){
         $row = $sql->fetch_assoc();
         foreach($row as $key => $value){
             $response[$key] = $value;
         }
     }
+    $response['cusPromotionType'] = $Obj->getCustomerPromotionType($con,$cus_id);
 
 }else if($cus_name != ''){
     $sql = $con->query("SELECT a.cus_id,a.customer_name,a.mobile1,b.area_name,c.sub_area_name FROM customer_register a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE a.customer_name = '$cus_name' ");
