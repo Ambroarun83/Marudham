@@ -112,8 +112,7 @@ class promotionListClass
         
         $sql = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cp.area_confirm_subarea IN ($this->sub_area_list) ");
 
-        if ($cus_id != '') {
-        }//add  and (cs.cus_id = $cus_id) to query if cus id is not null due to we only checking cus id in table
+        if($cus_id != ''){}//add  and (cs.cus_id = $cus_id) to query if cus id is not null due to we only checking cus id in table
         if ($sql->num_rows > 0) {
 
             while ($row = $sql->fetch_assoc()) {
