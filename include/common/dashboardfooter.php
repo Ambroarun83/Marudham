@@ -1233,6 +1233,9 @@ if($current_page == 'search_module') { ?>
 if($current_page == 'bulk_upload') { ?>
     <script src="js/bulk_upload.js"></script>
     <?php }
+if($current_page == 'loan_track') { ?>
+    <script src="js/loan_track.js"></script>
+    <?php }
 
 ?>
 
