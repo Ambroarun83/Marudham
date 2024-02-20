@@ -452,6 +452,11 @@ include('api/main.php'); // Database Connection File
 			<?php if($current_page == 'bulk_upload') { ?>
 			<?php include "include/templates/bulk_upload.php" ?>
 			<?php }else ?>
+			
+			<!-- Loan Track Module -->
+			<?php if($current_page == 'loan_track') { ?>
+			<?php include "include/templates/loan_track.php" ?>
+			<?php }else ?>
 
 			<!-- 404 Not found page -->
 			<?php { ?>
