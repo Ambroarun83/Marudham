@@ -3565,8 +3565,9 @@ function updateUser($mysqli,$id,$user_id){
 		`occupation`='".strip_tags($occupation)."',`pic`='".strip_tags($pic)."',
 		`loan_category`='".strip_tags($loan_category)."',`sub_category`='".strip_tags($sub_category)."',`tot_value`='".strip_tags($tot_value)."',`ad_amt`='".strip_tags($ad_amt)."',
 		`ad_perc`='".strip_tags($ad_perc)."',`loan_amt`='".strip_tags($loan_amt)."',
-		`poss_type`='".strip_tags($poss_type)."',`due_amt`='".strip_tags($due_amt)."',`due_period`='".strip_tags($due_period)."',
-		`update_login_id`='".strip_tags($userid)."',`updated_date`='current_timestamp' WHERE `req_id` = '".$id."' and `cus_status` = '0' ";
+		`poss_type`='".strip_tags($poss_type)."',`due_amt`='".strip_tags($due_amt)."',`due_period`='".strip_tags($due_period).
+		"',
+		`update_login_id`='" . strip_tags($userid) . "',`updated_date`=current_timestamp WHERE `req_id` = '" . $id . "' and `cus_status` = '0' ";
 
 		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
@@ -3872,8 +3873,8 @@ function updateUser($mysqli,$id,$user_id){
             }
 
 			if($cus_Tableid == ''){
-            $insertQry="INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($cus_name)."','".strip_tags($gender)."','".strip_tags($dob)."', '".strip_tags($age)."', '".strip_tags($bloodGroup)."', '".strip_tags($mobile1)."','".strip_tags($mobile2)."','".strip_tags($whatsapp_no)."','".strip_tags($pic)."','".strip_tags($guarentor_name)."', '".strip_tags($guarentor_relationship)."', '".strip_tags($guarentor)."', '".strip_tags($cus_type)."',
-            '".strip_tags($cus_exist_type)."','".strip_tags($cus_res_type)."','".strip_tags($cus_res_details)."','".strip_tags($cus_res_address)."', '".strip_tags($cus_res_native)."', '".strip_tags($cus_occ_type)."','".strip_tags($cus_occ_detail)."','".strip_tags($cus_occ_income)."','".strip_tags($cus_occ_address)."','".strip_tags($cus_occ_dow)."','".strip_tags($cus_occ_abt)."','".strip_tags($area_cnfrm)."','".strip_tags($state)."','".strip_tags($district)."','".strip_tags($taluk)."','".strip_tags($area)."','".strip_tags($sub_area)."','".strip_tags($area_group)."','".strip_tags($area_line)."','10','".$userid."' )";
+			$insertQry = "INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`, `cus_status`, `insert_login_id`,`created_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($cus_id) . "','" . strip_tags($cus_name) . "','" . strip_tags($gender) . "','" . strip_tags($dob) . "', '" . strip_tags($age) . "', '" . strip_tags($bloodGroup) . "', '" . strip_tags($mobile1) . "','" . strip_tags($mobile2) . "','" . strip_tags($whatsapp_no) . "','" . strip_tags($pic) . "','" . strip_tags($guarentor_name) . "', '" . strip_tags($guarentor_relationship) . "', '" . strip_tags($guarentor) . "', '" . strip_tags($cus_type) . "',
+            '" . strip_tags($cus_exist_type) . "','" . strip_tags($cus_res_type) . "','" . strip_tags($cus_res_details) . "','" . strip_tags($cus_res_address) . "', '" . strip_tags($cus_res_native) . "', '" . strip_tags($cus_occ_type) . "','" . strip_tags($cus_occ_detail) . "','" . strip_tags($cus_occ_income) . "','" . strip_tags($cus_occ_address) . "','" . strip_tags($cus_occ_dow) . "','" . strip_tags($cus_occ_abt) . "','" . strip_tags($area_cnfrm) . "','" . strip_tags($state) . "','" . strip_tags($district) . "','" . strip_tags($taluk) . "','" . strip_tags($area) . "','" . strip_tags($sub_area) . "','" . strip_tags($area_group) . "','" . strip_tags($area_line) . "','10','" . $userid . "',current_timestamp() )";
             $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
 			$insertQry = "UPDATE request_creation set cus_status = 10,updated_date=now() where req_id ='".strip_tags($req_id)."' ";
@@ -4009,25 +4010,7 @@ function updateUser($mysqli,$id,$user_id){
             }
             if(isset($_POST['doc_property_value'])){
                 $doc_property_value = $_POST['doc_property_value'];
-            }
-            // if(isset($_POST['mortgage_name'])){
-            //     $mortgage_name = $_POST['mortgage_name'];
-            // }
-            // if(isset($_POST['mortgage_dsgn'])){
-            //     $mortgage_dsgn = $_POST['mortgage_dsgn'];
-            // }
-            // if(isset($_POST['mortgage_nuumber'])){
-            //     $mortgage_nuumber = $_POST['mortgage_nuumber'];
-            // }
-            // if(isset($_POST['reg_office'])){
-            //     $reg_office = $_POST['reg_office'];
-            // }
-            // if(isset($_POST['mortgage_value'])){
-            //     $mortgage_value = $_POST['mortgage_value'];
-            // }
-            // if(isset($_POST['mortgage_document'])){
-            //     $mortgage_document = $_POST['mortgage_document'];    
-            // }
+		}
             if(isset($_POST['endorsement_process'])){
                 $endorsement_process = $_POST['endorsement_process'];
             }
@@ -4057,71 +4040,13 @@ function updateUser($mysqli,$id,$user_id){
 
             if(isset($_POST['en_Model'])){
                 $en_Model = $_POST['en_Model'];
-            }
-            // if(isset($_POST['vehicle_reg_no'])){
-            //     $vehicle_reg_no = $_POST['vehicle_reg_no'];
-            // }
-            // if(isset($_POST['endorsement_name'])){
-            //     $endorsement_name = $_POST['endorsement_name'];
-            // }
-            // if(isset($_POST['en_RC'])){
-            //     $en_RC = $_POST['en_RC'];
-            // }
-            // if(isset($_POST['en_Key'])){
-            //     $en_Key = $_POST['en_Key'];
-            // }
-            // if(isset($_POST['gold_info'])){
-            //     $gold_info = $_POST['gold_info'];
-            // }
-            // if(isset($_POST['gold_sts'])){
-            //     $gold_sts = $_POST['gold_sts'];
-            // }
-            // if(isset($_POST['gold_type'])){
-            //     $gold_type = $_POST['gold_type'];
-            // }
-            // if(isset($_POST['Purity'])){
-            //     $Purity = $_POST['Purity'];
-            // }
-            // if(isset($_POST['gold_Count'])){
-            //     $gold_Count = $_POST['gold_Count'];
-            // }
-            // if(isset($_POST['gold_Weight'])){
-            //     $gold_Weight = $_POST['gold_Weight'];
-            // }
-            // if(isset($_POST['gold_Value'])){
-            //     $gold_Value = $_POST['gold_Value'];
-            // }
-
-            // if(isset($_POST['document_name'])){
-            //     $document_name = $_POST['document_name'];
-            // }
-            // if(isset($_POST['document_details'])){
-            //     $document_details = $_POST['document_details'];
-            // }
-            // if(isset($_POST['document_type'])){
-            //     $document_type = $_POST['document_type'];
-            // }   
-            // if(isset($_POST['document_holder'])){
-            //     $document_holder = $_POST['document_holder'];
-            // }
-			// $docholder_name='';
-            // if(isset($_POST['docholder_name'])){
-            //     $docholder_name = $_POST['docholder_name'];
-            // }
-			// $docholder_relationship_name='';
-            // if(isset($_POST['docholder_relationship_name'])){
-            //     $docholder_relationship_name = $_POST['docholder_relationship_name'];
-            // }
-            // if(isset($_POST['doc_relation'])){
-            //     $doc_relation = $_POST['doc_relation'];
-            // }
-
+		}
             if(isset($_POST['doc_table_id'])){
                 $doc_table_id = $_POST['doc_table_id'];
             }
 
 			if($doc_table_id == ''){
-				$insertQry = "INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `cus_status`, `insert_login_id`) VALUES('".strip_tags($req_id)."','".strip_tags($cus_id_doc)."','".strip_tags($Customer_name)."','".strip_tags($cus_profile_id)."','".strip_tags($doc_id)."', '".strip_tags($mortgage_process)."', '".strip_tags($Propertyholder_type)."', '".strip_tags($Propertyholder_name)."','".strip_tags($Propertyholder_relationship_name)."','".strip_tags($doc_property_relation)."','".strip_tags($doc_property_pype)."','".strip_tags($doc_property_measurement)."', '".strip_tags($doc_property_location)."', '".strip_tags($doc_property_value)."', '".strip_tags($endorsement_process)."','".strip_tags($owner_type)."','".strip_tags($owner_name)."','".strip_tags($ownername_relationship_name)."','".strip_tags($en_relation)."','".strip_tags($vehicle_type)."','".strip_tags($vehicle_process)."','".strip_tags($en_Company)."','".strip_tags($en_Model)."','11','".$userid."' )";
+			$insertQry = "INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `cus_status`, `insert_login_id`,`created_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($cus_id_doc) . "','" . strip_tags($Customer_name) . "','" . strip_tags($cus_profile_id) . "','" . strip_tags($doc_id) . "', '" . strip_tags($mortgage_process) . "', '" . strip_tags($Propertyholder_type) . "', '" . strip_tags($Propertyholder_name) . "','" . strip_tags($Propertyholder_relationship_name) . "','" . strip_tags($doc_property_relation) . "','" . strip_tags($doc_property_pype) . "','" . strip_tags($doc_property_measurement) . "', '" . strip_tags($doc_property_location) . "', '" . strip_tags($doc_property_value) . "', '" . strip_tags($endorsement_process) . "','" . strip_tags($owner_type) . "','" . strip_tags($owner_name) . "','" . strip_tags($ownername_relationship_name) . "','" . strip_tags($en_relation) . "','" . strip_tags($vehicle_type) . "','" . strip_tags($vehicle_process) . "','" . strip_tags($en_Company) . "','" . strip_tags($en_Model) . "','11','" . $userid . "',current_timestamp() )";
 
 						$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
@@ -5316,7 +5241,7 @@ function updateUser($mysqli,$id,$user_id){
 				$maturity_month = $_POST['maturity_month'];
 			}
 
-			$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`,`bank_id`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`)  VALUES('".strip_tags($req_id)."','".strip_tags($cus_id)."','".strip_tags($issue_to)."','".strip_tags($agent_id)."','".strip_tags($issued_mode)."', '".strip_tags($payment_type)."', '".strip_tags($cash)."','".strip_tags($bank_id)."', '".strip_tags($chequeno)."','".strip_tags($chequeValue)."','".strip_tags($chequeRemark)."','".strip_tags($transaction_id)."','".strip_tags($transaction_value)."', '".strip_tags($transaction_remark)."', '".strip_tags($balance)."', '".strip_tags($loan_amt_cal)."','".strip_tags($net_cash_cal)."','".strip_tags($cash_guarentor_name)."','".strip_tags($relationship)."','0','".$userid."' )";
+		$insertQry = "INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`,`bank_id`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`,`created_date`)  VALUES('" . strip_tags($req_id) . "','" . strip_tags($cus_id) . "','" . strip_tags($issue_to) . "','" . strip_tags($agent_id) . "','" . strip_tags($issued_mode) . "', '" . strip_tags($payment_type) . "', '" . strip_tags($cash) . "','" . strip_tags($bank_id) . "', '" . strip_tags($chequeno) . "','" . strip_tags($chequeValue) . "','" . strip_tags($chequeRemark) . "','" . strip_tags($transaction_id) . "','" . strip_tags($transaction_value) . "', '" . strip_tags($transaction_remark) . "', '" . strip_tags($balance) . "', '" . strip_tags($loan_amt_cal) . "','" . strip_tags($net_cash_cal) . "','" . strip_tags($cash_guarentor_name) . "','" . strip_tags($relationship) . "','0','" . $userid . "',now() )";
 
 			$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
@@ -5641,7 +5566,7 @@ function updateUser($mysqli,$id,$user_id){
 				$closed_Sts_remark = $_POST['closed_Sts_remark'];
 			}
 
-			$insertCloasedSts = $mysqli->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`) VALUES ('".strip_tags($close_req_id)."','".strip_tags($cus_id)."','".strip_tags($closed_Sts)."','".strip_tags($closed_Sts_consider)."','".strip_tags($closed_Sts_remark)."', '20','$userid' )");
+		$insertCloasedSts = $mysqli->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`,`created_date`) VALUES ('" . strip_tags($close_req_id) . "','" . strip_tags($cus_id) . "','" . strip_tags($closed_Sts) . "','" . strip_tags($closed_Sts_consider) . "','" . strip_tags($closed_Sts_remark) . "', '20','$userid',now() )");
 		}
 
 		//Get User Details for Consent Creation.
