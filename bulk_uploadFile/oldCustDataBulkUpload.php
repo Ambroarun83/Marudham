@@ -45,7 +45,7 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                     $req_id = $obj->raiseRequest($con, $data, $userData);
                     $obj->verificationTables($con, $data, $userData, $req_id);
                     $obj->approvalTables($con, $req_id);
-                    $obj->acknowledgementTables($con,$data, $req_id);
+                    $obj->acknowledgementTables($con,$data, $req_id,$userData);
                     $obj->loanIssueTables($con, $data, $userData, $req_id);
 
                     // echo $insertQry;
