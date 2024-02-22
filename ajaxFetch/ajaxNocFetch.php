@@ -28,6 +28,40 @@ if($userid != 1){
     $sub_area_list = implode(',',$sub_area_ids);
 }
 
+
+class nocStatus
+{
+    public function getNocCompletedStatus($con, $id, $cus_id)
+    {
+        //this function is to find out whether all of the req id's documents are given to customer or not
+        // also it will return values if the document is temporarly taken out for some purpose. they should mark as returned in respective screen and to give noc here
+        $response = 0;
+
+        $sql = $con->query("SELECT sd.* From signed_doc sd JOIN in_issue ii ON ii.req_id = sd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and sd.noc_given !='1' ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT cnl.* From cheque_no_list cnl JOIN in_issue ii ON ii.req_id = cnl.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and cnl.noc_given !='1' ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.mortgage_process = 0 and ( ackd.mortgage_process_noc != '1' || (ackd.mortgage_document = 0 and ackd.mortgage_document_upd IS NOT NULL and ackd.mortgage_document_noc != '1' ) ) ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.endorsement_process = 0 and ( (ackd.endorsement_process_noc != '1') || (ackd.en_RC = 0 && ackd.en_RC_noc != '1') || (ackd.en_Key = 0 && ackd.en_Key_noc != '1')) ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT gi.* From gold_info gi JOIN in_issue ii ON ii.req_id = gi.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and gi.noc_given !='1' ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT di.* From document_info di JOIN in_issue ii ON ii.req_id = di.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and di.doc_info_upload_noc !='1' ");
+        $response = $response + $sql->num_rows;
+
+        // echo $cus_id.' - '.$response.'***';
+        return $response;
+    }
+}
+
+$obj = new nocStatus;
+
 $column = array(
     'cp.cus_id',
     'cp.cus_id',
@@ -116,7 +150,7 @@ foreach ($result as $row) {
     $cus_id = $row['cp_cus_id'];
     $id          = $row['req_id'];
 
-    $docToIssue = getNocCompletedStatus($con,$id,$cus_id);
+    $docToIssue = $obj->getNocCompletedStatus($con, $id, $cus_id);
     
     $action ="<div class='dropdown'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
@@ -159,31 +193,6 @@ echo json_encode($output);
 
 <?php
 
-function getNocCompletedStatus($con,$id,$cus_id){
-    //this function is to find out whether all of the req id's documents are given to customer or not
-    // also it will return values if the document is temporarly taken out for some purpose. they should mark as returned in respective screen and to give noc here
-    $response = 0;
-    
-    $sql = $con->query("SELECT sd.* From signed_doc sd JOIN in_issue ii ON ii.req_id = sd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and sd.noc_given !='1' ");
-    $response = $response + $sql->num_rows;
-    
-    $sql = $con->query("SELECT cnl.* From cheque_no_list cnl JOIN in_issue ii ON ii.req_id = cnl.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and cnl.noc_given !='1' ");
-    $response = $response + $sql->num_rows;
-    
-    $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.mortgage_process = 0 and ( ackd.mortgage_process_noc != '1' || (ackd.mortgage_document = 0 and ackd.mortgage_document_upd IS NOT NULL and ackd.mortgage_document_noc != '1' ) ) ");
-    $response = $response + $sql->num_rows;
-    
-    $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.endorsement_process = 0 and ( (ackd.endorsement_process_noc != '1') || (ackd.en_RC = 0 && ackd.en_RC_noc != '1') || (ackd.en_Key = 0 && ackd.en_Key_noc != '1')) ");
-    $response = $response + $sql->num_rows;
-    
-    $sql = $con->query("SELECT gi.* From gold_info gi JOIN in_issue ii ON ii.req_id = gi.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and gi.noc_given !='1' ");
-    $response = $response + $sql->num_rows;
-    
-    $sql = $con->query("SELECT di.* From document_info di JOIN in_issue ii ON ii.req_id = di.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and di.doc_info_upload_noc !='1' ");
-    $response = $response + $sql->num_rows;
-    
-    // echo $cus_id.' - '.$response.'***';
-    return $response;
-}
+
 
 ?>

@@ -8,18 +8,17 @@ $(document).ready(function () {
 
     $('#search_cus').click(function (event) {
 
-        let cus_id = $('#cus_id').val();
-        cus_id = cus_id.replace(/\s+/g, '');//removes spaces in adhar number
-        if (cus_id == '') {
+        let cus_id = $('#cus_id').val(); cus_id = cus_id.replace(/\s+/g, '');//removes spaces in adhar number
+        let cus_name = $('#cus_name').val(); let mobile = $('#mobile').val(); let loan_id = $('#loan_id').val();
+        if (!validate()) {
             event.preventDefault();
             alert('Please fill any one field to search!')
         } else {
             $.ajax({
                 url: 'searchModule/search_customer.php',
                 type: 'POST',
-                data: { cus_id },
+                data: { cus_id, cus_name, mobile, loan_id },
                 success: function (data) {
-                    // $('#customer_list_card').show();
                     $('#customer_list').empty().html(data);
                 }
             })
@@ -32,7 +31,23 @@ $(document).ready(function () {
     })
 })
 
+function validate() {
+    let cus_id = $('#cus_id').val(); cus_id = cus_id.replace(/\s+/g, '');//removes spaces in adhar number
+    let cus_name = $('#cus_name').val(); let mobile = $('#mobile').val(); let loan_id = $('#loan_id').val();
+    let response = true; let pattern = /^LID-\d{3,}$/; // '\d' matches any digit, '{3,}' matches at least 3 digits
 
+    if (cus_id == '' && cus_name == '' && mobile == '' && loan_id == '') {
+        response = false;
+    } else if (cus_id != '' && cus_id.length != 12) {
+        response = false;
+    } else if (mobile != '' && mobile.length != 10) {
+        response = false;
+    } else if (loan_id != '' && !loan_id.match(pattern)) {
+        response = false;
+    }
+
+    return response;
+}
 
 function viewCusOnClick() {
     $('.view_cust').off('click').click(function () {
@@ -194,9 +209,9 @@ function customerStatusOnClickEvents() {
         })
     })
 
-    $('.track-btn').off('click').click(function(){
-        let req_id = $(this).data('req_id');
-        $.post('loanTrackFile/getTrackDetails.php',req_id,function(response){
+    $('.track-btn').off('click').click(function () {
+        let req_id = $(this).attr('data-req_id');
+        $.post('loanTrackFile/getTrackDetails.php', { 'req_id': req_id }, function (response) {
             $('#loanTrackDiv').empty().html(response);
         })
     })

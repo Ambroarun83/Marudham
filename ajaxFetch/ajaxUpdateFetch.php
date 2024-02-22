@@ -66,6 +66,7 @@ $result = $statement->fetchAll();
 $data = array();
 $sno = 1;
 foreach ($result as $row) {
+    
     $sub_array   = array();
 
     $sub_array[] = $sno;

@@ -5512,38 +5512,38 @@ function updateUser($mysqli,$id,$user_id){
 			'".strip_tags($doc_checklist)."','".strip_tags($noc_date)."','".strip_tags($noc_member)."','".strip_tags($mem_name)."','21',$userid,now()) ");
 
 			for($i=0;$i<sizeof($sign_checklist_arr);$i++){
-				$qry = $mysqli->query("UPDATE `signed_doc` SET `noc_given`='1' WHERE id = '".$sign_checklist_arr[$i]."' and req_id = $req_id ");
+				$qry = $mysqli->query("UPDATE `signed_doc` SET `noc_given`='1',update_login_id = $userid, updated_date = now() WHERE id = '".$sign_checklist_arr[$i]."' and req_id = $req_id ");
 			}
 			
 			for($i=0;$i<sizeof($cheque_checklist_arr);$i++){
-				$qry = $mysqli->query("UPDATE `cheque_no_list` SET `noc_given`='1' WHERE id = '".$cheque_checklist_arr[$i]."' and req_id = $req_id ");
+				$qry = $mysqli->query("UPDATE `cheque_no_list` SET `noc_given`='1',update_login_id = $userid, updated_date = now() WHERE id = '".$cheque_checklist_arr[$i]."' and req_id = $req_id ");
 			}
 			
 			for($i=0;$i<sizeof($gold_checklist_arr);$i++){
-				$qry = $mysqli->query("UPDATE `gold_info` SET `noc_given`='1' WHERE id = '".$gold_checklist_arr[$i]."' and req_id = $req_id ");
+				$qry = $mysqli->query("UPDATE `gold_info` SET `noc_given`='1',update_login_id = $userid, updated_date = now() WHERE id = '".$gold_checklist_arr[$i]."' and req_id = $req_id ");
 			}
 			
 			for($i=0;$i<sizeof($mort_checklist_arr);$i++){
 
 				if($mort_checklist_arr[$i] == 'Mortgage Process noc'){
-					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_process_noc`='1' WHERE req_id = '".$req_id."' ");
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_process_noc`='1',update_login_id = $userid, updated_date = now() WHERE req_id = '".$req_id."' ");
 				}elseif($mort_checklist_arr[$i] == 'Mortgage Document noc'){
-					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_document_noc`='1' WHERE req_id = '".$req_id."' ");
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `mortgage_document_noc`='1',update_login_id = $userid, updated_date = now() WHERE req_id = '".$req_id."' ");
 				}
 			}
 
 			for($i=0;$i<sizeof($endorse_checklist_arr);$i++){
 				if($endorse_checklist_arr[$i] == 'Endorsement Process noc'){
-					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `endorsement_process_noc`='1' WHERE req_id = '".$req_id."' ");
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `endorsement_process_noc`='1',update_login_id = $userid, updated_date = now() WHERE req_id = '".$req_id."' ");
 				}elseif($endorse_checklist_arr[$i] == 'RC noc'){
-					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_RC_noc`='1' WHERE req_id = '".$req_id."' ");
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_RC_noc`='1',update_login_id = $userid, updated_date = now() WHERE req_id = '".$req_id."' ");
 				}elseif($endorse_checklist_arr[$i] == 'Key noc'){
-					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_Key_noc`='1' WHERE req_id = '".$req_id."' ");
+					$qry = $mysqli->query("UPDATE `acknowlegement_documentation` SET `en_Key_noc`='1',update_login_id = $userid, updated_date = now() WHERE req_id = '".$req_id."' ");
 				}
 			}
 			
 			for($i=0;$i<sizeof($doc_checklist_arr);$i++){
-				$qry = $mysqli->query("UPDATE `document_info` SET `doc_info_upload_noc`='1' WHERE id= '".$doc_checklist_arr[$i]."' and  req_id = '".$req_id."' ");
+				$qry = $mysqli->query("UPDATE `document_info` SET `doc_info_upload_noc`='1',update_login_id = $userid, updated_date = now() WHERE id= '".$doc_checklist_arr[$i]."' and  req_id = '".$req_id."' ");
 			}
 
 		}
@@ -6106,7 +6106,9 @@ function updateUser($mysqli,$id,$user_id){
 			}
 			if(isset($_FILES['qr_code']) && $_FILES['qr_code']['name'] != ''){
 				//remove old file
-				unlink('uploads/bank/'. $_POST['qr_code_name']);
+				if($_POST['qr_code_name'] != ''){
+					unlink('uploads/bank/'. $_POST['qr_code_name']);
+				}
 
 				$qr_code = $_FILES['qr_code']['name'];
 				$qr_code_temp = $_FILES['qr_code']['tmp_name'];
@@ -6596,8 +6598,10 @@ function updateUser($mysqli,$id,$user_id){
 		if(!empty($_FILES['pic']['name']))		
 		{
 			$oldPic = $_POST['cus_image'];
-			unlink("uploads/request/customer/".$oldPic);//delete old pic
-			unlink("uploads/verification/customer/".$oldPic);//delete old pic
+			if ($oldPic != '') {
+				unlink("uploads/request/customer/" . $oldPic); //delete old pic
+				unlink("uploads/verification/customer/" . $oldPic); //delete old pic
+			}
 
 			$cus_pic = $_FILES['pic']['name'];
 			$pic_temp = $_FILES['pic']['tmp_name'];
@@ -6630,7 +6634,9 @@ function updateUser($mysqli,$id,$user_id){
 		if(!empty($_FILES['guarentorpic']['name']))		
 		{
 			$oldPic = $_POST['guarentor_image'];
-			unlink("uploads/verification/guarentor/".$oldPic);//delete old pic
+			if ($oldPic != '') {
+				unlink("uploads/verification/guarentor/".$oldPic);//delete old pic
+			}
 
 			$guarentor_pic = $_FILES['guarentorpic']['name'];
 			$pic_temp = $_FILES['guarentorpic']['tmp_name'];
@@ -6753,7 +6759,7 @@ function updateUser($mysqli,$id,$user_id){
 		$insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
 
 
-		$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`state`='".strip_tags($state)."',`district`='".strip_tags($district)."',`taluk`='".strip_tags($taluk)."',`area`='".strip_tags($area)."',`sub_area`='".strip_tags($sub_area)."',`address`='".strip_tags($cus_address)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`father_name`='".strip_tags($father_name)."',`mother_name`='".strip_tags($mother_name)."',`marital`='".strip_tags($marital)."',`spouse`='".strip_tags($spouse_name)."',`occupation_type`='".strip_tags($occupation_type)."',`occupation`='".strip_tags($occupation)."',`how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_info_occ_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
+		$updateCus = "UPDATE `customer_register` SET  `cus_id`='".strip_tags($cus_id)."',`customer_name`='".strip_tags($cus_name)."',`gender`='".strip_tags($gender)."',`dob`='".strip_tags($dob)."',`age`='".strip_tags($age)."',`state`='".strip_tags($state)."',`district`='".strip_tags($district)."',`taluk`='".strip_tags($taluk)."',`area`='".strip_tags($area)."',`sub_area`='".strip_tags($sub_area)."',`address`='".strip_tags($cus_address)."',`mobile1`='".strip_tags($mobile1)."', `mobile2`='".strip_tags($mobile2)."',`father_name`='".strip_tags($father_name)."',`mother_name`='".strip_tags($mother_name)."',`marital`='".strip_tags($marital)."',`spouse`='".strip_tags($spouse_name)."',`occupation_type`='".strip_tags($occupation_type)."',`occupation`='".strip_tags($occupation)."',`pic` = '".strip_tags($cus_pic)."', `how_to_know`='".strip_tags($cus_how_know)."',`loan_count`='".strip_tags($cus_loan_count)."',`first_loan_date`='".strip_tags($cus_frst_loanDate)."',`travel_with_company`='".strip_tags($cus_travel_cmpy)."',`monthly_income`='".strip_tags($cus_monthly_income)."',`other_income`='".strip_tags($cus_other_income)."',`support_income`='".strip_tags($cus_support_income)."',`commitment`='".strip_tags($cus_Commitment)."',`monthly_due_capacity`='".strip_tags($cus_monDue_capacity)."',`loan_limit`='".strip_tags($cus_loan_limit)."',`about_customer`='".strip_tags($about_cus)."',`residential_type`='".strip_tags($cus_res_type)."',`residential_details`='".strip_tags($cus_res_details)."',`residential_address`='".strip_tags($cus_res_address)."',`residential_native_address`='".strip_tags($cus_res_native)."',`occupation_info_occ_type`='".strip_tags($cus_occ_type)."',`occupation_details`='".strip_tags($cus_occ_detail)."',`occupation_income`='".strip_tags($cus_occ_income)."',`occupation_address`='".strip_tags($cus_occ_address)."',`dow`='".strip_tags($cus_occ_dow)."',`abt_occ`='".strip_tags($cus_occ_abt)."',`area_confirm_type`='".strip_tags($area_cnfrm)."',`area_confirm_state`='".strip_tags($area_state)."',`area_confirm_district`='".strip_tags($area_district)."',`area_confirm_taluk`='".strip_tags($area_taluk)."',`area_confirm_area`='".strip_tags($area_confirm)."',`area_confirm_subarea`='".strip_tags($area_sub_area)."',`area_group`='".strip_tags($area_group)."',`area_line`='".strip_tags($area_line)."' WHERE `cus_id`= '".strip_tags($cus_id)."' ";
 		$insresult = $mysqli->query($updateCus) or die("Error ".$mysqli->error);
 
 
