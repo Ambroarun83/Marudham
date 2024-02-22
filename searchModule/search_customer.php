@@ -6,6 +6,7 @@ $cus_name = $_POST['cus_name'] ?? '';
 $area = $_POST['area'] ?? '';
 $sub_area = $_POST['sub_area'] ?? '';
 $mobile = $_POST['mobile'] ?? '';
+$loan_id = $_POST['loan_id'] ?? '';
 
 $statusLabels = [
     '0' => "In Request",
@@ -52,6 +53,8 @@ if ($cus_id != '') {
         ELSE sac.sub_area_id = cr.sub_area
         END
         WHERE sac.sub_area_name LIKE '%$sub_area%' GROUP BY cr.cus_id ";
+} else if ($loan_id != '') {
+    $sql = "SELECT cus_id from in_issue where loan_id = '$loan_id' ";
 }
 
 // echo $sql;
@@ -65,7 +68,7 @@ if ($runSql->num_rows > 0) {
 
 if (!empty($cus_id_fetched)) {
     foreach ($cus_id_fetched as $cus_id) {
-        $sql = $con->query("SELECT req_id,cus_id,cus_status From request_creation where cus_id = $cus_id GROUP BY cus_id ORDER BY req_id DESC ");
+        $sql = $con->query("SELECT req_id,cus_id,cus_status From request_creation where cus_id = $cus_id ORDER BY req_id DESC LIMIT 1 ");
         $row = $sql->fetch_assoc();
         $req_id[] = $row['req_id'];
         $cus_status[] = $row['cus_status'];

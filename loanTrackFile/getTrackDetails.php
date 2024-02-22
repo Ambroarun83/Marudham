@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 include '../ajaxconfig.php';
 
 
@@ -15,55 +15,83 @@ $cus_status = $qry->fetch_assoc()['cus_status'] ?? '';
 if ($cus_status != '') {
 
     // Request
-    $qry = $con->query("SELECT sub_area,insert_login_id,created_date from request_creation where req_id = $req_id");
-    $row = $qry->fetch_assoc();
-    $branch = $obj->getBranchName($con, $row['sub_area'], 'group');
-    $data[] = $obj->getTrackDetails($con, 'Request', $row['created_date'], $row['insert_login_id'], $branch);
+    $qry = $con->query("SELECT cus_id,sub_area,insert_login_id,created_date from request_creation where req_id = $req_id");
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $cus_id = $row['cus_id'];
+        $branch = $obj->getBranchName($con, $row['sub_area'], 'group');
+        $data[] = $obj->getTrackDetails($con, 'Request', $row['created_date'], $row['insert_login_id'], $branch);
+    }
 
     // Customer Profile
     $qry = $con->query("SELECT area_confirm_subarea as sub_area,insert_login_id,created_date from customer_profile where req_id = $req_id");
-    $row = $qry->fetch_assoc();
-    $branch = $obj->getBranchName($con, $row['sub_area'], 'group');
-    $data[] = $obj->getTrackDetails($con, 'Customer Profile', $row['created_date'], $row['insert_login_id'], $branch);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $branch = $obj->getBranchName($con, $row['sub_area'], 'group');
+        $data[] = $obj->getTrackDetails($con, 'Customer Profile', $row['created_date'], $row['insert_login_id'], $branch);
+    }
 
     // Documentation
     $qry = $con->query("SELECT insert_login_id,created_date from verification_documentation where req_id = $req_id");
-    $row = $qry->fetch_assoc();
-    $data[] = $obj->getTrackDetails($con, 'Documentation', $row['created_date'], $row['insert_login_id'], $branch);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $data[] = $obj->getTrackDetails($con, 'Documentation', $row['created_date'], $row['insert_login_id'], $branch);
+    }
 
     // Loan Calculation
     $qry = $con->query("SELECT insert_login_id,create_date from verification_loan_calculation where req_id = $req_id");
-    $row = $qry->fetch_assoc();
-    $data[] = $obj->getTrackDetails($con, 'Loan Calculation', $row['create_date'], $row['insert_login_id'], $branch);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $data[] = $obj->getTrackDetails($con, 'Loan Calculation', $row['create_date'], $row['insert_login_id'], $branch);
+    }
 
     // Approval
     $qry = $con->query("SELECT inserted_user,inserted_date from in_acknowledgement where req_id = $req_id");
-    $row = $qry->fetch_assoc();
-    $data[] = $obj->getTrackDetails($con, 'Approval', $row['inserted_date'], $row['inserted_user'], $branch);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $data[] = $obj->getTrackDetails($con, 'Approval', $row['inserted_date'], $row['inserted_user'], $branch);
+    }
 
     // Acknowledgment
     $qry = $con->query("SELECT inserted_user,inserted_date from in_issue where req_id = $req_id");
-    $row = $qry->fetch_assoc();
-    $qry1 = $con->query("SELECT area_confirm_subarea as sub_area from acknowlegement_customer_profile where req_id = $req_id");
-    $sub_area_id = $qry1->fetch_assoc()['sub_area'];
-    $branch = $obj->getBranchName($con, $sub_area_id, 'group');
-    $data[] = $obj->getTrackDetails($con, 'Acknowledgment', $row['inserted_date'], $row['inserted_user'], $branch);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $qry1 = $con->query("SELECT area_confirm_subarea as sub_area from acknowlegement_customer_profile where req_id = $req_id");
+        $sub_area_id = $qry1->fetch_assoc()['sub_area'];
+        $branch = $obj->getBranchName($con, $sub_area_id, 'group');
+        $data[] = $obj->getTrackDetails($con, 'Acknowledgment', $row['inserted_date'], $row['inserted_user'], $branch);
+    }
 
     // Loan Issue
     $qry = $con->query("SELECT insert_login_id,created_date from loan_issue where req_id = $req_id order by `id` DESC LIMIT 1"); //limit 1 desc because that table will have multiple lines for single customer, so last would be the correct one
-    $row = $qry->fetch_assoc();
-    $data[] = $obj->getTrackDetails($con, 'Loan Issue', $row['created_date'], $row['insert_login_id'], $branch);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $data[] = $obj->getTrackDetails($con, 'Loan Issue', $row['created_date'], $row['insert_login_id'], $branch);
+    }
 
     // Closed
     $qry = $con->query("SELECT insert_login_id,created_date from closed_status where req_id = $req_id");
-    $row = $qry->fetch_assoc();
-    $branch = $obj->getBranchName($con, $sub_area_id, 'line');
-    $data[] = $obj->getTrackDetails($con, 'Closed', $row['created_date'], $row['insert_login_id'], $branch);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $branch = $obj->getBranchName($con, $sub_area_id, 'line');
+        $data[] = $obj->getTrackDetails($con, 'Closed', $row['created_date'], $row['insert_login_id'], $branch);
+    }
+
+    // NOC
+    $nocStatus = $obj->getNocCompletedStatusbyReq($con, $req_id); //if this variable contains value 0 then all document are given to customer as noc. so need to take latest noc submission
+    if ($nocStatus == 0) {
+        //if all docs are given then read which user gives the last document
+        $nocDetails = $obj->getLatestNOCDetails($con, $req_id);
+        // echo json_encode($nocDetails);
+        if (!empty($nocDetails)) {
+            $data[] = $obj->getTrackDetails($con, 'NOC', $nocDetails['updated_date'], $nocDetails['insert_login_id'], $branch);
+        }
+    }
 }
-// echo json_encode($data);
+
 ?>
 
-<table>
+<table class="table table-bordered">
     <thead>
         <th width="10%">S.No</th>
         <th>Loan Stage</th>
@@ -72,6 +100,7 @@ if ($cus_status != '') {
         <th>User Name</th>
         <th>Name</th>
         <th>Branch</th>
+        <th>Action</th>
     </thead>
     <tbody>
         <?php
@@ -85,6 +114,7 @@ if ($cus_status != '') {
                 <td><?php echo $item['username']; ?></td>
                 <td><?php echo $item['fullname']; ?></td>
                 <td><?php echo $item['branch']; ?></td>
+                <td><?php echo $item['action']; ?></td>
             </tr>
         <?php
             $i++;
@@ -119,6 +149,92 @@ class getUserDetails
         }
         $branch_name = $qry->fetch_assoc()['branch_name'];
         return $branch_name;
+    }
+    public function getNocCompletedStatusbyReq($con, $req_id)
+    {
+        //this function is to find out whether all of the req id's documents are given to customer or not
+        // also it will return values if the document is temporarly taken out for some purpose. they should mark as returned in respective screen and to give noc here
+        $response = 0;
+
+        $sql = $con->query("SELECT sd.* From signed_doc sd JOIN in_issue ii ON ii.req_id = sd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and sd.noc_given !='1' ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT cnl.* From cheque_no_list cnl JOIN in_issue ii ON ii.req_id = cnl.req_id where ii.cus_status = 21 and ii.req_id = $req_id and cnl.noc_given !='1' ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and ackd.mortgage_process = 0 and ( ackd.mortgage_process_noc != '1' || (ackd.mortgage_document = 0 and ackd.mortgage_document_upd IS NOT NULL and ackd.mortgage_document_noc != '1' ) ) ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and ackd.endorsement_process = 0 and ( (ackd.endorsement_process_noc != '1') || (ackd.en_RC = 0 && ackd.en_RC_noc != '1') || (ackd.en_Key = 0 && ackd.en_Key_noc != '1')) ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT gi.* From gold_info gi JOIN in_issue ii ON ii.req_id = gi.req_id where ii.cus_status = 21 and ii.req_id = $req_id and gi.noc_given !='1' ");
+        $response = $response + $sql->num_rows;
+
+        $sql = $con->query("SELECT di.* From document_info di JOIN in_issue ii ON ii.req_id = di.req_id where ii.cus_status = 21 and ii.req_id = $req_id and di.doc_info_upload_noc !='1' ");
+        $response = $response + $sql->num_rows;
+
+        // echo $cus_id.' - '.$response.'***';
+        return $response;
+    }
+    public function getLatestNOCDetails($con, $req_id)
+    {
+        //this function is to find out whether all of the req id's documents are given to customer or not
+        // also it will return values if the document is temporarly taken out for some purpose. they should mark as returned in respective screen and to give noc here
+        $response = array();
+
+        $sql = $con->query("SELECT sd.* From signed_doc sd JOIN in_issue ii ON ii.req_id = sd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and sd.noc_given ='1' ");
+        if ($sql->num_rows > 0) {
+            $row = $sql->fetch_assoc();
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+        }
+
+        $sql = $con->query("SELECT cnl.* From cheque_no_list cnl JOIN in_issue ii ON ii.req_id = cnl.req_id where ii.cus_status = 21 and ii.req_id = $req_id and cnl.noc_given ='1' ");
+        if ($sql->num_rows > 0) {
+            $row = $sql->fetch_assoc();
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+        }
+
+        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and ackd.mortgage_process = 0 and ( ackd.mortgage_process_noc = '1' || (ackd.mortgage_document = 0 and ackd.mortgage_document_upd IS NOT NULL and ackd.mortgage_document_noc = '1' ) ) ");
+        if ($sql->num_rows > 0) {
+            $row = $sql->fetch_assoc();
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+        }
+
+        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and ackd.endorsement_process = 0 and ( (ackd.endorsement_process_noc = '1') || (ackd.en_RC = 0 && ackd.en_RC_noc = '1') || (ackd.en_Key = 0 && ackd.en_Key_noc = '1')) ");
+        if ($sql->num_rows > 0) {
+            $row = $sql->fetch_assoc();
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+        }
+
+        $sql = $con->query("SELECT gi.* From gold_info gi JOIN in_issue ii ON ii.req_id = gi.req_id where ii.cus_status = 21 and ii.req_id = $req_id and gi.noc_given ='1' ");
+        if ($sql->num_rows > 0) {
+            $row = $sql->fetch_assoc();
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+        }
+
+        $sql = $con->query("SELECT di.* From document_info di JOIN in_issue ii ON ii.req_id = di.req_id where ii.cus_status = 21 and ii.req_id = $req_id and di.doc_info_upload_noc ='1' ");
+        if ($sql->num_rows > 0) {
+            $row = $sql->fetch_assoc();
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+        }
+
+        // Loop through the response array to find the latest updated_date
+        $latestDate = '';
+        foreach ($response as $item) {
+            if ($item['updated_date'] > $latestDate) {
+                $latestDate = $item['updated_date'];
+            }
+        }
+
+        // Create a new array with only the latest date value
+        $latestResponse = array();
+        foreach ($response as $item) {
+            if ($item['updated_date'] == $latestDate) {
+                $latestResponse = $item;
+            }
+        }
+        return $latestResponse;
     }
 }
 ?>

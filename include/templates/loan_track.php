@@ -33,11 +33,28 @@
 					</div>
 					<div class="card-body">
 						<div class="row">
-							<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12"></div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="cus_id">Customer ID</label>
 									<input type="text" class="form-control" id="cus_id" name="cus_id" placeholder="Enter Customer ID" maxlength="14">
+								</div>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="cus_name">Customer Name</label>
+									<input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="Enter Customer Name">
+								</div>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="mobile">Mobile Number</label>
+									<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile Number">
+								</div>
+							</div>
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="form-group">
+									<label for="loan_id">Loan ID</label>
+									<input type="text" class="form-control" id="loan_id" name="loan_id" placeholder="LID-XXX">
 								</div>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="text-align:center">
@@ -280,11 +297,7 @@
 			<div class="modal-body">
 				<div class="container-fluid">
 
-					<div class="col-12">
-						<div class="row">
-							<div class="col-12" id='loanTrackDiv'></div>
-						</div>
-					</div>
+					<div id='loanTrackDiv'></div>
 				</div>
 			</div>
 			<div class="modal-footer">

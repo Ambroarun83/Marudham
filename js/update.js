@@ -100,6 +100,18 @@ $(document).ready(function () {
         getGroupandLine(sub_area_id);
     })
 
+    $('#pic').change(function(){//To show after choose image
+        var pic = $('#pic')[0];
+        var img = $('#imgshow');
+        img.attr('src', URL.createObjectURL(pic.files[0]));
+    })
+
+    $('#guarentorpic').change(function(){//To show after choose image
+        var pic = $('#guarentorpic')[0];
+        var img = $('#imgshows');
+        img.attr('src', URL.createObjectURL(pic.files[0]));
+    })
+
     window.onscroll = function () {
         var navbar = document.getElementById("navbar");
         var stickyHeader = navbar.offsetTop;
