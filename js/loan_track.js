@@ -26,7 +26,7 @@ $(document).ready(function () {
     })
 
     $('#close_btn').click(function () {
-        $('#loanlist_card').hide();
+        $('.loanlist_card').hide(); $('#loanTrackDiv table tbody').empty()
         $('#customer_list_card, #search_card').show();
     })
 })
@@ -63,7 +63,7 @@ function viewCusOnClick() {
             var bal_amt = $('#bal_amt').val()
             $.post("loanTrackFile/getCustomerLoanList.php", { cus_id, pending_sts, od_sts, due_nil_sts, closed_sts, bal_amt }, function (response) {
                 $('#loanListTableDiv').html(response);
-                $('#loanlist_card, #close_btn').show();
+                $('.loanlist_card, #close_btn').show();
                 $('#customer_list_card, #search_card').hide();
 
             });
@@ -209,12 +209,22 @@ function customerStatusOnClickEvents() {
         })
     })
 
-    $('.track-btn').off('click').click(function () {
+    $('.track-btn').off('click');
+    $(document).on('click', '.track-btn', function () {
         let req_id = $(this).attr('data-req_id');
         $.post('loanTrackFile/getTrackDetails.php', { 'req_id': req_id }, function (response) {
             $('#loanTrackDiv').empty().html(response);
         })
-    })
+    });
+
+    $('.stage-detail').off('click');
+    $(document).on('click', '.stage-detail', function () {
+        let req_id = $(this).attr('data-req_id');
+        let stage = $(this).attr('data-stage');
+        $.post('loanTrackFile/getStageDetails.php', { 'req_id': req_id, 'stage': stage }, function (res) {
+            $('#stageDetailsDiv').empty().html(res);
+        })
+    });
 }
 
 //Due Chart List

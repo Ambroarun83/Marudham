@@ -3,7 +3,7 @@
 include '../ajaxconfig.php';
 
 
-$obj = new getUserDetails;
+$obj = new getTrackTableDetails;
 
 $req_id = $_POST['req_id'] ?? '';
 $i = 0;
@@ -82,7 +82,6 @@ if ($cus_status != '') {
     if ($nocStatus == 0) {
         //if all docs are given then read which user gives the last document
         $nocDetails = $obj->getLatestNOCDetails($con, $req_id);
-        // echo json_encode($nocDetails);
         if (!empty($nocDetails)) {
             $data[] = $obj->getTrackDetails($con, 'NOC', $nocDetails['updated_date'], $nocDetails['insert_login_id'], $branch);
         }
@@ -100,7 +99,7 @@ if ($cus_status != '') {
         <th>User Name</th>
         <th>Name</th>
         <th>Branch</th>
-        <th>Action</th>
+        <th>Details</th>
     </thead>
     <tbody>
         <?php
@@ -125,11 +124,13 @@ if ($cus_status != '') {
 
 <?php
 
-class getUserDetails
+class getTrackTableDetails
 {
     public $usertypeArr = ['', 'Director', 'Agent', 'Staff'];
     public function getTrackDetails($con, $stage, $date, $user_id, $branch)
     {
+        $req_id = $_POST['req_id'] ?? '';
+
         $qry = $con->query("SELECT `role`,`user_name`,`fullname` FROM `user` WHERE user_id='" . mysqli_real_escape_string($con, $user_id) . "'");
         $row = $qry->fetch_assoc();
 
@@ -138,6 +139,17 @@ class getUserDetails
 
         $response = array('stage' => $stage, 'date' => $date, 'usertype' => $usertype, 'username' => $row['user_name'], 'fullname' => $row['fullname'], 'branch' => $branch);
 
+        $response['action'] = '';
+
+        if ($stage == 'Loan Calculation') {
+            $response['action'] = "<input type='button' class='btn btn-primary stage-detail' value='View' data-toggle='modal' data-target='#stageDetails' data-req_id= '" . $req_id . "' data-stage='lc'>";
+        }
+        if ($stage == 'Loan Issue') {
+            $response['action'] = "<input type='button' class='btn btn-primary stage-detail' value='View' data-toggle='modal' data-target='#stageDetails' data-req_id='" . $req_id . "' data-stage='li'>";
+        }
+        if ($stage == 'NOC') {
+            $response['action'] = "<input type='button' class='btn btn-primary stage-detail' value='View' data-toggle='modal' data-target='#stageDetails' data-req_id='" . $req_id . "' data-stage='noc'>";
+        }
         return $response;
     }
     public function getBranchName($con, $sub_area, $type)
@@ -186,37 +198,37 @@ class getUserDetails
         $sql = $con->query("SELECT sd.* From signed_doc sd JOIN in_issue ii ON ii.req_id = sd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and sd.noc_given ='1' ");
         if ($sql->num_rows > 0) {
             $row = $sql->fetch_assoc();
-            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date'],'table'=>'signed_doc','id'=>$row['id']);
         }
 
         $sql = $con->query("SELECT cnl.* From cheque_no_list cnl JOIN in_issue ii ON ii.req_id = cnl.req_id where ii.cus_status = 21 and ii.req_id = $req_id and cnl.noc_given ='1' ");
         if ($sql->num_rows > 0) {
             $row = $sql->fetch_assoc();
-            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date'],'table'=>'cheque_no_list', 'id'=>$row['id']);
         }
 
         $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and ackd.mortgage_process = 0 and ( ackd.mortgage_process_noc = '1' || (ackd.mortgage_document = 0 and ackd.mortgage_document_upd IS NOT NULL and ackd.mortgage_document_noc = '1' ) ) ");
         if ($sql->num_rows > 0) {
             $row = $sql->fetch_assoc();
-            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date'], 'table'=>'mort', 'id'=>$row['id']);
         }
 
         $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.req_id = $req_id and ackd.endorsement_process = 0 and ( (ackd.endorsement_process_noc = '1') || (ackd.en_RC = 0 && ackd.en_RC_noc = '1') || (ackd.en_Key = 0 && ackd.en_Key_noc = '1')) ");
         if ($sql->num_rows > 0) {
             $row = $sql->fetch_assoc();
-            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date'],'table'=>'endorse', 'id'=>$row['id'] );
         }
 
         $sql = $con->query("SELECT gi.* From gold_info gi JOIN in_issue ii ON ii.req_id = gi.req_id where ii.cus_status = 21 and ii.req_id = $req_id and gi.noc_given ='1' ");
         if ($sql->num_rows > 0) {
             $row = $sql->fetch_assoc();
-            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date'],'table'=>'gold_info','id'=>$row['id']);
         }
 
         $sql = $con->query("SELECT di.* From document_info di JOIN in_issue ii ON ii.req_id = di.req_id where ii.cus_status = 21 and ii.req_id = $req_id and di.doc_info_upload_noc ='1' ");
         if ($sql->num_rows > 0) {
             $row = $sql->fetch_assoc();
-            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date']);
+            $response[] = array('insert_login_id' => $row['update_login_id'], 'updated_date' => $row['updated_date'],'table'=>'document_info', 'id'=>$row['id']);
         }
 
         // Loop through the response array to find the latest updated_date
