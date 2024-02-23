@@ -108,7 +108,7 @@
 			<!-- Customer List END -->
 
 			<!-- Loan List Start -->
-			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12" id="loanlist_card" style="display: none;">
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 loanlist_card" style="display: none;">
 				<div class="card">
 					<div class="card-header">
 						<div class="card-title">Loan List</div>
@@ -130,6 +130,40 @@
 				</div>
 			</div>
 			<!-- Loan List End -->
+			<!-- Loan Track Start -->
+			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 loanlist_card" style="display: none;">
+				<div class="card">
+					<div class="card-header">
+						<div class="card-title">Loan Track</div>
+					</div>
+					<div class="card-body">
+						<div class="row ">
+							<!--Fields -->
+							<div class="col-md-12 ">
+								<div class="row">
+									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+										<div class="form-group" id='loanTrackDiv'>
+											<table class="table table-bordered">
+												<thead>
+													<th width="10%">S.No</th>
+													<th>Loan Stage</th>
+													<th>Date</th>
+													<th>User Type</th>
+													<th>User Name</th>
+													<th>Name</th>
+													<th>Branch</th>
+													<th>Details</th>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Loan Track End -->
 		</div>
 	</form>
 	<!-- Form End -->
@@ -282,14 +316,14 @@
 </div>
 <!-- /////////////////////////////////////////////////////////////////// Commitment Chart Modal END ////////////////////////////////////////////////////////////////////// -->
 
-<!-- /////////////////////////////////////////////////////////////////// Loan Track Modal Start ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Stage Details Modal Start ////////////////////////////////////////////////////////////////////// -->
 
-<!-- Modal for Commitment Chart just view table   -->
-<div class="modal fade" id="loanTrackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal for Details based on stages - just view table   -->
+<div class="modal fade" id="stageDetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-lg " role="document">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Loan Track</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Stage Details</h5>
 				<button type="button" class="close" data-dismiss="modal" tabindex="1" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -297,7 +331,7 @@
 			<div class="modal-body">
 				<div class="container-fluid">
 
-					<div id='loanTrackDiv'></div>
+					<div id='stageDetailsDiv'></div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -306,4 +340,4 @@
 		</div>
 	</div>
 </div>
-<!-- /////////////////////////////////////////////////////////////////// Loan Track Modal END ////////////////////////////////////////////////////////////////////// -->
+<!-- /////////////////////////////////////////////////////////////////// Stage Details Modal END ////////////////////////////////////////////////////////////////////// -->

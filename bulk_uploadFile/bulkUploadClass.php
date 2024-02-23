@@ -516,7 +516,7 @@ class bulkUploadClass
     {
         $insert_inack = $con->query("INSERT INTO `in_acknowledgement`(`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`,`update_login_id`,`created_on`,`updated_date`) SELECT req_id,cus_id,cus_status,status,insert_login_id,update_login_id,created_date,'" . $data['loan_date'] . "' from in_verification where req_id = '" . $req_id . "' ") or die('Error in in_acknowledgement');
         $ack_id = $con->insert_id;
-        $qry = $con->query("UPDATE in_acknowledgement set inserted_user = '" . $userData['user_id'] . "' and inserted_date = '" . $data['dor'] . "' where `id` = '$ack_id' ");
+        $qry = $con->query("UPDATE in_acknowledgement set inserted_user = '" . $userData['user_id'] . "', inserted_date = '" . $data['dor'] . "' where id = '$ack_id' ");
 
         $insert_ackcp = $con->query("INSERT INTO `acknowlegement_customer_profile`(`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`,`dow`,`abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT * FROM `customer_profile` WHERE `req_id`='$req_id' ") or die('Error in acknowlegement_customer_profile');
 
@@ -531,7 +531,7 @@ class bulkUploadClass
     {
         $insert_ii = $con->query("INSERT INTO `in_issue`(`loan_id`,`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`,`update_login_id`, `created_date`, `updated_date`)  SELECT '" . $data['loan_id'] . "', req_id,cus_id,cus_status,status,insert_login_id,update_login_id,created_date,'" . $data['loan_date'] . "' from in_verification where req_id = '" . $req_id . "' ");
         $ii_id = $con->insert_id;
-        $qry = $con->query("UPDATE in_issue set inserted_user = '" . $userData['user_id'] . "' and inserted_date = '" . $data['dor'] . "' where `id` = '$ii_id' ");
+        $qry = $con->query("UPDATE in_issue set inserted_user = '" . $userData['user_id'] . "', inserted_date = '" . $data['dor'] . "' where `id` = '$ii_id' ");
 
         $insert_dt = $con->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','1','" . $userData['user_id'] . "', '" . $data['dor'] . "','" . $data['dor'] . "' ) ");
 

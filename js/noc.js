@@ -107,9 +107,10 @@ $(document).ready(function(){
 
     $('#submit_noc').click(function(){
 
-
+        event.preventDefault();
         if(validations() == true){
             updateCheckedDetails();
+            updateNocTable();
         }
     })
 
@@ -1018,9 +1019,10 @@ function updateCheckedDetails(){
         
     // Perform AJAX request when the deferred object is resolved
     sign_deffer.done(function() {
+        let sign_ids = $('#sign_checklist').val().split(','); let req_id = $('#req_id').val();
         $.ajax({
             url: 'nocFile/updateSignDocNoc.php',
-            data: {'noc_details':sign_check,'table_name':'signed_doc'},
+            data: { 'noc_details': sign_check, 'table_name': 'signed_doc', sign_ids, req_id },
             type: 'post',
             cache: false,
             success: function(response){
@@ -1056,9 +1058,10 @@ function updateCheckedDetails(){
         
     // Perform AJAX request when the deferred object is resolved
     cheque_deffer.done(function() {
+        let cheque_ids = $('#cheque_checklist').val().split(','); let req_id = $('#req_id').val();
         $.ajax({
             url: 'nocFile/updateSignDocNoc.php',
-            data: {'noc_details':cheque_check,'table_name':'cheque_no_list'},
+            data: { 'noc_details': cheque_check, 'table_name': 'cheque_no_list', cheque_ids, req_id },
             type: 'post',
             cache: false,
             success: function(response){
@@ -1095,9 +1098,10 @@ function updateCheckedDetails(){
         
     // Perform AJAX request when the deferred object is resolved
     mort_deffer.done(function() {
+        let mort_ids = $('#mort_checklist').val().split(','); let req_id = $('#req_id').val();
         $.ajax({
             url: 'nocFile/updateSignDocNoc.php',
-            data: {'noc_details':mort_check,'table_name':'acknowlegement_documentation'},
+            data: { 'noc_details': mort_check, 'table_name': 'acknowlegement_documentation', mort_ids, req_id },
             type: 'post',
             cache: false,
             success: function(response){
@@ -1134,9 +1138,10 @@ function updateCheckedDetails(){
         
     // Perform AJAX request when the deferred object is resolved
     endorse_deffer.done(function() {
+        let endorse_ids = $('#endorse_checklist').val().split(','); let req_id = $('#req_id').val();
         $.ajax({
             url: 'nocFile/updateSignDocNoc.php',
-            data: {'noc_details':endorse_check,'table_name':'acknowlegement_documentation'},
+            data: { 'noc_details': endorse_check, 'table_name': 'acknowlegement_documentation', endorse_ids, req_id },
             type: 'post',
             cache: false,
             success: function(response){
@@ -1171,9 +1176,10 @@ function updateCheckedDetails(){
         
     // Perform AJAX request when the deferred object is resolved
     gold_deffer.done(function() {
+        let gold_ids = $('#gold_checklist').val().split(','); let req_id = $('#req_id').val();
         $.ajax({
             url: 'nocFile/updateSignDocNoc.php',
-            data: {'noc_details':gold_check,'table_name':'gold_info'},
+            data: { 'noc_details': gold_check, 'table_name': 'gold_info', gold_ids, req_id },
             type: 'post',
             cache: false,
             success: function(response){
@@ -1209,9 +1215,10 @@ function updateCheckedDetails(){
         
     // Perform AJAX request when the deferred object is resolved
     doc_deffer.done(function() {
+        let doc_ids = $('#doc_checklist').val().split(','); let req_id = $('#req_id').val();
         $.ajax({
             url: 'nocFile/updateSignDocNoc.php',
-            data: {'noc_details':doc_check,'table_name':'document_info'},
+            data: { 'noc_details': doc_check, 'table_name': 'document_info', doc_ids, req_id },
             type: 'post',
             cache: false,
             success: function(response){
@@ -1227,7 +1234,69 @@ function updateCheckedDetails(){
 
 }
 
+function updateNocTable() {
+    // Get the values from the form fields or variables
+    let cusidupd = $('#cusidupd').val();
+    let req_id = $('#req_id').val();
+    let sign_checklist = $('#sign_checklist').val();
+    let cheque_checklist = $('#cheque_checklist').val();
+    let gold_checklist = $('#gold_checklist').val();
+    let mort_checklist = $('#mort_checklist').val();
+    let endorse_checklist = $('#endorse_checklist').val();
+    let doc_checklist = $('#doc_checklist').val();
+    let noc_date = $('#noc_date').val();
+    let noc_member = $('#noc_member').val();
+    let mem_name = ''; // Initialize mem_name variable
 
+    // Determine mem_name based on noc_member value
+    if (noc_member === '3') {
+        mem_name = $('#mem_relation_name').val();
+    } else if (noc_member === '1' || noc_member === '2') {
+        mem_name = $('#mem_name').val();
+    }
+
+    // Create a FormData object and append the data
+    var formData = new FormData();
+    formData.append('cusidupd', cusidupd);
+    formData.append('req_id', req_id);
+    formData.append('sign_checklist', sign_checklist);
+    formData.append('cheque_checklist', cheque_checklist);
+    formData.append('gold_checklist', gold_checklist);
+    formData.append('mort_checklist', mort_checklist);
+    formData.append('endorse_checklist', endorse_checklist);
+    formData.append('doc_checklist', doc_checklist);
+    formData.append('noc_date', noc_date);
+    formData.append('noc_member', noc_member);
+    formData.append('mem_name', mem_name); // Append mem_name
+
+    // Now you can send this formData using AJAX
+
+    $.ajax({
+        url: 'nocFile/updateNocTable.php',
+        type: 'POST',
+        data: formData ,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function (response) {
+            if (response == "Success") {
+                Swal.fire({
+                    title: 'Submitted',
+                    icon: 'success',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#009688'
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error While Submitting',
+                    icon: 'error',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#009688'
+                });
+            }
+        }
+    })
+}
 
 function famNameList() {  // To show family name for Data Check.
     let req_id = $('#req_id').val();

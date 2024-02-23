@@ -4,17 +4,6 @@ if (isset($_POST['userid'])) {
 }
 
 
-if (isset($_POST['submit_noc']) && $_POST['submit_noc'] != '') {
-
-	$req_id = $_POST['req_id'];
-
-	$userObj->addNOC($mysqli, $req_id, $userid);
-?>
-	<script>
-		location.href = '<?php echo $HOSTPATH;  ?>edit_noc&msc=1';
-	</script>
-<?php
-}
 
 if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd'];
