@@ -1,7 +1,7 @@
 <?php
 // session_start();
 include '../ajaxconfig.php';
-// include './getTrackDetails.php';
+include './getTrackDetails.php';
 
 $req_id = $_POST['req_id'] ?? '';
 $stage = $_POST['stage'] ?? '';
@@ -24,7 +24,7 @@ if ($stage == 'lc') { //Loan Calculation, So show verification info
             $famname_row = $famname_qry->fetch_assoc();
             $verification_person = $famname_row['famname'];
         }
-
+        $detail_arr['verification_person'] = $verification_person;
         $detail_arr['verification_location'] = $row['verification_location'] == '0' ? 'On Spot' : 'Customer Spot';
         $heading_arr = ['Communication', 'Audio', 'Verification Person', 'Verification Location'];
     }
@@ -57,9 +57,16 @@ if ($stage == 'lc') { //Loan Calculation, So show verification info
         $heading_arr = ['Issued To', 'Relationship'];
     }
 } elseif ($stage == 'noc') { // NOC, So show NOC info
-    // $obj = new getTrackTableDetails;
-    // $nocDetails = $obj->getLatestNOCDetails($con, $req_id);
-    $detail_arr['headings'] = ['Date of NOC', 'Member', 'Relationship'];
+    $obj = new getTrackTableDetails;
+    $nocDetails = $obj->getLatestNOCDetails($con, $req_id);
+    
+    if(!empty($nocDetails)){
+        $table_id = $nocDetails['id'];
+        $table_name = $nocDetails['table'];
+        $detail_arr = $obj->getNOCDetails($con,$table_id,$table_name);
+    }
+
+    $heading_arr = ['Date of NOC', 'Member', 'Relationship'];
 }
 ?>
 

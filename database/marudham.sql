@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2024 at 01:29 PM
+-- Generation Time: Feb 24, 2024 at 01:49 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2522,7 +2522,7 @@ INSERT INTO `gold_info` (`id`, `cus_id`, `req_id`, `gold_sts`, `gold_type`, `Pur
 (13, '060120230408', '16', '1', 'check', 'check', '2', '100', '27300', '6565d2c155091.jpg', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-28 17:15:05'),
 (14, '474747474747', '78', '1', '1', '2', '1', '2', '1111', '', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, '3', NULL, '2024-02-22 15:28:11'),
 (15, '575757575757', '79', '1', '22', '2', '1', '1', '1', '', '1', '2024-02-23', '1', 'Sugumaran', '0', '0', NULL, NULL, NULL, NULL, NULL, '5', NULL, '2024-02-23 12:34:54'),
-(16, '575757575757', '79', '0', '2', '2', '1', '2', '2', '', '1', '2024-02-23', '1', 'Sugumaran', '0', '0', NULL, NULL, NULL, NULL, NULL, '5', NULL, '2024-02-23 12:55:22');
+(16, '575757575757', '79', '0', '2', '2', '1', '2', '2', '', '1', '2024-02-23', '2', '25', '0', '0', NULL, NULL, NULL, NULL, NULL, '5', NULL, '2024-02-24 12:55:22');
 
 -- --------------------------------------------------------
 
