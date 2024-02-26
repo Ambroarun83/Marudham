@@ -84,6 +84,8 @@ $search_module = '';
 $search_screen = '';
 $bulk_upload_module = '';
 $bulk_upload = '';
+$loan_track_module = '';
+$loan_track = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -212,6 +214,8 @@ if($idupd>0)
 			$search_screen = $getUser['search'];
 			$bulk_upload_module = $getUser['bulk_upload_module'];
 			$bulk_upload = $getUser['bulk_upload'];
+			$loan_track_module = $getUser['loan_track_module'];
+			$loan_track = $getUser['loan_track'];
 		}
 	}
 }
@@ -1010,6 +1014,24 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($bulk_upload==0){ echo'checked'; }} ?> tabindex="73" class="bulk_upload-checkbox" id="bulk_upload" name="bulk_upload" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="bulk_upload">Bulk Upload</label>
+                            </div>
+                        </div>
+					</div>
+					
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($loan_track_module==0){ echo'checked'; }} ?> tabindex="74" class="" id="loan_track_module" name="loan_track_module" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="loan_track_module">
+							<h5>Loan Track</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($loan_track==0){ echo'checked'; }} ?> tabindex="75" class="loan_track-checkbox" id="loan_track" name="loan_track" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="loan_track">Loan Track</label>
                             </div>
                         </div>
 					</div>

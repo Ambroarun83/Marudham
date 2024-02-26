@@ -77,6 +77,9 @@ else if ($current_page == 'edit_concern_creation' || $current_page == 'edit_conc
 } else if ($current_page == 'bulk_upload') {
 
 	$current_module = 'bulk_upload';
+}else if ($current_page == 'loan_track') {
+
+	$current_module = 'loan_track';
 } else {
 	$current_module = '';
 }
@@ -179,6 +182,8 @@ $search_module = '';
 $search = '';
 $bulk_upload_module = '';
 $bulk_upload = '';
+$loan_track_module = '';
+$loan_track = '';
 
 $getUser = $userObj->getUser($mysqli, $userid);
 if (sizeof($getUser) > 0) {
@@ -261,6 +266,8 @@ if (sizeof($getUser) > 0) {
 		$search          		     = $getUser['search'];
 		$bulk_upload_module          		     = $getUser['bulk_upload_module'];
 		$bulk_upload          		     = $getUser['bulk_upload'];
+		$loan_track_module          		     = $getUser['loan_track_module'];
+		$loan_track          		     = $getUser['loan_track'];
 	}
 }
 ?>
@@ -853,6 +860,23 @@ if (sizeof($getUser) > 0) {
 						</div>
 					</li>
 				<?php  } ?>
+				<?php if ($loan_track_module == 0) { ?>
+					<li class="sidebar-dropdown">
+						<a href="javascript:void(0)">
+							<i class='icon-target'></i>
+							<span class="menu-text">Loan Track</span>
+						</a>
+						<div class="sidebar-submenu" <?php if ($current_module == 'loan_track_module') echo 'style="display:block" '; ?>>
+							<ul>
+								<?php if ($loan_track == 0) { ?>
+									<li>
+										<a href="loan_track"><i class='icon-target'></i>Loan Track</a>
+									</li>
+								<?php  } ?>
+							</ul>
+						</div>
+					</li>
+				<?php  } ?>
 			</ul>
 		</div>
 		<!-- sidebar menu end -->
@@ -943,4 +967,6 @@ $search_module = '';
 $search = '';
 $bulk_upload_module = '';
 $bulk_upload = '';
+$loan_track_module = '';
+$loan_track = '';
 ?>
