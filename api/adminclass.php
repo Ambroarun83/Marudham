@@ -96,6 +96,8 @@ require 'moneyFormatIndia.php';
 				$detailrecords['search'] = strip_tags($row->search);
 				$detailrecords['bulk_upload_module'] = strip_tags($row->bulk_upload_module);
 				$detailrecords['bulk_upload'] = strip_tags($row->bulk_upload);
+				$detailrecords['loan_track_module'] = strip_tags($row->loan_track_module);
+				$detailrecords['loan_track'] = strip_tags($row->loan_track);
 
                 $detailrecords['status']                     = strip_tags($row->status);
             }
@@ -2568,7 +2570,17 @@ require 'moneyFormatIndia.php';
 		}else{
 			$bulk_upload=1;
 		}
-        $insertQry="INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
+		if (isset($_POST['loan_track_module']) &&    $_POST['loan_track_module'] == 'Yes') {
+			$loan_track_module = 0;
+		} else {
+			$loan_track_module = 1;
+		}
+		if (isset($_POST['loan_track']) &&    $_POST['loan_track'] == 'Yes') {
+			$loan_track = 0;
+		} else {
+			$loan_track = 1;
+		}
+		$insertQry = "INSERT INTO user(`fullname`,`emailid`, `user_name`, `user_password`, `role`, `role_type`, `dir_id`,
         `ag_id`, `staff_id`, `company_id`, `branch_id`,`loan_cat`, `agentforstaff`,`line_id`, `group_id`, `mastermodule`, `company_creation`, `branch_creation`, `loan_category`, `loan_calculation`,
         `loan_scheme`, `area_creation`, `area_mapping`, `area_approval`, `adminmodule`, `director_creation`, `agent_creation`, `staff_creation`, `manage_user`,`doc_mapping`,`bank_creation`,`requestmodule`,
         `request`,`request_list_access`,`verificationmodule`,`verification`,`approvalmodule`,`approval`,`acknowledgementmodule`,`acknowledgement`,`loanissuemodule`,`loan_issue`,
@@ -2577,7 +2589,7 @@ require 'moneyFormatIndia.php';
 		`accountsmodule`,`cash_tally`,`cash_tally_admin`,`bank_details`,`bank_clearance`,`finance_insight`,
 		`followupmodule`, `promotion_activity`, `loan_followup`, `confirmation_followup`, `due_followup`, `reportmodule`, `ledger_report`, 
 		`request_report`, `cus_profile_report`, `loan_issue_report`, `collection_report`, `balance_report`, `due_list_report`, `closed_report`,
-		`search_module`,`search`,`insert_login_id`,`created_date`)
+		`search_module`,`search`,`bulk_upload_module`, `bulk_upload`, `loan_track_module`, `loan_track`,`insert_login_id`,`created_date`)
         VALUES('".strip_tags($full_name)."','".strip_tags($email)."','".strip_tags($user_name)."','".strip_tags($user_password)."','".strip_tags($role)."',
         '".strip_tags($role_type)."','".strip_tags($dir_name)."','".strip_tags($ag_name)."','".strip_tags($staff_name)."','".strip_tags($company_id)."',
         '".strip_tags($branch_id)."','".strip_tags($loan_cat)."','".strip_tags($agentforstaff)."','".strip_tags($line)."','".strip_tags($group)."','".strip_tags($mastermodule)."','".strip_tags($company_creation)."',
@@ -2589,10 +2601,14 @@ require 'moneyFormatIndia.php';
 		'".strip_tags($collectionmodule)."','".strip_tags($collection)."','".strip_tags($collection_access)."','".strip_tags($closedmodule)."','".strip_tags($closed)."',
 		'".strip_tags($nocmodule)."','".strip_tags($noc)."','".strip_tags($doctrackmodule)."','".strip_tags($doctrack)."','".strip_tags($doc_rec_access)."','".strip_tags($updatemodule)."','".strip_tags($update_screen)."','".strip_tags($concernmodule)."','".strip_tags($concernCreation)."','".strip_tags($concernSolution)."','".strip_tags($concernFeedback)."',
 		'".strip_tags($accountsmodule)."','".strip_tags($cash_tally)."','".strip_tags($cash_tally_admin)."','".strip_tags($bank_details)."','".strip_tags($bank_clearance)."','".strip_tags($finance_insight)."',
-		'".strip_tags($followupmodule)."','".strip_tags($promotion_activity)."','".strip_tags($loan_followup)."','".strip_tags($conf_followup)."','".strip_tags($due_followup)."',
-		'".strip_tags($reportmodule)."', '".strip_tags($ledger_report)."', '".strip_tags($request_report)."', '".strip_tags($cus_profile_report)."', '".strip_tags($loan_issue_report)."',
-		'".strip_tags($collection_report)."', '".strip_tags($balance_report)."', '".strip_tags($due_list_report)."', '".strip_tags($closed_report)."',
-		'".strip_tags($searchmodule)."', '".strip_tags($search_screen)."','".strip_tags($bulk_upload_module)."', '".strip_tags($bulk_upload)."','".strip_tags($userid)."',now() )";
+		'".strip_tags($followupmodule)."','".strip_tags($promotion_activity)."','".strip_tags($loan_followup)."','".strip_tags($conf_followup)."','".strip_tags($due_followup).
+		"',
+		'" . strip_tags($reportmodule) . "', '" . strip_tags($ledger_report) . "', '" . strip_tags($request_report) . "', '" . strip_tags($cus_profile_report) . "', '" . strip_tags($loan_issue_report) .
+		"',
+		'" . strip_tags($collection_report) . "', '" . strip_tags($balance_report) . "', '" . strip_tags($due_list_report) . "', '" . strip_tags($closed_report) .
+		"',
+		'" . strip_tags($searchmodule) . "', '" . strip_tags($search_screen) . "','" . strip_tags($bulk_upload_module) . "', '" . strip_tags($bulk_upload) . "',
+		'" . strip_tags($loan_track_module) . "', '" . strip_tags($loan_track) . "','" . strip_tags($userid) . "',now() )";
 		// echo $insertQry;die;
         $insresult=$mysqli->query($insertQry) or die("Error ".$mysqli->error);
     }
@@ -3033,6 +3049,16 @@ function updateUser($mysqli,$id,$user_id){
 	}else{
 		$bulk_upload=1;
 	}
+		if (isset($_POST['loan_track_module']) &&    $_POST['loan_track_module'] == 'Yes') {
+			$loan_track_module = 0;
+		} else {
+			$loan_track_module = 1;
+		}
+		if (isset($_POST['loan_track']) &&    $_POST['loan_track'] == 'Yes') {
+			$loan_track = 0;
+		} else {
+			$loan_track = 1;
+		}
 	$updateQry = "UPDATE `user` SET `fullname` = '".strip_tags($full_name)."',`emailid` = '".strip_tags($email)."',`user_name` = '".strip_tags($user_name)."',
 	`user_password` = '".strip_tags($user_password)."',`role` = '".strip_tags($role)."',`role_type` = '".strip_tags($role_type)."',`dir_id` = '".strip_tags($dir_name)."',
 	`ag_id` = '".strip_tags($ag_name)."',`staff_id` = '".strip_tags($staff_name)."',`company_id` = '".strip_tags($company_id)."',`branch_id` = '".strip_tags($branch_id)."',
@@ -3056,10 +3082,13 @@ function updateUser($mysqli,$id,$user_id){
 	`confirmation_followup`='".strip_tags($conf_followup)."',`due_followup`='".strip_tags($due_followup)."',
 	`reportmodule` = '".strip_tags($reportmodule)."', `ledger_report` = '".strip_tags($ledger_report)."', `request_report` = '".strip_tags($request_report)."', 
 	`cus_profile_report` = '".strip_tags($cus_profile_report)."', `loan_issue_report` = '".strip_tags($loan_issue_report)."', 
-	`collection_report` = '".strip_tags($collection_report)."', `balance_report` = '".strip_tags($balance_report)."', 
-	`due_list_report` = '".strip_tags($due_list_report)."', `closed_report` = '".strip_tags($closed_report)."',
-	`search_module` = '".strip_tags($searchmodule)."', `search` = '".strip_tags($search_screen)."',`bulk_upload_module` = '".strip_tags($bulk_upload_module)."', `bulk_upload` = '".strip_tags($bulk_upload)."',
-	`status` = 0,`update_login_id` = '".strip_tags($user_id)."',`updated_date` = current_timestamp() WHERE user_id = '".strip_tags($id)."' ";
+	`collection_report` = '".strip_tags($collection_report)."', `balance_report` = '".strip_tags($balance_report).
+		"', 
+	`due_list_report` = '" . strip_tags($due_list_report) . "', `closed_report` = '" . strip_tags($closed_report) .
+			"',
+	`search_module` = '" . strip_tags($searchmodule) . "', `search` = '" . strip_tags($search_screen) . "',`bulk_upload_module` = '" . strip_tags($bulk_upload_module) . "', `bulk_upload` = '" . strip_tags($bulk_upload) .
+			"',
+	`loan_track_module` = '" . strip_tags($loan_track_module) . "', `loan_track` = '" . strip_tags($loan_track) . "',`status` = 0,`update_login_id` = '" . strip_tags($user_id) . "',`updated_date` = current_timestamp() WHERE user_id = '" . strip_tags($id) . "' ";
 	$result = $mysqli->query($updateQry) or die;
 }
 
