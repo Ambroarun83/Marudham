@@ -2539,7 +2539,7 @@ $sub_area_topbar = isset($sub_area_name)&& $sub_area_name != '' ? $sub_area_name
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="age">Age</label><span class="required">&nbsp;*</span>
-							<input type="number" class="form-control" id="group_age" name="group_age" tabindex='1'>
+							<input type="number" class="form-control" id="group_age" name="group_age" tabindex='1' placeholder="Enter Age">
 							<span class="text-danger" id="grpageCheck">Enter Age</span>
 						</div>
 					</div>
@@ -2547,7 +2547,7 @@ $sub_area_topbar = isset($sub_area_name)&& $sub_area_name != '' ? $sub_area_name
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="group_aadhar">Aadhar Number &nbsp;<span class="required">&nbsp;*</span></label>
-							<input type="text" class="form-control" id="group_aadhar" name="group_aadhar" data-type="adhaar-number" maxlength="14" tabindex='1'>
+							<input type="text" class="form-control" id="group_aadhar" name="group_aadhar" data-type="adhaar-number" maxlength="14" tabindex='1' placeholder='Enter Aadhar Number'>
 							<span class="text-danger" id="grpaadharCheck">Enter Aadhar Number</span>
 						</div>
 					</div>
