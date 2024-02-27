@@ -14,10 +14,15 @@ if ($stage == 'lc') { //Loan Calculation, So show verification info
         $row = $qry->fetch_assoc();
 
         $detail_arr['communication'] = $row['communication'] == '0' ? 'Phone' : 'Direct';
-        $detail_arr['com_audio'] = "<a href='uploads/verification/verifyInfo_audio/" . $row['com_audio'] . "' target='_blank'>Audio File</a>";
+        if ($row['com_audio'] != '') {
+            $detail_arr['com_audio'] = "<a href='uploads/verification/verifyInfo_audio/" . $row['com_audio'] . "' target='_blank'>Audio File</a>";
+        } else {
+            $detail_arr['com_audio'] = '';
+        }
 
         if ($row['verification_person'] == $row['cus_id']) {
             $cusname_qry = $con->query("SELECT customer_name from customer_register where cus_id = '" . strip_tags($row['cus_id']) . "' ");
+            $row = $cusname_qry->fetch_assoc();
             $verification_person = $row['customer_name'];
         } else {
             $famname_qry = $con->query("SELECT famname from verification_family_info where id = '" . strip_tags($row['verification_person']) . "' ");
