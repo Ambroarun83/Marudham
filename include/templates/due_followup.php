@@ -88,7 +88,7 @@ if($idupd>0)
 							<div class="col-md-12 ">
 								<div class="row">
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-										<div class="form-group" id='loanListTableDiv'>
+										<div class="form-group table-responsive" id='loanListTableDiv'>
 											
 										</div>
 									</div>
@@ -105,7 +105,7 @@ if($idupd>0)
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="loanHistoryDiv">
+								<div class="form-group table-responsive" id="loanHistoryDiv">
 									
 								</div>
 							</div>
@@ -120,7 +120,7 @@ if($idupd>0)
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="docHistoryDiv">
+								<div class="form-group table-responsive" id="docHistoryDiv">
 									
 								</div>
 							</div>
@@ -147,7 +147,7 @@ if($idupd>0)
                 </button>
             </div>
             <div class="modal-body">
-                <div id="dueChartTableDiv">
+                <div class="table-responsive" id="dueChartTableDiv">
                     <table class="table custom-table">
                         <thead>
                             <tr>
@@ -190,7 +190,7 @@ if($idupd>0)
                 </button>
             </div>
             <div class="modal-body">
-                <div id="penaltyChartTableDiv">
+                <div class="table-responsive" id="penaltyChartTableDiv">
                     <table class="table custom-table">
                         <thead>
                             <tr>
@@ -227,7 +227,7 @@ if($idupd>0)
                 </button>
             </div>
             <div class="modal-body">
-                <div id="collectionChargeDiv">
+                <div class="table-responsive" id="collectionChargeDiv">
                     <table class="table custom-table">
                         <thead>
                             <tr>
@@ -372,14 +372,7 @@ if($idupd>0)
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="container-fluid">
-					
-					<div class="col-12" >
-						<div class="row">
-							<div class="col-12" id='commChartDiv'></div>
-						</div>
-					</div>
-				</div>
+				<div class="table-responsive" id='commChartDiv'></div>
 			</div>
 			<div class="modal-footer">
 				<button class="btn btn-secondary" data-dismiss="modal" tabindex="2">Close</button>

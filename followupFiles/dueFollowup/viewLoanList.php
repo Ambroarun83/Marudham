@@ -48,7 +48,7 @@ function moneyFormatIndia($num) {
 <table class="table custom-table" id='loanListTable'>
     <thead>
         <tr>
-            <th>S.No</th>
+            <th width="10%">S.No</th>
             <th>Loan ID</th>
             <th>Loan Category</th>
             <th>Sub Category</th>

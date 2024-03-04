@@ -76,10 +76,18 @@ function OnLoadFunctions(){
 
             requests.push(request);
         });
-
+        
         $.when.apply($, requests).done(function() {
             // All AJAX requests are completed
-            var responses = arguments;
+            if(arguments[0][0]){
+                //if arguments does have 2 dimentions, then can directly assign to responses variable
+                var responses = arguments;
+            }else{
+                //if arguments only have 1 dimention, then it should be pushed inside another dimention to make it two.
+                //this is useful for following iteration processes.
+                var responses = [];
+                responses.push(arguments);
+            }
             var follow_cus_sts = [];
             var payable = [];
             var req_of_cus = [];
