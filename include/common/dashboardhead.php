@@ -72,15 +72,9 @@
             line-height: 30px;
         }
 		.table-responsive{overflow-x: unset;}
-		@media (max-width:1930px){
+		@media (max-width:1360px){
 			.table-responsive{overflow-x: scroll;}
 		}
-		/* .dataTables_wrapper{
-			overflow: auto;
-		}
-		.datatable {
-		table-layout: fixed;
-		} */
 		
 		/* Loader Start */
 		.overlay {

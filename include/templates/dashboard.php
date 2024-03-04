@@ -4,9 +4,9 @@ if (isset($_SESSION["userid"])) {
 	$userid = $_SESSION["userid"];
 }
 
-$userRole = $userObj->getuser($mysqli,$userid)['role'];
+$userRole = $userObj->getuser($mysqli, $userid)['role'];
 
-$getValues = $userObj->getDataForDashboard($mysqli,$userid);
+$getValues = $userObj->getDataForDashboard($mysqli, $userid);
 
 ?>
 <!-- for fadeIn animation -->
@@ -82,166 +82,176 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 	<!--form start-->
 	<form id="dashboard_form" name="dashboard_form" action="" method="post" enctype="multipart/form-data">
 
-		<?php if($userRole == 2) { ?>
-		<!-- Row start -->
-		<p class="heading-list wow fadeInUp">Request</p>
-		
-		<div class="row gutters">
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card  wow">
-					<div class="card-header">
-						<div class="card-title"></div>
-					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Today's Request</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['today_request']; ?></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<?php if ($userRole == 2) { ?>
+			<!-- Row start -->
+			<p class="heading-list wow fadeInUp">Request</p>
 
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card  wow">
-					<div class="card-header">
-						<div class="card-title"></div>
-					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Month's Request</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['month_request']; ?></p>
+			<div class="row gutters">
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card  wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today's Request</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['today_request']; ?></p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-		<!-- Row start -->
-		<p class="heading-list wow fadeInUp">Loan</p>
-		<div class="row gutters">
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card  wow">
-					<div class="card-header">
-						<div class="card-title"></div>
-					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Today's Issued Loan</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['today_loan']; ?></p>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card  wow">
-					<div class="card-header">
-						<div class="card-title"></div>
-					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Month's Issued Loan</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['month_loan']; ?></p>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card  wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Month's Request</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['month_request']; ?></p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- Row start -->
-		<p class="heading-list wow fadeInUp">Collection</p>
-		<div class="row gutters">
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card wow">
-					<div class="card-header">
-						<div class="card-title"></div>
-					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Today's No of Collection</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['today_collection_no']; ?></p>
+			<!-- Row start -->
+			<p class="heading-list wow fadeInUp">Loan</p>
+			<div class="row gutters">
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card  wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today's Issued Loan</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['today_loan']; ?></p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card wow">
-					<div class="card-header">
-						<div class="card-title"></div>
-					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Month's No of Collection</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['month_collection_no']; ?></p>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card  wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Month's Issued Loan</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['month_loan']; ?></p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card wow">
-					<div class="card-header">
-						<div class="card-title"></div>
-					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Today's Collection</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['today_collection']; ?></p>
+			<!-- Row start -->
+			<p class="heading-list wow fadeInUp">Collection</p>
+			<div class="row gutters">
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today's No of Collection</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['today_collection_no']; ?></p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
-				<div class="card wow">
-					<div class="card-header">
-						<div class="card-title"></div>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Month's No of Collection</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['month_collection_no']; ?></p>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
-						<div class="row">
-							<div class="col-12">
-								<div class="form-group text-center">
-									<p class='counter-head wow fadeIn'>Month's Collection</p>
-									<p class="counter wow fadeInUp"><?php echo $getValues['month_collection']; ?></p>
+				</div>
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today's Collection</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['today_collection']; ?></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12">
+					<div class="card wow">
+						<div class="card-header">
+							<div class="card-title"></div>
+						</div>
+						<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+							<div class="row">
+								<div class="col-12">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Month's Collection</p>
+										<p class="counter wow fadeInUp"><?php echo $getValues['month_collection']; ?></p>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		<?php } else { ?>
+			<div class="card wow">
+				<div class="card-header">
+					<div class="card-title"></div>
+				</div>
+				<div class="card-body" style="display:flex;justify-content:center;align-items: center;">
+					<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+					<div id="chartContainer1" style="height: 370px; width: 100%;"></div>
+				</div>
+			</div>
 		<?php } ?>
 	</form>
 </div>
 
 
-
+<script src="vendor/canvasjs/canvasjs.min.js"></script>
 <script>
 	document.addEventListener('DOMContentLoaded', () => {
 		new WOW().init();
@@ -268,5 +278,87 @@ $getValues = $userObj->getDataForDashboard($mysqli,$userid);
 		els.forEach(el => {
 			IO.observe(el);
 		});
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			theme: "light1", // "light1", "light2", "dark1", "dark2"
+			// exportEnabled: true,
+			// animationEnabled: true,
+			title: {
+				text: "Desktop Browser Market Share in 2016"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 25,
+				toolTipContent: "<b>{label}</b>: {y}",
+				showInLegend: "true",
+				legendText: "{label}",
+				indexLabelFontSize: 16,
+				indexLabel: "{label} - {y}",
+				dataPoints: [{
+					y: 51.08,
+					label: "Chrome"
+				}, {
+					y: 27.34,
+					label: "Internet Explorer"
+				}, {
+					y: 10.62,
+					label: "Firefox"
+				}, {
+					y: 5.02,
+					label: "Microsoft Edge"
+				}, {
+					y: 4.07,
+					label: "Safari"
+				}, {
+					y: 1.22,
+					label: "Opera"
+				}, {
+					y: 0.44,
+					label: "Others"
+				}],
+			}]
+		});
+		chart.render();
+		var chart1 = new CanvasJS.Chart("chartContainer1", {
+			theme: "light2", // "light1", "light2", "dark1", "dark2"
+			// exportEnabled: true,
+			// animationEnabled: true,
+			title: {
+				text: "Desktop Browser Market Share in 2016"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 25,
+				toolTipContent: "<b>{label}</b>: {y}",
+				showInLegend: "true",
+				legendText: "{label}",
+				indexLabelFontSize: 16,
+				indexLabel: "{label} - {y}",
+				dataPoints: [{
+					y: 51.08,
+					label: "Chrome"
+				}, {
+					y: 27.34,
+					label: "Internet Explorer"
+				}, {
+					y: 10.62,
+					label: "Firefox"
+				}, {
+					y: 5.02,
+					label: "Microsoft Edge"
+				}, {
+					y: 4.07,
+					label: "Safari"
+				}, {
+					y: 1.22,
+					label: "Opera"
+				}, {
+					y: 0.44,
+					label: "Others"
+				}],
+			}]
+		});
+		chart1.render();
+		$('.canvasjs-chart-credit').hide();
 	});
 </script>
