@@ -195,13 +195,13 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" id="req_title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Request</div>
 				</div>
 				<div class="card-body" id="req_body">
-					<div class="row" style="display:flex;justify-content:flex-start;">
+					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
 						<div class="col-2">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Requests</p>
-										<p class="counter wow fadeInUp" id="tot_req">100</p>
+										<p class="counter wow fadeInUp" id="tot_req"></p>
 									</div>
 								</div>
 							</div>
@@ -211,7 +211,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Issued</p>
-										<p class="counter wow fadeInUp" id="tot_issue">40</p>
+										<p class="counter wow fadeInUp" id="tot_issue"></p>
 									</div>
 								</div>
 							</div>
@@ -221,37 +221,37 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Balance</p>
-										<p class="counter wow fadeInUp" id="tot_bal">50</p>
+										<p class="counter wow fadeInUp" id="tot_bal"></p>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-2">
 							<div class="card">
-								<div class="card-body counter-cards">
+								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Requests</p>
-										<p class="counter wow fadeInUp" id="today_req">10</p>
+										<p class="counter wow fadeInUp" id="today_req"></p>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-2">
 							<div class="card">
-								<div class="card-body counter-cards">
+								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Issued</p>
-										<p class="counter wow fadeInUp" id="today_issue">5</p>
+										<p class="counter wow fadeInUp" id="today_issue"></p>
 									</div>
 								</div>
 							</div>
 						</div>
 						<div class="col-2">
 							<div class="card">
-								<div class="card-body counter-cards">
+								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Balance</p>
-										<p class="counter wow fadeInUp" id="today_bal">5</p>
+										<p class="counter wow fadeInUp" id="today_bal"></p>
 									</div>
 								</div>
 							</div>
@@ -269,10 +269,10 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 												<input type="radio" id="radio2" name="chart_selector" class="selector-item_radio">
 												<label for="radio2" class="selector-item_label">Customer Type</label>
 											</div>
-											<div class="selector-item">
+											<!-- <div class="selector-item">
 												<input type="radio" id="radio3" name="chart_selector" class="selector-item_radio">
 												<label for="radio3" class="selector-item_label">Loan Category</label>
-											</div>
+											</div> -->
 										</div>
 									</div>
 									<br>

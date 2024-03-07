@@ -1,48 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
-    new WOW().init();
-    const counterUp = window.counterUp.default;
 
-    const callback = entries => {
-        entries.forEach(entry => {
-            const el = entry.target;
-            if (entry.isIntersecting && !el.classList.contains('is-visible')) {
-                counterUp(el, {
-                    // duration: 3000,
-                    // delay: 20,
-                });
-                el.classList.add('is-visible');
-            }
+
+    {//wow js
+        new WOW().init();
+        const counterUp = window.counterUp.default;
+
+        const callback = entries => {
+            entries.forEach(entry => {
+                const el = entry.target;
+                if (entry.isIntersecting && !el.classList.contains('is-visible')) {
+                    counterUp(el, {
+                        // duration: 3000,
+                        // delay: 20,
+                    });
+                    el.classList.add('is-visible');
+                }
+            });
+        };
+
+        const IO = new IntersectionObserver(callback, {
+            threshold: 0
         });
-    };
 
-    const IO = new IntersectionObserver(callback, {
-        threshold: 0
-    });
-
-    const els = document.querySelectorAll('.counter');
-    els.forEach(el => {
-        IO.observe(el);
-    });
+        const els = document.querySelectorAll('.counter');
+        els.forEach(el => {
+            IO.observe(el);
+        });
+    }
 
     $('input[name="chart_selector"]').change(function () {
         let selectedValue = $('input[name="chart_selector"]:checked').next().text().trim();
         $('#chart1,#chart2').empty();
-    
+
+        
         if (selectedValue == 'Cancel & Revoke') {
-            tot_cr_chart();
-            tdy_cr_chart();
+            let tot_cancel = localStorage.getItem('tot_cancel');
+            let tot_revoke = localStorage.getItem('tot_revoke');
+            let today_cancel = localStorage.getItem('today_cancel');
+            let today_revoke = localStorage.getItem('today_revoke');
+
+            tot_cr_chart(tot_cancel, tot_revoke);
+            tdy_cr_chart(today_cancel,today_revoke);
         } else if (selectedValue == 'Customer Type') {
-            tot_ct_chart();
-            tdy_ct_chart();
+            let tot_new = localStorage.getItem('tot_new');
+            let tot_existing = localStorage.getItem('tot_existing');
+            let today_new = localStorage.getItem('today_new');
+            let today_existing = localStorage.getItem('today_existing');
+
+            tot_ct_chart(tot_new, tot_existing);
+            tdy_ct_chart(today_new, today_existing);
+
         } else if (selectedValue == 'Loan Category') {
             tot_lc_chart();
             tdy_lc_chart();
         }
     });
-    
-    $('input[name="chart_selector"]').trigger('change');//trigger at start
-    
-    
+
+
     $('#req_title').click(function () {
         let check = $('#req_body');
         if (check.is(':visible')) {
@@ -51,18 +65,28 @@ document.addEventListener('DOMContentLoaded', () => {
             check.slideDown();
         }
     });
+
+    getRequestDashboard();
+
 });
+
+$(function () {
+    //on load event
+
+
+})
 
 
 //Cancel and Revoke Charts
-function tot_cr_chart() {
+function tot_cr_chart(tot_cancel, tot_revoke) {
+
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ["Request Status", "Count", { role: "style" }],
-            ["Cancel", 15, "#faae7b"],
-            ["Revoke", 5, "#432371"],
+            ["Cancel", parseInt(tot_cancel), "#faae7b"],
+            ["Revoke", parseInt(tot_revoke), "#432371"],
         ]);
 
         var view = new google.visualization.DataView(data);
@@ -82,22 +106,22 @@ function tot_cr_chart() {
             bar: { groupWidth: "90%" },
             legend: { position: "none" },
             vAxis: { format: 'decimal', gridlines: { interval: [0, 5, 10, 15, 20] } },//this is for left vertical column count interval
-            chartArea: { 
-                
+            chartArea: {
+
             }
         };
         var chart = new google.visualization.ColumnChart(document.getElementById("chart1"));
         chart.draw(view, options);
     }
 }
-function tdy_cr_chart() {
+function tdy_cr_chart(today_cancel,today_revoke) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ["Request Status", "Count", { role: "style" }],
-            ["Cancel", 2, "#faae7b"],
-            ["Revoke", 3, "#432371"],
+            ["Cancel", parseInt(today_cancel), "#faae7b"],
+            ["Revoke", parseInt(today_revoke), "#432371"],
         ]);
 
         var view = new google.visualization.DataView(data);
@@ -124,14 +148,14 @@ function tdy_cr_chart() {
 }
 
 //Customer Type Charts
-function tot_ct_chart() {
+function tot_ct_chart(tot_new, tot_existing) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ["Customer Type", "Count", { role: "style" }],
-            ["New Customer", 75, "#faae7b"],
-            ["Existing Customer", 25, "#432371"],
+            ["New Customer", parseInt(tot_new), "#faae7b"],
+            ["Existing Customer", parseInt(tot_existing), "#432371"],
         ]);
 
         var view = new google.visualization.DataView(data);
@@ -156,14 +180,14 @@ function tot_ct_chart() {
         chart.draw(view, options);
     }
 }
-function tdy_ct_chart() {
+function tdy_ct_chart(today_new, today_existing) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ["Customer Type", "Count", { role: "style" }],
-            ["New Customer", 7, "#faae7b"],
-            ["Existing Customers", 2, "#432371"],
+            ["New Customer", parseInt(today_new), "#faae7b"],
+            ["Existing Customers", parseInt(today_existing), "#432371"],
         ]);
 
         var view = new google.visualization.DataView(data);
@@ -211,7 +235,7 @@ function tot_lc_chart() {
         var options = {
             // is3D: true,
             pieSliceText: 'label',
-            legend: { cursor: 'pointer'},
+            legend: { cursor: 'pointer' },
             colors: ['#734f5a', '#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51', '#941c2f', '#c05761'],
             tooltip: { trigger: 'selection' },
             width: '100%',
@@ -245,7 +269,7 @@ function tdy_lc_chart() {
         var options = {
             // is3D: true,
             pieSliceText: 'label',
-            legend: { cursor: 'pointer'},
+            legend: { cursor: 'pointer' },
             colors: ['#734f5a', '#264653', '#2a9d8f', '#e9c46a', '#f4a261', '#e76f51', '#941c2f', '#c05761'],
             tooltip: { trigger: 'selection' },
             width: '100%',
@@ -257,5 +281,33 @@ function tdy_lc_chart() {
         chart.draw(data, options);
 
     }
-    
+
+}
+
+
+function getRequestDashboard() {
+    $.post('dashboardFile/getRquestDashboard.php', function (data) {
+
+        $('#tot_req').text(data.tot_req)
+        $('#tot_issue').text(data.tot_issue)
+        $('#tot_bal').text(data.tot_balance)
+        $('#today_req').text(data.today_req)
+        $('#today_issue').text(data.today_issue)
+        $('#today_bal').text(data.today_balance)
+
+        localStorage.setItem('tot_cancel', data.tot_cancel);
+        localStorage.setItem('tot_revoke', data.tot_revoke);
+        localStorage.setItem('today_cancel', data.today_cancel);
+        localStorage.setItem('today_revoke', data.today_revoke);
+
+        localStorage.setItem('tot_new', data.tot_new);
+        localStorage.setItem('tot_existing', data.tot_existing);
+        localStorage.setItem('today_new', data.today_new);
+        localStorage.setItem('today_existing', data.today_existing);
+
+
+        $('input[name="chart_selector"]').trigger('change');//trigger at start
+
+    }, 'json');
+
 }
