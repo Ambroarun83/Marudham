@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2024 at 12:23 PM
+-- Generation Time: Mar 07, 2024 at 02:09 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2227,7 +2227,8 @@ INSERT INTO `customer_register` (`cus_reg_id`, `req_ref_id`, `cus_id`, `customer
 (45, '77', '123412341234', 'Rajesh', '1994-02-20', '29', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '2', '0', '0', '0', '18000', '0', '0', '0', '3000', '100000', 'xxx', '0', 'Illam', '25, Gandhi  road', 'Echur', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', '21', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
 (46, '78', '474747474747', 'Murugesan', '1994-02-20', '29', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '65d6f28385849.jpg', '2', '1', '10-01-2024', '1 Months,0 Years.', '18000', '0', '0', '0', '3000', '100000', 'xxx', '0', 'Illam', '25, Gandhi  road', 'Echur', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', '21', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
 (47, '79', '575757575757', 'Sugumaran', '1994-02-20', '29', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '65d81ec122dbd.jpg', '2', '1', '10-01-2024', '1 Months,0 Years.', '18000', '0', '0', '0', '3000', '100000', 'xxx', '0', 'Illam', '25, Gandhi  road', 'Echur', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', '21', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-(52, '84', '676767676767', 'Ilambarithi', '1994-02-20', '29', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '2', '0', '0', '0', '18000', '0', '0', '0', '3000', '100000', 'xxx', '0', 'Illam', '25, Gandhi  road', 'Echur', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', '14', '2024-01-01 00:00:00', '2024-01-01 00:00:00');
+(52, '84', '676767676767', 'Ilambarithi', '1994-02-20', '29', '1', '', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '2', '0', '0', '0', '18000', '0', '0', '0', '3000', '100000', 'xxx', '0', 'Illam', '25, Gandhi  road', 'Echur', '2', 'Supervisor', '', '', '', '', '0', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', 'GA 1', 'LA1', '14', '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
+(53, '85', '789789789789', 'Arjun', '2003-02-04', '21', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0', '2024-03-07 16:44:06', '2024-03-07 16:44:06');
 
 -- --------------------------------------------------------
 
@@ -3554,7 +3555,10 @@ INSERT INTO `request_category_info` (`cat_info`, `req_ref_id`, `category_info`) 
 (126, '77', '10000'),
 (127, '78', '10000'),
 (128, '79', '10000'),
-(133, '84', '10000');
+(133, '84', '10000'),
+(134, '85', '10*10'),
+(135, '85', '10*10'),
+(136, '85', '1000000');
 
 -- --------------------------------------------------------
 
@@ -3642,7 +3646,8 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (77, 'Staff', 'Arun', '', '', '', '', 'REQ-122', '2024-01-01', '45', '123412341234', 'New', 'Rajesh', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '21', '', '0', '2', '5', NULL, '2024-01-01 00:00:00', '2024-02-21 16:00:10'),
 (78, 'Staff', 'Arun', '', '', '', '', 'REQ-123', '2024-01-01', '46', '474747474747', 'New', 'Murugesan', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '21', '', '0', '2', '5', NULL, '2024-01-01 00:00:00', '2024-02-22 12:42:48'),
 (79, 'Staff', 'Arun', '', '', '', '', 'REQ-124', '2024-01-01', '47', '575757575757', 'New', 'Sugumaran', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '21', '', '0', '2', '5', NULL, '2024-01-01 00:00:00', '2024-02-23 10:00:32'),
-(84, 'Staff', 'Arun', '', '', '', '', 'REQ-125', '2024-01-01', '52', '676767676767', 'New', 'Ilambarithi', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '14', '', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00');
+(84, 'Staff', 'Arun', '', '', '', '', 'REQ-125', '2024-01-01', '52', '676767676767', 'New', 'Ilambarithi', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '14', '', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
+(85, 'Staff', 'Arun', '', '', 'ssf', '', 'REQ-126', '2024-03-07', NULL, '789789789789', 'New', 'Arjun', '2003-02-04', '21', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', '8', 'Plot Purchase', '50000', '5000', '10.0', '45000', '1', '155', '', '0', '', '0', '2', NULL, NULL, '2024-03-07 16:44:06', '2024-03-07 16:44:06');
 
 -- --------------------------------------------------------
 
@@ -5391,7 +5396,7 @@ ALTER TABLE `customer_profile`
 -- AUTO_INCREMENT for table `customer_register`
 --
 ALTER TABLE `customer_register`
-  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=53;
+  MODIFY `cus_reg_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `cus_old_data`
@@ -5535,13 +5540,13 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `request_category_info`
 --
 ALTER TABLE `request_category_info`
-  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=134;
+  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `request_creation`
 --
 ALTER TABLE `request_creation`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `signed_doc`
