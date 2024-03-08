@@ -16,18 +16,10 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 <script src="https://unpkg.com/counterup2@2.0.2/dist/index.js"></script>
 <link rel="stylesheet" href="css/dashboard.css">
 
-<style>
 
-</style>
 <!-- Page header start -->
 <br><br>
 <br><br>
-<!-- <div class="page-header">
-	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Dashboard
-	</div>
-</div><br> -->
-
 <!-- Page header end -->
 
 <!-- Main container start -->
@@ -190,11 +182,18 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 				</div>
 			</div>
 		<?php } else { ?>
-			<div class="card">
-				<div class="card-header">
-					<div class="card-title" id="req_title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Request</div>
+			<?php if ($userRole == 1) { ?>
+				<?php } ?>
+				<div class="branch-div">
+					<select name="by_branch" id="by_branch" class="branch-dropdown">
+						<option value="">Choose Branch</option>
+					</select>
 				</div>
-				<div class="card-body" id="req_body">
+			<div class="card" id="request_card">
+				<div class="card-header" id="req_title">
+					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Request</div>
+				</div>
+				<div class="card-body" id="req_body" style="display:none">
 					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
 						<div class="col-2">
 							<div class="card">
@@ -276,12 +275,12 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 										</div>
 									</div>
 									<br>
-									<div class="row" >
+									<div class="row">
 										<!-- <div class="col-12"> -->
-										<div class="col-6" >
+										<div class="col-6">
 											<div class="charts" id="chart1"></div>
 										</div>
-										<div class="col-6" >
+										<div class="col-6">
 											<div class="charts" id="chart2"></div>
 										</div>
 										<!-- </div> -->

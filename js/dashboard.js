@@ -27,12 +27,75 @@ document.addEventListener('DOMContentLoaded', () => {
             IO.observe(el);
         });
     }
+    
+    getBranchList();
+    
+    $('#by_branch').change(function () {
+        let by_branch = $('#by_branch', $(this).val());
+        getRequestDashboard();
+    });
+
+    $('#req_title').click(function () {
+        let check = $('#req_body');
+        if (check.is(':visible')) {
+            check.slideUp();
+        } else {
+            getRequestDashboard();
+            check.slideDown();
+        }
+    });
+
+
+});
+
+
+function getBranchList(){
+    $.post('dashboardFile/getBranchList.php', function (data) {
+        $('#by_branch').empty();
+        $('#by_branch').append('<option value="">Choose Branch</option>');
+        $('#by_branch').append('<option value="0">All Branch</option>');
+        for (let i = 0; i < data.length; i++) {
+            $('#by_branch').append('<option value="' + data[i].branch_id + '">' + data[i].branch_name + '</option>');
+        }
+    },'json')
+}
+
+
+// *****************************************************************************************************************************************
+//Request Dashboard initalization
+function getRequestDashboard() {
+
+    let by_branch = $('#by_branch').val();
+
+    $.post('dashboardFile/getRquestDashboard.php',{by_branch}, function (data) {
+
+        $('#tot_req').text(data.tot_req)
+        $('#tot_issue').text(data.tot_issue)
+        $('#tot_bal').text(data.tot_balance)
+        $('#today_req').text(data.today_req)
+        $('#today_issue').text(data.today_issue)
+        $('#today_bal').text(data.today_balance)
+
+        localStorage.setItem('tot_cancel', data.tot_cancel);
+        localStorage.setItem('tot_revoke', data.tot_revoke);
+        localStorage.setItem('today_cancel', data.today_cancel);
+        localStorage.setItem('today_revoke', data.today_revoke);
+
+        localStorage.setItem('tot_new', data.tot_new);
+        localStorage.setItem('tot_existing', data.tot_existing);
+        localStorage.setItem('today_new', data.today_new);
+        localStorage.setItem('today_existing', data.today_existing);
+
+
+        $('input[name="chart_selector"]').trigger('change');//trigger at start
+
+    }, 'json');
 
     $('input[name="chart_selector"]').change(function () {
         let selectedValue = $('input[name="chart_selector"]:checked').next().text().trim();
         $('#chart1,#chart2').empty();
 
-        
+
         if (selectedValue == 'Cancel & Revoke') {
             let tot_cancel = localStorage.getItem('tot_cancel');
             let tot_revoke = localStorage.getItem('tot_revoke');
@@ -40,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let today_revoke = localStorage.getItem('today_revoke');
 
             tot_cr_chart(tot_cancel, tot_revoke);
-            tdy_cr_chart(today_cancel,today_revoke);
+            tdy_cr_chart(today_cancel, today_revoke);
         } else if (selectedValue == 'Customer Type') {
             let tot_new = localStorage.getItem('tot_new');
             let tot_existing = localStorage.getItem('tot_existing');
@@ -55,27 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tdy_lc_chart();
         }
     });
-
-
-    $('#req_title').click(function () {
-        let check = $('#req_body');
-        if (check.is(':visible')) {
-            check.slideUp();
-        } else {
-            check.slideDown();
-        }
-    });
-
-    getRequestDashboard();
-
-});
-
-$(function () {
-    //on load event
-
-
-})
-
+}
 
 //Cancel and Revoke Charts
 function tot_cr_chart(tot_cancel, tot_revoke) {
@@ -114,7 +157,7 @@ function tot_cr_chart(tot_cancel, tot_revoke) {
         chart.draw(view, options);
     }
 }
-function tdy_cr_chart(today_cancel,today_revoke) {
+function tdy_cr_chart(today_cancel, today_revoke) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -284,30 +327,5 @@ function tdy_lc_chart() {
 
 }
 
+// *****************************************************************************************************************************************
 
-function getRequestDashboard() {
-    $.post('dashboardFile/getRquestDashboard.php', function (data) {
-
-        $('#tot_req').text(data.tot_req)
-        $('#tot_issue').text(data.tot_issue)
-        $('#tot_bal').text(data.tot_balance)
-        $('#today_req').text(data.today_req)
-        $('#today_issue').text(data.today_issue)
-        $('#today_bal').text(data.today_balance)
-
-        localStorage.setItem('tot_cancel', data.tot_cancel);
-        localStorage.setItem('tot_revoke', data.tot_revoke);
-        localStorage.setItem('today_cancel', data.today_cancel);
-        localStorage.setItem('today_revoke', data.today_revoke);
-
-        localStorage.setItem('tot_new', data.tot_new);
-        localStorage.setItem('tot_existing', data.tot_existing);
-        localStorage.setItem('today_new', data.today_new);
-        localStorage.setItem('today_existing', data.today_existing);
-
-
-        $('input[name="chart_selector"]').trigger('change');//trigger at start
-
-    }, 'json');
-
-}
