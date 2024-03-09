@@ -26,7 +26,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 <div class="main-container">
 	<!--form start-->
 	<form id="dashboard_form" name="dashboard_form" action="" method="post" enctype="multipart/form-data">
-
+		<input type="hidden" name="sub_area_list" id="sub_area_list" value=''>
 		<?php if ($userRole == 2) { ?>
 			<!-- Row start -->
 			<p class="heading-list wow fadeInUp">Request</p>
@@ -182,13 +182,13 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 				</div>
 			</div>
 		<?php } else { ?>
-			<?php if ($userRole == 1) { ?>
-				<?php } ?>
-				<div class="branch-div">
-					<select name="by_branch" id="by_branch" class="branch-dropdown">
-						<option value="">Choose Branch</option>
-					</select>
-				</div>
+
+			<div class="branch-div" <?php if ($userRole != 1) { ?> style="display:none" <?php } ?>>
+				<select name="branch_id" id="branch_id" class="branch-dropdown">
+					<option value="">Choose Branch</option>
+				</select>
+			</div>
+
 			<div class="card" id="request_card">
 				<div class="card-header" id="req_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Request</div>
@@ -291,7 +291,55 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					</div>
 				</div>
 			</div>
-		<?php } ?>
+			<div class="card" id="ver_card" style="display:none">
+				<div class="card-header" id="ver_title">
+					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Verification</div>
+				</div>
+				<div class="card-body" id="ver_body" style="display:none">
+					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
+						<div class="col-3">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total Verified</p>
+										<p class="counter wow fadeInUp" id="tot_ver">123123</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total In Verification</p>
+										<p class="counter wow fadeInUp" id="tot_in_ver">12312</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today Verified</p>
+										<p class="counter wow fadeInUp" id="today_ver">1231</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-3">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today In Verification</p>
+										<p class="counter wow fadeInUp" id="today_in_ver">123</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			<?php } ?>
 	</form>
 </div>
 

@@ -48,6 +48,11 @@ class branchProcess
             $sub_area_ids = array_merge($sub_area_ids, explode(',', $subarray));
         }
         $sub_area_list = implode(',', $sub_area_ids);
-        return $sub_area_list;
+        //check if sub area list is empty or not
+        if (!empty($sub_area_list)) {
+            return $sub_area_list;
+        }else{
+            return 'Error';
+        }
     }
 }
