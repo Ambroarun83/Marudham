@@ -6,7 +6,10 @@ $con = mysqli_connect("localhost", "root", "", "marudham") or die("Error in data
 mysqli_set_charset($con, "utf8");
 $con->query($timeZoneQry);
 
-$host = "localhost";$db_user = "root";$db_pass = "";$dbname = "marudham";
+$host = "localhost";
+$db_user = "root";
+$db_pass = "";
+$dbname = "marudham";
 $connect = new PDO("mysql:host=$host; dbname=$dbname", $db_user, $db_pass);
 $connect->exec($timeZoneQry);
 
@@ -16,3 +19,4 @@ $mysqli->query($timeZoneQry);
 
 
 
+date_default_timezone_set('Asia/Kolkata');
