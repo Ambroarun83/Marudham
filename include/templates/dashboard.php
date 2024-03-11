@@ -261,29 +261,23 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 									<div class="radio-container">
 										<div class="selector">
 											<div class="selector-item">
-												<input type="radio" id="radio1" name="chart_selector" class="selector-item_radio" checked>
-												<label for="radio1" class="selector-item_label">Cancel & Revoke</label>
+												<input type="radio" id="req_radio1" name="req_radio" class="selector-item_radio" checked>
+												<label for="req_radio1" class="selector-item_label">Cancel & Revoke</label>
 											</div>
 											<div class="selector-item">
-												<input type="radio" id="radio2" name="chart_selector" class="selector-item_radio">
-												<label for="radio2" class="selector-item_label">Customer Type</label>
+												<input type="radio" id="req_radio2" name="req_radio" class="selector-item_radio">
+												<label for="req_radio2" class="selector-item_label">Customer Type</label>
 											</div>
-											<!-- <div class="selector-item">
-												<input type="radio" id="radio3" name="chart_selector" class="selector-item_radio">
-												<label for="radio3" class="selector-item_label">Loan Category</label>
-											</div> -->
 										</div>
 									</div>
 									<br>
 									<div class="row">
-										<!-- <div class="col-12"> -->
 										<div class="col-6">
-											<div class="charts" id="chart1"></div>
+											<div class="charts" id="req_tot_chart"></div>
 										</div>
 										<div class="col-6">
-											<div class="charts" id="chart2"></div>
+											<div class="charts" id="req_today_chart"></div>
 										</div>
-										<!-- </div> -->
 									</div>
 								</div>
 							</div>
@@ -291,43 +285,43 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					</div>
 				</div>
 			</div>
-			<div class="card" id="ver_card" style="display:none">
+			<div class="card" id="ver_card">
 				<div class="card-header" id="ver_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Verification</div>
 				</div>
 				<div class="card-body" id="ver_body" style="display:none">
 					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-3">
-							<div class="card">
-								<div class="card-body counter-cards">
-									<div class="form-group text-center">
-										<p class='counter-head wow fadeIn'>Total Verified</p>
-										<p class="counter wow fadeInUp" id="tot_ver">123123</p>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-3">
+						<div class="col-2">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total In Verification</p>
-										<p class="counter wow fadeInUp" id="tot_in_ver">12312</p>
+										<p class="counter wow fadeInUp" id="tot_in_ver">123123</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-3">
+						<div class="col-2">
 							<div class="card">
-								<div class="card-body counter-cards today-card">
+								<div class="card-body counter-cards">
 									<div class="form-group text-center">
-										<p class='counter-head wow fadeIn'>Today Verified</p>
-										<p class="counter wow fadeInUp" id="today_ver">1231</p>
+										<p class='counter-head wow fadeIn'>Total Issued</p>
+										<p class="counter wow fadeInUp" id="tot_ver_issue">12312</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-3">
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total Balance</p>
+										<p class="counter wow fadeInUp" id="tot_balance">1231</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -337,13 +331,60 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today Issued</p>
+										<p class="counter wow fadeInUp" id="today_ver_issue">123</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today Balance</p>
+										<p class="counter wow fadeInUp" id="today_balance">123</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card" style="border:3px solid #009688">
+								<div class="card-body">
+									<div class="radio-container">
+										<div class="selector">
+											<div class="selector-item">
+												<input type="radio" id="ver_radio1" name="ver_radio" class="selector-item_radio" checked>
+												<label for="ver_radio1" class="selector-item_label">Cancel & Revoke</label>
+											</div>
+											<div class="selector-item">
+												<input type="radio" id="ver_radio2" name="ver_radio" class="selector-item_radio">
+												<label for="ver_radio2" class="selector-item_label">Customer Type</label>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-6">
+											<div class="charts" id="ver_tot_chart"></div>
+										</div>
+										<div class="col-6">
+											<div class="charts" id="ver_today_chart"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			<?php } ?>
+			</div>
+		<?php } ?>
 	</form>
 </div>
 
 
-<script src="vendor/canvasjs/canvasjs.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src='js/dashboard.js'></script>
