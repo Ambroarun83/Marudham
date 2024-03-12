@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2024 at 01:53 PM
+-- Generation Time: Mar 12, 2024 at 01:46 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -2747,7 +2747,8 @@ INSERT INTO `in_verification` (`req_id`, `user_type`, `user_name`, `agent_id`, `
 (78, 'Staff', 'Arun', '', '', '', '', 'REQ-123', '2024-01-01', '46', '474747474747', 'New', 'Murugesan', '1994-02-20', '29', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '21', '', '0', '2', '5', NULL, '2024-01-01 00:00:00', '2024-02-22 12:42:48'),
 (79, 'Staff', 'Arun', '', '', '', '', 'REQ-124', '2024-01-01', '47', '575757575757', 'New', 'Sugumaran', '1994-02-20', '29', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '21', '', '0', '2', '5', NULL, '2024-01-01 00:00:00', '2024-02-23 10:00:32'),
 (84, 'Staff', 'Arun', '', '', '', '', 'REQ-125', '2024-01-01', '52', '676767676767', 'New', 'Ilambarithi', '1994-02-20', '29', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '14', '', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-(85, 'Staff', 'Arun', '', '', 'ssf', '', 'REQ-126', '2024-03-07', '53', '789789789789', 'New', 'Arjun', '2003-02-04', '21', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', '8', 'Plot Purchase', '50000', '5000', '10.0', '45000', '1', '155', '', '1', '', '0', '2', '2', NULL, '2024-03-07 16:44:06', '2024-03-11 17:48:57');
+(85, 'Staff', 'Arun', '', '', 'ssf', '', 'REQ-126', '2024-03-07', '53', '789789789789', 'New', 'Arjun', '2003-02-04', '21', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', '8', 'Plot Purchase', '50000', '5000', '10.0', '45000', '1', '155', '', '1', '', '0', '2', '2', NULL, '2024-03-07 16:44:06', '2024-03-11 17:48:57'),
+(86, 'Staff', 'Arun', '', '', 'qwe', '', 'REQ-127', '2024-03-12', '53', '789789789789', 'Existing', 'Arjun', '2003-02-04', '21', '1', NULL, 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', '11', 'Interest R', '', '', '', '15000', '1', '1111', '', '1', '', '0', '2', '2', NULL, '2024-03-12 12:24:55', '2024-03-12 12:25:04');
 
 -- --------------------------------------------------------
 
@@ -3559,7 +3560,10 @@ INSERT INTO `request_category_info` (`cat_info`, `req_ref_id`, `category_info`) 
 (133, '84', '10000'),
 (134, '85', '10*10'),
 (135, '85', '10*10'),
-(136, '85', '1000000');
+(136, '85', '1000000'),
+(137, '86', 'VAO'),
+(138, '86', '24'),
+(139, '86', '17500');
 
 -- --------------------------------------------------------
 
@@ -3648,7 +3652,8 @@ INSERT INTO `request_creation` (`req_id`, `user_type`, `user_name`, `agent_id`, 
 (78, 'Staff', 'Arun', '', '', '', '', 'REQ-123', '2024-01-01', '46', '474747474747', 'New', 'Murugesan', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '21', '', '0', '2', '5', NULL, '2024-01-01 00:00:00', '2024-02-22 12:42:48'),
 (79, 'Staff', 'Arun', '', '', '', '', 'REQ-124', '2024-01-01', '47', '575757575757', 'New', 'Sugumaran', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '21', '', '0', '2', '5', NULL, '2024-01-01 00:00:00', '2024-02-23 10:00:32'),
 (84, 'Staff', 'Arun', '', '', '', '', 'REQ-125', '2024-01-01', '52', '676767676767', 'New', 'Ilambarithi', '1994-02-20', '29', '1', 'TamilNadu', 'Tiruvannamalai', 'Vandavasi', '5', '26', '50', '7708261661', '', 'Lingam', 'Rajeshwari', '1', 'Sowmiya', '2', 'Supervisor', '', '1', 'Personal', '', '', '', '25000', '1', '3000', '', '14', '', '0', '2', '2', NULL, '2024-01-01 00:00:00', '2024-01-01 00:00:00'),
-(85, 'Staff', 'Arun', '', '', 'ssf', '', 'REQ-126', '2024-03-07', '53', '789789789789', 'New', 'Arjun', '2003-02-04', '21', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', '8', 'Plot Purchase', '50000', '5000', '10.0', '45000', '1', '155', '', '1', '', '0', '2', '2', NULL, '2024-03-07 16:44:06', '2024-03-11 17:48:57');
+(85, 'Staff', 'Arun', '', '', 'ssf', '', 'REQ-126', '2024-03-07', '53', '789789789789', 'New', 'Arjun', '2003-02-04', '21', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', '8', 'Plot Purchase', '50000', '5000', '10.0', '45000', '1', '155', '', '1', '', '0', '2', '2', NULL, '2024-03-07 16:44:06', '2024-03-11 17:48:57'),
+(86, 'Staff', 'Arun', '', '', 'qwe', '', 'REQ-127', '2024-03-12', '53', '789789789789', 'Existing', 'Arjun', '2003-02-04', '21', '1', 'TamilNadu', 'Tiruvannamalai', 'Chetpet', '3', '15', '1', '9874563210', '', 'Dheena', 'Rani', '2', '', '1', 'VAO', '65e9a17e9d353.jpg', '11', 'Interest R', '', '', '', '15000', '1', '1111', '', '1', '', '0', '2', '2', NULL, '2024-03-12 12:24:55', '2024-03-12 12:25:04');
 
 -- --------------------------------------------------------
 
@@ -5541,13 +5546,13 @@ ALTER TABLE `noc`
 -- AUTO_INCREMENT for table `request_category_info`
 --
 ALTER TABLE `request_category_info`
-  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `cat_info` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=140;
 
 --
 -- AUTO_INCREMENT for table `request_creation`
 --
 ALTER TABLE `request_creation`
-  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `req_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- AUTO_INCREMENT for table `signed_doc`

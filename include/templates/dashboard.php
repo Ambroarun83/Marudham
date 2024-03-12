@@ -296,7 +296,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total In Verification</p>
-										<p class="counter wow fadeInUp" id="tot_in_ver">123123</p>
+										<p class="counter wow fadeInUp" id="tot_in_ver"></p>
 									</div>
 								</div>
 							</div>
@@ -306,7 +306,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Issued</p>
-										<p class="counter wow fadeInUp" id="tot_ver_issue">12312</p>
+										<p class="counter wow fadeInUp" id="tot_ver_issue"></p>
 									</div>
 								</div>
 							</div>
@@ -316,7 +316,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Balance</p>
-										<p class="counter wow fadeInUp" id="tot_balance">1231</p>
+										<p class="counter wow fadeInUp" id="tot_balance"></p>
 									</div>
 								</div>
 							</div>
@@ -326,7 +326,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today In Verification</p>
-										<p class="counter wow fadeInUp" id="today_in_ver">123</p>
+										<p class="counter wow fadeInUp" id="today_in_ver"></p>
 									</div>
 								</div>
 							</div>
@@ -336,7 +336,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Issued</p>
-										<p class="counter wow fadeInUp" id="today_ver_issue">123</p>
+										<p class="counter wow fadeInUp" id="today_ver_issue"></p>
 									</div>
 								</div>
 							</div>
@@ -346,7 +346,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Balance</p>
-										<p class="counter wow fadeInUp" id="today_balance">123</p>
+										<p class="counter wow fadeInUp" id="today_balance"></p>
 									</div>
 								</div>
 							</div>
