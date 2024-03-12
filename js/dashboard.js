@@ -159,22 +159,22 @@ function getVerificationDashboard(){
 
         $.post('dashboardFile/getVerificationDashboard.php', { sub_area_list }, function (data) {
 
-            // $('#tot_in_ver').text(data.tot_in_ver)
-            // $('#tot_ver_issue').text(data.tot_issue)
-            // $('#tot_balance').text(data.tot_balance)
-            // $('#today_in_ver').text(data.today_in_ver)
-            // $('#today_ver_issue').text(data.today_issue)
-            // $('#today_balance').text(data.today_balance)
+            $('#tot_in_ver').text(data.tot_in_ver)
+            $('#tot_ver_issue').text(data.tot_issue)
+            $('#tot_balance').text(data.tot_balance)
+            $('#today_in_ver').text(data.today_in_ver)
+            $('#today_ver_issue').text(data.today_issue)
+            $('#today_balance').text(data.today_balance)
 
-            // localStorage.setItem('tot_cancel', data.tot_cancel);
-            // localStorage.setItem('tot_revoke', data.tot_revoke);
-            // localStorage.setItem('today_cancel', data.today_cancel);
-            // localStorage.setItem('today_revoke', data.today_revoke);
+            localStorage.setItem('tot_cancel', data.tot_cancel);
+            localStorage.setItem('tot_revoke', data.tot_revoke);
+            localStorage.setItem('today_cancel', data.today_cancel);
+            localStorage.setItem('today_revoke', data.today_revoke);
 
-            // localStorage.setItem('tot_new', data.tot_new);
-            // localStorage.setItem('tot_existing', data.tot_existing);
-            // localStorage.setItem('today_new', data.today_new);
-            // localStorage.setItem('today_existing', data.today_existing);
+            localStorage.setItem('tot_new', data.tot_new);
+            localStorage.setItem('tot_existing', data.tot_existing);
+            localStorage.setItem('today_new', data.today_new);
+            localStorage.setItem('today_existing', data.today_existing);
 
 
             $('input[name="ver_radio"]').trigger('change');//trigger at start
