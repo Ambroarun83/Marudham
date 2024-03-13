@@ -210,7 +210,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Issued</p>
-										<p class="counter wow fadeInUp" id="tot_issue"></p>
+										<p class="counter wow fadeInUp" id="tot_req_issue"></p>
 									</div>
 								</div>
 							</div>
@@ -220,7 +220,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Balance</p>
-										<p class="counter wow fadeInUp" id="tot_bal"></p>
+										<p class="counter wow fadeInUp" id="tot_req_bal"></p>
 									</div>
 								</div>
 							</div>
@@ -240,7 +240,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Issued</p>
-										<p class="counter wow fadeInUp" id="today_issue"></p>
+										<p class="counter wow fadeInUp" id="today_req_issue"></p>
 									</div>
 								</div>
 							</div>
@@ -250,7 +250,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Balance</p>
-										<p class="counter wow fadeInUp" id="today_bal"></p>
+										<p class="counter wow fadeInUp" id="today_req_bal"></p>
 									</div>
 								</div>
 							</div>
@@ -316,7 +316,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Balance</p>
-										<p class="counter wow fadeInUp" id="tot_balance"></p>
+										<p class="counter wow fadeInUp" id="tot_ver_bal"></p>
 									</div>
 								</div>
 							</div>
@@ -346,7 +346,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Balance</p>
-										<p class="counter wow fadeInUp" id="today_balance"></p>
+										<p class="counter wow fadeInUp" id="today_ver_bal"></p>
 									</div>
 								</div>
 							</div>
@@ -373,6 +373,102 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 										</div>
 										<div class="col-6">
 											<div class="charts" id="ver_today_chart"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card" id="app_card">
+				<div class="card-header" id="app_title">
+					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Approval</div>
+				</div>
+				<div class="card-body" id="app_body" style="display:none">
+					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total In Approval</p>
+										<p class="counter wow fadeInUp" id="tot_in_app"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total Issued</p>
+										<p class="counter wow fadeInUp" id="tot_app_issue"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total Balance</p>
+										<p class="counter wow fadeInUp" id="tot_app_bal"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today In Approval</p>
+										<p class="counter wow fadeInUp" id="today_in_app"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today Issued</p>
+										<p class="counter wow fadeInUp" id="today_app_issue"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today Balance</p>
+										<p class="counter wow fadeInUp" id="today_app_bal"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card" style="border:3px solid #009688">
+								<div class="card-body">
+									<div class="radio-container">
+										<div class="selector">
+											<div class="selector-item">
+												<input type="radio" id="app_radio1" name="app_radio" class="selector-item_radio" checked>
+												<label for="app_radio1" class="selector-item_label">Cancel & Revoke</label>
+											</div>
+											<div class="selector-item">
+												<input type="radio" id="app_radio2" name="app_radio" class="selector-item_radio">
+												<label for="app_radio2" class="selector-item_label">Customer Type</label>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-6">
+											<div class="charts" id="app_tot_chart"></div>
+										</div>
+										<div class="col-6">
+											<div class="charts" id="app_today_chart"></div>
 										</div>
 									</div>
 								</div>

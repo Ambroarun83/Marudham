@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $('#branch_id').change(function () {
         getRequestDashboard();
         getVerificationDashboard();
+        getApprovalDashboard();
     });
 
     $('#req_title').click(function () {
@@ -30,6 +31,17 @@ document.addEventListener('DOMContentLoaded', () => {
             getVerificationDashboard();
             check.slideDown();
             $('.card-body').not('#ver_body').not($('#ver_body').find('.card-body')).slideUp();//hide the card body other than this card
+        }
+    });
+    $('#app_title').click(function () {
+        let check = $('#app_body');
+        check.find('.card-body').show();//show the card body of this title
+        if (check.is(':visible')) {
+            check.slideUp();
+        } else {
+            getApprovalDashboard();
+            check.slideDown();
+            $('.card-body').not('#app_body').not($('#app_body').find('.card-body')).slideUp();//hide the card body other than this card
         }
     });
 
@@ -96,11 +108,11 @@ function getRequestDashboard() {
         $.post('dashboardFile/getRequestDashboard.php', { sub_area_list }, function (data) {
 
             $('#tot_req').text(data.tot_req)
-            $('#tot_issue').text(data.tot_issue)
-            $('#tot_bal').text(data.tot_balance)
+            $('#tot_req_issue').text(data.tot_issue)
+            $('#tot_req_bal').text(data.tot_balance)
             $('#today_req').text(data.today_req)
-            $('#today_issue').text(data.today_issue)
-            $('#today_bal').text(data.today_balance)
+            $('#today_req_issue').text(data.today_issue)
+            $('#today_req_bal').text(data.today_balance)
 
             localStorage.setItem('tot_cancel', data.tot_cancel);
             localStorage.setItem('tot_revoke', data.tot_revoke);
@@ -128,16 +140,16 @@ function getRequestDashboard() {
                 let today_cancel = localStorage.getItem('today_cancel');
                 let today_revoke = localStorage.getItem('today_revoke');
 
-                tot_cr_chart(tot_cancel, tot_revoke,'req_tot_chart');
-                tdy_cr_chart(today_cancel, today_revoke,'req_today_chart');
+                tot_cr_chart(tot_cancel, tot_revoke, 'req_tot_chart');
+                tdy_cr_chart(today_cancel, today_revoke, 'req_today_chart');
             } else if (selectedValue == 'Customer Type') {
                 let tot_new = localStorage.getItem('tot_new');
                 let tot_existing = localStorage.getItem('tot_existing');
                 let today_new = localStorage.getItem('today_new');
                 let today_existing = localStorage.getItem('today_existing');
 
-                tot_ct_chart(tot_new, tot_existing,'req_tot_chart');
-                tdy_ct_chart(today_new, today_existing,'req_today_chart');
+                tot_ct_chart(tot_new, tot_existing, 'req_tot_chart');
+                tdy_ct_chart(today_new, today_existing, 'req_today_chart');
 
             }
         });
@@ -147,13 +159,8 @@ function getRequestDashboard() {
 
 // *****************************************************************************************************************************************
 
-function getVerificationDashboard(){
+function getVerificationDashboard() {
     let branch_id = $('#branch_id').val();
-    if(branch_id == ''){
-        //then pass 0 as branch id
-        //because, a staff should able to view his group's whole count which groups are assigned to them
-        //its like viewing the all branches of them
-    }
     localStorage.clear();//clear localstorage before fetching data for prevent conflict
     getSubAreaList(branch_id).then(sub_area_list => {
 
@@ -161,10 +168,10 @@ function getVerificationDashboard(){
 
             $('#tot_in_ver').text(data.tot_in_ver)
             $('#tot_ver_issue').text(data.tot_issue)
-            $('#tot_balance').text(data.tot_balance)
+            $('#tot_ver_bal').text(data.tot_balance)
             $('#today_in_ver').text(data.today_in_ver)
             $('#today_ver_issue').text(data.today_issue)
-            $('#today_balance').text(data.today_balance)
+            $('#today_ver_bal').text(data.today_balance)
 
             localStorage.setItem('tot_cancel', data.tot_cancel);
             localStorage.setItem('tot_revoke', data.tot_revoke);
@@ -192,28 +199,79 @@ function getVerificationDashboard(){
                 let today_cancel = localStorage.getItem('today_cancel');
                 let today_revoke = localStorage.getItem('today_revoke');
 
-                tot_cr_chart(tot_cancel, tot_revoke,'ver_tot_chart');
-                tdy_cr_chart(today_cancel, today_revoke,'ver_today_chart');
+                tot_cr_chart(tot_cancel, tot_revoke, 'ver_tot_chart');
+                tdy_cr_chart(today_cancel, today_revoke, 'ver_today_chart');
             } else if (selectedValue == 'Customer Type') {
                 let tot_new = localStorage.getItem('tot_new');
                 let tot_existing = localStorage.getItem('tot_existing');
                 let today_new = localStorage.getItem('today_new');
                 let today_existing = localStorage.getItem('today_existing');
 
-                tot_ct_chart(tot_new, tot_existing,'ver_tot_chart');
-                tdy_ct_chart(today_new, today_existing,'ver_today_chart');
+                tot_ct_chart(tot_new, tot_existing, 'ver_tot_chart');
+                tdy_ct_chart(today_new, today_existing, 'ver_today_chart');
 
             }
         });
-        });
+    });
 }
 
 // *****************************************************************************************************************************************
 
+function getApprovalDashboard() {
+    let branch_id = $('#branch_id').val();
+    localStorage.clear();//clear localstorage before fetching data for prevent conflict
+    getSubAreaList(branch_id).then(sub_area_list => {
+
+        $.post('dashboardFile/getApprovalDashboard.php', { sub_area_list }, function (data) {
+
+            $('#tot_in_app').text(data.tot_in_app)
+            $('#tot_app_issue').text(data.tot_issue)
+            $('#tot_app_bal').text(data.tot_app_bal)
+            $('#today_in_app').text(data.today_in_app)
+            $('#today_app_issue').text(data.today_issue)
+            $('#today_app_bal').text(data.today_app_bal)
+
+            localStorage.setItem('tot_cancel', data.tot_cancel);
+            localStorage.setItem('tot_revoke', data.tot_revoke);
+            localStorage.setItem('today_cancel', data.today_cancel);
+            localStorage.setItem('today_revoke', data.today_revoke);
+
+            localStorage.setItem('tot_new', data.tot_new);
+            localStorage.setItem('tot_existing', data.tot_existing);
+            localStorage.setItem('today_new', data.today_new);
+            localStorage.setItem('today_existing', data.today_existing);
 
 
+            $('input[name="app_radio"]').trigger('change');//trigger at start
+
+        }, 'json');
+
+        $('input[name="app_radio"]').change(function () {
+            let selectedValue = $('input[name="app_radio"]:checked').next().text().trim();
+            $('#app_tot_chart,#app_today_chart').empty();
 
 
+            if (selectedValue == 'Cancel & Revoke') {
+                let tot_cancel = localStorage.getItem('tot_cancel');
+                let tot_revoke = localStorage.getItem('tot_revoke');
+                let today_cancel = localStorage.getItem('today_cancel');
+                let today_revoke = localStorage.getItem('today_revoke');
+
+                tot_cr_chart(tot_cancel, tot_revoke, 'app_tot_chart');
+                tdy_cr_chart(today_cancel, today_revoke, 'app_today_chart');
+            } else if (selectedValue == 'Customer Type') {
+                let tot_new = localStorage.getItem('tot_new');
+                let tot_existing = localStorage.getItem('tot_existing');
+                let today_new = localStorage.getItem('today_new');
+                let today_existing = localStorage.getItem('today_existing');
+
+                tot_ct_chart(tot_new, tot_existing, 'app_tot_chart');
+                tdy_ct_chart(today_new, today_existing, 'app_today_chart');
+
+            }
+        });
+    });
+}
 
 
 
@@ -224,7 +282,7 @@ function getVerificationDashboard(){
 
 // *****************************************************************************************************************************************
 //Cancel and Revoke Charts
-function tot_cr_chart(tot_cancel, tot_revoke,target_chart) {
+function tot_cr_chart(tot_cancel, tot_revoke, target_chart) {
 
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
@@ -260,7 +318,7 @@ function tot_cr_chart(tot_cancel, tot_revoke,target_chart) {
         chart.draw(view, options);
     }
 }
-function tdy_cr_chart(today_cancel, today_revoke,target_chart) {
+function tdy_cr_chart(today_cancel, today_revoke, target_chart) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -294,7 +352,7 @@ function tdy_cr_chart(today_cancel, today_revoke,target_chart) {
 }
 
 //Customer Type Charts
-function tot_ct_chart(tot_new, tot_existing,target_chart) {
+function tot_ct_chart(tot_new, tot_existing, target_chart) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -326,7 +384,7 @@ function tot_ct_chart(tot_new, tot_existing,target_chart) {
         chart.draw(view, options);
     }
 }
-function tdy_ct_chart(today_new, today_existing,target_chart) {
+function tdy_ct_chart(today_new, today_existing, target_chart) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
