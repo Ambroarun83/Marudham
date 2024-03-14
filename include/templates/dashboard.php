@@ -477,6 +477,102 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					</div>
 				</div>
 			</div>
+			<div class="card" id="ack_card">
+				<div class="card-header" id="ack_title">
+					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Acknowledgment</div>
+				</div>
+				<div class="card-body" id="ack_body" style="display:none">
+					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total In Ack</p>
+										<p class="counter wow fadeInUp" id="tot_in_ack"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total Issued</p>
+										<p class="counter wow fadeInUp" id="tot_ack_issue"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total Balance</p>
+										<p class="counter wow fadeInUp" id="tot_ack_bal"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today In Ack</p>
+										<p class="counter wow fadeInUp" id="today_in_ack"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today Issued</p>
+										<p class="counter wow fadeInUp" id="today_ack_issue"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-2">
+							<div class="card">
+								<div class="card-body counter-cards today-card">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Today Balance</p>
+										<p class="counter wow fadeInUp" id="today_ack_bal"></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-12">
+							<div class="card" style="border:3px solid #009688">
+								<div class="card-body">
+									<div class="radio-container">
+										<div class="selector">
+											<div class="selector-item">
+												<input type="radio" id="ack_radio1" name="ack_radio" class="selector-item_radio" checked>
+												<label for="ack_radio1" class="selector-item_label">Cancel & Revoke</label>
+											</div>
+											<div class="selector-item">
+												<input type="radio" id="ack_radio2" name="ack_radio" class="selector-item_radio">
+												<label for="ack_radio2" class="selector-item_label">Customer Type</label>
+											</div>
+										</div>
+									</div>
+									<br>
+									<div class="row">
+										<div class="col-6">
+											<div class="charts" id="ack_tot_chart"></div>
+										</div>
+										<div class="col-6">
+											<div class="charts" id="ack_today_chart"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		<?php } ?>
 	</form>
 </div>
