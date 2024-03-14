@@ -44,6 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
             $('.card-body').not('#app_body').not($('#app_body').find('.card-body')).slideUp();//hide the card body other than this card
         }
     });
+    $('#ack_title').click(function () {
+        let check = $('#ack_body');
+        check.find('.card-body').show();//show the card body of this title
+        if (check.is(':visible')) {
+            check.slideUp();
+        } else {
+            getAcknowledgmentDashboard();
+            check.slideDown();
+            $('.card-body').not('#ack_body').not($('#ack_body').find('.card-body')).slideUp();//hide the card body other than this card
+        }
+    });
 
 
 });
@@ -273,7 +284,63 @@ function getApprovalDashboard() {
     });
 }
 
+// *****************************************************************************************************************************************
 
+function getAcknowledgmentDashboard() {
+    let branch_id = $('#branch_id').val();
+    localStorage.clear();//clear localstorage before fetching data for prevent conflict
+    getSubAreaList(branch_id).then(sub_area_list => {
+
+        $.post('dashboardFile/getAcknowledgmentDashboard.php', { sub_area_list }, function (data) {
+
+            $('#tot_in_ack').text(data.tot_in_ack)
+            $('#tot_ack_issue').text(data.tot_issue)
+            $('#tot_ack_bal').text(data.tot_ack_bal)
+            $('#today_in_ack').text(data.today_in_ack)
+            $('#today_ack_issue').text(data.today_issue)
+            $('#today_ack_bal').text(data.today_ack_bal)
+
+            localStorage.setItem('tot_cancel', data.tot_cancel);
+            localStorage.setItem('tot_revoke', data.tot_revoke);
+            localStorage.setItem('today_cancel', data.today_cancel);
+            localStorage.setItem('today_revoke', data.today_revoke);
+
+            localStorage.setItem('tot_new', data.tot_new);
+            localStorage.setItem('tot_existing', data.tot_existing);
+            localStorage.setItem('today_new', data.today_new);
+            localStorage.setItem('today_existing', data.today_existing);
+
+
+            $('input[name="ack_radio"]').trigger('change');//trigger at start
+
+        }, 'json');
+
+        $('input[name="ack_radio"]').change(function () {
+            let selectedValue = $('input[name="ack_radio"]:checked').next().text().trim();
+            $('#ack_tot_chart,#ack_today_chart').empty();
+
+
+            if (selectedValue == 'Cancel & Revoke') {
+                let tot_cancel = localStorage.getItem('tot_cancel');
+                let tot_revoke = localStorage.getItem('tot_revoke');
+                let today_cancel = localStorage.getItem('today_cancel');
+                let today_revoke = localStorage.getItem('today_revoke');
+
+                tot_cr_chart(tot_cancel, tot_revoke, 'ack_tot_chart');
+                tdy_cr_chart(today_cancel, today_revoke, 'ack_today_chart');
+            } else if (selectedValue == 'Customer Type') {
+                let tot_new = localStorage.getItem('tot_new');
+                let tot_existing = localStorage.getItem('tot_existing');
+                let today_new = localStorage.getItem('today_new');
+                let today_existing = localStorage.getItem('today_existing');
+
+                tot_ct_chart(tot_new, tot_existing, 'ack_tot_chart');
+                tdy_ct_chart(today_new, today_existing, 'ack_today_chart');
+
+            }
+        });
+    });
+}
 
 
 
