@@ -14,7 +14,7 @@ class verificaitonClass
         $sub_area_list = $_POST['sub_area_list'];
 
         $tot_in_ver = "SELECT COUNT(*) as tot_in_ver from request_creation where (cus_status >= 1 and cus_status NOT IN(4,8) ) ";
-        $today_in_ver = "SELECT COUNT(*) as tot_in_ver from request_creation where cus_status = 1 and date(updated_date) = '$today' ";
+        $today_in_ver = "SELECT COUNT(*) as tot_in_ver from request_creation where cus_status IN(1,10,11,12) and date(updated_date) = '$today' ";
         $tot_issue = "SELECT COUNT(*) as tot_issue FROM request_creation req JOIN customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 ";
         $today_issue = "SELECT COUNT(*) as today_issue FROM request_creation req JOIN customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 and date(req.updated_date) = '$today' ";
         $tot_balance = "SELECT COUNT(*) as tot_balance from request_creation where (cus_status < 14 and cus_status >= 1 and cus_status NOT IN(4, 5, 6, 7, 8, 9, 10, 11, 12) )  ";
