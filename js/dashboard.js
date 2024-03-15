@@ -6,9 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear();//clear localstorage before fetching data for prevent conflict
 
     $('#branch_id').change(function () {
-        getRequestDashboard();
-        getVerificationDashboard();
-        getApprovalDashboard();
+        // getRequestDashboard();
+        // getVerificationDashboard();
+        // getApprovalDashboard();
+        // getAcknowledgmentDashboard();
+        let opened = $('.card-body:visible').prev('.card-header').attr('id');
+        $('#' + opened).trigger('click');
+        showOverlay();
+        setTimeout(() => {
+            $('#' + opened).trigger('click');
+            hideOverlay();
+        }, 1000);
+
     });
 
     $('#req_title').click(function () {
@@ -53,6 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
             getAcknowledgmentDashboard();
             check.slideDown();
             $('.card-body').not('#ack_body').not($('#ack_body').find('.card-body')).slideUp();//hide the card body other than this card
+        }
+    });
+    $('#li_title').click(function () {
+        let check = $('#li_body');
+        check.find('.card-body').show();//show the card body of this title
+        if (check.is(':visible')) {
+            check.slideUp();
+        } else {
+            getLoanIssueDashboard();
+            check.slideDown();
+            $('.card-body').not('#li_body').not($('#li_body').find('.card-body')).slideUp();//hide the card body other than this card
         }
     });
 
@@ -342,6 +362,79 @@ function getAcknowledgmentDashboard() {
     });
 }
 
+// *****************************************************************************************************************************************
+
+function getLoanIssueDashboard() {
+    let branch_id = $('#branch_id').val();
+    localStorage.clear();//clear localstorage before fetching data for prevent conflict
+    getSubAreaList(branch_id).then(sub_area_list => {
+
+        $.post('dashboardFile/getLoanIssueDashboard.php', { sub_area_list }, function (data) {
+
+            $('#tot_li').text(data.tot_li)
+            $('#tot_li_issue').text(data.tot_li_issue)
+            $('#tot_li_bal').text(data.tot_li_bal)
+            $('#today_li').text(data.today_li)
+            $('#today_li_issue').text(data.today_li_issue)
+            $('#today_li_bal').text(data.today_li_bal)
+
+            localStorage.setItem('tot_bank', data.tot_bank);
+            localStorage.setItem('tot_cash', data.tot_cash);
+            localStorage.setItem('tot_cheque', data.tot_cheque);
+            localStorage.setItem('tot_transaction', data.tot_transaction);
+            localStorage.setItem('today_bank', data.today_bank);
+            localStorage.setItem('today_cash', data.today_cash);
+            localStorage.setItem('today_cheque', data.today_cheque);
+            localStorage.setItem('today_transaction', data.today_transaction);
+
+            localStorage.setItem('tot_new', data.tot_new);
+            localStorage.setItem('tot_existing', data.tot_existing);
+            localStorage.setItem('today_new', data.today_new);
+            localStorage.setItem('today_existing', data.today_existing);
+
+            localStorage.setItem('today_li_amt', data.today_li_amt);
+            localStorage.setItem('today_issued_amt', data.today_issued_amt);
+
+
+            $('input[name="li_radio"]').trigger('change');//trigger at start
+
+        }, 'json');
+
+        $('input[name="li_radio"]').change(function () {
+            let selectedValue = $('input[name="li_radio"]:checked').next().text().trim();
+            $('#li_tot_chart,#li_today_chart').empty();
+
+
+            if (selectedValue == 'Issued Modes') {
+                // let tot_bank = localStorage.getItem('tot_bank');
+                let tot_cash = localStorage.getItem('tot_cash');
+                let tot_cheque = localStorage.getItem('tot_cheque');
+                let tot_transaction = localStorage.getItem('tot_transaction');
+                // let today_bank = localStorage.getItem('today_bank');
+                let today_cash = localStorage.getItem('today_cash');
+                let today_cheque = localStorage.getItem('today_cheque');
+                let today_transaction = localStorage.getItem('today_transaction');
+
+                tot_issue_chart( tot_cash, tot_cheque, tot_transaction, 'li_tot_chart');
+                tdy_issue_chart( today_cash, today_cheque, today_transaction, 'li_today_chart');
+            } else if (selectedValue == 'Customer Type') {
+                let tot_new = localStorage.getItem('tot_new');
+                let tot_existing = localStorage.getItem('tot_existing');
+                let today_new = localStorage.getItem('today_new');
+                let today_existing = localStorage.getItem('today_existing');
+
+                tot_ct_chart(tot_new, tot_existing, 'li_tot_chart');
+                tdy_ct_chart(today_new, today_existing, 'li_today_chart');
+
+            }else if(selectedValue == 'Issue Amount'){
+                let today_li_amt = localStorage.getItem('today_li_amt');
+                let today_issued_amt = localStorage.getItem('today_issued_amt');
+                tdy_li_chart(today_li_amt, today_issued_amt, 'li_today_chart');
+            }
+        });
+    });
+}
+
 
 
 
@@ -473,6 +566,103 @@ function tdy_ct_chart(today_new, today_existing, target_chart) {
 
         var options = {
             title: "Today New & Existing Customers",
+            width: '100%',
+            height: '400px',
+            bar: { groupWidth: "90%" },
+            legend: { position: "none" },
+            vAxis: { format: 'decimal', gridlines: { interval: [0, 5, 10, 15, 20] } },//this is for left vertical column count interval
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById(target_chart));
+        chart.draw(view, options);
+    }
+}
+
+//Loan issue Pie charts
+function tot_issue_chart(tot_cash, tot_cheque, tot_transaction, target_chart) {
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Loan Issue Mode', 'Amount'],
+            // ['Bank', { v: parseInt(tot_bank), f: 'Bank: '+ parseInt(tot_bank) }],
+            ['Cash', { v: parseInt(tot_cash), f: 'Cash: '+ moneyFormatIndia(tot_cash) }],
+            ['Cheque', { v: parseInt(tot_cheque), f: 'Cheque: '+moneyFormatIndia(tot_cheque) }],
+            ['Transaction', { v: parseInt(tot_transaction), f: 'Transaction: '+moneyFormatIndia(tot_transaction) }],
+        ]);
+
+        var options = {
+            pieSliceText: 'value',
+            // is3D: true,
+            tooltip: {
+                trigger: 'selection', // Show tooltip on selection
+            },
+            title:'Total Issued Amount by Modes',
+            // pieHole:0.5,
+            sliceVisibilityThreshold: 0,//shows legend even value is 0
+
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById(target_chart));
+        chart.draw(data, options);
+
+    }
+}
+function tdy_issue_chart(today_cash, today_cheque, today_transaction, target_chart) {
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Loan Issue Mode', 'Amount'],
+            // ['Bank', { v: parseInt(today_bank), f: 'Bank: '+ parseInt(today_bank) }],
+            ['Cash', { v: parseInt(today_cash), f: 'Cash: '+ moneyFormatIndia(today_cash) }],
+            ['Cheque', { v: parseInt(today_cheque), f: 'Cheque: '+moneyFormatIndia(today_cheque) }],
+            ['Transaction', { v: parseInt(today_transaction), f: 'Transaction: '+moneyFormatIndia(today_transaction) }],
+        ]);
+
+        var options = {
+            pieSliceText: 'value',
+            // is3D: true,
+            tooltip: {
+                trigger: 'selection', // Show tooltip on selection
+            },
+            title:'Today Issued Amount by Modes',
+            sliceVisibilityThreshold: 0,//shows legend even value is 0
+
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById(target_chart));
+        chart.draw(data, options);
+
+    }
+}
+
+//Issued and about issued amounts
+function tdy_li_chart(issue_amt, issued_amt, target_chart) {
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ["Issue Amounts", "Count", { role: "style" }],
+            ["Issue Amount", parseInt(issue_amt), "#faae7b"],
+            ["Issued Amount", parseInt(issued_amt), "#432371"],
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+            {
+                calc: "stringify",
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation"
+            },
+            2]);
+
+        var options = {
+            title: "Today Issue Amounts",
             width: '100%',
             height: '400px',
             bar: { groupWidth: "90%" },
