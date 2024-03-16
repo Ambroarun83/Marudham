@@ -4,7 +4,13 @@ if (isset($_SESSION["userid"])) {
 	$userid = $_SESSION["userid"];
 }
 
-$userRole = $userObj->getuser($mysqli, $userid)['role'];
+$getuser = $userObj->getuser($mysqli, $userid);
+$userRole = $getuser["role"];
+$request = $getuser['request'];
+$verification = $getuser['verification'];
+$approval = $getuser['approval'];
+$acknowledgement = $getuser['acknowledgement'];
+$loan_issue = $getuser['loan_issue'];
 
 $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 
@@ -189,7 +195,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 				</select>
 			</div>
 
-			<div class="card" id="request_card">
+			<div class="card" id="request_card" <?php if ($request == 1) { ?> style="display: none;" <?php } ?>>
 				<div class="card-header" id="req_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Request</div>
 				</div>
@@ -285,7 +291,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					</div>
 				</div>
 			</div>
-			<div class="card" id="ver_card">
+			<div class="card" id="ver_card" <?php if ($verification == 1) { ?> style="display: none;" <?php } ?>>
 				<div class="card-header" id="ver_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Verification</div>
 				</div>
@@ -381,7 +387,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					</div>
 				</div>
 			</div>
-			<div class="card" id="app_card">
+			<div class="card" id="app_card" <?php if ($approval == 1) { ?> style="display: none;" <?php } ?>>
 				<div class="card-header" id="app_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Approval</div>
 				</div>
@@ -477,7 +483,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					</div>
 				</div>
 			</div>
-			<div class="card" id="ack_card">
+			<div class="card" id="ack_card" <?php if ($acknowledgement == 1) { ?> style="display: none;" <?php } ?>>
 				<div class="card-header" id="ack_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Acknowledgment</div>
 				</div>
@@ -573,7 +579,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					</div>
 				</div>
 			</div>
-			<div class="card" id="li_card">
+			<div class="card" id="li_card" <?php if ($loan_issue == 1) { ?> style="display: none;" <?php } ?>>
 				<div class="card-header" id="li_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Loan Issue</div>
 				</div>
@@ -646,7 +652,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 										<div class="selector">
 											<div class="selector-item">
 												<input type="radio" id="li_radio1" name="li_radio" class="selector-item_radio" checked>
-												<label for="li_radio1" class="selector-item_label">Issued Modes</label>
+												<label for="li_radio1" class="selector-item_label">Issued by Modes</label>
 											</div>
 											<div class="selector-item">
 												<input type="radio" id="li_radio2" name="li_radio" class="selector-item_radio">
