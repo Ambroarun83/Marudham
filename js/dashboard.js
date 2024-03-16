@@ -405,7 +405,7 @@ function getLoanIssueDashboard() {
             $('#li_tot_chart,#li_today_chart').empty();
 
 
-            if (selectedValue == 'Issued Modes') {
+            if (selectedValue == 'Issued by Modes') {
                 // let tot_bank = localStorage.getItem('tot_bank');
                 let tot_cash = localStorage.getItem('tot_cash');
                 let tot_cheque = localStorage.getItem('tot_cheque');
@@ -415,8 +415,8 @@ function getLoanIssueDashboard() {
                 let today_cheque = localStorage.getItem('today_cheque');
                 let today_transaction = localStorage.getItem('today_transaction');
 
-                tot_issue_chart( tot_cash, tot_cheque, tot_transaction, 'li_tot_chart');
-                tdy_issue_chart( today_cash, today_cheque, today_transaction, 'li_today_chart');
+                tot_issue_chart(tot_cash, tot_cheque, tot_transaction, 'li_tot_chart');
+                tdy_issue_chart(today_cash, today_cheque, today_transaction, 'li_today_chart');
             } else if (selectedValue == 'Customer Type') {
                 let tot_new = localStorage.getItem('tot_new');
                 let tot_existing = localStorage.getItem('tot_existing');
@@ -426,7 +426,7 @@ function getLoanIssueDashboard() {
                 tot_ct_chart(tot_new, tot_existing, 'li_tot_chart');
                 tdy_ct_chart(today_new, today_existing, 'li_today_chart');
 
-            }else if(selectedValue == 'Issue Amount'){
+            } else if (selectedValue == 'Issue Amount') {
                 let today_li_amt = localStorage.getItem('today_li_amt');
                 let today_issued_amt = localStorage.getItem('today_issued_amt');
                 tdy_li_chart(today_li_amt, today_issued_amt, 'li_today_chart');
@@ -587,9 +587,9 @@ function tot_issue_chart(tot_cash, tot_cheque, tot_transaction, target_chart) {
         var data = google.visualization.arrayToDataTable([
             ['Loan Issue Mode', 'Amount'],
             // ['Bank', { v: parseInt(tot_bank), f: 'Bank: '+ parseInt(tot_bank) }],
-            ['Cash', { v: parseInt(tot_cash), f: 'Cash: '+ moneyFormatIndia(tot_cash) }],
-            ['Cheque', { v: parseInt(tot_cheque), f: 'Cheque: '+moneyFormatIndia(tot_cheque) }],
-            ['Transaction', { v: parseInt(tot_transaction), f: 'Transaction: '+moneyFormatIndia(tot_transaction) }],
+            ['Cash', { v: parseInt(tot_cash), f: 'Cash: ' + moneyFormatIndia(tot_cash) }],
+            ['Cheque', { v: parseInt(tot_cheque), f: 'Cheque: ' + moneyFormatIndia(tot_cheque) }],
+            ['Transaction', { v: parseInt(tot_transaction), f: 'Transaction: ' + moneyFormatIndia(tot_transaction) }],
         ]);
 
         var options = {
@@ -598,7 +598,7 @@ function tot_issue_chart(tot_cash, tot_cheque, tot_transaction, target_chart) {
             tooltip: {
                 trigger: 'selection', // Show tooltip on selection
             },
-            title:'Total Issued Amount by Modes',
+            title: 'Total Issued Amount by Modes',
             // pieHole:0.5,
             sliceVisibilityThreshold: 0,//shows legend even value is 0
 
@@ -618,9 +618,9 @@ function tdy_issue_chart(today_cash, today_cheque, today_transaction, target_cha
         var data = google.visualization.arrayToDataTable([
             ['Loan Issue Mode', 'Amount'],
             // ['Bank', { v: parseInt(today_bank), f: 'Bank: '+ parseInt(today_bank) }],
-            ['Cash', { v: parseInt(today_cash), f: 'Cash: '+ moneyFormatIndia(today_cash) }],
-            ['Cheque', { v: parseInt(today_cheque), f: 'Cheque: '+moneyFormatIndia(today_cheque) }],
-            ['Transaction', { v: parseInt(today_transaction), f: 'Transaction: '+moneyFormatIndia(today_transaction) }],
+            ['Cash', { v: parseInt(today_cash), f: 'Cash: ' + moneyFormatIndia(today_cash) }],
+            ['Cheque', { v: parseInt(today_cheque), f: 'Cheque: ' + moneyFormatIndia(today_cheque) }],
+            ['Transaction', { v: parseInt(today_transaction), f: 'Transaction: ' + moneyFormatIndia(today_transaction) }],
         ]);
 
         var options = {
@@ -629,7 +629,7 @@ function tdy_issue_chart(today_cash, today_cheque, today_transaction, target_cha
             tooltip: {
                 trigger: 'selection', // Show tooltip on selection
             },
-            title:'Today Issued Amount by Modes',
+            title: 'Today Issued Amount by Modes',
             sliceVisibilityThreshold: 0,//shows legend even value is 0
 
         };
@@ -640,7 +640,7 @@ function tdy_issue_chart(today_cash, today_cheque, today_transaction, target_cha
     }
 }
 
-//Issued and about issued amounts
+//Issue and about issued amounts
 function tdy_li_chart(issue_amt, issued_amt, target_chart) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
