@@ -46,20 +46,17 @@ if(isset($_POST['lusername'])) {
 		<?php include("include/common/accounthead.php"); ?>
 			<form  id="loginform" name="loginform" action="" method="post">
 				<div class="row justify-content-md-center">
-					<div class="col-xl-4 col-lg-5 col-md-6 col-sm-12">
+					<div class="col-xl-5 col-lg-4 col-md-6 col-sm-12">
 						<div class="login-screen">
 							<div class="login-box">
 								<a href="#" class="login-logo">
-									<h3 style="color: #009688; position: relative;left: 20px;font-weight: bolder;">MARUDHAM SOFTWARE</h3>
+									<h3 style="color: #009688; position: relative;left: 41px;font-weight: bolder;">MARUDHAM SOFTWARE</h3>
 									<!-- <img src="img/logo.png" alt="Auction Dashboard" /> -->
 								</a>
-								<span class="text-danger" id="cinnocheck">		 
-								<?php
-								if($msg != '')
-								{
-									echo $msg;
-								}
-								?>
+								<span class="text-danger" id="cinnocheck">
+									<!-- <input type="hidden" id="err_msg" value=' -->
+									<?php echo $msg;?>
+									<!-- '> -->
 								</span>
 								<h5>Welcome back,<br />Please Login to your Account.</h5>
 								<div class="form-group mt-4">

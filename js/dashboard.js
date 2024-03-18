@@ -75,6 +75,17 @@ document.addEventListener('DOMContentLoaded', () => {
             $('.card-body').not('#li_body').not($('#li_body').find('.card-body')).slideUp();//hide the card body other than this card
         }
     });
+    $('#col_title').click(function () {
+        let check = $('#col_body');
+        check.find('.card-body').show();//show the card body of this title
+        if (check.is(':visible')) {
+            check.slideUp();
+        } else {
+            getCollectionDashboard();
+            check.slideDown();
+            $('.card-body').not('#col_body').not($('#col_body').find('.card-body')).slideUp();//hide the card body other than this card
+        }
+    });
 
 
 });
@@ -435,7 +446,23 @@ function getLoanIssueDashboard() {
     });
 }
 
+// *****************************************************************************************************************************************
+function getCollectionDashboard(){
+    
+    $('input[name="col_radio"]').change(function () {
+        let selectedValue = $('input[name="col_radio"]:checked').next().text().trim();
+        $('#col_chart').empty();
+        if(selectedValue == 'Total'){
+            $('#total_col_cards').show();
+            $('#today_col_cards').hide();
+        }else if(selectedValue == 'Today'){
+            $('#today_col_cards').show();
+            $('#total_col_cards').hide();
+        }
+    })
+    $('input[name="col_radio"]').trigger('change');//trigger at start
 
+}
 
 
 

@@ -11,6 +11,7 @@ $verification = $getuser['verification'];
 $approval = $getuser['approval'];
 $acknowledgement = $getuser['acknowledgement'];
 $loan_issue = $getuser['loan_issue'];
+$collection = $getuser['collection'];
 
 $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 
@@ -671,6 +672,127 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 										</div>
 										<div class="col-6">
 											<div class="charts" id="li_today_chart"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card" id="col_card" <?php if ($collection == 1) { ?> style="display: none;" <?php } ?>>
+				<div class="card-header" id="col_title">
+					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Collection</div>
+				</div>
+				<div class="card-body" id="col_body" style="display: none;">
+					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
+						<div class="col-12">
+							<div class="card" style="border:3px solid #009688">
+								<div class="card-body">
+									<div class="radio-container">
+										<div class="selector">
+											<div class="selector-item">
+												<input type="radio" id="col_radio1" name="col_radio" class="selector-item_radio" checked>
+												<label for="col_radio1" class="selector-item_label">Total</label>
+											</div>
+											<div class="selector-item">
+												<input type="radio" id="col_radio2" name="col_radio" class="selector-item_radio">
+												<label for="col_radio2" class="selector-item_label">Today</label>
+											</div>
+										</div>
+									</div>
+									<br><br>
+									<div id="total_col_cards" style="display: none;">
+										<div class="row cards-row" style="display:flex;justify-content:center;flex-wrap:wrap">
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Total Payable</p>
+															<p class="counter wow fadeInUp" id="tot_col_pay">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Total Paid</p>
+															<p class="counter wow fadeInUp" id="tot_col_paid">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Total Balance</p>
+															<p class="counter wow fadeInUp" id="tot_col_bal">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Total Penalty</p>
+															<p class="counter wow fadeInUp" id="tot_col_pen">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Total Fine</p>
+															<p class="counter wow fadeInUp" id="tot_col_fine">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="today_col_cards" style="display: none;">
+										<div class="row cards-row" style="display:flex;justify-content:center;flex-wrap:wrap">
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards today-card">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Today Paid</p>
+															<p class="counter wow fadeInUp" id="today_col_paid">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards today-card">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Today Penalty</p>
+															<p class="counter wow fadeInUp" id="today_col_pen">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-2">
+												<div class="card">
+													<div class="card-body counter-cards today-card">
+														<div class="form-group text-center">
+															<p class='counter-head wow fadeIn'>Today Fine</p>
+															<p class="counter wow fadeInUp" id="today_col_fine">5001</p>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" id="chart-part" style="display: none;">
+										<div class="col-12">
+											<div class="charts" id="col_chart"></div>
 										</div>
 									</div>
 								</div>
