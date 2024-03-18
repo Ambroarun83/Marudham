@@ -1,5 +1,25 @@
 // Document is ready
 $(document).ready(function () {
+
+	let err_msg = $('#err_msg').val();
+	// if(err_msg != ''){
+	// 	Swal.fire({
+    //         title: 'Invalid Login Credentials!',
+    //         icon: 'error',
+	// 		timer: 2000,
+	// 		timerProgressBar: true,
+	// 		didOpen: () => {
+	// 			Swal.showLoading();
+	// 			const timer = Swal.getPopup().querySelector("b");
+	// 			timerInterval = setInterval(() => {
+	// 			timer.textContent = `${Swal.getTimerLeft()}`;
+	// 			}, 100);
+	// 		},
+	// 		willClose: () => {
+	// 			clearInterval(timerInterval);
+	// 		}
+    //     });
+	// }
 	
 	// Validate username
 	$('#usernamecheck').hide();	
@@ -11,12 +31,14 @@ $(document).ready(function () {
 	function validateusername() {
 		let usernameValue = $('#lusername').val();	
 		if (usernameValue.length == '') {
-		$('#usernamecheck').show();
+			$('#lusername').css('border','1px solid red')
+			// $('#usernamecheck').show();
 		usernameError = false;
 			return false;
 		}
 		else {
-			$('#usernamecheck').hide();
+			$('#lusername').css('border','')
+			// $('#usernamecheck').hide();
 			usernameError = true;	
 		}
 	}
@@ -32,12 +54,14 @@ $(document).ready(function () {
 	function validatepassword() {
 		let passwordValue = $('#lpassword').val();	
 		if (passwordValue.length == '') {
-		$('#passwordcheck').show();
+			$('#lpassword').css('border','1px solid red')
+		// $('#passwordcheck').show();
 		passwordError = false;
 			return false;
 		}
 		else {
-			$('#passwordcheck').hide();
+			$('#lpassword').css('border','')
+			// $('#passwordcheck').hide();
 			passwordError = true;	
 		}
 	}
