@@ -6,10 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.clear();//clear localstorage before fetching data for prevent conflict
 
     $('#branch_id').change(function () {
-        // getRequestDashboard();
-        // getVerificationDashboard();
-        // getApprovalDashboard();
-        // getAcknowledgmentDashboard();
         let opened = $('.card-body:visible').prev('.card-header').attr('id');
         $('#' + opened).trigger('click');
         showOverlay();
@@ -85,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
             check.slideDown();
             $('.card-body').not('#col_body').not($('#col_body').find('.card-body')).slideUp();//hide the card body other than this card
         }
+        $('#col_chart_part').slideUp();
     });
 
 
@@ -447,21 +444,53 @@ function getLoanIssueDashboard() {
 }
 
 // *****************************************************************************************************************************************
-function getCollectionDashboard(){
-    
-    $('input[name="col_radio"]').change(function () {
-        let selectedValue = $('input[name="col_radio"]:checked').next().text().trim();
-        $('#col_chart').empty();
-        if(selectedValue == 'Total'){
-            $('#total_col_cards').show();
-            $('#today_col_cards').hide();
-        }else if(selectedValue == 'Today'){
-            $('#today_col_cards').show();
-            $('#total_col_cards').hide();
-        }
-    })
-    $('input[name="col_radio"]').trigger('change');//trigger at start
+function getCollectionDashboard() {
 
+    let branch_id = $('#branch_id').val();
+    localStorage.clear();//clear localstorage before fetching data for prevent conflict
+    getSubAreaList(branch_id).then(sub_area_list => {
+
+        $.post('dashboardFile/getCollectionDashboard.php', { sub_area_list }, function (data) {
+            $('#tot_col_paid').text(data.tot_col_paid)
+            $('#tot_col_pen').text(data.tot_col_pen)
+            $('#tot_col_fine').text(data.tot_col_fine)
+            $('#today_col_paid').text(data.today_col_paid)
+            $('#today_col_pen').text(data.today_col_pen)
+            $('#today_col_fine').text(data.today_col_fine)
+            $('#col_split_type').html(data.split_name);
+        }, 'json').then(function () {
+
+            $('.col-counter').off('click').click(function () {
+                $('#col_chart_part').slideDown();
+                let pid = $(this).attr('id');
+                getCollectionSplit(pid, sub_area_list).then(function () {
+                    $('#chart_part').empty();
+                    let cur_amt = localStorage.getItem('cur_amt');
+                    let cur_point = localStorage.getItem('cur_point');
+                    let pend_amt = localStorage.getItem('pend_amt');
+                    let pend_point = localStorage.getItem('pend_point');
+                    let od_amt = localStorage.getItem('od_amt');
+                    let od_point = localStorage.getItem('od_point');
+                    setCollectionChart(cur_amt, cur_point, pend_amt, pend_point, od_amt, od_point);
+                });
+            })
+        })
+
+    })
+    function getCollectionSplit(pid, sub_area_list) {
+        return new Promise(function (resolve, reject) {
+            $.post('dashboardFile/getCollectionSplit.php', { pid, sub_area_list }, function (data) {
+                localStorage.setItem('cur_amt', data.cur_amt);
+                localStorage.setItem('cur_point', data.cur_point);
+                localStorage.setItem('pend_amt', data.pend_amt);
+                localStorage.setItem('pend_point', data.pend_point);
+                localStorage.setItem('od_amt', data.od_amt);
+                localStorage.setItem('od_point', data.od_point);
+                $('#col_split_type').text(data.split_name);
+                resolve();
+            }, 'json');
+        })
+    }
 }
 
 
@@ -697,6 +726,74 @@ function tdy_li_chart(issue_amt, issued_amt, target_chart) {
             vAxis: { format: 'decimal', gridlines: { interval: [0, 5, 10, 15, 20] } },//this is for left vertical column count interval
         };
         var chart = new google.visualization.ColumnChart(document.getElementById(target_chart));
+        chart.draw(view, options);
+    }
+}
+
+//Dual column Collection chart part
+function setCollectionChart(cur_amt, cur_point, pend_amt, pend_point, od_amt, od_point) {
+
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart1);
+    function drawChart1() {
+        var data = google.visualization.arrayToDataTable([
+            ["Stages", "Amount", { role: "style" }],
+            ["Current", parseInt(cur_amt), "#edae49"],
+            ["Pending", parseInt(pend_amt), "#d1495b"],
+            ["OD", parseInt(od_amt), "#00798c"],
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+            {
+                calc: "stringify",
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation"
+            },
+            2]);
+
+        var options = {
+            title: "Split by Amount",
+            width: '100%',
+            height: '400px',
+            bar: { groupWidth: "90%" },
+            legend: { position: "none" },
+            vAxis: { format: 'decimal', gridlines: { interval: [0, 5, 10, 15, 20] } },//this is for left vertical column count interval
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('col_chart1'));
+        chart.draw(view, options);
+    }
+
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart2);
+    function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+            ["Stages", "Point", { role: "style" }],
+            ["Current", parseInt(cur_point), "#edae49"],
+            ["Pending", parseInt(pend_point), "#d1495b"],
+            ["OD", parseInt(od_point), "#00798c"],
+        ]);
+
+        var view = new google.visualization.DataView(data);
+        view.setColumns([0, 1,
+            {
+                calc: "stringify",
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation"
+            },
+            2]);
+
+        var options = {
+            title: "Split by Points",
+            width: '100%',
+            height: '400px',
+            bar: { groupWidth: "90%" },
+            legend: { position: "none" },
+            vAxis: { format: 'decimal', gridlines: { interval: [0, 5, 10, 15, 20] } },//this is for left vertical column count interval
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById('col_chart2'));
         chart.draw(view, options);
     }
 }
