@@ -83,6 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         $('#col_chart_part').slideUp();
     });
+    $('#cl_title').click(function () {
+        let check = $('#cl_body');
+        check.find('.card-body').show();//show the card body of this title
+        if (check.is(':visible')) {
+            check.slideUp();
+        } else {
+            getClosedDashboard();
+            check.slideDown();
+            $('.card-body').not('#cl_body').not($('#cl_body').find('.card-body')).slideUp();//hide the card body other than this card
+        }
+        $('#cl_chart_part').slideUp();
+    });
 
 
 });
@@ -493,7 +505,27 @@ function getCollectionDashboard() {
     }
 }
 
+// *****************************************************************************************************************************************
+function getClosedDashboard(){
+    let branch_id = $('#branch_id').val();
+    localStorage.clear();//clear localstorage before fetching data for prevent conflict
+    getSubAreaList(branch_id).then(sub_area_list => {
 
+        $.post('dashboardFile/getClosedDashboard.php', { sub_area_list }, function (data) {
+            $('#tot_col_paid').text(data.tot_col_paid)
+            $('#tot_col_pen').text(data.tot_col_pen)
+            $('#tot_col_fine').text(data.tot_col_fine)
+            $('#today_col_paid').text(data.today_col_paid)
+            $('#today_col_pen').text(data.today_col_pen)
+            $('#today_col_fine').text(data.today_col_fine)
+            $('#col_split_type').html(data.split_name);
+        }, 'json').then(function () {
+
+            
+        })
+
+    })
+}
 
 
 // *****************************************************************************************************************************************
