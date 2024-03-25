@@ -512,13 +512,20 @@ function getClosedDashboard(){
     getSubAreaList(branch_id).then(sub_area_list => {
 
         $.post('dashboardFile/getClosedDashboard.php', { sub_area_list }, function (data) {
-            $('#tot_col_paid').text(data.tot_col_paid)
-            $('#tot_col_pen').text(data.tot_col_pen)
-            $('#tot_col_fine').text(data.tot_col_fine)
-            $('#today_col_paid').text(data.today_col_paid)
-            $('#today_col_pen').text(data.today_col_pen)
-            $('#today_col_fine').text(data.today_col_fine)
-            $('#col_split_type').html(data.split_name);
+            $('#tot_in_cl').text(data.tot_in_cl)
+            $('#month_in_cl').text(data.month_in_cl)
+            $('#month_cl_status').text(data.month_cl_status)
+            $('#month_cl_bal').text(data.month_cl_bal)
+            $('#today_in_cl').text(data.today_in_cl)
+            $('#today_cl_status').text(data.today_cl_status)
+            $('#cl_wl').text(data.cl_wl)
+            $('#cl_bl').text(data.cl_bl)
+            $('#cl_cn').text(data.cl_cn)
+            $('#cl_bronze').text(data.cl_bronze)
+            $('#cl_silver').text(data.cl_silver)
+            $('#cl_gold').text(data.cl_gold)
+            $('#cl_platinum').text(data.cl_platinum)
+            $('#cl_diamond').text(data.cl_diamond)
         }, 'json').then(function () {
 
             
