@@ -12,6 +12,7 @@
     align-items: center;
     border-radius: 10px;
     border: 3px solid var(--blue);
+    height: 253px;
 }
     
 .today-card {
@@ -20,7 +21,9 @@
 .month-card {
     background-color: #d7e9f8;
 }
-
+.consider-cards{
+    background-color: #f5deb387;
+}
 
 .heading-list {
     font-size: 2rem;
@@ -29,25 +32,38 @@
 
 .counter-head {
     font-size: 1.5rem;
+    /* font-size: calc(.5vh + 1.4vw); */
     font-weight: bold;
 }
 
 .counter {
     font-size: 4rem;
+    /* font-size: calc(1vh + 2.75vw); */
     font-family: fantasy;
     font-weight: 100;
 }
-@media only screen and (min-width: 1574px) {
+/* @media only screen and (min-width: 1440px) {
     .counter-head {
-        font-size: 1.12rem;
+        font-size: 1.3rem;
+    }
+    .counter {
+        font-size: 3.2rem;
     }
 }
-@media only screen and (min-width: 1353px) and (max-width: 1407px) {
+@media only screen and (min-width: 1024px) and (max-width: 1439px) {
     .counter-head {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
-}
-@media (max-width: 1305px) {
+    .counter {
+        font-size: 3rem;
+    }
+} */
+/* @media only screen and (min-width: 1353px) and (max-width: 1406px) {
+    .counter-head {
+        font-size: 1rem;
+    }
+} */
+/* @media (max-width: 1305px) {
     .counter-head {
         font-size: 1.2rem;
     }
@@ -78,7 +94,7 @@
     .counter {
         font-size: 2rem;
     }
-}
+} */
 
 /* radio button */
 .radio-container {
