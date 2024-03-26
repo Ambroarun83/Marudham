@@ -93,7 +93,17 @@ document.addEventListener('DOMContentLoaded', () => {
             check.slideDown();
             $('.card-body').not('#cl_body').not($('#cl_body').find('.card-body')).slideUp();//hide the card body other than this card
         }
-        $('#cl_chart_part').slideUp();
+    });
+    $('#noc_title').click(function () {
+        let check = $('#noc_body');
+        check.find('.card-body').show();//show the card body of this title
+        if (check.is(':visible')) {
+            check.slideUp();
+        } else {
+            getNOCDashboard();
+            check.slideDown();
+            $('.card-body').not('#noc_body').not($('#noc_body').find('.card-body')).slideUp();//hide the card body other than this card
+        }
     });
 
 
@@ -506,7 +516,7 @@ function getCollectionDashboard() {
 }
 
 // *****************************************************************************************************************************************
-function getClosedDashboard(){
+function getClosedDashboard() {
     let branch_id = $('#branch_id').val();
     localStorage.clear();//clear localstorage before fetching data for prevent conflict
     getSubAreaList(branch_id).then(sub_area_list => {
@@ -528,12 +538,33 @@ function getClosedDashboard(){
             $('#cl_diamond').text(data.cl_diamond)
         }, 'json').then(function () {
 
-            
+
         })
 
     })
 }
 
+// *****************************************************************************************************************************************
+function getNOCDashboard() {
+    let branch_id = $('#branch_id').val();
+    localStorage.clear();//clear localstorage before fetching data for prevent conflict
+    getSubAreaList(branch_id).then(sub_area_list => {
+
+        $.post('dashboardFile/getNOCDashboard.php', { sub_area_list }, function (data) {
+            $('#tot_noc').text(data.tot_noc)
+            $('#tot_noc_issued').text(data.tot_noc_issued)
+            $('#month_noc').text(data.month_noc)
+            $('#month_noc_issued').text(data.month_noc_issued)
+            $('#month_noc_bal').text(data.month_noc_bal)
+            $('#today_noc').text(data.today_noc)
+            $('#today_noc_issued').text(data.today_noc_issued)
+        }, 'json').then(function () {
+
+
+        })
+
+    })
+}
 
 // *****************************************************************************************************************************************
 //Cancel and Revoke Charts

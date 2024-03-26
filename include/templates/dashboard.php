@@ -203,8 +203,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Request</div>
 				</div>
 				<div class="card-body" id="req_body" style="display:none">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-2">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -214,7 +214,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -224,7 +224,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -234,7 +234,9 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -244,7 +246,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -254,7 +256,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -264,6 +266,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
 						<div class="col-12">
 							<div class="card" style="border:3px solid #009688">
 								<div class="card-body">
@@ -299,8 +303,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Verification</div>
 				</div>
 				<div class="card-body" id="ver_body" style="display:none">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-2">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -310,7 +314,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -320,7 +324,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -330,7 +334,9 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -340,7 +346,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -350,7 +356,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -360,6 +366,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
 						<div class="col-12">
 							<div class="card" style="border:3px solid #009688">
 								<div class="card-body">
@@ -395,8 +403,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Approval</div>
 				</div>
 				<div class="card-body" id="app_body" style="display:none">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-2">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -406,7 +414,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -416,7 +424,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -426,7 +434,9 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -436,7 +446,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -446,7 +456,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -456,6 +466,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
 						<div class="col-12">
 							<div class="card" style="border:3px solid #009688">
 								<div class="card-body">
@@ -491,8 +503,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Acknowledgment</div>
 				</div>
 				<div class="card-body" id="ack_body" style="display:none">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-2">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -502,7 +514,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -512,7 +524,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -522,7 +534,9 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -532,7 +546,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -542,7 +556,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -552,6 +566,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
 						<div class="col-12">
 							<div class="card" style="border:3px solid #009688">
 								<div class="card-body">
@@ -587,8 +603,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Loan Issue</div>
 				</div>
 				<div class="card-body" id="li_body" style="display:none">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-2">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -598,7 +614,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -608,7 +624,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -618,7 +634,9 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -628,7 +646,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -638,7 +656,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -648,6 +666,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
 						<div class="col-12">
 							<div class="card" style="border:3px solid #009688">
 								<div class="card-body">
@@ -687,8 +707,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Collection</div>
 				</div>
 				<div class="card-body" id="col_body" style="display: none;">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-4">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -698,7 +718,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -708,7 +728,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
@@ -718,7 +738,9 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -728,7 +750,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -738,7 +760,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
-						<div class="col-4">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-4">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
@@ -748,6 +770,8 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
 						<div class="col-12" id="col_chart_part" style="display: none;">
 							<div class="card" style="border:3px solid #009688">
 								<div class="card-body">
@@ -757,10 +781,6 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 												<input type="radio" id="col_radio1" name="col_radio" class="selector-item_radio" checked>
 												<label for="col_radio1" class="selector-item_label" id="col_split_type">Collection Split Chart</label>
 											</div>
-											<!-- <div class="selector-item">
-												<input type="radio" id="col_radio2" name="col_radio" class="selector-item_radio">
-												<label for="col_radio2" class="selector-item_label">Today</label>
-											</div> -->
 										</div>
 									</div>
 									<br><br>
@@ -783,327 +803,248 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">Closed</div>
 				</div>
 				<div class="card-body" id="cl_body" style="display:none">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-2">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total In Closed</p>
-										<p class="counter wow fadeInUp" id="tot_in_cl">43210</p>
+										<p class="counter wow fadeInUp" id="tot_in_cl"></p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Month In Closed</p>
-										<p class="counter wow fadeInUp" id="month_in_cl">43210</p>
+										<p class="counter wow fadeInUp" id="month_in_cl"></p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Month Status</p>
-										<p class="counter wow fadeInUp" id="month_cl_status">43210</p>
+										<p class="counter wow fadeInUp" id="month_cl_status"></p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Month Balance</p>
-										<p class="counter wow fadeInUp" id="month_cl_bal">43210</p>
+										<p class="counter wow fadeInUp" id="month_cl_bal"></p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today In Closed</p>
-										<p class="counter wow fadeInUp" id="today_in_cl">43210</p>
+										<p class="counter wow fadeInUp" id="today_in_cl"></p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Status</p>
-										<p class="counter wow fadeInUp" id="today_cl_status">43210</p>
+										<p class="counter wow fadeInUp" id="today_cl_status"></p>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
 						<div class="col-12">
-							<div class="card" style="border:3px solid #009688;">
+							<div class="card" style="border:3px solid #009688;padding:10px;">
 								<div class="card-header">
-									<div class="card-title" style="font-size:1rem">Month's Closed Status</div>
+									<div class="card-title" >Month's Closed Status</div>
 								</div>
 								<div class="card-body">
 									<div class="row" style="display:flex;justify-content:center;">
 
-										<div class="col-2">
+										<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 											<div class="card">
 												<div class="card-body counter-cards">
 													<div class="form-group text-center">
 														<p class='counter-head wow fadeIn'>Waiting List</p>
-														<p class="counter wow fadeInUp" id="cl_wl">43210</p>
+														<p class="counter wow fadeInUp" id="cl_wl"></p>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div class="col-2">
+										<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 											<div class="card">
 												<div class="card-body counter-cards">
 													<div class="form-group text-center">
 														<p class='counter-head wow fadeIn'>Blocked List</p>
-														<p class="counter wow fadeInUp" id="cl_bl">43210</p>
+														<p class="counter wow fadeInUp" id="cl_bl"></p>
 													</div>
 												</div>
 											</div>
 										</div>
-										<div class="col-2"></div>
-										<div class="col-2">
+										<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3"></div>
+										<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 											<div class="card">
-												<div class="card-body counter-cards">
+												<div class="card-body counter-cards" style="background-color:wheat">
 													<div class="form-group text-center">
 														<p class='counter-head wow fadeIn'>Consider</p>
-														<p class="counter wow fadeInUp" id="cl_cn">43210</p>
+														<p class="counter wow fadeInUp" id="cl_cn"></p>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="row" style="display:flex;justify-content:center;">
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Bronze</p>
-														<p class="counter wow fadeInUp" id="cl_bronze">43210</p>
-													</div>
+								</div>
+								<div class="row" style="display:flex;justify-content:center;">
+									<div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+										<div class="card">
+											<div class="card-body counter-cards consider-cards">
+												<div class="form-group text-center">
+													<p class='counter-head wow fadeIn'>Bronze</p>
+													<p class="counter wow fadeInUp" id="cl_bronze"></p>
 												</div>
 											</div>
 										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Silver</p>
-														<p class="counter wow fadeInUp" id="cl_silver">43210</p>
-													</div>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+										<div class="card">
+											<div class="card-body counter-cards consider-cards">
+												<div class="form-group text-center">
+													<p class='counter-head wow fadeIn'>Silver</p>
+													<p class="counter wow fadeInUp" id="cl_silver"></p>
 												</div>
 											</div>
 										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Gold</p>
-														<p class="counter wow fadeInUp" id="cl_gold">43210</p>
-													</div>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+										<div class="card">
+											<div class="card-body counter-cards consider-cards">
+												<div class="form-group text-center">
+													<p class='counter-head wow fadeIn'>Gold</p>
+													<p class="counter wow fadeInUp" id="cl_gold"></p>
 												</div>
 											</div>
 										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Platinum</p>
-														<p class="counter wow fadeInUp" id="cl_platinum">43210</p>
-													</div>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+										<div class="card">
+											<div class="card-body counter-cards consider-cards">
+												<div class="form-group text-center">
+													<p class='counter-head wow fadeIn'>Platinum</p>
+													<p class="counter wow fadeInUp" id="cl_platinum"></p>
 												</div>
 											</div>
 										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Diamond</p>
-														<p class="counter wow fadeInUp" id="cl_diamond">43210</p>
-													</div>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-4 col-xl-2">
+										<div class="card">
+											<div class="card-body counter-cards consider-cards">
+												<div class="form-group text-center">
+													<p class='counter-head wow fadeIn'>Diamond</p>
+													<p class="counter wow fadeInUp" id="cl_diamond"></p>
 												</div>
 											</div>
 										</div>
-
 									</div>
 
 								</div>
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="card" id="noc_card" <?php if ($noc == 1) { ?> style="display: none;" <?php } ?> style="display: none;">
+			<div class="card" id="noc_card" <?php if ($noc == 1) { ?> style="display: none;" <?php } ?>>
 				<div class="card-header" id="noc_title">
 					<div class="card-title" style="display:flex;justify-content:center;align-items: center;font-size:1.5rem;cursor:pointer">NOC</div>
 				</div>
 				<div class="card-body" id="noc_body" style="display:none">
-					<div class="row cards-row" style="display:flex;justify-content:flex-start;">
-						<div class="col-2">
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
-										<p class='counter-head wow fadeIn'>Total In Closed</p>
-										<p class="counter wow fadeInUp" id="tot_in_cl">43210</p>
+										<p class='counter-head wow fadeIn'>Total NOC</p>
+										<p class="counter wow fadeInUp" id="tot_noc">43210</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+							<div class="card">
+								<div class="card-body counter-cards">
+									<div class="form-group text-center">
+										<p class='counter-head wow fadeIn'>Total Issued</p>
+										<p class="counter wow fadeInUp" id="tot_noc_issued">43210</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
-										<p class='counter-head wow fadeIn'>Month In Closed</p>
-										<p class="counter wow fadeInUp" id="month_in_cl">43210</p>
+										<p class='counter-head wow fadeIn'>Month NOC</p>
+										<p class="counter wow fadeInUp" id="month_noc">43210</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
-										<p class='counter-head wow fadeIn'>Month Status</p>
-										<p class="counter wow fadeInUp" id="month_cl_status">43210</p>
+										<p class='counter-head wow fadeIn'>Month Issued</p>
+										<p class="counter wow fadeInUp" id="month_noc_issued">43210</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Month Balance</p>
-										<p class="counter wow fadeInUp" id="month_cl_bal">43210</p>
+										<p class="counter wow fadeInUp" id="month_noc_bal">43210</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+					</div>
+					<div class="row cards-row" style="display:flex;justify-content:center;">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
-										<p class='counter-head wow fadeIn'>Today In Closed</p>
-										<p class="counter wow fadeInUp" id="today_in_cl">43210</p>
+										<p class='counter-head wow fadeIn'>Today NOC</p>
+										<p class="counter wow fadeInUp" id="today_noc">43210</p>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-2">
+						<div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
 							<div class="card">
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
-										<p class='counter-head wow fadeIn'>Today Status</p>
-										<p class="counter wow fadeInUp" id="today_cl_status">43210</p>
+										<p class='counter-head wow fadeIn'>Today Issued</p>
+										<p class="counter wow fadeInUp" id="today_noc_issued">43210</p>
 									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-12">
-							<div class="card" style="border:3px solid #009688;">
-								<div class="card-header">
-									<div class="card-title" style="font-size:1rem">Month's Closed Status</div>
-								</div>
-								<div class="card-body">
-									<div class="row" style="display:flex;justify-content:center;">
-
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Waiting List</p>
-														<p class="counter wow fadeInUp" id="cl_wl">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Blocked List</p>
-														<p class="counter wow fadeInUp" id="cl_bl">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-2"></div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Consider</p>
-														<p class="counter wow fadeInUp" id="cl_cn">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row" style="display:flex;justify-content:center;">
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Bronze</p>
-														<p class="counter wow fadeInUp" id="cl_bronze">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Silver</p>
-														<p class="counter wow fadeInUp" id="cl_silver">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Gold</p>
-														<p class="counter wow fadeInUp" id="cl_gold">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Platinum</p>
-														<p class="counter wow fadeInUp" id="cl_platinum">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="col-2">
-											<div class="card">
-												<div class="card-body counter-cards">
-													<div class="form-group text-center">
-														<p class='counter-head wow fadeIn'>Diamond</p>
-														<p class="counter wow fadeInUp" id="cl_diamond">43210</p>
-													</div>
-												</div>
-											</div>
-										</div>
-
-									</div>
-
 								</div>
 							</div>
 						</div>
