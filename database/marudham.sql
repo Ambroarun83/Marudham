@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 26, 2024 at 01:59 PM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Generation Time: Mar 27, 2024 at 12:46 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -2543,7 +2543,7 @@ INSERT INTO `gold_info` (`id`, `cus_id`, `req_id`, `gold_sts`, `gold_type`, `Pur
 (6, '500050005000', '11', '0', 'Kammal', '24k', '1', '1.5', '59000', '', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-27 15:48:19'),
 (12, '200020002000', '14', '1', '2', '3', '1', '4', '2', '6565c5fa56fd9.png', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-28 16:19:00'),
 (13, '060120230408', '16', '1', 'check', 'check', '2', '100', '27300', '6565d2c155091.jpg', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-11-28 17:15:05'),
-(14, '474747474747', '78', '1', '1', '2', '1', '2', '1111', '', '0', NULL, NULL, NULL, '0', '0', NULL, NULL, NULL, NULL, NULL, '3', NULL, '2024-02-22 15:28:11'),
+(14, '474747474747', '78', '1', '1', '2', '1', '2', '1111', '', '1', '2024-03-27', '1', 'Murugesan', '0', '0', NULL, NULL, NULL, NULL, NULL, '5', NULL, '2024-03-27 12:24:10'),
 (15, '575757575757', '79', '1', '22', '2', '1', '1', '1', '', '1', '2024-02-23', '1', 'Sugumaran', '0', '0', NULL, NULL, NULL, NULL, NULL, '5', NULL, '2024-02-23 12:34:54'),
 (16, '575757575757', '79', '0', '2', '2', '1', '2', '2', '', '1', '2024-02-23', '2', '25', '0', '0', NULL, NULL, NULL, NULL, NULL, '5', NULL, '2024-02-24 12:55:22');
 
@@ -3376,7 +3376,8 @@ INSERT INTO `noc` (`noc_id`, `req_id`, `cus_id`, `sign_checklist`, `cheque_check
 (1, '2', '100010001000', '4', '', '', 'Mortgage Process noc', '', '2', '2023-07-17', '1', 'Ganesan', '21', '2', NULL, '2023-07-17 13:19:34', '2023-07-17 13:19:34'),
 (2, '6', '200020002000', '', '', '', '', 'Endorsement Process noc,Key noc', '', '2023-09-12', '1', 'Aravind', '21', '2', NULL, '2023-09-12 14:33:19', '2023-09-12 14:33:19'),
 (9, '79', '575757575757', '', '', '15', '', '', '', '23-02-2024', '1', 'Sugumaran', '21', '5', NULL, '2024-02-23 12:34:54', '2024-02-23 12:34:54'),
-(10, '79', '575757575757', '', '', '16', '', 'Endorsement Process noc,RC noc,Key noc', '', '23-02-2024', '3', '25', '21', '5', NULL, '2024-02-23 12:55:22', '2024-02-23 12:55:22');
+(10, '79', '575757575757', '', '', '16', '', 'Endorsement Process noc,RC noc,Key noc', '', '23-02-2024', '3', '25', '21', '5', NULL, '2024-02-23 12:55:22', '2024-02-23 12:55:22'),
+(11, '78', '474747474747', '', '', '14', '', '', '', '27-03-2024', '1', 'Murugesan', '21', '5', NULL, '2024-03-27 12:24:10', '2024-03-27 12:24:10');
 
 -- --------------------------------------------------------
 
@@ -5583,7 +5584,7 @@ ALTER TABLE `new_promotion`
 -- AUTO_INCREMENT for table `noc`
 --
 ALTER TABLE `noc`
-  MODIFY `noc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=11;
+  MODIFY `noc_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Primary Key', AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `request_category_info`

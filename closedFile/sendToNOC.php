@@ -13,7 +13,7 @@ if (isset($_SESSION['userid'])) {
 
 //Closed  Completed And Move to NOC = 21.
 
-    $qry = $con->query("UPDATE request_creation set cus_status = 21, update_login_id = $userid WHERE  cus_id = '".$cus_id."' and req_id = '".$req_id."' && cus_status = '20' ") or die('Error on Request Table');
+    $qry = $con->query("UPDATE request_creation set cus_status = 21,updated_date = now(), update_login_id = $userid WHERE  cus_id = '".$cus_id."' and req_id = '".$req_id."' && cus_status = '20' ") or die('Error on Request Table');
     $qry = $con->query("UPDATE customer_register set cus_status = 21 WHERE cus_id = '".$cus_id."' and req_ref_id = '".$req_id."' ")or die('Error on Customer Table');
     $qry = $con->query("UPDATE in_verification set cus_status = 21, update_login_id = $userid WHERE cus_id = '".$cus_id."' and req_id = '".$req_id."' && cus_status = '20' ")or die('Error on inVerification Table');
     $qry = $con->query("UPDATE `in_approval` SET `cus_status`= 21,`update_login_id`= $userid WHERE  cus_id = '".$cus_id."' and req_id = '".$req_id."' && cus_status = '20' ") or die('Error on in_approval Table');

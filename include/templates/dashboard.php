@@ -979,7 +979,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total NOC</p>
-										<p class="counter wow fadeInUp" id="tot_noc">43210</p>
+										<p class="counter wow fadeInUp" id="tot_noc"></p>
 									</div>
 								</div>
 							</div>
@@ -989,7 +989,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Total Issued</p>
-										<p class="counter wow fadeInUp" id="tot_noc_issued">43210</p>
+										<p class="counter wow fadeInUp" id="tot_noc_issued"></p>
 									</div>
 								</div>
 							</div>
@@ -1001,7 +1001,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Month NOC</p>
-										<p class="counter wow fadeInUp" id="month_noc">43210</p>
+										<p class="counter wow fadeInUp" id="month_noc"></p>
 									</div>
 								</div>
 							</div>
@@ -1011,7 +1011,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Month Issued</p>
-										<p class="counter wow fadeInUp" id="month_noc_issued">43210</p>
+										<p class="counter wow fadeInUp" id="month_noc_issued"></p>
 									</div>
 								</div>
 							</div>
@@ -1021,7 +1021,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards month-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Month Balance</p>
-										<p class="counter wow fadeInUp" id="month_noc_bal">43210</p>
+										<p class="counter wow fadeInUp" id="month_noc_bal"></p>
 									</div>
 								</div>
 							</div>
@@ -1033,7 +1033,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today NOC</p>
-										<p class="counter wow fadeInUp" id="today_noc">43210</p>
+										<p class="counter wow fadeInUp" id="today_noc"></p>
 									</div>
 								</div>
 							</div>
@@ -1043,7 +1043,7 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 								<div class="card-body counter-cards today-card">
 									<div class="form-group text-center">
 										<p class='counter-head wow fadeIn'>Today Issued</p>
-										<p class="counter wow fadeInUp" id="today_noc_issued">43210</p>
+										<p class="counter wow fadeInUp" id="today_noc_issued"></p>
 									</div>
 								</div>
 							</div>
