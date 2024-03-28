@@ -17,6 +17,7 @@ class NocClass
         $tot_noc = "SELECT COUNT(*) as tot_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 ";
         $noc_issueqry = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 21 ";
         $month_noc = "SELECT COUNT(*) as month_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND month(req.updated_date) = month('$today') and year(req.updated_date) = year('$today') ";
+        $month_noc_bal = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND month(req.updated_date) = month('$today') and year(req.updated_date) = year('$today') ";
         $month_noc_issueqry = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 21 ";
         $today_noc = "SELECT COUNT(*) as today_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND date(req.updated_date) = '$today' ";
         $today_noc_issueqry = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 21  ";
@@ -28,6 +29,7 @@ class NocClass
         $tot_noc .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
         $noc_issueqry .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
         $month_noc .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
+        $month_noc_bal .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
         $month_noc_issueqry .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
         $today_noc .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
         $today_noc_issueqry .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
@@ -37,6 +39,8 @@ class NocClass
         $this->date_limit = '';
         $tot_noc_issued = $this->fetchdata($con, $noc_issueqry);
         $month_nocQry = $con->query($month_noc);
+        $this->date_limit = 'month';
+        $month_noc_bal = $this->fetchdata($con, $month_noc_bal);
         $this->date_limit = 'month';
         $month_noc_issued = $this->fetchdata($con, $month_noc_issueqry);
         $today_nocQry = $con->query($today_noc);
@@ -48,7 +52,7 @@ class NocClass
         $response['tot_noc_issued'] = $tot_noc_issued;
         $response['month_noc'] = $month_nocQry->fetch_assoc()['month_noc'];
         $response['month_noc_issued'] = $month_noc_issued;
-        $response['month_noc_bal'] = $response['month_noc'] - $response['month_noc_issued'];
+        $response['month_noc_bal'] = $response['month_noc'] - $month_noc_bal;
         $response['today_noc'] = $today_nocQry->fetch_assoc()['today_noc'];
         $response['today_noc_issued'] = $today_noc_issued;
 
@@ -63,6 +67,7 @@ class NocClass
             $req_id_arr[] = $row['req_id'];
         }
         $noc_status = array_map(array($this, 'getNocDocStatus'), $req_id_arr); //uses callback function of the class to process each data if array
+        // print_r($noc_status);
         $res = array_sum($noc_status); //add all the numbers inside the array
         return $res;
     }
@@ -77,43 +82,6 @@ class NocClass
         //now check all the documents tables to check whether the passed req_id having noc_status 0, means noc not completed for that req_id
         //if in all queries the noc status count is set to 1 then the count inside the query will return null or 0
         //if count is >0 then noc status is completed
-        // echo $req_id . '-' .$qry->fetch_assoc()['count'].'<br>';
-
-        // $qry = $con->query("SELECT COUNT(*) as `count` FROM `signed_doc_info` a JOIN signed_doc b ON a.id = b.signed_doc_id  where b.req_id = $req_id and b.noc_given != '1' ");
-        // if ($qry->fetch_assoc()['count'] > 0) {
-        //     //if the query returns any count > 0 then noc status is not completed
-        //     $nocstatus = 0; //not completed
-        // }
-
-        // $qry = $con->query("SELECT COUNT(*) as `count` FROM `cheque_no_list` a JOIN cheque_info b on a.cheque_table_id = b.id where a.req_id = $req_id and a.noc_given != '1' ");
-        // if ($qry->fetch_assoc()['count'] > 0) {
-        //     //if the query returns any count > 0 then noc status is not completed
-        //     $nocstatus = 0; //not completed
-        // }
-
-        // $qry = $con->query("SELECT COUNT(*) as `count` FROM `acknowlegement_documentation` where req_id = $req_id and ((mortgage_process = 0 && mortgage_process_noc != '1') or (mortgage_document = 0 && mortgage_document_noc != '1')) ");
-        // if ($qry->fetch_assoc()['count'] > 0) {
-        //     //if the query returns any count > 0 then noc status is not completed
-        //     $nocstatus = 0; //not completed
-        // }
-
-        // $qry = $con->query("SELECT COUNT(*) as `count` FROM `acknowlegement_documentation` where req_id = $req_id and ((endorsement_process = 0 && endorsement_process_noc != '1') or (en_RC = 0 && en_RC_noc != '1') or (en_Key = 0 && en_Key_noc != '1') ) ");
-        // if ($qry->fetch_assoc()['count'] > 0) {
-        //     //if the query returns any count > 0 then noc status is not completed
-        //     $nocstatus = 0; //not completed
-        // }
-
-        // $qry = $con->query("SELECT COUNT(*) as `count` FROM `gold_info` where req_id = $req_id and noc_given != '1' ");
-        // if ($qry->fetch_assoc()['count'] > 0) {
-        //     //if the query returns any count > 0 then noc status is not completed
-        //     $nocstatus = 0; //not completed
-        // }
-
-        // $qry = $con->query("SELECT COUNT(*) as `count` FROM document_info ac LEFT JOIN verification_family_info fam ON ac.relation_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_noc != '1' ");
-        // if ($qry->fetch_assoc()['count'] > 0) {
-        //     //if the query returns any count > 0 then noc status is not completed
-        //     $nocstatus = 0; //not completed
-        // }
 
         $qry = $con->query("SELECT COUNT(*) as `count` FROM (
             SELECT 1 FROM `signed_doc_info` a JOIN signed_doc b ON a.id = b.signed_doc_id WHERE b.req_id = $req_id AND b.noc_given != '1'
@@ -131,6 +99,7 @@ class NocClass
         if ($qry->fetch_assoc()['count'] > 0) {
             $nocstatus = 0;
         }
+        // echo $req_id . '-' .$nocstatus.'|';
 
         if ($nocstatus == 1) {
             //below query will fetch the latest updated noc date from all tables if the current request id's noc is completed
@@ -176,23 +145,43 @@ class NocClass
                     SELECT 1 FROM document_info ac LEFT JOIN verification_family_info fam ON ac.relation_name = fam.id WHERE ac.req_id = $req_id 
                 ) AS combined ");
                 $document_count = $qry->fetch_assoc()['count'];
+            } else {
+                $document_count = 1;
             }
-
             if ($document_count > 0) {
                 //if the request has documents given then compare the dates
                 //else the request is not having any document to issue so it will marked as issued
-
+                
                 if ($dater == 'month') {
                     //check for the call type and set the limit checker accordingly
-
+                    
                     $noc_date = date('Y-m', strtotime($noc_date));
-
+                    
                     //if the date is not in current month, then that noc issue cannot be calculated
                     if ($noc_date != date('Y-m', strtotime($today))) {
                         $nocstatus = 0; //not completed
                     }
                 } elseif ($dater == 'today') {
                     $noc_date = date('Y-m-d', strtotime($noc_date));
+                    //if the date is not in current date, then that noc issue cannot be calculated
+                    if ($noc_date != $today) {
+                        $nocstatus = 0; //not completed
+                    }
+                }
+            } else {
+                //if no doc submitted by the reqest then noc moved date will be tha noc date of that request
+                //so check the noc moved date and compare with the current date to check whether noc is completed or not
+                $qry = $con->query("SELECT updated_date FROM request_creation where req_id = $req_id ");
+                $noc_moved_date = $qry->fetch_assoc()['updated_date'];
+                if ($dater == 'month') {
+                    $noc_moved_date = date('Y-m', strtotime($noc_moved_date));
+                    //if the date is not in current month, then that noc issue cannot be calculated
+                    if ($noc_moved_date != date('Y-m', strtotime($today))) {
+                        $nocstatus = 0; //not completed
+                    }
+                    // echo $req_id . '-' . $noc_date . '|';
+                } elseif ($dater == 'today') {
+                    $noc_moved_date = date('Y-m-d', strtotime($noc_moved_date));
                     //if the date is not in current date, then that noc issue cannot be calculated
                     if ($noc_date != $today) {
                         $nocstatus = 0; //not completed
