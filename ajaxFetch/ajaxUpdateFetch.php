@@ -26,6 +26,19 @@ if($userid != 1){
     $sub_area_list = implode(',',$sub_area_ids);
 }
 
+
+$column = array(
+    'cus_reg_id',
+    'cus_id',
+    'customer_name',
+    'cus_reg_id',
+    'cus_reg_id',
+    'cus_reg_id',
+    'cus_reg_id',
+    'cus_reg_id',
+    'cus_reg_id',
+);
+
 if($userid == 1){
     $query = 'SELECT * FROM customer_register WHERE cus_status >= 13'; 
 }else{
@@ -38,12 +51,16 @@ if(isset($_POST['search']) && $_POST['search'] != "")
     $query .= "
         and (cus_id LIKE '%".$_POST['search']."%'
         OR customer_name LIKE '%".$_POST['search']."%'
-        OR area_group LIKE '%".$_POST['search']."%'
-        OR area_line LIKE '%".$_POST['search']."%'
         OR mobile1 LIKE '%".$_POST['search']."%' ) ";
 }
 
 $query .= " GROUP BY cus_id ";
+
+if (isset($_POST['order'])) {
+    $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
+} else {
+    $query .= ' ';
+}
 
 $query1 = '';
 
@@ -81,12 +98,6 @@ foreach ($result as $row) {
     ");
     $sub_array[] = $areaqry->fetch_assoc()['area_name'];
 
-    // $areaqry = $con->query("SELECT area_name FROM area_list_creation where area_id = '".$row['area']."' ");
-    // $sub_array[] = $areaqry->fetch_assoc()['area_name'];
-    
-    // $subareaqry = $con->query("SELECT sub_area_name FROM sub_area_list_creation where sub_area_id = '".$row['sub_area']."' ");
-    // $sub_array[] = $subareaqry->fetch_assoc()['sub_area_name'];
-    
     $branchqry = $con->query("SELECT bc.branch_name FROM area_group_mapping agm JOIN branch_creation bc ON agm.branch_id = bc.branch_id where  FIND_IN_SET('".$row['area']."' , agm.area_id) ");
     $sub_array[] = $branchqry->fetch_assoc()['branch_name'];
     
@@ -96,7 +107,6 @@ foreach ($result as $row) {
     ELSE ( SELECT line_name FROM area_line_mapping WHERE FIND_IN_SET( ( SELECT sub_area FROM request_creation WHERE cus_id = $cus_id ORDER BY `req_id` DESC LIMIT 1 ), sub_area_id ) )
     END AS `line_name`
     ");
-    // $lineqry = $con->query("SELECT line_name FROM area_line_mapping where  FIND_IN_SET('".$row['area']."' , area_id) ");
     $sub_array[] = $lineqry->fetch_assoc()['line_name'];
     
     $grpqry = $con->query("SELECT CASE 
@@ -105,7 +115,6 @@ foreach ($result as $row) {
     ELSE ( SELECT group_name FROM area_group_mapping WHERE FIND_IN_SET( ( SELECT sub_area FROM request_creation WHERE cus_id = $cus_id ORDER BY `req_id` DESC LIMIT 1 ), sub_area_id ) )
     END AS `group_name`
     ");
-    // $grpqry = $con->query("SELECT group_name FROM area_group_mapping where FIND_IN_SET('".$row['area']."' , area_id) ");
     $sub_array[] = $grpqry->fetch_assoc()['group_name'];
 
     if(getDocumentStatus($con,$cus_id) == false){
@@ -116,7 +125,6 @@ foreach ($result as $row) {
 
     $id          = $row['cus_id'];
     $cus_id      = $row['cus_id'];
-// if($cus_id == '100010001000'){die;}
     $action = "<a href='update&upd=$id' title='Update'>  <span class='icon-border_color' style='font-size: 12px;position: relative;top: 2px;'></span> </a>";
     
     $sub_array[] = $action;

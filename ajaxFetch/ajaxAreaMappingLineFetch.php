@@ -2,43 +2,44 @@
 include('../ajaxconfig.php');
 @session_start();
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
 }
 
 $column = array(
-    'map_id',
-    'line_name',
-    'company_id',
-    'branch_id',
-    'area_id',
-    'sub_area_id', 
-    'status'
+    'alm.map_id',
+    'alm.line_name',
+    'c.company_name',
+    'b.branch_name',
+    'alm.map_id',
+    'alm.map_id',
+    'alm.status',
+    'alm.status'
 );
 
-$query = "SELECT * FROM area_line_mapping ";
+$query = "SELECT alm.*, c.company_name, b.branch_name,
+        (SELECT GROUP_CONCAT(alc.area_name SEPARATOR ', ')
+        FROM area_list_creation alc
+        WHERE FIND_IN_SET(alc.area_id, alm.area_id) AND alc.status = 0) AS area_names,
+        (SELECT GROUP_CONCAT(salc.sub_area_name SEPARATOR ', ')
+        FROM sub_area_list_creation salc
+        WHERE FIND_IN_SET(salc.sub_area_id, alm.sub_area_id) AND salc.status = 0) AS sub_area_names
+        FROM area_line_mapping alm 
+        JOIN company_creation c ON c.company_id = alm.company_id
+        JOIN branch_creation b ON b.branch_id = alm.branch_id
+        WHERE 1 ";
 
-if(isset($_POST['search']) && $_POST['search']!="")
-{
-        if($_POST['search']=="Active")
-        {
-            $query .="WHERE status=0 "; 
-        }
-        else if($_POST['search']=="Inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
-
-        else{	
-            $query .= "WHERE
-            map_id LIKE  '%".$_POST['search']."%'
-            OR line_name LIKE '%".$_POST['search']."%'
-            OR company_id LIKE '%".$_POST['search']."%'
-            OR branch_id LIKE '%".$_POST['search']."%'
-            OR area_id LIKE '%".$_POST['search']."%'
-            OR sub_area_id LIKE '%".$_POST['search']."%'
-            OR status LIKE '%".$_POST['search']."%' ";
-        }
+if (isset($_POST['search']) && $_POST['search'] != "") {
+    $search = $_POST['search'];
+    $query .= "AND (alm.line_name LIKE '%" . $search . "%'
+            OR c.company_name LIKE '%" . $search . "%'
+            OR b.branch_name LIKE '%" . $search . "%'
+            OR (SELECT GROUP_CONCAT(alc.area_name SEPARATOR ', ')
+                FROM area_list_creation alc
+                WHERE FIND_IN_SET(alc.area_id, alm.area_id) AND alc.status = 0) LIKE '%" . $search . "%'
+            OR (SELECT GROUP_CONCAT(salc.sub_area_name SEPARATOR ', ')
+                FROM sub_area_list_creation salc
+                WHERE FIND_IN_SET(salc.sub_area_id, alm.sub_area_id) AND salc.status = 0) LIKE '%" . $search . "%') ";
 }
 
 if (isset($_POST['order'])) {
@@ -64,79 +65,30 @@ $data = array();
 $sno = 1;
 foreach ($result as $row) {
     $sub_array   = array();
-    
-    if($sno!="")
-    {
+
+    if ($sno != "") {
         $sub_array[] = $sno;
     }
-    
+
     $sub_array[] = $row['line_name'];
-    
-    //Company name Fetch
-    $company_id = $row['company_id'];
-    $getQry = "SELECT * from company_creation where company_id = '".$company_id."' and status = 0 ";
-    $res=$con->query($getQry);
-    while($row1=$res->fetch_assoc())
-    {
-        $sub_array[] = $row1["company_name"];        
-    }
+    $sub_array[] = $row["company_name"];
+    $sub_array[] = $row["branch_name"];
+    $sub_array[] = $row["area_names"];
+    $sub_array[] = $row["sub_area_names"];
 
-    //Branch name Fetch
-    $branch_id = $row['branch_id'];
-    $getbranchQry = "SELECT * from branch_creation where branch_id = '".$branch_id."' and status = 0 ";
-    $res=$con->query($getbranchQry);
-    while($row1=$res->fetch_assoc())
-    {
-        $sub_array[] = $row1["branch_name"];        
-    }
 
-    //Area name Fetch
-    $area_name_id = explode(',',$row['area_id']);
-    $area_name = '';
-    foreach($area_name_id as $area_name_id1){
-        $getareaQry = "SELECT * from area_list_creation where area_id = '".$area_name_id1."' and status = 0 ";
-        $res=$con->query($getareaQry);
-        while($row1=$res->fetch_assoc())
-        {
-            $area_name .= $row1["area_name"].','; 
-        }
-    }
-    $area_name = rtrim($area_name, ' , '); // will remove the last comma from string
-    $sub_array[] = $area_name;
-
-    //Sub Area name Fetch
-    $sub_area_id = explode(',',$row['sub_area_id']);
-    $sub_area_name = '';
-    if(sizeof($sub_area_id)>0){
-
-        foreach($sub_area_id as $id){
-            $getsubareaQry = "SELECT * from sub_area_list_creation where sub_area_id = '".$id."' and status = 0 ";
-            $res=$con->query($getsubareaQry);
-            if($res->num_rows>0){
-                $row1=$res->fetch_assoc();
-                $sub_area_name .= $row1["sub_area_name"] . ', ';
-            }
-        }
-        $sub_area_name = rtrim($sub_area_name, ' , '); // will remove the last comma from string
-    }
-    $sub_array[] = $sub_area_name;
-    
-    
     $status      = $row['status'];
-    if($status == 1)
-	{
-	$sub_array[] = "<span style='width: 144px;'><span class='kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill'>Inactive</span></span>";
-	}
-	else
-	{
-    $sub_array[] = "<span style='width: 144px;'><span class='kt-badge  kt-badge--success kt-badge--inline kt-badge--pill'>Active</span></span>";
-	}
-	
-	$id   = $row['map_id'];
-	$action="<a href='area_mapping&upd=$id&type=line' title='Edit details'><span class='icon-border_color'></span></a>&nbsp;&nbsp; 
+    if ($status == 1) {
+        $sub_array[] = "<span style='width: 144px;'><span class='kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill'>Inactive</span></span>";
+    } else {
+        $sub_array[] = "<span style='width: 144px;'><span class='kt-badge  kt-badge--success kt-badge--inline kt-badge--pill'>Active</span></span>";
+    }
+
+    $id   = $row['map_id'];
+    $action = "<a href='area_mapping&upd=$id&type=line' title='Edit details'><span class='icon-border_color'></span></a>&nbsp;&nbsp; 
 	<a href='area_mapping&del=$id&type=line' title='Delete details' class='delete_area_mapping'><span class='icon-trash-2'></span></a>";
 
-	$sub_array[] = $action;
+    $sub_array[] = $action;
     $data[]      = $sub_array;
     $sno = $sno + 1;
 }
@@ -157,4 +109,3 @@ $output = array(
 );
 
 echo json_encode($output);
-?>

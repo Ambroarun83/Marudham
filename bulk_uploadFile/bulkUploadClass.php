@@ -355,9 +355,9 @@ class bulkUploadClass
         }
         return $area_id;
     }
-    function getSubAreaId($con, $sub_area_name)
+    function getSubAreaId($con, $sub_area_name,$area_id)
     {
-        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $sub_area_name . "' ";
+        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $sub_area_name . "' and area_id_ref = '".$area_id."' ";
         $result1 = $con->query($query) or die("Error ");
         if ($con->affected_rows > 0) {
             $row = $result1->fetch_assoc();
@@ -394,8 +394,7 @@ class bulkUploadClass
     {
         $group_name = 'Invalid';
         if ($sub_area_id != 'Not Found') {
-
-            $qry = $con->query("SELECT group_name from area_group_mapping where FIND_IN_SET($sub_area_id, sub_area_id) ");
+            $qry = $con->query("SELECT group_name FROM area_group_mapping WHERE FIND_IN_SET($sub_area_id, sub_area_id) ");
             if ($qry->num_rows > 0) {
                 $group_name = $qry->fetch_assoc()['group_name'];
             }
@@ -406,7 +405,7 @@ class bulkUploadClass
     {
         $line_name = 'Invalid';
         if ($sub_area_id != 'Not Found') {
-            $qry = $con->query("SELECT line_name from area_line_mapping where FIND_IN_SET($sub_area_id, sub_area_id) ");
+            $qry = $con->query("SELECT line_name FROM area_line_mapping WHERE FIND_IN_SET( $sub_area_id, sub_area_id ) ");
             if ($qry->num_rows > 0) {
                 $line_name = $qry->fetch_assoc()['line_name'];
             }
@@ -512,13 +511,13 @@ class bulkUploadClass
         $insert_inap = $con->query("INSERT INTO in_approval (`req_id`, `cus_id`, `cus_status`, `status`,`insert_login_id`,`update_login_id` ) SELECT req_id,cus_id,cus_status,status,insert_login_id,update_login_id from in_verification where req_id = '" . $req_id . "' ");
     }
 
-    function acknowledgementTables($con, $data, $req_id,$userData)
+    function acknowledgementTables($con, $data, $req_id, $userData)
     {
         $insert_inack = $con->query("INSERT INTO `in_acknowledgement`(`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`,`update_login_id`,`created_on`,`updated_date`) SELECT req_id,cus_id,cus_status,status,insert_login_id,update_login_id,created_date,'" . $data['loan_date'] . "' from in_verification where req_id = '" . $req_id . "' ") or die('Error in in_acknowledgement');
         $ack_id = $con->insert_id;
         $qry = $con->query("UPDATE in_acknowledgement set inserted_user = '" . $userData['user_id'] . "', inserted_date = '" . $data['dor'] . "' where id = '$ack_id' ");
 
-        $insert_ackcp = $con->query("INSERT INTO `acknowlegement_customer_profile`(`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`,`dow`,`abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT * FROM `customer_profile` WHERE `req_id`='$req_id' ") or die('Error in acknowlegement_customer_profile');
+        $insert_ackcp = $con->query("INSERT INTO `acknowlegement_customer_profile`(`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`,`dow`,`abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`,`latlong`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT * FROM `customer_profile` WHERE `req_id`='$req_id' ") or die('Error in acknowlegement_customer_profile');
 
         $insert_ackdoc = $con->query("INSERT INTO `acknowlegement_documentation`(`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`,`document_name`, `document_details`, `document_type`,  `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT `id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`,`document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date` FROM `verification_documentation` WHERE `req_id` ='$req_id'") or die('Error in acknowlegement_documentation');
 
@@ -565,7 +564,7 @@ class bulkUploadClass
             $errcolumns[] = 'Customer Existence Type';
         }
 
-        if (!preg_match('/^[A-Za-z]+$/', $data['cus_name'])) {
+        if ($data['cus_name'] == '') {
             $errcolumns[] = 'Customer Name';
         }
 
@@ -597,7 +596,7 @@ class bulkUploadClass
             $errcolumns[] = 'Sub Area ID';
         }
 
-        if (!preg_match('/^[A-Za-z0-9]+$/', $data['address'])) {
+        if ($data['address'] == '') {
             $errcolumns[] = 'Address';
         }
 
@@ -605,11 +604,11 @@ class bulkUploadClass
             $errcolumns[] = 'Mobile Number';
         }
 
-        if (!preg_match('/^[A-Za-z]+$/', $data['father_name'])) {
+        if ($data['father_name'] == '') {
             $errcolumns[] = 'Father Name';
         }
 
-        if (!preg_match('/^[A-Za-z]+$/', $data['mother_name'])) {
+        if ($data['mother_name'] == '') {
             $errcolumns[] = 'Mother Name';
         }
 
@@ -617,11 +616,11 @@ class bulkUploadClass
             $errcolumns[] = 'Marital Status';
         }
 
-        if ($data['marital'] == '1' && !preg_match('/^[A-Za-z]+$/', $data['spouse'])) {
+        if ($data['marital'] == '1' && $data['spouse'] == '') {
             $errcolumns[] = 'Spouse Name';
         }
 
-        if (!preg_match('/^[A-Za-z]+$/', $data['guarantor_name'])) {
+        if ($data['guarantor_name'] == '') {
             $errcolumns[] = 'Guarantor Name';
         }
 
@@ -653,15 +652,15 @@ class bulkUploadClass
             $errcolumns[] = 'Sub Category Check';
         }
 
-        if (!preg_match('/^[0-9]*$/', $data['tot_amt'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['tot_amt'])) {
             $errcolumns[] = 'Total Amount';
         }
 
-        if (!preg_match('/^[0-9]*$/', $data['adv_amt'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['adv_amt'])) {
             $errcolumns[] = 'Advance Amount';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['loan_amt'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['loan_amt'])) {
             $errcolumns[] = 'Loan Amount';
         }
 
@@ -669,11 +668,11 @@ class bulkUploadClass
             $errcolumns[] = 'Possibility Type';
         }
 
-        if ($data['poss_type'] == '1' && !preg_match('/^[0-9]+$/', $data['poss_due_amt'])) {
+        if ($data['poss_type'] == '1' && !preg_match('/^\d+(\.\d{1,2})?$/', $data['poss_due_amt'])) {
             $errcolumns[] = 'Possibility Due Amount';
         }
 
-        if ($data['poss_type'] == '2' && !preg_match('/^[0-9]+$/', $data['poss_due_period'])) {
+        if ($data['poss_type'] == '2' && !preg_match('/^\d+(\.\d{1,2})?$/', $data['poss_due_period'])) {
             $errcolumns[] = 'Possibility Due Period';
         }
 
@@ -681,7 +680,7 @@ class bulkUploadClass
             $errcolumns[] = 'Calculation Categories';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['loan_limit'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['loan_limit'])) {
             $errcolumns[] = 'Loan Limit';
         }
 
@@ -757,51 +756,51 @@ class bulkUploadClass
             $errcolumns[] = 'Profit Type';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['int_rate'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['int_rate'])) {
             $errcolumns[] = 'Interest Rate';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['due_period'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['due_period'])) {
             $errcolumns[] = 'Due Period';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['doc_charge'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['doc_charge'])) {
             $errcolumns[] = 'Document Charge';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['proc_fee'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['proc_fee'])) {
             $errcolumns[] = 'Processing Fee';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['loan_amt_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['loan_amt_cal'])) {
             $errcolumns[] = 'Loan Amount Calculation';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['principal_amt_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['principal_amt_cal'])) {
             $errcolumns[] = 'Principal Amount Calculation';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['int_amt_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['int_amt_cal'])) {
             $errcolumns[] = 'Interest Amount Calculation';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['tot_amt_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['tot_amt_cal'])) {
             $errcolumns[] = 'Total Amount Calculation';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['due_amt_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['due_amt_cal'])) {
             $errcolumns[] = 'Due Amount Calculation';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['doc_charge_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['doc_charge_cal'])) {
             $errcolumns[] = 'Document Charge Calculation';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['proc_fee_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['proc_fee_cal'])) {
             $errcolumns[] = 'Processing Fee Calculation';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['net_cash_cal'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['net_cash_cal'])) {
             $errcolumns[] = 'Net Cash Calculation';
         }
 
@@ -829,7 +828,7 @@ class bulkUploadClass
             $errcolumns[] = 'Verification Location';
         }
 
-        if (!preg_match('/^[A-Za-z]+$/', $data['issued_to'])) {
+        if ($data['issued_to'] == '') {
             $errcolumns[] = 'Issued To';
         }
 
@@ -845,11 +844,11 @@ class bulkUploadClass
             $errcolumns[] = 'Payment Type';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['cash'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['cash'])) {
             $errcolumns[] = 'Cash';
         }
 
-        if (!preg_match('/^[0-9]+$/', $data['balance_amt'])) {
+        if (!preg_match('/^\d+(\.\d{1,2})?$/', $data['balance_amt'])) {
             $errcolumns[] = 'Balance Amount';
         }
 

@@ -30,13 +30,17 @@ $statusLabels = [
     '20' => 'Closed',
     '21' => 'NOC',
 ];
+$fam_sql = '';
 
 if ($cus_id != '') {
     $sql = "SELECT cus_id from customer_register WHERE cus_id LIKE '%$cus_id%' ";
+    $fam_sql = "SELECT id from verification_family_info WHERE relation_aadhar LIKE '%$cus_id%' ";
 } else if ($cus_name != '') {
     $sql = "SELECT cus_id from customer_register WHERE customer_name LIKE '%$cus_name%' ";
+    $fam_sql = "SELECT id from verification_family_info WHERE famname LIKE '%$cus_name%' ";
 } else if ($mobile != '') {
     $sql = "SELECT cus_id from customer_register WHERE mobile1 LIKE '%$mobile%' or mobile2 LIKE '%$mobile%' ";
+    $fam_sql = "SELECT id from verification_family_info WHERE relation_Mobile LIKE '%$mobile%' ";
 } else if ($area != '') {
     $sql = "SELECT cr.cus_id from area_list_creation ac 
         JOIN customer_register cr ON 
@@ -74,32 +78,13 @@ if (!empty($cus_id_fetched)) {
         $cus_status[] = $row['cus_status'];
     }
 }
-?>
-
-<table class="table custom-table" id="custListTable">
-    <thead>
-        <tr>
-            <th>S.No</th>
-            <th>Customer ID</th>
-            <th>Customer Name</th>
-            <th>Area</th>
-            <th>Sub Area</th>
-            <th>Branch</th>
-            <th>Line</th>
-            <th>Group</th>
-            <th>Mobile 1</th>
-            <th>Mobile 2</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        $i = 1;
-        $x = 0;
-        if (!empty($req_id)) {
-            foreach ($req_id as $req) {
-                if ($cus_status[$x] == '0' || $cus_status[$x] == '1' || $cus_status[$x] == '4' || $cus_status[$x] == '5' || $cus_status[$x] == '8' || $cus_status[$x] == '9') {
-                    $req_sql = $con->query("SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
+$i = 1;
+$x = 0;
+$data = array();
+if (!empty($req_id)) {
+    foreach ($req_id as $req) {
+        if ($cus_status[$x] == '0' || $cus_status[$x] == '1' || $cus_status[$x] == '4' || $cus_status[$x] == '5' || $cus_status[$x] == '8' || $cus_status[$x] == '9') {
+            $req_sql = $con->query("SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
                         From request_creation req 
                         LEFT JOIN area_list_creation ac ON req.area = ac.area_id 
                         LEFT JOIN sub_area_list_creation sac ON req.sub_area = sac.sub_area_id 
@@ -107,8 +92,8 @@ if (!empty($cus_id_fetched)) {
                         LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sac.sub_area_id,agm.sub_area_id)
                         LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id 
                         where req.req_id = $req ");
-                } else {
-                    $req_sql = $con->query("SELECT cp.cus_id,cp.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,cp.mobile1,cp.mobile2 
+        } else {
+            $req_sql = $con->query("SELECT cp.cus_id,cp.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,cp.mobile1,cp.mobile2 
                     FROM customer_profile cp
                     LEFT JOIN area_list_creation ac ON cp.area_confirm_area = ac.area_id 
                     LEFT JOIN sub_area_list_creation sac ON cp.area_confirm_subarea = sac.sub_area_id 
@@ -116,54 +101,59 @@ if (!empty($cus_id_fetched)) {
                     LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sac.sub_area_id,agm.sub_area_id)
                     LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id 
                     WHERE cp.req_id = $req  ");
-                }
-                $x++;
-                while ($req_row = $req_sql->fetch_assoc()) {
-        ?>
-                    <tr>
-                        <td><?php echo $i++; ?></td>
-                        <td><?php echo $req_row['cus_id']; ?></td>
-                        <td><?php echo $req_row['cus_name']; ?></td>
-                        <td><?php echo $req_row['area_name']; ?></td>
-                        <td><?php echo $req_row['sub_area_name']; ?></td>
-                        <td><?php echo $req_row['branch_name']; ?></td>
-                        <td><?php echo $req_row['line_name']; ?></td>
-                        <td><?php echo $req_row['group_name']; ?></td>
-                        <td><?php echo $req_row['mobile1']; ?></td>
-                        <td><?php echo $req_row['mobile2']; ?></td>
-                        <td><input type="button" class="view_cust btn btn-primary" value="View" data-toggle="modal" data-target="#customerStatusModal" data-cusid="<?php echo $req_row['cus_id']; ?>"></td>
-                    </tr>
-        <?php
-                }
+        }
+        $x++;
+        while ($req_row = $req_sql->fetch_assoc()) {
+            $sub_array = array();
+            $sub_array['sno'] = $i++;
+            $sub_array['cus_id'] = $req_row['cus_id'];
+            $sub_array['cus_name'] = $req_row['cus_name'];
+            $sub_array['area'] = $req_row['area_name'];
+            $sub_array['sub_area'] = $req_row['sub_area_name'];
+            $sub_array['branch'] = $req_row['branch_name'];
+            $sub_array['line'] = $req_row['line_name'];
+            $sub_array['group'] = $req_row['group_name'];
+            $sub_array['mobile1'] = $req_row['mobile1'];
+            $sub_array['mobile2'] = $req_row['mobile2'];
+            $action = '<input type="button" class="view_cust btn btn-primary" value="View" data-toggle="modal" data-target="#customerStatusModal" data-cusid=' . $req_row['cus_id'] . '>';
+            $sub_array['action'] = $action;
+
+            $data['customer_data'][] = $sub_array;
+        }
+    }
+}
+
+
+//for family data fetching
+if ($fam_sql != '') {
+
+    $runSql = $con->query($fam_sql);
+    $fam_id_arr = [];
+    if ($runSql->num_rows > 0) {
+        while ($row = $runSql->fetch_assoc()) {
+            $fam_id_arr[] = $row['id'];
+        }
+    }
+
+    if (!empty($fam_id_arr)) {
+        $i = 1;
+        foreach ($fam_id_arr as $id) {
+            $qry = $con->query("SELECT fam.cus_id,cr.customer_name,fam.famname,fam.relationship,fam.relation_aadhar,fam.relation_Mobile FROM verification_family_info fam JOIN customer_register cr ON fam.cus_id = cr.cus_id WHERE fam.id = '$id' ");
+            while ($row = $qry->fetch_assoc()) {
+                $sub_array = array();
+                $sub_array['sno'] = $i++;
+                $sub_array['name'] = $row['famname'];
+                $sub_array['relationship'] = $row['relationship'];
+                $sub_array['adhaar'] = $row['relation_aadhar'];
+                $sub_array['mobile'] = $row['relation_Mobile'];
+                $sub_array['under_cus'] = $row['customer_name'];
+                $sub_array['under_cus_id'] = $row['cus_id'];
+
+                $data['family_data'][] = $sub_array;
             }
         }
-        ?>
-    </tbody>
-</table>
-<input type="hidden" name="pending_sts" id="pending_sts" value="" />
-<input type="hidden" name="od_sts" id="od_sts" value="" />
-<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
-<input type="hidden" name="closed_sts" id="closed_sts" value="" />
-<input type="hidden" name="bal_amt" id="bal_amt" value="" />
-<script>
-    // let table = $('#custListTable').DataTable();
-    // table.destroy();
-    // $('#custListTable').DataTable({
-    //     'processing': true,
-    //     'iDisplayLength': 5,
-    //     "lengthMenu": [
-    //         [10, 25, 50, -1],
-    //         [10, 25, 50, "All"]
-    //     ],
-    //     dom: 'lBfrtip',
-    //     buttons: [{
-    //             extend: 'excel',
-    //         },
-    //         {
-    //             extend: 'colvis',
-    //             collectionLayout: 'fixed four-column',
-    //         }
-    //     ],
-    // });
-    viewCusOnClick();
-</script>
+    }
+}
+
+
+echo json_encode($data);

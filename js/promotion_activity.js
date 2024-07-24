@@ -80,7 +80,7 @@ function searchCustomer() {
         } else {
 
             $('.alert-danger').show();
-            $('.alert-danger .alert-text').html('Customer is in '+ response['cusPromotionType'] + '!');
+            $('.alert-danger .alert-text').html('Customer is in ' + response['cusPromotionType'] + '!');
             setTimeout(function () {
                 $('.alert').fadeOut('slow');
             }, 2000);

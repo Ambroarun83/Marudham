@@ -22,7 +22,7 @@ foreach($branch_id as $val){
         $records[$i]['collected_amt'] = $row['total_paid'];
 
         //get username by user id to shortlist
-        $usernameqry = $con->query("SELECT us.fullname,us.role,us.line_id,lm.line_name from user us JOIN area_line_mapping lm ON us.line_id = lm.map_id where us.user_id = '".strip_tags($row['insert_login_id'])."' ");
+        $usernameqry = $con->query("SELECT us.fullname,us.role,us.line_id,lm.line_name from user us LEFT JOIN area_line_mapping lm ON us.line_id = lm.map_id where us.user_id = '".strip_tags($row['insert_login_id'])."' ");
         $row1 = $usernameqry->fetch_assoc();
         if($row1['role'] != '2'){ // check if inserted person is not agent here by checking role 
 

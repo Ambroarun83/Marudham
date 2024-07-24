@@ -80,6 +80,9 @@ else if ($current_page == 'edit_concern_creation' || $current_page == 'edit_conc
 }else if ($current_page == 'loan_track') {
 
 	$current_module = 'loan_track';
+} else if ($current_page == 'sms_generation') {
+
+	$current_module = 'sms_generation';
 } else {
 	$current_module = '';
 }
@@ -184,6 +187,8 @@ $bulk_upload_module = '';
 $bulk_upload = '';
 $loan_track_module = '';
 $loan_track = '';
+$sms_module = '';
+$sms_generation = '';
 
 $getUser = $userObj->getUser($mysqli, $userid);
 if (sizeof($getUser) > 0) {
@@ -268,6 +273,8 @@ if (sizeof($getUser) > 0) {
 		$bulk_upload          		     = $getUser['bulk_upload'];
 		$loan_track_module          		     = $getUser['loan_track_module'];
 		$loan_track          		     = $getUser['loan_track'];
+		$sms_module          		     = $getUser['sms_module'];
+		$sms_generation          		     = $getUser['sms_generation'];
 	}
 }
 ?>
@@ -849,7 +856,7 @@ if (sizeof($getUser) > 0) {
 							<i class='icon-upload-cloud'></i>
 							<span class="menu-text">Bulk Upload</span>
 						</a>
-						<div class="sidebar-submenu" <?php if ($current_module == 'bulk_upload_module') echo 'style="display:block" '; ?>>
+						<div class="sidebar-submenu" <?php if ($current_module == 'bulk_upload') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php if ($bulk_upload == 0) { ?>
 									<li>
@@ -866,7 +873,7 @@ if (sizeof($getUser) > 0) {
 							<i class='icon-target'></i>
 							<span class="menu-text">Loan Track</span>
 						</a>
-						<div class="sidebar-submenu" <?php if ($current_module == 'loan_track_module') echo 'style="display:block" '; ?>>
+						<div class="sidebar-submenu" <?php if ($current_module == 'loan_track') echo 'style="display:block" '; ?>>
 							<ul>
 								<?php if ($loan_track == 0) { ?>
 									<li>
@@ -876,7 +883,24 @@ if (sizeof($getUser) > 0) {
 							</ul>
 						</div>
 					</li>
-				<?php  } ?>
+				<?php  } if ($sms_module == 0) { ?>
+				<li class="sidebar-dropdown">
+					<a href="javascript:void(0)">
+						<i class='icon-mail'></i>
+						<span class="menu-text">SMS</span>
+					</a>
+					<div class="sidebar-submenu" <?php if ($current_module == 'sms_generation') echo 'style="display:block" '; ?>>
+						<ul>
+						<?php if ($sms_generation == 0) { ?>
+							<li>
+								<a href="sms_generation"><i class="icon-message"></i>SMS Generation</a>
+							</li>
+						<?php  } ?>
+						</ul>
+					</div>
+				</li>
+				<?php } ?>
+
 			</ul>
 		</div>
 		<!-- sidebar menu end -->
@@ -969,4 +993,6 @@ $bulk_upload_module = '';
 $bulk_upload = '';
 $loan_track_module = '';
 $loan_track = '';
+$sms_module = '';
+$sms_generation = '';
 ?>

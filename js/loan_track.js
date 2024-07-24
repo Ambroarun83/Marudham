@@ -17,10 +17,34 @@ $(document).ready(function () {
             $.ajax({
                 url: 'searchModule/search_customer.php',
                 type: 'POST',
+                dataType: 'JSON',
                 data: { cus_id, cus_name, mobile, loan_id },
                 success: function (data) {
-                    $('#customer_list').empty().html(data);
+                    console.log("🚀 ~ data:", data)
+                    let appendData;
+                    $('#custListTable tbody').empty()
+                    if (Array.isArray(data.customer_data) && data.customer_data.length > 0) {
+                        $.each(data.customer_data, function (key, val) {
+                            appendData += `<tr><td>${val.sno}</td>
+                                <td>${val.cus_id}</td>
+                                <td>${val.cus_name}</td>
+                                <td>${val.area}</td>
+                                <td>${val.sub_area}</td>
+                                <td>${val.branch}</td>
+                                <td>${val.line}</td>
+                                <td>${val.group}</td>
+                                <td>${val.mobile1}</td>
+                                <td>${val.mobile2}</td>
+                                <td>${val.action}</td>
+                                </tr>`;
+                        })
+                    } else {
+                        appendData = `<tr><td colspan='11'>No Records available</td></tr>`;
+                    }
+                    $('#customer_list tbody').html(appendData);
                 }
+            }).then(function () {
+                viewCusOnClick();
             })
         }
     })
@@ -53,9 +77,8 @@ function viewCusOnClick() {
     $('.view_cust').off('click').click(function () {
         $('#loanListTableDiv').empty();
         let cus_id = $(this).data('cusid');
-        callresetCustomerStatus(cus_id); //this function will give the customer's status like pending od current
-        showOverlay(); //loader start
-        setTimeout(() => {
+        callresetCustomerStatus(cus_id, function () {
+            showOverlay(); //loader start
             var pending_sts = $('#pending_sts').val();
             var od_sts = $('#od_sts').val();
             var due_nil_sts = $('#due_nil_sts').val();
@@ -65,14 +88,13 @@ function viewCusOnClick() {
                 $('#loanListTableDiv').html(response);
                 $('.loanlist_card, #close_btn').show();
                 $('#customer_list_card, #search_card').hide();
-
+                hideOverlay();
             });
-            hideOverlay();
-        }, 1000);
+        }); //this function will give the customer's status like pending od current
     });
 }
 
-function callresetCustomerStatus(cus_id) {
+function callresetCustomerStatus(cus_id, callback) {
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -109,7 +131,7 @@ function callresetCustomerStatus(cus_id) {
                 $('#bal_amt').val(bal_amt);
             };
         }
-    });
+    }).then(callback());
 }
 
 function customerStatusOnClickEvents() {

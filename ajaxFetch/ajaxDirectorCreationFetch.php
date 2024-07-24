@@ -3,41 +3,31 @@
 include('..\ajaxconfig.php');
 
 $column = array(
-    'dir_id',
-    'company_id',
-    // 'branch_id',
-    'dir_code',
-    'dir_name',
-    'dir_type',
-    'place',
-    'taluk',
-    'district',
-    'mobile_no',
-    'status',
+    'd.dir_id',
+    'c.company_name',
+    'd.dir_code',
+    'd.dir_name',
+    'd.dir_type',
+    'd.place',
+    'd.taluk',
+    'd.district',
+    'd.mobile_no',
+    'd.status',
+    'd.dir_id'
 );
 
-$query = "SELECT * FROM director_creation ";
+$query = "SELECT d.*,c.company_name FROM director_creation d
+JOIN company_creation c ON c.company_id = d.company_id WHERE 1 ";
 if (isset($_POST['search']) && $_POST['search'] != "") {
 
-        if ($_POST['search'] == "Active") {
-            $query .= "WHERE status=0 ";
-        } else if ($_POST['search'] == "Inactive") {
-            $query .= "WHERE status=1 ";
-        }
-
-        // OR branch_id LIKE '%".$_POST['search']."%'
-        else {
-            $query .= "WHERE
-        dir_code LIKE '%" . $_POST['search'] . "%'
-        OR dir_name LIKE '%" . $_POST['search'] . "%'
-        OR dir_type LIKE '%" . $_POST['search'] . "%'
-        OR company_id LIKE '%" . $_POST['search'] . "%'
-        OR place LIKE '%" . $_POST['search'] . "%'
-        OR taluk LIKE '%" . $_POST['search'] . "%'
-        OR district LIKE '%" . $_POST['search'] . "%'
-        OR mobile_no LIKE '%" . $_POST['search'] . "%'
-        OR status LIKE '%" . $_POST['search'] . "%' ";
-        }
+    $query .= "and
+        (d.dir_code LIKE '%" . $_POST['search'] . "%'
+        OR d.dir_name LIKE '%" . $_POST['search'] . "%'
+        OR c.company_name LIKE '%" . $_POST['search'] . "%'
+        OR d.place LIKE '%" . $_POST['search'] . "%'
+        OR d.taluk LIKE '%" . $_POST['search'] . "%'
+        OR d.district LIKE '%" . $_POST['search'] . "%'
+        OR d.mobile_no LIKE '%" . $_POST['search'] . "%') ";
 }
 
 if (isset($_POST['order'])) {
@@ -70,25 +60,7 @@ foreach ($result as $row) {
     $sub_array   = array();
 
     $sub_array[] = $sno;
-
-
-    //Company name Fetch
-    $company_id = $row['company_id'];
-    $getQry = "SELECT * from company_creation where company_id = '" . $company_id . "' and status = 0 ";
-    $res = $con->query($getQry);
-    while ($row1 = $res->fetch_assoc()) {
-        $sub_array[] = $row1["company_name"];
-    }
-
-    // //Branch name Fetch
-    // $branch_id = $row['branch_id'];
-    // $getbranchQry = "SELECT * from branch_creation where branch_id = '".$branch_id."' and status = 0 ";
-    // $res=$con->query($getbranchQry);
-    // while($row1=$res->fetch_assoc())
-    // {
-    //     $sub_array[] = $row1["branch_name"];        
-    // }
-
+    $sub_array[] = $row["company_name"];
     $sub_array[] = $row['dir_code'];
     $sub_array[] = $row['dir_name'];
 

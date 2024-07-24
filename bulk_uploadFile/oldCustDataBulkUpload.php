@@ -27,7 +27,7 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                 $data['doc_code'] = $obj->getDocumentCode($con);
                 $data['loan_id'] = $obj->getLoanCode($con);
                 $data['area_id'] = $obj->getAreaId($con, $data['area']);
-                $data['sub_area_id'] = $obj->getSubAreaId($con, $data['sub_area']);
+                $data['sub_area_id'] = $obj->getSubAreaId($con, $data['sub_area'],$data['area_id']);
                 $data['loan_cat_id'] = $obj->getLoanCategoryId($con, $data['loan_category']);
                 $data['sub_categoryCheck'] = $obj->checkSubCategory($con, $data['sub_category']);
                 $data['group_name'] = $obj->getAreaGroup($con, $data['sub_area_id']) == $data['area_group'] ? $data['area_group'] : 'Invalid';

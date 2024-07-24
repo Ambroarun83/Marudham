@@ -1,7 +1,8 @@
-.card{
+.card {
     min-height: fit-content;
 }
-#search_cus{
+
+#search_cus {
     padding: 12px 20px;
     background-color: #ccc;
     border: none;
@@ -13,13 +14,14 @@
     outline: none;
     transition: background-color 0.3s, color 0.3s;
 }
-#search_cus:hover{
+
+#search_cus:hover {
     background-color: #009688;
     color: white;
 }
 
-.add-new-btn{
-    padding: 6px 32px;  
+.add-new-btn {
+    padding: 6px 32px;
     float: right;
 }
 
@@ -27,7 +29,7 @@
     padding: 10px 4px 3px 0px;
 }
 
-.img-show{
+.img-show {
     border-radius: 50%;
     height: 150px;
     width: 150px;
@@ -62,4 +64,10 @@
 .toggle-button.active:not(#by_user) {
     background-color: #009688;
     color: white;
+}
+
+@media (max-width:1481px) {
+    .table-responsive {
+        overflow-x: scroll;
+    }
 }

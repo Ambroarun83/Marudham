@@ -9,17 +9,48 @@ $bank_detail = $_POST['bank_detail'];
 include('../../ajaxconfig.php');
 
 
-$op_date = date('Y-m-d',strtotime($_POST['op_date']. '-1 day'));
-if($op_date == date('Y-m-d')){// check whether opening date is current date
-    
+$op_date = date('Y-m-d', strtotime($_POST['op_date'] . '-1 day'));
+if ($op_date == date('Y-m-d')) { // check whether opening date is current date
+
     $records[0]['hand_opening'] = 0;
     $records[0]['bank_opening'] = 0;
     $records[0]['agent_opening'] = 0;
+    $records[0]['bank_untrkd'] = 0;
     $records[0]['opening_balance'] = 0;
-    $records[0]['opening_balance'] = 0;
-    echo json_encode($records);
-}else{// only if opening date is less than today's date, increase one date
-    
+} else { // only if opening date is less than today's date, increase one date
+
+    $old_hand = 0;
+    $old_agent = 0;
+    $old_bank = 0;
+    $old_bank_unt = 0;
+
+    $records = getOpeningBalance($con, $op_date, $bank_detail, $user_id);
+
+    //if while loop gets true, then the function will load the old opening balance.. so store latest opening balance
+    $opening_balance = $records[0]['opening_balance'];
+
+    while ($records[0]['hand_opening'] != 0 || $records[0]['agent_opening'] != 0  || $records[0]['bank_opening'] != 0) {
+        $old_hand += intVal($records[0]['hand_opening']);
+        $old_agent += intVal($records[0]['agent_opening']);
+        $old_bank += intVal($records[0]['bank_opening']);
+        $old_bank_unt += intVal($records[0]['bank_untrkd']);
+
+        $op_date = date('Y-m-d', strtotime($op_date . '-1 day'));
+        $records = getOpeningBalance($con, $op_date, $bank_detail, $user_id);
+    }
+
+    //now reassign latest opening date to returing variable.
+    $records[0]['opening_balance'] = $opening_balance;
+    $records[0]['hand_opening'] = intVal($records[0]['hand_opening']) + intVal($old_hand);
+    $records[0]['agent_opening'] = intVal($records[0]['agent_opening']) + intVal($old_agent);
+    $records[0]['bank_opening'] = intVal($records[0]['bank_opening']) + intVal($old_bank);
+    $records[0]['bank_untrkd'] = intVal($records[0]['bank_untrkd']) + intVal($old_bank_unt);
+}
+echo json_encode($records);
+
+
+function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
+{
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +83,7 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
             UNION ALL
             (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_hinvest WHERE date(created_date) = '$op_date' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
             UNION ALL
-            (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_hissued WHERE date(created_date) = '$op_date' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
+            (SELECT COALESCE(SUM(netcash), 0) AS amt FROM ct_db_hissued WHERE date(created_date) = '$op_date' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
             UNION ALL
             (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_hel WHERE date(created_date) = '$op_date' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
             UNION ALL
@@ -66,14 +97,15 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
 
     $handDebit = $handDebitQry->fetch_assoc()['hand_debits'];
 
-    $records[0]['hand_opening'] = intVal($handCredit) - intVal($handDebit) ;
+    $records[0]['hand_opening'] = intVal($handCredit) - intVal($handDebit);
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    $bank_details_arr = explode(',',$bank_detail);
-    $i=0; $bank_opening_all = 0;
-        foreach($bank_details_arr as $val){
-            $bankCreditQry = $con->query("SELECT
+    $bank_details_arr = explode(',', $bank_detail);
+    $i = 0;
+    $bank_opening_all = 0;
+    foreach ($bank_details_arr as $val) {
+        $bankCreditQry = $con->query("SELECT
                 SUM(amt) AS bank_credit
                 FROM (
                     (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_cash_deposit WHERE date(created_date) = '$op_date' and to_bank_id = '$val' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -92,9 +124,9 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
                 ) AS Bank_Credit_Opening
             ");
 
-            $bankCredit = $bankCreditQry->fetch_assoc()['bank_credit'];
+        $bankCredit = $bankCreditQry->fetch_assoc()['bank_credit'];
 
-            $bankDebitQry = $con->query("SELECT
+        $bankDebitQry = $con->query("SELECT
                 SUM(amt) AS bank_debit
                 FROM (
                     (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_cash_withdraw WHERE date(created_date) = '$op_date' and from_bank_id = '$val' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -115,21 +147,22 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
                 ) AS Bank_Credit_Opening
             ");
 
-            $bankDebit = $bankDebitQry->fetch_assoc()['bank_debit'];
-            
-            $records[$i]['bank_opening'] = intVal($bankCredit) - intVal($bankDebit) ;
-            $bank_opening_all = $bank_opening_all + $records[$i]['bank_opening'];
-            $i++;
-        }
+        $bankDebit = $bankDebitQry->fetch_assoc()['bank_debit'];
+
+        $records[$i]['bank_opening'] = intVal($bankCredit) - intVal($bankDebit);
+        $bank_opening_all = $bank_opening_all + $records[$i]['bank_opening'];
+        $i++;
+    }
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $qry = $con->query("SELECT ag.ag_id FROM agent_creation ag JOIN user us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id' ");
+    $qry = $con->query("SELECT `user_id` from `user` where ag_id IN (SELECT ag.ag_id FROM agent_creation ag JOIN `user` us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id')  ");
     //without while it will not give all the agent ids
-    while($rww = $qry->fetch_assoc()){
-        $ag_ids[] = $rww["ag_id"];
+    $ag_ids = [];
+    while ($rww = $qry->fetch_assoc()) {
+        $ag_ids[] = $rww["user_id"];
     }
-    $ag_ids = implode(',',$ag_ids);
+    $ag_ids = implode(',', $ag_ids);
 
 
     $agentCollQry = $con->query("SELECT
@@ -143,11 +176,20 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
 
     $agentCollCredit = $agentCollQry->fetch_assoc()['agent_coll'];
 
+    //only for collections we need user ids of agents
+    $qry = $con->query("SELECT ag.ag_id FROM agent_creation ag JOIN user us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id'");
+    $ag_ids = [];
+    while ($rww = $qry->fetch_assoc()) {
+        $ag_ids[] = $rww["ag_id"];
+    }
+    $ag_ids = implode(',', $ag_ids);
+
+
     $agentIssueQry = $con->query("SELECT
         SUM(amt) AS agent_issue
         FROM (
             (SELECT COALESCE(SUM(cash + cheque_value + transaction_value), 0) AS amt FROM loan_issue
-            WHERE date(created_date) = '$op_date' AND FIND_IN_SET(agent_id,''$ag_ids'') ORDER BY created_date DESC LIMIT 1)
+            WHERE date(created_date) = '$op_date' AND FIND_IN_SET(agent_id,'$ag_ids') ORDER BY created_date DESC LIMIT 1)
             
         ) AS Agent_Issue_Debit_Opening
     ");
@@ -178,7 +220,7 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
 
     $agentDebit = $agentDebitQry->fetch_assoc()['agent_debit'];
 
-    $agent_hand_op = intVal($agentCredit) - intVal($agentDebit);
+    $agent_hand_op = intVal($agentDebit) - intVal($agentCredit);
 
     //
 
@@ -202,23 +244,24 @@ if($op_date == date('Y-m-d')){// check whether opening date is current date
 
     $agentDebit = $agentDebitQry->fetch_assoc()['agent_debit'];
 
-    $agent_bank_op = intVal($agentCredit) - intVal($agentDebit);
+    $agent_bank_op = intVal($agentDebit) - intVal($agentCredit);
 
 
 
-    $records[0]['agent_opening'] = $agent_hand_op + $agent_bank_op + $agent_CL_op ;
+    $records[0]['agent_opening'] = $agent_hand_op + $agent_bank_op + $agent_CL_op;
+
+    $records[0]['hand_opening'] = $records[0]['hand_opening'] - $agent_hand_op; //this will subract the hand debited amount for the agent with hand closing cash
+    $bank_opening_all = $bank_opening_all - $agent_bank_op; //this will subract the bank debited amount for the agent with bank closing cash
 
     $records[0]['opening_balance'] = $records[0]['hand_opening'] + $bank_opening_all + $records[0]['agent_opening'];
 
 
     $qry = $con->query("SELECT bank_untrkd from cash_tally where date(created_date) = '$op_date' and insert_login_id = '$user_id' ");
-    if($qry->num_rows > 0){
+    if ($qry->num_rows > 0) {
         $records[0]['bank_untrkd'] = $qry->fetch_assoc()['bank_untrkd'];
-    }else{
+    } else {
         $records[0]['bank_untrkd'] = '';
     }
 
-    echo json_encode($records);
+    return $records;
 }
-
-?>

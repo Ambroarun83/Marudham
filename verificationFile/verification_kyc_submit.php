@@ -9,31 +9,33 @@ $proof_type    = $_POST['proof_type'];
 $proof_number  = $_POST['proof_number'];
 $upload        = $_FILES['upload']['name'];
 $kycID         = $_POST['kycID'];
+$uniqueFileName = '';
 
+if ($upload) {
+    $path = "kycUploads/";
+    $fileName = $_FILES['upload']['name'];
+    $filePath = $_FILES['upload']['tmp_name'];
 
-
-$path = "kycUploads/";
-$fileName = $_FILES['upload']['name'];
-$filePath = $_FILES['upload']['tmp_name'];
-
-$fileExtension = pathinfo($path . $fileName, PATHINFO_EXTENSION);
-$uniqueFileName = uniqid() . '.' . $fileExtension;
-
-while (file_exists($path . $uniqueFileName)) {
+    $fileExtension = pathinfo($path . $fileName, PATHINFO_EXTENSION);
     $uniqueFileName = uniqid() . '.' . $fileExtension;
-}
 
-if (move_uploaded_file($filePath, $path . $uniqueFileName)) {
-    echo "The file " . $fileName . " has been uploaded";
-} else {
-    echo "There was an error uploading the file, please try again!";
+    while (file_exists($path . $uniqueFileName)) {
+        $uniqueFileName = uniqid() . '.' . $fileExtension;
+    }
+
+    if (move_uploaded_file($filePath, $path . $uniqueFileName)) {
+        echo "The file " . $fileName . " has been uploaded";
+    } else {
+        echo "There was an error uploading the file, please try again!";
+        $uniqueFileName = '';
+    }
 }
 
 
 
 if ($kycID == '') {
 
-    $insert_qry = $connect->query("INSERT INTO `verification_kyc_info`(`cus_id`, `req_id`, `proofOf`,`fam_mem`, `proof_type`, `proof_no`, `upload`) VALUES ('$cus_id','$req_id','$proofof','$fam_mem','$proof_type','$proof_number','$uniqueFileName')");
+    $qry = $connect->query("INSERT INTO `verification_kyc_info`(`cus_id`, `req_id`, `proofOf`,`fam_mem`, `proof_type`, `proof_no`, `upload`) VALUES ('$cus_id','$req_id','$proofof','$fam_mem','$proof_type','$proof_number','$uniqueFileName')");
 } else {
 
     if ($upload) {
@@ -46,10 +48,10 @@ if ($kycID == '') {
         $kyc_upload = $_POST['kyc_upload'];
     }
 
-    $update = $connect->query("UPDATE `verification_kyc_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`proofOf`='$proofof',`fam_mem`='$fam_mem',`proof_type`='$proof_type',`proof_no`='$proof_number',`upload`='$kyc_upload' WHERE `id`='$kycID'");
+    $qry = $connect->query("UPDATE `verification_kyc_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`proofOf`='$proofof',`fam_mem`='$fam_mem',`proof_type`='$proof_type',`proof_no`='$proof_number',`upload`='$kyc_upload' WHERE `id`='$kycID'");
 }
 
-if ($insert_qry) {
+if ($qry) {
     $result = "KYC Info Inserted Successfully.";
 } elseif ($update) {
     $result = "KYC Info Updated Successfully.";

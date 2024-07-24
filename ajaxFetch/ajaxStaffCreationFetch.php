@@ -3,44 +3,34 @@
 include('..\ajaxconfig.php');
 
 $column = array(
-    'staff_id',
-    'staff_code',
-    'staff_name',
-    'staff_type',
-    'place',
-    'company_id',
-    'department',
-    'team',
-    'designation',
-    'status'
+    'sc.staff_id',
+    'sc.staff_code',
+    'sc.staff_name',
+    'stc.staff_type_name',
+    'sc.place',
+    'c.company_name',
+    'sc.department',
+    'sc.team',
+    'sc.designation',
+    'sc.status',
+    'sc.status'
 );
 
-$query = "SELECT * FROM staff_creation ";
-if(isset($_POST['search']) && $_POST['search'] != "")
-{
+$query = "SELECT sc.*,stc.staff_type_name,c.company_name 
+FROM staff_creation sc
+JOIN staff_type_creation stc ON stc.staff_type_id = sc.staff_type and stc.status = 0
+JOIN company_creation c ON c.company_id =  sc.company_id WHERE 1 ";
+if (isset($_POST['search']) && $_POST['search'] != "") {
 
-        if($_POST['search']=="Active" or $_POST['search']=="active")
-        {
-            $query .="WHERE status=0 ";
-            
-        }
-        else if($_POST['search']=="Inactive" or $_POST['search']=="inactive")
-        {
-            $query .="WHERE status=1 ";
-        }
-
-        else{   
-            $query .= "WHERE
-                staff_code LIKE '%".$_POST['search']."%'
-                OR staff_name LIKE '%".$_POST['search']."%'
-                OR staff_type LIKE '%".$_POST['search']."%'
-                OR place LIKE '%".$_POST['search']."%'
-                OR company_id LIKE '%".$_POST['search']."%'
-                OR department LIKE '%".$_POST['search']."%'
-                OR team LIKE '%".$_POST['search']."%'
-                OR designation LIKE '%".$_POST['search']."%' ";
-        }
-    // print_r($query);
+    $query .= "AND
+            (sc.staff_code LIKE '%" . $_POST['search'] . "%'
+            OR sc.staff_name LIKE '%" . $_POST['search'] . "%'
+            OR stc.staff_type_name LIKE '%" . $_POST['search'] . "%'
+            OR sc.place LIKE '%" . $_POST['search'] . "%'
+            OR c.company_name LIKE '%" . $_POST['search'] . "%'
+            OR sc.department LIKE '%" . $_POST['search'] . "%'
+            OR sc.team LIKE '%" . $_POST['search'] . "%'
+            OR sc.designation LIKE '%" . $_POST['search'] . "%') ";
 }
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
@@ -72,55 +62,31 @@ foreach ($result as $row) {
     $sub_array   = array();
 
     $sub_array[] = $sno;
-    
+
     $sub_array[] = $row['staff_code'];
     $sub_array[] = $row['staff_name'];
-    
-
-    //Staff Type Fetch
-    $staff_type = $row['staff_type'];
-    $getQry = "SELECT * from staff_type_creation where staff_type_id = '".$staff_type."' and status = 0 ";
-    $res=$con->query($getQry);
-    while($row1=$res->fetch_assoc())
-    {
-        $sub_array[] = $row1["staff_type_name"];        
-    }
-    
+    $sub_array[] = $row["staff_type_name"];
     $sub_array[] = $row['place'];
-
-    //Company name Fetch
-    $company_id = $row['company_id'];
-    $getQry = "SELECT * from company_creation where company_id = '".$company_id."' and status = 0 ";
-    $res=$con->query($getQry);
-    while($row1=$res->fetch_assoc())
-    {
-        $sub_array[] = $row1["company_name"];        
-    }
-
-
-    
+    $sub_array[] = $row["company_name"];
     $sub_array[] = $row['department'];
     $sub_array[] = $row['team'];
     $sub_array[] = $row['designation'];
 
     $status      = $row['status'];
 
-    if($status==1)
-    {
-    $sub_array[]="<span style='width: 144px;'><span class='kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill'>Inactive</span></span>";
-    }
-    else
-    {
-    $sub_array[]="<span style='width: 144px;'><span class='kt-badge  kt-badge--success kt-badge--inline kt-badge--pill'>Active</span></span>";
+    if ($status == 1) {
+        $sub_array[] = "<span style='width: 144px;'><span class='kt-badge  kt-badge--danger kt-badge--inline kt-badge--pill'>Inactive</span></span>";
+    } else {
+        $sub_array[] = "<span style='width: 144px;'><span class='kt-badge  kt-badge--success kt-badge--inline kt-badge--pill'>Active</span></span>";
     }
     $id          = $row['staff_id'];
-    
-    $action="<a href='staff_creation&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>&nbsp;&nbsp; 
+
+    $action = "<a href='staff_creation&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>&nbsp;&nbsp; 
     <a href='staff_creation&del=$id' title='Edit details' class='delete_staff'><span class='icon-trash-2'></span></a>";
 
     $sub_array[] = $action;
     $data[]      = $sub_array;
-    $sno = $sno+1;
+    $sno = $sno + 1;
 }
 
 function count_all_data($connect)
@@ -139,5 +105,3 @@ $output = array(
 );
 
 echo json_encode($output);
-
-?>

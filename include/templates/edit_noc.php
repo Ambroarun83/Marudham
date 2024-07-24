@@ -67,82 +67,7 @@
 
 
 <script>
-	var sortOrder = 1; // 1 for ascending, -1 for descending
-
-	document.querySelectorAll('th').forEach(function(th) {
-		th.addEventListener('click', function() {
-			var columnIndex = this.cellIndex;
-			document.querySelector('tbody').innerHTML = '';
-			dT();
-			setTimeout(function() {
-				var tableRows = Array.prototype.slice.call(document.querySelectorAll('tbody tr'));
-
-				tableRows.sort(function(a, b) {
-					var textA = a.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
-					var textB = b.querySelectorAll('td')[columnIndex].textContent.toUpperCase();
-
-					if (textA < textB) {
-						return -1 * sortOrder;
-					}
-					if (textA > textB) {
-						return 1 * sortOrder;
-					}
-					return 0;
-				});
-
-				tableRows.forEach(function(row) {
-					document.querySelector('tbody').appendChild(row);
-				});
-
-				sortOrder = -1 * sortOrder;
-
-				// update the serial numbers
-				document.querySelectorAll('tbody tr').forEach(function(row, index) {
-					row.querySelectorAll('td')[0].textContent = index + 1;
-				});
-			}, 1000);
-		});
-	});
-
-	function dT() {
-		// Collection datatable
-		var noc_table = $('#noc_table').DataTable();
-		noc_table.destroy();
-		var noc_table = $('#noc_table').DataTable({
-			"order": [
-				[0, "desc"]
-			],
-			"ordering": false,
-			'paging': false,
-			'processing': true,
-			'serverSide': true,
-			'serverMethod': 'post',
-			'ajax': {
-				'url': 'ajaxFetch/ajaxNocFetch.php',
-				'data': function(data) {
-					var search = $('input[type=search]').val();
-					data.search = search;
-				}
-			},
-			dom: 'lBfrtip',
-			buttons: [{
-					extend: 'excel',
-					title: "NOC List"
-				},
-				{
-					extend: 'colvis',
-					collectionLayout: 'fixed four-column',
-				}
-			],
-			"lengthMenu": [
-				[10, 25, 50, -1],
-				[10, 25, 50, "All"]
-			],
-
-		});
-	}
-
-	setTimeout(() => {
+	function callOnClickEvents() {
 
 		$('.remove-noc').click(function() {
 			event.preventDefault();
@@ -195,9 +120,12 @@
 			event.preventDefault();
 			let req_id = $(this).data('reqid');
 			let cus_id = $(this).data('cusid');
-			$.post('nocFile/nocLetter.php', {req_id: req_id,cus_id: cus_id}, function(html) {
+			$.post('nocFile/nocLetter.php', {
+				req_id: req_id,
+				cus_id: cus_id
+			}, function(html) {
 				$('#printnocletter').html(html)
 			})
 		})
-	}, 1500);
+	};
 </script>

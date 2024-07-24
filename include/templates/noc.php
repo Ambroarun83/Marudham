@@ -46,37 +46,6 @@ if (sizeof($documentationInfo) > 0) {
 		background-color: white;
 	}
 
-	/* .overlay {
-	position: fixed;
-	z-index: 9999;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-color: white; 
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.loader {
-	border: 4px solid #f3f3f3;
-	border-top: 4px solid #3498db;
-	border-radius: 50%;
-	width: 30px;
-	height: 30px;
-	animation: spin 2s linear infinite;
-}
-
-@keyframes spin {
-	0% { transform: rotate(0deg); }
-	100% { transform: rotate(360deg); }
-}
-.overlay-text {
-	color: black;
-	font-size: 1.5rem;
-	margin-left: 10px;
-} */
 </style>
 
 <!-- Page header start -->
@@ -131,7 +100,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="card-header">Personal Info <span style="font-weight:bold" class=""></span></div>
 						<div class="card-body">
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-xl-8 col-lg-6 col-md-12 col-sm-12">
 									<div class="row">
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
@@ -190,8 +159,8 @@ if (sizeof($documentationInfo) > 0) {
 									</div>
 								</div>
 
-								<div class="col-md-4">
-									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+								<div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+									<div class="col-xl-8 col-lg-10 col-md-6 ">
 										<div class="form-group" style="margin-left: 30px;">
 											<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
 											<input type="hidden" name="cus_pic" id="cus_pic" value="<?php if (isset($cus_pic)) {
@@ -220,7 +189,7 @@ if (sizeof($documentationInfo) > 0) {
 									<div class="row">
 
 										<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<div class="form-group" id='loanListTableDiv'>
+											<div class="form-group table-responsive" id='loanListTableDiv'>
 												<table class="table custom-table" id='loanListTable'>
 													<thead>
 														<tr>
@@ -311,7 +280,7 @@ if (sizeof($documentationInfo) > 0) {
 										<h5 style='margin-left:18px;margin-bottom:30px;'>Signed Document List</h5>
 										<span class="text-danger sign_checklistCheck" style="margin-left:18px;display: none;">Please Select atleast one</span>
 										<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<div class="form-group" id='signDocDiv'>
+											<div class="form-group table-responsive" id='signDocDiv'>
 
 											</div>
 										</div>
@@ -327,7 +296,7 @@ if (sizeof($documentationInfo) > 0) {
 										<h5 style='margin-left:18px;margin-bottom:30px;'>Cheque List</h5>
 										<span class="text-danger cheque_checklistCheck" style="margin-left:18px;display: none;">Please Select atleast one</span>
 										<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<div class="form-group" id='chequeDiv'>
+											<div class="form-group table-responsive" id='chequeDiv'>
 
 											</div>
 										</div>
@@ -345,7 +314,7 @@ if (sizeof($documentationInfo) > 0) {
 												<h5 style='margin-top:30px;margin-bottom:30px;'>Mortgage Details</h5>
 											</div>
 										</div>
-										<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="MortgageProcess"> Mortgage Process</label>
 												<select type="text" class="form-control" id="mortgage_process" name="mortgage_process" disabled tabindex='13'>
@@ -355,7 +324,7 @@ if (sizeof($documentationInfo) > 0) {
 												</select>
 											</div>
 										</div>
-										<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mort_proc">
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 mort_proc">
 											<div class="form-group">
 												<label for="PropertyHoldertype "> Property Holder type </label>
 												<select type="text" class="form-control" id="Propertyholder_type" name="Propertyholder_type" disabled tabindex='14'>
@@ -467,7 +436,7 @@ if (sizeof($documentationInfo) > 0) {
 											</div>
 										</div>
 										<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<div class="form-group" id='mortgageDiv'>
+											<div class="form-group table-responsive" id='mortgageDiv'>
 
 											</div>
 										</div>
@@ -486,7 +455,7 @@ if (sizeof($documentationInfo) > 0) {
 												<h5 style='margin-top:30px;margin-bottom:30px;'>Endorsement Details</h5>
 											</div>
 										</div>
-										<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 											<div class="form-group">
 												<label for="EndorsementProcess"> Endorsement Process</label>
 												<select type="text" class="form-control" id="endorsement_process" name="endorsement_process" disabled tabindex='27'>
@@ -602,7 +571,7 @@ if (sizeof($documentationInfo) > 0) {
 											</div>
 										</div>
 										<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<div class="form-group" id='endorsementDiv'>
+											<div class="form-group table-responsive" id='endorsementDiv'>
 
 											</div>
 										</div>
@@ -618,7 +587,7 @@ if (sizeof($documentationInfo) > 0) {
 										<h5 style='margin-left:18px;margin-bottom:30px;'>Gold List</h5>
 										<span class="text-danger gold_checklistCheck" style="margin-left:18px;display: none;">Please Select atleast one</span>
 										<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<div class="form-group" id='goldDiv'>
+											<div class="form-group table-responsive" id='goldDiv'>
 
 											</div>
 										</div>
@@ -634,7 +603,7 @@ if (sizeof($documentationInfo) > 0) {
 										<h5 style='margin-left:18px;margin-bottom:30px;'>Document List</h5>
 										<span class="text-danger doc_checklistCheck" style="margin-left:18px;display: none;">Please Select atleast one</span>
 										<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-											<div class="form-group" id='documentDiv'>
+											<div class="form-group table-responsive" id='documentDiv'>
 
 											</div>
 										</div>
@@ -644,13 +613,13 @@ if (sizeof($documentationInfo) > 0) {
 							<!-- Document Info End -->
 							<hr>
 							<div class="row">
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="noc_date">Date Of NOC</label><span class="required">&nbsp;*</span>
 										<input type="text" class="form-control" id="noc_date" name="noc_date" value='<?php echo date('d-m-Y'); ?>' readonly tabindex='39'>
 									</div>
 								</div>
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="noc_member">Member</label><span class="required">&nbsp;*</span>
 										<select type='text' id='noc_member' name='noc_member' class="form-control" tabindex="40">
@@ -662,7 +631,7 @@ if (sizeof($documentationInfo) > 0) {
 										<span class="text-danger noc_memberCheck" style="display:none">Please Select Member</span>
 									</div>
 								</div>
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 mem_relation_name">
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mem_relation_name">
 									<div class="form-group">
 										<label for="mem_relation_name">Member Name</label><span class="required">&nbsp;*</span>
 										<select type='text' id='mem_relation_name' name='mem_relation_name' class="form-control" tabindex='41'>
@@ -671,20 +640,20 @@ if (sizeof($documentationInfo) > 0) {
 										<span class="text-danger mem_relation_nameCheck" style="display:none">Please Select Member Name</span>
 									</div>
 								</div>
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8 mem_name">
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12 mem_name">
 									<div class="form-group">
 										<label for="mem_name">Member Name</label><span class="required">&nbsp;*</span>
 										<input type="hidden" id="mem_id" name="mem_id" value='' readonly>
 										<input type="text" class="form-control" id="mem_name" name="mem_name" value='' readonly tabindex='42'>
 									</div>
 								</div>
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="ack_fingerprint">Acknowledgement</label><span class="required">&nbsp;*</span>
 										<input type="hidden" class="form-control" id="compare_finger" name="compare_finger" value='' readonly>
 										<input type="hidden" class="form-control" id="ack_fingerprint" name="ack_fingerprint" value='' readonly>
 										<input type="text" class="form-control" value='' readonly style="visibility:hidden;"><!--Just for spacing-->
-										<button type="button" class='btn btn-success scanBtn' id="" name="" style='background-color:#009688;margin-top: -50px;width: 509px;' onclick="event.preventDefault()" title='Put Your Thumb' tabindex='43'><i class="material-icons" id="icon-flipped">&#xe90d;</i>&nbsp;Scan</button>
+										<button type="button" class='btn btn-success scanBtn' id="" name="" style='background-color:#009688;margin-top: -50px;width: auto;' onclick="event.preventDefault()" title='Put Your Thumb' tabindex='43'><i class="material-icons" id="icon-flipped">&#xe90d;</i>&nbsp;Scan</button>
 										<span class="text-danger scanBtnCheck" style="display:none">Please Scan fingerprint</span>
 									</div>
 								</div>

@@ -3,16 +3,13 @@
     margin: 12px 5px;
 }
 
-.inside-title{
+.inside-title {
     margin: 10px -20px;
 }
 
 
-
 .split-card {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: baseline;
+    display: block;
 }
 
 .balance-sheet-card,
@@ -26,14 +23,16 @@
 
 table {
     border: 3px solid black;
-    width: 90%; /* Ensure the table takes 100% width of its container */
+    width: 90%;
+    /* Ensure the table takes 100% width of its container */
 }
 
 thead {
     background-color: #00a494a1;
     font-weight: bolder;
 }
-tfoot{
+
+tfoot {
     background-color: #a4190082;
     font-weight: bolder;
 }
@@ -41,7 +40,8 @@ tfoot{
 tr td {
     color: black;
     border: 1px solid black;
-    padding: 10px 5px; /* Adjust the padding for better responsiveness */
+    padding: 10px 5px;
+    /* Adjust the padding for better responsiveness */
 }
 
 .break {
@@ -75,7 +75,7 @@ table tr td:not(:first-child) {
     outline: none;
     transition: background-color 0.3s, color 0.3s;
 }
-  
+
 .toggle-button.active:not(#by_user) {
     background-color: #009688;
     color: white;
@@ -83,7 +83,7 @@ table tr td:not(:first-child) {
 
 
 /* label */
-.BBDiff{
+.BBDiff {
     padding: 12px 20px;
     background-color: #ffd09b;
     border: 1px solid #fa9017;
@@ -94,45 +94,29 @@ table tr td:not(:first-child) {
 }
 
 
-@media (max-width: 992px) {
-    .split-card {
-        flex-wrap: wrap;
-    }
-    .card {
-        flex: 0 0 45%;
-        margin: 10px;
-    }
-}
 
-@media (max-width: 768px) {
-    .card {
-        height: 171vh;
-        min-width: 44vw;
-    }
-    tr td {
-        padding: 10px 3px; /* Adjust the padding for better responsiveness on smaller screens */
-    }
-}
+@media (max-width: 576px) {
 
-@media (max-width: 576px) { 
-    /* mobile view */
-    .card {
-        height: auto;
-        flex: 0 0 100%;
-    }
-    tr td {
-        padding: 5px 2px; /* Further adjust the padding for better responsiveness on mobile devices */
-    }
     .toggle-container {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
     }
+
     .toggle-button {
         margin: 2px 5px;
         width: 100%;
     }
-    select{
+
+    select {
         text-align: center;
+    }
+}
+
+@media (min-width: 1200px) {
+    .split-card {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: baseline;
     }
 }

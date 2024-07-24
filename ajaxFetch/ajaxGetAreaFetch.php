@@ -2,7 +2,7 @@
 include('../ajaxconfig.php');
 @session_start();
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
 }
 
@@ -12,27 +12,11 @@ $column = array(
     'status'
 );
 
-$query = "SELECT * FROM area_list_creation WHERE status=0 ";
+$query = "SELECT * FROM area_list_creation WHERE status = 0 ";
 
-if(isset($_POST['search']) && $_POST['search'] != "")
-{
-
-        // if($_POST['search']=="Active")
-        // {
-        //     $query .="and status=0 "; 
-        // }
-        // else if($_POST['search']=="Inactive")
-        // {
-        //     $query .="and status=1 ";
-        // }
-
-        // else{	
-            $query .= "and
-            (area_id LIKE '%".$_POST['search']."%' 
-            OR area_name LIKE '%".$_POST['search']."%' ) ";
-        // }
+if (isset($_POST['search']) && $_POST['search'] != "") {
+    $query .= "and area_name LIKE '%" . $_POST['search'] . "%' ";
 }
-// print_r($query);die;
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
@@ -57,32 +41,25 @@ $data = array();
 $sno = 1;
 foreach ($result as $row) {
     $sub_array   = array();
-    
-    if($sno!="")
-    {
+
+    if ($sno != "") {
         $sub_array[] = $sno;
     }
 
     $sub_array[] = $row['area_name'];
 
-    $area_enable      = $row['area_enable'];
-    $id   = $row['area_id'];
-    
-    if($area_enable == 0)
-	{
-    $action="<button onclick='enable($id)' disabled title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
-    <button onclick='disable($id)' title='Edit details' class='btn btn-danger'>Disable</button>";
-	}
-	elseif($area_enable == 1)
-	{
-    $action="<button onclick='enable($id)' title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
-        <button onclick='disable($id)' disabled title='Edit details' class='btn btn-danger'>Disable</button>";
-	}
-	
-	// $action="<button onclick='enable($id)' title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
-    // <button onclick='disable($id)' title='Edit details' class='btn btn-danger'>Disable</button>";
+    $area_enable = $row['area_enable'];
+    $id = $row['area_id'];
 
-	$sub_array[] = $action;
+    if ($area_enable == 0) {
+        $action = "<button onclick='enable($id)' disabled title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
+    <button onclick='disable($id)' title='Edit details' class='btn btn-danger'>Disable</button>";
+    } elseif ($area_enable == 1) {
+        $action = "<button onclick='enable($id)' title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
+        <button onclick='disable($id)' disabled title='Edit details' class='btn btn-danger'>Disable</button>";
+    }
+
+    $sub_array[] = $action;
     $data[]      = $sub_array;
     $sno = $sno + 1;
 }
@@ -103,4 +80,3 @@ $output = array(
 );
 
 echo json_encode($output);
-?>

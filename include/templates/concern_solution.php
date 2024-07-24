@@ -39,7 +39,7 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
 
 ?>
     <script>
-       location.href = '<?php echo $HOSTPATH; ?>edit_concern_solution&msc=1';
+        location.href = '<?php echo $HOSTPATH; ?>edit_concern_solution&msc=1';
     </script>
 <?php
 }
@@ -103,18 +103,21 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                     </div>
                                 </div>
 
-                                <?php if (isset($raisingFor) and $raisingFor != '1'){?>    
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-                                    <div class="form-group">
-                                        <label for="created-username">Created User Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="created_user_name" name="created_user_name" tabindex='2' value='<?php if(isset($insert_user_name)) echo $insert_user_name; ?>' readonly>
+                                <?php if (isset($raisingFor) and $raisingFor != '1') { ?>
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                        <div class="form-group">
+                                            <label for="created-username">Created User Name</label><span class="required">&nbsp;*</span>
+                                            <input type="text" class="form-control" id="created_user_name" name="created_user_name" tabindex='2' value='<?php if (isset($insert_user_name)) echo $insert_user_name; ?>' readonly>
+                                        </div>
                                     </div>
-                                </div>
                                 <?php } ?>
 
                             </div>
 
-                            <div class="row" id="myself" <?php if (isset($raisingFor) and $raisingFor == '1'){ }else{ echo 'style="display: none;"'; } ?>> <!-- When Raising For is Myself Means Myself will show -->
+                            <div class="row" id="myself" <?php if (isset($raisingFor) and $raisingFor == '1') {
+                                                            } else {
+                                                                echo 'style="display: none;"';
+                                                            } ?>> <!-- When Raising For is Myself Means Myself will show -->
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
@@ -132,7 +135,10 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
 
                             </div>
 
-                            <div class="row" id="staff" <?php if (isset($raisingFor) and $raisingFor == '2'){ }else{ echo 'style="display: none;"'; } ?>> <!-- When Raising For is staff Means staff will show -->
+                            <div class="row" id="staff" <?php if (isset($raisingFor) and $raisingFor == '2') {
+                                                        } else {
+                                                            echo 'style="display: none;"';
+                                                        } ?>> <!-- When Raising For is staff Means staff will show -->
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
@@ -164,7 +170,10 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
 
                             </div>
 
-                            <div class="row" id="agent" <?php if (isset($raisingFor) and $raisingFor == '3'){ }else{ echo 'style="display: none;"'; } ?> > <!-- When Raising For is Agent Means Agent will show -->
+                            <div class="row" id="agent" <?php if (isset($raisingFor) and $raisingFor == '3') {
+                                                        } else {
+                                                            echo 'style="display: none;"';
+                                                        } ?>> <!-- When Raising For is Agent Means Agent will show -->
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
@@ -183,7 +192,10 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
 
                             </div>
 
-                            <div class="row" id="customer" <?php if (isset($raisingFor) and $raisingFor == '4'){ }else{ echo 'style="display: none;"'; } ?> > <!-- When Raising For is customer Means customer will show -->
+                            <div class="row" id="customer" <?php if (isset($raisingFor) and $raisingFor == '4') {
+                                                            } else {
+                                                                echo 'style="display: none;"';
+                                                            } ?>> <!-- When Raising For is customer Means customer will show -->
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
@@ -210,14 +222,14 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="subarea">Sub Area</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="cus_sub_area" name="cus_sub_area" value="<?php if (isset($cus_sub_area)) echo $cus_sub_area; ?>"  readonly tabindex='13'>
+                                        <input type="text" class="form-control" id="cus_sub_area" name="cus_sub_area" value="<?php if (isset($cus_sub_area)) echo $cus_sub_area; ?>" readonly tabindex='13'>
                                     </div>
                                 </div>
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="group">Group</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="cus_group" name="cus_group"  value="<?php if (isset($cus_grp)) echo $cus_grp; ?>" readonly tabindex='14'>
+                                        <input type="text" class="form-control" id="cus_group" name="cus_group" value="<?php if (isset($cus_grp)) echo $cus_grp; ?>" readonly tabindex='14'>
                                     </div>
                                 </div>
 
@@ -249,7 +261,7 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="comcode">Concern Code</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="com_code" name="com_code" value="<?php if (isset($conCode)) echo $conCode; ?>" readonly tabindex='17' >
+                                        <input type="text" class="form-control" id="com_code" name="com_code" value="<?php if (isset($conCode)) echo $conCode; ?>" readonly tabindex='17'>
                                     </div>
                                 </div>
 
@@ -265,14 +277,20 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 dept" <?php if (isset($concernTo) and $concernTo == '1'){ }else{ echo 'style="display: none;"'; } ?> >
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 dept" <?php if (isset($concernTo) and $concernTo == '1') {
+                                                                                                } else {
+                                                                                                    echo 'style="display: none;"';
+                                                                                                } ?>>
                                     <div class="form-group">
                                         <label for="toname">Department Name </label> <span class="required">&nbsp;*</span>
                                         <input tabindex="19" type="text" class="form-control" id="to_dept_name" name="to_dept_name" value="<?php if (isset($toDeptName)) echo $toDeptName; ?>" readonly>
                                         <span class="text-danger" style='display:none' id='todeptnameCheck'>Please Select Department Name</span>
                                     </div>
                                 </div>
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 team" <?php if (isset($concernTo) and $concernTo == '2'){ }else{ echo 'style="display: none;"'; } ?>>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 team" <?php if (isset($concernTo) and $concernTo == '2') {
+                                                                                                } else {
+                                                                                                    echo 'style="display: none;"';
+                                                                                                } ?>>
                                     <div class="form-group">
                                         <label for="toname">Team Name </label> <span class="required">&nbsp;*</span>
                                         <input tabindex="20" type="text" class="form-control" id="to_team_name" name="to_team_name" value="<?php if (isset($toTeamName)) echo $toTeamName; ?>" readonly>
@@ -289,7 +307,7 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                         <span class="text-danger" style='display:none' id='concernsubCheck'>Please Select Concern Subject</span>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="com-priority">Concern Priority</label><span class="required">&nbsp;*</span>
@@ -302,7 +320,7 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
                                         <span class="text-danger" style='display:none' id='conpriorityCheck'>Please Select Concern Priority</span>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="comremark">Concern Remark</label><span class="required">&nbsp;*</span>
@@ -318,49 +336,49 @@ if (isset($_POST['submit_concern_solution']) && $_POST['submit_concern_solution'
 
                     <!-- Consern Solution START-->
                     <div class="card">
-						<div class="card-header"> Concern Solution <span style="font-weight:bold" class=""></span></div>
-						<div class="card-body">
-							<div class="row">
+                        <div class="card-header"> Concern Solution <span style="font-weight:bold" class=""></span></div>
+                        <div class="card-body">
+                            <div class="row">
 
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="sol-date"> Solution Date </label> <span class="required">*</span>
-										<input type="date" class="form-control" name="solution_date" id="solution_date" tabindex="24" value="<?php echo date('Y-m-d');?>" readonly>
-									</div>
-								</div>
+                                    <div class="form-group">
+                                        <label for="sol-date"> Solution Date </label> <span class="required">*</span>
+                                        <input type="date" class="form-control" name="solution_date" id="solution_date" tabindex="24" value="<?php echo date('Y-m-d'); ?>" readonly>
+                                    </div>
+                                </div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="Communitcation"> Communication </label> <span class="required">*</span>
-										<select type="text" class="form-control" name="Com_for_solution" id="Com_for_solution" tabindex="25">
-											<option value=""> Select Communication </option>
-											<option value="1"> Phone </option>
-											<option value="2"> Direct </option>
-										</select>
-										<span class="text-danger" style='display:none' id='communicationCheck'>Please Select communication </span>
-									</div>
-								</div>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="Communitcation"> Communication </label> <span class="required">*</span>
+                                        <select type="text" class="form-control" name="Com_for_solution" id="Com_for_solution" tabindex="25">
+                                            <option value=""> Select Communication </option>
+                                            <option value="1"> Phone </option>
+                                            <option value="2"> Direct </option>
+                                        </select>
+                                        <span class="text-danger" style='display:none' id='communicationCheck'>Please Select communication </span>
+                                    </div>
+                                </div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"  style="display: none;" id="solutionUploads">
-									<div class="form-group">
-										<label for="Communitcation"> Uploads </label>
-										<input type="file" class="form-control" name="concern_upload[]" id="concern_upload" tabindex="26" multiple>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="display: none;" id="solutionUploads">
+                                    <div class="form-group">
+                                        <label for="Communitcation"> Uploads </label>
+                                        <input type="file" class="form-control" name="concern_upload[]" id="concern_upload" tabindex="26" multiple>
                                         <span class="text-danger" style='display:none' id='updCheck'>Please Upload </span>
-									</div>
-								</div>
+                                    </div>
+                                </div>
 
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-									<div class="form-group">
-										<label for="reamrk"> Solution Remark </label> <span class="required">*</span>
-										<textarea type="text" class="form-control" name="solution_remark" id="solution_remark" tabindex="27"></textarea>
-										<span class="text-danger" style='display:none' id='solutionRemarkCheck'>Please Enter Solution Remark </span>
-									</div>
-								</div>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                    <div class="form-group">
+                                        <label for="reamrk"> Solution Remark </label> <span class="required">*</span>
+                                        <textarea type="text" class="form-control" name="solution_remark" id="solution_remark" tabindex="27"></textarea>
+                                        <span class="text-danger" style='display:none' id='solutionRemarkCheck'>Please Enter Solution Remark </span>
+                                    </div>
+                                </div>
 
-							</div>
+                            </div>
 
-						</div>
-					</div>
+                        </div>
+                    </div>
                     <!-- Consern Solution END-->
 
 

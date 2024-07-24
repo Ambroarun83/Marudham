@@ -42,59 +42,6 @@
     font-family: fantasy;
     font-weight: 100;
 }
-/* @media only screen and (min-width: 1440px) {
-    .counter-head {
-        font-size: 1.3rem;
-    }
-    .counter {
-        font-size: 3.2rem;
-    }
-}
-@media only screen and (min-width: 1024px) and (max-width: 1439px) {
-    .counter-head {
-        font-size: 1.5rem;
-    }
-    .counter {
-        font-size: 3rem;
-    }
-} */
-/* @media only screen and (min-width: 1353px) and (max-width: 1406px) {
-    .counter-head {
-        font-size: 1rem;
-    }
-} */
-/* @media (max-width: 1305px) {
-    .counter-head {
-        font-size: 1.2rem;
-    }
-
-    .counter {
-        font-size: 3.1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .counter-head {
-        font-size: 1.5rem;
-    }
-
-    .counter {
-        font-size: 4rem;
-    }
-}
-
-@media (max-width: 600px) {
-    .counter {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 320px) {
-
-    .counter {
-        font-size: 2rem;
-    }
-} */
 
 /* radio button */
 .radio-container {

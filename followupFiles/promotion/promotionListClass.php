@@ -33,7 +33,7 @@ class promotionListClass
         if ($type == 'existing') {
             //only closed customers who dont have any loans in current.
 
-            $sql = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cp.area_confirm_subarea IN ($this->sub_area_list) ");
+            $sql = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cp.area_confirm_subarea IN ($this->sub_area_list) and cs.closed_sts = 1 ");
 
             while ($row = $sql->fetch_assoc()) {
 
@@ -41,29 +41,8 @@ class promotionListClass
 
                 $check_req = $con->query("SELECT req_id from request_creation where (cus_status NOT between 4 and 9) and cus_status < 20 and cus_id = '" . $row['cus_id'] . "' ORDER By req_id DESC LIMIT 1 ");
                 if ($check_req->num_rows == 0) {
-                    $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['cus_status'], 'last_updated_date' => $last_closed_date);
+                    $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['consider_level'], 'last_updated_date' => $last_closed_date);
                 }
-
-                // $qry1 = $con->query("SELECT cus_id FROM in_issue WHERE (cus_status < '20' and cus_status NOT IN (4, 5, 6, 7, 8, 9)) AND cus_id ='" . $row['cus_id'] . "' ");
-
-                // $qry2 = $con->query("SELECT cus_id FROM request_creation WHERE (cus_status < '20' and cus_status NOT IN (4, 5, 6, 7, 8, 9)) AND cus_id ='" . $row['cus_id'] . "' ");
-
-                // if ($qry1->num_rows == 0 && $qry2->num_rows == 0) {
-                //     //means customer is in request / loan process
-                //     //take customer promotion chart
-
-                //     $sql1 = $con->query("SELECT updated_date FROM request_creation WHERE (cus_status >= 4 and cus_status <= 9 ) and cus_id = '" . $row['cus_id'] . "' ORDER BY req_id DESC LIMIT 1 ");
-                //     if ($sql1->num_rows > 0) {
-                //         //this condition will filter only if the closed date is higher than the other dates of customer
-                //         $last_updated_date = date('Y-m-d', strtotime($sql1->fetch_assoc()['updated_date']));
-
-                //         if ($last_closed_date > $last_updated_date) {
-                //             $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['consider_level'],'last_updated_date'=>$last_updated_date);
-                //         }
-                //     } else {
-                //         $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['consider_level'],'last_updated_date'=>$last_closed_date);
-                //     }
-                // }
             }
         } else {
 
@@ -77,30 +56,6 @@ class promotionListClass
                 if ($check_req->num_rows == 0) {
                     $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['cus_status'], 'last_updated_date' => $last_updated_date);
                 }
-
-                // $sql1 = $con->query("SELECT created_date FROM closed_status WHERE cus_sts >= 20 and cus_id ='" . $row['cus_id'] . "' ORDER BY id DESC LIMIT 1");
-                // $sql2 = $con->query("SELECT updated_date FROM request_creation WHERE NOT(cus_status >= 4 AND cus_status <= 9) and cus_id ='" . $row['cus_id'] . "' ORDER BY req_id DESC LIMIT 1");
-                // if ($sql1->num_rows > 0) {
-
-                //     //this condition will filter only if the revoked/cancelled date is higher than the closed date of customer
-                //     $last_closed_date = date('Y-m-d', strtotime($sql1->fetch_assoc()['created_date']));
-
-                //     if ($last_updated_date > $last_closed_date) {
-                //         $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['cus_status'],'last_updated_date'=>$last_closed_date);
-                //     }
-                // } elseif ($sql2->num_rows > 0) {
-                //     //this condition will filter only if the revoked/cancelled date is higher than the recent request date of customer 
-                //     //which will avoid showing the customer who has other requests other than 
-                //     $last_requested_date = date('Y-m-d', strtotime($sql2->fetch_assoc()['updated_date']));
-
-                //     if ($last_updated_date > $last_requested_date) {
-                //         $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['cus_status'],'last_updated_date'=>$last_requested_date);
-                //     }
-                // } else {
-
-                //     $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['cus_status'],'last_updated_date'=>$last_updated_date);
-                // }
-
             }
         }
         return $arr;

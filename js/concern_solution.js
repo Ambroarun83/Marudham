@@ -1,8 +1,8 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
     $('#Com_for_solution').change(function () {
         let com = $(this).val();
-    
+
         if (com == '1') {
             $('#solutionUploads').show();
         } else {
@@ -10,29 +10,29 @@ $(document).ready(function(){
         }
     });
 
-    $('#submit_concern_solution').click(function(){
+    $('#submit_concern_solution').click(function () {
         solutionSubmitValidation();
     });
 
 });
 
-$(function(){
+$(function () {
 
     getDeptName();
     DropDownCourse();
 
-    setTimeout(()=>{
+    setTimeout(() => {
         getTeamName();
-    },500);
+    }, 500);
 
 }); //OnLoad END.
 
-function getDeptName(){  // To show Department Name.
-var dept = $('#staff_dept').val();
+function getDeptName() {  // To show Department Name.
+    var dept = $('#staff_dept').val();
     $.ajax({
         url: 'concernFile/getdepartmentname.php',
         type: 'POST',
-        data: { },
+        data: {},
         dataType: 'json',
         cache: false,
         success: function (response) { //showing all department no Restriction based on company.
@@ -52,13 +52,13 @@ var dept = $('#staff_dept').val();
     });
 }
 
-function getTeamName(){  // To show Team Name.
+function getTeamName() {  // To show Team Name.
     var deptName = $('#staff_dept_name').val();
     var staffTeam = $('#staff_team').val();
     $.ajax({
         url: 'concernFile/getTeamName.php',
         type: 'POST',
-        data: {'dept':deptName },
+        data: { 'dept': deptName },
         dataType: 'json',
         cache: false,
         success: function (response) {
@@ -77,27 +77,27 @@ function getTeamName(){  // To show Team Name.
     });
 }
 
-function DropDownCourse(){
+function DropDownCourse() {
     var sub = $('#con_sub').val();
     $.ajax({
         url: 'concernFile/getConSub.php',
         type: 'post',
         data: {},
         dataType: 'json',
-        success:function(response){
+        success: function (response) {
 
             var len = response.length;
             $("#com_sub").empty();
-            $("#com_sub").append("<option value=''>"+'Select Concern Subject'+"</option>");
-            for(var i = 0; i<len; i++){
+            $("#com_sub").append("<option value=''>" + 'Select Concern Subject' + "</option>");
+            for (var i = 0; i < len; i++) {
                 var concern_sub_id = response[i]['concern_sub_id'];
                 var concern_subject = response[i]['concern_subject'];
                 var selected = '';
                 if (concern_sub_id != '' && concern_sub_id == sub) {
                     selected = 'selected';
                 }
-                $("#com_sub").append("<option value='"+concern_sub_id+"' " + selected + " >"+concern_subject+"</option>");
-                
+                $("#com_sub").append("<option value='" + concern_sub_id + "' " + selected + " >" + concern_subject + "</option>");
+
             }
             {//To Order Alphabetically
                 var firstOption = $("#com_sub option:first-child");
@@ -111,29 +111,29 @@ function DropDownCourse(){
     });
 }
 
-function solutionSubmitValidation(){
+function solutionSubmitValidation() {
     var com = $('#Com_for_solution').val(); var upd = $('#concern_upload').val(); var solutionRemark = $('#solution_remark').val();
-    
-    if(com == ''){
+
+    if (com == '') {
         event.preventDefault();
         $('#communicationCheck').show();
-    }else{
+    } else {
         $('#communicationCheck').hide();
     }
 
-    if(com=='1'){
-        if(upd == ''){
+    if (com == '1') {
+        if (upd == '') {
             event.preventDefault();
             $('#updCheck').show();
-        }else{
+        } else {
             $('#updCheck').hide();
         }
     }
 
-    if(solutionRemark == ''){
+    if (solutionRemark == '') {
         event.preventDefault();
         $('#solutionRemarkCheck').show();
-    }else{
+    } else {
         $('#solutionRemarkCheck').hide();
     }
 

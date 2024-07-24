@@ -7,31 +7,25 @@ const branchMultiselect = new Choices('#under_branch_dummy', {
 });
 
 
-$(document).ready(function(){
+$(document).ready(function () {
 
-
-    // $('#company').change(function(){
-    //     var companySelected = $(this).val();
-    //     getBranchDropdown(companySelected);
-    // })
-    
     var companySelected = $('#company').val();
     getBranchDropdown(companySelected);
 
-    $('#submit_bank_creation').click(function(){
-        
+    $('#submit_bank_creation').click(function () {
+
         //Branch Multi select store
         var branch_list = branchMultiselect.getValue();
         var branch = '';
-        for(var i=0;i<branch_list.length;i++){
+        for (var i = 0; i < branch_list.length; i++) {
             if (i > 0) {
                 branch += ',';
             }
             branch += branch_list[i].value;
         }
         var arr = branch.split(",");
-        arr.sort(function(a,b){return a-b});
-		var sortedStr = arr.join(",");
+        arr.sort(function (a, b) { return a - b });
+        var sortedStr = arr.join(",");
         $('#under_branch').val(sortedStr);
 
         validations();
@@ -40,9 +34,9 @@ $(document).ready(function(){
 })//Document ready END
 
 //Auto call function
-$(function(){
+$(function () {
     var idupd = $('#idupd').val();
-    if(idupd > 0){
+    if (idupd > 0) {
         var company_id = $('#company').val();
         getBranchDropdown(company_id);
     }
@@ -50,23 +44,23 @@ $(function(){
 
 
 //Get BranchDropdown Based on Company id
-function getBranchDropdown(company_id){
+function getBranchDropdown(company_id) {
     var branch_id_upd = $('#under_branch_upd').val();
-    var values=branch_id_upd.split(',');
+    var values = branch_id_upd.split(',');
     $.ajax({
         url: 'areaMapping/getBranchDropdown.php',
         type: 'post',
         dataType: 'json',
-        data:{'company_id':company_id},
+        data: { 'company_id': company_id },
         cache: false,
-        success: function(response){
+        success: function (response) {
             branchMultiselect.clearStore();
-            for(var i=0;i<response.length;i++){
+            for (var i = 0; i < response.length; i++) {
 
                 var branch_id = response[i]['branch_id'];
                 var branch_name = response[i]['branch_name'];
                 var selected = '';
-                if(branch_id_upd != '' &&  values.includes(branch_id)){
+                if (branch_id_upd != '' && values.includes(branch_id)) {
                     selected = 'selected';
                     // checked = false;
                 }
@@ -85,53 +79,45 @@ function getBranchDropdown(company_id){
 }
 
 
-function validations(){
-    var bank_name = $('#bank_name').val();var short_name = $('#short_name').val();var acc_no = $('#acc_no').val();var ifsc = $('#ifsc').val();var branch = $('#branch').val();
-    var company = $('#company').val();var under_branch = branchMultiselect.getValue();
+function validations() {
+    var bank_name = $('#bank_name').val(); var short_name = $('#short_name').val(); var acc_no = $('#acc_no').val(); var ifsc = $('#ifsc').val(); var branch = $('#branch').val();
+    var under_branch = branchMultiselect.getValue();
 
-    if(bank_name == ''){
-        // $('#bank_name').attr('style','border-color:red');
+    if (bank_name == '') {
         $('#banknameCheck').show();
         event.preventDefault();
-    }else{
-        // $('#bank_name').attr('style','border-color:');
+    } else {
         $('#banknameCheck').hide();
     }
-    if(short_name == ''){
+    if (short_name == '') {
         $('#shortnameCheck').show();
         event.preventDefault();
-    }else{
+    } else {
         $('#shortnameCheck').hide();
     }
-    if(acc_no == ''){
+    if (acc_no == '') {
         $('#accnoCheck').show();
         event.preventDefault();
-    }else{
+    } else {
         $('#accnoCheck').hide();
     }
-    if(ifsc == ''){
+    if (ifsc == '') {
         $('#ifscCheck').show();
         event.preventDefault();
-    }else{
+    } else {
         $('#ifscCheck').hide();
     }
-    if(branch == ''){
+    if (branch == '') {
         $('#branchCheck').show();
         event.preventDefault();
-    }else{
+    } else {
         $('#branchCheck').hide();
     }
-    // if(company == ''){
-    //     $('#companyCheck').show();
-    //     event.preventDefault();
-    // }else{
-    //     $('#companyCheck').hide();
-    // }
-    if(under_branch.length == 0){
+    if (under_branch.length == 0) {
         // $('.choices__inner').attr('style','border-color:red');
         $('#underbranchCheck').show();
         event.preventDefault();
-    }else{
+    } else {
         $('#underbranchCheck').hide();
     }
 }

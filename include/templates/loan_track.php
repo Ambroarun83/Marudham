@@ -79,7 +79,7 @@
 							<div class="col-md-12 ">
 								<div class="row">
 									<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-										<div class="form-group" id='customer_list'>
+										<div class="form-group table-responsive" id='customer_list'>
 											<table class="table custom-table" id="custListTable">
 												<thead>
 													<tr>
@@ -96,6 +96,11 @@
 														<th>Action</th>
 													</tr>
 												</thead>
+												<tbody>
+													<tr>
+														<td colspan='11'>No Records available</td>
+													</tr>
+												</tbody>
 											</table>
 										</div>
 									</div>

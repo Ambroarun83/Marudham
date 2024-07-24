@@ -1,160 +1,172 @@
 <?php
 
 
-include ('../../ajaxconfig.php');
+include('../../ajaxconfig.php');
 
 $type = $_POST['type'];
 $user_id = ($_POST['user_id'] != '') ? $_POST['user_id'] : '';
 
-if($type == 'today'){
+if ($type == 'today') {
 
     $where = 'DATE(created_date) = CURRENT_DATE ';
-    if($user_id != ''){$where .= " && insert_login_id = '".$user_id."' " ; }//for user based
-    getDetails($con,$where); //passing where clause as arg
+    if ($user_id != '') {
+        $where .= " && insert_login_id = '" . $user_id . "' ";
+    } //for user based
+    getDetails($con, $where); //passing where clause as arg
 
-}else if($type == 'day'){
+} else if ($type == 'day') {
 
-    $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
-    
-    $where = '(DATE(created_date) >= DATE("'.$from_date.'") && DATE(created_date) <= DATE("'.$to_date.'"))  ';
-    if($user_id != ''){$where .= " && insert_login_id = '".$user_id."' " ; }//for user based
-    getDetails($con, $where);//passing where clause as arg
-        
+    $from_date = $_POST['from_date'];
+    $to_date = $_POST['to_date'];
 
-}else if($type == 'month'){
-    
-    $month = date('m',strtotime($_POST['month']));
-    $year = date('Y',strtotime($_POST['month']));
+    $where = '(DATE(created_date) >= DATE("' . $from_date . '") && DATE(created_date) <= DATE("' . $to_date . '"))  ';
+    if ($user_id != '') {
+        $where .= " && insert_login_id = '" . $user_id . "' ";
+    } //for user based
+    getDetails($con, $where); //passing where clause as arg
 
-    $where = 'MONTH(created_date) = "'.$month.'" && YEAR(created_date) = "'.$year.'"  ';
-    if($user_id != ''){$where .= " && insert_login_id = '".$user_id."' " ; }//for user based
-    getDetails($con, $where);//passing where clause as arg
+
+} else if ($type == 'month') {
+
+    $month = date('m', strtotime($_POST['month']));
+    $year = date('Y', strtotime($_POST['month']));
+
+    $where = 'MONTH(created_date) = "' . $month . '" && YEAR(created_date) = "' . $year . '"  ';
+    if ($user_id != '') {
+        $where .= " && insert_login_id = '" . $user_id . "' ";
+    } //for user based
+    getDetails($con, $where); //passing where clause as arg
 }
 
 
 
 
-function getDetails($con, $where){
-    
+function getDetails($con, $where)
+{
+
     // Investment Credit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_cr_binvest WHERE ".$where."
+        SELECT amt FROM ct_cr_binvest WHERE $where 
         UNION ALL
-        SELECT amt FROM ct_cr_hinvest WHERE ".$where."
+        SELECT amt FROM ct_cr_hinvest WHERE $where 
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $investment = $row['amt'] ?? 0;
-    
+
     $response['cr_investment'] = intval($investment);
 
     // Investment Debit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_db_binvest WHERE ".$where."
+        SELECT amt FROM ct_db_binvest WHERE $where
         UNION ALL
-        SELECT amt FROM ct_db_hinvest WHERE ".$where."
+        SELECT amt FROM ct_db_hinvest WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $investment = $row['amt'] ?? 0;
-    
+
     $response['db_investment'] = intval($investment);
 
 
     // Deposit Credit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_cr_bdeposit WHERE ".$where."
+        SELECT amt FROM ct_cr_bdeposit WHERE $where
+        UNION ALL
+        SELECT amt FROM ct_cr_hdeposit WHERE $where
         ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $deposit = $row['amt'] ?? 0;
-    
+
     $response['cr_deposit'] = intval($deposit);
-    
+
     // Deposit Debit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_db_bdeposit WHERE ".$where."
+        SELECT amt FROM ct_db_bdeposit WHERE $where 
+        UNION ALL
+        SELECT amt FROM ct_db_hdeposit WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $deposit = $row['amt'] ?? 0;
-    
+
     $response['db_deposit'] = intval($deposit);
 
     // EL Credit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_cr_bel WHERE ".$where."
+        SELECT amt FROM ct_cr_bel WHERE $where
         UNION ALL
-        SELECT amt FROM ct_cr_hel WHERE ".$where."
+        SELECT amt FROM ct_cr_hel WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $el = $row['amt'] ?? 0;
-    
+
     $response['cr_el'] = intval($el);
 
     // EL Debit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_db_bel WHERE ".$where."
+        SELECT amt FROM ct_db_bel WHERE $where
         UNION ALL
-        SELECT amt FROM ct_db_hel WHERE ".$where."
+        SELECT amt FROM ct_db_hel WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $el = $row['amt'] ?? 0;
-    
+
     $response['db_el'] = intval($el);
-    
+
     // Exchange Credit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_cr_bexchange WHERE ".$where."
+        SELECT amt FROM ct_cr_bexchange WHERE $where
         UNION ALL
-        SELECT amt FROM ct_cr_hexchange WHERE ".$where."
+        SELECT amt FROM ct_cr_hexchange WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $exchange = $row['amt'] ?? 0;
-    
+
     $response['cr_exchange'] = intval($exchange);
 
     // Exchange Debit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_db_bexchange WHERE ".$where."
+        SELECT amt FROM ct_db_bexchange WHERE $where
         UNION ALL
-        SELECT amt FROM ct_db_hexchange WHERE ".$where."
+        SELECT amt FROM ct_db_hexchange WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $exchange = $row['amt'] ?? 0;
-    
+
     $response['db_exchange'] = intval($exchange);
-    
+
     // Agent Credit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_cr_bag WHERE ".$where."
+        SELECT amt FROM ct_cr_bag WHERE $where
         UNION ALL
-        SELECT amt FROM ct_cr_hag WHERE ".$where."
+        SELECT amt FROM ct_cr_hag WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $agent = $row['amt'] ?? 0;
-    
+
     $response['cr_agent'] = intval($agent);
-    
+
     // Agent Debit
     $qry = $con->query("SELECT SUM(amt) as amt FROM (
-        SELECT amt FROM ct_db_bag WHERE ".$where."
+        SELECT amt FROM ct_db_bag WHERE $where
         UNION ALL
-        SELECT amt FROM ct_db_hag WHERE ".$where."
+        SELECT amt FROM ct_db_hag WHERE $where
     ) AS combined_table");
-    
+
     $row = $qry->fetch_assoc();
     $agent = $row['amt'] ?? 0;
-    
+
     $response['db_agent'] = intval($agent);
 
 
-    
+
     $response['cr_investment'] = moneyFormatIndia($response['cr_investment']);
     $response['db_investment'] = moneyFormatIndia($response['db_investment']);
     $response['cr_deposit'] = moneyFormatIndia($response['cr_deposit']);
@@ -167,11 +179,11 @@ function getDetails($con, $where){
     $response['db_agent'] = moneyFormatIndia($response['db_agent']);
 
     echo json_encode($response);
-
 }
 
 //Format number in Indian Format
-function moneyFormatIndia($num) {
+function moneyFormatIndia($num)
+{
     $isNegative = false;
     if ($num < 0) {
         $isNegative = true;
@@ -198,4 +210,3 @@ function moneyFormatIndia($num) {
 
     return $isNegative ? "-" . $thecash : $thecash;
 }
-?>

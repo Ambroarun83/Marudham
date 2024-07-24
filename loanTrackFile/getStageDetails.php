@@ -22,8 +22,8 @@ if ($stage == 'lc') { //Loan Calculation, So show verification info
 
         if ($row['verification_person'] == $row['cus_id']) {
             $cusname_qry = $con->query("SELECT customer_name from customer_register where cus_id = '" . strip_tags($row['cus_id']) . "' ");
-            $row = $cusname_qry->fetch_assoc();
-            $verification_person = $row['customer_name'];
+            $cusname_row = $cusname_qry->fetch_assoc();
+            $verification_person = $cusname_row['customer_name'];
         } else {
             $famname_qry = $con->query("SELECT famname from verification_family_info where id = '" . strip_tags($row['verification_person']) . "' ");
             $famname_row = $famname_qry->fetch_assoc();

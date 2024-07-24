@@ -9,53 +9,34 @@ if ($userid != 1) {
 
     $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
     while ($rowuser = $userQry->fetch_assoc()) {
-        $group_id = $rowuser['group_id'];
-        $line_id = $rowuser['line_id'];
         $staff_id = $rowuser['staff_id'];
     }
-
-    $line_id = explode(',', $line_id);
-    $sub_area_list = array();
-    foreach ($line_id as $line) {
-        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
-        $sub_area_list[] = $row_sub['sub_area_id'];
-    }
-    $sub_area_ids = array();
-    foreach ($sub_area_list as $subarray) {
-        $sub_area_ids = array_merge($sub_area_ids, explode(',', $subarray));
-    }
-    $sub_area_list = array();
-    $sub_area_list = implode(',', $sub_area_ids);
 }
-
 $column = array(
-    'cp.cus_id',
-    'cp.cus_id',
-    'cp.cus_name',
-    'cp.area_confirm_area',
-    'cp.area_confirm_subarea',
-    'cp.area_line',
-    'cp.area_line',
-    'cp.mobile1',
-    'cp.status'
+    'cc.id',
+    'cc.com_code',
+    'cc.com_date',
+    'b.branch_name',
+    'sc.staff_name',
+    'cs.concern_subject',
+    'cc.status',
+    'cc.id'
 );
 
-if ($userid == 1) {
-    $query = 'SELECT * FROM `concern_creation` WHERE status != 2'; // 
-} else {
-    $query = "SELECT * FROM `concern_creation` WHERE  status != 2 && staff_assign_to = '" . strip_tags($staff_id) . "'"; // 
-}
+$query = "SELECT cc.*,b.branch_name,sc.staff_name,cs.concern_subject
+    FROM concern_creation cc
+    JOIN branch_creation b ON cc.branch_name = b.branch_id 
+    JOIN staff_creation sc ON cc.staff_assign_to = sc.staff_id
+    JOIN concern_subject cs ON cc.com_sub = cs.concern_sub_id
+    WHERE cc.status != 2 && cc.staff_assign_to = '" . strip_tags($staff_id) . "' "; // 
 // echo $query;
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
-
-    if (strtolower($_POST['search']) == 'pending') {$search1 = 'OR status = 0';}else if (strtolower($_POST['search']) == 'resolved') {$search1 = 'OR status = 1';}else{$search1 ='';}
-    $query .= "
-            and (com_code LIKE '%" . $_POST['search'] . "%'
-            OR com_date LIKE '%" . date('Y-m-d',strtotime($_POST['search'])) . "%' 
-            $search1 ) ";
-
+    $query .= " AND (cc.com_code LIKE '%" . $_POST['search'] . "%' OR
+            cc.com_date LIKE '%" . $_POST['search'] . "%' OR
+            b.branch_name LIKE '%" . $_POST['search'] . "%' OR
+            sc.staff_name LIKE '%" . $_POST['search'] . "%' OR
+            cs.concern_subject LIKE '%" . $_POST['search'] . "%') ";
 }
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
@@ -90,27 +71,9 @@ foreach ($result as $row) {
 
     $sub_array[] = $row['com_code'];
     $sub_array[] = date('d-m-Y', strtotime($row['com_date']));
-
-    $branch_id = $row['branch_name'];
-    $qry = $mysqli->query("SELECT b.branch_name FROM branch_creation b  where b.branch_id = '" . $branch_id . "' ");
-    $row1 = $qry->fetch_assoc();
-    $sub_array[] = $row1['branch_name'];
-
-    //Staff Name fetch
-    $staff_id = $row['staff_assign_to'];
-    $qry = $mysqli->query("SELECT staff_name FROM staff_creation where staff_id = $staff_id ");
-    $row1 = $qry->fetch_assoc();
-    $staff_name = $row1['staff_name'];
-
-    $sub_array[] = $staff_name;
-
-    //Concern Subject Name Fetch
-    $com_sub_id = $row['com_sub'];
-    $qry = $mysqli->query("SELECT concern_subject FROM concern_subject where concern_sub_id = $com_sub_id ");
-    $row1 = $qry->fetch_assoc();
-    $con_sub = $row1['concern_subject'];
-
-    $sub_array[] = $con_sub;
+    $sub_array[] = $row['branch_name'];
+    $sub_array[] = $row['staff_name'];
+    $sub_array[] = $row['concern_subject'];
 
     //Status
     $con_sts = $row['status'];
@@ -137,9 +100,12 @@ foreach ($result as $row) {
 
 function count_all_data($connect)
 {
-    $query     = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
-    acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and ii.cus_status = 21 GROUP BY ii.cus_id ";
+    $query     = "SELECT cc.*,b.branch_name,sc.staff_name,cs.concern_subject
+    FROM concern_creation cc
+    JOIN branch_creation b ON cc.branch_name = b.branch_id 
+    JOIN staff_creation sc ON cc.staff_assign_to = sc.staff_id
+    JOIN concern_subject cs ON cc.com_sub = cs.concern_sub_id
+    WHERE cc.status != 2";
     $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();

@@ -1,16 +1,13 @@
 <?php
-@session_start();  
+@session_start();
 include('config-file.php');
 include("iedit-config.php");
 include("adminclass.php");
 
 $userObj = new admin();
 $where = '';
-$idupd ='';
+$idupd = '';
 
-$getuserdetails  = $userObj->getuser($mysqli, $idupd); 
+$getuserdetails  = $userObj->getuser($mysqli, $idupd);
 
 date_default_timezone_set('Asia/Calcutta');
-?>
-
-

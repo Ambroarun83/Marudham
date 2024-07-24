@@ -4,8 +4,8 @@ $(document).ready(function () {
 	let err_msg = $('#err_msg').val();
 	// if(err_msg != ''){
 	// 	Swal.fire({
-    //         title: 'Invalid Login Credentials!',
-    //         icon: 'error',
+	//         title: 'Invalid Login Credentials!',
+	//         icon: 'error',
 	// 		timer: 2000,
 	// 		timerProgressBar: true,
 	// 		didOpen: () => {
@@ -18,70 +18,67 @@ $(document).ready(function () {
 	// 		willClose: () => {
 	// 			clearInterval(timerInterval);
 	// 		}
-    //     });
+	//     });
 	// }
-	
+
 	// Validate username
-	$('#usernamecheck').hide();	
+	$('#usernamecheck').hide();
 	let usernameError = true;
-	$('#lusername').keyup(function () {		
-	validateusername();
+	$('#lusername').keyup(function () {
+		validateusername();
 	});
-	
+
 	function validateusername() {
-		let usernameValue = $('#lusername').val();	
+		let usernameValue = $('#lusername').val();
 		if (usernameValue.length == '') {
-			$('#lusername').css('border','1px solid red')
+			$('#lusername').css('border', '1px solid red')
 			// $('#usernamecheck').show();
-		usernameError = false;
+			usernameError = false;
 			return false;
 		}
 		else {
-			$('#lusername').css('border','')
+			$('#lusername').css('border', '')
 			// $('#usernamecheck').hide();
-			usernameError = true;	
+			usernameError = true;
 		}
 	}
 
 
 	// Validate password
-	$('#passwordcheck').hide();	
+	$('#passwordcheck').hide();
 	let passwordError = true;
-	$('#lpassword').change(function () {	
-	validatepassword();
+	$('#lpassword').change(function () {
+		validatepassword();
 	});
 
 	function validatepassword() {
-		let passwordValue = $('#lpassword').val();	
+		let passwordValue = $('#lpassword').val();
 		if (passwordValue.length == '') {
-			$('#lpassword').css('border','1px solid red')
-		// $('#passwordcheck').show();
-		passwordError = false;
+			$('#lpassword').css('border', '1px solid red')
+			// $('#passwordcheck').show();
+			passwordError = false;
 			return false;
 		}
 		else {
-			$('#lpassword').css('border','')
+			$('#lpassword').css('border', '')
 			// $('#passwordcheck').hide();
-			passwordError = true;	
+			passwordError = true;
 		}
 	}
 
 	// Submit Button Onclick
-	$('#lbutton').click(function () {				
-		validateusername();					
-		validatepassword();		
+	$('#lbutton').click(function () {
+		validateusername();
+		validatepassword();
 
-		if (usernameError == true && passwordError == true) 
-			{	
+		if (usernameError == true && passwordError == true) {
 			return true;
-			} 
-			else 
-			{
+		}
+		else {
 			return false;
-			}
+		}
 	});
-	
+
 
 });
 
-	
