@@ -46,8 +46,13 @@ if (count($getConcernCreation) > 0) {
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
 <style>
+    .stars {
+        display: flex;
+        gap: 5px;
+    }
+
     .stars i {
-        font-size: 35px;
+        font-size: 27px;
         color: #b5b8b1;
         transition: all 0.2s;
         cursor: pointer;
@@ -408,7 +413,7 @@ if (count($getConcernCreation) > 0) {
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                                     <div class="form-group">
                                         <label for="Communitcation"> Feedback Rating </label> <span class="required">*</span>
                                         <input type='hidden' id='rating_value' name='rating_value'>

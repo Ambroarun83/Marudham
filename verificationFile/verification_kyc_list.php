@@ -23,31 +23,63 @@ include '../ajaxconfig.php';
 
         $i = 1;
         while ($kyc = $KYCInfo->fetch()) {
-            if($kyc['proofOf'] == '0'){$proof_Of = "Customer";}else
-            if($kyc['proofOf'] == '1'){$proof_Of = "Guarantor";}else
-            if($kyc['proofOf'] == '2'){$proof_Of = "Family Members";}else
-            if($kyc['proofOf'] == '3'){$proof_Of = "Group Members";}
-            
-            if($kyc['proof_type'] == '1'){$proof_type = "Adhar";}else
-            if($kyc['proof_type'] == '2'){$proof_type = "Smart Card";}else
-            if($kyc['proof_type'] == '3'){$proof_type = "Voter ID";}else
-            if($kyc['proof_type'] == '4'){$proof_type = "Driving License";}else
-            if($kyc['proof_type'] == '5'){$proof_type = "PAN Card";}else
-            if($kyc['proof_type'] == '6'){$proof_type = "Passport";}else
-            if($kyc['proof_type'] == '7'){$proof_type = "Occupation ID";}else
-            if($kyc['proof_type'] == '8'){$proof_type = "Salary Slip";}else
-            if($kyc['proof_type'] == '9'){$proof_type = "Bank statement";}else
-            if($kyc['proof_type'] == '10'){$proof_type = "EB Bill";}else
-            if($kyc['proof_type'] == '11'){$proof_type = "Business Proof";}
-            
-            
+            if ($kyc['proofOf'] == '0') {
+                $proof_Of = "Customer";
+            } else
+            if ($kyc['proofOf'] == '1') {
+                $proof_Of = "Guarantor";
+            } else
+            if ($kyc['proofOf'] == '2') {
+                $proof_Of = "Family Members";
+            } else
+            if ($kyc['proofOf'] == '3') {
+                $proof_Of = "Group Members";
+            }
+
+            if ($kyc['proof_type'] == '1') {
+                $proof_type = "Adhar";
+            } else
+            if ($kyc['proof_type'] == '2') {
+                $proof_type = "Smart Card";
+            } else
+            if ($kyc['proof_type'] == '3') {
+                $proof_type = "Voter ID";
+            } else
+            if ($kyc['proof_type'] == '4') {
+                $proof_type = "Driving License";
+            } else
+            if ($kyc['proof_type'] == '5') {
+                $proof_type = "PAN Card";
+            } else
+            if ($kyc['proof_type'] == '6') {
+                $proof_type = "Passport";
+            } else
+            if ($kyc['proof_type'] == '7') {
+                $proof_type = "Occupation ID";
+            } else
+            if ($kyc['proof_type'] == '8') {
+                $proof_type = "Salary Slip";
+            } else
+            if ($kyc['proof_type'] == '9') {
+                $proof_type = "Bank statement";
+            } else
+            if ($kyc['proof_type'] == '10') {
+                $proof_type = "EB Bill";
+            } else
+            if ($kyc['proof_type'] == '11') {
+                $proof_type = "Business Proof";
+            }
+
+
             $relationship = 'NIL';
-            if($kyc['proofOf']=='2'){
+            if ($kyc['proofOf'] == '2') {
                 $fam_mem = $kyc['fam_mem'];
                 $sql = $con->query("SELECT relationship FROM `verification_family_info` where famname = '$fam_mem'");
                 $relationship = $sql->fetch_assoc()['relationship'];
-            }elseif ($kyc['proofOf'] == '1') {
-                $qry = $con->query("CALL get_kyc_guarentor('$req_id')");
+            } elseif ($kyc['proofOf'] == '1') {
+                $qry = $con->query("SELECT a.famname,a.relationship from verification_family_info a 
+                LEFT JOIN customer_profile b ON a.id = b.guarentor_name
+                where b.req_id = '$req_id' ");
                 $rw = $qry->fetch_assoc();
                 $fam_mem = $rw['famname'] ?? '';
                 $relationship = $rw['relationship'] ?? '';
@@ -58,7 +90,7 @@ include '../ajaxconfig.php';
                 $relationship = 'NIL';
                 mysqli_next_result($con); // Move to the next query
             }
-            ?>
+        ?>
             <tr>
                 <td> <?php echo $i++; ?></td>
                 <td> <?php echo $proof_Of; ?></td>

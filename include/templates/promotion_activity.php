@@ -1,40 +1,46 @@
 <link rel="stylesheet" type="text/css" href="css/promotion_activity.css" />
 <?php
 
-$getUser = $userObj->getUser($mysqli,$_SESSION['userid']); 
-if (sizeof($getUser)>0) {
+$getUser = $userObj->getUser($mysqli, $_SESSION['userid']);
+if (sizeof($getUser) > 0) {
 	$user_name = $getUser['fullname'];
 	$user_type = $getUser['role'];
-	if($user_type == '1'){$user_type = 'Director';}elseif($user_type == '2'){$user_type = 'Agent';}elseif($user_type == '3'){$user_type = 'Staff';}
+	if ($user_type == '1') {
+		$user_type = 'Director';
+	} elseif ($user_type == '2') {
+		$user_type = 'Agent';
+	} elseif ($user_type == '3') {
+		$user_type = 'Staff';
+	}
 }
 ?>
 <!-- Page header start -->
 <br><br>
 <div class="page-header">
-    <div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-        Marudham -  Promotion Activity 
+	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
+		Marudham - Promotion Activity
 	</div>
-	
+
 </div><br>
 
 <div class="text-right" style="margin-right: 25px;">
-	<button class="btn btn-primary" id='close_history_card' style="display: none;" >&times;&nbsp;&nbsp;Cancel</button>
+	<button class="btn btn-primary" id='close_history_card' style="display: none;">&times;&nbsp;&nbsp;Cancel</button>
 </div>
 
 <!-- Main container start -->
 <div class="main-container">
 	<!--form start-->
-	<form id = "promotion_activity_form" name="promotion_activ_form" action="" method="post" enctype="multipart/form-data"> 
+	<form id="promotion_activity_form" name="promotion_activ_form" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="pending_sts" id="pending_sts" value="" />
 		<input type="hidden" name="od_sts" id="od_sts" value="" />
 		<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
 		<input type="hidden" name="closed_sts" id="closed_sts" value="" />
-		
+
 		<div class="row gutters">
 			<div class="toggle-container col-12">
 				<input type="button" class="toggle-button" value='Existing'>
 				<input type="button" class="toggle-button" value='New'>
-				<input type="button" class="toggle-button" value= 'Repromotion'>
+				<input type="button" class="toggle-button" value='Repromotion'>
 			</div>
 		</div>
 
@@ -43,7 +49,7 @@ if (sizeof($getUser)>0) {
 				<div class="card">
 					<div class="card-header">Existing Customer</div>
 					<div class="card-body">
-						<div id="exCusDiv">
+						<div id="exCusDiv" class="table-responsive">
 						</div>
 					</div>
 				</div>
@@ -56,8 +62,8 @@ if (sizeof($getUser)>0) {
 				<div class="card">
 					<div class="card-header"> Loan History </div>
 					<div class="card-body">
-						<div id="loanHistoryDiv">
-							
+						<div id="loanHistoryDiv" class="table-responsive">
+
 						</div>
 					</div>
 				</div>
@@ -71,8 +77,8 @@ if (sizeof($getUser)>0) {
 				<div class="card">
 					<div class="card-header"> Document History </div>
 					<div class="card-body">
-						<div id="docHistoryDiv">
-							
+						<div id="docHistoryDiv" class="table-responsive">
+
 						</div>
 					</div>
 				</div>
@@ -88,10 +94,10 @@ if (sizeof($getUser)>0) {
 					<div class="col-12">
 						<div class="alert alert-danger" role="alert" style="display: none;">
 							<div class="alert-text">Customer Already Existing!</div>
-						</div> 
+						</div>
 						<div class="alert alert-success" role="alert" style="display: none;">
 							<div class="alert-text">Customer is New to Promotion!</div>
-						</div> 
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="row">
@@ -135,8 +141,8 @@ if (sizeof($getUser)>0) {
 						<button class="btn btn-primary add-new-btn" id="add_new_cus" name="add_new_cus" data-toggle="modal" data-target="#addnewcus" tabindex=""><span class="icon-add"></span></button>
 					</div>
 					<div class="card-body">
-						<div id="new_promo_div">
-							
+						<div id="new_promo_div" class="table-responsive">
+
 						</div>
 					</div>
 				</div>
@@ -149,7 +155,7 @@ if (sizeof($getUser)>0) {
 				<div class="card">
 					<div class="card-header">Repromotion</div>
 					<div class="card-body">
-						<div id="rePromoCusDiv">
+						<div id="rePromoCusDiv" class="table-responsive">
 						</div>
 					</div>
 				</div>
@@ -169,7 +175,7 @@ if (sizeof($getUser)>0) {
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">New Promotion</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -204,7 +210,7 @@ if (sizeof($getUser)>0) {
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -222,7 +228,7 @@ if (sizeof($getUser)>0) {
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Promotion</h5>
 				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -233,8 +239,8 @@ if (sizeof($getUser)>0) {
 							<input type="hidden" name="orgin_table" id="orgin_table"><!-- this is to reset the table contents -->
 							<input type="hidden" name="promo_cus_id" id="promo_cus_id">
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-								<label for="promo_date">Date</label><span class="required">&nbsp;*</span> 
-								<input type="text" class='form-control' readonly name="promo_date" id="promo_date" tabindex="1" value='<?php echo date('d-m-Y');?>' />
+								<label for="promo_date">Date</label><span class="required">&nbsp;*</span>
+								<input type="text" class='form-control' readonly name="promo_date" id="promo_date" tabindex="1" value='<?php echo date('d-m-Y'); ?>' />
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_status">Status</label><span class="required">&nbsp;*</span>
@@ -243,7 +249,7 @@ if (sizeof($getUser)>0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_label">Label</label><span class="required">&nbsp;*</span>
-								<input type="text" name="promo_label" id="promo_label" class='form-control' placeholder="Enter Label" tabindex="3" >
+								<input type="text" name="promo_label" id="promo_label" class='form-control' placeholder="Enter Label" tabindex="3">
 								<span class="text-danger" id='promo_labelCheck' style="display: none;">Please Enter Label </span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -253,12 +259,12 @@ if (sizeof($getUser)>0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_user_type">User Type</label><span class="required">&nbsp;*</span>
-								<input type="text" name="promo_user_type" id="promo_user_type" class='form-control' value='<?php echo $user_type;?>' tabindex="5" readonly>
+								<input type="text" name="promo_user_type" id="promo_user_type" class='form-control' value='<?php echo $user_type; ?>' tabindex="5" readonly>
 								<span class="text-danger" id='promo_user_typeCheck' style="display: none;">Please Enter User Type </span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="promo_user">User</label><span class="required">&nbsp;*</span>
-								<input type="text" name="promo_user" id="promo_user" class='form-control' value="<?php echo $user_name;?>" tabindex="6" readonly>
+								<input type="text" name="promo_user" id="promo_user" class='form-control' value="<?php echo $user_name; ?>" tabindex="6" readonly>
 								<span class="text-danger" id='promo_userCheck' style="display: none;">Please Enter User </span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -268,7 +274,7 @@ if (sizeof($getUser)>0) {
 							</div>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -286,15 +292,15 @@ if (sizeof($getUser)>0) {
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Promotion Chart</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid">
-					
-					<div class="col-12" >
+
+					<div class="col-12">
 						<div class="row">
-							<div class="col-12" id='promoChartDiv'></div>
+							<div class="col-12 table-responsive" id='promoChartDiv'></div>
 						</div>
 					</div>
 				</div>
@@ -313,13 +319,13 @@ if (sizeof($getUser)>0) {
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Personal Info</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
+					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
 				<div class="container-fluid row" id='personalInfoDiv'>
-					
-					
+
+
 				</div>
 			</div>
 			<div class="modal-footer">

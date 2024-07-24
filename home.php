@@ -458,6 +458,11 @@ include('api/main.php'); // Database Connection File
 			<?php include "include/templates/loan_track.php" ?>
 			<?php }else ?>
 
+			<!-- Loan Track Module -->
+			<?php if($current_page == 'sms_generation') { ?>
+			<?php include "include/templates/sms_generation.php" ?>
+			<?php }else ?>
+
 			<!-- 404 Not found page -->
 			<?php { ?>
 			<?php 	//include "include/templates/notfound.php" ?>

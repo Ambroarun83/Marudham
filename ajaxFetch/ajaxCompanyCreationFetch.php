@@ -15,20 +15,20 @@ $column = array(
 $query = "SELECT * FROM company_creation ";
 if (isset($_POST['search']) && $_POST['search'] != "") {
 
-        if ($_POST['search'] == "Active") {
-            $query .= "WHERE status=0 ";
-        } else if ($_POST['search'] == "Inactive") {
-            $query .= "WHERE status=1 ";
-        } else {
-            $query .= "WHERE
-    company_id LIKE  '%" . $_POST['search'] . "%'
-    OR company_name LIKE '%" . $_POST['search'] . "%'
-    OR district LIKE '%" . $_POST['search'] . "%'
-    OR taluk LIKE '%" . $_POST['search'] . "%'
-    OR place LIKE '%" . $_POST['search'] . "%'
-    OR mobile LIKE '%" . $_POST['search'] . "%'
-    OR status LIKE '%" . $_POST['search'] . "%' ";
-        }
+    if ($_POST['search'] == "Active") {
+        $query .= "WHERE status=0 ";
+    } else if ($_POST['search'] == "Inactive") {
+        $query .= "WHERE status=1 ";
+    } else {
+        $query .= "WHERE
+        company_id LIKE  '%" . $_POST['search'] . "%'
+        OR company_name LIKE '%" . $_POST['search'] . "%'
+        OR district LIKE '%" . $_POST['search'] . "%'
+        OR taluk LIKE '%" . $_POST['search'] . "%'
+        OR place LIKE '%" . $_POST['search'] . "%'
+        OR mobile LIKE '%" . $_POST['search'] . "%'
+        OR status LIKE '%" . $_POST['search'] . "%' ";
+    }
 }
 
 if (isset($_POST['order'])) {
@@ -63,18 +63,10 @@ foreach ($result as $row) {
     $sub_array[] = $sno;
 
     $sub_array[] = $row['company_name'];
-    // $sub_array[] = $row['address1'];
-    // $sub_array[] = $row['address2'];
-    // $sub_array[] = $row['state'];
     $sub_array[] = $row['place'];
     $sub_array[] = $row['taluk'];
     $sub_array[] = $row['district'];
-    // $sub_array[] = $row['pincode'];
-    // $sub_array[] = $row['website'];
-    // $sub_array[] = $row['mailid'];
     $sub_array[] = $row['mobile'];
-    // $sub_array[] = $row['whatsapp'];
-    // $sub_array[] = $row['landline'];
 
     $status      = $row['status'];
 
@@ -85,9 +77,6 @@ foreach ($result as $row) {
         $sub_array[] = "<span style='width: 144px;'><span class='kt-badge  kt-badge--success kt-badge--inline kt-badge--pill'>Active</span></span>";
     }
     $id          = $row['company_id'];
-
-    // $action="<a href='company_creation&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>&nbsp;&nbsp; 
-    // <a href='company_creation&del=$id' title='Edit details' class='delete_company'><span class='icon-trash-2'></span></a>";
 
     $action = "<a href='company_creation&upd=$id' title='Edit details'><span class='icon-border_color'></span></a>";
 

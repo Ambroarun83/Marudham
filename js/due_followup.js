@@ -1,38 +1,38 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
-    $('.back-button').click(function(){
+    $('.back-button').click(function () {
         window.history.back();
     })
 
-    $('#comm_ftype').change(function(){
+    $('#comm_ftype').change(function () {
         let type = $(this).val();
         let append;
-        if(type == 1){//direct
+        if (type == 1) {//direct
             append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='2'>Unavailable</option>`;
-        }else if(type == 2){//mobile
+        } else if (type == 2) {//mobile
             append = `<option value="">Select Follow Up Status</option><option value='1'>Commitment</option><option value='3'>RNR</option><option value='4'>Not Reachable</option>
             <option value='5'>Switch Off</option><option value='6'>Not in Use</option><option value='7'>Blocked</option>`;
-        }else{
+        } else {
             append = `<option value="">Select Follow Up Status</option>`;
         }
         $('#comm_fstatus').empty().append(append);
     })
 
-    $('#comm_fstatus').change(function(){
+    $('#comm_fstatus').change(function () {
         let status = $(this).val();
-        if(status == 1){//commitment
+        if (status == 1) {//commitment
             $('.person-div').show();
-        }else {
+        } else {
             $('.person-div').hide();
             $('#comm_person_type,#comm_person_name,#comm_person_name1,#comm_relationship').val('');//empty values when hiding person div
         }
     })
 
-    $('#comm_person_type').change(function(){
+    $('#comm_person_type').change(function () {
         let type = $(this).val();
         let req_id = $('#comm_req_id').val();
         let cus_id = $('#cusidupd').val();
-        if(type == 1){
+        if (type == 1) {
 
             let cus_name = $('#cus_name').val();
             $('#comm_person_name1').hide();//select box
@@ -40,50 +40,50 @@ $(document).ready(function(){
             $('#comm_person_name').val(cus_name);//storing customer name in person name
             $('#comm_relationship').val('NIL');
 
-        }else if(type == 2 ){
-            type=1;//cause in below url garentor is managed as type 1
-            $.post('verificationFile/documentation/check_holder_name.php',{'reqId':req_id,type},function(response){
+        } else if (type == 2) {
+            type = 1;//cause in below url garentor is managed as type 1
+            $.post('verificationFile/documentation/check_holder_name.php', { 'reqId': req_id, type }, function (response) {
                 //if guarentor show readonly input box and hide select box
                 $('#comm_person_name').show();
                 $('#comm_person_name1').hide();//select box
                 $('#comm_person_name1').empty();//select box
-                
+
                 $('#comm_person_name').val(response['name'])
                 $('#comm_relationship').val(response['relationship']);
-            },'json')
-        }else if(type == 3){
-            $.post('verificationFile/verificationFam.php',{cus_id},function(response){
+            }, 'json')
+        } else if (type == 3) {
+            $.post('verificationFile/verificationFam.php', { cus_id }, function (response) {
                 //if Family member then show dropdown and hide input box
                 $('#comm_person_name1').show();//select box
                 $('#comm_person_name').hide();
                 $('#comm_person_name').empty();
-                
+
                 $('#comm_person_name1').empty().append("<option value=''>Select Person Name</option>")
-                for(var i=0;i<response.length-1;i++){
-                    $('#comm_person_name1').append("<option value='"+response[i]['fam_id']+"'>"+response[i]['fam_name']+"</option>")
+                for (var i = 0; i < response.length - 1; i++) {
+                    $('#comm_person_name1').append("<option value='" + response[i]['fam_id'] + "'>" + response[i]['fam_name'] + "</option>")
                 }
 
                 //create onchange event for person name that will bring the relationship of selected customer
-                $('#comm_person_name1').off('change').change(function(){
+                $('#comm_person_name1').off('change').change(function () {
                     let person = $(this).val();
-                    for(var i=0;i<response.length-1;i++){
-                        if(person == response[i]['fam_id']){
+                    for (var i = 0; i < response.length - 1; i++) {
+                        if (person == response[i]['fam_id']) {
                             $('#comm_relationship').val(response[i]['relationship']);
                         }
                     }
                 })
-                
-            },'json')
+
+            }, 'json')
         }
     });
 
-    $('#sumit_add_comm').click(function(){
-        if(validateCommitment() == true){
+    $('#sumit_add_comm').click(function () {
+        if (validateCommitment() == true) {
             submitCommitment();
         }
     })
 
-    $('#addCommitment').find('.closeModal').click(function(){
+    $('#addCommitment').find('.closeModal').click(function () {
         $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
         $('#addCommitment').find('.modal-body span').hide();
         $('.person-div').hide();
@@ -100,15 +100,15 @@ $(document).ready(function(){
 
 
 //On Load Event
-$(function(){
+$(function () {
 
     var req_id = $('#idupd').val()
     const cus_id = $('#cusidupd').val()
-    OnLoadFunctions(req_id,cus_id);
+    OnLoadFunctions(req_id, cus_id);
 
 })
 
-function OnLoadFunctions(req_id,cus_id){
+function OnLoadFunctions(req_id, cus_id) {
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -117,14 +117,14 @@ function OnLoadFunctions(req_id,cus_id){
     var balAmnt = [];
     $.ajax({
         url: 'followupFiles/dueFollowup/resetCustomerStsForFollowup.php',
-        data: {'cus_id':cus_id},
-        dataType:'json',
-        type:'post',
+        data: { 'cus_id': cus_id },
+        dataType: 'json',
+        type: 'post',
         cache: false,
-        success: function(response){
-            if(response.length != 0){
+        success: function (response) {
+            if (response.length != 0) {
 
-                for(var i=0;i< response['pending_customer'].length;i++){
+                for (var i = 0; i < response['pending_customer'].length; i++) {
                     pending_arr[i] = response['pending_customer'][i]
                     od_arr[i] = response['od_customer'][i]
                     due_nil_arr[i] = response['due_nil_customer'][i]
@@ -143,9 +143,9 @@ function OnLoadFunctions(req_id,cus_id){
                 $('#balAmnt').val(balAmnt);
             }
         }
-    }); 
+    });
     showOverlay();//loader start
-    setTimeout(()=>{
+    setTimeout(() => {
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
         var due_nil_sts = $('#due_nil_sts').val()
@@ -154,16 +154,16 @@ function OnLoadFunctions(req_id,cus_id){
         $.ajax({
             //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
             url: 'followupFiles/dueFollowup/viewLoanList.php',
-            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
-            type:'post',
+            data: { 'req_id': req_id, 'cus_id': cus_id, 'pending_sts': pending_sts, 'od_sts': od_sts, 'due_nil_sts': due_nil_sts, 'closed_sts': closed_sts, 'bal_amt': bal_amt },
+            type: 'post',
             cache: false,
-            success: function(response){
+            success: function (response) {
                 $('.overlay').remove();
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
                 // searchFunction();//this will call search function repair module
 
-                $('.loan-history-window').click(function(e){
+                $('.loan-history-window').click(function (e) {
                     e.preventDefault();
 
                     $('.loanlist_card').hide();
@@ -177,10 +177,10 @@ function OnLoadFunctions(req_id,cus_id){
                     $.ajax({
                         //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
                         url: 'followupFiles/dueFollowup/viewLoanHistory.php',
-                        data: {'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts},
-                        type:'post',
+                        data: { 'cus_id': cus_id, 'pending_sts': pending_sts, 'od_sts': od_sts, 'due_nil_sts': due_nil_sts, 'closed_sts': closed_sts },
+                        type: 'post',
                         cache: false,
-                        success: function(response){
+                        success: function (response) {
                             $('#loanHistoryDiv').empty()
                             $('#loanHistoryDiv').html(response);
                         }
@@ -188,7 +188,7 @@ function OnLoadFunctions(req_id,cus_id){
 
                 });
 
-                $('.doc-history-window').click(function(e){
+                $('.doc-history-window').click(function (e) {
                     e.preventDefault();
 
                     $('.loanlist_card').hide();
@@ -202,10 +202,10 @@ function OnLoadFunctions(req_id,cus_id){
                     $.ajax({
                         //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
                         url: 'followupFiles/dueFollowup/viewDocumentHistory.php',
-                        data: {'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
-                        type:'post',
+                        data: { 'cus_id': cus_id, 'pending_sts': pending_sts, 'od_sts': od_sts, 'due_nil_sts': due_nil_sts, 'closed_sts': closed_sts, 'bal_amt': bal_amt },
+                        type: 'post',
                         cache: false,
-                        success: function(response){
+                        success: function (response) {
                             $('#docHistoryDiv').empty()
                             $('#docHistoryDiv').html(response);
                         }
@@ -213,21 +213,21 @@ function OnLoadFunctions(req_id,cus_id){
 
                 });
 
-                $('#close_collection_card').click(function(){
+                $('#close_collection_card').click(function () {
 
                     $('.loanlist_card').show();
                     $('.back-button').show();
                     $('.loan_history_card').hide();
                     $('.doc_history_card').hide();
                     $('#close_collection_card').hide();
-                    
+
                 });
 
-                $('.due-chart').click(function(){
+                $('.due-chart').click(function () {
                     var req_id = $(this).attr('value');
-                    dueChartList(req_id,cus_id); // To show Due Chart List.
-                    setTimeout(()=>{
-                        $('.print_due_coll').click(function(){
+                    dueChartList(req_id, cus_id); // To show Due Chart List.
+                    setTimeout(() => {
+                        $('.print_due_coll').click(function () {
                             var id = $(this).attr('value');
                             Swal.fire({
                                 title: 'Print',
@@ -244,11 +244,11 @@ function OnLoadFunctions(req_id,cus_id){
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     $.ajax({
-                                        url:'collectionFile/print_collection.php',
-                                        data:{'coll_id':id},
-                                        type:'post',
-                                        cache:false,
-                                        success:function(html){
+                                        url: 'collectionFile/print_collection.php',
+                                        data: { 'coll_id': id },
+                                        type: 'post',
+                                        cache: false,
+                                        success: function (html) {
                                             $('#printcollection').html(html)
                                             // Get the content of the div element
                                             var content = $("#printcollection").html();
@@ -257,90 +257,90 @@ function OnLoadFunctions(req_id,cus_id){
                                 }
                             })
                         })
-                    },1000)
+                    }, 1000)
                 })
-                $('.penalty-chart').click(function(){
+                $('.penalty-chart').click(function () {
                     var req_id = $(this).attr('value');
                     $.ajax({
                         //to insert penalty by on click
                         url: 'collectionFile/getLoanDetails.php',
-                            data: {'req_id':req_id,'cus_id':cus_id},
-                            dataType:'json',
-                            type:'post',
-                            cache: false,
-                            success: function(response){
-                                penaltyChartList(req_id,cus_id); //To show Penalty List.
-                            }
+                        data: { 'req_id': req_id, 'cus_id': cus_id },
+                        dataType: 'json',
+                        type: 'post',
+                        cache: false,
+                        success: function (response) {
+                            penaltyChartList(req_id, cus_id); //To show Penalty List.
+                        }
                     })
                 })
-                $('.coll-charge-chart').click(function(){
+                $('.coll-charge-chart').click(function () {
                     var req_id = $(this).attr('value');
                     collectionChargeChartList(req_id) //To Show Fine Chart List
                 })
-                $('.coll-charge').click(function(){
+                $('.coll-charge').click(function () {
                     var req_id = $(this).attr('value');
                     resetcollCharges(req_id);  //Fine
                 })
 
-                $('.add-commitment-chart').click(function(){
+                $('.add-commitment-chart').click(function () {
                     let req_id = $(this).data('reqid');
                     $('#comm_req_id').val(req_id)
                 })
                 //Commitment chart
-                $('.commitment-chart').off('click').click(function(){
-                    let req_id = $(this).data('reqid');let cus_id = $('#cusidupd').val();
-                    $.post('followupFiles/dueFollowup/getCommitmentChart.php',{cus_id,req_id},function(html){
+                $('.commitment-chart').off('click').click(function () {
+                    let req_id = $(this).data('reqid'); let cus_id = $('#cusidupd').val();
+                    $.post('followupFiles/dueFollowup/getCommitmentChart.php', { cus_id, req_id }, function (html) {
                         $('#commChartDiv').empty().html(html);
                     })
                 })
-        }
-    })
-    hideOverlay();//loader stop
-},2000)
+            }
+        })
+        hideOverlay();//loader stop
+    }, 2000)
 
 }//Auto Load function END
 
 //Due Chart List
-function dueChartList(req_id,cus_id){
+function dueChartList(req_id, cus_id) {
     // var req_id = $('#idupd').val()
     // const cus_id = $('#cusidupd').val()
     $.ajax({
         url: 'collectionFile/getDueChartList.php',
-        data: {'req_id':req_id,'cus_id':cus_id},
-        type:'post',
+        data: { 'req_id': req_id, 'cus_id': cus_id },
+        type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#dueChartTableDiv').empty()
             $('#dueChartTableDiv').html(response)
         }
-    }).then(function(){
+    }).then(function () {
 
-        $.post('collectionFile/getDueMethodName.php',{req_id},function(response){
-            $('#dueChartTitle').text('Due Chart ( '+ response['due_method'] + ' - '+ response['loan_type'] +' )');
-        },'json');
+        $.post('collectionFile/getDueMethodName.php', { req_id }, function (response) {
+            $('#dueChartTitle').text('Due Chart ( ' + response['due_method'] + ' - ' + response['loan_type'] + ' )');
+        }, 'json');
     })
 }
 //Penalty Chart List
-function penaltyChartList(req_id,cus_id){
+function penaltyChartList(req_id, cus_id) {
     $.ajax({
         url: 'collectionFile/getPenaltyChartList.php',
-        data: {'req_id':req_id,'cus_id':cus_id},
-        type:'post',
+        data: { 'req_id': req_id, 'cus_id': cus_id },
+        type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#penaltyChartTableDiv').empty()
             $('#penaltyChartTableDiv').html(response)
         }
     });//Ajax End.
 }
 //Collection Charge Chart List
-function collectionChargeChartList(req_id){
+function collectionChargeChartList(req_id) {
     $.ajax({
         url: 'collectionFile/getCollectionChargeList.php',
-        data: {'req_id':req_id},
-        type:'post',
+        data: { 'req_id': req_id },
+        type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#collectionChargeDiv').empty()
             $('#collectionChargeDiv').html(response)
         }
@@ -365,37 +365,37 @@ function resetcollCharges(req_id) {
 }
 
 
-function submitCommitment(){
-    let req_id = $('#comm_req_id').val();let cus_id = $('#cusidupd').val();
-    let ftype = $('#comm_ftype').val();let fstatus = $('#comm_fstatus').val();
-    let person_type = $('#comm_person_type').val();let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();
-    let relationship = $('#comm_relationship').val();let remark = $('#comm_remark').val();let date = $('#comm_date').val();let hint = $('#comm_hint').val();let err = $('#comm_err').val();
-    let args = {cus_id,req_id,ftype,fstatus,person_type,person_name,person_name1,relationship,remark,date,hint,err};
-    
-    $.post('followupFiles/dueFollowup/submitCommitment.php',args,function(response){
-        if(response.includes('Error')){
+function submitCommitment() {
+    let req_id = $('#comm_req_id').val(); let cus_id = $('#cusidupd').val();
+    let ftype = $('#comm_ftype').val(); let fstatus = $('#comm_fstatus').val();
+    let person_type = $('#comm_person_type').val(); let person_name = $('#comm_person_name').val(); let person_name1 = $('#comm_person_name1').val();
+    let relationship = $('#comm_relationship').val(); let remark = $('#comm_remark').val(); let date = $('#comm_date').val(); let hint = $('#comm_hint').val(); let err = $('#comm_err').val();
+    let args = { cus_id, req_id, ftype, fstatus, person_type, person_name, person_name1, relationship, remark, date, hint, err };
+
+    $.post('followupFiles/dueFollowup/submitCommitment.php', args, function (response) {
+        if (response.includes('Error')) {
             swarlErrorAlert(response);
-        }else{
+        } else {
             swarlSuccessAlert(response);
             $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
             $('.person-div').hide();
         }
     })
 }
-function validateCommitment(){
+function validateCommitment() {
     let response = true;
     let ftype = $('#comm_ftype').val(); let fstatus = $('#comm_fstatus').val(); let person_type = $('#comm_person_type').val();
-    let person_name = $('#comm_person_name').val();let person_name1 = $('#comm_person_name1').val();let remark = $('#comm_remark').val();
-    let comm_date = $('#comm_date').val(); let hint = $('#comm_hint').val();let err = $('#comm_err').val();
+    let person_name = $('#comm_person_name').val(); let person_name1 = $('#comm_person_name1').val(); let remark = $('#comm_remark').val();
+    let comm_date = $('#comm_date').val(); let hint = $('#comm_hint').val(); let err = $('#comm_err').val();
 
     validateField(ftype, '#comm_ftypeCheck');
     validateField(fstatus, '#comm_fstatusCheck');
-    if(fstatus == 1){
+    if (fstatus == 1) {
 
         validateField(person_type, '#comm_person_typeCheck');
-        if(person_type == 3){
+        if (person_type == 3) {
             validateField(person_name1, '#comm_person_nameCheck');
-        }else{
+        } else {
             $('#comm_person_nameCheck').hide();
         }
         validateField(comm_date, '#comm_dateCheck');
@@ -405,29 +405,18 @@ function validateCommitment(){
     validateField(err, '#comm_errCheck');
 
     function validateField(value, fieldId) {
-        if (value === '' ) {
+        if (value === '') {
             response = false;
             event.preventDefault();
             $(fieldId).show();
         } else {
             $(fieldId).hide();
         }
-        
+
     }
 
     return response;
 }
-
-
-
-
-
-
-
-
-
-
-
 
 // Improved code snippet
 function swarlErrorAlert(response) {
@@ -449,9 +438,9 @@ function swarlInfoAlert(title, text) {
         cancelButtonColor: '#cc4444',
         cancelButtonText: 'No',
         confirmButtonText: 'Yes'
-    }).then(function(result) {
+    }).then(function (result) {
         if (result.isConfirmed) {
-        update();
+            update();
         }
     });
 }

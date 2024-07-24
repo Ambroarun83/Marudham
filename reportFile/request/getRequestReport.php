@@ -5,39 +5,77 @@ include '../../ajaxconfig.php';
 
 $where = "1";
 
-if(isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date'] !='' && $_POST['to_date'] != ''){
-    $from_date = date('Y-m-d',strtotime($_POST['from_date']));
-    $to_date = date('Y-m-d',strtotime($_POST['to_date']));
-    $where  = "(date(req.dor) >= '".$from_date."') and (date(req.dor) <= '".$to_date."') ";
-
+if (isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date'] != '' && $_POST['to_date'] != '') {
+    $from_date = date('Y-m-d', strtotime($_POST['from_date']));
+    $to_date = date('Y-m-d', strtotime($_POST['to_date']));
+    $where  = "(date(req.dor) >= '" . $from_date . "') and (date(req.dor) <= '" . $to_date . "') ";
 }
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
 }
-if($userid != 1){
-    
+if ($userid != 1) {
+
     $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while($rowuser = $userQry->fetch_assoc()){
+    while ($rowuser = $userQry->fetch_assoc()) {
         $group_id = $rowuser['group_id'];
     }
-    $group_id = explode(',',$group_id);
+    $group_id = explode(',', $group_id);
     $sub_area_list = array();
-    foreach($group_id as $group){
-        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group "); 
+    foreach ($group_id as $group) {
+        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
         $row_sub = $groupQry->fetch_assoc();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
     foreach ($sub_area_list as $subarray) {
-        $sub_area_ids = array_merge($sub_area_ids, explode(',',$subarray));
+        $sub_area_ids = array_merge($sub_area_ids, explode(',', $subarray));
     }
     $sub_area_list = array();
-    $sub_area_list = implode(',',$sub_area_ids);
+    $sub_area_list = implode(',', $sub_area_ids);
 }
+$statusLabels = [
+    '0' => "In Request",
+    '1' => 'In Verification',
+    '2' => 'In Approval',
+    '3' => 'In Acknowledgement',
+    '4' => 'Cancel - Request',
+    '5' => 'Cancel - Verification',
+    '6' => 'Cancel - Approval',
+    '7' => 'Cancel - Acknowledgement',
+    '8' => 'Revoke - Request',
+    '9' => 'Revoke - Verification',
+    '10' => 'In Verification',
+    '11' => 'In Verification',
+    '12' => 'In Verification',
+    '13' => 'In Issue',
+    '14' => 'Collection',
+    '15' => 'Collection Error',
+    '16' => 'Collection Legal',
+    '17' => 'Collection',
+    '20' => 'Closed',
+    '21' => 'NOC',
+];
 
-$qry = $con->query("
-            SELECT 
+$column = array(
+    'req.req_id',
+    'req.req_code',
+    'req.dor',
+    'req.cus_id',
+    'req.cus_name',
+    'al.area_name',
+    'sal.sub_area_name',
+    'lcc.loan_category_creation_name',
+    'req.sub_category',
+    'req.loan_amt',
+    'req.user_type',
+    'req.user_name',
+    'req.req_id',
+    'req.responsible',
+    'req.cus_data',
+    'req.req_id',
+);
+$query = "SELECT 
             req.*,
             al.area_name,
             sal.sub_area_name,
@@ -49,92 +87,91 @@ $qry = $con->query("
             JOIN sub_area_list_creation sal ON req.sub_area = sal.sub_area_id
             JOIN loan_category_creation lcc ON req.loan_category = lcc.loan_category_creation_id
 
-            WHERE ".$where." and 
+            WHERE " . $where . " and 
             CASE 
                 WHEN req.cus_status >= 10  THEN (select area_confirm_subarea from customer_profile where req_id = req.req_id) IN ($sub_area_list)
                 WHEN req.cus_status < 10  THEN (select sub_area from request_creation where req_id = req.req_id) IN ($sub_area_list)
             END
-        ");
+        ";
 
-    $statusLabels = [
-        '0' => "In Request",
-        '1' => 'In Verification',
-        '2' => 'In Approval',
-        '3' => 'In Acknowledgement',
-        '4' => 'Cancel - Request',
-        '5' => 'Cancel - Verification',
-        '6' => 'Cancel - Approval',
-        '7' => 'Cancel - Acknowledgement',
-        '8' => 'Revoke - Request',
-        '9' => 'Revoke - Verification',
-        '10' => 'In Verification',
-        '11' => 'In Verification',
-        '12' => 'In Verification',
-        '13' => 'In Issue',
-        '14' => 'Collection',
-        '15' => 'Collection Error',
-        '16' => 'Collection Legal',
-        '17' => 'Collection',
-        '20' => 'Closed',
-        '21' => 'NOC',
-    ];
-?>
+if (isset($_POST['search'])) {
+    if ($_POST['search'] != "") {
+
+        $query .= " and (req.cus_id LIKE '%" . $_POST['search'] . "%' OR
+                req.cus_name LIKE '%" . $_POST['search'] . "%' OR
+                al.area_name LIKE '%" . $_POST['search'] . "%' OR
+                lcc.loan_category_creation_name LIKE '%" . $_POST['search'] . "%' OR
+                req.cus_data LIKE '%" . $_POST['search'] . "%' ) ";
+    }
+}
 
 
-<table id="request_report_table" class="table custom-table">
-    <thead>
-        <th>S.No</th>
-        <th>Req. ID</th>
-        <th>Req. Date</th>
-        <th>Cust. ID</th>
-        <th>Cust. Name</th>
-        <th>Area</th>
-        <th>Sub Area</th>
-        <th>Loan Category</th>
-        <th>Sub Category</th>
-        <th>Loan Amount</th>
-        <th>User Type</th>
-        <th>User Name</th>
-        <th>Agent</th>
-        <th>Responsible</th>
-        <th>Cust. Data</th>
-        <th>Cust. Status</th>
-        <!-- <th>Status</th>
-        <th>Sub Status</th> -->
-    </thead>
-    <tbody>
-        <?php
-                $i=1;
-                while ($row = $qry->fetch_assoc()){
-                    ?>
-                    <tr>
-                    <td><?php echo $i++; ?></td>
-                    <td><?php echo $row['req_code']; ?></td>
-                    <td><?php echo date('d-m-Y',strtotime($row['dor'])); ?></td>
-                    <td><?php echo $row['cus_id']; ?></td>
-                    <td><?php echo $row['cus_name']; ?></td>
-                    <td><?php echo $row['area_name']; ?></td>
-                    <td><?php echo $row['sub_area_name']; ?></td>
-                    <td><?php echo $row['loan_category_creation_name']; ?></td>
-                    <td><?php echo $row['sub_category']; ?></td>
-                    <td><?php echo moneyFormatIndia($row['loan_amt']); ?></td>
-                    <td><?php echo $row['user_type']; ?></td>
-                    <td><?php echo $row['user_name']; ?></td>
-                    <td><?php echo $row['ag_name']; ?></td>
-                    <td><?php echo ($row['responsible']==0)?'Yes':'No'; ?></td>
-                    <td><?php echo $row['cus_data']; ?></td>
-                    <!-- <td><?php echo $row['cus_data']; ?></td> -->
-                    <td><?php echo $statusLabels[$row['cus_status']]; ?></td>
-                    <!-- <td><?php echo $row['cus_data']; ?></td> -->
-                    </tr>
-                    <?php
-                }
-            ?>
-    </tbody>
-</table>
+if (isset($_POST['order'])) {
+    $query .= " ORDER BY " . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'];
+} else {
+    $query .= ' ';
+}
 
-<?php
-function moneyFormatIndia($num){
+$query1 = '';
+if ($_POST['length'] != -1) {
+    $query1 = " LIMIT " . $_POST['start'] . ", " . $_POST['length'];
+}
+
+$statement = $connect->prepare($query);
+
+$statement->execute();
+
+$number_filter_row = $statement->rowCount();
+
+$statement = $connect->prepare($query . $query1);
+
+$statement->execute();
+
+$result = $statement->fetchAll();
+
+$data = array();
+$sno = 1;
+foreach ($result as $row) {
+    $sub_array   = array();
+
+    $sub_array[] = $sno;
+    $sub_array[] = $row['req_code'];
+    $sub_array[] = date('d-m-Y', strtotime($row['dor']));
+    $sub_array[] = $row['cus_id'];
+    $sub_array[] = $row['cus_name'];
+    $sub_array[] = $row['area_name'];
+    $sub_array[] = $row['sub_area_name'];
+    $sub_array[] = $row['loan_category_creation_name'];
+    $sub_array[] = $row['sub_category'];
+    $sub_array[] = moneyFormatIndia($row['loan_amt']);
+    $sub_array[] = $row['user_type'];
+    $sub_array[] = $row['user_name'];
+    $sub_array[] = $row['ag_name'];
+    $sub_array[] = ($row['responsible'] == 0) ? 'Yes' : 'No';
+    $sub_array[] = $row['cus_data'];
+    $sub_array[] = $statusLabels[$row['cus_status']];
+
+    $data[]      = $sub_array;
+    $sno = $sno + 1;
+}
+$output = array(
+    'draw' => intval($_POST['draw']),
+    'recordsTotal' => count_all_data($connect),
+    'recordsFiltered' => $number_filter_row,
+    'data' => $data
+);
+
+echo json_encode($output);
+
+function count_all_data($connect)
+{
+    $query     = "SELECT req_id FROM request_creation ";
+    $statement = $connect->prepare($query);
+    $statement->execute();
+    return $statement->rowCount();
+}
+function moneyFormatIndia($num)
+{
     $explrestunits = "";
     if (strlen($num) > 3) {
         $lastthree = substr($num, strlen($num) - 3, strlen($num));
@@ -154,28 +191,3 @@ function moneyFormatIndia($num){
     }
     return $thecash;
 }
-?>
-
-
-<script>
-    $(document).ready(function () {
-        $('#request_report_table').DataTable({
-            "title":"Monthly Ledger",
-            'processing': true,
-            'iDisplayLength': 10,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            dom: 'lBfrtip',
-            buttons: [{
-                    extend: 'excel',
-                },
-                {
-                    extend: 'colvis',
-                    collectionLayout: 'fixed four-column',
-                }
-            ],
-        });
-    });
-</script>

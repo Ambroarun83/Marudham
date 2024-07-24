@@ -21,27 +21,12 @@ if($qry1->num_rows == '0'){
         $records['closing_bal'] = 0;
     }
     
-    // $records['op_hand'] = $row['op_hand'];
-    // $records['op_bank'] = $row['op_bank'];
-    // $records['op_agent'] = $row['op_agent'];
-    // $records['opening_bal'] = $row['opening_bal'];
-    // $records['cl_hand'] = $row['cl_hand'];
-    // $records['cl_bank'] = $row['cl_bank'];
-    // $records['cl_agent'] = $row['cl_agent'];
-    // $records['closing_bal'] = $row['closing_bal'];
 }else{
     // if this condition true, then today's cash tally has been closed
     $row1 = $qry1->fetch_assoc();
     $records['opening_date'] = date('d-m-Y',strtotime(''.' +1 day'));
     $records['closing_bal'] = $row1['closing_bal'];
-    // $records['op_hand'] = 0;
-    // $records['op_bank'] = 0;
-    // $records['op_agent'] = 0;
-    // $records['opening_bal'] = 0;
-    // $records['cl_hand'] = 0;
-    // $records['cl_bank'] = 0;
-    // $records['cl_agent'] = 0;
-    // $records['closing_bal'] = 0;
+    
 }
 
 echo json_encode($records);

@@ -32,15 +32,15 @@ if ($userid != 1) {
 }
 
 $column = array(
-    'cp.cus_id',
+    'cp.id',
     'cp.cus_id',
     'cp.cus_name',
     'cp.area_confirm_area',
     'cp.area_confirm_subarea',
-    'cp.area_line',
-    'cp.area_line',
+    'cp.id',
+    'cp.id',
     'cp.mobile1',
-    'cp.status'
+    'cp.id'
 );
 
 if ($userid == 1) {
@@ -61,29 +61,27 @@ if ($userid == 1) {
 if (isset($_POST['search'])) {
     if ($_POST['search'] != "") {
 
-        $query .= "
-        and (cp.cus_id LIKE '%" . $_POST['search'] . "%'
+        $query .= " and (cp.cus_id LIKE '" . $_POST['search'] . "%'
             OR cp.cus_name LIKE '%" . $_POST['search'] . "%' ";
-            
-        // $qry = $mysqli->query("SELECT area_id FROM area_list_creation where area_name LIKE '%".$_POST['search']."%' ");
-        // $search1 = $qry->fetch_assoc()['area_id']??'';
-        // $qry = $mysqli->query("SELECT sub_area_id FROM sub_area_list_creation where sub_area_name LIKE '%".$_POST['search']."%' ");
-        // $search2 = $qry->fetch_assoc()['sub_area_id']??'';
 
-        // if($search1 !=''){$query .= " OR cp.area_confirm_area LIKE '%" . $search1 . "%' ";}
-        // if($search2 !=''){$query .= " OR cp.area_confirm_subarea LIKE '%" . $search2 . "%' ";}
-        
+        $qry = $mysqli->query("SELECT area_id FROM area_list_creation where area_name LIKE '%".$_POST['search']."%' ");
+        $search1 = $qry->fetch_assoc()['area_id']??'';
+        $qry = $mysqli->query("SELECT sub_area_id FROM sub_area_list_creation where sub_area_name LIKE '%".$_POST['search']."%' ");
+        $search2 = $qry->fetch_assoc()['sub_area_id']??'';
+
+        if($search1 !=''){$query .= " OR cp.area_confirm_area LIKE '%" . $search1 . "%' ";}
+        if($search2 !=''){$query .= " OR cp.area_confirm_subarea LIKE '%" . $search2 . "%' ";}
+
         $query .= " OR cp.mobile1 LIKE '%" . $_POST['search'] . "%' ) ";
-
     }
 }
 if ($userid == 1 || $role != '2') {
     $query .= " GROUP BY ii.cus_id ";
 }
-// echo $query;
+// echo $query;die;
 
 if (isset($_POST['order'])) {
-    $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
+    $query .= " ORDER BY " . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'];
 } else {
     $query .= ' ';
 }
@@ -91,7 +89,7 @@ if (isset($_POST['order'])) {
 $query1 = '';
 
 if ($_POST['length'] != -1) {
-    $query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
+    $query1 = ' LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
 
 $statement = $connect->prepare($query);

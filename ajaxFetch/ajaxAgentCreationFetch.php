@@ -3,37 +3,36 @@
 include('..\ajaxconfig.php');
 
 $column = array(
-    'ag_id',
-    'company_id',
-    'branch_id',
-    'ag_name',
-    'ag_group_id',
-    'place',
-    'district',
-    'loan_category',
-    'sub_category',
-    'status',
+    'ac.ag_id',
+    'c.company_name',
+    'ac.ag_name',
+    'agc.agent_group_name',
+    'ac.place',
+    'ac.district',
+    'ac.ag_id',
+    'ac.sub_category',
+    'ac.status',
+    'ac.ag_id',
 );
 
-$query = "SELECT * FROM agent_creation ";
+$query = "SELECT ac.*,c.company_name,agc.agent_group_name,
+    (SELECT GROUP_CONCAT(lcc.loan_category_creation_name SEPARATOR ', ') FROM loan_category_creation lcc WHERE FIND_IN_SET(lcc.loan_category_creation_id,ac.loan_category) and lcc.status = 0 ) AS loan_category
+    FROM agent_creation ac 
+    JOIN company_creation c ON c.company_id = ac.company_id and c.status = 0
+    JOIN agent_group_creation agc ON agc.agent_group_id = ac.ag_group_id and agc.status = 0
+    WHERE 1 ";
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
-    if ($_POST['search'] == "Active" or $_POST['search'] == "active") {
-        $query .= "WHERE status=0 ";
-    } else if ($_POST['search'] == "Inactive" or $_POST['search'] == "inactive") {
-        $query .= "WHERE status=1 ";
-    } else {
-        $query .= "WHERE
-                ag_name LIKE '%" . $_POST['search'] . "%'
-                OR company_id LIKE '%" . $_POST['search'] . "%'
-                OR ag_group_id LIKE '%" . $_POST['search'] . "%'
-                OR place LIKE '%" . $_POST['search'] . "%'
-                OR district LIKE '%" . $_POST['search'] . "%'
-                OR loan_category LIKE '%" . $_POST['search'] . "%'
-                OR sub_category LIKE '%" . $_POST['search'] . "%'
-                OR status LIKE '%" . $_POST['search'] . "%' ";
-    }
-    // print_r($query);
+    $query .= " AND
+                (ag_name LIKE '%" . $_POST['search'] . "%'
+                OR c.company_name LIKE '%" . $_POST['search'] . "%'
+                OR agc.agent_group_name LIKE '%" . $_POST['search'] . "%'
+                OR (SELECT GROUP_CONCAT(lcc.loan_category_creation_name SEPARATOR ', ') FROM loan_category_creation lcc 
+                WHERE FIND_IN_SET(lcc.loan_category_creation_id,ac.loan_category) and lcc.status = 0) LIKE '%" . $_POST['search'] . "%'
+                OR ac.place LIKE '%" . $_POST['search'] . "%'
+                OR ac.district LIKE '%" . $_POST['search'] . "%'
+                OR ac.loan_category LIKE '%" . $_POST['search'] . "%'
+                OR ac.sub_category LIKE '%" . $_POST['search'] . "%') ";
 }
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
@@ -65,40 +64,14 @@ foreach ($result as $row) {
     $sub_array   = array();
 
     $sub_array[] = $sno;
-
-    //Company name Fetch
-    $company_id = $row['company_id'];
-    $getQry = "SELECT * from company_creation where company_id = '" . $company_id . "' and status = 0 ";
-    $res = $con->query($getQry);
-    while ($row1 = $res->fetch_assoc()) {
-        $sub_array[] = $row1["company_name"];
-    }
-
-
-
+    $sub_array[] = $row["company_name"];
     $sub_array[] = $row['ag_name'];
-
-    $ag_group_id = $row['ag_group_id'];
-    $selectQry = "SELECT * From agent_group_creation where status=0 and agent_group_id = '" . $ag_group_id . "' ";
-    $result = $con->query($selectQry) or die;
-    $row1 = $result->fetch_assoc();
-    $sub_array[] = $row1['agent_group_name'];
+    $sub_array[] = $row['agent_group_name'];
 
     $sub_array[] = $row['place'];
     $sub_array[] = $row['district'];
 
-    //Loan category name Fetch
-    $loan_category_id1 = explode(',', $row['loan_category']);
-    $loan_category = array();
-    foreach ($loan_category_id1 as $loan_category_id) {
-        $qry = "SELECT * From loan_category_creation where loan_category_creation_id = $loan_category_id and status = 0";
-        $res = $con->query($qry);
-        $row1 = $res->fetch_assoc();
-        $loan_category[] = $row1['loan_category_creation_name'];
-    }
-    $loan_category_name = implode(',', $loan_category);
-
-    $sub_array[] = $loan_category_name;
+    $sub_array[] = $row['loan_category'];
 
     $sub_array[] = $row["sub_category"];
 

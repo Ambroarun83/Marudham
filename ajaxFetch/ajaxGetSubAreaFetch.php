@@ -2,39 +2,26 @@
 include('../ajaxconfig.php');
 @session_start();
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
 }
 
 $column = array(
-    'sub_area_id',
-    'sub_area_name',
-    'area_id_ref',
-    'status'
+    'slc.sub_area_id',
+    'slc.sub_area_name',
+    'alc.area_name',
+    'alc.area_enable'
 );
 
-$query = "SELECT * FROM  sub_area_list_creation WHERE status=0 ";
+$query = "SELECT slc.*,alc.area_enable,alc.area_name FROM sub_area_list_creation slc
+JOIN area_list_creation alc ON alc.area_id = slc.area_id_ref
+WHERE slc.status = 0 ";
 
-if(isset($_POST['search']) && $_POST['search'] != "")
-{
-
-        // if($_POST['search']=="Active")
-        // {
-        //     $query .="WHERE status=0 "; 
-        // }
-        // else if($_POST['search']=="Inactive")
-        // {
-        //     $query .="WHERE status=1 ";
-        // }
-
-        // else{	
-            $query .= "and
-            (sub_area_id LIKE '%".$_POST['search']."%' 
-            OR sub_area_name LIKE '%".$_POST['search']."%'
-            OR area_id_ref LIKE '%".$_POST['search']."%' ) ";
-        // }
+if (isset($_POST['search']) && $_POST['search'] != "") {
+    $query .= "and
+            (slc.sub_area_name LIKE '%" . $_POST['search'] . "%' 
+            OR alc.area_name LIKE '%" . $_POST['search'] . "%' ) ";
 }
-// print_r($query);die;
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
@@ -59,52 +46,23 @@ $data = array();
 $sno = 1;
 foreach ($result as $row) {
     $sub_array   = array();
-    
-    if($sno!="")
-    {
-        $sub_array[] = $sno;
-    }
-    $area_id_ref = $row['area_id_ref'];
-    $qry = $con->query("SELECT * from area_list_creation where area_id = '".$area_id_ref."' and status = 0");
-    $res = $qry->fetch_assoc();
-    $area_chech = $res['area_enable'];
 
+    $sub_array[] = $sno;
     $sub_array[] = $row['sub_area_name'];
+    $sub_array[] = $row['area_name'];
+    $area_check = $row['area_enable'];
 
-    $area_id_ref = $row['area_id_ref'];
-    $qry = $con->query("SELECT * from area_list_creation where status = 0 and area_id = '".$area_id_ref."' ");
-    $ress = $qry->fetch_assoc();
-    $sub_array[] = $ress['area_name'];
+    $sub_area_enable = $row['sub_area_enable'];
+    $id = $row['sub_area_id'];
 
-    
-    $sub_area_enable      = $row['sub_area_enable'];
-    $id   = $row['sub_area_id'];
-    
-    if($sub_area_enable == 0 and $area_chech == 0)//sub area enabled
-	{
-    $action="<button onclick='enable($id)' disabled title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
-    <button onclick='disable($id)' title='Edit details' class='btn btn-danger'>Disable</button>";
-	}
-	elseif($sub_area_enable == 1 and $area_chech == 0)//sub area disabled
-	{
-    $action="<button onclick='enable($id)'  title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
-        <button onclick='disable($id)' disabled title='Edit details' class='btn btn-danger'>Disable</button>";
-	}
-	elseif($sub_area_enable == 0 and $area_chech == 1)//sub area disabled
-	{
-    $action="
-        <button onclick='disable($id)' disabled title='Edit details' class='btn btn-danger'>Disable</button>";
-	}
-	elseif($sub_area_enable == 1 and $area_chech == 1)//sub area disabled
-	{
-    $action="
-        <button onclick='disable($id)' disabled title='Edit details' class='btn btn-danger'>Disable</button>";
-	}
-	
-	// $action="<button onclick='enable($id)' title='Edit details'class='btn btn-success' >Enable</button>&nbsp;&nbsp;
-    // <button onclick='disable($id)' title='Edit details' class='btn btn-danger'>Disable</button>";
+    if ($area_check == 0) {
+        $action = "<button onclick='enable($id)' " . ($sub_area_enable == 0 ? "disabled" : "") . " title='Edit details' class='btn btn-success'>Enable</button>&nbsp;&nbsp;
+        <button onclick='disable($id)' " . ($sub_area_enable == 1 ? "disabled" : "") . " title='Edit details' class='btn btn-danger'>Disable</button>";
+    } elseif ($area_check == 1) {
+        $action = "<button onclick='disable($id)' disabled title='Edit details' class='btn btn-danger'>Disable</button>";
+    }
 
-	$sub_array[] = $action;
+    $sub_array[] = $action;
     $data[]      = $sub_array;
     $sno = $sno + 1;
 }
@@ -125,4 +83,3 @@ $output = array(
 );
 
 echo json_encode($output);
-?>

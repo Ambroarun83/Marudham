@@ -76,7 +76,6 @@ if ($idupd > 0) {
 <div class="text-right" style="margin-right: 25px;">
     <a href="edit_branch_creation">
         <button type="button" class="btn btn-primary"><span class="icon-arrow-left"></span>&nbsp; Back</button>
-        <!-- <button type="button" class="btn btn-primary"><span class="icon-border_color"></span>&nbsp Edit Employee Master</button> -->
     </a>
 </div><br><br>
 <!-- Page header end -->
@@ -104,35 +103,35 @@ if ($idupd > 0) {
                             <!--Fields -->
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Company Name</label>&nbsp;<span class="text-danger">*</span>
                                             <input type="hidden" id='company_name' name="company_name" value='<?php echo $companyName[0]['company_id'] ?>'>
                                             <input type="text" class="form-control" id='company_name1' name="company_name1" value='<?php echo $companyName[0]['company_name'] ?>' readonly tabindex='1'>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Branch Code</label>
 
                                             <?php if ($idupd == '') { ?>
-                                                <input type="text" readonly class="form-control" id="branch_code" name="branch_code" placeholder="Enter Branch Code"  tabindex='2'>
+                                                <input type="text" readonly class="form-control" id="branch_code" name="branch_code" placeholder="Enter Branch Code" tabindex='2'>
                                             <?php } else { ?>
-                                                <input type="text" readonly class="form-control" id="branch_code1" name="branch_code" value="<?php if (isset($branch_code)) print_r($branch_code); ?>" placeholder="Enter Branch Code"  tabindex='2'>
+                                                <input type="text" readonly class="form-control" id="branch_code1" name="branch_code" value="<?php if (isset($branch_code)) print_r($branch_code); ?>" placeholder="Enter Branch Code" tabindex='2'>
                                             <?php } ?>
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Branch Name</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="text" id="branch_name" name="branch_name" class="form-control" required value="<?php if (isset($branch_name)) echo $branch_name; ?>" placeholder="Enter Branch Name"  tabindex='3'>
+                                            <input type="text" id="branch_name" name="branch_name" class="form-control" required value="<?php if (isset($branch_name)) echo $branch_name; ?>" placeholder="Enter Branch Name" tabindex='3'>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Address</label>
-                                            <input type="text" id="address1" name="address1" class="form-control" value="<?php if (isset($address1)) echo $address1; ?>" placeholder="Enter Address"  tabindex='4'>
+                                            <input type="text" id="address1" name="address1" class="form-control" value="<?php if (isset($address1)) echo $address1; ?>" placeholder="Enter Address" tabindex='4'>
                                             <!-- <span id="address1check" class="text-danger" >Enter Address1 </span>  -->
                                         </div>
                                     </div>
@@ -172,18 +171,18 @@ if ($idupd > 0) {
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="inputReadOnly">Place</label>&nbsp;<span class="text-danger">*</span>
-                                            <input class="form-control" id="place" name="place" type="text" required value="<?php if (isset($place)) echo $place; ?>" placeholder="Enter Place"  tabindex='8'>
+                                            <input class="form-control" id="place" name="place" type="text" required value="<?php if (isset($place)) echo $place; ?>" placeholder="Enter Place" tabindex='8'>
                                             <!-- <span class="text-danger" id="placecheck">Enter Valid place</span>  -->
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label class="label">Pincode</label>&nbsp;<span class="text-danger">*</span>
-                                            <input type="number" required onkeydown="javascript: return event.keyCode == 69 ? false : true" name="pincode" id="pincode" class="form-control" placeholder="Enter Pincode" value="<?php if (isset($pincode)) echo $pincode; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==6) return false;"  tabindex='9'>
+                                            <input type="number" required onkeydown="javascript: return event.keyCode == 69 ? false : true" name="pincode" id="pincode" class="form-control" placeholder="Enter Pincode" value="<?php if (isset($pincode)) echo $pincode; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==6) return false;" tabindex='9'>
                                             <!-- <span id="pincodecheck" class="text-danger">Enter Pincode</span>  -->
                                         </div>
                                     </div>
@@ -202,7 +201,7 @@ if ($idupd > 0) {
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="inputReadOnly">E-Mail Id</label>
-                                            <input class="form-control" id="email_id" name="email_id" type="text" value="<?php if (isset($email_id)) echo $email_id; ?>" placeholder="Enter Email Id"  tabindex='10'>
+                                            <input class="form-control" id="email_id" name="email_id" type="text" value="<?php if (isset($email_id)) echo $email_id; ?>" placeholder="Enter Email Id" tabindex='10'>
                                             <!-- <span class="text-danger" id="email_idcheck">Enter Valid E-mail Id</span> -->
                                         </div>
                                     </div>
@@ -210,18 +209,14 @@ if ($idupd > 0) {
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Mobile Number</label>
-                                            <input type="number" onkeydown="javascript: return event.keyCode == 49 ? false : true" 
-                                            name="mobile_number" id="mobile_number" class="form-control" placeholder="Enter Mobile Number" 
-                                            value="<?php if (isset($mobile_number))echo $mobile_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='11'>
+                                            <input type="number" onkeydown="javascript: return event.keyCode == 49 ? false : true" name="mobile_number" id="mobile_number" class="form-control" placeholder="Enter Mobile Number" value="<?php if (isset($mobile_number)) echo $mobile_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='11'>
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">WhatsApp Number</label>
-                                            <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" 
-                                            name="whatsapp_number" id="whatsapp_number" class="form-control" placeholder="Enter WhatsApp Number" 
-                                            value="<?php if (isset($whatsapp_number))echo $whatsapp_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='12'>
+                                            <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="whatsapp_number" id="whatsapp_number" class="form-control" placeholder="Enter WhatsApp Number" value="<?php if (isset($whatsapp_number)) echo $whatsapp_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='12'>
 
                                             <!-- <span id="whatsapp_numbercheck" class="text-danger" >Enter Whatsapp Number</span>  -->
                                         </div>
@@ -230,9 +225,7 @@ if ($idupd > 0) {
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Landline Number</label>
-                                            <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" 
-                                            name="landline_number" id="landline_number" class="form-control" placeholder="Enter Landline Number" 
-                                            value="<?php if (isset($landline_number))echo $landline_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='13'>
+                                            <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="landline_number" id="landline_number" class="form-control" placeholder="Enter Landline Number" value="<?php if (isset($landline_number)) echo $landline_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='13'>
 
                                         </div>
                                     </div>

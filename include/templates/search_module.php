@@ -19,6 +19,12 @@
 <!-- Main container start -->
 <div class="main-container">
 	<!--form start-->
+	<input type="hidden" name="pending_sts" id="pending_sts" value="" />
+	<input type="hidden" name="od_sts" id="od_sts" value="" />
+	<input type="hidden" name="due_nil_sts" id="due_nil_sts" value="" />
+	<input type="hidden" name="closed_sts" id="closed_sts" value="" />
+	<input type="hidden" name="bal_amt" id="bal_amt" value="" />
+
 	<form id="search_module_form" name="search_module_form" action="" method="post" enctype="multipart/form-data">
 		<div class="row gutters">
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -55,7 +61,7 @@
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
 											<label for="mobile">Mobile Number</label>
-											<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile Number">
+											<input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter Mobile Number" maxlength="10">
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" style="text-align:center">
@@ -70,26 +76,63 @@
 						</div>
 					</div>
 				</div>
-				<div class="card " id="customer_list_card" style="display: none;">
-					<div class="card-header">Customer List</div>
-					<div class="card-body">
-						<!-- <div class="col-md-12 ">
-							<div class="row">
-								<div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 col-12"></div>
-								<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
-									<div class="form-group" style="text-align:right;">
-										<label>Search</label>
-									</div>
-								</div>
-								<div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
-									<div class="form-group" style="text-align:left;">
-										<input type="text" id="searchbox" name="searchbox" class='form-control' width="50px">
-									</div>
-								</div>
+				<div class="radio-container" style="display: none;">
+					<div class="selector">
+						<div class="selector-item">
+							<input type="radio" id="cus_list_radio" name="search_radio" class="selector-item_radio" checked>
+							<label for="cus_list_radio" class="selector-item_label">Customer List</label>
+						</div>
+						<div class="selector-item">
+							<input type="radio" id="fam_list_radio" name="search_radio" class="selector-item_radio">
+							<label for="fam_list_radio" class="selector-item_label">Family List</label>
+						</div>
+					</div>
+				</div>
+				<div id="search_container" style="display:none">
+					<div class="card " id="customer_list_card">
+						<div class="card-header">Customer List</div>
+						<div class="card-body">
+							<div id="customer_list" style="overflow-x:auto">
+								<table class="table custom-table" id="custListTable">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Customer ID</th>
+											<th>Customer Name</th>
+											<th>Area</th>
+											<th>Sub Area</th>
+											<th>Branch</th>
+											<th>Line</th>
+											<th>Group</th>
+											<th>Mobile 1</th>
+											<th>Mobile 2</th>
+											<th>Action</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
 							</div>
-						</div> -->
-						<div id="customer_list" style="overflow-x:auto">
-
+						</div>
+					</div>
+					<div class="card" id="family_list_card" style="display:none">
+						<div class="card-header">Family List</div>
+						<div class="card-body">
+							<div id="family_list" style="overflow-x:auto">
+								<table class="table custom-table" id="famlistTable">
+									<thead>
+										<tr>
+											<th>S.No</th>
+											<th>Name</th>
+											<th>Relationship</th>
+											<th>Adhaar</th>
+											<th>Mobile</th>
+											<th>Under Customer</th>
+											<th>Under Customer ID</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -279,7 +322,7 @@
 	}
 
 	.modal .modal-body {
-		overflow-y: auto;
+		overflow-y: visible;
 	}
 
 	@mixin modal-fullscreen() {
@@ -311,6 +354,79 @@
 			.modal-fullscreen#{$infix} {
 				@include modal-fullscreen();
 			}
+		}
+	}
+
+	/* radio button */
+	.radio-container {
+		position: relative;
+		height: 5em;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.selector {
+		position: relative;
+		width: 60%;
+		height: 40px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.selector-item {
+		position: relative;
+		flex-basis: calc(70% / 3);
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.selector-item_radio {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.selector-item_label {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		/* box-shadow: 0 0 16px rgba(0, 0, 0, .2); */
+		border: 1px solid grey;
+		cursor: pointer;
+	}
+
+	.selector-item_radio {
+		appearance: none;
+		display: none;
+	}
+
+	.selector-item_label {
+		position: relative;
+		height: 40px;
+		width: 200px;
+		text-align: center;
+		border-radius: 9999px;
+		font-family: 'Poppins', sans-serif;
+		font-weight: 700;
+		transition-duration: .5s;
+		transition-property: transform, box-shadow;
+		transform: none;
+	}
+
+	.selector-item_radio:checked+.selector-item_label {
+		background-color: #009688;
+		color: #ffff;
+		box-shadow: 0 0 4px rgba(0, 0, 0, .5), 0 2px 4px rgba(0, 0, 0, .5);
+		transform: translateY(-2px);
+	}
+
+	@media (max-width:480px) {
+		.selector {
+			width: 90%;
 		}
 	}
 </style>

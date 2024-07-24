@@ -1,92 +1,55 @@
 <?php
-// session_start();
-// $userid = $_SESSION['userid'];
 
-include ('../../ajaxconfig.php');
+include('../../ajaxconfig.php');
 
 $type = $_POST['type'];
-$user_id = ($_POST['user_id'] != '') ? $where = " and insert_login_id = '".$_POST['user_id']."' " : $where = '';//for user based
+$user_id = ($_POST['user_id'] != '') ? $where = " and insert_login_id = '" . $_POST['user_id'] . "' " : $where = ''; //for user based
 
-if($type == 'today'){
-    
-    $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,
-    SUM(penalty_track) as penalty_track,SUM(coll_charge_track) as coll_charge_track 
-    FROM collection where DATE(coll_date) = CURRENT_DATE $where ");
+if ($type == 'today') {
+    $where = " DATE(coll_date) = CURRENT_DATE $where";
+    $response = getCollectionRecord($con, $where);
+} else if ($type == 'day') {
 
+    $from_date = $_POST['from_date'];
+    $to_date = $_POST['to_date'];
+    $where = " (DATE(coll_date) >= '$from_date' && DATE(coll_date) <= '$to_date' ) $where ";
+    $response = getCollectionRecord($con, $where);
+} else if ($type == 'month') {
 
-    if($qry->num_rows > 0){
-        $row = $qry->fetch_assoc();
-        $response['collection'] = ($row['due_amt_track'] ?? 0 + $row['princ_amt_track'] ?? 0 + $row['int_amt_track'] ?? 0) + ($row['penalty_track'] ?? 0) + ($row['coll_charge_track'] ?? 0);
-    }else{
-        $response['collection'] = 0;
-    }
-
-}else if($type == 'day'){
-
-    $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
-    $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,
-    SUM(penalty_track) as penalty_track,SUM(coll_charge_track) as coll_charge_track
-    from collection where (DATE(coll_date) >= '$from_date' && DATE(coll_date) <= '$to_date' ) $where ");
-
-    if($qry->num_rows > 0){
-        $row = $qry->fetch_assoc();
-        $response['collection'] = ($row['due_amt_track'] ?? 0 + $row['princ_amt_track'] ?? 0 + $row['int_amt_track'] ?? 0) + ($row['penalty_track'] ?? 0) + ($row['coll_charge_track'] ?? 0);
-    }else{
-        $response['collection'] = 0;
-    }
-
-}else if($type == 'month'){
-    
-    $month = date('m',strtotime($_POST['month']));
-    $year = date('Y',strtotime($_POST['month']));
-
-    $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,
-    SUM(penalty_track) as penalty_track,SUM(coll_charge_track) as coll_charge_track
-    from collection where (MONTH(coll_date) = '$month' and YEAR(coll_date) = $year) $where ");
-
-    if($qry->num_rows > 0){
-        $row = $qry->fetch_assoc();
-        $response['collection'] = ($row['due_amt_track'] ?? 0 + $row['princ_amt_track'] ?? 0 + $row['int_amt_track'] ?? 0) + ($row['penalty_track'] ?? 0) + ($row['coll_charge_track'] ?? 0);
-    }else{
-        $response['collection'] = 0;
-    }
+    $month = date('m', strtotime($_POST['month']));
+    $year = date('Y', strtotime($_POST['month']));
+    $where = " (MONTH(coll_date) = '$month' and YEAR(coll_date) = $year) $where";
+    $response = getCollectionRecord($con, $where);
 }
-$response['collection'] = moneyFormatIndia($response['collection']);
+
+$response = array_map(function ($num) {
+    return number_format(intVal($num), 0, '', ',');
+}, $response);
 
 echo json_encode($response);
 
 
-?>
+function getCollectionRecord($con, $where)
+{
+
+    $response = array();
+
+    $qry = $con->query("SELECT SUM(due_amt_track) as due_amt_track,SUM(princ_amt_track) as princ_amt_track,SUM(int_amt_track) as int_amt_track,
+    SUM(penalty_track) as penalty_track,SUM(coll_charge_track) as coll_charge_track 
+    FROM collection where $where ");
+    // $qry = $con->query("SELECT SUM(amt) as total_collection from ( SELECT rec_amt as amt from ct_hand_collection where $where UNION ALL SELECT credited_amt as amt from ct_bank_collection where $where) as collection_amt ");
 
 
-<?php
-
-//Format number in Indian Format
-function moneyFormatIndia($num) {
-    $isNegative = false;
-    if ($num < 0) {
-        $isNegative = true;
-        $num = abs($num);
+    if ($qry->num_rows > 0) {
+        $row = $qry->fetch_assoc();
+        $response['collection'] = intVal($row['due_amt_track'] ?? 0)  + intVal($row['princ_amt_track'] ?? 0)  + intVal($row['int_amt_track'] ?? 0) + intVal($row['penalty_track'] ?? 0) + intVal($row['coll_charge_track'] ?? 0);
+        // $response['collection'] = $row['total_collection'] ?? 0;
+        $response['due_collection'] = $row['due_amt_track'] ?? 0;
+        $response['princ_collection'] = $row['princ_amt_track'] ?? 0;
+        $response['int_collection'] = $row['int_amt_track'] ?? 0;
+        $response['penalty'] = $row['penalty_track'] ?? 0;
+        $response['fine'] = $row['coll_charge_track'] ?? 0;
     }
 
-    $explrestunits = "";
-    if (strlen((string)$num) > 3) {
-        $lastthree = substr((string)$num, -3);
-        $restunits = substr((string)$num, 0, -3);
-        $restunits = (strlen($restunits) % 2 == 1) ? "0" . $restunits : $restunits;
-        $expunit = str_split($restunits, 2);
-        foreach ($expunit as $index => $value) {
-            if ($index == 0) {
-                $explrestunits .= (int)$value . ",";
-            } else {
-                $explrestunits .= $value . ",";
-            }
-        }
-        $thecash = $explrestunits . $lastthree;
-    } else {
-        $thecash = $num;
-    }
-
-    return $isNegative ? "-" . $thecash : $thecash;
+    return $response;
 }
-?>

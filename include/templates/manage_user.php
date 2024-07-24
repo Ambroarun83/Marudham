@@ -86,6 +86,8 @@ $bulk_upload_module = '';
 $bulk_upload = '';
 $loan_track_module = '';
 $loan_track = '';
+$sms_module = '';
+$sms_generation = '';
 
 $agentNameList = $userObj->getagentNameList($mysqli);
 
@@ -216,6 +218,8 @@ if($idupd>0)
 			$bulk_upload = $getUser['bulk_upload'];
 			$loan_track_module = $getUser['loan_track_module'];
 			$loan_track = $getUser['loan_track'];
+			$sms_module = $getUser['sms_module'];
+			$sms_generation = $getUser['sms_generation'];
 		}
 	}
 }
@@ -1032,6 +1036,24 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($loan_track==0){ echo'checked'; }} ?> tabindex="75" class="loan_track-checkbox" id="loan_track" name="loan_track" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="loan_track">Loan Track</label>
+                            </div>
+                        </div>
+					</div>
+					
+					<hr>
+
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" value="Yes" <?php if($idupd > 0){ if($sms_module==0){ echo'checked'; }} ?> tabindex="74" id="sms_module" name="sms_module" >&nbsp;&nbsp;
+						<label class="custom-control-label" for="sms_module">
+							<h5>SMS</h5>
+						</label>
+					</div>
+					<br>
+					<div class="row">
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($sms_generation==0){ echo'checked'; }} ?> tabindex="75" class="sms_generation-checkbox" id="sms_generation" name="sms_generation" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="sms_generation">SMS Generation</label>
                             </div>
                         </div>
 					</div>

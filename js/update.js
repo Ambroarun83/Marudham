@@ -1,11 +1,5 @@
 $(document).ready(function () {
 
-    // $('input[data-type="adhaar-number"]').keyup(function () { /// AAdhar Validation 
-    //     var value = $(this).val();
-    //     value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
-    //     $(this).val(value);
-    // });
-
     //Show Remark and Address when select other in Relationship.
     $('#relationship').on('change', function () {
 
@@ -100,13 +94,22 @@ $(document).ready(function () {
         getGroupandLine(sub_area_id);
     })
 
-    $('#pic').change(function(){//To show after choose image
+    $('#getlatlong').click(function () {
+        event.preventDefault();
+        navigator.geolocation.getCurrentPosition((position) => {
+            let latitude = position.coords.latitude;
+            let longitude = position.coords.longitude;
+            $('#latlong').val(latitude + ',' + longitude);
+        });
+    })
+
+    $('#pic').change(function () {//To show after choose image
         var pic = $('#pic')[0];
         var img = $('#imgshow');
         img.attr('src', URL.createObjectURL(pic.files[0]));
     })
 
-    $('#guarentorpic').change(function(){//To show after choose image
+    $('#guarentorpic').change(function () {//To show after choose image
         var pic = $('#guarentorpic')[0];
         var img = $('#imgshows');
         img.attr('src', URL.createObjectURL(pic.files[0]));
@@ -568,14 +571,14 @@ $(function () {
 
 function getImage() { // Cus img show onload.
     let imgName = $('#cus_image').val();
-    if(imgName != ''){
+    if (imgName != '') {
         $('#imgshow').attr('src', "uploads/request/customer/" + imgName + " ");
-    }else{$('#imgshow').attr('src', 'img/avatar.png');}
+    } else { $('#imgshow').attr('src', 'img/avatar.png'); }
 
     var guarentorimg = $('#guarentor_image').val();
     if (guarentorimg != '') {
         $('#imgshows').attr('src', "uploads/verification/guarentor/" + guarentorimg + " ");
-    }else{
+    } else {
         $('#imgshows').attr('src', 'img/avatar.png');
     }
 
@@ -1240,18 +1243,18 @@ function resetbankinfoList() {
 
 ////////////////////////// KYC Info ////////////////////////////////////////////////
 
-$('#proof_number').keyup(function(){
+$('#proof_number').keyup(function () {
     let proof_type = $('#proof_type').val();
-    if(proof_type == 1){
+    if (proof_type == 1) {
         var value = $(this).val();
         value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(" ");
         $(this).val(value);
-        $(this).attr('maxlength','14')
-    }else{
+        $(this).attr('maxlength', '14')
+    } else {
         $(this).removeAttr('maxlength');//remove maxlength when other than adhar due to unkown count of number 
     }
 });
-$('#proof_type').change(function(){
+$('#proof_type').change(function () {
     $('#proof_number').val('')
 })
 
@@ -3512,7 +3515,7 @@ function submitGoldInfo(req_id, cus_id) {
         let gold_upload = $("#gold_upload")[0];
         gold_upload = gold_upload.files[0];
         let goldID = $("#goldID").val();
-        
+
         let formdata = new FormData();
         formdata.append('req_id', req_id);
         formdata.append('cus_id', cus_id);

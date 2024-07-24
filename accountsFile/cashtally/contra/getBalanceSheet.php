@@ -9,42 +9,70 @@ $bank_id = $bankqry->fetch_assoc()['bank_details'];
 
 $sheet_type = $_POST['sheet_type'];
 
-if(isset($_POST['exp_cat_type'])){$exp_cat_type = $_POST['exp_cat_type'];}else{$exp_cat_type = '';}
+if (isset($_POST['exp_cat_type'])) {
+    $exp_cat_type = $_POST['exp_cat_type'];
+} else {
+    $exp_cat_type = '';
+}
 
-if(isset($_POST['IDEtype'])){$IDEtype = $_POST['IDEtype'];}else{$IDEtype = '';} // investment or Deposit or EL
-if(isset($_POST['IDEview_type'])){$IDEview_type = $_POST['IDEview_type'];}else{$IDEview_type = '';} // overall or individual
-if(isset($_POST['IDE_name_id'])){$IDE_name_id = $_POST['IDE_name_id'];}else{$IDE_name_id = '';} // Name id for IDE
+if (isset($_POST['IDEtype'])) {
+    $IDEtype = $_POST['IDEtype'];
+} else {
+    $IDEtype = '';
+} // investment or Deposit or EL
+if (isset($_POST['IDEview_type'])) {
+    $IDEview_type = $_POST['IDEview_type'];
+} else {
+    $IDEview_type = '';
+} // overall or individual
+if (isset($_POST['IDE_name_id'])) {
+    $IDE_name_id = $_POST['IDE_name_id'];
+} else {
+    $IDE_name_id = '';
+} // Name id for IDE
 
-if(isset($_POST['ag_view_type'])){$ag_view_type = $_POST['ag_view_type'];}else{$ag_view_type = '';} // Agent view type
-if(isset($_POST['ag_name'])){$ag_name = $_POST['ag_name'];}else{$ag_name = '';} // Agent view by name
+if (isset($_POST['ag_view_type'])) {
+    $ag_view_type = $_POST['ag_view_type'];
+} else {
+    $ag_view_type = '';
+} // Agent view type
+if (isset($_POST['ag_name'])) {
+    $ag_name = $_POST['ag_name'];
+} else {
+    $ag_name = '';
+} // Agent view by name
 
-$tableHeaders = '';$difference = 0;
-$opening_bal = '';$closing_bal = '';
+$tableHeaders = '';
+$difference = 0;
+$opening_bal = '';
+$closing_bal = '';
 
-if($sheet_type == 1 ){//1 Means contra balance sheet
-    
+if ($sheet_type == 1) { //1 Means contra balance sheet
+
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
     $qry = $con->query("SELECT created_date AS 'tdate', from_bank_id AS 'ctype', '' AS 'Credit', amt AS 'Debit', amt AS 'Amount' FROM ct_db_cash_withdraw WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(from_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', 'Hand Cash' AS 'ctype', '' AS 'Credit', amount AS 'Debit', amount AS 'Amount' FROM ct_db_bank_deposit WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(to_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', 'Hand Cash' AS 'ctype', amt AS 'Credit', '' AS 'Debit', amt AS 'Amount' FROM ct_cr_bank_withdraw WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(from_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', to_bank_id AS 'ctype', amt AS 'Credit', '' AS 'Debit', amt AS 'Amount' FROM ct_cr_cash_deposit WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(to_bank_id,'$bank_id') ORDER BY 1");
 
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
@@ -56,14 +84,14 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $debitSum = $debitSum + intVal($row['Debit']);
             $i++;
         }
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
-    $tabBodyEnd = "<tr><td></td><td colspan='2'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td></td><td colspan='2'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($creditSum - $debitSum)."</td></tr>";
-}else if($sheet_type == 2){ // 2 Means Exchange Balance Sheet
+    $tabBodyEnd = "<tr><td></td><td colspan='2'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td></td><td colspan='2'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($creditSum - $debitSum) . "</td></tr>";
+} else if ($sheet_type == 2) { // 2 Means Exchange Balance Sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Exchange Entry</th><th>Credit</th><th>Debit</th>";
 
@@ -92,27 +120,29 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
-            $usernameqry = $con->query("SELECT fullname from user where user_id = '".$row['from_user_id']."' ");
+
+            $usernameqry = $con->query("SELECT fullname from user where user_id = '" . $row['from_user_id'] . "' ");
             $username = $usernameqry->fetch_assoc()['fullname'];
             $tabBody .= "<td>" . $username . "</td>";
 
@@ -127,15 +157,15 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference = $creditSum - $debitSum;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
 
-    $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td></td><td colspan='3'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($difference)."</td></tr>";
-}else if($sheet_type == 3){ // 3 Means Other income Balance Sheet
+    $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td></td><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
+} else if ($sheet_type == 3) { // 3 Means Other income Balance Sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Credit Amount</th>";
 
@@ -152,28 +182,30 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
 
-    if($qry->num_rows >0){ //check wheather query returning values or not
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
-            
-            
+
+
+
             $tabBody .= "<td>" . $row['category'] . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= '</tr>';
@@ -182,14 +214,14 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $creditSum = $creditSum + intVal($row['Credit']);
             $i++;
         }
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
 
-    $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td></tr>";
-}else if($sheet_type == 4 and $exp_cat_type==''){//4 Means Expense Balance Sheet
+    $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td></tr>";
+} else if ($sheet_type == 4 and $exp_cat_type == '') { //4 Means Expense Balance Sheet
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Debit Amount</th>";
 
     $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
@@ -205,29 +237,31 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
 
-    if($qry->num_rows >0){ //check wheather query returning values or not
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
-            $catqry = $con->query("SELECT category from expense_category where id = '".$row['cat']."' ");
+
+            $catqry = $con->query("SELECT category from expense_category where id = '" . $row['cat'] . "' ");
             $category = $catqry->fetch_assoc()['category'];
-            
+
             $tabBody .= "<td>" . $category . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -236,16 +270,14 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $debitSum = $debitSum + intVal($row['Debit']);
             $i++;
         }
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
 
-    $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-
-    
-}else if($sheet_type == 4 and $exp_cat_type !=''){//4 Means Expense Balance Sheet and exp_cat type if has values then show category wise
+    $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+} else if ($sheet_type == 4 and $exp_cat_type != '') { //4 Means Expense Balance Sheet and exp_cat type if has values then show category wise
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Debit Amount</th>";
 
     $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
@@ -261,48 +293,48 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
-    if($qry->num_rows >0){ //check wheather query returning values or not
-        
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
         $tabBody = '<tr>';
 
-        while($row = $qry->fetch_assoc()){
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
-    
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
+
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
-    
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
+
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
-            $catqry = $con->query("SELECT category from expense_category where id = '".$row['cat']."' ");
+
+            $catqry = $con->query("SELECT category from expense_category where id = '" . $row['cat'] . "' ");
             $category = $catqry->fetch_assoc()['category'];
-            
+
             $tabBody .= "<td>" . $category . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
-    
+
             //Store credit and debit for total
             $debitSum = $debitSum + intVal($row['Debit']);
             $i++;
         }
-    
-        $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    }else{
+
+        $tabBodyEnd = "<tr><td></td><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
+} else if ($sheet_type == 5 and $IDEtype == 1 and $IDEview_type == 1 and $IDE_name_id == '') { //5 Means IDE Balance Sheet, 1 Means Investment Balance Sheet, 1 Means Overall Balance sheet
 
-    
-}else if($sheet_type == 5 and $IDEtype == 1 and $IDEview_type == 1 and $IDE_name_id == ''){//5 Means IDE Balance Sheet, 1 Means Investment Balance Sheet, 1 Means Overall Balance sheet
-    
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
     $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
@@ -330,26 +362,28 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
+
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -360,18 +394,17 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference = $creditSum - $debitSum;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
         $difference = 0;
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($difference)."</td></tr>";
-    
-}else if($sheet_type == 5 and $IDEtype == 1 and $IDEview_type == 2 and $IDE_name_id != ''){//5 Means IDE Balance Sheet, 1 Means Investment Balance Sheet, 2 Means Individual Balance sheet
-    
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
+} else if ($sheet_type == 5 and $IDEtype == 1 and $IDEview_type == 2 and $IDE_name_id != '') { //5 Means IDE Balance Sheet, 1 Means Investment Balance Sheet, 2 Means Individual Balance sheet
+
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
     $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
@@ -399,26 +432,28 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
+
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -429,20 +464,18 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference = $creditSum - $debitSum;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
         $difference = 0;
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($difference)."</td></tr>";
-    
-}else if($sheet_type == 5 and $IDEtype == 2 and $IDEview_type == 1 and $IDE_name_id == ''){//5 Means IDE Balance Sheet, 2 Means Deposit Balance Sheet, 1 Means Overall Balance sheet
-    
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
+} else if ($sheet_type == 5 and $IDEtype == 2 and $IDEview_type == 1 and $IDE_name_id == '') { //5 Means IDE Balance Sheet, 2 Means Deposit Balance Sheet, 1 Means Overall Balance sheet
     {
-    $opening_qry = $con->query("SELECT
+        $opening_qry = $con->query("SELECT
         IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
         FROM (
             SELECT
@@ -484,9 +517,9 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
                 AND insert_login_id = '$user_id'
         ) AS opening
     ");
-    $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
-    
-    $closing_qry = $con->query("SELECT
+        $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
+
+        $closing_qry = $con->query("SELECT
         IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
         FROM (
             SELECT
@@ -572,7 +605,7 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
                 AND insert_login_id = '$user_id'
         ) AS closing
     ");
-    $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
+        $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
     }
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
@@ -602,26 +635,28 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
+
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -632,19 +667,17 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference = $creditSum - $debitSum;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
         $difference = 0;
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($difference)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>".moneyFormatIndia($closing_bal)."</td></tr>";
-    
-}else if($sheet_type == 5 and $IDEtype == 2 and $IDEview_type == 2 and $IDE_name_id != ''){//5 Means IDE Balance Sheet, 2 Means Deposit Balance Sheet, 2 Means Individual Balance sheet
-    
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>" . moneyFormatIndia($closing_bal) . "</td></tr>";
+} else if ($sheet_type == 5 and $IDEtype == 2 and $IDEview_type == 2 and $IDE_name_id != '') { //5 Means IDE Balance Sheet, 2 Means Deposit Balance Sheet, 2 Means Individual Balance sheet
     {
         $opening_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
@@ -689,7 +722,7 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             ) AS opening
         ");
         $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
-        
+
         $closing_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
             FROM (
@@ -806,26 +839,28 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
+
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -836,19 +871,17 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference = $creditSum - $debitSum;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
         $difference = 0;
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($difference)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>".moneyFormatIndia($closing_bal)."</td></tr>";
-    
-}else if($sheet_type == 5 and $IDEtype == 3 and $IDEview_type == 1 and $IDE_name_id == ''){//5 Means IDE Balance Sheet, 3 Means EL Balance Sheet, 1 Means Overall Balance sheet
-    
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>" . moneyFormatIndia($closing_bal) . "</td></tr>";
+} else if ($sheet_type == 5 and $IDEtype == 3 and $IDEview_type == 1 and $IDE_name_id == '') { //5 Means IDE Balance Sheet, 3 Means EL Balance Sheet, 1 Means Overall Balance sheet
     {
         $opening_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
@@ -893,7 +926,7 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             ) AS opening
         ");
         $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
-        
+
         $closing_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
             FROM (
@@ -1010,26 +1043,28 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
+
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -1040,19 +1075,17 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference = $creditSum - $debitSum;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
         $difference = 0;
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($difference)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>".moneyFormatIndia($closing_bal)."</td></tr>";
-    
-}else if($sheet_type == 5 and $IDEtype == 3 and $IDEview_type == 2 and $IDE_name_id != ''){//5 Means IDE Balance Sheet, 3 Means EL Balance Sheet, 2 Means Individual Balance sheet
-    
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>" . moneyFormatIndia($closing_bal) . "</td></tr>";
+} else if ($sheet_type == 5 and $IDEtype == 3 and $IDEview_type == 2 and $IDE_name_id != '') { //5 Means IDE Balance Sheet, 3 Means EL Balance Sheet, 2 Means Individual Balance sheet
     {
         $opening_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
@@ -1097,7 +1130,7 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             ) AS opening
         ");
         $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
-        
+
         $closing_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
             FROM (
@@ -1214,26 +1247,28 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
-    
-    if($qry->num_rows >0){ //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
+
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
+
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -1244,18 +1279,17 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference = $creditSum - $debitSum;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
         $difference = 0;
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>".moneyFormatIndia($creditSum)."</td><td>".moneyFormatIndia($debitSum)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>".moneyFormatIndia($difference)."</td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>".moneyFormatIndia($closing_bal)."</td></tr>";
-    
-}else if($sheet_type == 6 ){ //6 Means Excess Fund Balance Sheet
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td>" . moneyFormatIndia($creditSum) . "</td><td>" . moneyFormatIndia($debitSum) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>" . moneyFormatIndia($closing_bal) . "</td></tr>";
+} else if ($sheet_type == 6) { //6 Means Excess Fund Balance Sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Bank</th><th>Ref ID</th><th>Remark</th><th>Transaction ID</th><th>Amount</th>";
 
@@ -1266,27 +1300,29 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY 1
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
 
     $tabBody = '<tr>';
 
-    if($qry->num_rows >0){ //check wheather query returning values or not
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
-            if($row['ctype'] != 'Hand Cash'){
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '".$row['ctype']."' ");
+            if ($row['ctype'] != 'Hand Cash') {
+                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
                 $bnamerun = $bnameqry->fetch_assoc();
-                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'],-5);
+                $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
-            }else{
+            } else {
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
-            
-            
+
+
             $tabBody .= "<td>" . $row['ref_code'] . "</td>";
             $tabBody .= "<td>" . $row['remark'] . "</td>";
             $tabBody .= "<td>" . $row['trans_id'] . "</td>";
@@ -1297,36 +1333,39 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $debitSum = $debitSum + intVal($row['Debit']);
             $i++;
         }
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
 
-    $tabBodyEnd = "<tr><td colspan='6'><b>Total</b></td><td><b>".moneyFormatIndia($debitSum)."</b></td></tr>";
+    $tabBodyEnd = "<tr><td colspan='6'><b>Total</b></td><td><b>" . moneyFormatIndia($debitSum) . "</b></td></tr>";
+} else if ($sheet_type == 7 && $ag_view_type == 1 && $ag_name == '') { //7 Means Agent Balance Sheet and 1 means overall
 
-    
-}else if($sheet_type == 7 && $ag_view_type == 1 && $ag_name == ''){ //7 Means Agent Balance Sheet and 1 means overall
 
-    $tableHeaders = "<th width='50'>S.No</th><th>Agent</th><th>Date</th><th>Coll Amount</th><th>Net Cash</th><th>Credit</th><th>Debit</th>";
+    //get agent user id to get data from collection
+    $ag_userid_qry = $con->query("SELECT `user_id` from user where FIND_IN_SET( `ag_id`, (SELECT `agentforstaff` from user where `user_id` = '$user_id')) ");
+    while ($row = $ag_userid_qry->fetch_assoc()) {
+        $ids[] = $row['user_id'];
+    }
+    $ag_user_id = implode(',', $ids);
 
-    {
+
+    $tableHeaders = "<th width='50'>S.No</th><th>Agent</th><th>Date</th><th>Coll Amount</th><th>Net Cash</th><th>Credit</th><th>Debit</th>"; {
         $opening_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
             FROM (
                 SELECT cl.total_paid_track as Credit, '' AS Debit
-                FROM collection cl JOIN user us 
-                ON us.user_id = '$user_id' and FIND_IN_SET(cl.insert_login_id,us.agentforstaff)
+                FROM collection cl 
                 WHERE
-                    cl.created_date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01')
+                    cl.created_date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01') and FIND_IN_SET(cl.insert_login_id,'$ag_user_id')
                 
                 UNION ALL
 
                 SELECT '' AS Credit, li.cash + li.cheque_value + li.transaction_value AS Debit  
-                FROM loan_issue li JOIN user us 
-                ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
+                FROM loan_issue li 
                 WHERE
-                    li.created_date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01')
+                    li.created_date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01') and FIND_IN_SET(li.agent_id,'$ag_user_id')
                 
                 UNION ALL
     
@@ -1370,22 +1409,17 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             ) AS opening
         ");
         $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
-        
     }
 
-
-
-    $qry = $con->query("SELECT cl.insert_login_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
-    FROM collection cl JOIN user us 
-    ON us.user_id = '$user_id' and FIND_IN_SET(cl.insert_login_id,us.agentforstaff)
-    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE())
+    $qry = $con->query("SELECT u.ag_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
+    FROM collection cl JOIN user u ON cl.insert_login_id = u.user_id
+    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(cl.insert_login_id,'$ag_user_id')
     
     UNION ALL
 
     SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
-    FROM loan_issue li JOIN user us 
-    ON us.user_id = '$user_id' and FIND_IN_SET(li.agent_id,us.agentforstaff)
-    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE())
+    FROM loan_issue li JOIN user u ON u.user_id = '$user_id'
+    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(li.agent_id,u.agentforstaff)
 
     UNION ALL 
 
@@ -1414,24 +1448,29 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     ORDER BY tdate
     ");
 
-    $i = 1;$creditSum = 0;$debitSum = 0; $collSum = 0; $netSum = 0;$difference1 = 0;$difference2 = 0;
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
+    $collSum = 0;
+    $netSum = 0;
+    $difference1 = 0;
+    $difference2 = 0;
 
     $tabBody = '<tr>';
 
-    if($qry->num_rows >0){ //check wheather query returning values or not
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
 
-            
-            $agqry = $con->query("SELECT ag_name from agent_creation where ag_id = '".$row['ag_id']."' ");
+            $agqry = $con->query("SELECT ag_name from agent_creation where ag_id = '" . $row['ag_id'] . "' ");
             $ag_name = $agqry->fetch_assoc()['ag_name'];
 
             $tabBody .= "<td>" . $ag_name . "</td>";
-            
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
-            $tabBody .= "<td>" . $row['coll_amt'] . "</td>";
-            $tabBody .= "<td>" . $row['netcash'] . "</td>";
+
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . moneyFormatIndia($row['coll_amt']) . "</td>";
+            $tabBody .= "<td>" . moneyFormatIndia($row['netcash']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -1444,24 +1483,24 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference1 = $collSum - $netSum;
-        $difference2 = $creditSum - $debitSum;
+        $difference2 = $debitSum - $creditSum;
         $closing_bal = $difference1 + $difference2 + $opening_bal;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td><b>".moneyFormatIndia($collSum)."</b></td><td><b>".moneyFormatIndia($netSum)."</b></td><td><b>".moneyFormatIndia($creditSum)."</b></td><td><b>".moneyFormatIndia($debitSum)."</b></td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'><b>".moneyFormatIndia($difference1)."</b></td><td colspan='2'><b>".moneyFormatIndia($difference2)."</b></td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='4'><b>".moneyFormatIndia($closing_bal)."</b></td></tr>";
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td><b>" . moneyFormatIndia($collSum) . "</b></td><td><b>" . moneyFormatIndia($netSum) . "</b></td><td><b>" . moneyFormatIndia($creditSum) . "</b></td><td><b>" . moneyFormatIndia($debitSum) . "</b></td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'><b>" . moneyFormatIndia($difference1) . "</b></td><td colspan='2'><b>" . moneyFormatIndia($difference2) . "</b></td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='4'><b>" . moneyFormatIndia($closing_bal) . "</b></td></tr>";
+} else if ($sheet_type == 7 && $ag_view_type == 2 && $ag_name != '') { //7 Means Agent Balance Sheet and 2 means individual and agent id
 
-    
-}else if($sheet_type == 7 && $ag_view_type == 2 && $ag_name != ''){ //7 Means Agent Balance Sheet and 2 means individual and agent id
+    //get agent user id to get data from collection
+    $ag_userid_qry = $con->query("SELECT `user_id` from user where ag_id = '$ag_name' ");
+    $ag_user_id = $ag_userid_qry->fetch_assoc()['user_id'];
 
-    $tableHeaders = "<th width='50'>S.No</th><th>Agent</th><th>Date</th><th>Coll Amount</th><th>Net Cash</th><th>Credit</th><th>Debit</th>";
-
-    {
+    $tableHeaders = "<th width='50'>S.No</th><th>Agent</th><th>Date</th><th>Coll Amount</th><th>Net Cash</th><th>Credit</th><th>Debit</th>"; {
         $opening_qry = $con->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
             FROM (
@@ -1469,7 +1508,7 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
                 FROM collection cl JOIN user us 
                 ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
                 WHERE
-                    cl.created_date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01') and cl.insert_login_id = '$ag_name'
+                    cl.created_date < DATE_FORMAT(CURRENT_DATE(), '%Y-%m-01') and cl.insert_login_id = '$ag_user_id'
                 
                 UNION ALL
 
@@ -1521,16 +1560,13 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             ) AS opening
         ");
         $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
-        
-        
     }
 
 
-
-    $qry = $con->query("SELECT cl.insert_login_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
+    $qry = $con->query("SELECT $ag_name AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
     FROM collection cl JOIN user us 
     ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
-    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and cl.insert_login_id = '$ag_name'
+    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and cl.insert_login_id = '$ag_user_id'
     
     UNION ALL
 
@@ -1565,26 +1601,31 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
     
     ORDER BY tdate
     ");
-    
-    
-    $i = 1;$creditSum = 0;$debitSum = 0; $collSum = 0; $netSum = 0;$difference1 = 0;$difference2 = 0;
+
+
+    $i = 1;
+    $creditSum = 0;
+    $debitSum = 0;
+    $collSum = 0;
+    $netSum = 0;
+    $difference1 = 0;
+    $difference2 = 0;
 
     $tabBody = '<tr>';
 
-    if($qry->num_rows >0){ //check wheather query returning values or not
+    if ($qry->num_rows > 0) { //check wheather query returning values or not
 
-        while($row = $qry->fetch_assoc()){
+        while ($row = $qry->fetch_assoc()) {
             $tabBody .= "<td>$i</td>";
 
-            
-            $agqry = $con->query("SELECT ag_name from agent_creation where ag_id = '".$row['ag_id']."' ");
+            $agqry = $con->query("SELECT ag_name from agent_creation where ag_id = '" . $row['ag_id'] . "' ");
             $ag_name = $agqry->fetch_assoc()['ag_name'];
 
             $tabBody .= "<td>" . $ag_name . "</td>";
-            
-            $tabBody .= "<td>" . date('d-m-Y',strtotime($row['tdate'])) . "</td>";
-            $tabBody .= "<td>" . $row['coll_amt'] . "</td>";
-            $tabBody .= "<td>" . $row['netcash'] . "</td>";
+
+            $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
+            $tabBody .= "<td>" . moneyFormatIndia($row['coll_amt']) . "</td>";
+            $tabBody .= "<td>" . moneyFormatIndia($row['netcash']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Credit']) . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
             $tabBody .= '</tr>';
@@ -1597,52 +1638,51 @@ if($sheet_type == 1 ){//1 Means contra balance sheet
             $i++;
         }
         $difference1 = $collSum - $netSum;
-        $difference2 = $creditSum - $debitSum;
+        $difference2 = $debitSum - $creditSum;
         $closing_bal = $difference1 + $difference2 + $opening_bal;
-    }else{
+    } else {
         //if query not returning any values, set table body and footer empty. by default its not working
         $tabBody = '';
         $tabBodyEnd = '';
     }
 
-    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td><b>".moneyFormatIndia($collSum)."</b></td><td><b>".moneyFormatIndia($netSum)."</b></td><td><b>".moneyFormatIndia($creditSum)."</b></td><td><b>".moneyFormatIndia($debitSum)."</b></td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'><b>".moneyFormatIndia($difference1)."</b></td><td colspan='2'><b>".moneyFormatIndia($difference2)."</b></td></tr>";
-    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='4'><b>".moneyFormatIndia($closing_bal)."</b></td></tr>";
-
-    
+    $tabBodyEnd = "<tr><td colspan='3'><b>Total</b></td><td><b>" . moneyFormatIndia($collSum) . "</b></td><td><b>" . moneyFormatIndia($netSum) . "</b></td><td><b>" . moneyFormatIndia($creditSum) . "</b></td><td><b>" . moneyFormatIndia($debitSum) . "</b></td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'><b>" . moneyFormatIndia($difference1) . "</b></td><td colspan='2'><b>" . moneyFormatIndia($difference2) . "</b></td></tr>";
+    $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='4'><b>" . moneyFormatIndia($closing_bal) . "</b></td></tr>";
+} else {
+    return '';
 }
-else{return '';}
 ?>
 <?php
-if($opening_bal != ''){
+if ($opening_bal != '') {
 ?>
-<div class="col-12">
-    <div class="row">
-        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12"></div>
-        <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
-            <div class="form-group">
-                <label for=''><b>Opening Balance: <?php echo $opening_bal;?></b></label>
-                <!-- <input type="text" class="form-control" value='<?php echo $opening_bal;?>' readonly> -->
+    <div class="col-12">
+        <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12"></div>
+            <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
+                <div class="form-group">
+                    <label for=''><b>Opening Balance: <?php echo $opening_bal; ?></b></label>
+                    <!-- <input type="text" class="form-control" value='<?php echo $opening_bal; ?>' readonly> -->
+                </div>
             </div>
+            <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12"></div>
         </div>
-        <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-12"></div>
     </div>
-</div>
 <?php } ?>
 <table class="table custom-table" id='blncSheetTable'>
     <thead>
         <tr>
-            <?php echo $tableHeaders;?>
+            <?php echo $tableHeaders; ?>
         </tr>
     </thead>
     <tbody>
         <?php
-            echo $tabBody;
+        echo $tabBody;
         ?>
     </tbody>
     <tfoot>
         <?php
-            echo $tabBodyEnd;
+        echo $tabBodyEnd;
         ?>
     </tfoot>
 </table>
@@ -1657,8 +1697,7 @@ if($opening_bal != ''){
                 [10, 25, 50, "All"]
             ],
             dom: 'lBfrtip',
-            buttons: [
-                {
+            buttons: [{
                     extend: 'excel',
                 },
                 {
@@ -1671,13 +1710,13 @@ if($opening_bal != ''){
             //     var api = this.api();
             //     var columnIdx = 4; // Replace with the index of the desired column
             //     var columnData = api.column(columnIdx, { search: 'applied' }).data();
-                
+
             //     // Calculate the total value of the column
             //     var total = columnData.reduce(function (a, b) {
             //         b = b.replace(',','');
             //         return parseInt(a) + parseInt(b);
             //     }, 0);
-                
+
             //     // Display the total in the table footer
             //     $(api.column(columnIdx).footer()).html( total);
             // }
@@ -1690,10 +1729,11 @@ if($opening_bal != ''){
 
 <?php
 //Format number in Indian Format
-function moneyFormatIndia($num1) {
-    if($num1 < 0){
-        $num = str_replace("-","",$num1);
-    }else{
+function moneyFormatIndia($num1)
+{
+    if ($num1 < 0) {
+        $num = str_replace("-", "", $num1);
+    } else {
         $num = $num1;
     }
     $explrestunits = "";
@@ -1704,7 +1744,7 @@ function moneyFormatIndia($num1) {
         $expunit = str_split($restunits, 2);
         for ($i = 0; $i < sizeof($expunit); $i++) {
             if ($i == 0) {
-                $explrestunits .= (int)$expunit[$i] . ",";
+                $explrestunits .= (int) $expunit[$i] . ",";
             } else {
                 $explrestunits .= $expunit[$i] . ",";
             }
@@ -1714,7 +1754,7 @@ function moneyFormatIndia($num1) {
         $thecash = $num;
     }
 
-    if($num1 < 0 && $num1 != ''){
+    if ($num1 < 0 && $num1 != '') {
         $thecash = "-" . $thecash;
     }
 
@@ -1722,11 +1762,10 @@ function moneyFormatIndia($num1) {
 }
 
 
-if($sheet_type == 4){//4 Means Expense Balance Sheet so show/hide view types
+if ($sheet_type == 4) { //4 Means Expense Balance Sheet so show/hide view types
 
     echo "<script>$('#exp_typeDiv').show()</script>";
-
-}else{
+} else {
     echo "<script>$('#exp_typeDiv').hide()</script>";
 }
 ?>

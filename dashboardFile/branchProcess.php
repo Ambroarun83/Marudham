@@ -8,6 +8,7 @@ class branchProcess
     function getBranchList($user_id)
     {
         global $con;
+        $response = array();
         $qry = $con->query("SELECT bc.branch_id, bc.branch_name from branch_creation bc JOIN user u ON FIND_IN_SET (bc.branch_id, u.branch_id) where u.user_id = '$user_id' ");
         while ($row = $qry->fetch_assoc()) {
             $response[] = $row;
@@ -51,7 +52,7 @@ class branchProcess
         //check if sub area list is empty or not
         if (!empty($sub_area_list)) {
             return $sub_area_list;
-        }else{
+        } else {
             return 'Error';
         }
     }

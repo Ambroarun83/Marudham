@@ -1,13 +1,13 @@
-$(document).ready(function(){
-/// noc_req_id = get particular line item request id becuase multiple request show in list against single customer.. the Customer is same but request is not so have to take particular req id to show details.
-    $('#submit_closed').click(function(){ 
+$(document).ready(function () {
+    /// noc_req_id = get particular line item request id becuase multiple request show in list against single customer.. the Customer is same but request is not so have to take particular req id to show details.
+    $('#submit_closed').click(function () {
         validations();
     })
 
     ///Customer Feedback 
     $("body").on("click", "#cus_feedback_edit", function () {
         let id = $(this).attr('value');
-    
+
         $.ajax({
             url: 'closedFile/loan_summary_edit.php',
             type: 'POST',
@@ -62,19 +62,19 @@ $(document).ready(function(){
     });
 
     //closed status
-    $('#closed_Sts').change(function(){
+    $('#closed_Sts').change(function () {
         var sts = $(this).val();
 
-        if(sts == '1'){
+        if (sts == '1') {
             $('#considerlevel').show();
-        }else{
+        } else {
             $('#considerlevel').hide();
         }
     })
 
-    $('.commitment-chart').click(function(){//Commitment chart
-        let req_id = $('#noc_req_id').val();let cus_id = $('#cusidupd').val();
-        $.post('followupFiles/dueFollowup/getCommitmentChart.php',{cus_id,req_id},function(html){
+    $('.commitment-chart').click(function () {//Commitment chart
+        let req_id = $('#noc_req_id').val(); let cus_id = $('#cusidupd').val();
+        $.post('followupFiles/dueFollowup/getCommitmentChart.php', { cus_id, req_id }, function (html) {
             $('#commChartDiv').empty().html(html);
         })
     })
@@ -83,7 +83,7 @@ $(document).ready(function(){
 
 
 //On Load Event
-$(function(){
+$(function () {
 
     $('.noc_window').hide(); //Hide collection window at the starting
     $('#close_noc_card').hide();//Hide collection close button at the starting
@@ -91,13 +91,13 @@ $(function(){
 
     var req_id = $('#idupd').val()
     const cus_id = $('#cusidupd').val()
-    OnLoadFunctions(req_id,cus_id);
+    OnLoadFunctions(req_id, cus_id);
 
     var cus_pic = $('#cuspicupd').val();
-    $('#imgshow').attr('src','uploads/request/customer/'+cus_pic);
+    $('#imgshow').attr('src', 'uploads/request/customer/' + cus_pic);
 })
 
-function OnLoadFunctions(req_id,cus_id){
+function OnLoadFunctions(req_id, cus_id) {
     //To get loan sub Status
     var pending_arr = [];
     var od_arr = [];
@@ -106,13 +106,13 @@ function OnLoadFunctions(req_id,cus_id){
     var balAmnt = [];
     $.ajax({
         url: 'closedFile/resetCustomerStsForClosed.php',
-        data: {'cus_id':cus_id},
-        dataType:'json',
-        type:'post',
+        data: { 'cus_id': cus_id },
+        dataType: 'json',
+        type: 'post',
         cache: false,
-        success: function(response){
-            
-            for(var i=0;i< response['pending_customer'].length;i++){
+        success: function (response) {
+
+            for (var i = 0; i < response['pending_customer'].length; i++) {
                 pending_arr[i] = response['pending_customer'][i]
                 od_arr[i] = response['od_customer'][i]
                 due_nil_arr[i] = response['due_nil_customer'][i]
@@ -129,11 +129,11 @@ function OnLoadFunctions(req_id,cus_id){
             $('#closed_sts').val(closed_sts);
             balAmnt = balAmnt.join(',');
             // $('#balAmnt').val(balAmnt);
-            
+
         }
-    }); 
+    });
     showOverlay();//loader start
-    setTimeout(()=>{
+    setTimeout(() => {
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
         var due_nil_sts = $('#due_nil_sts').val()
@@ -142,19 +142,19 @@ function OnLoadFunctions(req_id,cus_id){
         $.ajax({
             //in this file, details gonna fetch by customer ID, Not by req id (Because we need all loans from customer)
             url: 'closedFile/getLoanListForClosed.php',
-            data: {'req_id':req_id,'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts,'bal_amt':bal_amt},
-            type:'post',
+            data: { 'req_id': req_id, 'cus_id': cus_id, 'pending_sts': pending_sts, 'od_sts': od_sts, 'due_nil_sts': due_nil_sts, 'closed_sts': closed_sts, 'bal_amt': bal_amt },
+            type: 'post',
             cache: false,
-            success: function(response){
+            success: function (response) {
                 // $('.overlay').remove();
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
-                
-                $(document).on('click', '.noc-window', function(event){
+
+                $(document).on('click', '.noc-window', function (event) {
                     let req_id = $(this).data('value');
-                    checkDocumentsStatus(req_id,(result)=>{result=='completed'? checkit = 'completed':checkit = 'pending';});
-                    setTimeout(()=>{
-                        if(checkit == 'completed'){//this function will check if the particular loan is completed all the document upload
+                    checkDocumentsStatus(req_id, (result) => { result == 'completed' ? checkit = 'completed' : checkit = 'pending'; });
+                    setTimeout(() => {
+                        if (checkit == 'completed') {//this function will check if the particular loan is completed all the document upload
 
                             $('.loanlist_card').hide();
                             $('.datachecking_card').hide();
@@ -163,20 +163,20 @@ function OnLoadFunctions(req_id,cus_id){
                             $('.noc_window').show();
                             $('#close_noc_card').show();
                             $('#submit_closed').show();
-                            
+
                             var reqID = $(this).attr('data-value');
                             $('#noc_req_id').val(reqID);
-                            
+
                             resetfeedback(); //Reset Feedback Modal Table.
                             feedbackList(); // Feedback List.
-                        }else{//else prevent closing the document due to not completing documents
+                        } else {//else prevent closing the document due to not completing documents
                             event.preventDefault();
                             alert('Please complete pending documents to Close!')
                         }
-                    },1000)
+                    }, 1000)
                 });
-                
-                $('#close_noc_card').click(function(){
+
+                $('#close_noc_card').click(function () {
                     $('.loanlist_card').show();
                     $('.datachecking_card').show();
                     $('.customersummary_card').show();
@@ -186,11 +186,11 @@ function OnLoadFunctions(req_id,cus_id){
                     $('#submit_closed').hide();
                 })
 
-                $('.due-chart').click(function(){
+                $('.due-chart').click(function () {
                     var nocreq_id = $('#noc_req_id').val();
-                    dueChartList(nocreq_id,cus_id); // To show Due Chart List.
-                    setTimeout(()=>{
-                        $('.print_due_coll').click(function(){
+                    dueChartList(nocreq_id, cus_id); // To show Due Chart List.
+                    setTimeout(() => {
+                        $('.print_due_coll').click(function () {
                             var id = $(this).attr('value');
                             Swal.fire({
                                 title: 'Print',
@@ -210,24 +210,24 @@ function OnLoadFunctions(req_id,cus_id){
                             }).then((result) => {
                                 if (result.isConfirmed) {
                                     $.ajax({
-                                        url:'collectionFile/print_collection.php',
-                                        data:{'coll_id':id},
-                                        type:'post',
-                                        cache:false,
-                                        success:function(html){
+                                        url: 'collectionFile/print_collection.php',
+                                        data: { 'coll_id': id },
+                                        type: 'post',
+                                        cache: false,
+                                        success: function (html) {
                                             $('#printcollection').html(html)
                                             // Get the content of the div element
                                             var content = $("#printcollection").html();
-                
+
                                             // Create a new window
                                             var w = window.open();
-                
+
                                             // Write the content to the new window
                                             $(w.document.body).html(content);
-                
+
                                             // Print the new window
                                             w.print();
-                
+
                                             // Close the new window
                                             w.close();
                                         }
@@ -235,36 +235,36 @@ function OnLoadFunctions(req_id,cus_id){
                                 }
                             })
                         })
-                    },1000)
+                    }, 1000)
                 })
 
-                $('.penalty-chart').click(function(){
+                $('.penalty-chart').click(function () {
                     var noc_req_id = $('#noc_req_id').val();
                     $.ajax({
                         //to insert penalty by on click
                         url: 'collectionFile/getLoanDetails.php',
-                            data: {'req_id':noc_req_id,'cus_id':cus_id},
-                            dataType:'json',
-                            type:'post',
-                            cache: false,
-                            success: function(response){
-                                penaltyChartList(noc_req_id,cus_id); //To show Penalty List.
-                            }
+                        data: { 'req_id': noc_req_id, 'cus_id': cus_id },
+                        dataType: 'json',
+                        type: 'post',
+                        cache: false,
+                        success: function (response) {
+                            penaltyChartList(noc_req_id, cus_id); //To show Penalty List.
+                        }
                     })
                 })
 
-                $('.coll-charge-chart').click(function(){
+                $('.coll-charge-chart').click(function () {
                     var noc_req_id = $('#noc_req_id').val();
                     collectionChargeChartList(noc_req_id) //To Show Fine Chart List
                 })
 
-                $('.coll-charge').click(function(){
+                $('.coll-charge').click(function () {
                     var noc_req_id = $('#noc_req_id').val();
                     resetcollCharges(noc_req_id);  //Fine
-                })   
-                
-                
-                
+                })
+
+
+
             }
         })
 
@@ -272,30 +272,30 @@ function OnLoadFunctions(req_id,cus_id){
         $.ajax({
             // To Check Customer Guarentor History.
             url: 'closedFile/getGuarentorData.php',
-            data: {'cus_id':cus_id,'pending_sts':pending_sts,'od_sts':od_sts,'due_nil_sts':due_nil_sts,'closed_sts':closed_sts},
-            type:'post',
+            data: { 'cus_id': cus_id, 'pending_sts': pending_sts, 'od_sts': od_sts, 'due_nil_sts': due_nil_sts, 'closed_sts': closed_sts },
+            type: 'post',
             cache: false,
-            success: function(response){
+            success: function (response) {
                 $('#guarentor_checkDiv').empty()
                 $('#guarentor_checkDiv').html(response);
-                }
+            }
         })
-            
+
         getCustomerLoanCounts(); // to get customer summary details
         hideOverlay();//loader stop
-    },2000)
+    }, 2000)
 
 }//Auto Load function END
 
-function getCustomerLoanCounts(){
+function getCustomerLoanCounts() {
     let cus_id = $('#cusidupd').val()
     $.ajax({
         url: 'verificationFile/getCustomerLoanCounts.php',
-        data: {'cus_id':cus_id},
+        data: { 'cus_id': cus_id },
         dataType: 'json',
         type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#cus_loan_count').val(response['loan_count'])
             $('#cus_frst_loanDate').val(response['first_loan'])
             $('#cus_travel_cmpy').val(response['travel'])
@@ -304,15 +304,15 @@ function getCustomerLoanCounts(){
     })
     getCustomerSummary();//to get income details
 }
-function getCustomerSummary(){
+function getCustomerSummary() {
     let cus_id = $('#cusidupd').val()
     $.ajax({
         url: 'closedFile/getCustomerSummary.php',
-        data: {'cus_id':cus_id},
+        data: { 'cus_id': cus_id },
         dataType: 'json',
         type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#cus_how_know').val(response['how_to_know'])
             $('#cus_monthly_income').val(response['monthly_income'])
             $('#cus_other_income').val(response['other_income'])
@@ -322,7 +322,7 @@ function getCustomerSummary(){
             $('#cus_loan_limit').val(response['loan_limit'])
             $('#about_cus').val(response['about_customer'])
         }
-    }).then(function(){
+    }).then(function () {
 
         $.ajax({
             url: 'verificationFile/customer_feedback_list.php',
@@ -338,72 +338,72 @@ function getCustomerSummary(){
     });
 }
 
-function validations(){
+function validations() {
     var closed_Sts = $('#closed_Sts').val(); var closed_Sts_consider = $('#closed_Sts_consider').val(); var closed_Sts_remark = $('#closed_Sts_remark').val();
 
-    if(closed_Sts == ''){
+    if (closed_Sts == '') {
         $('#closedStatusCheck').show();
         event.preventDefault();
-    }else{
+    } else {
         $('#closedStatusCheck').hide();
     }
 
-    if(closed_Sts == '1'){
-        if(closed_Sts_consider == ''){
+    if (closed_Sts == '1') {
+        if (closed_Sts_consider == '') {
             $('#considerLevelCheck').show();
             event.preventDefault();
-        }else{
+        } else {
             $('#considerLevelCheck').hide();
         }
     }
 
-    if(closed_Sts_remark == ''){
+    if (closed_Sts_remark == '') {
         $('#remarkCheck').show();
         event.preventDefault();
-    }else{
+    } else {
         $('#remarkCheck').hide();
     }
 }
 
 //Due Chart List
-function dueChartList(nocreq_id,cus_id){
+function dueChartList(nocreq_id, cus_id) {
     $.ajax({
         url: 'collectionFile/getDueChartList.php',
-        data: {'req_id':nocreq_id,'cus_id':cus_id,'closed': 'true'},
-        type:'post',
+        data: { 'req_id': nocreq_id, 'cus_id': cus_id, 'closed': 'true' },
+        type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#dueChartTableDiv').empty()
             $('#dueChartTableDiv').html(response)
         }
-    }).then(function(){
+    }).then(function () {
 
-        $.post('collectionFile/getDueMethodName.php',{"req_id" : nocreq_id},function(response){
-            $('#dueChartTitle').text('Due Chart ( '+ response['due_method'] + ' - '+ response['loan_type'] +' )');
-        },'json');
+        $.post('collectionFile/getDueMethodName.php', { "req_id": nocreq_id }, function (response) {
+            $('#dueChartTitle').text('Due Chart ( ' + response['due_method'] + ' - ' + response['loan_type'] + ' )');
+        }, 'json');
     })
 }
 //Penalty Chart List
-function penaltyChartList(noc_req_id,cus_id){
+function penaltyChartList(noc_req_id, cus_id) {
     $.ajax({
         url: 'collectionFile/getPenaltyChartList.php',
-        data: {'req_id':noc_req_id,'cus_id':cus_id},
-        type:'post',
+        data: { 'req_id': noc_req_id, 'cus_id': cus_id },
+        type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#penaltyChartTableDiv').empty()
             $('#penaltyChartTableDiv').html(response)
         }
     });//Ajax End.
 }
 //Collection Charge Chart List
-function collectionChargeChartList(noc_req_id){
+function collectionChargeChartList(noc_req_id) {
     $.ajax({
         url: 'collectionFile/getCollectionChargeList.php',
-        data: {'req_id':noc_req_id},
-        type:'post',
+        data: { 'req_id': noc_req_id },
+        type: 'post',
         cache: false,
-        success: function(response){
+        success: function (response) {
             $('#collectionChargeDiv').empty()
             $('#collectionChargeDiv').html(response)
         }
@@ -428,7 +428,7 @@ $(document).on("click", "#feedbackBtn", function () {
         $.ajax({
             url: 'closedFile/loan_summary_submit.php',
             type: 'POST',
-            data: { "feedback_label": feedback_label, "cus_feedback": cus_feedback,"feedback_remark":feedback_remark,"feedbackID": feedbackID,  "reqId": nocreq_id,"cusidupd":cusidupd },
+            data: { "feedback_label": feedback_label, "cus_feedback": cus_feedback, "feedback_remark": feedback_remark, "feedbackID": feedbackID, "reqId": nocreq_id, "cusidupd": cusidupd },
             cache: false,
             success: function (response) {
 
@@ -517,13 +517,13 @@ function feedbackList() {
 }
 //Loan Summary Modal End
 
-function checkDocumentsStatus(req_id,callback){
+function checkDocumentsStatus(req_id, callback) {
     let val;
-    $.post('closedFile/checkDocumentsStatus.php',{req_id},(response)=>{
-        if(response == 'true'){
-            val =  'completed';
-        }else{
-            val =  'pending';
+    $.post('closedFile/checkDocumentsStatus.php', { req_id }, (response) => {
+        if (response == 'true') {
+            val = 'completed';
+        } else {
+            val = 'pending';
         }
         callback(val);
     })

@@ -19,22 +19,6 @@ if (isset($_POST['submit_update_cus_profile']) && $_POST['submit_update_cus_prof
 <?php
 }
 
-// if(isset($_POST['update_mortgage'])){
-
-// 	$userObj->updateMortEndorse($mysqli, $userid,'mort');
-?>
-<script>
-	//alert('Documentation Details Updated'); 
-</script>
-<?php
-// }elseif(isset($_POST['update_mortgage'])){
-// 	$userObj->updateMortEndorse($mysqli, $userid,'endor');
-?>
-<script>
-	//alert('Documentation Details Updated'); 
-</script>
-<?php
-// }
 
 //////////////////////// Customer Profile Info ///////////////////////////////
 $getCustomerReg = $userObj->getCustomerRegister($mysqli, $idupd);
@@ -89,6 +73,7 @@ if (sizeof($getCustomerReg) > 0) {
 		$area_confirm_taluk 		= $getCustomerReg['area_confirm_taluk'];
 		$area_confirm_area 			= $getCustomerReg['area_confirm_area'];
 		$area_confirm_subarea 		= $getCustomerReg['area_confirm_subarea'];
+		$latlong 		= $getCustomerReg['latlong'];
 		$area_group 				= $getCustomerReg['area_group'];
 		$area_line 					= $getCustomerReg['area_line'];
 		$area_name 					= $getCustomerReg['area_name'];
@@ -257,20 +242,46 @@ if (sizeof($documentationInfo) > 0) {
 	<!-- Customer Profile form start-->
 	<div id="customer_profile" style="display: none;">
 		<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="cus_id_load" id="cus_id_load" value="<?php if (isset($idupd)) { echo $idupd; } ?>" />
-			<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) { echo $req_id; } ?>" />
-			<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($state)) { echo $state; } ?>" />
-			<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($district)) { echo $district; } ?>" />
-			<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($taluk)) { echo $taluk; } ?>" />
-			<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area)) { echo $area; } ?>" />
-			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($sub_area)) { echo $sub_area; } ?>" />
-			<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) { echo $guarentor_name; } ?>" />
+			<input type="hidden" name="cus_id_load" id="cus_id_load" value="<?php if (isset($idupd)) {
+																				echo $idupd;
+																			} ?>" />
+			<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {
+																		echo $req_id;
+																	} ?>" />
+			<input type="hidden" name="state_upd" id="state_upd" value="<?php if (isset($state)) {
+																			echo $state;
+																		} ?>" />
+			<input type="hidden" name="district_upd" id="district_upd" value="<?php if (isset($district)) {
+																					echo $district;
+																				} ?>" />
+			<input type="hidden" name="taluk_upd" id="taluk_upd" value="<?php if (isset($taluk)) {
+																			echo $taluk;
+																		} ?>" />
+			<input type="hidden" name="area_upd" id="area_upd" value="<?php if (isset($area)) {
+																			echo $area;
+																		} ?>" />
+			<input type="hidden" name="sub_area_upd" id="sub_area_upd" value="<?php if (isset($sub_area)) {
+																					echo $sub_area;
+																				} ?>" />
+			<input type="hidden" name="guarentor_name_upd" id="guarentor_name_upd" value="<?php if (isset($guarentor_name)) {
+																								echo $guarentor_name;
+																							} ?>" />
 
-			<input type="hidden" name="area_state_upd" id="area_state_upd" value="<?php if (isset($area_confirm_state)) { echo $area_confirm_state; } ?>" />
-			<input type="hidden" name="area_district_upd" id="area_district_upd" value="<?php if (isset($area_confirm_district)) { echo $area_confirm_district; } ?>" />
-			<input type="hidden" name="area_taluk_upd" id="area_taluk_upd" value="<?php if (isset($area_confirm_taluk)) { echo $area_confirm_taluk; } ?>" />
-			<input type="hidden" name="area_confirm_area" id="area_confirm_area" value="<?php if (isset($area_confirm_area)) { echo $area_confirm_area; } ?>" />
-			<input type="hidden" name="sub_area_confirm" id="sub_area_confirm" value="<?php if (isset($area_confirm_subarea)) { echo $area_confirm_subarea; } ?>" />
+			<input type="hidden" name="area_state_upd" id="area_state_upd" value="<?php if (isset($area_confirm_state)) {
+																						echo $area_confirm_state;
+																					} ?>" />
+			<input type="hidden" name="area_district_upd" id="area_district_upd" value="<?php if (isset($area_confirm_district)) {
+																							echo $area_confirm_district;
+																						} ?>" />
+			<input type="hidden" name="area_taluk_upd" id="area_taluk_upd" value="<?php if (isset($area_confirm_taluk)) {
+																						echo $area_confirm_taluk;
+																					} ?>" />
+			<input type="hidden" name="area_confirm_area" id="area_confirm_area" value="<?php if (isset($area_confirm_area)) {
+																							echo $area_confirm_area;
+																						} ?>" />
+			<input type="hidden" name="sub_area_confirm" id="sub_area_confirm" value="<?php if (isset($area_confirm_subarea)) {
+																							echo $area_confirm_subarea;
+																						} ?>" />
 
 			<input type="hidden" class="form-control" value="<?php if (isset($marital)) echo $marital; ?>" id="marital_upd" name="marital_upd">
 
@@ -284,12 +295,14 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="card-header">General Info</div>
 						<div class="card-body">
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-xl-8 col-lg-6 col-md-12 col-sm-12">
 									<div class="row">
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
 												<label for="cus_id">Customer ID</label><span class="required">&nbsp;*</span>
-												<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cus_id)) { echo $cus_id; } ?>' tabindex='1' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" readonly>
+												<input type="text" class="form-control" id="cus_id" name="cus_id" value='<?php if (isset($cus_id)) {
+																																echo $cus_id;
+																															} ?>' tabindex='1' data-type="adhaar-number" maxlength="14" placeholder="Enter Adhaar Number" readonly>
 												<span class="text-danger" style='display:none' id='cusidCheck'>Please Enter Customer ID</span>
 											</div>
 										</div>
@@ -473,17 +486,17 @@ if (sizeof($documentationInfo) > 0) {
 										</div>
 									</div>
 								</div>
-								<div class="col-md-4">
-									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+								<div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+									<div class="col-xl-8 col-lg-10 col-md-6 ">
 										<div class="form-group" style="margin-left: 30px;">
 											<label style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
 											<input type="hidden" class="form-control" id="cus_image" name="cus_image" value='<?php if (isset($pic)) {
 																																	echo $pic;
 																																} ?>'>
 											<img id='imgshow' class="imgshow" src='img/avatar.png' /><br>
-											<input type="file" class="form-control" id="pic" name="pic" tabindex='20' value='<?php if (isset($pic)) {
-																																	echo $pic;
-																																} ?>'>
+											<input type="file" onchange="checkInputFileSize(this,200)" class="form-control" id="pic" name="pic" tabindex='20' value='<?php if (isset($pic)) {
+																																											echo $pic;
+																																										} ?>'>
 										</div>
 									</div>
 								</div>
@@ -502,7 +515,7 @@ if (sizeof($documentationInfo) > 0) {
 							<div class="row">
 
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="famList">
+									<div class="form-group table-responsive" id="famList">
 										<table class="table custom-table">
 											<thead>
 												<tr>
@@ -534,7 +547,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="card-header">Guarentor Info<span class="required">&nbsp;*</span><span style="font-weight:bold" class=""></span></div>
 						<div class="card-body">
 							<div class="row">
-								<div class="col-md-8">
+								<div class="col-xl-8 col-lg-6 col-md-12 col-sm-12">
 									<div class="row">
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
 											<div class="form-group">
@@ -557,17 +570,17 @@ if (sizeof($documentationInfo) > 0) {
 									</div>
 								</div>
 
-								<div class="col-md-4">
-									<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+								<div class="col-xl-4 col-lg-6 col-md-12 col-sm-12">
+									<div class="col-xl-8 col-lg-10 col-md-6 ">
 										<div class="form-group" style="margin-left: 30px;">
 											<label for="pic" style="margin-left: -20px;"> Guarentor Photo </label><span class="required">&nbsp;*</span><br>
 											<input type="hidden" name="guarentor_image" id="guarentor_image" value="<?php if (isset($guarentor_photo)) {
 																														echo $guarentor_photo;
 																													} ?>">
 											<img id='imgshows' class="imgshow" src='img/avatar.png' />
-											<input type="file" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="24" value="<?php if (isset($guarentor_photo)) {
-																																					echo $guarentor_photo;
-																																				} ?>">
+											<input type="file" onchange="checkInputFileSize(this,200)" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="24" value="<?php if (isset($guarentor_photo)) {
+																																															echo $guarentor_photo;
+																																														} ?>">
 											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
 										</div>
 									</div>
@@ -767,7 +780,18 @@ if (sizeof($documentationInfo) > 0) {
 										</select>
 									</div>
 								</div>
-
+								<div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
+									<div class="form-group">
+										<label for="latlong">Location</label>
+										<input type="text" class="form-control" name="latlong" id="latlong" placeholder="Enter Latitude Longitude" value="<?php echo $latlong; ?>">
+									</div>
+								</div>
+								<div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
+									<div class="form-group">
+										<label style="visibility:hidden">Location</label>
+										<button class="btn btn-primary" id="getlatlong" name="getlatlong" style="padding: 5px 35px;"><span class="icon-my_location"></span></button>
+									</div>
+								</div>
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="area_group">Group</label>
@@ -802,7 +826,7 @@ if (sizeof($documentationInfo) > 0) {
 							<div class="row">
 
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="propertyList">
+									<div class="form-group table-responsive" id="propertyList">
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
@@ -837,7 +861,7 @@ if (sizeof($documentationInfo) > 0) {
 							<div class="row">
 
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="bankResetTable">
+									<div class="form-group table-responsive" id="bankResetTable">
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
@@ -872,7 +896,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="card-body">
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="kycListTable">
+									<div class="form-group table-responsive" id="kycListTable">
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
@@ -1022,7 +1046,7 @@ if (sizeof($documentationInfo) > 0) {
 
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group" id="feedbackListTable">
+									<div class="form-group table-responsive" id="feedbackListTable">
 										<table class="table custom-table modalTable">
 											<thead>
 												<tr>
@@ -1043,7 +1067,7 @@ if (sizeof($documentationInfo) > 0) {
 							<hr>
 
 							<div class="row">
-								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 									<div class="form-group">
 										<label for="about_cus"> About Customer </label> <span class="required">*</span>
 										<textarea class="form-control" name="about_cus" id="about_cus" tabindex="57"><?php if (isset($about_customer)) {
@@ -1092,7 +1116,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="card-body">
 						<div class="row">
 
-							<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<div class="form-group">
 									<label for="cus_id_doc">Customer ID </label> <span class="required">* </span>
 									<input type="text" class="form-control" id="cus_id_doc" name="cus_id_doc" value='<?php if (isset($cus_id)) echo $cus_id; ?>' readonly tabindex="1">
@@ -1132,7 +1156,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="docHistoryDiv">
+								<div class="form-group table-responsive" id="docHistoryDiv">
 
 								</div>
 							</div>
@@ -1152,7 +1176,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="row">
 
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="signDocResetDiv">
+								<div class="form-group table-responsive" id="signDocResetDiv">
 
 								</div>
 							</div>
@@ -1174,7 +1198,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="row">
 
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="chequeResetDiv">
+								<div class="form-group table-responsive" id="chequeResetDiv">
 
 								</div>
 							</div>
@@ -1192,7 +1216,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="card-body" id="mortdivform">
 							<div class="row">
 
-								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="mortgage_process"> Mortgage Process</label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="mortgage_process" name="mortgage_process" tabindex="8">
@@ -1330,7 +1354,7 @@ if (sizeof($documentationInfo) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="mort_doc_upd" style="display: none;">
 										<div class="form-group">
 											<label for="mortgage_document_upd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
-											<input type="file" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
+											<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
 											<input type="hidden" id="mortgage_doc_upd" name="mortgage_doc_upd" value="">
 											<span class="text-danger" id="mortgagedocUpdCheck" style='display:none'> Upload Mortgage Document </span>
 										</div>
@@ -1368,7 +1392,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="card-body">
 							<div class="row">
 
-								<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
 										<label for="endorsement_process"> Endorsement Process</label> <span class="required">&nbsp;*</span>
 										<select type="text" class="form-control" id="endorsement_process" name="endorsement_process" tabindex="24">
@@ -1458,7 +1482,7 @@ if (sizeof($documentationInfo) > 0) {
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
-										<label for="vehicle_reg_no"> Vehicle Reg No. </label> 
+										<label for="vehicle_reg_no"> Vehicle Reg No. </label>
 										<input type="text" class="form-control" id="vehicle_reg_no" name="vehicle_reg_no" placeholder="Enter Vehicle No" value="" tabindex="32">
 										<span class="text-danger" id="vehicle_reg_noCheck" style='display:none'> Enter Vehicle No </span>
 									</div>
@@ -1499,7 +1523,7 @@ if (sizeof($documentationInfo) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="end_doc_upd" style="display: none;">
 									<div class="form-group">
 										<label for="RC_document_upd"> RC Uploads </label> <span class="required">&nbsp;*</span>
-										<input type="file" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="38">
+										<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="38">
 										<input type="hidden" id="rc_doc_upd" name="rc_doc_upd" value="">
 										<span class="text-danger" id="rcdocUpdCheck" style='display:none'> Upload RC </span>
 									</div>
@@ -1537,7 +1561,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="goldResetDiv">
+								<div class="form-group table-responsive" id="goldResetDiv">
 
 								</div>
 							</div>
@@ -1554,7 +1578,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="documentResetDiv">
+								<div class="form-group table-responsive" id="documentResetDiv">
 
 								</div>
 							</div>
@@ -1569,7 +1593,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group fingerprintTable">
+								<div class="form-group table-responsive fingerprintTable">
 
 								</div>
 							</div>
@@ -1596,7 +1620,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="card-body">
 						<div class="row">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-								<div class="form-group" id="oldCusDataDiv">
+								<div class="form-group table-responsive" id="oldCusDataDiv">
 
 								</div>
 							</div>
@@ -1746,7 +1770,7 @@ if (sizeof($documentationInfo) > 0) {
 				</div>
 				</br>
 
-				<div id="updatedFamTable">
+				<div id="updatedFamTable" class=" table-responsive">
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
@@ -1845,7 +1869,7 @@ if (sizeof($documentationInfo) > 0) {
 				</div>
 				</br>
 
-				<div id="propertyTable">
+				<div id="propertyTable" class="table-responsive">
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
@@ -1952,7 +1976,7 @@ if (sizeof($documentationInfo) > 0) {
 				</div>
 				</br>
 
-				<div id="bankTable">
+				<div id="bankTable" class="table-responsive">
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
@@ -2064,7 +2088,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="upd"> Uploads </label>
-								<input type="file" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()" tabindex='1'>
+								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()" tabindex='1'>
 								<span class="text-danger" id="docupdCheck" style="display: none;"> Upload Document </span>
 							</div>
 						</div>
@@ -2077,7 +2101,7 @@ if (sizeof($documentationInfo) > 0) {
 					</div>
 					</br>
 
-					<div id="signTable" style="overflow-x: auto;">
+					<div id="signTable" class="table-responsive">
 						<table class="table custom-table modalTable">
 							<thead>
 								<tr>
@@ -2191,7 +2215,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="upd"> Uploads </label>
-								<input type="file" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple onchange="chequefilesCount()" tabindex='1'>
+								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple onchange="chequefilesCount()" tabindex='1'>
 								<span class="text-danger" id="chequeupdCheck" style='display:none'> Upload Cheque </span>
 							</div>
 						</div>
@@ -2208,7 +2232,7 @@ if (sizeof($documentationInfo) > 0) {
 					</br>
 
 
-					<div id="chequeTable" style="overflow-x: auto;">
+					<div id="chequeTable" class="table-responsive">
 						<table class="table custom-table">
 							<thead>
 								<tr>
@@ -2309,7 +2333,7 @@ if (sizeof($documentationInfo) > 0) {
 				</br>
 
 
-				<div id="feedbackTable">
+				<div id="feedbackTable" class="table-responsive">
 					<table class="table custom-table">
 						<thead>
 							<tr>
@@ -2419,12 +2443,12 @@ if (sizeof($documentationInfo) > 0) {
 								<span class="text-danger" id="goldValueCheck" style='display:none'> Enter Value </span>
 							</div>
 						</div>
-						
+
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="gold_upload"> Upload </label>
 								<input type="hidden" name="goldupload" id="goldupload">
-								<input type="file" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
+								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
 								<span class="text-danger" id="gold_uploadCheck" style="display:none"> Please Upload files </span>
 							</div>
 						</div>
@@ -2437,7 +2461,7 @@ if (sizeof($documentationInfo) > 0) {
 					</br>
 
 
-					<div id="goldTable">
+					<div id="goldTable" class="table-responsive">
 						<table class="table custom-table">
 							<thead>
 								<tr>
@@ -2561,7 +2585,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="DocumentUpd"> Document Uploads </label>
-								<input type="file" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="1">
+								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="1">
 								<span class="text-danger" id="docinfoupdCheck" style='display:none'> Please Select Document </span>
 							</div>
 						</div>
@@ -2574,7 +2598,7 @@ if (sizeof($documentationInfo) > 0) {
 					</br>
 
 
-					<div id="docModalDiv" style="overflow-x: auto;">
+					<div id="docModalDiv" class="table-responsive">
 						<table class="table custom-table">
 							<thead>
 								<tr>
@@ -2691,7 +2715,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="upload"> Upload </label>
-							<input type="file" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
+							<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
 							<span class="text-danger" id="proofUploadCheck" style="display:none"> Upload </span>
 						</div>
 					</div>
@@ -2705,7 +2729,7 @@ if (sizeof($documentationInfo) > 0) {
 				</div>
 				</br>
 
-				<div id="kycTable">
+				<div id="kycTable" class="table-responsive">
 					<table class="table custom-table modalTable">
 						<thead>
 							<tr>
@@ -2741,7 +2765,7 @@ if (sizeof($documentationInfo) > 0) {
 				</button>
 			</div>
 			<div class="modal-body">
-				<div id="nocsummaryModal">
+				<div id="nocsummaryModal" class="table-responsive">
 
 				</div>
 			</div>
@@ -2808,25 +2832,6 @@ if (sizeof($documentationInfo) > 0) {
 								<span class="text-danger" id="tempoutremarksCheck" style='display:none'> Please Enter Remarks </span>
 							</div>
 						</div>
-						<!-- <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempout_person"> Given to </label> <span class="required">&nbsp;*</span>
-							<select class='form-control' id='tempout_person' name='tempout_person' tabindex="4">
-								<option value="">Select Given Person</option>
-								<option value="1">Customer</option>
-								<option value="2">Family Member</option>
-							</select>
-							<span class="text-danger" id="tempoutpersonCheck" style='display:none'> Please Select Given Person </span>
-						</div>
-					</div>
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
-							<label for="tempout_name"> Person Name </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="tempout_name" name="tempout_name" value="" tabindex="5" readonly placeholder="Select Given to Person" />
-							<select class='form-control' id='tempout_rel_name' name='tempout_rel_name' style="display: none;" tabindex="5"></select>
-							<span class="text-danger" id="tempoutrelnameCheck" style='display:none'> Please Select Person name </span>
-						</div>
-					</div> -->
 						<div class="col-xl-2 col-lg-2 col-md-4 col-sm-4 col-12">
 							<input type="hidden" name="req_id_tempout" id="req_id_tempout" value=''>
 							<input type="hidden" name="cus_id_tempout" id="cus_id_tempout" value=''>
