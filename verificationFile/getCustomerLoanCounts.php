@@ -21,7 +21,7 @@ while($res = $result->fetch()){
 }
 
 if($records['loan_count'] > 0){
-    $result = $connect->query("SELECT created_date FROM `loan_issue` where cus_id='$cus_id' and balance_amount = 0 GROUP BY created_date ");
+    $result = $connect->query("SELECT created_date FROM `loan_issue` where cus_id='$cus_id' and balance_amount = 0 ORDER BY created_date DESC LIMIT 1");
     $res = $result->fetch();
     $first_loan_date = date('d-m-Y',strtotime($res['created_date']));
 
