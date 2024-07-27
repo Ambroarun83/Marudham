@@ -1512,6 +1512,8 @@
         }
 
         function searchFunction(table_name) {
+            let DACC = <?php echo DACC; ?>;
+
             $('#search').attr({
                 'title': 'Press Ctrl+Enter to search',
                 'autocomplete': 'off'
@@ -1536,6 +1538,13 @@
                     $('.dropdown').removeClass('active');
                 }
             });
+
+            // Check if DACC is 1 and hide Excel button if true
+            if (DACC === 1) {
+                // Find and remove the Excel button
+                let table = $(`#${table_name}`).DataTable();
+                table.buttons().container().find('.buttons-excel').hide();
+            }
         }
 
 

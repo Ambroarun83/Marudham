@@ -18,6 +18,7 @@ $company_id           = '';
 $branch_id           = '';
 $line_id           = '';
 $group_id           = '';
+$download_access = '';
 $mastermodule    = '';
 $company_creation      = '';
 $branch_creation = '';
@@ -147,6 +148,7 @@ if($idupd>0)
 			$agentforstaff          		     = $getUser['agentforstaff'];
 			$line_id          		     = $getUser['line_id'];
 			$group_id          		     = $getUser['group_id'];
+			$download_access          		     = $getUser['download_access'];
 			$mastermodule          		     = $getUser['mastermodule'];
 			$company_creation          		     = $getUser['company_creation'];
 			$branch_creation          		     = $getUser['branch_creation'];
@@ -480,6 +482,18 @@ if($idupd>0)
 												<option value="">Select Group Name</option>
 											</select>
 											<span class="text-danger" style='display:none' id='groupCheck'>Please select Group Name</span>
+                                        </div>
+                                    </div>
+									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<br>
+												<label>Download Access</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input class="form-check-input" type="radio" name="download_access" id="da_yes" value="0" <?php if($idupd > 0){ if($download_access==0){ echo'checked'; }} ?>>
+													<label class="form-check-label" for="download_access1">Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input class="form-check-input" type="radio" name="download_access" id="da_no" value="1" <?php if($idupd > 0){ if($download_access==1){ echo'checked'; }}?> >
+													<label class="form-check-label" for="download_access2">No</label>
+										<!-- <input type="checkbox" value="Yes"  tabindex="10" id="downloan_access" name="downloan_access">&nbsp;&nbsp; -->
+										<!-- <label class="custom-control-label" for="downloan_access">Download Access</label> -->
                                         </div>
                                     </div>
 								</div>
