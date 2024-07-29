@@ -5,8 +5,9 @@ include("iedit-config.php");
 include("adminclass.php");
 
 $userObj = new admin();
-$idupd = $_SESSION['userid'];
+$idupd = '';
+$user_id = $_SESSION['userid']??'';
 
-$getuserdetails  = $userObj->getuser($mysqli, $idupd);
+$getuserdetails  = $userObj->getuser($mysqli, $user_id);
 
 date_default_timezone_set('Asia/Calcutta');

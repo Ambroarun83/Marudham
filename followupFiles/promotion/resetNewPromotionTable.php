@@ -10,7 +10,7 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
 
 <table class="table custom-table" id='new_promo_table' data-id='new_promotion'>
     <thead>
-        <th>Date</th>
+        <th width="10%">Date</th>
         <th>Customer ID</th>
         <th>Customer Name</th>
         <th>Mobile No.</th>
@@ -21,45 +21,45 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
         <th>Follow Date</th>
     </thead>
     <tbody>
-        <?php while($row =  $sql->fetch_assoc()){?>
+        <?php while ($row =  $sql->fetch_assoc()) { ?>
             <tr>
-                <td width="10%"><?php echo date('d-m-Y',strtotime($row['created_date'])); ?></td>
-                <td><?php echo $row['cus_id'] ; ?></td>
+                <td><?php echo date('d-m-Y', strtotime($row['created_date'])); ?></td>
+                <td><?php echo $row['cus_id']; ?></td>
                 <td><?php echo $row['cus_name']; ?></td>
                 <td><?php echo $row['mobile']; ?></td>
                 <td><?php echo $row['area']; ?></td>
                 <td><?php echo $row['sub_area']; ?></td>
                 <td>
                     <?php  //for intrest or not intrest choice to make
-                        // if($row['int_status'] == '' or $row['int_status'] == NULL){
+                    // if($row['int_status'] == '' or $row['int_status'] == NULL){
 
-                            $action="<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
-                            
-                            $action .= "<a class='intrest' data-toggle='modal' data-target='#addPromotion' data-id='".$row['cus_id']."'><span>Interested</span></a>
-                            <a class='not-intrest' data-toggle='modal' data-target='#addPromotion' data-id='".$row['cus_id']."'><span>Not Interested</span></a>";
-                            $action .= "</div></div>";
-                            echo $action;
+                    $action = "<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
 
-                        // }elseif($row['int_status'] == '0'){
-                        //     echo 'Interested';
-                        // }elseif($row['int_status'] == '1'){
-                        //     echo 'Not Interested';
-                        // }
+                    $action .= "<a class='intrest' data-toggle='modal' data-target='#addPromotion' data-id='" . $row['cus_id'] . "'><span>Interested</span></a>
+                            <a class='not-intrest' data-toggle='modal' data-target='#addPromotion' data-id='" . $row['cus_id'] . "'><span>Not Interested</span></a>";
+                    $action .= "</div></div>";
+                    echo $action;
+
+                    // }elseif($row['int_status'] == '0'){
+                    //     echo 'Interested';
+                    // }elseif($row['int_status'] == '1'){
+                    //     echo 'Not Interested';
+                    // }
                     ?>
                 </td>
                 <td>
                     <?php //for promotion chart
-                        echo "<input type='button' class='btn btn-primary promo-chart' data-id='".$row['cus_id']."' data-toggle='modal' data-target='#promoChartModal' value='View' />";
+                    echo "<input type='button' class='btn btn-primary promo-chart' data-id='" . $row['cus_id'] . "' data-toggle='modal' data-target='#promoChartModal' value='View' />";
                     ?>
                 </td>
                 <td>
-                    <?php 
-                    $qry = $con->query("SELECT follow_date FROM new_promotion WHERE cus_id = '".$row['cus_id']."' ORDER BY created_date DESC limit 1");
+                    <?php
+                    $qry = $con->query("SELECT follow_date FROM new_promotion WHERE cus_id = '" . $row['cus_id'] . "' ORDER BY created_date DESC limit 1");
                     //take last promotion follow up date inserted from new promotion table
-                    if($qry->num_rows > 0){
+                    if ($qry->num_rows > 0) {
                         $fdate = $qry->fetch_assoc()['follow_date'];
-                        echo date('d-m-Y',strtotime($fdate));
-                    }else{
+                        echo date('d-m-Y', strtotime($fdate));
+                    } else {
                         echo '';
                     }
                     ?></td>
@@ -87,6 +87,9 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
                 collectionLayout: 'fixed four-column',
             }
         ],
+        'drawCallback': function() {
+            searchFunction('new_promo_table');
+        }
     })
     $('.dropdown').click(function(event) {
         event.preventDefault();
@@ -100,7 +103,7 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
             $('.dropdown').removeClass('active');
         }
     });
-    $('#new_promo_table tbody tr').not('th').each(function(){
+    $('#new_promo_table tbody tr').not('th').each(function() {
         let tddate = $(this).find('td:eq(8)').text(); // Get the text content of the 8th td element (Follow date)
         let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
         let values = new Date(datecorrection); // Create a Date object from the corrected date
@@ -109,28 +112,41 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
         let curDate = new Date(); // Get the current date
         curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
 
-        let colors = {'past':'FireBrick','current':'DarkGreen','future':'CornflowerBlue'}; // Define colors for different date types
+        let colors = {
+            'past': 'FireBrick',
+            'current': 'DarkGreen',
+            'future': 'CornflowerBlue'
+        }; // Define colors for different date types
 
-        if(tddate != '' && values != 'Invalid Date'){ // Check if the extracted date and the created Date object are valid
+        if (tddate != '' && values != 'Invalid Date') { // Check if the extracted date and the created Date object are valid
 
-            if(values < curDate){ // Compare the extracted date with the current date
-                $(this).find('td:eq(8)').css({'background-color':colors.past, 'color':'white'}); // Apply styling for past dates
-            }else if(values > curDate){
-                $(this).find('td:eq(8)').css({'background-color': colors.future, 'color':'white'}); // Apply styling for future dates
-            }else {
-                $(this).find('td:eq(8)').css({'background-color':colors.current, 'color':'white'}); // Apply styling for the current date
+            if (values < curDate) { // Compare the extracted date with the current date
+                $(this).find('td:eq(8)').css({
+                    'background-color': colors.past,
+                    'color': 'white'
+                }); // Apply styling for past dates
+            } else if (values > curDate) {
+                $(this).find('td:eq(8)').css({
+                    'background-color': colors.future,
+                    'color': 'white'
+                }); // Apply styling for future dates
+            } else {
+                $(this).find('td:eq(8)').css({
+                    'background-color': colors.current,
+                    'color': 'white'
+                }); // Apply styling for the current date
             }
         }
     });
 </script>
 <style>
-    .dropdown-content{
+    .dropdown-content {
         color: black;
     }
+
     @media (max-width: 598px) {
-        #new_promo_div{
+        #new_promo_div {
             overflow: auto;
         }
     }
-    
 </style>

@@ -75,6 +75,7 @@ if(isset($_POST['req_id'])){
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('document_table');
             },
             dom: 'lBfrtip',
             buttons: [{

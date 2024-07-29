@@ -5,13 +5,13 @@ include '../ajaxconfig.php';
 <table class="table custom-table" id="feedback_table_data">
     <thead>
         <tr>
-			<th width="20%"> S.No </th>
-			<th> Feedback Label </th>
-			<th> Feedback </th>
-			<th> Remarks </th>
-			<th> ACTION </th>
+            <th width="20%"> S.No </th>
+            <th> Feedback Label </th>
+            <th> Feedback </th>
+            <th> Remarks </th>
+            <th> ACTION </th>
 
-		</tr>
+        </tr>
     </thead>
     <tbody>
 
@@ -26,7 +26,17 @@ include '../ajaxconfig.php';
             <tr>
                 <td><?php echo $i; ?></td>
                 <td><?php echo $feedback["feedback_label"]; ?></td>
-                <td><?php if($feedback["cus_feedback"] == '1'){ echo 'Bad';}else if($feedback["cus_feedback"] == '2'){ echo 'Poor';}else if($feedback["cus_feedback"] == '3'){ echo 'Average';}else if($feedback["cus_feedback"] == '4'){ echo 'Good';}else if($feedback["cus_feedback"] == '5'){ echo 'Excellent';} ?></td>
+                <td><?php if ($feedback["cus_feedback"] == '1') {
+                        echo 'Bad';
+                    } else if ($feedback["cus_feedback"] == '2') {
+                        echo 'Poor';
+                    } else if ($feedback["cus_feedback"] == '3') {
+                        echo 'Average';
+                    } else if ($feedback["cus_feedback"] == '4') {
+                        echo 'Good';
+                    } else if ($feedback["cus_feedback"] == '5') {
+                        echo 'Excellent';
+                    } ?></td>
                 <td><?php echo $feedback["feedback_remark"]; ?></td>
 
                 <td>
@@ -58,6 +68,7 @@ include '../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('feedback_table_data');
             },
             dom: 'lBfrtip',
             buttons: [{

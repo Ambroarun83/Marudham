@@ -31,14 +31,14 @@ include '../../ajaxconfig.php';
             $id = $cheque["id"];
             $updresult = $connect->query("SELECT upload_cheque_name FROM `cheque_upd` where cheque_table_id = '$id'");
             $a = 1;
-            while($upd = $updresult->fetch()){
-            $docName = $upd['upload_cheque_name'];
+            while ($upd = $updresult->fetch()) {
+                $docName = $upd['upload_cheque_name'];
                 $doc_upd_name .= "<a href=uploads/verification/cheque_upd/";
-                $doc_upd_name .= $docName ;
+                $doc_upd_name .= $docName;
                 $doc_upd_name .= " target='_blank'>";
-                $doc_upd_name .=  $a. ' ' ;
-                $doc_upd_name .= "</a>" ;
-                 $a++;
+                $doc_upd_name .=  $a . ' ';
+                $doc_upd_name .= "</a>";
+                $a++;
             }
         ?>
 
@@ -64,7 +64,7 @@ include '../../ajaxconfig.php';
                 <td><?php echo $doc_upd_name; ?></td>
 
                 <td>
-                    <a id="cheque_info_edit" value="<?php echo $cheque['id']; ?>" style="text-decoration: underline;"> ENTRY </a> 
+                    <a id="cheque_info_edit" value="<?php echo $cheque['id']; ?>" style="text-decoration: underline;"> ENTRY </a>
                 </td>
 
             </tr>
@@ -91,6 +91,7 @@ include '../../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('chequeInfo_table_data');
             },
             dom: 'lBfrtip',
             buttons: [{

@@ -9,7 +9,7 @@ $Obj = new promotionListClass($con);
 $arr = $Obj->getdetails($con, $type);
 
 if ($type == 'existing') {
-    
+
     $orgin_table_id = 'existing';
 
     $sub_status = [1 => 'Bronze', 2 => 'Silver', 3 => 'Gold', 4 => 'Platinum', 5 => 'Diamond'];
@@ -65,7 +65,7 @@ if ($type == 'existing') {
                         WHERE cp.cus_id = " . $val['cus_id'] . " ORDER BY cp.cus_reg_id DESC LIMIT 1");
             }
             $row = $sql->fetch_assoc();
-            ?>
+        ?>
             <tr>
                 <td>
                     <?php echo $sno;
@@ -101,7 +101,8 @@ if ($type == 'existing') {
                         <?php echo 'Consider'; ?>
                     </td>
                     <td>
-                        <?php echo $sub_status[$val['sub_status']]; //fetched from closed status table above mentioned    ?>
+                        <?php echo $sub_status[$val['sub_status']]; //fetched from closed status table above mentioned    
+                        ?>
                     </td>
                     <td>
                         <?php
@@ -120,7 +121,8 @@ if ($type == 'existing') {
                         <?php echo $status[$val['sub_status']]; ?>
                     </td>
                     <td>
-                        <?php echo $sub_status[$val['sub_status']]; //fetched from request table above mentioned     ?>
+                        <?php echo $sub_status[$val['sub_status']]; //fetched from request table above mentioned     
+                        ?>
                     </td>
                     <?php if ($type != 'existing') { ?>
                         <td>
@@ -156,14 +158,14 @@ if ($type == 'existing') {
                 </td>
                 <td>
                     <?php  //for intrest or not intrest choice to make
-                        $action = "<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
+                    $action = "<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
 
-                        $action .= "<a class='intrest' data-toggle='modal' data-target='#addPromotion' data-id='" . $row['cus_id'] . "'><span>Interested</span></a>
+                    $action .= "<a class='intrest' data-toggle='modal' data-target='#addPromotion' data-id='" . $row['cus_id'] . "'><span>Interested</span></a>
                             <a class='not-intrest' data-toggle='modal' data-target='#addPromotion' data-id='" . $row['cus_id'] . "'><span>Not Interested</span></a>";
 
-                        $action .= "</div></div>";
-                        echo $action;
-                        ?>
+                    $action .= "</div></div>";
+                    echo $action;
+                    ?>
                 </td>
                 <td>
                     <?php
@@ -195,18 +197,21 @@ if ($type == 'existing') {
         ],
         dom: 'lBfrtip',
         buttons: [{
-            extend: 'excel',
-        },
-        {
-            extend: 'colvis',
-            collectionLayout: 'fixed four-column',
-        }
+                extend: 'excel',
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
         ],
+        'drawCallback': function() {
+            searchFunction('promotion_list');
+        }
     })
 
     let dropdownOpen = false;
 
-    $('.dropdown').off('click').click(function (event) {
+    $('.dropdown').off('click').click(function(event) {
         event.preventDefault();
         if (!dropdownOpen) {
             $('.dropdown').not(this).removeClass('active');
@@ -217,7 +222,7 @@ if ($type == 'existing') {
         }
     });
 
-    $(document).click(function (event) {
+    $(document).click(function(event) {
         var target = $(event.target);
         if (!target.closest('.dropdown').length) {
             $('.dropdown').removeClass('active');
@@ -225,11 +230,11 @@ if ($type == 'existing') {
         }
     });
 
-    $('.intrest, .not-intrest').click(function (event) {
+    $('.intrest, .not-intrest').click(function(event) {
         event.stopPropagation();
     });
 
-    $('#promotion_list tbody tr').not('th').each(function () {
+    $('#promotion_list tbody tr').not('th').each(function() {
         let tddate = $(this).find('td:eq(14)').text(); // Get the text content of the 14th td element (Follow date)
         let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
         let values = new Date(datecorrection); // Create a Date object from the corrected date
@@ -238,21 +243,34 @@ if ($type == 'existing') {
         let curDate = new Date(); // Get the current date
         curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
 
-        let colors = { 'past': 'FireBrick', 'current': 'DarkGreen', 'future': 'CornflowerBlue' }; // Define colors for different date types
+        let colors = {
+            'past': 'FireBrick',
+            'current': 'DarkGreen',
+            'future': 'CornflowerBlue'
+        }; // Define colors for different date types
 
         if (tddate != '' && values != 'Invalid Date') { // Check if the extracted date and the created Date object are valid
 
             if (values < curDate) { // Compare the extracted date with the current date
-                $(this).find('td:eq(14)').css({ 'background-color': colors.past, 'color': 'white' }); // Apply styling for past dates
+                $(this).find('td:eq(14)').css({
+                    'background-color': colors.past,
+                    'color': 'white'
+                }); // Apply styling for past dates
             } else if (values > curDate) {
-                $(this).find('td:eq(14)').css({ 'background-color': colors.future, 'color': 'white' }); // Apply styling for future dates
+                $(this).find('td:eq(14)').css({
+                    'background-color': colors.future,
+                    'color': 'white'
+                }); // Apply styling for future dates
             } else {
-                $(this).find('td:eq(14)').css({ 'background-color': colors.current, 'color': 'white' }); // Apply styling for the current date
+                $(this).find('td:eq(14)').css({
+                    'background-color': colors.current,
+                    'color': 'white'
+                }); // Apply styling for the current date
             }
         }
     });
 
-    $('#promotion_list tbody tr').not('th').each(function () {
+    $('#promotion_list tbody tr').not('th').each(function() {
         let tddate = $(this).find('td:eq(15)').text(); // Get the text content of the 15th td element (Follow date)
         let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
         let values = new Date(datecorrection); // Create a Date object from the corrected date
@@ -261,21 +279,32 @@ if ($type == 'existing') {
         let curDate = new Date(); // Get the current date
         curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
 
-        let colors = { 'past': 'FireBrick', 'current': 'DarkGreen', 'future': 'CornflowerBlue' }; // Define colors for different date types
+        let colors = {
+            'past': 'FireBrick',
+            'current': 'DarkGreen',
+            'future': 'CornflowerBlue'
+        }; // Define colors for different date types
 
         if (tddate != '' && values != 'Invalid Date') { // Check if the extracted date and the created Date object are valid
 
             if (values < curDate) { // Compare the extracted date with the current date
-                $(this).find('td:eq(15)').css({ 'background-color': colors.past, 'color': 'white' }); // Apply styling for past dates
+                $(this).find('td:eq(15)').css({
+                    'background-color': colors.past,
+                    'color': 'white'
+                }); // Apply styling for past dates
             } else if (values > curDate) {
-                $(this).find('td:eq(15)').css({ 'background-color': colors.future, 'color': 'white' }); // Apply styling for future dates
+                $(this).find('td:eq(15)').css({
+                    'background-color': colors.future,
+                    'color': 'white'
+                }); // Apply styling for future dates
             } else {
-                $(this).find('td:eq(15)').css({ 'background-color': colors.current, 'color': 'white' }); // Apply styling for the current date
+                $(this).find('td:eq(15)').css({
+                    'background-color': colors.current,
+                    'color': 'white'
+                }); // Apply styling for the current date
             }
         }
     });
-
-
 </script>
 <style>
     .dropdown-content {

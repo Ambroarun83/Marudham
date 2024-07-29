@@ -57,6 +57,9 @@ $(document).ready(function () {
                 // Update footer for the current column
                 $(api.column(colIndex).footer()).html(`<b>` + total.toLocaleString() + `</b>`);
             });
+        },
+        'drawCallback': function() {
+            searchFunction('collection_report_table');
         }
     });
     $('#reset_btn').click(function () {

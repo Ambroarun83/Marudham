@@ -31,6 +31,9 @@ $(document).ready(function () {
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
         ],
+        'drawCallback': function () {
+            searchFunction('request_report_table');
+        },
         "footerCallback": function (row, data, start, end, display) {
             var api = this.api();
 

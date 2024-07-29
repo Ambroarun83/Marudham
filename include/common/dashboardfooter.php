@@ -978,40 +978,6 @@
                 }
             });
 
-            var conf_follow_table = $('#conf_follow_table').DataTable({
-                "order": [
-                    [0, "desc"]
-                ],
-                'processing': true,
-                'serverSide': true,
-                'serverMethod': 'post',
-                'ajax': {
-                    'url': 'followupFiles/confirmation/resetConfirmationFollowupTable.php',
-                    'data': function(data) {
-                        var search = $('input[type=search]').val();
-                        data.search = search;
-                    }
-                },
-                dom: 'lBfrtip',
-                buttons: [{
-                        extend: 'excel',
-                        title: "Confirmation Followup List"
-                    },
-                    {
-                        extend: 'colvis',
-                        collectionLayout: 'fixed four-column',
-                    }
-                ],
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                'drawCallback': function() {
-                    searchFunction('conf_follow_table');
-                    confirmationTableOnClick();
-                }
-            });
-
             var loan_follow_table = $('#loan_follow_table').DataTable({
                 "order": [
                     [0, "desc"]
@@ -1043,6 +1009,40 @@
                 'drawCallback': function() {
                     searchFunction('loan_follow_table');
                     loanFollowupTableOnclick();
+                }
+            });
+
+            var conf_follow_table = $('#conf_follow_table').DataTable({
+                "order": [
+                    [0, "desc"]
+                ],
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url': 'followupFiles/confirmation/resetConfirmationFollowupTable.php',
+                    'data': function(data) {
+                        var search = $('input[type=search]').val();
+                        data.search = search;
+                    }
+                },
+                dom: 'lBfrtip',
+                buttons: [{
+                        extend: 'excel',
+                        title: "Confirmation Followup List"
+                    },
+                    {
+                        extend: 'colvis',
+                        collectionLayout: 'fixed four-column',
+                    }
+                ],
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                'drawCallback': function() {
+                    searchFunction('conf_follow_table');
+                    confirmationTableOnClick();
                 }
             });
 
@@ -1515,15 +1515,15 @@
             let DACC = <?php echo DACC; ?>;
 
             $('#search').attr({
-                'title': 'Press Ctrl+Enter to search',
+                'title': 'Click Outside to search',
                 'autocomplete': 'off'
             })
             // new search on keyup event for search by display content
-            $('#search').off().on('keypress', function(e) {
-                if (e.which == 10 && e.ctrlKey == true) { //control and enter key pressed then key value will be 10
+            $('#search').off().on('blur', function(e) {
+                // if (e.which == 10 && e.ctrlKey == true) { //control and enter key pressed then key value will be 10
                     let table = $(`#${table_name}`).DataTable();
                     table.search(this.value).draw();
-                }
+                // }
             });
 
             $('.dropdown').click(function(event) {

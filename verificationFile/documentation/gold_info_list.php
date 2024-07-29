@@ -26,7 +26,7 @@ function moneyFormatIndia($num)
 
 <table class="table custom-table" id="gold_table">
     <thead>
-    <tr>
+        <tr>
             <th width="15%"> S.No </th>
             <th> Gold Status </th>
             <th> Gold Type </th>
@@ -47,9 +47,13 @@ function moneyFormatIndia($num)
         while ($gold = $goldInfo->fetch()) {
 
         ?>
-             <tr>
+            <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php if($gold["gold_sts"] == '0'){ echo 'Old';}else if($gold["gold_sts"] == '1'){echo 'New'; } ?></td>
+                <td><?php if ($gold["gold_sts"] == '0') {
+                        echo 'Old';
+                    } else if ($gold["gold_sts"] == '1') {
+                        echo 'New';
+                    } ?></td>
                 <td> <?php echo $gold["gold_type"]; ?></td>
                 <td> <?php echo $gold["Purity"]; ?></td>
                 <td><?php echo $gold["gold_Count"]; ?></td>
@@ -80,6 +84,7 @@ function moneyFormatIndia($num)
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('gold_table');
             },
             dom: 'lBfrtip',
             buttons: [{

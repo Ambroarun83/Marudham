@@ -82,6 +82,7 @@ if(isset($_POST['cus_id'])){
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('docModalTable');
             },
             dom: 'lBfrtip',
             buttons: [{

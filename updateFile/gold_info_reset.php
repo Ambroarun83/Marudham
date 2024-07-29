@@ -96,6 +96,7 @@ function moneyFormatIndia($num)
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('goldInfo_table_data');
             },
             dom: 'lBfrtip',
             buttons: [{

@@ -127,6 +127,7 @@ include '../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('kyc_data_table');
             },
             dom: 'lBfrtip',
             buttons: [{

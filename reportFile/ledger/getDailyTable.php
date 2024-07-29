@@ -91,7 +91,7 @@ while ($row = $qry->fetch_assoc()) {
         $end = new DateTime($currMonth->format('Y-m-t'));
         $total_dates = 0;
         for ($date = $start; $date <= $end; $date->modify('+1 day')) {
-            $total_dates ++;
+            $total_dates++;
         ?>
 
             <th>
@@ -152,7 +152,7 @@ while ($row = $qry->fetch_assoc()) {
     </tbody>
     <tfoot>
         <?php
-        $tfoot = "<tr><td colspan='8'><b>Total</b></td><td><b>" . moneyFormatIndia($due_amt_sum) . "</b></td><td><b>" . moneyFormatIndia($opening_balance_sum) . "</b></td><td colspan=".$total_dates."></td><td><b>" . moneyFormatIndia($total_paid_sum) . "</b></td><td><b>" . moneyFormatIndia($closing_balance_sum) . "</b></td></tr>";
+        $tfoot = "<tr><td colspan='8'><b>Total</b></td><td><b>" . moneyFormatIndia($due_amt_sum) . "</b></td><td><b>" . moneyFormatIndia($opening_balance_sum) . "</b></td><td colspan=" . $total_dates . "></td><td><b>" . moneyFormatIndia($total_paid_sum) . "</b></td><td><b>" . moneyFormatIndia($closing_balance_sum) . "</b></td></tr>";
         echo $tfoot;
         ?>
     </tfoot>
@@ -177,6 +177,9 @@ while ($row = $qry->fetch_assoc()) {
                     collectionLayout: 'fixed four-column',
                 }
             ],
+            'drawCallback': function() {
+                searchFunction('daily_table');
+            }
         });
     });
 </script>

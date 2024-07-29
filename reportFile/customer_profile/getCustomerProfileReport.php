@@ -95,7 +95,15 @@ $column = array(
 );
 
 $query = "SELECT 
-            cp.*,
+            cp.cus_id,cp.cus_name,
+            cp.mobile1,
+            cp.area_line,
+            cp.area_group,
+            cp.occupation_type,
+            cp.occupation_details,
+            cp.residential_type,
+            cp.residential_details,
+            cp.blood_group,
             fam.famname,
             fam.relationship,
             al.area_name,
@@ -189,10 +197,10 @@ foreach ($result as $row) {
 
 function count_all_data($connect)
 {
-    $query = "SELECT id FROM customer_profile cp GROUP BY cus_id ";
+    $query = "SELECT COUNT(*) as count FROM customer_profile ";
     $statement = $connect->prepare($query);
     $statement->execute();
-    return $statement->rowCount();
+    return $statement->fetch()['count'];
 }
 
 $output = array(

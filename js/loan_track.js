@@ -50,7 +50,7 @@ $(document).ready(function () {
     })
 
     $('#close_btn').click(function () {
-        $('.loanlist_card').hide(); $('#loanTrackDiv table tbody').empty()
+        $('.loanlist_card, #close_btn').hide(); $('#loanTrackDiv table tbody').empty()
         $('#customer_list_card, #search_card').show();
     })
 })

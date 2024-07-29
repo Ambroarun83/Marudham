@@ -2,7 +2,7 @@
 include '../ajaxconfig.php';
 ?>
 
-<table class="table custom-table " id="famdatatable" >
+<table class="table custom-table " id="famdatatable">
     <thead>
         <tr>
             <th width="25%">S.No</th>
@@ -14,22 +14,22 @@ include '../ajaxconfig.php';
     <tbody>
         <?php
         $cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
-        $famInfo = $connect -> query("SELECT * FROM `verification_family_info` where cus_id = '$cus_id' order by id desc");
+        $famInfo = $connect->query("SELECT * FROM `verification_family_info` where cus_id = '$cus_id' order by id desc");
 
-            $i = 1;
-            while ($fam = $famInfo ->fetch()) {
+        $i = 1;
+        while ($fam = $famInfo->fetch()) {
         ?>
-                <tr>
-                    <td><?php echo $i; ?></td>
-                    <td><?php  echo $fam["famname"]; ?></td>
-                    <td><?php  echo $fam["relationship"]; ?></td>
-                    <td>
-                        <a id="verification_fam_edit" value="<?php  echo $fam['id'];?>" > <span class="icon-border_color"></span></a> &nbsp
-                        <a id="verification_fam_delete" value="<?php echo $fam['id']; ?>" > <span class='icon-trash-2'></span> </a>
-                    </td>
-                </tr>
+            <tr>
+                <td><?php echo $i; ?></td>
+                <td><?php echo $fam["famname"]; ?></td>
+                <td><?php echo $fam["relationship"]; ?></td>
+                <td>
+                    <a id="verification_fam_edit" value="<?php echo $fam['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp
+                    <a id="verification_fam_delete" value="<?php echo $fam['id']; ?>"> <span class='icon-trash-2'></span> </a>
+                </td>
+            </tr>
         <?php $i = $i + 1;
-            }
+        }
         ?>
     </tbody>
 </table>
@@ -50,6 +50,7 @@ include '../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('famdatatable');
             },
             dom: 'lBfrtip',
             buttons: [{
