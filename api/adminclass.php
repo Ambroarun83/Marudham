@@ -4424,56 +4424,56 @@ class admin
 		}
 	}
 
-	function getLoanCalculationForVerification($mysqli, $req_id)
-	{
-		$detailrecords = array();
-		$Qry = $mysqli->query("SELECT * FROM `verification_loan_calculation` WHERE req_id = '" . strip_tags($req_id) . "' ");
-		if ($mysqli->affected_rows > 0) {
-			while ($row = $Qry->fetch_assoc()) {
-				$detailrecords['loan_cal_id'] = $row['loan_cal_id'];
-				// $detailrecords['req_id'] = $row['req_id'];
-				$detailrecords['cus_id_loan'] = $row['cus_id_loan'];
-				$detailrecords['cus_name_loan'] = $row['cus_name_loan'];
-				$detailrecords['cus_data_loan'] = $row['cus_data_loan'];
-				$detailrecords['mobile_loan'] = $row['mobile_loan'];
-				$detailrecords['pic_loan'] = $row['pic_loan'];
-				$detailrecords['loan_category'] = $row['loan_category'];
-				$detailrecords['sub_category'] = $row['sub_category'];
-				$detailrecords['tot_value'] = $row['tot_value'];
-				$detailrecords['ad_amt'] = $row['ad_amt'];
-				$detailrecords['loan_amt'] = $row['loan_amt'];
-				$detailrecords['profit_type'] = $row['profit_type'];
-				$detailrecords['due_method_calc'] = $row['due_method_calc'];
-				$detailrecords['due_type'] = $row['due_type'];
-				$detailrecords['profit_method'] = $row['profit_method'];
-				$detailrecords['calc_method'] = $row['calc_method'];
-				$detailrecords['due_method_scheme'] = $row['due_method_scheme'];
-				$detailrecords['day_scheme'] = $row['day_scheme'];
-				$detailrecords['scheme_name'] = $row['scheme_name'];
-				$detailrecords['int_rate'] = $row['int_rate'];
-				$detailrecords['due_period'] = $row['due_period'];
-				$detailrecords['doc_charge'] = $row['doc_charge'];
-				$detailrecords['proc_fee'] = $row['proc_fee'];
-				$detailrecords['loan_amt_cal'] = $row['loan_amt_cal'];
-				$detailrecords['principal_amt_cal'] = $row['principal_amt_cal'];
-				$detailrecords['int_amt_cal'] = $row['int_amt_cal'];
-				$detailrecords['tot_amt_cal'] = $row['tot_amt_cal'];
-				$detailrecords['due_amt_cal'] = $row['due_amt_cal'];
-				$detailrecords['doc_charge_cal'] = $row['doc_charge_cal'];
-				$detailrecords['proc_fee_cal'] = $row['proc_fee_cal'];
-				$detailrecords['net_cash_cal'] = $row['net_cash_cal'];
-				$detailrecords['due_start_from'] = $row['due_start_from'];
-				$detailrecords['maturity_month'] = $row['maturity_month'];
-				$detailrecords['collection_method'] = $row['collection_method'];
-				$detailrecords['communication'] = $row['communication'];
-				$detailrecords['com_audio'] = $row['com_audio'];
-				$detailrecords['verification_person'] = $row['verification_person'];
-				$detailrecords['verification_location'] = $row['verification_location'];
-				$detailrecords['cus_status'] = $row['cus_status'];
+		function getLoanCalculationForVerification($mysqli, $req_id)
+		{
+			$detailrecords = array();
+			$Qry = $mysqli->query("SELECT * FROM `verification_loan_calculation` WHERE req_id = '" . strip_tags($req_id) . "' ");
+			if ($mysqli->affected_rows > 0) {
+				while ($row = $Qry->fetch_assoc()) {
+					$detailrecords['loan_cal_id'] = $row['loan_cal_id'];
+					// $detailrecords['req_id'] = $row['req_id'];
+					$detailrecords['cus_id_loan'] = $row['cus_id_loan'];
+					$detailrecords['cus_name_loan'] = $row['cus_name_loan'];
+					$detailrecords['cus_data_loan'] = $row['cus_data_loan'];
+					$detailrecords['mobile_loan'] = $row['mobile_loan'];
+					$detailrecords['pic_loan'] = $row['pic_loan'];
+					$detailrecords['loan_category'] = $row['loan_category'];
+					$detailrecords['sub_category'] = $row['sub_category'];
+					$detailrecords['tot_value'] = $row['tot_value'];
+					$detailrecords['ad_amt'] = $row['ad_amt'];
+					$detailrecords['loan_amt'] = $row['loan_amt'];
+					$detailrecords['profit_type'] = $row['profit_type'];
+					$detailrecords['due_method_calc'] = $row['due_method_calc'];
+					$detailrecords['due_type'] = $row['due_type'];
+					$detailrecords['profit_method'] = $row['profit_method'];
+					$detailrecords['calc_method'] = $row['calc_method'];
+					$detailrecords['due_method_scheme'] = $row['due_method_scheme'];
+					$detailrecords['day_scheme'] = $row['day_scheme'];
+					$detailrecords['scheme_name'] = $row['scheme_name'];
+					$detailrecords['int_rate'] = $row['int_rate'];
+					$detailrecords['due_period'] = $row['due_period'];
+					$detailrecords['doc_charge'] = $row['doc_charge'];
+					$detailrecords['proc_fee'] = $row['proc_fee'];
+					$detailrecords['loan_amt_cal'] = $row['loan_amt_cal'];
+					$detailrecords['principal_amt_cal'] = $row['principal_amt_cal'];
+					$detailrecords['int_amt_cal'] = $row['int_amt_cal'];
+					$detailrecords['tot_amt_cal'] = $row['tot_amt_cal'];
+					$detailrecords['due_amt_cal'] = $row['due_amt_cal'];
+					$detailrecords['doc_charge_cal'] = $row['doc_charge_cal'];
+					$detailrecords['proc_fee_cal'] = $row['proc_fee_cal'];
+					$detailrecords['net_cash_cal'] = $row['net_cash_cal'];
+					$detailrecords['due_start_from'] = $row['due_start_from'];
+					$detailrecords['maturity_month'] = $row['maturity_month'];
+					$detailrecords['collection_method'] = $row['collection_method'];
+					$detailrecords['communication'] = $row['communication'];
+					$detailrecords['com_audio'] = $row['com_audio'];
+					$detailrecords['verification_person'] = $row['verification_person'];
+					$detailrecords['verification_location'] = $row['verification_location'];
+					$detailrecords['cus_status'] = $row['cus_status'];
+				}
 			}
+			return $detailrecords;
 		}
-		return $detailrecords;
-	}
 
 	//Get Loan calculation Category info for edit
 	function getVerificationLoanCalCategory($mysqli, $loan_cal_id)

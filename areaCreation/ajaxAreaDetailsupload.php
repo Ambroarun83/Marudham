@@ -58,7 +58,7 @@ if (isset($_FILES["file"]["type"])) {
                     $sub_area_list_creation_id = '';
                     if (isset($Row[4])) {
                         $subarea = mysqli_real_escape_string($con, $Row[4]);
-                        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $subarea . "' and status = 0";
+                        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $subarea . "' and area_id_ref = '" . $area_list_creation_id . "' and status = 0";
                         $result1 = $con->query($query) or die("Error ");
                         if ($con->affected_rows > 0) {
                             $row = $result1->fetch_assoc();

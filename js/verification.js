@@ -4269,10 +4269,10 @@ $('#sub_category').change(function () {
 
 //Fetch loan Details based on category select
 function getLoaninfo(sub_cat_id) {
-
+    let cus_id = $('#cus_id_load').val();
     $.ajax({
         url: 'requestFile/getLoanInfo.php',
-        data: { 'sub_cat_id': sub_cat_id },
+        data: { 'sub_cat_id': sub_cat_id ,"cus_id":cus_id},
         dataType: 'json',
         type: 'post',
         cache: false,
