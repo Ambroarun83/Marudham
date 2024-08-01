@@ -118,10 +118,30 @@ $(document).ready(function () {
         }
     });
 
-    $('#submit_collection').click(function () {
-        var submit_btn = $(this);
+    $('#submit_collection').click(function (event) {
+        event.preventDefault();
+        let submit_btn = $(this);
         submit_btn.attr('disabled', true);
-        validations(submit_btn);
+        if (validations()) {
+            Swal.fire({
+                title: 'Are you sure to Submit?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#009688',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then(function (result) {
+                if (result.isConfirmed) {
+                    submitCollection();
+                } else {
+                    //if cancelled, re-enable the submit button
+                    submit_btn.removeAttr('disabled');
+                }
+            })
+        } else {
+            //if the validation false, re-enable the submit button
+            submit_btn.removeAttr('disabled');
+        }
     })
 
     window.onscroll = function () {
@@ -536,9 +556,10 @@ function OnLoadFunctions(req_id, cus_id) {
                 })
                 $('.due-chart').click(function () {
                     var req_id = $(this).attr('value');
-                    dueChartList(req_id, cus_id); // To show Due Chart List.
-                    setTimeout(() => {
-                        $('.print_due_coll').click(function () {
+                    dueChartList(req_id, cus_id, function () {
+
+                        $(document).off('click', '.print_due_coll');
+                        $(document).on('click', '.print_due_coll', function () {
                             var id = $(this).attr('value');
                             Swal.fire({
                                 title: 'Print',
@@ -583,7 +604,7 @@ function OnLoadFunctions(req_id, cus_id) {
                                 }
                             })
                         })
-                    }, 1000)
+                    }); // To show Due Chart List.
                 })
                 $('.penalty-chart').click(function () {
                     var req_id = $(this).attr('value');
@@ -783,7 +804,7 @@ function getChequeNoList() {
 
 function getBankNames() {
     $.ajax({
-        url: 'accountsFile/cashtally/contra/getBankDetails.php',
+        url: 'manageUser/getBankDetails.php',
         data: {},
         dataType: 'json',
         type: 'post',
@@ -799,17 +820,14 @@ function getBankNames() {
     })
 }
 
-function validations(submit_btn) {
-    var collection_access = $('#collection_access').val();
-    var collection_mode = $('#collection_mode').val(); var bank_id = $('#bank_id').val(); var cheque_no = $('#cheque_no').val(); var trans_id = $('#trans_id').val(); var trans_date = $('#trans_date').val();
-    var collection_loc = $('#collection_loc').val(); var due_amt_track = $('#due_amt_track').val(); var penalty_track = $('#penalty_track').val(); var coll_charge_track = $('#coll_charge_track').val();
-    var pre_close_waiver = $('#pre_close_waiver').val(); var penalty_waiver = $('#penalty_waiver').val(); var coll_charge_waiver = $('#coll_charge_waiver').val()
-    var total_paid_track = $('#total_paid_track').val(); var total_waiver = $('#total_waiver').val();
-
+function validations() {
+    let collection_mode = $('#collection_mode').val(); let bank_id = $('#bank_id').val(); let cheque_no = $('#cheque_no').val(); let trans_id = $('#trans_id').val(); let trans_date = $('#trans_date').val();
+    let collection_loc = $('#collection_loc').val(); let total_paid_track = $('#total_paid_track').val(); let total_waiver = $('#total_waiver').val();
+    let retVal = true;
 
     if (collection_mode == '') {
         $('#collectionmodeCheck').show();
-        event.preventDefault();
+        retVal = false;
     } else {
         $('#collectionmodeCheck').hide();
 
@@ -817,26 +835,26 @@ function validations(submit_btn) {
             //if Cheque Chosen
             if (bank_id == '') {
                 $('#bank_idCheck').show();
-                event.preventDefault();
+                retVal = false;
             } else {
                 $('#bank_idCheck').hide();
             }
             if (cheque_no == '') {
                 $('#chequeCheck').show();
-                event.preventDefault();
+                retVal = false;
             } else {
                 $('#chequeCheck').hide();
             }
 
             if (trans_id == '') {
                 $('#transidCheck').show();
-                event.preventDefault();
+                retVal = false;
             } else {
                 $('#transidCheck').hide();
             }
             if (trans_date == '') {
                 $('#transdateCheck').show();
-                event.preventDefault();
+                retVal = false;
             } else {
                 $('#transdateCheck').hide();
             }
@@ -844,19 +862,19 @@ function validations(submit_btn) {
             //If other than cash and cheque
             if (bank_id == '') {
                 $('#bank_idCheck').show();
-                event.preventDefault();
+                retVal = false;
             } else {
                 $('#bank_idCheck').hide();
             }
             if (trans_id == '') {
                 $('#transidCheck').show();
-                event.preventDefault();
+                retVal = false;
             } else {
                 $('#transidCheck').hide();
             }
             if (trans_date == '') {
                 $('#transdateCheck').show();
-                event.preventDefault();
+                retVal = false;
             } else {
                 $('#transdateCheck').hide();
             }
@@ -865,7 +883,7 @@ function validations(submit_btn) {
 
     if (collection_loc == '') {
         $('#collectionlocCheck').show();
-        event.preventDefault();
+        retVal = false;
     } else {
         $('#collectionlocCheck').hide();
     }
@@ -873,10 +891,10 @@ function validations(submit_btn) {
     // if(collection_access == 0){
 
     // }
-    if (total_paid_track == '' || total_paid_track == 0) {
-        if (total_waiver == '' || total_waiver == 0) {
+    if (total_paid_track == '' || total_paid_track == 0 || total_paid_track == undefined) {
+        if (total_waiver == '' || total_waiver == 0 || total_waiver == undefined) {
             $('.totalpaidCheck').show();
-            event.preventDefault();
+            retVal = false;
         } else {
             $('.totalpaidCheck').hide();
         }
@@ -884,7 +902,21 @@ function validations(submit_btn) {
         $('.totalpaidCheck').hide();
     }
 
-    submit_btn.removeAttr('disabled');
+    // submit_btn.removeAttr('disabled');
+    return retVal;
+}
+function submitCollection() {
+    $.post('collectionFile/submitCollection.php', $('#collectionForm').serialize(), function (response) {
+        if (response.includes('Success')) {
+            swarlSuccessAlert(response);
+            setTimeout(function () {
+                location.reload();
+            }, 2000)
+        } else {
+            swarlErrorAlert('Error on Submit');
+            $('#submit_collection').removeAttr('disabled');
+        }
+    }, 'json')
 }
 
 function submitCommitment() {
@@ -940,7 +972,7 @@ function validateCommitment() {
 }
 
 //Due Chart List
-function dueChartList(req_id, cus_id) {
+function dueChartList(req_id, cus_id, callback) {
     // var req_id = $('#idupd').val()
     // const cus_id = $('#cusidupd').val()
     $.ajax({
@@ -957,6 +989,8 @@ function dueChartList(req_id, cus_id) {
         $.post('collectionFile/getDueMethodName.php', { req_id }, function (response) {
             $('#dueChartTitle').text('Due Chart ( ' + response['due_method'] + ' - ' + response['loan_type'] + ' )');
         }, 'json');
+
+        callback();
     })
 
 }
@@ -1036,9 +1070,9 @@ function swarlSuccessAlert(response) {
         title: response,
         icon: 'success',
         confirmButtonText: 'Ok',
-        confirmButtonColor: '#009688'
+        confirmButtonColor: '#009688',
+        timerProgressBar: true,
+        timer: 2000,
+        showConfirmButton: false
     });
 }
-document.addEventListener('load', function () {
-
-})

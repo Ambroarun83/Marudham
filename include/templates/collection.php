@@ -4,33 +4,6 @@ if (isset($_SESSION['userid'])) {
 	$userid = $_SESSION['userid'];
 }
 
-
-if (isset($_POST['submit_collection']) && $_POST['submit_collection'] != '') {
-	if (isset($_POST['req_id'])) {
-		$req_id = $_POST['req_id'];
-	}
-?>
-	<script>
-		$('#submit_collection').attr('disabled', true);
-	</script>
-
-	<?php
-	if (isset($_POST['collection_id'])) {
-		$coll_id = $_POST['collection_id'];
-	}
-	$userObj->addCollection($mysqli, $req_id, $userid);
-
-	?>
-	<!-- <script>location.href='<?php echo $HOSTPATH; ?>edit_collection&msc=1&id=<?php echo $coll_id ?>';</script> -->
-	<script>
-		location.href = '<?php echo $HOSTPATH; ?>collection&upd=<?php echo $_GET['upd']; ?>&cusidupd=<?php echo $_GET['cusidupd']; ?>';
-	</script>
-	<script>
-		$('#submit_collection').removeAttr('disabled');
-	</script>
-<?php
-}
-
 $idupd = 0;
 if (isset($_GET['upd'])) {
 	$idupd = $_GET['upd'];
@@ -124,7 +97,7 @@ if ($idupd > 0) {
 <!-- Main container start -->
 <div class="main-container">
 	<!--form start-->
-	<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
+	<form id="collectionForm" name="collectionForm" action="" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="idupd" id="idupd" value="<?php if (isset($idupd)) {
 																echo $idupd;
 															} ?>" />
@@ -622,10 +595,8 @@ if ($idupd > 0) {
 											<label for="disabledInput">Collection Method</label>&nbsp;<span class="text-danger">*</span>
 											<select class='form-control' id='collection_loc' name='collection_loc' tabindex='32'>
 												<option value=''>Select Collection Method</option>
-												<!-- <option value='1'>Office</option> -->
-												<option value='1'>By Self</option>
+												<option value='1' selected>By Self</option>
 												<option value='2'>On Spot</option>
-												<!-- <option value='3'>Bank Transaction</option> -->
 											</select>
 											<span class="text-danger" id='collectionlocCheck' style="display: none;">Please Select Collection Method<span>
 										</div>
@@ -647,7 +618,7 @@ if ($idupd > 0) {
 											<label for="disabledInput">Collection Mode</label>&nbsp;<span class="text-danger">*</span>
 											<select class='form-control' id='collection_mode' name='collection_mode' tabindex='35'>
 												<option value=''>Select Collection Mode</option>
-												<option value='1'>Cash</option>
+												<option value='1' selected>Cash</option>
 												<option value='2'>Cheque</option>
 												<option value='3'>ECS</option>
 												<option value='4'>IMPS/NEFT/RTGS</option>

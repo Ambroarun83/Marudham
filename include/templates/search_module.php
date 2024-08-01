@@ -36,14 +36,14 @@
 								<div class="row">
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="cus_id">Customer ID</label>
-											<input type="text" class="form-control" id="cus_id" name="cus_id" placeholder="Enter Customer ID" maxlength="14">
+											<label for="cus_id">Adhaar ID</label>
+											<input type="text" class="form-control" id="cus_id" name="cus_id" placeholder="Enter Adhaar ID" maxlength="14">
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 										<div class="form-group">
-											<label for="cus_name">Customer Name</label>
-											<input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="Enter Customer Name">
+											<label for="cus_name">Name</label>
+											<input type="text" class="form-control" id="cus_name" name="cus_name" placeholder="Enter Name">
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
