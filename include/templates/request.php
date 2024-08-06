@@ -275,7 +275,7 @@ if ($idupd > 0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 agent" <?php if (isset($role)) {
 																								if ($role == '2') { ?>style="display: none" <?php }
-																																					} ?>>
+																																	} ?>>
 								<div class="form-group">
 									<label for="agent">Agent</label>
 									<select tabindex="3" type="text" class="form-control" id="agent" name="agent">
@@ -285,7 +285,7 @@ if ($idupd > 0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 responsible" <?php if (isset($role)) {
 																									if ($role != '1') { ?> style="display: none" <?php }
-																																							} ?>>
+																																			} ?>>
 								<div class="form-group">
 									<label for="responsible">Responsible&nbsp;<span class="required">&nbsp;*</span></label>
 									<select tabindex="4" type="text" class="form-control" id="responsible" name="responsible">
@@ -298,7 +298,7 @@ if ($idupd > 0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 remarks" <?php if (isset($role)) {
 																								if ($role != '3') { ?>style="display: none" <?php }
-																																						} ?>>
+																																	} ?>>
 								<div class="form-group">
 									<label for="remark">Remarks</label><span class="required">&nbsp;*</span>
 									<input type="text" class="form-control" id="remark" name="remark" value='<?php if (isset($remarks)) echo $remarks; ?>' tabindex='5' placeholder="Enter Remarks" pattern="[a-zA-Z\s]+">
@@ -307,7 +307,7 @@ if ($idupd > 0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 declaration" <?php if (isset($role)) {
 																									if ($role == '3') { ?>style="display: none" <?php }
-																																							} ?>>
+																																		} ?>>
 								<div class="form-group">
 									<label for="declaration">Declaration</label><span class="required">&nbsp;*</span>
 									<input type="text" class="form-control" id="declaration" name="declaration" value='<?php if (isset($declaration)) echo $declaration; ?>' tabindex='6' placeholder="Enter Declaration" pattern="[a-zA-Z\s]+">
@@ -485,6 +485,7 @@ if ($idupd > 0) {
 									<input type="number" class="form-control" id="mobile2" name="mobile2" onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile2)) {
 																																											echo $mobile2;
 																																										} ?>' tabindex='23' placeholder="Enter Mobile Number">
+									<span class="text-danger" style='display:none' id='mobile2Check'>Please Enter Mobile Number</span>
 								</div>
 							</div>
 							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">

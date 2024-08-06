@@ -106,11 +106,11 @@ function validateCustSearch() {
             event.preventDefault();
             $(fieldId).show();
         } else {
-            if (cus_id != '' && cus_id.length != 12) {
+            if (cus_id != '' && cus_id.length < 12) {
                 response = false;
                 event.preventDefault();
                 $(fieldId).show();
-            } else if (cus_mob != '' && cus_mob.length != 10) {
+            } else if (cus_mob != '' && cus_mob.length < 10) {
                 response = false;
                 event.preventDefault();
                 $(fieldId).show();
@@ -159,9 +159,7 @@ function validateNewCusAdd() {
     let cus_id = $('#cus_id').val(); let cus_name = $('#cus_name').val(); let cus_mob = $('#cus_mob').val();
     let area = $('#area').val(); let sub_area = $('#sub_area').val();
 
-    validateField(cus_id, '#cus_idCheck');
     validateField(cus_name, '#cus_nameCheck');
-    validateField(cus_mob, '#cus_mobCheck');
     validateField(area, '#areaCheck');
     validateField(sub_area, '#sub_areaCheck');
 
@@ -175,6 +173,16 @@ function validateNewCusAdd() {
         }
 
     }
+    if (cus_id === '' || cus_id.length < 12) {
+        response = false;
+        event.preventDefault();
+        $("#cus_idCheck").show();
+    } else { $("#cus_idCheck").hide(); }
+    if (cus_mob === '' || cus_mob.length < 10) {
+        response = false;
+        event.preventDefault();
+        $("#cus_mobCheck").show();
+    } else { $("#cus_mobCheck").hide(); }
 
     return response;
 }

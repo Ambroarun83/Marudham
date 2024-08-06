@@ -620,7 +620,7 @@ $(document).on("click", "#submitFamInfoBtn", function () {
     let relation_Blood = $("#relation_Blood").val();
     let famTableId = $("#famID").val();
 
-    if (famname != "" && relationship != "" && relation_age != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Occupation != "" && relation_Income != "") {
+    if (famname != "" && relationship != "" && relation_age != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Mobile.length === 10 && relation_Occupation != "" && relation_Income != "") {
         $.ajax({
             url: 'updateFile/update_family_submit.php',
             type: 'POST',
@@ -692,7 +692,7 @@ $(document).on("click", "#submitFamInfoBtn", function () {
             $('#famaadharCheck').hide();
         }
 
-        if (relation_Mobile == "") {
+        if (relation_Mobile == "" || relation_Mobile.length < 10) {
             $('#fammobileCheck').show();
         } else {
             $('#fammobileCheck').hide();
@@ -1992,7 +1992,7 @@ function validation() {
     var cus_id = $('#cus_id').val(); var cus_name = $('#cus_name').val(); var dob = $('#dob').val(); var gender = $('#gender').val(); var state = $('#state').val();
     var cus_image = $('#cus_image').val(); var pic = $('#pic').val();
     var district = $('#district1').val(); var taluk = $('#taluk1').val(); var area = $('#area').val(); var sub_area = $('#sub_area').val(); var cus_address = $('#cus_address').val();
-    var mobile1 = $('#mobile1').val(); var father_name = $('#father_name').val(); var mother_name = $('#mother_name').val(); var marital = $('#marital').val();
+    var mobile1 = $('#mobile1').val(); var mobile2 = $('#mobile2').val(); var father_name = $('#father_name').val(); var mother_name = $('#mother_name').val(); var marital = $('#marital').val();
     var occupation_type = $('#occupation_type').val(); var occupation = $('#occupation').val(); var area_cnfrm = $('#area_cnfrm').val(); var cus_res_type = $('#cus_res_type').val();
     var cus_res_details = $('#cus_res_details').val(); var cus_res_address = $('#cus_res_address').val(); var cus_res_native = $('#cus_res_native').val();
     var cus_occ_type = $('#cus_occ_type').val(); var cus_occ_detail = $('#cus_occ_detail').val(); var cus_occ_income = $('#cus_occ_income').val(); var cus_occ_address = $('#cus_occ_address').val(); var cus_occ_dow = $('#cus_occ_dow').val(); var cus_occ_abt = $('#cus_occ_abt').val();
@@ -2059,11 +2059,17 @@ function validation() {
     } else {
         $('#addressCheck').hide();
     }
-    if (mobile1 == '') {
+    if (mobile1 == '' || mobile1.length < 10) {
         event.preventDefault();
         $('#mobile1Check').show();
     } else {
         $('#mobile1Check').hide();
+    }
+    if (mobile2 != '' && mobile2.length < 10) {
+        event.preventDefault();
+        $('#mobile2Check').show();
+    } else {
+        $('#mobile2Check').hide();
     }
     if (father_name == '') {
         event.preventDefault();
@@ -3734,7 +3740,6 @@ function OldCusValidation() {
     let mobile_old = $('#mobile_old').val(); let area_old = $('#area_old').val(); let sub_area_old = $('#sub_area_old').val(); let loan_cat_old = $('#loan_cat_old').val(); let sub_cat_old = $('#sub_cat_old').val();
     let loan_amt_old = $('#loan_amt_old').val(); let due_chart_old = $('#due_chart_old').val();
 
-    validateField(mobile_old, "mobile_old");
     validateField(area_old, "area_old");
     validateField(sub_area_old, "sub_area_old");
     validateField(loan_cat_old, "loan_cat_old");
@@ -3752,6 +3757,11 @@ function OldCusValidation() {
         }
     }
 
+    if (mobile_old === '' || mobile_old.length < 10) {
+        response = false;
+        event.preventDefault();
+        $("#mobile_oldCheck").show();
+    } else { $("#mobile_oldCheck").hide(); }
     return response;
 }
 function submitCustomerOldData() {

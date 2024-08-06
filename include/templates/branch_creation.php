@@ -209,14 +209,14 @@ if ($idupd > 0) {
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Mobile Number</label>
-                                            <input type="number" onkeydown="javascript: return event.keyCode == 49 ? false : true" name="mobile_number" id="mobile_number" class="form-control" placeholder="Enter Mobile Number" value="<?php if (isset($mobile_number)) echo $mobile_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='11'>
+                                            <input type="number" name="mobile_number" id="mobile_number" class="form-control" placeholder="Enter Mobile Number" value="<?php if (isset($mobile_number)) echo $mobile_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='11'>
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12"></div>
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">WhatsApp Number</label>
-                                            <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="whatsapp_number" id="whatsapp_number" class="form-control" placeholder="Enter WhatsApp Number" value="<?php if (isset($whatsapp_number)) echo $whatsapp_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='12'>
+                                            <input type="number" name="whatsapp_number" id="whatsapp_number" class="form-control" placeholder="Enter WhatsApp Number" value="<?php if (isset($whatsapp_number)) echo $whatsapp_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='12'>
 
                                             <!-- <span id="whatsapp_numbercheck" class="text-danger" >Enter Whatsapp Number</span>  -->
                                         </div>
@@ -225,7 +225,7 @@ if ($idupd > 0) {
                                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                         <div class="form-group">
                                             <label for="disabledInput">Landline Number</label>
-                                            <input type="number" onkeydown="javascript: return event.keyCode == 69 ? false : true" name="landline_number" id="landline_number" class="form-control" placeholder="Enter Landline Number" value="<?php if (isset($landline_number)) echo $landline_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==10) return false;" tabindex='13'>
+                                            <input type="number" name="landline_number" id="landline_number" class="form-control" placeholder="Enter Landline Number" value="<?php if (isset($landline_number)) echo $landline_number; ?>" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;" tabindex='13'>
 
                                         </div>
                                     </div>
@@ -236,7 +236,7 @@ if ($idupd > 0) {
                 </div>
                 <div class="col-md-12">
                     <div class="text-right">
-                        <button type="submit" onclick="submitbranch_creation();" name="submitbranch_creation" id="submitbranch_creation" class="btn btn-primary" value="Submit" tabindex="14">Submit</button>
+                        <button type="submit" name="submitbranch_creation" id="submitbranch_creation" class="btn btn-primary" value="Submit" tabindex="14">Submit</button>
                         <button type="reset" class="btn btn-outline-secondary" tabindex="15">Clear</button>
                     </div>
                 </div>

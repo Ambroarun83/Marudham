@@ -703,7 +703,7 @@ function getSchemeValues(sub_cat) {
             </td>`;
         co = co + 1;
         appendTxt += `<td>
-                <input type="number" tabindex='`+ co + `' name="mobile[]" id="mobile" class="form-control" onKeyPress="if(this.value.length==10) return false;" >
+                <input type="number" tabindex='`+ co + `' name="mobile[]" id="mobile" class="form-control" onKeyPress="if(this.value.length==10) return false;" onblur="if(this.value < 10) $(this).focus();" >
             </td>`;
         co = co + 1;
         appendTxt += `<td>

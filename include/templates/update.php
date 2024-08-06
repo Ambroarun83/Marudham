@@ -419,6 +419,7 @@ if (sizeof($documentationInfo) > 0) {
 												<input type="number" class="form-control" id="mobile2" name="mobile2" onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile2)) {
 																																														echo $mobile2;
 																																													} ?>' tabindex='13' placeholder="Enter Mobile Number">
+												<span class="text-danger" style='display:none' id='mobile2Check'>Please Enter Mobile Number</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">

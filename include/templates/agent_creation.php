@@ -237,10 +237,10 @@ if ($idupd > 0) {
 														<input type="text" tabindex="13" name="designation[]" id="designation" class="form-control" pattern="[a-zA-Z\s]+">
 													</td>
 													<td>
-														<input type="number" tabindex="14" name="mobile[]" id="mobile" class="form-control" onKeyPress="if(this.value.length==10) return false;">
+														<input type="number" tabindex="14" name="mobile[]" id="mobile" class="form-control" onKeyPress="if(this.value.length==10) return false;" onblur="if(this.value != '' && this.value.length < 10) $(this).focus();">
 													</td>
 													<td>
-														<input type="number" tabindex="15" name="whatsapp[]" id="whatsapp" class="form-control" onKeyPress="if(this.value.length==10) return false;">
+														<input type="number" tabindex="15" name="whatsapp[]" id="whatsapp" class="form-control" onKeyPress="if(this.value.length==10) return false;" onblur="if(this.value != '' && this.value.length < 10) $(this).focus();">
 													</td>
 													<td>
 														<button type="button" tabindex="16" id="add_comm[]" name="add_comm" value="Submit" class="btn btn-primary add_comm">Add</button>
@@ -273,13 +273,13 @@ if ($idupd > 0) {
 																<input type="number" tabindex="<?php $tb++;
 																								echo $tb; ?>" name="mobile[]" id="mobile" class="form-control" onKeyPress="if(this.value.length==10) return false;" value="<?php if (isset($mobile)) {
 																																																								echo $mobile[$i];
-																																																							} ?>">
+																																																							} ?>" onblur="if(this.value != '' && this.value.length < 10) $(this).focus();">
 															</td>
 															<td>
 																<input type="number" tabindex="<?php $tb++;
 																								echo $tb; ?>" name="whatsapp[]" id="whatsapp" class="form-control" onKeyPress="if(this.value.length==10) return false;" value="<?php if (isset($whatsapp)) {
 																																																									echo $whatsapp[$i];
-																																																								} ?>">
+																																																								} ?>" onblur="if(this.value != '' && this.value.length < 10) $(this).focus();">
 															</td>
 															<td>
 																<button type="button" tabindex="<?php $tb++;
