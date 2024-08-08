@@ -1,5 +1,5 @@
 <?php
-$URLPATH="https://".$_SERVER['HTTP_HOST']."/marudham/"; 
+$URLPATH="http://".$_SERVER['HTTP_HOST']."/marudham/"; 
 
 $HOSTPATH = $URLPATH;
 //echo $HOSTPATH;

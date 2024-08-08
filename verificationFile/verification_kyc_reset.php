@@ -68,6 +68,12 @@ include '../ajaxconfig.php';
             } else
             if ($kyc['proof_type'] == '11') {
                 $proof_type = "Business Proof";
+            } else
+            if ($kyc['proof_type'] == '12') {
+                $proof_type = "Own House Proof";
+            }else
+            if ($kyc['proof_type'] == '13') {
+                $proof_type = "Others";
             }
 
             $fam_mem = $kyc['fam_mem'];

@@ -390,7 +390,7 @@ $(document).ready(function () {
     function getCustomerOldData() {
         let cus_id = $('#cus_id').val();
         $.post('updateFile/showCustomerOldData.php', { cus_id }, function (html) {
-            $('#cusOldDataDiv').empty().html(html);
+            // $('#cusOldDataDiv').empty().html(html);
         })
     }
 
@@ -444,7 +444,6 @@ $(document).ready(function () {
             success: function (result) {
 
                 $("#signedID").val(result['id']);
-                $("#doc_name").val(result['doc_name']);
                 $("#sign_type").val(result['sign_type']);
 
                 if (result['sign_type'] == '1') {//if guarentor
@@ -3109,7 +3108,7 @@ $(document).on("click", "#signInfoBtn", function () {
     let doc_Count = $("#doc_Count").val();
     let signedID = $("#signedID").val();
 
-    if (doc_name != "" && sign_type != "" && doc_Count != "" && req_id != "") {
+    if (sign_type != "" && doc_Count != "" && req_id != "") {
         $.ajax({
             url: 'verificationFile/documentation/signed_doc_info_submit.php',
             type: 'POST',
@@ -3146,12 +3145,6 @@ $(document).on("click", "#signInfoBtn", function () {
     }
     else {
 
-        if (doc_name == "") {
-            $('#docNameCheck').show();
-        } else {
-            $('#docNameCheck').hide();
-        }
-
         if (sign_type == "") {
             $('#signTypeCheck').show();
         } else {
@@ -3179,7 +3172,6 @@ function resetsignInfo() {
             $("#signTable").empty();
             $("#signTable").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#guar_name_div").hide();
             $("#guar_name").val('');
@@ -3251,7 +3243,6 @@ function resetsigninfoList() {
             $("#signDocResetTable").empty();
             $("#signDocResetTable").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#guar_name").val('');
             $("#guar_name_div").hide();

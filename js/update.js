@@ -1282,7 +1282,7 @@ $(document).on("click", "#kycInfoBtn", function () {
     formdata.append('reqId', req_id)
     formdata.append('cus_id', cus_id)
 
-    if (proofof != "" && proof_type != "" && proof_number != "" && file != undefined && req_id != "") {
+    if (proofof != "" && proof_type != "" && proof_number != "" && (file != undefined || kyc_upload != '') && req_id != "") {
         $.ajax({
             url: 'verificationFile/verification_kyc_submit.php',
             type: 'POST',
@@ -1340,7 +1340,7 @@ $(document).on("click", "#kycInfoBtn", function () {
             $('#proofnoCheck').hide();
         }
 
-        if (file == undefined && kycID == "") {
+        if (file == undefined && kyc_upload == "") {
             $('#proofUploadCheck').show();
         } else {
             $('#proofUploadCheck').hide();
@@ -1367,6 +1367,7 @@ function resetkycInfo() {
             $("#proof_number").val('');
             $("#upload").val('');
             $("#kycID").val('');
+            $("#kyc_upload").val('');
 
             $('#proofCheck').hide(); $('#proofTypeCheck').hide(); $('#proofnoCheck').hide(); $('#proofUploadCheck').hide();
         }
@@ -2385,7 +2386,6 @@ function resetSignedDocList(req_id, cus_id) {
             $("#signDocResetDiv").empty();
             $("#signDocResetDiv").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#signType_relationship").val('');
             $("#doc_Count").val('');
@@ -3147,7 +3147,6 @@ function resetsignInfo(req_id, cus_id) {
             $("#signTable").empty();
             $("#signTable").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#signType_relationship").val('');
             $("#doc_Count").val('');
@@ -3180,7 +3179,6 @@ function signInfoEditEvent() {
             success: function (result) {
 
                 $("#signedID").val(result['id']);
-                $("#doc_name").val(result['doc_name']);
                 $("#sign_type").val(result['sign_type']);
 
                 if (result['sign_type'] == '3') {

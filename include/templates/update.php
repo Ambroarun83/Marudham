@@ -235,7 +235,7 @@ if (sizeof($documentationInfo) > 0) {
 		<div class="form-group" style="text-align:center">
 			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile"></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="radio" name="verification_type" id="documentation" value="documentation"></input><label for='documentation'>&nbsp;&nbsp; Documentation </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="customer_old" value="customer_old"></input><label for='customer_old'>&nbsp;&nbsp; Old Data </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<!-- <input type="radio" name="verification_type" id="customer_old" value="customer_old"></input><label for='customer_old'>&nbsp;&nbsp; Old Data </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 		</div>
 	</div>
 
@@ -2043,13 +2043,8 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
-								<select type="text" class="form-control" id="doc_name" name="doc_name" disabled tabindex='1'>
-									<option value=""> Select Doc Name </option>
-									<option value="0"> Promissory Note </option>
-									<option value="1"> Stamp Paper </option>
-									<option value="2"> P Additional </option>
-									<option value="3"> S Additional </option>
-								</select>
+								<input type="hidden" name="doc_name" id="doc_name" value="0">
+								<input type="text" class="form-control" name="doc_name_dummy" id="doc_name_dummy" value="Signed Document" disabled tabindex='1'>
 								<span class="text-danger" id="docNameCheck" style='display:none'> Select Doc Name </span>
 							</div>
 						</div>
@@ -2700,6 +2695,8 @@ if (sizeof($documentationInfo) > 0) {
 								<option value="9"> Bank statement </option>
 								<option value="10"> EB Bill </option>
 								<option value="11"> Business Proof </option>
+								<option value="12"> Own House Proof </option>
+								<option value="13"> Others </option>
 							</select>
 							<span class="text-danger" id="proofTypeCheck" style="display:none"> Select Proof Type </span>
 						</div>
@@ -2717,7 +2714,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="form-group">
 							<label for="upload"> Upload </label>
 							<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
-							<span class="text-danger" id="proofUploadCheck" style="display:none"> Upload </span>
+							<span class="text-danger" id="proofUploadCheck" style="display:none"> Please Upload File </span>
 						</div>
 					</div>
 

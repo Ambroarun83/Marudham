@@ -196,20 +196,6 @@ function moneyFormatIndia($num)
 
 
 <script>
-    $('.dropdown').unbind('click');
-    $('.dropdown').click(function(event) {
-        event.preventDefault();
-        $('.dropdown').not(this).removeClass('active');
-        $(this).toggleClass('active');
-    });
-
-    $(document).click(function(event) {
-        var target = $(event.target);
-        if (!target.closest('.dropdown').length) {
-            $('.dropdown').removeClass('active');
-        }
-    });
-
     $('#loanListTable').DataTable({
         'processing': true,
         'iDisplayLength': 5,
@@ -229,6 +215,19 @@ function moneyFormatIndia($num)
         ],
         'drawCallback': function() {
             searchFunction('loanListTable');
+            $('.dropdown').unbind('click');
+            $('.dropdown').click(function(event) {
+                event.preventDefault();
+                $('.dropdown').not(this).removeClass('active');
+                $(this).toggleClass('active');
+            });
+
+            $(document).click(function(event) {
+                var target = $(event.target);
+                if (!target.closest('.dropdown').length) {
+                    $('.dropdown').removeClass('active');
+                }
+            });
         }
     });
 </script>

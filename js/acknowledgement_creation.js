@@ -91,7 +91,6 @@ $(document).ready(function () {
             success: function (result) {
 
                 $("#signedID").val(result['id']);
-                $("#doc_name").val(result['doc_name']);
                 $("#sign_type").val(result['sign_type']);
 
                 if (result['sign_type'] == '1') {//if guarentor
@@ -155,11 +154,6 @@ $(document).ready(function () {
             $('#docNameCheck').hide(); $('#signTypeCheck').hide(); $('#docCountCheck').hide(); $('#docupdCheck').hide();
         } else {
 
-            if (doc_name == "") {
-                $('#docNameCheck').show();
-            } else {
-                $('#docNameCheck').hide();
-            }
 
             if (sign_type == "") {
                 $('#signTypeCheck').show();
@@ -1592,7 +1586,6 @@ function resetsignInfo() {
             $("#signTable").empty();
             $("#signTable").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#guar_name_div").hide();
             $("#guar_name").val('');
@@ -1661,7 +1654,6 @@ function resetsigninfoList() {
             $("#signDocResetTable").empty();
             $("#signDocResetTable").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#guar_name").val('');
             $("#guar_name_div").hide();

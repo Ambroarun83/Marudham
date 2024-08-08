@@ -2137,18 +2137,18 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 					<!-- Loan History END -->
 
 					<!-- Customer Old Data START -->
-					<div class="card">
+					<!-- <div class="card">
 						<div class="card-header"> Customer Old Data </div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-									<div class="form-group table-responsive" id="cusOldDataDiv">
+									<div class="form-group table-responsive" id="cusOldDataDiv" style="display:none">
 
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					<!-- Customer Old Data END -->
 
 					<!-- Loan Info Start -->
@@ -3012,6 +3012,8 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 								<option value="9"> Bank statement </option>
 								<option value="10"> EB Bill </option>
 								<option value="11"> Business Proof </option>
+								<option value="12"> Own House Proof </option>
+								<option value="13"> Others </option>
 							</select>
 							<span class="text-danger" id="proofTypeCheck" style="display:none"> Select Proof Type </span>
 						</div>
@@ -3102,13 +3104,8 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="doc_name"> Doc Name </label> <span class="required">&nbsp;*</span>
-							<select type="text" class="form-control" id="doc_name" name="doc_name" tabindex='1'>
-								<option value=""> Select Doc Name </option>
-								<option value="0"> Promissory Note </option>
-								<option value="1"> Stamp Paper </option>
-								<option value="2"> P Additional </option>
-								<option value="3"> S Additional </option>
-							</select>
+							<input type="hidden" name="doc_name" id="doc_name" value="0">
+							<input type="text" class="form-control" name="doc_name_dummy" id="doc_name_dummy" value="Signed Document" disabled tabindex='1'>
 							<span class="text-danger" id="docNameCheck"> Select Doc Name </span>
 						</div>
 					</div>

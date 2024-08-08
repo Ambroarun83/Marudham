@@ -22,7 +22,7 @@ if (isset($_FILES["file"]["type"])) {
             $Reader->ChangeSheet($i);
             foreach ($Reader as $Row) {
 
-                if ($Row[0] != 'State') {
+                if ($Row[0] != 'State' && $Row[0] != '') {
 
                     if (isset($Row[0])) {
                         $state = mysqli_real_escape_string($con, $Row[0]);

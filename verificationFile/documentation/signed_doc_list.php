@@ -5,11 +5,11 @@ include '../../ajaxconfig.php';
 <table class="table custom-table" id="signed_table">
     <thead>
         <tr>
-        <th width="50"> S.No </th>
-		<th> Doc Name </th>
-		<th> Sign Type </th>
-		<th> Relationship </th>
-		<th> Count </th>
+            <th width="50"> S.No </th>
+            <th> Doc Name </th>
+            <th> Sign Type </th>
+            <th> Relationship </th>
+            <th> Count </th>
         </tr>
     </thead>
     <tbody>
@@ -27,12 +27,24 @@ include '../../ajaxconfig.php';
             <tr>
                 <td> <?php echo $i++; ?></td>
 
-                <td> <?php if($signedDoc["doc_name"] == '0'){ echo 'Promissory Note';}elseif($signedDoc["doc_name"] == '1'){ echo 'Stamp Paper';}elseif($signedDoc["doc_name"] == '2'){ echo 'P Additional';}elseif($signedDoc["doc_name"] == '3'){ echo 'S Additional';} ?></td>
+                <td>Signed Document</td>
 
-                <td> <?php if($signedDoc["sign_type"] == '0'){ echo 'Customer';}elseif($signedDoc["sign_type"] == '1'){ echo 'Guarantor';}elseif($signedDoc["sign_type"] == '2'){ echo 'Combined';}elseif($signedDoc["sign_type"] == '3'){ echo 'Family Members';} ?></td>
+                <td> <?php if ($signedDoc["sign_type"] == '0') {
+                            echo 'Customer';
+                        } elseif ($signedDoc["sign_type"] == '1') {
+                            echo 'Guarantor';
+                        } elseif ($signedDoc["sign_type"] == '2') {
+                            echo 'Combined';
+                        } elseif ($signedDoc["sign_type"] == '3') {
+                            echo 'Family Members';
+                        } ?></td>
 
-                <td> <?php if($signedDoc["sign_type"] == '3' or $signedDoc["sign_type"] == '1' or $signedDoc["sign_type"] == '2'){ echo $row["famname"].' - '.$row["relationship"];}else{echo 'NIL';} ?></td>
-                
+                <td> <?php if ($signedDoc["sign_type"] == '3' or $signedDoc["sign_type"] == '1' or $signedDoc["sign_type"] == '2') {
+                            echo $row["famname"] . ' - ' . $row["relationship"];
+                        } else {
+                            echo 'NIL';
+                        } ?></td>
+
                 <td> <?php echo $signedDoc['doc_Count']; ?></td>
             </tr>
 
