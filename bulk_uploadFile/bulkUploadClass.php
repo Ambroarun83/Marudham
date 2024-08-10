@@ -893,17 +893,19 @@ class bulkUploadClass
             if ($data['closed_status'] == 'Not Found') {
                 $errcolumns[] = 'Closed Status';
             }
+            if ($data['closed_status'] == '1') {
 
-            if ($data['consider_level']  == 'Not Found') {
-                $errcolumns[] = 'Consider Level';
-            }
+                if ($data['consider_level']  == 'Not Found') {
+                    $errcolumns[] = 'Consider Level';
+                }
 
-            if ($data['closed_remark'] == '') {
-                $errcolumns[] = 'Closed Remark';
-            }
+                if ($data['closed_remark'] == '') {
+                    $errcolumns[] = 'Closed Remark';
+                }
 
-            if ($data['closed_date'] == 'Invalid Date') {
-                $errcolumns[] = 'Closed Date';
+                if ($data['closed_date'] == 'Invalid Date') {
+                    $errcolumns[] = 'Closed Date';
+                }
             }
         }
 
