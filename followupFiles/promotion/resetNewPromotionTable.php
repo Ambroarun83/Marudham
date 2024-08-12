@@ -91,18 +91,6 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
             searchFunction('new_promo_table');
         }
     })
-    $('.dropdown').click(function(event) {
-        event.preventDefault();
-        $('.dropdown').not(this).removeClass('active');
-        $(this).toggleClass('active');
-    });
-
-    $(document).click(function(event) {
-        var target = $(event.target);
-        if (!target.closest('.dropdown').length) {
-            $('.dropdown').removeClass('active');
-        }
-    });
     $('#new_promo_table tbody tr').not('th').each(function() {
         let tddate = $(this).find('td:eq(8)').text(); // Get the text content of the 8th td element (Follow date)
         let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format

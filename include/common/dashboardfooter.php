@@ -1527,7 +1527,7 @@
             });
 
             $('.dropdown').click(function(event) {
-                // event.stopPropagation();
+                event.preventDefault();
                 $('.dropdown').not(this).removeClass('active');
                 $(this).toggleClass('active');
             });

@@ -25,8 +25,8 @@ if ($cus_id != '') {
         foreach ($row as $key => $value) {
             $response[$key] = $value;
         }
+        $response['cusPromotionType'] = $Obj->getCustomerPromotionType($con, $response['cus_id']);
     }
-    $response['cusPromotionType'] = $Obj->getCustomerPromotionType($con, $cus_id);
 } else if ($cus_name != '') {
     $sql = $con->query("SELECT a.cus_id,a.customer_name,a.mobile1,b.area_name,c.sub_area_name FROM customer_register a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE a.customer_name = '$cus_name' ");
 
@@ -35,8 +35,8 @@ if ($cus_id != '') {
         foreach ($row as $key => $value) {
             $response[$key] = $value;
         }
+        $response['cusPromotionType'] = $Obj->getCustomerPromotionType($con, $response['cus_id']);
     }
-    // $response['cusPromotionType'] = $Obj->getCustomerPromotionType($con, $cus_id);
 } else if ($cus_mob != '') {
     $sql = $con->query("SELECT a.cus_id,a.customer_name,a.mobile1,b.area_name,c.sub_area_name FROM customer_register a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE a.mobile1 = '$cus_mob' ");
 
@@ -45,8 +45,8 @@ if ($cus_id != '') {
         foreach ($row as $key => $value) {
             $response[$key] = $value;
         }
+        $response['cusPromotionType'] = $Obj->getCustomerPromotionType($con, $response['cus_id']);
     }
-    $response['cusPromotionType'] = $Obj->getCustomerPromotionType($con, $cus_id);
 }
 
 if ($sql->num_rows) {
