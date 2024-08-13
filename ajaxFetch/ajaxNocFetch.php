@@ -29,40 +29,6 @@ if ($userid != 1) {
 }
 
 
-class nocStatus
-{
-    public function getNocCompletedStatus($con, $id, $cus_id)
-    {
-        //this function is to find out whether all of the req id's documents are given to customer or not
-        // also it will return values if the document is temporarly taken out for some purpose. they should mark as returned in respective screen and to give noc here
-        $response = 0;
-
-        $sql = $con->query("SELECT sd.* From signed_doc sd JOIN in_issue ii ON ii.req_id = sd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and sd.noc_given !='1' ");
-        $response = $response + $sql->num_rows;
-
-        $sql = $con->query("SELECT cnl.* From cheque_no_list cnl JOIN in_issue ii ON ii.req_id = cnl.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and cnl.noc_given !='1' ");
-        $response = $response + $sql->num_rows;
-
-        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.mortgage_process = 0 and ( ackd.mortgage_process_noc != '1' || (ackd.mortgage_document = 0 and ackd.mortgage_document_upd IS NOT NULL and ackd.mortgage_document_noc != '1' ) ) ");
-        $response = $response + $sql->num_rows;
-
-        $sql = $con->query("SELECT ackd.* From acknowlegement_documentation ackd JOIN in_issue ii ON ii.req_id = ackd.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and ackd.endorsement_process = 0 and ( (ackd.endorsement_process_noc != '1') || (ackd.en_RC = 0 && ackd.en_RC_noc != '1') || (ackd.en_Key = 0 && ackd.en_Key_noc != '1')) ");
-        $response = $response + $sql->num_rows;
-
-        $sql = $con->query("SELECT gi.* From gold_info gi JOIN in_issue ii ON ii.req_id = gi.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and gi.noc_given !='1' ");
-        $response = $response + $sql->num_rows;
-
-        $sql = $con->query("SELECT di.* From document_info di JOIN in_issue ii ON ii.req_id = di.req_id where ii.cus_status = 21 and ii.cus_id = $cus_id and di.doc_info_upload_noc !='1' ");
-        $response = $response + $sql->num_rows;
-
-        // echo $cus_id.' - '.$response.'***';
-        return $response;
-    }
-}
-
-$obj = new nocStatus;
-
-
 $column = array(
     'cp.id',
     'cp.cus_id',
@@ -76,7 +42,7 @@ $column = array(
 );
 
 if ($userid == 1) {
-    $query = 'SELECT cp.cus_id as cp_cus_id,cp.cus_name,ac.area_name, sa.sub_area_name, al.line_name,bc.branch_name,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id 
+    $query = 'SELECT cp.cus_id as cp_cus_id,cp.cus_name,ac.area_name, sa.sub_area_name, al.line_name,bc.branch_name,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id, 0 as response 
     FROM acknowlegement_customer_profile cp 
     JOIN in_issue ii ON cp.cus_id = ii.cus_id
     JOIN area_list_creation ac ON cp.area_confirm_area = ac.area_id
@@ -85,14 +51,82 @@ if ($userid == 1) {
     JOIN branch_creation bc ON al.branch_id = bc.branch_id
     where ii.status = 0 and ii.cus_status = 21 GROUP BY ii.cus_id '; // Only Issued and all lines not relying on sub area
 } else {
-    $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,ac.area_name, sa.sub_area_name, al.line_name,bc.branch_name,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id  
-    FROM acknowlegement_customer_profile cp 
+    $query = " SELECT cp.cus_id AS cp_cus_id,
+    cp.cus_name,
+    ac.area_name,
+    sa.sub_area_name,
+    al.line_name,
+    bc.branch_name,
+    cp.mobile1,
+    ii.cus_id AS ii_cus_id,
+    ii.req_id,
+    COALESCE(sd_count, 0) +
+    COALESCE(cnl_count, 0) +
+    COALESCE(ackd_count, 0) +
+    COALESCE(ackd_endorse_count, 0) +
+    COALESCE(gi_count, 0) +
+    COALESCE(di_count, 0) AS response
+    FROM acknowlegement_customer_profile cp
     JOIN in_issue ii ON cp.cus_id = ii.cus_id
     JOIN area_list_creation ac ON cp.area_confirm_area = ac.area_id
     JOIN sub_area_list_creation sa ON cp.area_confirm_subarea = sa.sub_area_id
     JOIN area_line_mapping al ON FIND_IN_SET(sa.sub_area_id, al.sub_area_id)
     JOIN branch_creation bc ON al.branch_id = bc.branch_id
-    where ii.status = 0 and ii.cus_status = 21 and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id "; //show only issued customers within the same lines of user. 
+    LEFT JOIN (
+        SELECT ii.cus_id, COUNT(sd.id) AS sd_count
+        FROM signed_doc sd
+        JOIN in_issue ii ON ii.req_id = sd.req_id
+        WHERE ii.cus_status = 21 AND sd.noc_given != '1'
+        GROUP BY ii.cus_id
+    ) AS sd_table ON ii.cus_id = sd_table.cus_id
+    LEFT JOIN (
+        SELECT ii.cus_id, COUNT(cnl.id) AS cnl_count
+        FROM cheque_no_list cnl
+        JOIN in_issue ii ON ii.req_id = cnl.req_id
+        WHERE ii.cus_status = 21 AND cnl.noc_given != '1'
+        GROUP BY ii.cus_id
+    ) AS cnl_table ON ii.cus_id = cnl_table.cus_id
+    LEFT JOIN (
+        SELECT ii.cus_id, COUNT(ackd.id) AS ackd_count
+        FROM acknowlegement_documentation ackd
+        JOIN in_issue ii ON ii.req_id = ackd.req_id
+        WHERE ii.cus_status = 21
+            AND ackd.mortgage_process = 0
+            AND (ackd.mortgage_process_noc != '1' 
+                OR (ackd.mortgage_document = 0 
+                    AND ackd.mortgage_document_upd IS NOT NULL 
+                    AND ackd.mortgage_document_noc != '1'))
+        GROUP BY ii.cus_id
+    ) AS ackd_table ON ii.cus_id = ackd_table.cus_id
+    LEFT JOIN (
+        SELECT ii.cus_id, COUNT(ackd.id) AS ackd_endorse_count
+        FROM acknowlegement_documentation ackd
+        JOIN in_issue ii ON ii.req_id = ackd.req_id
+        WHERE ii.cus_status = 21
+            AND ackd.endorsement_process = 0
+            AND (ackd.endorsement_process_noc != '1'
+                OR (ackd.en_RC = 0 AND ackd.en_RC_noc != '1')
+                OR (ackd.en_Key = 0 AND ackd.en_Key_noc != '1'))
+        GROUP BY ii.cus_id
+    ) AS ackd_endorse_table ON ii.cus_id = ackd_endorse_table.cus_id
+    LEFT JOIN (
+        SELECT ii.cus_id, COUNT(gi.id) AS gi_count
+        FROM gold_info gi
+        JOIN in_issue ii ON ii.req_id = gi.req_id
+        WHERE ii.cus_status = 21 AND gi.noc_given != '1'
+        GROUP BY ii.cus_id
+    ) AS gi_table ON ii.cus_id = gi_table.cus_id
+    LEFT JOIN (
+        SELECT ii.cus_id, COUNT(di.id) AS di_count
+        FROM document_info di
+        JOIN in_issue ii ON ii.req_id = di.req_id
+        WHERE ii.cus_status = 21 AND di.doc_info_upload_noc != '1'
+        GROUP BY ii.cus_id
+    ) AS di_table ON ii.cus_id = di_table.cus_id
+    WHERE ii.status = 0
+        AND ii.cus_status = 21
+        AND cp.area_confirm_subarea IN ($sub_area_list)
+    GROUP BY ii.cus_id ";
 }
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
@@ -150,7 +184,7 @@ foreach ($result as $row) {
     $cus_id = $row['cp_cus_id'];
     $id = $row['req_id'];
 
-    $docToIssue = $obj->getNocCompletedStatus($con, $id, $cus_id);
+    $docToIssue = $row['response'];
 
     $action = "<div class='dropdown'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>
