@@ -1521,13 +1521,16 @@
             // new search on keyup event for search by display content
             $('#search').off().on('blur', function(e) {
                 // if (e.which == 10 && e.ctrlKey == true) { //control and enter key pressed then key value will be 10
-                    let table = $(`#${table_name}`).DataTable();
-                    table.search(this.value).draw();
+                let table = $(`#${table_name}`).DataTable();
+                table.search(this.value).draw();
                 // }
             });
 
             $('.dropdown').click(function(event) {
-                event.preventDefault();
+                let linkcheck = $('.dropdown .dropdown-content a').attr('href');
+                if (linkcheck == '#') {
+                    event.preventDefault();
+                }
                 $('.dropdown').not(this).removeClass('active');
                 $(this).toggleClass('active');
             });

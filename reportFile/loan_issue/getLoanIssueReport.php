@@ -44,10 +44,10 @@ $column = array(
     'fam.relationship',
     'al.area_name',
     'sal.sub_area_name',
-    'loan_cat_name',
-    'sub_category',
-    'ag_name',
-    'loan_date',
+    'lcc.loan_category_creation_name',
+    'lc.sub_category',
+    'ac.ag_name',
+    'ii.updated_date',
     'ii.id',
     'ii.id',
     'ii.id',
@@ -61,7 +61,8 @@ $column = array(
 
 $query = "SELECT 
         ii.loan_id,
-        cp.*,
+        cp.cus_id,
+        cp.cus_name,
         fam.famname,
         fam.relationship,
         al.area_name,
@@ -82,19 +83,19 @@ $query = "SELECT
         vfi_received_by.relationship as rel_name
 
         FROM in_issue ii
-        JOIN acknowlegement_customer_profile cp ON ii.req_id = cp.req_id
-        JOIN acknowlegement_loan_calculation lc ON ii.req_id = lc.req_id
-        JOIN verification_family_info fam ON cp.guarentor_name = fam.id
-        JOIN area_list_creation al ON cp.area_confirm_area = al.area_id
-        JOIN sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
-        JOIN request_creation req ON ii.req_id = req.req_id
-        JOIN loan_issue li ON li.req_id = ii.req_id
-        JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
-        JOIN agent_creation ac ON req.agent_id = ac.ag_id
+        LEFT JOIN acknowlegement_customer_profile cp ON ii.req_id = cp.req_id
+        LEFT JOIN acknowlegement_loan_calculation lc ON ii.req_id = lc.req_id
+        LEFT JOIN verification_family_info fam ON cp.guarentor_name = fam.id
+        LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id
+        LEFT JOIN sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
+        LEFT JOIN request_creation req ON ii.req_id = req.req_id
+        LEFT JOIN loan_issue li ON li.req_id = ii.req_id
+        LEFT JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
+        LEFT JOIN agent_creation ac ON req.agent_id = ac.ag_id
         LEFT JOIN verification_family_info vfi_received_by ON li.cash_guarentor_name = vfi_received_by.relation_aadhar
 
         WHERE ii.cus_status >= 14 
-        AND cp.area_confirm_subarea IN ($sub_area_list) ";
+        AND cp.area_confirm_subarea IN ($sub_area_list) $where";
 
 if (isset($_POST['search'])) {
     if ($_POST['search'] != "") {
@@ -187,7 +188,7 @@ echo json_encode($output);
 
 function count_all_data($connect, $where, $sub_area_list)
 {
-    $query     = "SELECT ii.id from in_issue ii JOIN acknowlegement_customer_profile cp ON ii.req_id = cp.req_id WHERE ii.cus_status >= 14 " . $where . " and cp.area_confirm_subarea IN ($sub_area_list) ";
+    $query = "SELECT ii.id from in_issue ii JOIN acknowlegement_customer_profile cp ON ii.req_id = cp.req_id WHERE ii.cus_status >= 14  and cp.area_confirm_subarea IN ($sub_area_list) ";
     $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();

@@ -125,34 +125,48 @@ if ($userid == 1) {
     ) AS di_table ON ii.cus_id = di_table.cus_id
     WHERE ii.status = 0
         AND ii.cus_status = 21
-        AND cp.area_confirm_subarea IN ($sub_area_list)
-    GROUP BY ii.cus_id ";
+        AND cp.area_confirm_subarea IN ($sub_area_list) ";
+
+    $forcount = "SELECT cp.cus_id 
+        FROM acknowlegement_customer_profile cp 
+        JOIN in_issue ii ON cp.cus_id = ii.cus_id
+        JOIN area_list_creation ac ON cp.area_confirm_area = ac.area_id
+        JOIN sub_area_list_creation sa ON cp.area_confirm_subarea = sa.sub_area_id
+        JOIN area_line_mapping al ON FIND_IN_SET(sa.sub_area_id, al.sub_area_id)
+        JOIN branch_creation bc ON al.branch_id = bc.branch_id
+        where ii.status = 0 and ii.cus_status = 21 and cp.area_confirm_subarea IN ($sub_area_list) ";
 }
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
 
-    $query .= " AND (cp.cus_id LIKE '%" . $_POST['search'] . "%'
+    $search = " AND (cp.cus_id LIKE '%" . $_POST['search'] . "%'
             OR cp.cus_name LIKE '%" . $_POST['search'] . "%'
             OR ac.area_name LIKE '%" . $_POST['search'] . "%'
             OR sa.sub_area_name LIKE '%" . $_POST['search'] . "%'
             OR al.line_name LIKE '%" . $_POST['search'] . "%'
             OR bc.branch_name LIKE '%" . $_POST['search'] . "%'
             OR cp.mobile1 LIKE '%" . $_POST['search'] . "%' ) ";
+    $query .= $search;
+    $forcount .= $search;
 }
+
+$query .= 'GROUP BY ii.cus_id ';
+$forcount .= 'GROUP BY ii.cus_id ';
 
 if (isset($_POST['order'])) {
     $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
+    $forcount .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 } else {
     $query .= ' ';
+    $forcount .= ' ';
 }
 
 $query1 = '';
-
 if ($_POST['length'] != -1) {
     $query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
 
-$statement = $connect->prepare($query);
+$statement = $connect->prepare($forcount);
 
 $statement->execute();
 

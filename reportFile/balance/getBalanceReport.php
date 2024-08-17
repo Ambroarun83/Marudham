@@ -7,7 +7,7 @@ $where = "";
 $li_where = "";
 if (isset($_POST['to_date']) && $_POST['to_date'] != '') {
     $to_date = date('Y-m-d', strtotime($_POST['to_date']));
-    $where  = "AND (date(coll_date) <= '$to_date')";
+    $where  = " WHERE (date(coll_date) <= '$to_date')";
     $li_where  = "AND date(li.created_date) <= date('$to_date') AND balance_amount = '0'";
 }
 
@@ -38,11 +38,28 @@ $statusObj = [
 ];
 
 $column = [
-    'lc.loan_cal_id', 'cp.area_line', 'ii.loan_id', 'ii.updated_date', 'lc.maturity_month',
-    'cp.cus_id', 'cp.cus_name', 'al.area_name', 'sal.sub_area_name', 'lc.loan_cal_id',
-    'lc.sub_category', 'lc.loan_cal_id', 'lc.loan_cal_id', 'lc.loan_cal_id', 'lc.loan_cal_id',
-    'lc.loan_cal_id', 'lc.loan_cal_id', 'lc.loan_cal_id', 'lc.loan_cal_id', 'lc.loan_cal_id',
-    'lc.loan_cal_id', 'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'cp.area_line',
+    'ii.loan_id',
+    'ii.updated_date',
+    'lc.maturity_month',
+    'cp.cus_id',
+    'cp.cus_name',
+    'al.area_name',
+    'sal.sub_area_name',
+    'lc.loan_cal_id',
+    'lc.sub_category',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
+    'lc.loan_cal_id',
 ];
 
 $query = "
@@ -95,7 +112,7 @@ $query = "
             SUM(princ_amt_track) AS princ_amt_track, 
             SUM(int_amt_track) AS int_amt_track 
         FROM 
-            collection 
+            collection $where
         GROUP BY 
             req_id
     ) c ON lc.req_id = c.req_id
