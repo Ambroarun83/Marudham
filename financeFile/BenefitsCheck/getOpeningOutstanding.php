@@ -83,7 +83,7 @@ function getDetials($con, $condition, $where)
         //will show only interest amunt under user's branch not others also
         if ($qry->num_rows > 0) {
 
-            
+
             $qry = $con->query("SELECT tot_amt_cal, principal_amt_cal from acknowlegement_loan_calculation where req_id = '" . $row1['req_id'] . "' ");
             //fetching overall collection amount to be get from customers
             $row = $qry->fetch_assoc();
@@ -131,3 +131,4 @@ function moneyFormatIndia($num)
 
     return $isNegative ? "-" . $thecash : $thecash;
 }
+$con->close();

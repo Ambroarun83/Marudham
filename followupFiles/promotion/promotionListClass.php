@@ -2,7 +2,7 @@
 session_start();
 class promotionListClass
 {
-    private $sub_area_list = array();
+    public $sub_area_list = array();
     public function __construct($con)
     {
         $userid = $_SESSION["userid"];

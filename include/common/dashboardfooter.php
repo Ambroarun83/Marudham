@@ -33,6 +33,10 @@
         /* this will set all datatable's cell to not wrap the contents globally */
         white-space: nowrap;
     }
+
+    .dropdown-content {
+        color: black;
+    }
 </style>
 <script>
     $(document).ready(function() {
@@ -1528,7 +1532,7 @@
 
             $('.dropdown').click(function(event) {
                 let linkcheck = $('.dropdown .dropdown-content a').attr('href');
-                if (linkcheck == '#') {
+                if (linkcheck == '#' || linkcheck == undefined) {
                     event.preventDefault();
                 }
                 $('.dropdown').not(this).removeClass('active');

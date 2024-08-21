@@ -70,11 +70,12 @@ function getDetails($con, $where)
     $cash_withdrawal = $row['amt'] ?? 0;
 
     $response['credit_contra'] = intVal($bank_withdrawal) + intVal($cash_deposit);
-    $response['debit_contra'] = + intVal($bank_deposit) + intVal($cash_withdrawal);
+    $response['debit_contra'] = +intVal($bank_deposit) + intVal($cash_withdrawal);
 
-    $response['credit_contra'] = number_format($response['credit_contra'],0,'',',');
-    $response['debit_contra'] = number_format($response['debit_contra'],0,'',',');
+    $response['credit_contra'] = number_format($response['credit_contra'], 0, '', ',');
+    $response['debit_contra'] = number_format($response['debit_contra'], 0, '', ',');
 
     echo json_encode($response);
 }
 
+$con->close();

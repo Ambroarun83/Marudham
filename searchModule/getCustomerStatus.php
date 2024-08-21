@@ -74,7 +74,7 @@ if ($result->num_rows > 0) {
             if ($cus_status == '21') {
                 $Qry = $con->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
                 $closed_status = ['', 'Consider', 'Waiting List', 'Block List'];
-                $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts']];
+                $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts'] ?? 0];
             }
         }
         // }
@@ -177,7 +177,7 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
     $due_nil_sts = isset($_POST["due_nil_sts"]) ? explode(',', $_POST["due_nil_sts"]) : null;
     $bal_amt = isset($_POST["bal_amt"]) ? explode(',', $_POST["bal_amt"]) : null;
     $closed_sts = isset($_POST["closed_sts"]) ? explode(',', $_POST["closed_sts"]) : null;
-    $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
+    $consider_lvl_arr = [1 => 'Bronze', 2 => 'Silver', 3 => 'Gold', 4 => 'Platinum', 5 => 'Diamond'];
 
     $retVal = '';
 

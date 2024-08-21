@@ -124,3 +124,5 @@ function getSubareaList($con, $user_id)
     $condition = ($sub_area_list != '') ? " and FIND_IN_SET(sub_area ,'" . $sub_area_list . "')" : '';
     return $condition;
 }
+
+$con->close();
