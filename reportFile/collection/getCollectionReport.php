@@ -74,32 +74,32 @@ $column = array(
 );
 
 $query = "SELECT 
-            cp.area_line as line,
-            ii.loan_id,
-            ii.updated_date as loan_date,
-            coll.cus_id,
-            coll.req_id,
-            coll.cus_name,
-            al.area_name,
-            sal.sub_area_name,
-            (SELECT loan_category_creation_name From loan_category_creation WHERE loan_category_creation_id = lc.loan_category) as loan_cat_name,
-            lc.sub_category,
-            lc.due_type,
-            lc.due_period,
-            lc.principal_amt_cal,
-            lc.int_amt_cal,
-            (SELECT ag_name from agent_creation where ag_id = req.agent_id) as ag_name,
-            req.user_type,
-            req.user_name,
-            coll.coll_date,
-            coll.trans_date,
-            SUM(coll.due_amt_track) as due_amt_track,
-            SUM(coll.princ_amt_track) as princ_amt_track,
-            SUM(coll.int_amt_track) as int_amt_track,
-            SUM(coll.penalty_track) as penalty_track,
-            SUM(coll.coll_charge_track) as coll_charge_track,
-            SUM(coll.total_paid_track) as total_paid_track,
-            req.cus_status
+                cp.area_line AS line,
+                ii.loan_id,
+                ii.updated_date AS loan_date,
+                coll.cus_id,
+                coll.req_id,
+                coll.cus_name,
+                al.area_name,
+                sal.sub_area_name,
+                lcc.loan_category_creation_name AS loan_cat_name,
+                lc.sub_category,
+                lc.due_type,
+                lc.due_period,
+                lc.principal_amt_cal,
+                lc.int_amt_cal,
+                ac.ag_name,
+                req.user_type,
+                req.user_name,
+                coll.coll_date,
+                coll.trans_date,
+                SUM(coll.due_amt_track) AS due_amt_track,
+                SUM(coll.princ_amt_track) AS princ_amt_track,
+                SUM(coll.int_amt_track) AS int_amt_track,
+                SUM(coll.penalty_track) AS penalty_track,
+                SUM(coll.coll_charge_track) AS coll_charge_track,
+                SUM(coll.total_paid_track) AS total_paid_track,
+                req.cus_status
 
             FROM collection coll
             JOIN acknowlegement_customer_profile cp ON coll.req_id = cp.req_id
@@ -108,9 +108,12 @@ $query = "SELECT
             JOIN sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
             JOIN acknowlegement_loan_calculation lc ON coll.req_id = lc.req_id
             JOIN request_creation req ON coll.req_id = req.req_id
-            
-            WHERE req.cus_status >= 14 and " . $where . "
-            and cp.area_confirm_subarea IN ($sub_area_list) ";
+            JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
+            JOIN agent_creation ac ON req.agent_id = ac.ag_id
+
+            WHERE req.cus_status >= 14 
+            AND $where
+            AND cp.area_confirm_subarea IN ($sub_area_list) ";
 
 if (isset($_POST['search'])) {
     if ($_POST['search'] != "") {
@@ -220,17 +223,16 @@ foreach ($result as $row) {
     $data[]      = $sub_array;
     $sno = $sno + 1;
 }
-function count_all_data($connect)
+function count_all_data($con)
 {
     $query = "SELECT coll_id FROM collection coll JOIN request_creation req ON coll.req_id = req.req_id where req.cus_status >= 14 GROUP BY coll.req_id ";
-    $statement = $connect->prepare($query);
-    $statement->execute();
-    return $statement->rowCount();
+    $statement = $con->query($query);
+    return $statement->num_rows;
 }
 
 $output = array(
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => count_all_data($connect),
+    'recordsTotal' => count_all_data($con),
     'recordsFiltered' => $number_filter_row,
     'data' => $data
 );

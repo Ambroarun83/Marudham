@@ -16,9 +16,7 @@ if ($selectIC->num_rows > 0) {
     while ($row = $codeAvailable->fetch_assoc()) {
         $ac2 = $row["loan_id"];
     }
-    $appno2 = ltrim(strstr($ac2, '-'), '-');
-    $appno2 = $appno2 + 1;
-    $loan_id = $appno2;
+    $loan_id = intval($ac2) + 1;
 } else {
     $initialapp = "101";
     $loan_id = $initialapp;

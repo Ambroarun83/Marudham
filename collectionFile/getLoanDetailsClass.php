@@ -52,7 +52,11 @@ class GetLoanDetails
             $loan_arr['loan_date'] = date('Y-m-d', strtotime($qry->fetch_assoc()['updated_date']));
         }
         $coll_arr = array();
-        $result = $con->query("SELECT * FROM `collection` WHERE req_id = $this->req_id and DATE(coll_date) <= DATE('" . date('Y-m-01', strtotime($this->ddate)) . "')");
+        $coll_qry = "SELECT due_amt_track,pre_close_waiver,princ_amt_track,int_amt_track FROM `collection` WHERE req_id = $this->req_id and DATE(coll_date) <= DATE('" . date('Y-m-01', strtotime($this->ddate)) . "')";
+        if ($this->use == 'Collection') {
+            $coll_qry = "SELECT due_amt_track,pre_close_waiver,princ_amt_track,int_amt_track FROM `collection` WHERE req_id = $this->req_id and DATE(coll_date) <= DATE('" . date('Y-m-d', strtotime($this->ddate)) . "')";
+        }
+        $result = $con->query($coll_qry);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $coll_arr[] = $row;
@@ -161,7 +165,7 @@ class GetLoanDetails
                     $start_date_obj->add($interval); //increase one month to loop again
                     $count++; //Count represents how many months are exceeded
                 }
-                if ($this->use == 'Collection') {
+                if ($this->use == 'Collection' && $current_date_obj > $end_date_obj) {
                     $count++; //because if the maturity date crossed the pending amount should have the maturity month's amount also so add 1month to count in collection
                 }
 
@@ -290,7 +294,7 @@ class GetLoanDetails
                 $start_date_obj->add($interval); //increase one month to loop again
                 $count++; //Count represents how many months are exceeded
             }
-            if ($this->use == 'Collection') {
+            if ($this->use == 'Collection' && $current_date_obj > $end_date_obj) {
                 $count++; //because if the maturity date crossed the pending amount should have the maturity month's amount also so add 1month to count in collection
             }
 
@@ -402,7 +406,7 @@ class GetLoanDetails
                 $start_date_obj->add($interval); //increase one month to loop again
                 $count++; //Count represents how many months are exceeded
             }
-            if ($this->use == 'Collection') {
+            if ($this->use == 'Collection' && $current_date_obj > $end_date_obj) {
                 $count++; //because if the maturity date crossed the pending amount should have the maturity month's amount also so add 1month to count in collection
             }
 

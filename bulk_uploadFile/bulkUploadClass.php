@@ -322,18 +322,15 @@ class bulkUploadClass
     }
     function getLoanCode($con)
     {
-        $myStr = "LID";
         $selectIC = $con->query("SELECT loan_id FROM in_issue WHERE loan_id != '' ");
         if ($selectIC->num_rows > 0) {
             $codeAvailable = $con->query("SELECT loan_id FROM in_issue WHERE (loan_id != '' or loan_id != NULL) ORDER BY id DESC LIMIT 1");
             while ($row = $codeAvailable->fetch_assoc()) {
                 $ac2 = $row["loan_id"];
             }
-            $appno2 = ltrim(strstr($ac2, '-'), '-');
-            $appno2 = $appno2 + 1;
-            $loan_id = $myStr . "-" . "$appno2";
+            $loan_id = intval($ac2) + 1;
         } else {
-            $initialapp = $myStr . "-101";
+            $initialapp = "101";
             $loan_id = $initialapp;
         }
         return $loan_id;
