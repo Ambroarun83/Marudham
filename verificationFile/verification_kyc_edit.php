@@ -5,7 +5,7 @@ $id = $_POST['id'];
 
 $kyc = array();
 
-$BANKInfo = $connect -> query("SELECT * FROM `verification_kyc_info` WHERE id='$id' ");
+$BANKInfo = $connect->query("SELECT * FROM `verification_kyc_info` WHERE id='$id' ");
 $bank_details = $BANKInfo->fetch();
 
 $kyc['id'] = $bank_details['id'];
@@ -17,4 +17,7 @@ $kyc['upload'] = $bank_details['upload'];
 
 
 echo json_encode($kyc);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

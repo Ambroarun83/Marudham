@@ -3,13 +3,16 @@ include '../../ajaxconfig.php';
 
 $id = $_POST['id'];
 
- 
+
 $delct = $connect->query("DELETE FROM `document_info` WHERE id = '$id' ");
 
-	if($delct){
-		$message=" Document Info Deleted Successfully";
-	}
+if ($delct) {
+	$message = " Document Info Deleted Successfully";
+}
 
 
 echo json_encode($message);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

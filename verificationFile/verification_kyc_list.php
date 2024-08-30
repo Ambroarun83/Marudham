@@ -71,7 +71,7 @@ include '../ajaxconfig.php';
             } else
             if ($kyc['proof_type'] == '12') {
                 $proof_type = "Own House Proof";
-            }else
+            } else
             if ($kyc['proof_type'] == '13') {
                 $proof_type = "Others";
             }
@@ -143,3 +143,8 @@ include '../ajaxconfig.php';
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null; ?>

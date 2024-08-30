@@ -1,12 +1,12 @@
-<?php 
+<?php
 include('../ajaxconfig.php');
 
 $Membername_arr = array();
 
-$cus_id =$_POST['cus_id'];
+$cus_id = $_POST['cus_id'];
 $result = $connect->query("SELECT famname FROM `verification_family_info` where cus_id = '$cus_id' ");
 
-while( $row = $result->fetch()){
+while ($row = $result->fetch()) {
     $Membername_arr[] = $row['famname'];
 }
 
@@ -16,4 +16,7 @@ $row = $result->fetch();
 $Membername_arr[] = $row['customer_name'];
 
 echo json_encode($Membername_arr);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

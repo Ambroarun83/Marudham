@@ -89,3 +89,9 @@ if (isset($_POST['req_id'])) {
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

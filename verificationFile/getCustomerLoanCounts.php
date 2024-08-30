@@ -40,3 +40,7 @@ if ($records['loan_count'] > 0) {
     $records['travel'] = '';
 }
 echo json_encode($records);
+
+$con->close();
+$mysqli->close();
+$connect = null;

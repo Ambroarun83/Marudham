@@ -109,3 +109,9 @@ function moneyFormatIndia($num)
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

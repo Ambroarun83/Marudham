@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (isset($_SESSION['userid'])) {
     $userid = $_SESSION['userid'];
@@ -10,7 +10,7 @@ if (isset($_POST['req_id'])) {
     $req_id = $_POST['req_id'];
 }
 if (isset($_POST['cus_id'])) {
-    $cus_id = preg_replace('/\D/', '',$_POST['cus_id']);
+    $cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
 }
 
 //Move to Issue = 13.
@@ -26,10 +26,13 @@ $qry = $con->query("UPDATE in_issue set inserted_user = '$userid' , inserted_dat
 
 $qry = $con->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`)  VALUES('" . strip_tags($req_id) . "','" . strip_tags($cus_id) . "','1','$userid', now()) ");
 
-if($qry){
+if ($qry) {
     $response = 'Moved to Issue';
-}else{
+} else {
     $response = 'Error While Moving';
 }
-    echo json_encode($response);
-?>
+echo json_encode($response);
+
+$con->close();
+$mysqli->close();
+$connect = null;

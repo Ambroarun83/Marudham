@@ -743,6 +743,7 @@
                 ],
                 'drawCallback': function() {
                     searchFunction('closed_table');
+                    setNOCButton();
                 }
             });
 

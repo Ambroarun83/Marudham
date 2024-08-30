@@ -87,3 +87,7 @@ if ($screen == 'request') {
 }
 
 echo $response;
+
+$con->close();
+$mysqli->close();
+$connect = null;

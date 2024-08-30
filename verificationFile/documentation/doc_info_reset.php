@@ -103,3 +103,9 @@ if (isset($_POST['pages'])) {
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

@@ -3,13 +3,16 @@ include '../ajaxconfig.php';
 
 $id = $_POST['bankid'];
 
- 
+
 $delct = $connect->query("DELETE FROM `verification_bank_info` WHERE id = '$id' ");
 
-	if($delct){
-		$message=" Bank Info Deleted Successfully";
-	}
+if ($delct) {
+	$message = " Bank Info Deleted Successfully";
+}
 
 
 echo json_encode($message);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

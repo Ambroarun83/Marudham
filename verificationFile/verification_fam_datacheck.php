@@ -16,18 +16,24 @@ include '../ajaxconfig.php';
     </thead>
     <tbody>
         <?php
-        if(isset($_POST['name'])){
+        if (isset($_POST['name'])) {
             $name =  preg_replace('/\s+/', '', $_POST['name']);
         }
-        if(isset($_POST['req_id'])){
+        if (isset($_POST['req_id'])) {
             $req_id = $_POST['req_id'];
         }
-        if(isset($_POST['category'])){
+        if (isset($_POST['category'])) {
             $category = $_POST['category'];
-            if($category == '0'){ $category = "famname";}
-            if($category == '1'){ $category = "relation_aadhar";}
-            if($category == '2'){ $category = "relation_Mobile";}
+            if ($category == '0') {
+                $category = "famname";
             }
+            if ($category == '1') {
+                $category = "relation_aadhar";
+            }
+            if ($category == '2') {
+                $category = "relation_Mobile";
+            }
+        }
 
         $cusInfo = $connect->query("SELECT a.`famname`,a.`relationship`,a.`relation_aadhar`,b.`cus_id`,b.`customer_name` FROM `verification_family_info` a left join `customer_register` b 
         on a.req_id = b.req_ref_id  WHERE a.`req_id` != '$req_id' && a.$category = '$name' order by a.id desc");
@@ -69,3 +75,8 @@ include '../ajaxconfig.php';
     //     });
     // });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null; ?>

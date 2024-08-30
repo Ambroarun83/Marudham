@@ -101,3 +101,9 @@ function moneyFormatIndia($num)
     return $thecash;
 }
 ?>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

@@ -5,7 +5,7 @@ $id = $_POST['id'];
 
 $feedback = array();
 
-$feedbackDetail = $connect -> query("SELECT * FROM `verification_cus_feedback` WHERE id='$id' ");
+$feedbackDetail = $connect->query("SELECT * FROM `verification_cus_feedback` WHERE id='$id' ");
 $cus_feedback = $feedbackDetail->fetch();
 
 $feedback['id'] = $cus_feedback['id'];
@@ -14,4 +14,7 @@ $feedback['cus_feedback'] = $cus_feedback['cus_feedback'];
 $feedback['feedback_remark'] = $cus_feedback['feedback_remark'];
 
 echo json_encode($feedback);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

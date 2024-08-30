@@ -83,4 +83,7 @@ if ($result->num_rows > 0) {
 </script>
 <?php
 
+$con->close();
+$mysqli->close();
+$connect = null;
 ?>

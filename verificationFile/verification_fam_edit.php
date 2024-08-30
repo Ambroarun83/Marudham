@@ -1,10 +1,10 @@
 <?php
 require '../ajaxconfig.php';
 
-$id =$_POST['id'];
+$id = $_POST['id'];
 
 $famEditRes = array();
-$famInfo = $connect -> query("SELECT * FROM `verification_family_info` WHERE id='$id' ");
+$famInfo = $connect->query("SELECT * FROM `verification_family_info` WHERE id='$id' ");
 $fam = $famInfo->fetch();
 
 $famEditRes['id'] = $fam['id'];
@@ -20,6 +20,7 @@ $famEditRes['income'] = $fam['relation_Income'];
 $famEditRes['bg'] = $fam['relation_Blood'];
 
 echo json_encode($famEditRes);
-?>
 
-
+$con->close();
+$mysqli->close();
+$connect = null;

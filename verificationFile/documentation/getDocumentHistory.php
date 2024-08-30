@@ -529,3 +529,10 @@ function getDocumentStatus($con, $req_id, $cus_id)
         }
     });
 </script>
+
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

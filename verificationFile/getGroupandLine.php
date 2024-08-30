@@ -1,6 +1,6 @@
-<?php 
+<?php
 include('../ajaxconfig.php');
-if(isset($_POST['sub_area_id'])){
+if (isset($_POST['sub_area_id'])) {
     $sub_area = $_POST['sub_area_id'];
 }
 
@@ -16,4 +16,7 @@ $records['line_name'] = $row['line_name'];
 
 
 echo json_encode($records);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;
