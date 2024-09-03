@@ -619,7 +619,7 @@ class GetLoanDetails
 
 
                 $penalty = 0;
-                $start_for_penalty = $start->format('Y-m-d');
+                $start_for_penalty = $start->format('Y-m');
 
                 $qry = $con->query("SELECT princ_amt_track as princ,bal_amt, coll_date FROM `collection` WHERE req_id = '" . $this->req_id . "' and princ_amt_track != '' and month(coll_date) = month('" . $start->format('Y-m-d') . "') and year(coll_date) = year('" . $start->format('Y-m-d') . "') ORDER BY coll_date ASC ");
                 if ($qry->num_rows > 0) {
@@ -694,7 +694,7 @@ class GetLoanDetails
                         }
                     }
 
-                    $checkPenalty = $con->query("SELECT * from penalty_charges where month(penalty_date) = month('$start_for_penalty') AND year(penalty_date) = year('$start_for_penalty') and req_id = '" . $this->req_id . "' ");
+                    $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$start_for_penalty' and req_id = '" . $this->req_id . "' ");
                     if ($checkPenalty->num_rows == 0) {
                         $penalty = round((($cur_result * $penalty_per) / 100) + $penalty);
                         if ($cur_result != 0) {
@@ -707,7 +707,7 @@ class GetLoanDetails
             while ($start->format('m') <= $end->format('m')) {
 
                 $penalty = 0;
-                $start_for_penalty = $start->format('Y-m-d');
+                $start_for_penalty = $start->format('Y-m');
 
                 $dueperday = $due_amt / intval($start->format('t'));
 
@@ -753,7 +753,7 @@ class GetLoanDetails
                         }
                     }
 
-                    $checkPenalty = $con->query("SELECT * from penalty_charges where month(penalty_date) = month('$start_for_penalty') AND year(penalty_date) = year('$start_for_penalty') and req_id = '" . $this->req_id . "' ");
+                    $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$start_for_penalty' and req_id = '" . $this->req_id . "' ");
                     if ($checkPenalty->num_rows == 0) {
                         $penalty = round((($cur_result * $penalty_per) / 100) + $penalty);
                         if ($cur_result != 0) {
