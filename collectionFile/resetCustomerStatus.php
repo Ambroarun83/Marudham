@@ -817,13 +817,13 @@ function dueAmtCalculation($con, $start_date, $end_date, $due_amt, $loan_arr, $s
                     }
                 }
 
-                $checkPenalty = $con->query("SELECT * from penalty_charges where month(penalty_date) = month('$start_for_penalty') AND year(penalty_date) = year('$start_for_penalty') and req_id = '" . $req_id . "' ");
-                if ($checkPenalty->num_rows == 0) {
-                    $penalty = round((($cur_result * $penalty_per) / 100) + $penalty);
-                    if ($cur_result != 0) {
-                        $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('" . $req_id . "','" . date('Y-m', strtotime($start_for_penalty)) . "','$penalty',now())");
-                    }
-                }
+                // $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$start_for_penalty' and req_id = '" . $req_id . "' ");
+                // if ($checkPenalty->num_rows == 0) {
+                //     $penalty = round((($cur_result * $penalty_per) / 100) + $penalty);
+                //     if ($cur_result != 0) {
+                //         $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('" . $req_id . "','" . date('Y-m', strtotime($start_for_penalty)) . "','$penalty',now())");
+                //     }
+                // }
             }
         }
     } else {
@@ -876,13 +876,13 @@ function dueAmtCalculation($con, $start_date, $end_date, $due_amt, $loan_arr, $s
                     }
                 }
 
-                $checkPenalty = $con->query("SELECT * from penalty_charges where month(penalty_date) = month('$start_for_penalty') AND year(penalty_date) = year('$start_for_penalty') and req_id = '" . $req_id . "' ");
-                if ($checkPenalty->num_rows == 0) {
-                    $penalty = round((($cur_result * $penalty_per) / 100) + $penalty);
-                    if ($cur_result != 0) {
-                        $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('" . $req_id . "','" . date('Y-m', strtotime($start_for_penalty)) . "','$penalty',now())");
-                    }
-                }
+                // $checkPenalty = $con->query("SELECT * from penalty_charges where penalty_date = '$start_for_penalty' and req_id = '" . $req_id . "' ");
+                // if ($checkPenalty->num_rows == 0) {
+                //     $penalty = round((($cur_result * $penalty_per) / 100) + $penalty);
+                //     if ($cur_result != 0) {
+                //         $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('" . $req_id . "','" . date('Y-m', strtotime($start_for_penalty)) . "','$penalty',now())");
+                //     }
+                // }
             }
         }
     }

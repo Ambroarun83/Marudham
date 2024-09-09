@@ -45,7 +45,7 @@ $query = "SELECT rc.*, a.area_name, sa.sub_area_name, ag.group_name, bc.branch_n
     JOIN area_line_mapping alm ON FIND_IN_SET(sa.sub_area_id, alm.sub_area_id)
     JOIN loan_category_creation lcc ON lcc.loan_category_creation_id = rc.loan_category
     WHERE rc.status = 0 
-    AND (rc.cus_status NOT IN (8, 9) AND rc.cus_status < 14) 
+    AND (rc.cus_status NOT IN (4, 5, 6, 7, 8, 9) AND rc.cus_status < 14) 
     AND rc.insert_login_id = '$userid' "; //hide if issued or revoked(after issued cus_status = 7 , request revoked = 8, verification revoked = 9)
 if ($userid == 1 or $request_list_access == 0) { //if request_list_access is granted to the current user
     $query = "SELECT rc.*, a.area_name, sa.sub_area_name, ag.group_name, bc.branch_name, alm.line_name,lcc.loan_category_creation_name
@@ -57,7 +57,7 @@ if ($userid == 1 or $request_list_access == 0) { //if request_list_access is gra
     JOIN area_line_mapping alm ON FIND_IN_SET(sa.sub_area_id, alm.sub_area_id)
     JOIN loan_category_creation lcc ON lcc.loan_category_creation_id = rc.loan_category
     WHERE rc.status = 0 
-    AND (rc.cus_status NOT IN (8, 9) AND rc.cus_status < 14) ";
+    AND (rc.cus_status NOT IN (4, 5, 6, 7, 8, 9) AND rc.cus_status < 14) ";
 }
 if (isset($_POST['search']) && $_POST['search'] != "") {
 

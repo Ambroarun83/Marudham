@@ -1124,7 +1124,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 													<th width="50"> S.No </th>
 													<th> Proof of </th>
 													<th> Proof type </th>
-													<th> Proof Details </th>
+													<th> Proof Number </th>
 													<th> Upload </th>
 												</tr>
 											</thead>
@@ -1247,7 +1247,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
-										<label for="cus_loan_limit"> Customer Limit </label> <span class="required">*</span>
+										<label for="cus_loan_limit"> Customer Limit </label>
 										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Customer Limit" value="<?php if (isset($loan_limit)) {
 																																											echo $loan_limit;
 																																										} ?>" tabindex="60">
@@ -2534,14 +2534,6 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label class="label" for="relation_age"> Age </label>&nbsp;<span class="text-danger">*</span>
-							<input type="number" class="form-control" name="relation_age" id="relation_age" tabindex='4' placeholder="Enter Age">
-							<span class="text-danger" id="famageCheck">Enter Age</span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
 							<label class="label" for="relation_aadhar"> Aadhar No </label>&nbsp;<span class="text-danger">*</span>
 							<input type="text" class="form-control" name="relation_aadhar" id="relation_aadhar" data-type="adhaar-number" maxlength="14" tabindex='5' placeholder="Enter Adhar Number">
 							<span class="text-danger" id="famaadharCheck">Enter Aadhar Number</span>
@@ -2558,7 +2550,15 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label class="label" for="relation_Occupation"> Occupation </label>&nbsp;<span class="text-danger">*</span>
+							<label class="label" for="relation_age"> Age </label>
+							<input type="number" class="form-control" name="relation_age" id="relation_age" tabindex='4' placeholder="Enter Age">
+							<span class="text-danger" id="famageCheck">Enter Age</span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label class="label" for="relation_Occupation"> Occupation </label>
 							<input type="text" class="form-control" name="relation_Occupation" id="relation_Occupation" onkeydown="return /[a-z ]/i.test(event.key)" tabindex='7' placeholder="Enter Mobile Number">
 							<span class="text-danger" id="famoccCheck">Enter Occupation</span>
 						</div>
@@ -2566,7 +2566,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label class="label" for="relation_Income"> Income </label>&nbsp;<span class="text-danger">*</span>
+							<label class="label" for="relation_Income"> Income </label>
 							<input type="number" class="form-control" name="relation_Income" id="relation_Income" tabindex='8' placeholder="Enter Income">
 							<span class="text-danger" id="famincomeCheck">Enter Income</span>
 						</div>
@@ -2986,6 +2986,12 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 							<span class="text-danger" id="proofCheck" style="display:none"> Select Proof </span>
 						</div>
 					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 name_div" style="display:none">
+						<div class="form-group">
+							<label for="proofofname"> Name </label>
+							<input type="text" class="form-control" id="proofofname" name="proofofname" readonly>
+						</div>
+					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 fam_mem_div" style="display:none">
 						<div class="form-group">
 							<label for="fam_mem"> Family Member </label> <span class="required">&nbsp;*</span>
@@ -3021,9 +3027,9 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="proof_number"> Proof Details </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Details" tabindex='1'>
-							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Details </span>
+							<label for="proof_number"> Proof Number </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Number" tabindex='1'>
+							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Number </span>
 						</div>
 					</div>
 
@@ -3051,7 +3057,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 								<th width="50"> S.No </th>
 								<th> Proof of </th>
 								<th> Proof type </th>
-								<th> Proof Details </th>
+								<th> Proof Number </th>
 								<th> ACTION </th>
 							</tr>
 						</thead>

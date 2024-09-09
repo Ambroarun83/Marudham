@@ -1131,7 +1131,7 @@ $(document).on("click", "#submitFamInfoBtn", function () {
     let relation_Blood = $("#relation_Blood").val();
     let famTableId = $("#famID").val();
 
-    if (famname != "" && relationship != "" && relation_age != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Mobile.length === 10 && relation_Occupation != "" && relation_Income != "" && req_id != "") {
+    if (famname != "" && relationship != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Mobile.length === 10 && req_id != "") {
         $.ajax({
             url: 'verificationFile/verification_family_submit.php',
             type: 'POST',
@@ -1191,12 +1191,6 @@ $(document).on("click", "#submitFamInfoBtn", function () {
             $('#famaddressCheck').hide();
         }
 
-        if (relation_age == "") {
-            $('#famageCheck').show();
-        } else {
-            $('#famageCheck').hide();
-        }
-
         if (relation_aadhar == "") {
             $('#famaadharCheck').show();
         } else {
@@ -1209,17 +1203,6 @@ $(document).on("click", "#submitFamInfoBtn", function () {
             $('#fammobileCheck').hide();
         }
 
-        if (relation_Occupation == "") {
-            $('#famoccCheck').show();
-        } else {
-            $('#famoccCheck').hide();
-        }
-
-        if (relation_Income == "") {
-            $('#famincomeCheck').show();
-        } else {
-            $('#famincomeCheck').hide();
-        }
     }
 
 });
@@ -2199,7 +2182,7 @@ function resetkycInfo() {
             $("#upload").val('');
             $("#kycID").val('');
 
-            $('#proofCheck').hide(); $('#proofTypeCheck').hide(); $('#proofnoCheck').hide(); $('#proofUploadCheck').hide();
+            $('#proofCheck,#proofTypeCheck,#proofnoCheck,#proofUploadCheck,.name_div').hide();
         }
     });
 }
@@ -2295,6 +2278,15 @@ $('#proofof').change(function () {
     let req_id = $('#req_id').val();
     let cus_id = $('#cus_id').val();
     let proof = $('#proofof').val();
+
+    if (proof == '0' || proof == '1') {
+        $.post('verificationFile/get_proof_of_name.php', { req_id, cus_id, proof }, function (response) {
+            $('.name_div').show();
+            $('#proofofname').val(response);
+        }, 'json')
+    } else {
+        $('.name_div').hide()
+    }
 
     if (proof != '2' && proof != '') { // if proof of is not family members then check for other's proofs entered already 
         $('.fam_mem_div').hide();//hide fam div on other proof of selected
@@ -2928,12 +2920,12 @@ function validation(submit_btn) {
     } else {
         $('#monthlyDueCapacityCheck').hide();
     }
-    if (cus_loan_limit == '') {
-        event.preventDefault();
-        $('#loanLimitCheck').show();
-    } else {
-        $('#loanLimitCheck').hide();
-    }
+    // if (cus_loan_limit == '') {
+    //     event.preventDefault();
+    //     $('#loanLimitCheck').show();
+    // } else {
+    //     $('#loanLimitCheck').hide();
+    // }
     if (about_cus == '') {
         event.preventDefault();
         $('#aboutcusCheck').show();

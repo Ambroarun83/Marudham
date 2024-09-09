@@ -3857,6 +3857,7 @@ class admin
 		if (isset($_POST['cus_monDue_capacity'])) {
 			$cus_monDue_capacity = $_POST['cus_monDue_capacity'];
 		}
+		$cus_loan_limit = '';
 		if (isset($_POST['cus_loan_limit'])) {
 			$cus_loan_limit = $_POST['cus_loan_limit'];
 		}

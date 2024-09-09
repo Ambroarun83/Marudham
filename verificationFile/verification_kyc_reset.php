@@ -11,7 +11,7 @@ include '../ajaxconfig.php';
             <th> Name </th>
             <th> Relationship </th>
             <th> Proof type </th>
-            <th> Proof Details </th>
+            <th> Proof Number </th>
             <th> ACTION </th>
         </tr>
     </thead>

@@ -1099,7 +1099,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 													<th width="50"> S.No </th>
 													<th> Proof of </th>
 													<th> Proof type </th>
-													<th> Proof Details </th>
+													<th> Proof Number </th>
 													<th> Upload </th>
 												</tr>
 											</thead>
@@ -1216,7 +1216,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 									<div class="form-group">
-										<label for="loanlimit"> Customer Limit </label> <span class="required">*</span>
+										<label for="loanlimit"> Customer Limit </label> 
 										<input type="number" class="form-control" name="cus_loan_limit" id="cus_loan_limit" placeholder="Enter Customer Limit" value="<?php if (isset($loan_limit)) {
 																																											echo $loan_limit;
 																																										} ?>" tabindex="49">

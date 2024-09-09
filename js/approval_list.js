@@ -64,30 +64,50 @@ function callOnClickEvents() {
         });
         $('.move_acknowledgement').click(function () {
             var req_id = $(this).val();
-            if (confirm('Do You want to Approve?')) {
-                $.ajax({
-                    url: 'approveFile/sendToAcknowledgement.php',
-                    dataType: 'json',
-                    type: 'post',
-                    data: { 'req_id': req_id },
-                    cache: false,
-                    success: function (response) {
-                        if (response.includes('Approved')) {
-                            Swal.fire({
-                                timerProgressBar: true,
-                                timer: 2000,
-                                title: response,
-                                icon: 'success',
-                                showConfirmButton: true,
-                                confirmButtonColor: '#009688'
-                            });
-                            setTimeout(function () {
-                                window.location = 'approval_list';
-                            }, 2000)
+            let cus_id = $(this).data('cusid');
+            $.post('approveFile/check_customer_limit.php', { cus_id }, function (response) {
+                let cus_limit = response['cus_limit'];
+                if (cus_limit == '') {
+                    alert('Customer Limit is not set');
+                } else {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Customer Limit',
+                        text: `Customer Limit is set to ${cus_limit}. Do you want to Approve?`,
+                        showCancelButton: true,
+                        confirmButtonColor: '#009688',
+                        cancelButtonColor: '#d33',
+                        cancelButtonText: 'No',
+                        confirmButtonText: 'Yes'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: 'approveFile/sendToAcknowledgement.php',
+                                dataType: 'json',
+                                type: 'post',
+                                data: { 'req_id': req_id },
+                                cache: false,
+                                success: function (response) {
+                                    if (response.includes('Approved')) {
+                                        Swal.fire({
+                                            timerProgressBar: true,
+                                            timer: 2000,
+                                            title: response,
+                                            icon: 'success',
+                                            showConfirmButton: true,
+                                            confirmButtonColor: '#009688'
+                                        });
+                                        setTimeout(function () {
+                                            window.location = 'approval_list';
+                                        }, 2000)
+                                    }
+                                }
+                            })
                         }
-                    }
-                })
-            }
+                    })
+                }
+            }, 'json')
+
         });
 
         // Approval list Actions

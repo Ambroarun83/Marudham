@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include('../ajaxconfig.php');
 if (isset($_POST['req_id'])) {
@@ -25,4 +25,8 @@ $insertLoanCat = $con->query("INSERT INTO `acknowledgement_loan_cal_category`( `
 
 $response = 'Verification Approved';
 echo json_encode($response);
-?>
+
+
+$con->close();
+$mysqli->close();
+$connect = null;

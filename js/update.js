@@ -620,7 +620,7 @@ $(document).on("click", "#submitFamInfoBtn", function () {
     let relation_Blood = $("#relation_Blood").val();
     let famTableId = $("#famID").val();
 
-    if (famname != "" && relationship != "" && relation_age != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Mobile.length === 10 && relation_Occupation != "" && relation_Income != "") {
+    if (famname != "" && relationship != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Mobile.length === 10) {
         $.ajax({
             url: 'updateFile/update_family_submit.php',
             type: 'POST',
@@ -680,12 +680,6 @@ $(document).on("click", "#submitFamInfoBtn", function () {
             $('#famaddressCheck').hide();
         }
 
-        if (relation_age == "") {
-            $('#famageCheck').show();
-        } else {
-            $('#famageCheck').hide();
-        }
-
         if (relation_aadhar == "") {
             $('#famaadharCheck').show();
         } else {
@@ -696,18 +690,6 @@ $(document).on("click", "#submitFamInfoBtn", function () {
             $('#fammobileCheck').show();
         } else {
             $('#fammobileCheck').hide();
-        }
-
-        if (relation_Occupation == "") {
-            $('#famoccCheck').show();
-        } else {
-            $('#famoccCheck').hide();
-        }
-
-        if (relation_Income == "") {
-            $('#famincomeCheck').show();
-        } else {
-            $('#famincomeCheck').hide();
         }
     }
 
@@ -1453,12 +1435,22 @@ function resetkycinfoList() {
 
 $('#proofof').change(function () {
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let proof = $('#proofof').val();
+
+    if (proof == '0' || proof == '1') {
+        $.post('verificationFile/get_proof_of_name.php', { req_id, cus_id, proof }, function (response) {
+            $('.name_div').show();
+            $('#proofofname').val(response);
+        }, 'json')
+    } else {
+        $('.name_div').hide()
+    }
 
     $.ajax({
         url: 'verificationFile/verification_proof_type.php',
         type: 'POST',
-        data: { "reqId": req_id, "proof": proof },
+        data: { "reqId": req_id, "cus_id":cus_id,"proof": proof },
         dataType: 'json',
         cache: false,
         success: function (response) {
