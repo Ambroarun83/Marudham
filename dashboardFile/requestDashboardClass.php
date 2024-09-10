@@ -13,16 +13,17 @@ class RequestClass
 
         $response = array();
         $today = date('Y-m-d');
+        $month = (isset($_POST['month']) && $_POST['month'] != '') ? date('Y-m-01', strtotime($_POST['month'])) : date('Y-m-01');
         $sub_area_list = $_POST['sub_area_list'];
 
         //all the above queries without $con->query(). just query as string like $req_query = "SELECT count(*) as tot_req FROM request_creation WHERE insert_login_id = '$this->user_id' "
-        $req_query = "SELECT count(*) as tot_req FROM request_creation WHERE 1 ";
-        $issue_query = "SELECT count(*) as tot_issue FROM request_creation WHERE cus_status >= 14 ";
-        $balance_query = "SELECT count(*) as tot_balance FROM request_creation WHERE (cus_status < 14 and cus_status NOT IN(4, 5, 6, 7, 8, 9) ) ";
-        $cancel_query = "SELECT count(*) as tot_cancel FROM request_creation WHERE cus_status = 4 ";
-        $revoke_query = "SELECT count(*) as tot_revoke FROM request_creation WHERE cus_status = 8 ";
-        $new_query = "SELECT count(*) as tot_new FROM request_creation WHERE cus_data = 'New' ";
-        $existing_query = "SELECT count(*) as tot_existing FROM request_creation WHERE cus_data = 'Existing' ";
+        $req_query = "SELECT count(*) as tot_req FROM request_creation WHERE 1 and month(created_date) = month('$month') and year(created_date) = year('$month')";
+        $issue_query = "SELECT count(*) as tot_issue FROM request_creation WHERE cus_status >= 14 and month(created_date) = month('$month') and year(created_date) = year('$month')";
+        $balance_query = "SELECT count(*) as tot_balance FROM request_creation WHERE (cus_status < 14 and cus_status NOT IN(4, 5, 6, 7, 8, 9) ) and month(created_date) = month('$month') and year(created_date) = year('$month')";
+        $cancel_query = "SELECT count(*) as tot_cancel FROM request_creation WHERE cus_status = 4 and month(created_date) = month('$month') and year(created_date) = year('$month')";
+        $revoke_query = "SELECT count(*) as tot_revoke FROM request_creation WHERE cus_status = 8 and month(created_date) = month('$month') and year(created_date) = year('$month')";
+        $new_query = "SELECT count(*) as tot_new FROM request_creation WHERE cus_data = 'New' and month(created_date) = month('$month') and year(created_date) = year('$month')";
+        $existing_query = "SELECT count(*) as tot_existing FROM request_creation WHERE cus_data = 'Existing' and month(created_date) = month('$month') and year(created_date) = year('$month')";
         $today_req_query = "SELECT count(*) as today_req FROM request_creation WHERE date(created_date) = '$today' ";
         $today_issue_query = "SELECT count(*) as today_issue FROM request_creation WHERE cus_status >= 14 AND date(created_date) = '$today' ";
         $today_balance_query = "SELECT count(*) as today_balance FROM request_creation WHERE (cus_status < 14 and cus_status NOT IN(4, 5, 6, 7, 8, 9)) AND date(created_date) = '$today'";

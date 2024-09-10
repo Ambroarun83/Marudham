@@ -13,23 +13,24 @@ class LoanIssueClass
 
         $response = array();
         $today = date('Y-m-d');
+        $month = (isset($_POST['month']) && $_POST['month'] != '') ? date('Y-m-01', strtotime($_POST['month'])) : date('Y-m-01');
         $sub_area_list = $_POST['sub_area_list'];
 
-        $tot_li = "SELECT COUNT(*) as tot_li FROM request_creation where cus_status >= 13  ";
+        $tot_li = "SELECT COUNT(*) as tot_li FROM request_creation where cus_status >= 13 and month(updated_date) = month('$month') and year(updated_date) = year('$month') ";
         $today_li = "SELECT COUNT(*) as today_li FROM request_creation where cus_status = 13 and date(updated_date) = '$today' ";
-        $tot_li_issue = "SELECT COUNT(*) as tot_li_issue FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 ";
+        $tot_li_issue = "SELECT COUNT(*) as tot_li_issue FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 and month(req.updated_date) = month('$month') and year(req.updated_date) = year('$month')";
         $today_li_issue = "SELECT COUNT(*) as today_li_issue FROM request_creation req JOIN customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 and date(req.updated_date) = '$today' ";
-        $tot_li_bal = "SELECT COUNT(*) as tot_li_bal FROM request_creation where cus_status = 13 ";
+        $tot_li_bal = "SELECT COUNT(*) as tot_li_bal FROM request_creation where cus_status = 13 and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_li_bal = "SELECT COUNT(*) as today_li_bal FROM request_creation where cus_status = 13 and date(updated_date) = '$today' ";
-        $tot_cash = "SELECT SUM(li.cash) as tot_cash from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.cash IS NOT NULL ";
+        $tot_cash = "SELECT SUM(li.cash) as tot_cash from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.cash IS NOT NULL and month(li.created_date) = month('$month') and year(li.created_date) = year('$month')";
         $today_cash = "SELECT SUM(li.cash) as today_cash from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.cash IS NOT NULL and date(li.created_date) = '$today' ";
-        $tot_cheque = "SELECT SUM(li.cheque_value) as tot_cheque from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.cheque_value IS NOT NULL ";
+        $tot_cheque = "SELECT SUM(li.cheque_value) as tot_cheque from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.cheque_value IS NOT NULL and month(li.created_date) = month('$month') and year(li.created_date) = year('$month')";
         $today_cheque = "SELECT SUM(li.cheque_value) as today_cheque from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.cheque_value IS NOT NULL and date(li.created_date) = '$today' ";
-        $tot_transaction = "SELECT SUM(li.transaction_value) as tot_transaction from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.transaction_value IS NOT NULL ";
+        $tot_transaction = "SELECT SUM(li.transaction_value) as tot_transaction from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.transaction_value IS NOT NULL and month(li.created_date) = month('$month') and year(li.created_date) = year('$month')";
         $today_transaction = "SELECT SUM(li.transaction_value) as today_transaction from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where li.transaction_value IS NOT NULL and date(li.created_date) = '$today' ";
-        $tot_new = "SELECT COUNT(*) as tot_new from request_creation where cus_status = 13 and cus_data = 'New' ";
+        $tot_new = "SELECT COUNT(*) as tot_new from request_creation where cus_status = 13 and cus_data = 'New' and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_new = "SELECT COUNT(*) as today_new from request_creation where cus_status = 13 and cus_data = 'New' and date(updated_date) = '$today' ";
-        $tot_existing = "SELECT COUNT(*) as tot_existing from request_creation where cus_status = 13 and cus_data = 'Existing' ";
+        $tot_existing = "SELECT COUNT(*) as tot_existing from request_creation where cus_status = 13 and cus_data = 'Existing' and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_existing = "SELECT COUNT(*) as today_existing from request_creation where cus_status = 13 and cus_data = 'Existing' and date(updated_date) = '$today' ";
         $today_li_amt = "SELECT COALESCE(SUM(lc.net_cash_cal),0) as today_li_amt FROM request_creation req JOIN acknowlegement_loan_calculation lc ON lc.req_id = req.req_id LEFT JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 13 and date(req.updated_date) = '$today' ";
         $today_issued_amt = "SELECT COALESCE(SUM(li.cash + li.cheque_value + li.transaction_value),0) as today_issued_amt from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where date(li.created_date) = '$today' ";

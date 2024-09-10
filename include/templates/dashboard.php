@@ -191,11 +191,15 @@ $getValues = $userObj->getDataForDashboard($mysqli, $userid);
 				</div>
 			</div>
 		<?php } else { ?>
-
-			<div class="branch-div" <?php if ($userRole != 1) { ?> style="display:none" <?php } ?>>
-				<select name="branch_id" id="branch_id" class="branch-dropdown">
-					<option value="">Choose Branch</option>
-				</select>
+			<div class="d-flex justify-content-between">
+				<div class="dash-input-div">
+					<input type="month" name="filter_month" class="dash-input" id="filter_month">
+				</div>
+				<div class="dash-input-div" <?php if ($userRole != 1) { ?> style="display:none" <?php } ?>>
+					<select name="branch_id" id="branch_id" class="dash-input">
+						<option value="">Choose Branch</option>
+					</select>
+				</div>
 			</div>
 
 			<div class="card" id="request_card" <?php if ($request == 1) { ?> style="display: none;" <?php } ?>>

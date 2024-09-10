@@ -2818,7 +2818,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="Goldtype "> Gold Type </label> <span class="required">&nbsp;*</span>
+							<label for="Goldtype "> Gold Type (Ornament's Name)</label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type" tabindex='1'>
 							<span class="text-danger" id="GoldtypeCheck"> Enter Gold Type </span>
 						</div>
@@ -2827,7 +2827,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="Purity "> Purity </label> <span class="required">&nbsp;*</span>
+							<label for="Purity "> Purity (Carat)</label> <span class="required">&nbsp;*</span>
 							<input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity" tabindex='1'>
 							<span class="text-danger" id="purityCheck"> Enter Purity </span>
 						</div>
@@ -2843,7 +2843,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="Weight"> Weight </label> <span class="required">&nbsp;*</span>
+							<label for="Weight"> Weight (in Grams)</label> <span class="required">&nbsp;*</span>
 							<input type="number" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight in Grams" tabindex='1'>
 							<span class="text-danger" id="goldWeightCheck"> Enter Weight </span>
 						</div>

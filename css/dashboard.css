@@ -145,12 +145,12 @@
 }
 }
 
-.branch-div{
+.dash-input-div{
     padding: 10px;
     display: flex;
     justify-content: flex-end;
 }
-.branch-dropdown{
+.dash-input{
     padding: 12px 20px;
     background-color: #ccc;
     border: none;
@@ -162,6 +162,6 @@
     outline: none;
     transition: background-color 0.3s, color 0.3s;
 }
-.branch-dropdown>option{
+.dash-input>option{
     padding: 2px;
 }

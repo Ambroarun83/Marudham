@@ -3712,34 +3712,34 @@ class admin
 			$whatsapp_no = $_POST['whatsapp_no'];
 		}
 		if (!empty($_FILES['pic']['name'])) {
+			// Delete the file from both the request and verification folders
+			$pic_req = $_POST['cus_image'];
+			unlink("uploads/request/customer/{$pic_req}");
+			unlink("uploads/verification/customer/{$pic_req}");
+
+			// Get the original filename and temporary path of the uploaded file
 			$pic = $_FILES['pic']['name'];
 			$pic_temp = $_FILES['pic']['tmp_name'];
-			$picfolderreq = "uploads/request/customer/" . $pic;
-			$picfolder = "uploads/verification/customer/" . $pic;
 
-			$qry = $mysqli->query("SELECT * From customer_profile where req_id = $req_id");
-			if ($qry->num_rows == 0) {
-				//this will protect uploading same file again into server incase of resubmittion
-				$fileExtension = pathinfo($picfolderreq, PATHINFO_EXTENSION); //get the file extention
-				$pic = uniqid() . '.' . $fileExtension;
-				while (file_exists("uploads/request/customer/" . $pic)) {
-					//this loop will continue until it generates a unique file name
-					$pic = uniqid() . '.' . $fileExtension;
-				}
-				move_uploaded_file($pic_temp, "uploads/request/customer/" . $pic);
+			// Extract the file extension from the original filename
+			$fileExtension = pathinfo($pic, PATHINFO_EXTENSION);
 
-				$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION); //get the file extention
-				$pic = uniqid() . '.' . $fileExtension;
-				while (file_exists("uploads/verification/customer/" . $pic)) {
-					//this loop will continue until it generates a unique file name
-					$pic = uniqid() . '.' . $fileExtension;
-				}
-
-				move_uploaded_file($pic_temp, "uploads/verification/customer/" . $pic);
+			// Generate a unique filename
+			$pic_req = uniqid() . '.' . $fileExtension;
+			// Check if the unique filename already exists in the request folder
+			while (file_exists("uploads/request/customer/{$pic_req}")) {
+				// If it exists, generate a new unique filename
+				$pic_req = uniqid() . '.' . $fileExtension;
 			}
+			// Move the uploaded file to the request folder with the new unique filename
+			move_uploaded_file($pic_temp, "uploads/request/customer/{$pic_req}");
+			copy("uploads/request/customer/{$pic_req}", "uploads/verification/customer/{$pic_req}");
 		} else {
-			$pic = $_POST['cus_image'];
+			// If no file was uploaded, use the existing image filename
+			$pic_req = $_POST['cus_image'];
 		}
+
+
 		if (isset($_POST['guarentor_name'])) {
 			$guarentor_name = $_POST['guarentor_name'];
 		}
@@ -3747,21 +3747,21 @@ class admin
 			$guarentor_relationship = $_POST['guarentor_relationship'];
 		}
 		if (!empty($_FILES['guarentorpic']['name'])) {
+			//to delete old pic
+			$goldpic = $_POST['guarentor_image'];
+			unlink("uploads/verification/guarentor/" . $goldpic);
+
 			$guarentor = $_FILES['guarentorpic']['name'];
 			$pic_temp = $_FILES['guarentorpic']['tmp_name'];
 			$picfolder = "uploads/verification/guarentor/" . $guarentor;
 
-			$qry = $mysqli->query("SELECT * From customer_profile where req_id = $req_id");
-			if ($qry->num_rows == 0) {
-				//this will protect uploading same file again into server incase of resubmittion
-				$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION); //get the file extention
+			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION); //get the file extention
+			$guarentor = uniqid() . '.' . $fileExtension;
+			while (file_exists("uploads/verification/guarentor/" . $guarentor)) {
+				//this loop will continue until it generates a unique file name
 				$guarentor = uniqid() . '.' . $fileExtension;
-				while (file_exists("uploads/verification/guarentor/" . $guarentor)) {
-					//this loop will continue until it generates a unique file name
-					$guarentor = uniqid() . '.' . $fileExtension;
-				}
-				move_uploaded_file($pic_temp, "uploads/verification/guarentor/" . $guarentor);
 			}
+			move_uploaded_file($pic_temp, "uploads/verification/guarentor/" . $guarentor);
 		} else {
 			$guarentor = $_POST['guarentor_image'];
 		}
@@ -3873,27 +3873,27 @@ class admin
 			$qry = $mysqli->query("SELECT * From customer_profile where req_id = $req_id");
 			if ($qry->num_rows == 0) {
 				//this will filter out duplication entry in customer profile table
-				$insertQry = "INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`,`latlong` , `area_group`, `area_line`, `cus_status`, `insert_login_id`,`created_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($cus_id) . "','" . strip_tags($cus_name) . "','" . strip_tags($gender) . "','" . strip_tags($dob) . "', '" . strip_tags($age) . "', '" . strip_tags($bloodGroup) . "', '" . strip_tags($mobile1) . "','" . strip_tags($mobile2) . "','" . strip_tags($whatsapp_no) . "','" . strip_tags($pic) . "','" . strip_tags($guarentor_name) . "', '" . strip_tags($guarentor_relationship) . "', '" . strip_tags($guarentor) . "', '" . strip_tags($cus_type) . "',
+				$insertQry = "INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`,`latlong` , `area_group`, `area_line`, `cus_status`, `insert_login_id`,`created_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($cus_id) . "','" . strip_tags($cus_name) . "','" . strip_tags($gender) . "','" . strip_tags($dob) . "', '" . strip_tags($age) . "', '" . strip_tags($bloodGroup) . "', '" . strip_tags($mobile1) . "','" . strip_tags($mobile2) . "','" . strip_tags($whatsapp_no) . "','" . strip_tags($pic_req) . "','" . strip_tags($guarentor_name) . "', '" . strip_tags($guarentor_relationship) . "', '" . strip_tags($guarentor) . "', '" . strip_tags($cus_type) . "',
 				'" . strip_tags($cus_exist_type) . "','" . strip_tags($cus_res_type) . "','" . strip_tags($cus_res_details) . "','" . strip_tags($cus_res_address) . "', '" . strip_tags($cus_res_native) . "', '" . strip_tags($cus_occ_type) . "','" . strip_tags($cus_occ_detail) . "','" . strip_tags($cus_occ_income) . "','" . strip_tags($cus_occ_address) . "','" . strip_tags($cus_occ_dow) . "','" . strip_tags($cus_occ_abt) . "','" . strip_tags($area_cnfrm) . "','" . strip_tags($state) . "','" . strip_tags($district) . "','" . strip_tags($taluk) . "','" . strip_tags($area) . "','" . strip_tags($sub_area) . "','" . strip_tags($latlong) . "','" . strip_tags($area_group) . "','" . strip_tags($area_line) . "','10','" . $userid . "',current_timestamp() )";
 				$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
 
 				$insertQry = "UPDATE request_creation set cus_status = 10,updated_date=now() where req_id ='" . strip_tags($req_id) . "' ";
 				$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
 
-				$insertQry = "UPDATE in_verification set cus_status = 10,`cus_id`='" . strip_tags($cus_id) . "',`cus_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "', `mobile2`='" . strip_tags($mobile2) . "',`pic`='" . strip_tags($pic) . "',updated_date=now() where req_id ='" . strip_tags($req_id) . "' ";
+				$insertQry = "UPDATE in_verification set cus_status = 10,`cus_id`='" . strip_tags($cus_id) . "',`cus_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "', `mobile2`='" . strip_tags($mobile2) . "',`pic`='" . strip_tags($pic_req) . "',updated_date=now() where req_id ='" . strip_tags($req_id) . "' ";
 				$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
 			}
 		} else {
 
-			$cusUpd = "UPDATE `customer_profile` SET `req_id`='" . strip_tags($req_id) . "',`cus_id`='" . strip_tags($cus_id) . "',`cus_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "',`mobile2`='" . strip_tags($mobile2) . "',`whatsapp`='" . strip_tags($whatsapp_no) . "',`cus_pic`='" . strip_tags($pic) . "',`guarentor_name`='" . strip_tags($guarentor_name) . "',`guarentor_relation`='" . strip_tags($guarentor_relationship) . "',`guarentor_photo`='" . strip_tags($guarentor) . "',`cus_type`='" . strip_tags($cus_type) . "',`cus_exist_type`='" . strip_tags($cus_exist_type) . "',`residential_type`='" . strip_tags($cus_res_type) . "',`residential_details`='" . strip_tags($cus_res_details) . "',`residential_address`='" . strip_tags($cus_res_address) . "',`residential_native_address`='" . strip_tags($cus_res_native) . "',`occupation_type`='" . strip_tags($cus_occ_type) . "',`occupation_details`='" . strip_tags($cus_occ_detail) . "',`occupation_income`='" . strip_tags($cus_occ_income) . "',`occupation_address`='" . strip_tags($cus_occ_address) . "',`dow`='" . strip_tags($cus_occ_dow) . "',`abt_occ`='" . strip_tags($cus_occ_abt) . "',`area_confirm_type`='" . strip_tags($area_cnfrm) . "',`area_confirm_state`='" . strip_tags($state) . "',`area_confirm_district`='" . strip_tags($district) . "',`area_confirm_taluk`='" . strip_tags($taluk) . "',`area_confirm_area`='" . strip_tags($area) . "',`area_confirm_subarea`='" . strip_tags($sub_area) . "',`latlong`='" . strip_tags($latlong) . "',`area_group`='" . strip_tags($area_group) . "',`area_line`='" . strip_tags($area_line) . "',`update_login_id`='" . $userid . "',`updated_date`= now() WHERE `id`='" . strip_tags($cus_Tableid) . "' ";
+			$cusUpd = "UPDATE `customer_profile` SET `req_id`='" . strip_tags($req_id) . "',`cus_id`='" . strip_tags($cus_id) . "',`cus_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "',`mobile2`='" . strip_tags($mobile2) . "',`whatsapp`='" . strip_tags($whatsapp_no) . "',`cus_pic`='" . strip_tags($pic_req) . "',`guarentor_name`='" . strip_tags($guarentor_name) . "',`guarentor_relation`='" . strip_tags($guarentor_relationship) . "',`guarentor_photo`='" . strip_tags($guarentor) . "',`cus_type`='" . strip_tags($cus_type) . "',`cus_exist_type`='" . strip_tags($cus_exist_type) . "',`residential_type`='" . strip_tags($cus_res_type) . "',`residential_details`='" . strip_tags($cus_res_details) . "',`residential_address`='" . strip_tags($cus_res_address) . "',`residential_native_address`='" . strip_tags($cus_res_native) . "',`occupation_type`='" . strip_tags($cus_occ_type) . "',`occupation_details`='" . strip_tags($cus_occ_detail) . "',`occupation_income`='" . strip_tags($cus_occ_income) . "',`occupation_address`='" . strip_tags($cus_occ_address) . "',`dow`='" . strip_tags($cus_occ_dow) . "',`abt_occ`='" . strip_tags($cus_occ_abt) . "',`area_confirm_type`='" . strip_tags($area_cnfrm) . "',`area_confirm_state`='" . strip_tags($state) . "',`area_confirm_district`='" . strip_tags($district) . "',`area_confirm_taluk`='" . strip_tags($taluk) . "',`area_confirm_area`='" . strip_tags($area) . "',`area_confirm_subarea`='" . strip_tags($sub_area) . "',`latlong`='" . strip_tags($latlong) . "',`area_group`='" . strip_tags($area_group) . "',`area_line`='" . strip_tags($area_line) . "',`update_login_id`='" . $userid . "',`updated_date`= now() WHERE `id`='" . strip_tags($cus_Tableid) . "' ";
 
 			$updateCus = $mysqli->query($cusUpd) or die("Error " . $mysqli->error);
 
-			$insertQry = "UPDATE in_verification set `cus_id`='" . strip_tags($cus_id) . "',`cus_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "', `mobile2`='" . strip_tags($mobile2) . "',`pic`='" . strip_tags($pic) . "' where req_id ='" . strip_tags($req_id) . "' ";
+			$insertQry = "UPDATE in_verification set `cus_id`='" . strip_tags($cus_id) . "',`cus_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "', `mobile2`='" . strip_tags($mobile2) . "',`pic`='" . strip_tags($pic_req) . "' where req_id ='" . strip_tags($req_id) . "' ";
 			$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
 		}
 
-		$updateCus = "UPDATE `customer_register` SET  `cus_id`='" . strip_tags($cus_id) . "',`customer_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "', `mobile2`='" . strip_tags($mobile2) . "',`pic`='" . strip_tags($pic) . "',`how_to_know`='" . strip_tags($cus_how_know) . "',`loan_count`='" . strip_tags($cus_loan_count) . "',`first_loan_date`='" . strip_tags($cus_frst_loanDate) . "',`travel_with_company`='" . strip_tags($cus_travel_cmpy) . "',`monthly_income`='" . strip_tags($cus_monthly_income) . "',`other_income`='" . strip_tags($cus_other_income) . "',`support_income`='" . strip_tags($cus_support_income) . "',`commitment`='" . strip_tags($cus_Commitment) . "',`monthly_due_capacity`='" . strip_tags($cus_monDue_capacity) . "',`loan_limit`='" . strip_tags($cus_loan_limit) . "',`about_customer`='" . strip_tags($about_cus) . "',`residential_type`='" . strip_tags($cus_res_type) . "',`residential_details`='" . strip_tags($cus_res_details) . "',`residential_address`='" . strip_tags($cus_res_address) . "',`residential_native_address`='" . strip_tags($cus_res_native) . "',`occupation_info_occ_type`='" . strip_tags($cus_occ_type) . "',`occupation_details`='" . strip_tags($cus_occ_detail) . "',`occupation_income`='" . strip_tags($cus_occ_income) . "',`occupation_address`='" . strip_tags($cus_occ_address) . "',`dow`='" . strip_tags($cus_occ_dow) . "',`abt_occ`='" . strip_tags($cus_occ_abt) . "',`area_confirm_type`='" . strip_tags($area_cnfrm) . "',`area_confirm_state`='" . strip_tags($state) . "',`area_confirm_district`='" . strip_tags($district) . "',`area_confirm_taluk`='" . strip_tags($taluk) . "',`area_confirm_area`='" . strip_tags($area) . "',`area_confirm_subarea`='" . strip_tags($sub_area) . "',`latlong`='" . strip_tags($latlong) . "',`area_group`='" . strip_tags($area_group) . "',`area_line`='" . strip_tags($area_line) . "' WHERE `cus_id`= '" . strip_tags($cus_id) . "' ";
+		$updateCus = "UPDATE `customer_register` SET  `cus_id`='" . strip_tags($cus_id) . "',`customer_name`='" . strip_tags($cus_name) . "',`gender`='" . strip_tags($gender) . "',`dob`='" . strip_tags($dob) . "',`age`='" . strip_tags($age) . "',`blood_group`='" . strip_tags($bloodGroup) . "',`mobile1`='" . strip_tags($mobile1) . "', `mobile2`='" . strip_tags($mobile2) . "',`pic`='" . strip_tags($pic_req) . "',`how_to_know`='" . strip_tags($cus_how_know) . "',`loan_count`='" . strip_tags($cus_loan_count) . "',`first_loan_date`='" . strip_tags($cus_frst_loanDate) . "',`travel_with_company`='" . strip_tags($cus_travel_cmpy) . "',`monthly_income`='" . strip_tags($cus_monthly_income) . "',`other_income`='" . strip_tags($cus_other_income) . "',`support_income`='" . strip_tags($cus_support_income) . "',`commitment`='" . strip_tags($cus_Commitment) . "',`monthly_due_capacity`='" . strip_tags($cus_monDue_capacity) . "',`loan_limit`='" . strip_tags($cus_loan_limit) . "',`about_customer`='" . strip_tags($about_cus) . "',`residential_type`='" . strip_tags($cus_res_type) . "',`residential_details`='" . strip_tags($cus_res_details) . "',`residential_address`='" . strip_tags($cus_res_address) . "',`residential_native_address`='" . strip_tags($cus_res_native) . "',`occupation_info_occ_type`='" . strip_tags($cus_occ_type) . "',`occupation_details`='" . strip_tags($cus_occ_detail) . "',`occupation_income`='" . strip_tags($cus_occ_income) . "',`occupation_address`='" . strip_tags($cus_occ_address) . "',`dow`='" . strip_tags($cus_occ_dow) . "',`abt_occ`='" . strip_tags($cus_occ_abt) . "',`area_confirm_type`='" . strip_tags($area_cnfrm) . "',`area_confirm_state`='" . strip_tags($state) . "',`area_confirm_district`='" . strip_tags($district) . "',`area_confirm_taluk`='" . strip_tags($taluk) . "',`area_confirm_area`='" . strip_tags($area) . "',`area_confirm_subarea`='" . strip_tags($sub_area) . "',`latlong`='" . strip_tags($latlong) . "',`area_group`='" . strip_tags($area_group) . "',`area_line`='" . strip_tags($area_line) . "' WHERE `cus_id`= '" . strip_tags($cus_id) . "' ";
 		$insresult = $mysqli->query($updateCus) or die("Error " . $mysqli->error);
 	}
 
@@ -6388,24 +6388,23 @@ class admin
 				unlink("uploads/verification/customer/" . $oldPic); //delete old pic
 			}
 
-			$cus_pic = $_FILES['pic']['name'];
+			// Get the original filename and temporary path of the uploaded file
+			$pic = $_FILES['pic']['name'];
 			$pic_temp = $_FILES['pic']['tmp_name'];
-			$picfolder = "uploads/request/customer/" . $cus_pic;
 
-			$fileExtension = pathinfo($picfolder, PATHINFO_EXTENSION); //get the file extention
+			// Extract the file extension from the original filename
+			$fileExtension = pathinfo($pic, PATHINFO_EXTENSION);
+
+			// Generate a unique filename
 			$cus_pic = uniqid() . '.' . $fileExtension;
-			while (file_exists("uploads/request/customer/" . $cus_pic)) {
-				//this loop will continue until it generates a unique file name
+			// Check if the unique filename already exists in the request folder
+			while (file_exists("uploads/request/customer/{$cus_pic}")) {
+				// If it exists, generate a new unique filename
 				$cus_pic = uniqid() . '.' . $fileExtension;
 			}
-			move_uploaded_file($pic_temp, "uploads/request/customer/" . $cus_pic);
-
-			while (file_exists("uploads/verification/customer/" . $cus_pic)) {
-				//this loop will continue until it generates a unique file name
-				$cus_pic = uniqid() . '.' . $fileExtension;
-			}
-
-			move_uploaded_file($pic_temp, "uploads/verification/customer/" . $cus_pic);
+			// Move the uploaded file to the request folder with the new unique filename
+			move_uploaded_file($pic_temp, "uploads/request/customer/{$cus_pic}");
+			copy("uploads/request/customer/{$cus_pic}", "uploads/verification/customer/{$cus_pic}");
 		} else {
 			$cus_pic = $_POST['cus_image'];
 		}

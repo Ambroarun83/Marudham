@@ -1482,6 +1482,9 @@
                 showConfirmButton: true,
                 confirmButtonColor: '#f2372b',
                 timerProgressBar: true,
+                // allowOutsideClick: false, // Disable outside click
+                // allowEscapeKey: false, // Disable escape key
+                // allowEnterKey: false, // Disable enter key
             })
 
             return false;
