@@ -193,22 +193,6 @@ function calculateOthers($loan_arr, $response, $con, $req_id)
             // $qry = $con->query("DELETE FROM penalty_charges where req_id = '$req_id' and (penalty_date != '' or penalty_date != NULL ) ");
 
             while ($start_date_obj < $end_date_obj && $start_date_obj < $current_date_obj) {
-                //To raise penalty in seperate table
-                $penalty_raised_date = $start_date_obj->format('Y-m');
-                // If due month exceeded
-                if ($loan_arr['scheme_name'] == '' || $loan_arr['scheme_name'] == null) {
-                    $result = $con->query("SELECT overdue FROM `loan_calculation` WHERE loan_category = '" . $loan_arr['loan_category'] . "' and sub_category = '" . $loan_arr['sub_category'] . "' ");
-                } else {
-                    $result = $con->query("SELECT overdue FROM `loan_scheme` WHERE loan_category = '" . $loan_arr['loan_category'] . "' and sub_category = '" . $loan_arr['sub_category'] . "' ");
-                }
-                $row = $result->fetch_assoc();
-                $penalty_per = $row['overdue']; //get penalty percentage to insert
-                $penalty = number_format(($response['due_amt'] * $penalty_per) / 100);
-
-
-                // $qry = $con->query("INSERT into penalty_charges (`req_id`,`penalty_date`, `penalty`, `created_date`) values ('$req_id','$penalty_raised_date','$penalty',current_timestamp)");
-
-
                 $start_date_obj->add($interval);
                 $count++; //Count represents how many months are exceeded
             }

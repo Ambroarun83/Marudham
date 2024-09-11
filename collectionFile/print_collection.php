@@ -93,18 +93,15 @@ $user_name = $qry->fetch_assoc()['fullname'];
 <script type="text/javascript">
     function poprint() {
         var Bill = document.getElementById("dettable").innerHTML;
-        var printWindow = window.open('', '', 'height=1000;weight=1000;');
-        printWindow.document.write('<html><head></head><body>');
-        printWindow.document.write(Bill);
-        printWindow.document.write('</body></html>');
+        var printWindow = window.open('', '_blank', 'height=1000;weight=1000;');
+        printWindow.document.write(`<html><head></head><body>${Bill}</body></html>`);
         printWindow.document.close();
-        printWindow.print();
-        printWindow.close();
+        setTimeout(() => {
+            printWindow.print();
+            printWindow.close();
+        }, 1500);
     }
-    setTimeout(() => {
-        document.getElementById("printpurchase").click();
-
-    }, 1500);
+    document.getElementById("printpurchase").click();
 </script>
 
 <?php

@@ -196,9 +196,10 @@ if ($check == 0 && $penalty_check == 0 && $coll_charge_check == 0) {
 
 
 if ($insresult) {
-    $response = 'Success';
+    $response['info'] = 'Success';
+    $response['coll_id'] = $collection_id;
 } else {
-    $response = 'Error';
+    $response['info'] = 'Error';
 }
 
 echo json_encode($response);

@@ -907,10 +907,10 @@ function validations() {
 }
 function submitCollection() {
     $.post('collectionFile/submitCollection.php', $('#collectionForm').serialize(), function (response) {
-        if (response.includes('Success')) {
-            swarlSuccessAlert(response);
+        if (response['info'].includes('Success')) {
+            swarlSuccessAlert(response.info);
             setTimeout(function () {
-                location.reload();
+                printCollection(response.coll_id);
             }, 2000)
         } else {
             swarlErrorAlert('Error on Submit');
@@ -918,7 +918,40 @@ function submitCollection() {
         }
     }, 'json')
 }
-
+function printCollection(coll_id) {
+    Swal.fire({
+        title: 'Print',
+        text: 'Do you want to print this collection?',
+        imageUrl: 'img/printer.png',
+        imageWidth: 300,
+        imageHeight: 210,
+        imageAlt: 'Custom image',
+        showCancelButton: true,
+        confirmButtonColor: '#009688',
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'No',
+        confirmButtonText: 'Yes'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'collectionFile/print_collection.php',
+                data: { 'coll_id': coll_id },
+                type: 'post',
+                cache: false,
+                success: function (html) {
+                    $('#printcollection').html(html)
+                    // Get the content of the div element
+                    var content = $("#printcollection").html();
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
+            })
+        } else {
+            location.reload();
+        }
+    })
+}
 function submitCommitment() {
     let req_id = $('#comm_req_id').val(); let cus_id = $('#cusidupd').val();
     let ftype = $('#comm_ftype').val(); let fstatus = $('#comm_fstatus').val();
