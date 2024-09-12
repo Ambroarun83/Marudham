@@ -9,6 +9,8 @@ if (isset($_POST['to_date']) && $_POST['to_date'] != '') {
     $to_date = date('Y-m-d', strtotime($_POST['to_date']));
     $where  = " WHERE (date(coll_date) <= '$to_date')";
     $li_where  = "AND date(li.created_date) <= date('$to_date') AND balance_amount = '0'";
+}else{
+    $to_date = date('Y-m-d');
 }
 
 $userid = $_SESSION["userid"] ?? null;
@@ -35,6 +37,8 @@ $statusObj = [
     '15' => 'Error',
     '16' => 'Legal',
     '17' => 'Current',
+    '20' => 'Closed',
+    '21' => 'NOC'
 ];
 
 $column = [
@@ -62,64 +66,77 @@ $column = [
     'lc.loan_cal_id',
 ];
 
-$query = "
-    SELECT 
-        cp.area_line AS line,
-        ii.loan_id,
-        ii.updated_date AS loan_date,
-        lc.maturity_month,
-        cp.cus_id,
-        cp.req_id,
-        cp.cus_name,
-        al.area_name,
-        sal.sub_area_name,
-        lcc.loan_category_creation_name AS loan_cat_name,
-        lc.sub_category,
-        ac.ag_name,
-        lc.loan_amt_cal,
-        lc.due_amt_cal,
-        lc.principal_amt_cal,
-        lc.int_amt_cal,
-        lc.tot_amt_cal,
-        lc.due_type,
-        lc.due_period,
-        c.due_amt_track,
-        c.princ_amt_track,
-        c.int_amt_track,
-        req.cus_status
-    FROM 
-        acknowlegement_loan_calculation lc
-    JOIN 
-        acknowlegement_customer_profile cp ON lc.req_id = cp.req_id
-    JOIN 
-        in_issue ii ON lc.req_id = ii.req_id
-    JOIN 
-        loan_issue li ON lc.req_id = li.req_id $li_where
-    JOIN 
-        area_list_creation al ON cp.area_confirm_area = al.area_id
-    JOIN 
-        sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
-    JOIN 
-        request_creation req ON lc.req_id = req.req_id
-    LEFT JOIN 
-        loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
-    LEFT JOIN 
-        agent_creation ac ON req.agent_id = ac.ag_id
-    LEFT JOIN (
-        SELECT 
-            req_id, 
-            SUM(due_amt_track) AS due_amt_track, 
-            SUM(princ_amt_track) AS princ_amt_track, 
-            SUM(int_amt_track) AS int_amt_track 
+
+$qry = "SELECT req.req_id FROM request_creation req
+    JOIN acknowlegement_customer_profile cp ON req.req_id = cp.req_id
+    JOIN loan_issue li ON req.req_id = li.req_id $li_where
+    WHERE req.cus_status BETWEEN 14 AND 18  AND cp.area_confirm_subarea IN ($sub_area_list)
+
+    UNION
+
+    SELECT req_id FROM closing_customer WHERE date(closing_date) > date('$to_date')  ";
+
+$run = $mysqli->query($qry);
+$req_id_list = [];
+while ($row = $run->fetch_assoc()) {
+    $req_id_list[] = $row['req_id'];
+}
+$req_id_list = implode(',', $req_id_list);
+
+$query = " SELECT 
+            cp.area_line AS line,
+            ii.loan_id,
+            ii.updated_date AS loan_date,
+            lc.maturity_month,
+            cp.cus_id,
+            cp.req_id,
+            cp.cus_name,
+            al.area_name,
+            sal.sub_area_name,
+            lcc.loan_category_creation_name AS loan_cat_name,
+            lc.sub_category,
+            ac.ag_name,
+            lc.loan_amt_cal,
+            lc.due_amt_cal,
+            lc.principal_amt_cal,
+            lc.int_amt_cal,
+            lc.tot_amt_cal,
+            lc.due_type,
+            lc.due_period,
+            c.due_amt_track,
+            c.princ_amt_track,
+            c.int_amt_track,
+            req.cus_status
         FROM 
-            collection $where
-        GROUP BY 
-            req_id
-    ) c ON lc.req_id = c.req_id
-    WHERE 
-        req.cus_status BETWEEN 14 AND 18 
-        AND cp.area_confirm_subarea IN ($sub_area_list)
-";
+            acknowlegement_loan_calculation lc
+        JOIN 
+            acknowlegement_customer_profile cp ON lc.req_id = cp.req_id
+        JOIN 
+            in_issue ii ON lc.req_id = ii.req_id
+        JOIN 
+            loan_issue li ON lc.req_id = li.req_id 
+        JOIN 
+            area_list_creation al ON cp.area_confirm_area = al.area_id
+        JOIN 
+            sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
+        JOIN 
+            request_creation req ON lc.req_id = req.req_id
+        LEFT JOIN 
+            loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
+        LEFT JOIN 
+            agent_creation ac ON req.agent_id = ac.ag_id
+        LEFT JOIN (
+            SELECT 
+                req_id, 
+                SUM(due_amt_track) AS due_amt_track, 
+                SUM(princ_amt_track) AS princ_amt_track, 
+                SUM(int_amt_track) AS int_amt_track 
+            FROM 
+                collection $where
+            GROUP BY 
+                req_id
+        ) c ON c.req_id = req.req_id
+        WHERE lc.req_id IN ($req_id_list) ";
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
     $search = $_POST['search'];
