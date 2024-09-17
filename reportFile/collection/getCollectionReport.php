@@ -99,7 +99,9 @@ $query = "SELECT
                 SUM(coll.penalty_track) AS penalty_track,
                 SUM(coll.coll_charge_track) AS coll_charge_track,
                 SUM(coll.total_paid_track) AS total_paid_track,
-                req.cus_status
+                req.cus_status,
+                cls.closed_sts,
+                cls.consider_level
 
             FROM collection coll
             JOIN acknowlegement_customer_profile cp ON coll.req_id = cp.req_id
@@ -110,6 +112,7 @@ $query = "SELECT
             JOIN request_creation req ON coll.req_id = req.req_id
             JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
             JOIN agent_creation ac ON req.agent_id = ac.ag_id
+            LEFT JOIN closed_status cls ON req.req_id = cls.req_id
 
             WHERE req.cus_status >= 14 
             AND $where
@@ -198,11 +201,9 @@ foreach ($result as $row) {
 
     if ($row['cus_status'] >= '20') {
         $sub_array[] = 'Closed';
-        $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($row['req_id']) . "' ");
-        if ($closedSts->num_rows > 0) {
-            $closedStsrow = $closedSts->fetch_assoc();
-            $rclosed = $closedStsrow['closed_sts'];
-            $consider_lvl = $closedStsrow['consider_level'];
+        if ($row['closed_sts'] != '' && $row['closed_sts'] != NULL) {
+            $rclosed = $row['closed_sts'];
+            $consider_lvl = $row['consider_level'];
             if ($rclosed == '1') {
                 $sub_array[] = 'Consider - ' . $consider_lvl_arr[$consider_lvl];
             } else
@@ -223,16 +224,16 @@ foreach ($result as $row) {
     $data[]      = $sub_array;
     $sno = $sno + 1;
 }
-function count_all_data($con)
+function count_all_data($mysqli)
 {
-    $query = "SELECT coll_id FROM collection coll JOIN request_creation req ON coll.req_id = req.req_id where req.cus_status >= 14 GROUP BY coll.req_id ";
-    $statement = $con->query($query);
-    return $statement->num_rows;
+    $query = $mysqli->query("SELECT COUNT(subquery.coll_id) AS count_result FROM ( SELECT coll.coll_id FROM collection coll JOIN request_creation req ON coll.req_id = req.req_id WHERE req.cus_status >= 14 GROUP BY coll.req_id ) AS subquery ");
+    $statement = $query->fetch_assoc();
+    return intVal($statement['count_result']);
 }
 
 $output = array(
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => count_all_data($con),
+    'recordsTotal' => count_all_data($mysqli),
     'recordsFiltered' => $number_filter_row,
     'data' => $data
 );
@@ -298,3 +299,7 @@ function calculatePrincipalAndInterest($principal,  $interest,  $paidAmount): ar
         'interest_paid' => (int) $interest_paid
     ];
 }
+
+$con->close();
+$mysqli->close();
+$connect = null;

@@ -174,6 +174,7 @@ if ($check == 0 && $penalty_check == 0 && $coll_charge_check == 0) {
     $mysqli->query("UPDATE `in_approval` SET `cus_status`= $cus_status,updated_date=now(),`update_login_id`= $userid WHERE  req_id = '" . $req_id . "' ") or die('Error on in_approval Table');
     $mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= $cus_status,updated_date=now(),`update_login_id`= $userid WHERE  req_id = '" . $req_id . "' ") or die('Error on in_acknowledgement Table');
     $mysqli->query("UPDATE `in_issue` SET `cus_status`= $cus_status, `update_login_id` = $userid where req_id = '" . $req_id . "' ") or die('Error on in_issue Table');
+    $mysqli->query("INSERT INTO `closing_customer` (req_id,cus_id,closing_date) VALUES ($req_id, $cus_id, DATE(now()) ) ") or die('Error on closing_customer Table');
 }
 // $qry = $con->query("SELECT customer_name, mobile1 from customer_register where req_ref_id = '$req_id' ");
 // $row = $qry->fetch_assoc();
@@ -203,3 +204,7 @@ if ($insresult) {
 }
 
 echo json_encode($response);
+
+$con->close();
+$mysqli->close();
+$connect = null;

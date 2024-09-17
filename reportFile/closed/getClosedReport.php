@@ -159,7 +159,7 @@ foreach ($result as $row) {
 
     $qry = $con->query("SELECT coll_location FROM collection where req_id = '" . $row['req_id'] . "' GROUP BY coll_location ORDER BY COUNT(coll_location) DESC LIMIT 1");
     if ($qry->num_rows > 0) {
-        $coll_format = $qry->fetch_assoc()['coll_format'];
+        $coll_format = $qry->fetch_assoc()['coll_location'];
         if ($coll_format == '1') {
             $sub_array[] = 'By Self';
         } elseif ($coll_format == '2') {
@@ -213,3 +213,7 @@ function moneyFormatIndia($num)
     }
     return $thecash;
 }
+
+$con->close();
+$mysqli->close();
+$connect = null;
