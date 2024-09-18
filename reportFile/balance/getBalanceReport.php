@@ -74,7 +74,7 @@ $qry = "SELECT req.req_id FROM request_creation req
 
     UNION
 
-    SELECT req_id FROM closing_customer WHERE date(closing_date) > date('$to_date')  ";
+    SELECT cc.req_id FROM closing_customer cc JOIN loan_issue li ON cc.req_id = li.req_id WHERE date(cc.closing_date) > date('$to_date') AND date(li.created_date) <= date('$to_date')  ";
 
 $run = $mysqli->query($qry);
 $req_id_list = [];

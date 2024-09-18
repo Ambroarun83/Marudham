@@ -303,9 +303,8 @@ function OnLoadFunctions(req_id, cus_id) {
                 // $('#balAmnt').val(balAmnt);
             }
         }
-    });
-    showOverlay();//loader start
-    setTimeout(() => {
+    }).then(() => {
+        showOverlay();//loader start
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
         var due_nil_sts = $('#due_nil_sts').val()

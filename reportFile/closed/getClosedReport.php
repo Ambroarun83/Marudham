@@ -176,17 +176,16 @@ foreach ($result as $row) {
     $sno = $sno + 1;
 }
 
-function count_all_data($connect)
+function count_all_data($mysqli)
 {
-    $query = "SELECT req_id FROM request_creation where cus_status >= 20 ";
-    $statement = $connect->prepare($query);
-    $statement->execute();
-    return $statement->rowCount();
+    $query = $mysqli->query("SELECT count(req_id) as req_count FROM request_creation where cus_status >= 20 ");
+    $statement = $query->fetch_assoc();
+    return $statement['req_count'];
 }
 
 $output = array(
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => count_all_data($connect),
+    'recordsTotal' => count_all_data($mysqli),
     'recordsFiltered' => $number_filter_row,
     'data' => $data
 );

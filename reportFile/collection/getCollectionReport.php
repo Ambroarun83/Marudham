@@ -111,7 +111,7 @@ $query = "SELECT
             JOIN acknowlegement_loan_calculation lc ON coll.req_id = lc.req_id
             JOIN request_creation req ON coll.req_id = req.req_id
             JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
-            JOIN agent_creation ac ON req.agent_id = ac.ag_id
+            LEFT JOIN agent_creation ac ON req.agent_id = ac.ag_id
             LEFT JOIN closed_status cls ON req.req_id = cls.req_id
 
             WHERE req.cus_status >= 14 
