@@ -2,26 +2,27 @@
 session_start();
 include '../ajaxconfig.php';
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $user_id = $_SESSION["userid"];
 }
-if(isset($_POST["pending_sts"])){
-    $pending_sts = explode(',',$_POST["pending_sts"]);
+if (isset($_POST["pending_sts"])) {
+    $pending_sts = explode(',', $_POST["pending_sts"]);
 }
-if(isset($_POST["od_sts"])){
-    $od_sts = explode(',',$_POST["od_sts"]);
+if (isset($_POST["od_sts"])) {
+    $od_sts = explode(',', $_POST["od_sts"]);
 }
-if(isset($_POST["due_nil_sts"])){
-    $due_nil_sts = explode(',',$_POST["due_nil_sts"]);
+if (isset($_POST["due_nil_sts"])) {
+    $due_nil_sts = explode(',', $_POST["due_nil_sts"]);
 }
-if(isset($_POST["closed_sts"])){
-    $closed_sts = explode(',',$_POST["closed_sts"]);
+if (isset($_POST["closed_sts"])) {
+    $closed_sts = explode(',', $_POST["closed_sts"]);
 }
-if(isset($_POST["bal_amt"])){
-    $bal_amt = explode(',',$_POST["bal_amt"]);
+if (isset($_POST["bal_amt"])) {
+    $bal_amt = explode(',', $_POST["bal_amt"]);
 }
 
-function moneyFormatIndia($num) {
+function moneyFormatIndia($num)
+{
     $explrestunits = "";
     if (strlen($num) > 3) {
         $lastthree = substr($num, strlen($num) - 3, strlen($num));
@@ -70,124 +71,137 @@ function moneyFormatIndia($num) {
 
         $i = 1;
         $curdate = date('Y-m-d');
-        $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
+        $consider_lvl_arr = [1 => 'Bronze', 2 => 'Silver', 3 => 'Gold', 4 => 'Platinum', 5 => 'Diamond'];
         while ($row = $run->fetch()) {
             //Show NOC button until closed_status submit so we check the count of closed status against the request id.
             $ii_req_id = $row["req_id"];
-            $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
+            $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
             $closed_cnt = $closedSts->rowCount();
-            
+
         ?>
-        <tr>
-            <td><?php echo $row['loan_id']; ?></td> <!-- id -->
-            <td><?php echo $row["loan_catrgory_name"]; ?></td> <!-- Loan Cat -->
-            <td><?php echo $row["sub_category"]; ?></td> <!-- Loan Sub Cat -->
-            <td>
-                <?php 
-                        if($row["agent_id"] != '' || $row["agent_id"] != NULL){
-                            $run1 = $connect->query('SELECT ag_name from agent_creation where ag_id = "'.$row['agent_id'].'" ');
-                            echo $run1->fetch()['ag_name'];
-                        } 
-                        ?>
-            </td> <!-- Agent -->
-            <td><?php echo date('d-m-Y',strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
-            <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td> <!-- Loan Amount -->
-            <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td> <!-- Balance Amount -->
-            <td><?php if($row['cus_status'] < 20){echo 'Present';}else if($row['cus_status'] >= 20){ echo 'Closed';} ?>
-            </td> <!-- Status -->
-            <td><?php 
-                    if($row['cus_status'] <= '20'){
-                        if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0 ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
-                            if($row['cus_status'] == '15'){
+            <tr>
+                <td><?php echo $row['loan_id']; ?></td> <!-- id -->
+                <td><?php echo $row["loan_catrgory_name"]; ?></td> <!-- Loan Cat -->
+                <td><?php echo $row["sub_category"]; ?></td> <!-- Loan Sub Cat -->
+                <td>
+                    <?php
+                    if ($row["agent_id"] != '' || $row["agent_id"] != NULL) {
+                        $run1 = $connect->query('SELECT ag_name from agent_creation where ag_id = "' . $row['agent_id'] . '" ');
+                        echo $run1->fetch()['ag_name'];
+                    }
+                    ?>
+                </td> <!-- Agent -->
+                <td><?php echo date('d-m-Y', strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
+                <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td> <!-- Loan Amount -->
+                <td><?php echo moneyFormatIndia($bal_amt[$i - 1]); ?></td> <!-- Balance Amount -->
+                <td><?php if ($row['cus_status'] < 20) {
+                        echo 'Present';
+                    } else if ($row['cus_status'] >= 20) {
+                        echo 'Closed';
+                    } ?>
+                </td> <!-- Status -->
+                <td><?php
+                    if ($row['cus_status'] <= '20') {
+                        if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate))  and $bal_amt[$i - 1] != 0) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+                            if ($row['cus_status'] == '15') {
                                 echo 'Error';
-                            }elseif($row['cus_status']== '16'){
+                            } elseif ($row['cus_status'] == '16') {
                                 echo 'Legal';
-                            }else{
+                            } else {
                                 echo 'Current';
                             }
-                        }else{
-                            if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
-                                if($row['cus_status'] == '15'){
+                        } else {
+                            if ($pending_sts[$i - 1] == 'true' && $od_sts[$i - 1] == 'false') {
+                                if ($row['cus_status'] == '15') {
                                     echo 'Error';
-                                }elseif($row['cus_status']== '16'){
+                                } elseif ($row['cus_status'] == '16') {
                                     echo 'Legal';
-                                }else{
+                                } else {
                                     echo 'Pending';
                                 }
-                            }else if($od_sts[$i-1] == 'true'){
-                                if($row['cus_status'] == '15'){
+                            } else if ($od_sts[$i - 1] == 'true') {
+                                if ($row['cus_status'] == '15') {
                                     echo 'Error';
-                                }elseif($row['cus_status']== '16'){
+                                } elseif ($row['cus_status'] == '16') {
                                     echo 'Legal';
-                                }else{
+                                } else {
                                     echo 'OD';
                                 }
-                            }elseif($due_nil_sts[$i-1] == 'true'){
-                                if($row['cus_status'] == '15'){
+                            } elseif ($due_nil_sts[$i - 1] == 'true') {
+                                if ($row['cus_status'] == '15') {
                                     echo 'Error';
-                                }elseif($row['cus_status']== '16'){
+                                } elseif ($row['cus_status'] == '16') {
                                     echo 'Legal';
-                                }else{
+                                } else {
                                     echo 'Due Nil';
                                 }
-                            }elseif($pending_sts[$i-1] == 'false'){
-                                if($row['cus_status'] == '15'){
+                            } elseif ($pending_sts[$i - 1] == 'false') {
+                                if ($row['cus_status'] == '15') {
                                     echo 'Error';
-                                }elseif($row['cus_status']== '16'){
+                                } elseif ($row['cus_status'] == '16') {
                                     echo 'Legal';
-                                }else{
-                                    if($closed_sts[$i-1] == 'true'){
+                                } else {
+                                    if ($closed_sts[$i - 1] == 'true') {
                                         echo "Closed";
-                                    }else{
+                                    } else {
                                         echo 'Current';
                                     }
                                 }
                             }
                         }
-                    }else if($row['cus_status'] > 20){// if status is closed(21) or more than that(22), then show closed status
-                        $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
+                    } else if ($row['cus_status'] > 20) { // if status is closed(21) or more than that(22), then show closed status
+                        $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
                         $closedStsrow = $closedSts->fetch_assoc();
                         $rclosed = $closedStsrow['closed_sts'];
                         $consider_lvl = $closedStsrow['consider_level'];
-                        if($rclosed == '1'){echo 'Consider - '.$consider_lvl_arr[$consider_lvl]; } 
-                        if($rclosed == '2'){echo 'Waiting List';}
-                        if($rclosed == '3'){echo 'Block List';}
+                        if ($rclosed == '1') {
+                            echo 'Consider - ' . $consider_lvl_arr[$consider_lvl];
+                        }
+                        if ($rclosed == '2') {
+                            echo 'Waiting List';
+                        }
+                        if ($rclosed == '3') {
+                            echo 'Block List';
+                        }
                     } ?></td> <!-- Sub status -->
-            <td>
-                <?php
-                    if($closed_cnt== '0'){
-                    if($row['cus_status'] == '20'){ // 20 is collection completed.
-                        echo  $action="<div class='dropdown'><span class='btn btn-primary noc-window'  data-value='".$row['req_id']."'>  Close </span></div>";
+                <td>
+                    <?php
+                    if ($closed_cnt == '0') {
+                        if ($row['cus_status'] == '20') { // 20 is collection completed.
+                            echo  $action = "<div class='dropdown'><span class='btn btn-primary noc-window'  data-value='" . $row['req_id'] . "'>  Close </span></div>";
+                        }
+                    } else {
                     }
-                }else{
-                    
-                }
                     ?>
-            </td> <!-- Action -->
-        </tr>
+                </td> <!-- Action -->
+            </tr>
 
-        <?php  $i++;} ?>
+        <?php $i++;
+        } ?>
     </tbody>
 </table>
 
 <script type="text/javascript">
-$(function() {
-    $('#loanListTable').DataTable({
-        'processing': true,
-        'iDisplayLength': 5,
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "All"]
-        ],
-        dom: 'lBfrtip',
-        buttons: [{
-                extend: 'excel',
-            },
-            {
-                extend: 'colvis',
-                collectionLayout: 'fixed four-column',
+    $(function() {
+        $('#loanListTable').DataTable({
+            'processing': true,
+            'iDisplayLength': 5,
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            dom: 'lBfrtip',
+            buttons: [{
+                    extend: 'excel',
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            'drawCallback': function() {
+                searchFunction('loanListTable');
             }
-        ],
+        });
     });
-});
 </script>

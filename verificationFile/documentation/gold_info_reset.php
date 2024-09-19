@@ -51,7 +51,11 @@ function moneyFormatIndia($num)
 
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php if($gold["gold_sts"] == '0'){ echo 'Old';}else if($gold["gold_sts"] == '1'){echo 'New'; } ?></td>
+                <td><?php if ($gold["gold_sts"] == '0') {
+                        echo 'Old';
+                    } else if ($gold["gold_sts"] == '1') {
+                        echo 'New';
+                    } ?></td>
                 <td> <?php echo $gold["gold_type"]; ?></td>
                 <td> <?php echo $gold["Purity"]; ?></td>
                 <td><?php echo $gold["gold_Count"]; ?></td>
@@ -61,9 +65,10 @@ function moneyFormatIndia($num)
 
                 <td>
                     <a id="gold_info_edit" value="<?php echo $gold['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp
-                    <?php if($pages == 1){  // Verification screen only delete option. ?>
+                    <?php if ($pages == 1) {  // Verification screen only delete option. 
+                    ?>
                         <a id="gold_info_delete" value="<?php echo $gold['id']; ?>"> <span class='icon-trash-2'></span> </a>
-                  <?php  } ?>
+                    <?php  } ?>
                 </td>
 
             </tr>
@@ -90,6 +95,7 @@ function moneyFormatIndia($num)
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('goldInfo_table_data');
             },
             dom: 'lBfrtip',
             buttons: [{
@@ -103,3 +109,9 @@ function moneyFormatIndia($num)
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

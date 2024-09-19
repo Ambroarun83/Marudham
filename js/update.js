@@ -620,7 +620,7 @@ $(document).on("click", "#submitFamInfoBtn", function () {
     let relation_Blood = $("#relation_Blood").val();
     let famTableId = $("#famID").val();
 
-    if (famname != "" && relationship != "" && relation_age != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Occupation != "" && relation_Income != "") {
+    if (famname != "" && relationship != "" && relation_aadhar != "" && relation_Mobile != "" && relation_Mobile.length === 10) {
         $.ajax({
             url: 'updateFile/update_family_submit.php',
             type: 'POST',
@@ -680,34 +680,16 @@ $(document).on("click", "#submitFamInfoBtn", function () {
             $('#famaddressCheck').hide();
         }
 
-        if (relation_age == "") {
-            $('#famageCheck').show();
-        } else {
-            $('#famageCheck').hide();
-        }
-
         if (relation_aadhar == "") {
             $('#famaadharCheck').show();
         } else {
             $('#famaadharCheck').hide();
         }
 
-        if (relation_Mobile == "") {
+        if (relation_Mobile == "" || relation_Mobile.length < 10) {
             $('#fammobileCheck').show();
         } else {
             $('#fammobileCheck').hide();
-        }
-
-        if (relation_Occupation == "") {
-            $('#famoccCheck').show();
-        } else {
-            $('#famoccCheck').hide();
-        }
-
-        if (relation_Income == "") {
-            $('#famincomeCheck').show();
-        } else {
-            $('#famincomeCheck').hide();
         }
     }
 
@@ -1282,7 +1264,7 @@ $(document).on("click", "#kycInfoBtn", function () {
     formdata.append('reqId', req_id)
     formdata.append('cus_id', cus_id)
 
-    if (proofof != "" && proof_type != "" && proof_number != "" && file != undefined && req_id != "") {
+    if (proofof != "" && proof_type != "" && proof_number != "" && (file != undefined || kyc_upload != '') && req_id != "") {
         $.ajax({
             url: 'verificationFile/verification_kyc_submit.php',
             type: 'POST',
@@ -1340,7 +1322,7 @@ $(document).on("click", "#kycInfoBtn", function () {
             $('#proofnoCheck').hide();
         }
 
-        if (file == undefined && kycID == "") {
+        if (file == undefined && kyc_upload == "") {
             $('#proofUploadCheck').show();
         } else {
             $('#proofUploadCheck').hide();
@@ -1367,6 +1349,7 @@ function resetkycInfo() {
             $("#proof_number").val('');
             $("#upload").val('');
             $("#kycID").val('');
+            $("#kyc_upload").val('');
 
             $('#proofCheck').hide(); $('#proofTypeCheck').hide(); $('#proofnoCheck').hide(); $('#proofUploadCheck').hide();
         }
@@ -1452,12 +1435,22 @@ function resetkycinfoList() {
 
 $('#proofof').change(function () {
     let req_id = $('#req_id').val();
+    let cus_id = $('#cus_id').val();
     let proof = $('#proofof').val();
+
+    if (proof == '0' || proof == '1') {
+        $.post('verificationFile/get_proof_of_name.php', { req_id, cus_id, proof }, function (response) {
+            $('.name_div').show();
+            $('#proofofname').val(response);
+        }, 'json')
+    } else {
+        $('.name_div').hide()
+    }
 
     $.ajax({
         url: 'verificationFile/verification_proof_type.php',
         type: 'POST',
-        data: { "reqId": req_id, "proof": proof },
+        data: { "reqId": req_id, "cus_id":cus_id,"proof": proof },
         dataType: 'json',
         cache: false,
         success: function (response) {
@@ -1992,7 +1985,7 @@ function validation() {
     var cus_id = $('#cus_id').val(); var cus_name = $('#cus_name').val(); var dob = $('#dob').val(); var gender = $('#gender').val(); var state = $('#state').val();
     var cus_image = $('#cus_image').val(); var pic = $('#pic').val();
     var district = $('#district1').val(); var taluk = $('#taluk1').val(); var area = $('#area').val(); var sub_area = $('#sub_area').val(); var cus_address = $('#cus_address').val();
-    var mobile1 = $('#mobile1').val(); var father_name = $('#father_name').val(); var mother_name = $('#mother_name').val(); var marital = $('#marital').val();
+    var mobile1 = $('#mobile1').val(); var mobile2 = $('#mobile2').val(); var father_name = $('#father_name').val(); var mother_name = $('#mother_name').val(); var marital = $('#marital').val();
     var occupation_type = $('#occupation_type').val(); var occupation = $('#occupation').val(); var area_cnfrm = $('#area_cnfrm').val(); var cus_res_type = $('#cus_res_type').val();
     var cus_res_details = $('#cus_res_details').val(); var cus_res_address = $('#cus_res_address').val(); var cus_res_native = $('#cus_res_native').val();
     var cus_occ_type = $('#cus_occ_type').val(); var cus_occ_detail = $('#cus_occ_detail').val(); var cus_occ_income = $('#cus_occ_income').val(); var cus_occ_address = $('#cus_occ_address').val(); var cus_occ_dow = $('#cus_occ_dow').val(); var cus_occ_abt = $('#cus_occ_abt').val();
@@ -2059,11 +2052,17 @@ function validation() {
     } else {
         $('#addressCheck').hide();
     }
-    if (mobile1 == '') {
+    if (mobile1 == '' || mobile1.length < 10) {
         event.preventDefault();
         $('#mobile1Check').show();
     } else {
         $('#mobile1Check').hide();
+    }
+    if (mobile2 != '' && mobile2.length < 10) {
+        event.preventDefault();
+        $('#mobile2Check').show();
+    } else {
+        $('#mobile2Check').hide();
     }
     if (father_name == '') {
         event.preventDefault();
@@ -2379,7 +2378,6 @@ function resetSignedDocList(req_id, cus_id) {
             $("#signDocResetDiv").empty();
             $("#signDocResetDiv").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#signType_relationship").val('');
             $("#doc_Count").val('');
@@ -3141,7 +3139,6 @@ function resetsignInfo(req_id, cus_id) {
             $("#signTable").empty();
             $("#signTable").html(html);
 
-            $("#doc_name").val('');
             $("#sign_type").val('');
             $("#signType_relationship").val('');
             $("#doc_Count").val('');
@@ -3174,7 +3171,6 @@ function signInfoEditEvent() {
             success: function (result) {
 
                 $("#signedID").val(result['id']);
-                $("#doc_name").val(result['doc_name']);
                 $("#sign_type").val(result['sign_type']);
 
                 if (result['sign_type'] == '3') {
@@ -3734,7 +3730,6 @@ function OldCusValidation() {
     let mobile_old = $('#mobile_old').val(); let area_old = $('#area_old').val(); let sub_area_old = $('#sub_area_old').val(); let loan_cat_old = $('#loan_cat_old').val(); let sub_cat_old = $('#sub_cat_old').val();
     let loan_amt_old = $('#loan_amt_old').val(); let due_chart_old = $('#due_chart_old').val();
 
-    validateField(mobile_old, "mobile_old");
     validateField(area_old, "area_old");
     validateField(sub_area_old, "sub_area_old");
     validateField(loan_cat_old, "loan_cat_old");
@@ -3752,6 +3747,11 @@ function OldCusValidation() {
         }
     }
 
+    if (mobile_old === '' || mobile_old.length < 10) {
+        response = false;
+        event.preventDefault();
+        $("#mobile_oldCheck").show();
+    } else { $("#mobile_oldCheck").hide(); }
     return response;
 }
 function submitCustomerOldData() {

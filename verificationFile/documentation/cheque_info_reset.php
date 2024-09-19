@@ -76,6 +76,7 @@ include '../../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('chequeInfo_table_data');
             },
             dom: 'lBfrtip',
             buttons: [{
@@ -89,3 +90,9 @@ include '../../ajaxconfig.php';
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

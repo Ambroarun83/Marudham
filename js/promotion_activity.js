@@ -12,14 +12,14 @@ $(document).ready(function () {
         var typevalue = this.value;
         $('.existing_card, .new_card, .new_promo_card, .loan-history-card, .doc-history-card, #close_history_card, .repromotion_card').hide();
         if (typevalue == 'New') {
-            $('.new_card, .new_promo_card').toggle('show')
+            $('.new_card, .new_promo_card').show()
             resetNewPromotionTable();
         } else if (typevalue == 'Existing') {
-            $('.existing_card').toggle('show');
-            showPromotionList('existing');
+            $('.existing_card').show();
+            showPromotionList('existing', 'expromotion_list');
         } else if (typevalue == 'Repromotion') {
-            $('.repromotion_card').toggle('show')
-            showPromotionList('repromotion');
+            $('.repromotion_card').show()
+            showPromotionList('repromotion', 'repromotion_list');
         }
     })
 
@@ -106,11 +106,11 @@ function validateCustSearch() {
             event.preventDefault();
             $(fieldId).show();
         } else {
-            if (cus_id != '' && cus_id.length != 12) {
+            if (cus_id != '' && cus_id.length < 12) {
                 response = false;
                 event.preventDefault();
                 $(fieldId).show();
-            } else if (cus_mob != '' && cus_mob.length != 10) {
+            } else if (cus_mob != '' && cus_mob.length < 10) {
                 response = false;
                 event.preventDefault();
                 $(fieldId).show();
@@ -159,9 +159,7 @@ function validateNewCusAdd() {
     let cus_id = $('#cus_id').val(); let cus_name = $('#cus_name').val(); let cus_mob = $('#cus_mob').val();
     let area = $('#area').val(); let sub_area = $('#sub_area').val();
 
-    validateField(cus_id, '#cus_idCheck');
     validateField(cus_name, '#cus_nameCheck');
-    validateField(cus_mob, '#cus_mobCheck');
     validateField(area, '#areaCheck');
     validateField(sub_area, '#sub_areaCheck');
 
@@ -175,6 +173,16 @@ function validateNewCusAdd() {
         }
 
     }
+    if (cus_id === '' || cus_id.length < 12) {
+        response = false;
+        event.preventDefault();
+        $("#cus_idCheck").show();
+    } else { $("#cus_idCheck").hide(); }
+    if (cus_mob === '' || cus_mob.length < 10) {
+        response = false;
+        event.preventDefault();
+        $("#cus_mobCheck").show();
+    } else { $("#cus_mobCheck").hide(); }
 
     return response;
 }
@@ -244,6 +252,7 @@ function promoChartOnclick() {//function of on click event for promo chart
 }
 function intNotintOnclick() {
     $('.intrest, .not-intrest').off('click').click(function () {//onclick for add promotion modal
+
         let value = $(this).children().text();//takes span inner html
         let cus_id = $(this).data('id');//takes customer id of new customer promotion
 
@@ -269,20 +278,47 @@ function intNotintOnclick() {
 }
 
 
-function showPromotionList(type) {
-    $.post('followupFiles/promotion/showPromotionList.php', { type }, function (html) {
-        if (type == 'existing') {
-            $('#rePromoCusDiv').empty()
-            $('#exCusDiv').empty().html(html);
-        } else {
-            $('#exCusDiv').empty()
-            $('#rePromoCusDiv').empty().html(html);
+function showPromotionList(type, tableid) {
+    let table = $(`#${tableid}`).DataTable();
+    table.destroy();
+    $(`#${tableid}`).DataTable({
+        "order": [
+            [0, "desc"]
+        ],
+        'processing': true,
+        'serverSide': true,
+        'serverMethod': 'post',
+        'ajax': {
+            'url': 'followupFiles/promotion/showPromotionList.php',
+            'data': function (data) {
+                var search = $('input[type=search]').val();
+                data.search = search;
+                data.type = type;
+            }
+        },
+        dom: 'lBfrtip',
+        buttons: [{
+            extend: 'excel',
+            title: "Promotion List"
+        },
+        {
+            extend: 'colvis',
+            collectionLayout: 'fixed four-column',
         }
-        intNotintOnclick();
-        promoChartOnclick();
+        ],
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        'drawCallback': function () {
+            searchFunction(tableid);
 
-        promotionListOnclick();
-    })
+            intNotintOnclick();
+            promoChartOnclick();
+            promotionListOnclick();
+            promotionChartColor(tableid);
+        }
+    });
 }
 function promotionListOnclick() {
 
@@ -303,6 +339,46 @@ function promotionListOnclick() {
         let cus_id = $(this).data('cusid');
         getPersonalInfo(cus_id);
     })
+}
+function promotionChartColor(tableid) {
+    $(`#${tableid} tbody tr`).not('th').each(function () {
+        if (tableid == 'expromotion_list') var element = $(this).find('td:eq(14)'); // Get the text content of the 14th td element (Follow date)
+        if (tableid == 'repromotion_list') var element = $(this).find('td:eq(15)'); // Get the text content of the 14th td element (Follow date)
+
+        let tddate = element.text();
+        let datecorrection = tddate.split("-").reverse().join("-").replaceAll(/\s/g, ''); // Correct the date format
+        let values = new Date(datecorrection); // Create a Date object from the corrected date
+        values.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
+
+        let curDate = new Date(); // Get the current date
+        curDate.setHours(0, 0, 0, 0); // Set the time to midnight for accurate date comparison
+
+        let colors = {
+            'past': 'FireBrick',
+            'current': 'DarkGreen',
+            'future': 'CornflowerBlue'
+        }; // Define colors for different date types
+
+        if (tddate != '' && values != 'Invalid Date') { // Check if the extracted date and the created Date object are valid
+
+            if (values < curDate) { // Compare the extracted date with the current date
+                element.css({
+                    'background-color': colors.past,
+                    'color': 'white'
+                }); // Apply styling for past dates
+            } else if (values > curDate) {
+                element.css({
+                    'background-color': colors.future,
+                    'color': 'white'
+                }); // Apply styling for future dates
+            } else {
+                element.css({
+                    'background-color': colors.current,
+                    'color': 'white'
+                }); // Apply styling for the current date
+            }
+        }
+    });
 }
 
 

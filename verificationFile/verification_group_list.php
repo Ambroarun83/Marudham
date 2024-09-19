@@ -2,7 +2,7 @@
 include '../ajaxconfig.php';
 ?>
 
-<table class="table custom-table "  id="grpTable">
+<table class="table custom-table " id="grpTable">
     <thead>
         <tr>
             <th style="width: 5px;">S.No</th>
@@ -28,7 +28,15 @@ include '../ajaxconfig.php';
                 <td> <?php echo $grp['group_age']; ?></td>
                 <td> <?php echo $grp['group_aadhar']; ?></td>
                 <td> <?php echo $grp['group_mobile']; ?></td>
-                <td> <?php if(isset($grp['group_gender'])){ if($grp['group_gender']== '1'){ echo 'Male';}elseif($grp['group_gender']== '2'){ echo 'Female';}elseif($grp['group_gender']== '3'){ echo 'Other';} }?></td>
+                <td> <?php if (isset($grp['group_gender'])) {
+                            if ($grp['group_gender'] == '1') {
+                                echo 'Male';
+                            } elseif ($grp['group_gender'] == '2') {
+                                echo 'Female';
+                            } elseif ($grp['group_gender'] == '3') {
+                                echo 'Other';
+                            }
+                        } ?></td>
                 <td> <?php echo $grp['group_designation']; ?></td>
             </tr>
 
@@ -54,6 +62,7 @@ include '../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('grpTable');
             },
             dom: 'lBfrtip',
             buttons: [{
@@ -67,3 +76,8 @@ include '../ajaxconfig.php';
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null; ?>

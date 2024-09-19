@@ -49,8 +49,26 @@ if (sizeof($getUser) > 0) {
 				<div class="card">
 					<div class="card-header">Existing Customer</div>
 					<div class="card-body">
-						<div id="exCusDiv" class="table-responsive">
-						</div>
+						<table class="table custom-table" id='expromotion_list' data-id="existing" style="width: 100%;">
+							<thead>
+								<th width='20'>S.No</th>
+								<th>Customer ID</th>
+								<th>Customer Name</th>
+								<th>Area</th>
+								<th>Sub Area</th>
+								<th>Branch</th>
+								<th>Group</th>
+								<th>Line</th>
+								<th>Mobile</th>
+								<th>Status</th>
+								<th>Sub Status</th>
+								<th>List Date</th>
+								<th>View</th>
+								<th>Action</th>
+								<th>Follow Date</th>
+							</thead>
+							<tbody></tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -155,8 +173,27 @@ if (sizeof($getUser) > 0) {
 				<div class="card">
 					<div class="card-header">Repromotion</div>
 					<div class="card-body">
-						<div id="rePromoCusDiv" class="table-responsive">
-						</div>
+						<table class="table custom-table" id='repromotion_list' data-id="repromotion" style="width:100%">
+							<thead>
+								<th width='20'>S.No</th>
+								<th>Customer ID</th>
+								<th>Customer Name</th>
+								<th>Area</th>
+								<th>Sub Area</th>
+								<th>Branch</th>
+								<th>Group</th>
+								<th>Line</th>
+								<th>Mobile</th>
+								<th>Status</th>
+								<th>Sub Status</th>
+								<th>Remarks</th>
+								<th>List Date</th>
+								<th>View</th>
+								<th>Action</th>
+								<th>Follow Date</th>
+							</thead>
+							<tbody></tbody>
+						</table>
 					</div>
 				</div>
 			</div>

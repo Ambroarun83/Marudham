@@ -11,7 +11,7 @@ include '../ajaxconfig.php';
             <th> Name </th>
             <th> Relationship </th>
             <th> Proof type </th>
-            <th> Proof Details </th>
+            <th> Proof Number </th>
             <th> ACTION </th>
         </tr>
     </thead>
@@ -68,6 +68,12 @@ include '../ajaxconfig.php';
             } else
             if ($kyc['proof_type'] == '11') {
                 $proof_type = "Business Proof";
+            } else
+            if ($kyc['proof_type'] == '12') {
+                $proof_type = "Own House Proof";
+            } else
+            if ($kyc['proof_type'] == '13') {
+                $proof_type = "Others";
             }
 
             $fam_mem = $kyc['fam_mem'];
@@ -127,6 +133,7 @@ include '../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('kyc_data_table');
             },
             dom: 'lBfrtip',
             buttons: [{
@@ -140,3 +147,8 @@ include '../ajaxconfig.php';
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null; ?>

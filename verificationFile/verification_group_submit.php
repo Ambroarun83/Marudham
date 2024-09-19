@@ -12,23 +12,21 @@ $group_designation    = $_POST['group_designation'];
 $grpTableId           = $_POST['grpTableId'];
 
 
-if($grpTableId == ''){
+if ($grpTableId == '') {
 
-$insert_qry = $connect ->query("INSERT INTO `verification_group_info`( `cus_id`,`req_id`, `group_name`, `group_age`, `group_aadhar`, `group_mobile`, `group_gender`, `group_designation`) VALUES ('$cus_id','$req_id','$group_name','$group_age','$group_aadhar','$group_mobile','$group_gender','$group_designation')");
-
-}
-else{
-$update = $connect->query("UPDATE `verification_group_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`group_name`='$group_name',`group_age`='$group_age',`group_aadhar`='$group_aadhar',`group_mobile`='$group_mobile',`group_gender`='$group_gender',`group_designation`='$group_designation' WHERE `id`='$grpTableId' ");
-
+    $insert_qry = $connect->query("INSERT INTO `verification_group_info`( `cus_id`,`req_id`, `group_name`, `group_age`, `group_aadhar`, `group_mobile`, `group_gender`, `group_designation`) VALUES ('$cus_id','$req_id','$group_name','$group_age','$group_aadhar','$group_mobile','$group_gender','$group_designation')");
+} else {
+    $update = $connect->query("UPDATE `verification_group_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`group_name`='$group_name',`group_age`='$group_age',`group_aadhar`='$group_aadhar',`group_mobile`='$group_mobile',`group_gender`='$group_gender',`group_designation`='$group_designation' WHERE `id`='$grpTableId' ");
 }
 
-if($insert_qry){
+if ($insert_qry) {
     $result = "Group Info Inserted Successfully.";
-}
-elseif($update){
+} elseif ($update) {
     $result = "Group Info Updated Successfully.";
 }
 
 echo json_encode($result);
 
-?>
+$con->close();
+$mysqli->close();
+$connect = null;

@@ -2,23 +2,23 @@
 session_start();
 include '../ajaxconfig.php';
 
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $user_id = $_SESSION["userid"];
 }
-if(isset($_POST["pending_sts"])){
-    $pending_sts = explode(',',$_POST["pending_sts"]);
+if (isset($_POST["pending_sts"])) {
+    $pending_sts = explode(',', $_POST["pending_sts"]);
 }
-if(isset($_POST["od_sts"])){
-    $od_sts = explode(',',$_POST["od_sts"]);
+if (isset($_POST["od_sts"])) {
+    $od_sts = explode(',', $_POST["od_sts"]);
 }
-if(isset($_POST["due_nil_sts"])){
-    $due_nil_sts = explode(',',$_POST["due_nil_sts"]);
+if (isset($_POST["due_nil_sts"])) {
+    $due_nil_sts = explode(',', $_POST["due_nil_sts"]);
 }
-if(isset($_POST["closed_sts"])){
-    $closed_sts = explode(',',$_POST["closed_sts"]);
+if (isset($_POST["closed_sts"])) {
+    $closed_sts = explode(',', $_POST["closed_sts"]);
 }
-if(isset($_POST["bal_amt"])){
-    $bal_amt = explode(',',$_POST["bal_amt"]);
+if (isset($_POST["bal_amt"])) {
+    $bal_amt = explode(',', $_POST["bal_amt"]);
 }
 
 ?>
@@ -32,7 +32,8 @@ if(isset($_POST["bal_amt"])){
     }
 </style>
 <?php
-function moneyFormatIndia($num) {
+function moneyFormatIndia($num)
+{
     $explrestunits = "";
     if (strlen($num) > 3) {
         $lastthree = substr($num, strlen($num) - 3, strlen($num));
@@ -96,102 +97,114 @@ function moneyFormatIndia($num) {
                 <td><?php echo $row["loan_catrgory_name"]; ?></td>
                 <td><?php echo $row["sub_category"]; ?></td>
                 <td>
-                    <?php 
-                        if($row["agent_id"] != '' || $row["agent_id"] != NULL){
-                            $run1 = $connect->query('SELECT ag_name from agent_creation where ag_id = "'.$row['agent_id'].'" ');
-                            echo $run1->fetch()['ag_name'];
-                        } 
-                        ?>
+                    <?php
+                    if ($row["agent_id"] != '' || $row["agent_id"] != NULL) {
+                        $run1 = $connect->query('SELECT ag_name from agent_creation where ag_id = "' . $row['agent_id'] . '" ');
+                        echo $run1->fetch()['ag_name'];
+                    }
+                    ?>
                 </td>
-                <td><?php echo date('d-m-Y',strtotime($row["updated_date"])); ?></td>
+                <td><?php echo date('d-m-Y', strtotime($row["updated_date"])); ?></td>
                 <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td>
-                <td><?php echo moneyFormatIndia($bal_amt[$i-1]); ?></td>
-                <td><?php if($row["collection_method"] == '1'){ echo 'By Self';}else if($row["collection_method"] == '2'){ echo 'Spot Collection';}else if($row["collection_method"] == '3'){ echo 'Cheque Collection';}else if($row["collection_method"] == '4'){ echo 'ECS';} ?></td>
+                <td><?php echo moneyFormatIndia($bal_amt[$i - 1]); ?></td>
+                <td><?php if ($row["collection_method"] == '1') {
+                        echo 'By Self';
+                    } else if ($row["collection_method"] == '2') {
+                        echo 'Spot Collection';
+                    } else if ($row["collection_method"] == '3') {
+                        echo 'Cheque Collection';
+                    } else if ($row["collection_method"] == '4') {
+                        echo 'ECS';
+                    } ?></td>
                 <td><?php echo 'Present'; ?></td>
-                <td><?php if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0 ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
-                            if($row['cus_status'] == '15'){
+                <td><?php if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate))  and $bal_amt[$i - 1] != 0) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
+                        if ($row['cus_status'] == '15') {
+                            echo 'Error';
+                        } elseif ($row['cus_status'] == '16') {
+                            echo 'Legal';
+                        } else {
+                            echo 'Current';
+                        }
+                    } else {
+                        if ($pending_sts[$i - 1] == 'true' && $od_sts[$i - 1] == 'false') { //using i as 1 so subract it with 1
+                            if ($row['cus_status'] == '15') {
                                 echo 'Error';
-                            }elseif($row['cus_status']== '16'){
+                            } elseif ($row['cus_status'] == '16') {
                                 echo 'Legal';
-                            }else{
-                                echo 'Current';
-                            }
-                        }else{
-                        if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){//using i as 1 so subract it with 1
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
+                            } else {
                                 echo 'Pending';
                             }
-                        }else if($od_sts[$i-1] == 'true' && $due_nil_sts[$i-1] =='false'){
-                            if($row['cus_status'] == '15'){
+                        } else if ($od_sts[$i - 1] == 'true' && $due_nil_sts[$i - 1] == 'false') {
+                            if ($row['cus_status'] == '15') {
                                 echo 'Error';
-                            }elseif($row['cus_status']== '16'){
+                            } elseif ($row['cus_status'] == '16') {
                                 echo 'Legal';
-                            }else{
+                            } else {
                                 echo 'OD';
                             }
-                        }elseif($due_nil_sts[$i-1] == 'true'){
-                            if($row['cus_status'] == '15'){
+                        } elseif ($due_nil_sts[$i - 1] == 'true') {
+                            if ($row['cus_status'] == '15') {
                                 echo 'Error';
-                            }elseif($row['cus_status']== '16'){
+                            } elseif ($row['cus_status'] == '16') {
                                 echo 'Legal';
-                            }else{
+                            } else {
                                 echo 'Due Nil';
                             }
-                        }elseif($pending_sts[$i-1] == 'false'){
-                            if($row['cus_status'] == '15'){
+                        } elseif ($pending_sts[$i - 1] == 'false') {
+                            if ($row['cus_status'] == '15') {
                                 echo 'Error';
-                            }elseif($row['cus_status']== '16'){
+                            } elseif ($row['cus_status'] == '16') {
                                 echo 'Legal';
-                            }else{
-                                if($closed_sts[$i-1] == 'true'){
+                            } else {
+                                if ($closed_sts[$i - 1] == 'true') {
                                     echo "Move To Close";
-                                }else{
+                                } else {
                                     echo 'Current';
                                 }
                             }
-                        } 
+                        }
                     } ?></td>
                 <td><?php echo "<span class='btn btn-success collection-window' style='font-size: 17px;position: relative;top: 0px; background-color:#009688;";
-                            if($row['cus_status']== '16' ){echo 'display:none';} //|| $row['cus_status']== '15' || $closed_sts[$i-1] == 'true'
-                echo " ' data-value='".$row['req_id']."'' tabindex='0'>$</span>"; ?></td>
+                    if ($row['cus_status'] == '16') {
+                        echo 'display:none';
+                    } //|| $row['cus_status']== '15' || $closed_sts[$i-1] == 'true'
+                    echo " ' data-value='" . $row['req_id'] . "'' tabindex='0'>$</span>"; ?></td>
                 <td>
-                    <?php 
-                        $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary' ";
-                        
-                        $action .="><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
-                        $action .= "<a><span data-toggle='modal' data-target='.DueChart' class='due-chart' value='".$row['req_id']."' > Due Chart</span></a>
-                        <a><span data-toggle='modal' data-target='.PenaltyChart' class='penalty-chart' value='".$row['req_id']."' > Penalty Chart</span></a>
-                        <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='".$row['req_id']."' > Fine Chart</span></a>
-                        <a><span data-toggle='modal' data-target='#commitmentChart' class='commitment-chart' data-reqid='".$row['req_id']."' > Commitment Chart </span></a>";
-                        $action .= "</div></div>";
-                        echo $action;
+                    <?php
+                    $action = "<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary' ";
+
+                    $action .= "><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
+                    $action .= "<a><span data-toggle='modal' data-target='.DueChart' class='due-chart' value='" . $row['req_id'] . "' > Due Chart</span></a>
+                        <a><span data-toggle='modal' data-target='.PenaltyChart' class='penalty-chart' value='" . $row['req_id'] . "' > Penalty Chart</span></a>
+                        <a><span data-toggle='modal' data-target='.collectionChargeChart' class='coll-charge-chart' value='" . $row['req_id'] . "' > Fine Chart</span></a>
+                        <a><span data-toggle='modal' data-target='#commitmentChart' class='commitment-chart' data-reqid='" . $row['req_id'] . "' > Commitment Chart </span></a>";
+                    $action .= "</div></div>";
+                    echo $action;
                     ?>
                 </td>
                 <td>
                     <?php
-                        $action="<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
-                        if($row['collection_access'] == '0'){
-                            $action .= "<a href='' class='move-error' value='".$row['req_id']."' > Move To Error</a>
-                            <a href='' class='move-legal' value='".$row['req_id']."' > Move To Legal</a>
-                            <a href='' class='return-sub' value='".$row['req_id']."' > Return Sub Status</a>
-                            <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='".$row['req_id']."' > Fine </span></a>
-                            <a><span data-toggle='modal' data-target='#addCommitment' class='add-commitment-chart' data-reqid='".$row['req_id']."' > New Commitment </span></a>";
-                            //if balance is eqauls to zero, then that loan must be able to moved as closed
-                            // if($closed_sts[$i-1] == 'true'){
-                            //     $action .= "<a href='' class='move-closed' value='".$row['req_id']."' > Move To Closed</a>";
-                            // }
-                        }
-                        $action .= "</div></div>";
-                        echo $action;
+                    $action = "<div class='dropdown' style='float:right'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
+                    
+                    if ($row['collection_access'] == '0') {
+                        $action .= "<a href='' class='move-error' value='" . $row['req_id'] . "' > Move To Error</a>
+                            <a href='' class='move-legal' value='" . $row['req_id'] . "' > Move To Legal</a>
+                            <a href='' class='return-sub' value='" . $row['req_id'] . "' > Return Sub Status</a>
+                            <a><span data-toggle='modal' data-target='.collectionCharges' class='coll-charge' value='" . $row['req_id'] . "' > Fine </span></a>";
+                        //if balance is eqauls to zero, then that loan must be able to moved as closed
+                        // if($closed_sts[$i-1] == 'true'){
+                        //     $action .= "<a href='' class='move-closed' value='".$row['req_id']."' > Move To Closed</a>";
+                        // }
+                    }
+                    $action .= "<a><span data-toggle='modal' data-target='#addCommitment' class='add-commitment-chart' data-reqid='" . $row['req_id'] . "' > New Commitment </span></a>";
+                    $action .= "</div></div>";
+                    echo $action;
                     ?>
                 </td>
             </tr>
 
-        <?php  $i++;} ?>
+        <?php $i++;
+        } ?>
     </tbody>
 </table>
 
@@ -213,6 +226,10 @@ function moneyFormatIndia($num) {
                     collectionLayout: 'fixed four-column',
                 }
             ],
+
+            'drawCallback': function() {
+                searchFunction('loanListTable');
+            }
         });
     });
     $('.dropdown').off().click(function(event) {
@@ -227,5 +244,5 @@ function moneyFormatIndia($num) {
             $('.dropdown').removeClass('active');
         }
     });
-    $('.due-chart, .penalty-chart, .coll-charge-chart, .coll-charge, .add-commitment-chart, .commitment-chart').css('color','black');
+    $('.due-chart, .penalty-chart, .coll-charge-chart, .coll-charge, .add-commitment-chart, .commitment-chart').css('color', 'black');
 </script>

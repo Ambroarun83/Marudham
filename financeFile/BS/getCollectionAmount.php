@@ -53,3 +53,4 @@ function getCollectionRecord($con, $where)
 
     return $response;
 }
+$con->close();

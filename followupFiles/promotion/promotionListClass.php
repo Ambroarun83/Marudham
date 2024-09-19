@@ -2,7 +2,7 @@
 session_start();
 class promotionListClass
 {
-    private $sub_area_list = array();
+    public $sub_area_list = array();
     public function __construct($con)
     {
         $userid = $_SESSION["userid"];
@@ -63,9 +63,9 @@ class promotionListClass
 
     function getCustomerPromotionType($con, $cus_id)
     {
-        $response = '';
+        $response = 'Loan Progress';
 
-        $sql = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cp.area_confirm_subarea IN ($this->sub_area_list) and cs.cus_id = '$cus_id' ");
+        $sql = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cs.cus_id = '$cus_id' ");
 
         while ($row = $sql->fetch_assoc()) {
 
@@ -76,7 +76,7 @@ class promotionListClass
         }
 
 
-        $sql = $con->query("SELECT req.* FROM request_creation req WHERE (req.cus_status >= 4 AND req.cus_status <= 9) AND (req.sub_area IN ( " . $this->sub_area_list . " ) or  (select area_confirm_subarea from customer_profile where req_id = req.req_id) IN ( " . $this->sub_area_list . " ) ) and req.cus_id = '$cus_id' ");
+        $sql = $con->query("SELECT req.* FROM request_creation req WHERE (req.cus_status >= 4 AND req.cus_status <= 9) and req.cus_id = '$cus_id' ");
 
         while ($row = $sql->fetch_assoc()) {
 

@@ -5,12 +5,12 @@ include '../../ajaxconfig.php';
 <table class="table custom-table" id="signed_table">
     <thead>
         <tr>
-        <th width="15%"> S.No </th>
-		<th> Doc Name </th>
-		<th> Sign Type </th>
-		<th> Relationship </th>
-		<th> Count </th>
-		<th> Uploads </th>
+            <th width="15%"> S.No </th>
+            <th> Doc Name </th>
+            <th> Sign Type </th>
+            <th> Relationship </th>
+            <th> Count </th>
+            <th> Uploads </th>
         </tr>
     </thead>
     <tbody>
@@ -29,25 +29,45 @@ include '../../ajaxconfig.php';
             $id = $signedDoc["id"];
             $updresult = $connect->query("SELECT upload_doc_name FROM `signed_doc` where signed_doc_id = '$id'");
             $a = 1;
-            while($upd = $updresult->fetch()){
-            $docName = $upd['upload_doc_name'];
+            while ($upd = $updresult->fetch()) {
+                $docName = $upd['upload_doc_name'];
                 $doc_upd_name .= "<a href=uploads/verification/signed_doc/";
-                $doc_upd_name .= $docName ;
+                $doc_upd_name .= $docName;
                 $doc_upd_name .= " target='_blank'>";
-                $doc_upd_name .=  $docName. ' ' ;
-                $doc_upd_name .= "</a>" ;
-                 $a++;
+                $doc_upd_name .=  $docName . ' ';
+                $doc_upd_name .= "</a>";
+                $a++;
             }
         ?>
             <tr>
                 <td> <?php echo $i++; ?></td>
 
-                <td> <?php if($signedDoc["doc_name"] == '0'){ echo 'Promissory Note';}elseif($signedDoc["doc_name"] == '1'){ echo 'Stamp Paper';}elseif($signedDoc["doc_name"] == '2'){ echo 'P Additional';}elseif($signedDoc["doc_name"] == '3'){ echo 'S Additional';} ?></td>
+                <td> <?php if ($signedDoc["doc_name"] == '0') {
+                            echo 'Promissory Note';
+                        } elseif ($signedDoc["doc_name"] == '1') {
+                            echo 'Stamp Paper';
+                        } elseif ($signedDoc["doc_name"] == '2') {
+                            echo 'P Additional';
+                        } elseif ($signedDoc["doc_name"] == '3') {
+                            echo 'S Additional';
+                        } ?></td>
 
-                <td> <?php if($signedDoc["sign_type"] == '0'){ echo 'Customer';}elseif($signedDoc["sign_type"] == '1'){ echo 'Guarantor';}elseif($signedDoc["sign_type"] == '2'){ echo 'Combined';}elseif($signedDoc["sign_type"] == '3'){ echo 'Family Members';} ?></td>
+                <td> <?php if ($signedDoc["sign_type"] == '0') {
+                            echo 'Customer';
+                        } elseif ($signedDoc["sign_type"] == '1') {
+                            echo 'Guarantor';
+                        } elseif ($signedDoc["sign_type"] == '2') {
+                            echo 'Combined';
+                        } elseif ($signedDoc["sign_type"] == '3') {
+                            echo 'Family Members';
+                        } ?></td>
 
-                <td> <?php if($signedDoc["sign_type"] == '3' or $signedDoc["sign_type"] == '1' or $signedDoc["sign_type"] == '2'){ echo $row["famname"].' - '.$row["relationship"];}else{echo 'NIL';} ?></td>
-                
+                <td> <?php if ($signedDoc["sign_type"] == '3' or $signedDoc["sign_type"] == '1' or $signedDoc["sign_type"] == '2') {
+                            echo $row["famname"] . ' - ' . $row["relationship"];
+                        } else {
+                            echo 'NIL';
+                        } ?></td>
+
                 <td> <?php echo $signedDoc['doc_Count']; ?></td>
                 <td><?php echo $doc_upd_name; ?></td>
             </tr>
@@ -87,3 +107,9 @@ include '../../ajaxconfig.php';
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

@@ -1,7 +1,7 @@
 <?php
 require '../ajaxconfig.php';
 
-if(isset($_POST['cus_id'])){
+if (isset($_POST['cus_id'])) {
     $cus_id = $_POST['cus_id'];
 }
 
@@ -9,7 +9,7 @@ $NameList = array();
 
 $names = $connect->query("SELECT `famname`,`relationship`,`relation_aadhar`,`relation_Mobile` FROM `verification_family_info` WHERE  cus_id = '$cus_id' ");
 
-while($famName = $names->fetch()){
+while ($famName = $names->fetch()) {
     $famname = $famName['famname'];
     $relationship = $famName['relationship'];
     $aadhar = $famName['relation_aadhar'];
@@ -20,4 +20,7 @@ while($famName = $names->fetch()){
 
 
 echo json_encode($NameList);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

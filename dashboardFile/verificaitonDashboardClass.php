@@ -11,21 +11,22 @@ class verificaitonClass
     {
         $response = array();
         $today = date('Y-m-d');
+        $month = (isset($_POST['month']) && $_POST['month'] != '') ? date('Y-m-01', strtotime($_POST['month'])) : date('Y-m-01');
         $sub_area_list = $_POST['sub_area_list'];
 
-        $tot_in_ver = "SELECT COUNT(*) as tot_in_ver from request_creation where (cus_status >= 1 and cus_status NOT IN(4,8) ) ";
+        $tot_in_ver = "SELECT COUNT(*) as tot_in_ver from request_creation where (cus_status >= 1 and cus_status NOT IN(4,8) ) and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_in_ver = "SELECT COUNT(*) as tot_in_ver from request_creation where cus_status IN(1,10,11,12) and date(updated_date) = '$today' ";
-        $tot_issue = "SELECT COUNT(*) as tot_issue FROM request_creation req JOIN customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 ";
+        $tot_issue = "SELECT COUNT(*) as tot_issue FROM request_creation req JOIN customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 and month(req.updated_date) = month('$month') and year(req.updated_date) = year('$month')";
         $today_issue = "SELECT COUNT(*) as today_issue FROM request_creation req JOIN customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 14 and date(req.updated_date) = '$today' ";
-        $tot_balance = "SELECT COUNT(*) as tot_balance from request_creation where (cus_status < 14 and cus_status >= 1 and cus_status NOT IN(4, 5, 6, 7, 8, 9, 10, 11, 12) )  ";
+        $tot_balance = "SELECT COUNT(*) as tot_balance from request_creation where (cus_status < 14 and cus_status >= 1 and cus_status NOT IN(4, 5, 6, 7, 8, 9, 10, 11, 12) ) and month(updated_date) = month('$month') and year(updated_date) = year('$month') ";
         $today_balance = "SELECT COUNT(*) as today_balance from request_creation where cus_status IN(1,10,11,12) and date(updated_date) = '$today'  ";
-        $tot_cancel = "SELECT COUNT(*) as tot_cancel from request_creation where cus_status = 5 ";
+        $tot_cancel = "SELECT COUNT(*) as tot_cancel from request_creation where cus_status = 5 and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_cancel = "SELECT COUNT(*) as today_cancel from request_creation where cus_status = 5 and date(updated_date) = '$today' ";
-        $tot_revoke = "SELECT COUNT(*) as tot_revoke from request_creation where cus_status = 9 ";
+        $tot_revoke = "SELECT COUNT(*) as tot_revoke from request_creation where cus_status = 9 and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_revoke = "SELECT COUNT(*) as today_revoke from request_creation where cus_status = 9 and date(updated_date) = '$today' ";
-        $tot_new = "SELECT COUNT(*) as tot_new from request_creation where (cus_status < 14 and cus_status >= 1 and cus_status NOT IN(4, 5, 6, 7, 8, 9, 10, 11, 12) ) and cus_data = 'New' ";
+        $tot_new = "SELECT COUNT(*) as tot_new from request_creation where (cus_status < 14 and cus_status >= 1 and cus_status NOT IN(4, 5, 6, 7, 8, 9, 10, 11, 12) ) and cus_data = 'New' and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_new = "SELECT COUNT(*) as today_new from request_creation where cus_status = 1 and cus_data = 'New' and date(updated_date) = '$today' ";
-        $tot_existing = "SELECT COUNT(*) as tot_existing from request_creation where (cus_status < 14 and cus_status >= 1 and cus_status NOT IN(4, 5, 6, 7, 8, 9, 10, 11, 12) ) and cus_data = 'Existing' ";
+        $tot_existing = "SELECT COUNT(*) as tot_existing from request_creation where (cus_status < 14 and cus_status >= 1 and cus_status NOT IN(4, 5, 6, 7, 8, 9, 10, 11, 12) ) and cus_data = 'Existing' and month(updated_date) = month('$month') and year(updated_date) = year('$month')";
         $today_existing = "SELECT COUNT(*) as today_existing from request_creation where cus_status = 1 and cus_data = 'Existing' and date(updated_date) = '$today' ";
 
         if (empty($sub_area_list)) {

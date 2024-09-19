@@ -235,7 +235,7 @@ if (sizeof($documentationInfo) > 0) {
 		<div class="form-group" style="text-align:center">
 			<input type="radio" name="verification_type" id="cus_profile" value="cus_profile"></input><label for='cus_profile'>&nbsp;&nbsp; Customer Profile </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<input type="radio" name="verification_type" id="documentation" value="documentation"></input><label for='documentation'>&nbsp;&nbsp; Documentation </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<input type="radio" name="verification_type" id="customer_old" value="customer_old"></input><label for='customer_old'>&nbsp;&nbsp; Old Data </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<!-- <input type="radio" name="verification_type" id="customer_old" value="customer_old"></input><label for='customer_old'>&nbsp;&nbsp; Old Data </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
 		</div>
 	</div>
 
@@ -419,6 +419,7 @@ if (sizeof($documentationInfo) > 0) {
 												<input type="number" class="form-control" id="mobile2" name="mobile2" onkeypress="if(this.value.length==10) return false;" value='<?php if (isset($mobile2)) {
 																																														echo $mobile2;
 																																													} ?>' tabindex='13' placeholder="Enter Mobile Number">
+												<span class="text-danger" style='display:none' id='mobile2Check'>Please Enter Mobile Number</span>
 											</div>
 										</div>
 										<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-8">
@@ -903,7 +904,7 @@ if (sizeof($documentationInfo) > 0) {
 													<th width="50"> S.No </th>
 													<th> Proof of </th>
 													<th> Proof type </th>
-													<th> Proof Details </th>
+													<th> Proof Number </th>
 													<th> Upload </th>
 												</tr>
 											</thead>
@@ -1716,14 +1717,6 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label class="label"> Age </label>&nbsp;<span class="text-danger">*</span>
-							<input type="number" class="form-control" name="relation_age" id="relation_age" placeholder="Enter Age" tabindex='1'>
-							<span class="text-danger" id="famageCheck" style='display:none'>Enter Age</span>
-						</div>
-					</div>
-
-					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
-						<div class="form-group">
 							<label class="label"> Aadhar No </label>&nbsp;<span class="text-danger">*</span>
 							<input type="text" class="form-control" name="relation_aadhar" id="relation_aadhar" data-type="adhaar-number" maxlength="14" placeholder="Enter Aadhar No" tabindex='1'>
 							<span class="text-danger" id="famaadharCheck" style='display:none'>Enter Aadhar Number</span>
@@ -1740,7 +1733,15 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label class="label"> Occupation </label>&nbsp;<span class="text-danger">*</span>
+							<label class="label"> Age </label>
+							<input type="number" class="form-control" name="relation_age" id="relation_age" placeholder="Enter Age" tabindex='1'>
+							<span class="text-danger" id="famageCheck" style='display:none'>Enter Age</span>
+						</div>
+					</div>
+
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+						<div class="form-group">
+							<label class="label"> Occupation </label>
 							<input type="text" class="form-control" name="relation_Occupation" id="relation_Occupation" onkeydown="return /[a-z ]/i.test(event.key)" placeholder="Enter Occupation" tabindex='1'>
 							<span class="text-danger" id="famoccCheck" style='display:none'>Enter Occupation</span>
 						</div>
@@ -1748,7 +1749,7 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label class="label"> Income </label>&nbsp;<span class="text-danger">*</span>
+							<label class="label"> Income </label>
 							<input type="number" class="form-control" name="relation_Income" id="relation_Income" placeholder="Enter Income" tabindex='1'>
 							<span class="text-danger" id="famincomeCheck" style='display:none'>Enter Income</span>
 						</div>
@@ -2042,13 +2043,8 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
-								<select type="text" class="form-control" id="doc_name" name="doc_name" disabled tabindex='1'>
-									<option value=""> Select Doc Name </option>
-									<option value="0"> Promissory Note </option>
-									<option value="1"> Stamp Paper </option>
-									<option value="2"> P Additional </option>
-									<option value="3"> S Additional </option>
-								</select>
+								<input type="hidden" name="doc_name" id="doc_name" value="0">
+								<input type="text" class="form-control" name="doc_name_dummy" id="doc_name_dummy" value="Signed Document" disabled tabindex='1'>
 								<span class="text-danger" id="docNameCheck" style='display:none'> Select Doc Name </span>
 							</div>
 						</div>
@@ -2405,7 +2401,7 @@ if (sizeof($documentationInfo) > 0) {
 
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
-								<label for="gold_type"> Gold Type </label> <span class="required">&nbsp;*</span>
+								<label for="gold_type"> Gold Type (Ornament's Name)</label> <span class="required">&nbsp;*</span>
 								<input type="text" class="form-control" id="gold_type" name="gold_type" placeholder="Enter Gold Type" tabindex='1'>
 								<span class="text-danger" id="GoldtypeCheck" style='display:none'> Enter Gold Type </span>
 							</div>
@@ -2414,7 +2410,7 @@ if (sizeof($documentationInfo) > 0) {
 
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
-								<label for="Purity"> Purity </label> <span class="required">&nbsp;*</span>
+								<label for="Purity"> Purity (Carat)</label> <span class="required">&nbsp;*</span>
 								<input type="text" class="form-control" id="Purity" name="Purity" placeholder="Enter Purity" tabindex='1'>
 								<span class="text-danger" id="purityCheck" style='display:none'> Enter Purity </span>
 							</div>
@@ -2430,7 +2426,7 @@ if (sizeof($documentationInfo) > 0) {
 
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
-								<label for="gold_Weight"> Weight </label> <span class="required">&nbsp;*</span>
+								<label for="gold_Weight"> Weight (in Grams)</label> <span class="required">&nbsp;*</span>
 								<input type="number" class="form-control" id="gold_Weight" name="gold_Weight" placeholder="Enter Weight in Grams" tabindex='1'>
 								<span class="text-danger" id="goldWeightCheck" style='display:none'> Enter Weight </span>
 							</div>
@@ -2673,6 +2669,12 @@ if (sizeof($documentationInfo) > 0) {
 							<span class="text-danger" id="proofCheck" style="display:none"> Select Proof </span>
 						</div>
 					</div>
+					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 name_div" style="display:none">
+						<div class="form-group">
+							<label for="proofofname"> Name </label>
+							<input type="text" class="form-control" id="proofofname" name="proofofname" readonly>
+						</div>
+					</div>
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 fam_mem_div" style="display:none">
 						<div class="form-group">
 							<label for="fam_mem"> Family Member </label> <span class="required">&nbsp;*</span>
@@ -2699,6 +2701,8 @@ if (sizeof($documentationInfo) > 0) {
 								<option value="9"> Bank statement </option>
 								<option value="10"> EB Bill </option>
 								<option value="11"> Business Proof </option>
+								<option value="12"> Own House Proof </option>
+								<option value="13"> Others </option>
 							</select>
 							<span class="text-danger" id="proofTypeCheck" style="display:none"> Select Proof Type </span>
 						</div>
@@ -2706,9 +2710,9 @@ if (sizeof($documentationInfo) > 0) {
 
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
-							<label for="proof_number"> Proof Details </label> <span class="required">&nbsp;*</span>
-							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Details" tabindex='1'>
-							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Details </span>
+							<label for="proof_number"> Proof Number </label> <span class="required">&nbsp;*</span>
+							<input type="text" class="form-control" id="proof_number" name="proof_number" placeholder="Enter Proof Number" tabindex='1'>
+							<span class="text-danger" id="proofnoCheck" style="display:none"> Enter Proof Number </span>
 						</div>
 					</div>
 
@@ -2716,7 +2720,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="form-group">
 							<label for="upload"> Upload </label>
 							<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
-							<span class="text-danger" id="proofUploadCheck" style="display:none"> Upload </span>
+							<span class="text-danger" id="proofUploadCheck" style="display:none"> Please Upload File </span>
 						</div>
 					</div>
 
@@ -2736,7 +2740,7 @@ if (sizeof($documentationInfo) > 0) {
 								<th width="50"> S.No </th>
 								<th> Proof of </th>
 								<th> Proof type </th>
-								<th> Proof Details </th>
+								<th> Proof Number </th>
 								<th> ACTION </th>
 							</tr>
 						</thead>

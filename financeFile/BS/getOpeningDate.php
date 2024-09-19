@@ -10,42 +10,46 @@ $user_id = ($_POST['user_id'] != '') ? $_POST['user_id'] : '';
 $records = array();
 
 
-if($type == 'today'){
+if ($type == 'today') {
 
     $where = " date(ct1.cl_date) <= CURRENT_DATE() ";
     $where2 = " date(ct2.cl_date) <= CURRENT_DATE() ";
 
-    if($user_id != ''){$where .= " and ct1.insert_login_id = $user_id " ; }//for user based
+    if ($user_id != '') {
+        $where .= " and ct1.insert_login_id = $user_id ";
+    } //for user based
 
     getDetails($con, $where, $where2);
+} else if ($type == 'day') {
 
-}else if($type == 'day'){
+    $from_date = $_POST['from_date'];
+    $to_date = $_POST['to_date'];
 
-    $from_date = $_POST['from_date'];$to_date = $_POST['to_date'];
-    
     $where = " date(ct1.cl_date) < DATE('$from_date') ";
     $where2 = " date(ct2.cl_date) <= DATE('$from_date') ";
-    
-    if($user_id != ''){$where .= " and ct1.insert_login_id = $user_id " ; }//for user based
+
+    if ($user_id != '') {
+        $where .= " and ct1.insert_login_id = $user_id ";
+    } //for user based
 
     getDetails($con, $where, $where2);
+} else if ($type == 'month') {
 
-
-}else if($type == 'month'){
-
-    $month = date('m',strtotime($_POST['month']));
-    $year = date('Y',strtotime($_POST['month']));
+    $month = date('m', strtotime($_POST['month']));
+    $year = date('Y', strtotime($_POST['month']));
 
     $where = " (month(ct1.cl_date) = $month && YEAR(ct1.cl_date) = '$year' ) ";
     $where2 = " (month(ct2.cl_date) = $month && YEAR(ct2.cl_date) = '$year' ) ";
-    if($user_id != ''){$where .= " and ct1.insert_login_id = $user_id " ; }//for user based
+    if ($user_id != '') {
+        $where .= " and ct1.insert_login_id = $user_id ";
+    } //for user based
 
     getDetails($con, $where, $where2);
-
 }
 
-function getDetails($con, $where, $where2){
-    
+function getDetails($con, $where, $where2)
+{
+
     $records['closing_bal'] = 0;
 
     $qry = $con->query("SELECT ct1.insert_login_id, ct1.cl_date AS last_entered_date, ct1.closing_bal
@@ -56,13 +60,13 @@ function getDetails($con, $where, $where2){
         WHERE ct1.insert_login_id = ct2.insert_login_id 
     AND ct1.cl_date < ct2.cl_date and $where2 ) "); // then fetch the last updated date
 
-    if($qry->num_rows != 0){
+    if ($qry->num_rows != 0) {
 
-        while($row = $qry->fetch_assoc()){
+        while ($row = $qry->fetch_assoc()) {
 
             $records['closing_bal'] += intVal($row['closing_bal']);
         }
-    }else{
+    } else {
         $records['closing_bal'] = 0;
     }
 
@@ -72,7 +76,8 @@ function getDetails($con, $where, $where2){
 }
 
 
-function moneyFormatIndia($num) {
+function moneyFormatIndia($num)
+{
     $isNegative = false;
     if ($num < 0) {
         $isNegative = true;
@@ -100,4 +105,4 @@ function moneyFormatIndia($num) {
     return $isNegative ? "-" . $thecash : $thecash;
 }
 
-?>
+$con->close();

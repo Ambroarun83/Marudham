@@ -33,6 +33,10 @@
         /* this will set all datatable's cell to not wrap the contents globally */
         white-space: nowrap;
     }
+
+    .dropdown-content {
+        color: black;
+    }
 </style>
 <script>
     $(document).ready(function() {
@@ -739,6 +743,7 @@
                 ],
                 'drawCallback': function() {
                     searchFunction('closed_table');
+                    setNOCButton();
                 }
             });
 
@@ -978,40 +983,6 @@
                 }
             });
 
-            var conf_follow_table = $('#conf_follow_table').DataTable({
-                "order": [
-                    [0, "desc"]
-                ],
-                'processing': true,
-                'serverSide': true,
-                'serverMethod': 'post',
-                'ajax': {
-                    'url': 'followupFiles/confirmation/resetConfirmationFollowupTable.php',
-                    'data': function(data) {
-                        var search = $('input[type=search]').val();
-                        data.search = search;
-                    }
-                },
-                dom: 'lBfrtip',
-                buttons: [{
-                        extend: 'excel',
-                        title: "Confirmation Followup List"
-                    },
-                    {
-                        extend: 'colvis',
-                        collectionLayout: 'fixed four-column',
-                    }
-                ],
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                'drawCallback': function() {
-                    searchFunction('conf_follow_table');
-                    confirmationTableOnClick();
-                }
-            });
-
             var loan_follow_table = $('#loan_follow_table').DataTable({
                 "order": [
                     [0, "desc"]
@@ -1043,6 +1014,40 @@
                 'drawCallback': function() {
                     searchFunction('loan_follow_table');
                     loanFollowupTableOnclick();
+                }
+            });
+
+            var conf_follow_table = $('#conf_follow_table').DataTable({
+                "order": [
+                    [0, "desc"]
+                ],
+                'processing': true,
+                'serverSide': true,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url': 'followupFiles/confirmation/resetConfirmationFollowupTable.php',
+                    'data': function(data) {
+                        var search = $('input[type=search]').val();
+                        data.search = search;
+                    }
+                },
+                dom: 'lBfrtip',
+                buttons: [{
+                        extend: 'excel',
+                        title: "Confirmation Followup List"
+                    },
+                    {
+                        extend: 'colvis',
+                        collectionLayout: 'fixed four-column',
+                    }
+                ],
+                "lengthMenu": [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "All"]
+                ],
+                'drawCallback': function() {
+                    searchFunction('conf_follow_table');
+                    confirmationTableOnClick();
                 }
             });
 
@@ -1477,6 +1482,9 @@
                 showConfirmButton: true,
                 confirmButtonColor: '#f2372b',
                 timerProgressBar: true,
+                // allowOutsideClick: false, // Disable outside click
+                // allowEscapeKey: false, // Disable escape key
+                // allowEnterKey: false, // Disable enter key
             })
 
             return false;
@@ -1512,20 +1520,25 @@
         }
 
         function searchFunction(table_name) {
+            let DACC = <?php echo DACC; ?>;
+
             $('#search').attr({
-                'title': 'Press Ctrl+Enter to search',
+                'title': 'Click Outside to search',
                 'autocomplete': 'off'
             })
             // new search on keyup event for search by display content
-            $('#search').off().on('keypress', function(e) {
-                if (e.which == 10 && e.ctrlKey == true) { //control and enter key pressed then key value will be 10
-                    let table = $(`#${table_name}`).DataTable();
-                    table.search(this.value).draw();
-                }
+            $('#search').off().on('blur', function(e) {
+                // if (e.which == 10 && e.ctrlKey == true) { //control and enter key pressed then key value will be 10
+                let table = $(`#${table_name}`).DataTable();
+                table.search(this.value).draw();
+                // }
             });
 
             $('.dropdown').click(function(event) {
-                // event.stopPropagation();
+                let linkcheck = $('.dropdown .dropdown-content a').attr('href');
+                if (linkcheck == '#' || linkcheck == undefined) {
+                    event.preventDefault();
+                }
                 $('.dropdown').not(this).removeClass('active');
                 $(this).toggleClass('active');
             });
@@ -1536,6 +1549,13 @@
                     $('.dropdown').removeClass('active');
                 }
             });
+
+            // Check if DACC is 1 and hide Excel button if true
+            if (DACC === 1) {
+                // Find and remove the Excel button
+                let table = $(`#${table_name}`).DataTable();
+                table.buttons().container().find('.buttons-excel').hide();
+            }
         }
 
 

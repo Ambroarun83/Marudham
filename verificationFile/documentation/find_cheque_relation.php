@@ -7,6 +7,9 @@ $result = $connect->query("SELECT relationship FROM `verification_family_info` w
 $row = $result->fetch();
 
 $relationship = $row['relationship'];
- 
+
 echo json_encode($relationship);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

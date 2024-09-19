@@ -11,21 +11,21 @@ $Ifsc_code             = $_POST['Ifsc_code'];
 $bankID                = $_POST['bankID'];
 
 
-if($bankID == ''){
+if ($bankID == '') {
 
-$insert_qry = $connect ->query("INSERT INTO `verification_bank_info`(`cus_id`, `req_id`, `bank_name`, `branch_name`, `acc_holder_name`, `acc_no`, `ifsc_code`) VALUES ('$cus_id','$req_id','$bank_name','$branch_name','$account_holder_name','$account_number','$Ifsc_code')");
-
-}
-else{
-$update = $connect->query("UPDATE `verification_bank_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`bank_name`='$bank_name',`branch_name`='$branch_name',`acc_holder_name`='$account_holder_name',`acc_no`='$account_number',`ifsc_code`='$Ifsc_code' WHERE `id`='$bankID'");
-
+    $insert_qry = $connect->query("INSERT INTO `verification_bank_info`(`cus_id`, `req_id`, `bank_name`, `branch_name`, `acc_holder_name`, `acc_no`, `ifsc_code`) VALUES ('$cus_id','$req_id','$bank_name','$branch_name','$account_holder_name','$account_number','$Ifsc_code')");
+} else {
+    $update = $connect->query("UPDATE `verification_bank_info` SET `cus_id`='$cus_id',`req_id`='$req_id',`bank_name`='$bank_name',`branch_name`='$branch_name',`acc_holder_name`='$account_holder_name',`acc_no`='$account_number',`ifsc_code`='$Ifsc_code' WHERE `id`='$bankID'");
 }
 
-if($insert_qry){
+if ($insert_qry) {
     $result = "Bank Info Inserted Successfully.";
-}
-elseif($update){
+} elseif ($update) {
     $result = "Bank Info Updated Successfully.";
 }
 
 echo json_encode($result);
+
+$con->close();
+$mysqli->close();
+$connect = null;

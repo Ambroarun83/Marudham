@@ -76,23 +76,30 @@ $column = array(
     'req.req_id',
 );
 $query = "SELECT 
-            req.*,
-            al.area_name,
-            sal.sub_area_name,
-            lcc.loan_category_creation_name,
-            (select ag_name from agent_creation where ag_id = req.agent_id) as ag_name
-
-            FROM request_creation req 
-            JOIN area_list_creation al ON req.area = al.area_id
-            JOIN sub_area_list_creation sal ON req.sub_area = sal.sub_area_id
-            JOIN loan_category_creation lcc ON req.loan_category = lcc.loan_category_creation_id
-
-            WHERE " . $where . " and 
-            CASE 
-                WHEN req.cus_status >= 10  THEN (select area_confirm_subarea from customer_profile where req_id = req.req_id) IN ($sub_area_list)
-                WHEN req.cus_status < 10  THEN (select sub_area from request_creation where req_id = req.req_id) IN ($sub_area_list)
-            END
-        ";
+    req.*,
+    al.area_name,
+    sal.sub_area_name,
+    lcc.loan_category_creation_name,
+    ag.ag_name
+FROM 
+    request_creation req 
+JOIN 
+    area_list_creation al ON req.area = al.area_id
+JOIN 
+    sub_area_list_creation sal ON req.sub_area = sal.sub_area_id
+JOIN 
+    loan_category_creation lcc ON req.loan_category = lcc.loan_category_creation_id
+LEFT JOIN 
+    agent_creation ag ON req.agent_id = ag.ag_id
+LEFT JOIN 
+    customer_profile cp ON req.req_id = cp.req_id
+WHERE 
+    " . $where . " 
+    AND (
+        (req.cus_status >= 10 AND cp.area_confirm_subarea IN ($sub_area_list))
+        OR 
+        (req.cus_status < 10 AND req.sub_area IN ($sub_area_list))
+    ) ";
 
 if (isset($_POST['search'])) {
     if ($_POST['search'] != "") {

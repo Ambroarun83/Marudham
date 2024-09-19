@@ -1,10 +1,10 @@
 <?php
 require '../ajaxconfig.php';
 
-$id =$_POST['id'];
+$id = $_POST['id'];
 
 $grpEditRes = array();
-$grpInfo = $connect -> query("SELECT * FROM `verification_group_info` WHERE id='$id' ");
+$grpInfo = $connect->query("SELECT * FROM `verification_group_info` WHERE id='$id' ");
 $group = $grpInfo->fetch();
 
 $grpEditRes['id'] = $group['id'];
@@ -16,6 +16,7 @@ $grpEditRes['gGen'] = $group['group_gender'];
 $grpEditRes['dgsn'] = $group['group_designation'];
 
 echo json_encode($grpEditRes);
-?>
 
-
+$con->close();
+$mysqli->close();
+$connect = null;

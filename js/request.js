@@ -1074,7 +1074,7 @@ function validation(submit_btn) {
     }
 
     var cus_id = $('#cus_id').val(); var cus_name = $('#cus_name').val(); var dob = $('#dob').val(); var gender = $('#gender').val(); var pic = $('#pic').val(); var state = $('#state').val();
-    var district = $('#district1').val(); var taluk = $('#taluk1').val(); var area = $('#area').val(); var sub_area = $('#sub_area').val(); var address = $('#address').val(); var mobile1 = $('#mobile1').val();
+    var district = $('#district1').val(); var taluk = $('#taluk1').val(); var area = $('#area').val(); var sub_area = $('#sub_area').val(); var address = $('#address').val(); var mobile1 = $('#mobile1').val();var mobile2 = $('#mobile2').val();
     var father_name = $('#father_name').val(); var mother_name = $('#mother_name').val(); var marital = $('#marital').val(); var spouse_name = $('#spouse_name').val(); var occupation_type = $('#occupation_type').val();
     var occupation = $('#occupation').val(); var loan_category = $('#loan_category').val(); var sub_category = $('#sub_category').val(); var tot_value = $('#tot_value').val();
     var ad_amt = $('#ad_amt').val(); var ad_perc = $('#ad_perc').val(); var loan_amt = $('#loan_amt').val(); var poss_type = $('#poss_type').val(); var due_amt = $('#due_amt').val();
@@ -1148,11 +1148,17 @@ function validation(submit_btn) {
     } else {
         $('#addressCheck').hide();
     }
-    if (mobile1 == '') {
+    if (mobile1 == '' || mobile1.length < 10) {
         event.preventDefault();
         $('#mobile1Check').show();
     } else {
         $('#mobile1Check').hide();
+    }
+    if (mobile2 != '' && mobile2.length < 10) {
+        event.preventDefault();
+        $('#mobile2Check').show();
+    } else {
+        $('#mobile2Check').hide();
     }
     if (father_name == '') {
         event.preventDefault();

@@ -84,7 +84,7 @@ if ($payable > 0) {
         }
 
         // Fetch collection date range
-        $collDate = $mysqli->query("SELECT CASE WHEN DAYOFMONTH(coll_date) BETWEEN 26 AND 31 THEN '26-30'WHEN DAYOFMONTH(coll_date) BETWEEN 21 AND 25 THEN '21-25'WHEN DAYOFMONTH(coll_date) BETWEEN 16 AND 20 THEN '16-20'WHEN DAYOFMONTH(coll_date) BETWEEN 11 AND 15 THEN '11-15'ELSE ''END AS date_range FROM collection WHERE cus_id='$cus_id' ORDER BY coll_id DESC LIMIT 1");
+        $collDate = $mysqli->query("SELECT CASE WHEN DAYOFMONTH(coll_date) BETWEEN 26 AND 31 THEN '26-30' WHEN DAYOFMONTH(coll_date) BETWEEN 21 AND 25 THEN '21-25' WHEN DAYOFMONTH(coll_date) BETWEEN 16 AND 20 THEN '16-20' WHEN DAYOFMONTH(coll_date) BETWEEN 11 AND 15 THEN '11-15' ELSE '1-10' END AS date_range FROM collection WHERE cus_id='$cus_id' ORDER BY coll_id DESC LIMIT 1");
         $coll_date_qry = $collDate->fetch_assoc();
         $date_range = isset($coll_date_qry['date_range']) ? $coll_date_qry['date_range'] : '';
 

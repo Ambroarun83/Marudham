@@ -63,19 +63,44 @@ if ($searchValue != '') {
 
 $orderQuery = " ORDER BY " . $columns[$orderColumnIndex] . " " . $orderDir;
 
-$sql = "SELECT rc.*, alc.area_name, salc.sub_area_name, lcc.loan_category_creation_name, ac.ag_name, 
-        bc.branch_name, agm.group_name, alm.line_name 
-        FROM request_creation rc 
-        LEFT JOIN area_list_creation alc ON rc.area = alc.area_id 
-        LEFT JOIN sub_area_list_creation salc ON rc.sub_area = salc.sub_area_id 
-        LEFT JOIN loan_category_creation lcc ON rc.loan_category = lcc.loan_category_creation_id 
-        LEFT JOIN agent_creation ac ON rc.agent_id = ac.ag_id
-        LEFT JOIN area_group_mapping agm ON FIND_IN_SET(rc.sub_area, agm.sub_area_id)
-        LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
-        LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area, alm.sub_area_id)
-        WHERE rc.cus_status >= 14 
-        AND (SELECT area_confirm_subarea FROM acknowlegement_customer_profile WHERE req_id = rc.req_id LIMIT 1) IN (" . $sub_area_list . ") 
-        " . $searchQuery . $orderQuery . " LIMIT " . $start . ", " . $length;
+$sql = "WITH ConfirmedSubareas AS (
+    SELECT
+        req_id,
+        area_confirm_subarea
+    FROM
+        acknowlegement_customer_profile
+    WHERE
+        area_confirm_subarea IN (" . $sub_area_list . ")
+)
+SELECT 
+    rc.*,
+    alc.area_name,
+    salc.sub_area_name,
+    lcc.loan_category_creation_name,
+    ac.ag_name,
+    bc.branch_name,
+    agm.group_name,
+    alm.line_name
+FROM 
+    request_creation rc
+LEFT JOIN 
+    area_list_creation alc ON rc.area = alc.area_id
+LEFT JOIN 
+    sub_area_list_creation salc ON rc.sub_area = salc.sub_area_id
+LEFT JOIN 
+    loan_category_creation lcc ON rc.loan_category = lcc.loan_category_creation_id
+LEFT JOIN 
+    agent_creation ac ON rc.agent_id = ac.ag_id
+LEFT JOIN 
+    area_group_mapping agm ON FIND_IN_SET(rc.sub_area, agm.sub_area_id)
+LEFT JOIN 
+    branch_creation bc ON agm.branch_id = bc.branch_id
+LEFT JOIN 
+    area_line_mapping alm ON FIND_IN_SET(rc.sub_area, alm.sub_area_id)
+JOIN 
+    ConfirmedSubareas cs ON rc.req_id = cs.req_id
+WHERE 
+    rc.cus_status >= 14 " . $searchQuery . $orderQuery . " LIMIT " . $start . ", " . $length;
 
 $result = $con->query($sql);
 $data = [];
@@ -130,20 +155,26 @@ while ($row = $result->fetch_assoc()) {
     }
 }
 
-$totalRecordsQry = $con->query("SELECT COUNT(*) AS total FROM request_creation rc WHERE rc.cus_status >= 14 AND (SELECT area_confirm_subarea FROM acknowlegement_customer_profile WHERE req_id = rc.req_id LIMIT 1) IN (" . $sub_area_list . ")");
+$totalRecordsQry = $con->query("WITH ConfirmedSubareas AS (
+    SELECT
+        req_id,
+        area_confirm_subarea
+    FROM
+        acknowlegement_customer_profile
+    WHERE
+        area_confirm_subarea IN (" . $sub_area_list . ")
+) SELECT COUNT(*) AS total FROM request_creation rc JOIN ConfirmedSubareas cs ON rc.req_id = cs.req_id WHERE rc.cus_status >= 14 ");
 $totalRecords = $totalRecordsQry->fetch_assoc()['total'];
 
-$totalFilteredRecordsQry = $con->query("SELECT COUNT(*) AS total FROM request_creation rc 
-        LEFT JOIN area_list_creation alc ON rc.area = alc.area_id 
-        LEFT JOIN sub_area_list_creation salc ON rc.sub_area = salc.sub_area_id 
-        LEFT JOIN loan_category_creation lcc ON rc.loan_category = lcc.loan_category_creation_id 
-        LEFT JOIN agent_creation ac ON rc.agent_id = ac.ag_id
-        LEFT JOIN area_group_mapping agm ON FIND_IN_SET(rc.sub_area, agm.sub_area_id)
-        LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
-        LEFT JOIN area_line_mapping alm ON FIND_IN_SET(rc.sub_area, alm.sub_area_id)
-        WHERE rc.cus_status >= 14 
-        AND (SELECT area_confirm_subarea FROM acknowlegement_customer_profile WHERE req_id = rc.req_id LIMIT 1) IN (" . $sub_area_list . ") 
-        " . $searchQuery);
+$totalFilteredRecordsQry = $con->query("WITH ConfirmedSubareas AS (
+    SELECT
+        req_id,
+        area_confirm_subarea
+    FROM
+        acknowlegement_customer_profile
+    WHERE
+        area_confirm_subarea IN (" . $sub_area_list . ")
+) SELECT COUNT(*) AS total FROM request_creation rc JOIN ConfirmedSubareas cs ON rc.req_id = cs.req_id WHERE rc.cus_status >= 14 " . $searchQuery);
 $totalFilteredRecords = $totalFilteredRecordsQry->fetch_assoc()['total'];
 
 $response = [

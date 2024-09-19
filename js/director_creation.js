@@ -24,7 +24,7 @@ $(document).ready(function () {
 
     $('#submit_director_creation').click(function () {
         //Validation
-        var company_id = $('#company_id').val(); var branch_id = $('#branch_id').val(); var dir_type = $('#dir_type').val(); var dir_id = $('#dir_id').val(); var dir_name = $('#dir_name').val(); var state = $('#state').val(); var district = $('#district1').val(); var taluk = $('#taluk1').val(); var place = $('#place').val(); var pincode = $('#pincode').val();
+        var dir_type = $('#dir_type').val(); var dir_id = $('#dir_id').val(); var dir_name = $('#dir_name').val(); var state = $('#state').val(); var district = $('#district1').val(); var taluk = $('#taluk1').val(); var place = $('#place').val(); var pincode = $('#pincode').val(); var mobile = $('#mobile').val(); var whatsapp = $('#whatsapp').val();
         if (dir_type === '' || dir_id === '' || dir_name === '' || state === '' || district === '' || taluk === '' || place === '' || pincode === '') {
             Swal.fire({
                 timerProgressBar: true,
@@ -34,6 +34,16 @@ $(document).ready(function () {
                 showConfirmButton: true,
                 confirmButtonColor: '#009688'
             });
+            return false;
+        } else if (whatsapp != '' && whatsapp.length < 10) {
+            alert('Please enter 10 digit valid number');
+            $('#whatsapp').focus();
+            event.preventDefault();
+            return false;
+        } else if (mobile != '' && mobile.length < 10) {
+            alert('Please enter 10 digit valid number');
+            $('#mobile').focus();
+            event.preventDefault();
             return false;
         }
     })

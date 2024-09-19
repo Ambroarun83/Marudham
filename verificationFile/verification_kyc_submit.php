@@ -58,3 +58,7 @@ if ($qry) {
 }
 
 echo json_encode($result);
+
+$con->close();
+$mysqli->close();
+$connect = null;

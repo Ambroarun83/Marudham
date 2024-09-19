@@ -39,6 +39,7 @@ function OnLoadFunctions() {
         },
         "drawCallback": function () {
             enableDateColoring();
+            searchFunction('due_followup_table')
         }
     });
 

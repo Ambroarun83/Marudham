@@ -5,12 +5,12 @@ include '../../ajaxconfig.php';
 <table class="table custom-table" id="signedDoc_table_data">
     <thead>
         <tr>
-        <th width="15%"> S.No </th>
-		<th> Doc Name </th>
-		<th> Sign Type </th>
-		<th> Relationship </th>
-		<th> Count </th>
-		<th> ACTION </th>
+            <th width="15%"> S.No </th>
+            <th> Doc Name </th>
+            <th> Sign Type </th>
+            <th> Relationship </th>
+            <th> Count </th>
+            <th> ACTION </th>
         </tr>
     </thead>
     <tbody>
@@ -29,11 +29,23 @@ include '../../ajaxconfig.php';
             <tr>
                 <td><?php echo $i; ?></td>
 
-                <td><?php  if($signed["doc_name"] == '0'){ echo 'Promissory Note';}elseif($signed["doc_name"] == '1'){ echo 'Stamp Paper';}elseif($signed["doc_name"] == '2'){ echo 'P Additional';}elseif($signed["doc_name"] == '3'){ echo 'S Additional';} ?></td>
+                <td>Signed Document</td>
 
-                <td><?php  if($signed["sign_type"] == '0'){ echo 'Customer';}elseif($signed["sign_type"] == '1'){ echo 'Guarantor';}elseif($signed["sign_type"] == '2'){ echo 'Combined';}elseif($signed["sign_type"] == '3'){ echo 'Family Members';} ?></td>
-                
-                <td> <?php if($signed["sign_type"] == '3' or $signed["sign_type"] == '1' or $signed["sign_type"] == '2'){ echo $row["famname"].' - '.$row["relationship"];}else{echo 'NIL';} ?></td>
+                <td><?php if ($signed["sign_type"] == '0') {
+                        echo 'Customer';
+                    } elseif ($signed["sign_type"] == '1') {
+                        echo 'Guarantor';
+                    } elseif ($signed["sign_type"] == '2') {
+                        echo 'Combined';
+                    } elseif ($signed["sign_type"] == '3') {
+                        echo 'Family Members';
+                    } ?></td>
+
+                <td> <?php if ($signed["sign_type"] == '3' or $signed["sign_type"] == '1' or $signed["sign_type"] == '2') {
+                            echo $row["famname"] . ' - ' . $row["relationship"];
+                        } else {
+                            echo 'NIL';
+                        } ?></td>
                 <td><?php echo $signed["doc_Count"]; ?></td>
                 <td>
                     <a id="signed_doc_edit" value="<?php echo $signed['id']; ?>"> <span class="icon-border_color"></span></a> &nbsp
@@ -63,6 +75,7 @@ include '../../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('signedDoc_table_data');
             },
             dom: 'lBfrtip',
             buttons: [{
@@ -76,3 +89,9 @@ include '../../ajaxconfig.php';
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

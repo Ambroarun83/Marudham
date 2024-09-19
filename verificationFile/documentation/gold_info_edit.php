@@ -5,7 +5,7 @@ $id = $_POST['id'];
 
 $gold = array();
 
-$goldInfo = $connect -> query("SELECT * FROM `gold_info` WHERE id='$id' ");
+$goldInfo = $connect->query("SELECT * FROM `gold_info` WHERE id='$id' ");
 $goldDetails = $goldInfo->fetch();
 
 $gold['id'] = $goldDetails['id'];
@@ -18,4 +18,7 @@ $gold['gold_Value'] = $goldDetails['gold_Value'];
 $gold['gold_upload'] = $goldDetails['gold_upload'];
 
 echo json_encode($gold);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

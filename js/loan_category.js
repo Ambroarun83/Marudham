@@ -156,6 +156,9 @@ $(document).ready(function () {
                 collectionLayout: 'fixed four-column',
             }
             ],
+            'drawCallback': function () {
+                searchFunction('coursecategoryTable');
+            }
         });
     });
 

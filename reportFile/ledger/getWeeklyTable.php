@@ -220,6 +220,9 @@ $weeks = generateWeeks($startDate, $endDate);
                     collectionLayout: 'fixed four-column',
                 }
             ],
+            'drawCallback': function() {
+                searchFunction('weekly_table');
+            }
         });
     });
 </script>

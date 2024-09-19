@@ -9,18 +9,16 @@ if (isset($_SESSION['userid'])) {
 }
 
 //////////////////////////////////////////////////////////////////////////
-$myStr = "LID";
+
 $selectIC = $con->query("SELECT loan_id FROM in_issue WHERE loan_id != '' ");
 if ($selectIC->num_rows > 0) {
     $codeAvailable = $con->query("SELECT loan_id FROM in_issue WHERE (loan_id != '' or loan_id != NULL) ORDER BY id DESC LIMIT 1");
     while ($row = $codeAvailable->fetch_assoc()) {
         $ac2 = $row["loan_id"];
     }
-    $appno2 = ltrim(strstr($ac2, '-'), '-');
-    $appno2 = $appno2 + 1;
-    $loan_id = $myStr . "-" . "$appno2";
+    $loan_id = intval($ac2) + 1;
 } else {
-    $initialapp = $myStr . "-101";
+    $initialapp = "101";
     $loan_id = $initialapp;
 }
 //////////////////////////////////////////////////////////////////////////
@@ -48,25 +46,24 @@ if ($ag_id > 0 and $ag_id != '' and $ag_id != null) { //if agent id is mentioned
         VALUES ('$req_id', '$cus_id', 'Agent', '$ag_id', '$net_cash', '0', '$loan_amt', '$net_cash', '$userid', now()) ");
 }
 
-    // $qry = $con->query("SELECT customer_name, mobile1 from customer_register where req_ref_id = '$req_id' ");
-    // $row = $qry->fetch_assoc();
-    // $customer_name = $row['customer_name'];
-    // $cus_mobile1 = $row['mobile1'];
+// $qry = $con->query("SELECT customer_name, mobile1 from customer_register where req_ref_id = '$req_id' ");
+// $row = $qry->fetch_assoc();
+// $customer_name = $row['customer_name'];
+// $cus_mobile1 = $row['mobile1'];
 
-    // $message = "";
-    // $templateid	= ''; //FROM DLT PORTAL.
-    // // Account details
-    // $apiKey = '';
-    // // Message details
-    // $sender = '';
-    // // Prepare data for POST request
-    // $data = 'access_token='.$apiKey.'&to='.$cus_mobile1.'&message='.$message.'&service=T&sender='.$sender.'&template_id='.$templateid;
-    // // Send the GET request with cURL
-    // $url = 'https://sms.messagewall.in/api/v2/sms/send?'.$data; 
-    // $response = file_get_contents($url);  
-    // // Process your response here
-    // return $response; 
+// $message = "";
+// $templateid	= ''; //FROM DLT PORTAL.
+// // Account details
+// $apiKey = '';
+// // Message details
+// $sender = '';
+// // Prepare data for POST request
+// $data = 'access_token='.$apiKey.'&to='.$cus_mobile1.'&message='.$message.'&service=T&sender='.$sender.'&template_id='.$templateid;
+// // Send the GET request with cURL
+// $url = 'https://sms.messagewall.in/api/v2/sms/send?'.$data; 
+// $response = file_get_contents($url);  
+// // Process your response here
+// return $response; 
 
-    $response = 'Loan Issue Completed';
-    echo json_encode($response);
-?>
+$response = 'Loan Issue Completed';
+echo json_encode($response);

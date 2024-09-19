@@ -19,6 +19,22 @@ $(document).ready(function () {
         $('#taluk1').val(talukselected);
     })
 
+    $('#submitbranch_creation').click(function () {
+        let mobile = $('#mobile_number').val()
+        let wapp = $('#whatsapp_number').val()
+        if (mobile != '' && mobile.length < 10) {
+            alert('Please enter 10 digit valid number');
+            $('#mobile_number').focus();
+            event.preventDefault();
+            return false;
+        } else
+            if (wapp != '' && wapp.length < 10) {
+                alert('Please enter 10 digit valid number');
+                $('#whatsapp_number').focus();
+                event.preventDefault();
+                return false;
+            }
+    })
 });
 
 $(function () {

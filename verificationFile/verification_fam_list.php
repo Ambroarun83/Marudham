@@ -30,8 +30,8 @@ include '../ajaxconfig.php';
                 <td> <?php echo $i++; ?></td>
                 <td> <?php echo $fam['famname']; ?></td>
                 <td> <?php echo $fam['relationship']; ?></td>
-                <!-- <td> <?php echo ($fam['relationship'] =='Other') ? $fam['other_remark'] : '---'; ?></td>
-                <td> <?php echo ($fam['relationship'] =='Other') ? $fam['other_address'] : '---' ; ?></td> -->
+                <!-- <td> <?php echo ($fam['relationship'] == 'Other') ? $fam['other_remark'] : '---'; ?></td>
+                <td> <?php echo ($fam['relationship'] == 'Other') ? $fam['other_address'] : '---'; ?></td> -->
                 <td> <?php echo $fam['relation_age']; ?></td>
                 <td> <?php echo $fam['relation_aadhar']; ?></td>
                 <td> <?php echo $fam['relation_Mobile']; ?></td>
@@ -61,6 +61,7 @@ include '../ajaxconfig.php';
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('famTable');
             },
             dom: 'lBfrtip',
             buttons: [{
@@ -74,3 +75,8 @@ include '../ajaxconfig.php';
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null; ?>

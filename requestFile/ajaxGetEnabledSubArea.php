@@ -1,4 +1,4 @@
-<?php 
+<?php
 include('../ajaxconfig.php');
 @session_start();
 // $area ='1';
@@ -6,7 +6,7 @@ if (isset($_POST['area'])) {
     $area = $_POST['area'];
 }
 // $userid = '25';
-if(isset($_SESSION["userid"])){
+if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
 }
 
@@ -14,26 +14,26 @@ $loan_category_arr = array();
 
 $user_area = array();
 
-$Qry = $con->query("SELECT * FROM user where status=0 and user_id= '".$userid."'");//fetching group of current staff
+$Qry = $con->query("SELECT * FROM user where status=0 and user_id= '" . $userid . "'"); //fetching group of current staff
 $run = $Qry->fetch_assoc();
-$user_group = explode(',',$run['group_id']);
+$user_group = explode(',', $run['group_id']);
 
-foreach($user_group as $group_id){
-    
-    $Qry = $con->query("SELECT * FROM area_group_mapping where status =0  and map_id = $group_id ");//fetching area id from group
+foreach ($user_group as $group_id) {
+
+    $Qry = $con->query("SELECT * FROM area_group_mapping where status =0  and map_id = $group_id "); //fetching area id from group
     $run = $Qry->fetch_assoc();
-    $user_sub_area[] = explode(',',$run['sub_area_id']);
+    $user_sub_area[] = explode(',', $run['sub_area_id']);
 }
 
 
-$result=$con->query("SELECT * FROM sub_area_list_creation where area_id_ref='".$area."' and status=0 and sub_area_enable = 0");
-while( $row = $result->fetch_assoc()){
+$result = $con->query("SELECT * FROM sub_area_list_creation where area_id_ref='" . $area . "' and status=0 and sub_area_enable = 0");
+while ($row = $result->fetch_assoc()) {
     $sub_area_id = $row['sub_area_id'];
     $sub_area_name = $row['sub_area_name'];
     // print_r($sub_area_id);
-    for($i=0;$i<sizeof($user_sub_area);$i++){
-        
-        if(in_array($sub_area_id,$user_sub_area[$i])){
+    for ($i = 0; $i < sizeof($user_sub_area); $i++) {
+
+        if (in_array($sub_area_id, $user_sub_area[$i])) {
 
             // $checkQry=$con->query("SELECT * FROM area_creation where status=0 and FIND_IN_SET($sub_area_id,sub_area)");
             // if ($checkQry->num_rows>0){
@@ -47,4 +47,7 @@ while( $row = $result->fetch_assoc()){
 }
 
 echo json_encode($loan_category_arr);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

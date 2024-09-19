@@ -1,6 +1,7 @@
 <?php
 @session_start();
 include('../../ajaxconfig.php');
+include_once('../../api/config-file.php');
 
 if (isset($_SESSION['userid'])) {
     $user_id = $_SESSION['userid'];
@@ -41,7 +42,7 @@ $customerIDs = fetchCustomerIDs($con, $start, $length, $searchValue, $sub_area_l
 $data = [];
 foreach ($customerIDs as $cus_id) {
     // Process the customer ID
-    $statusResponse = file_get_contents("http://localhost/marudham/collectionFile/resetCustomerStatus.php?cus_id=$cus_id");
+    $statusResponse = file_get_contents(HOSTPATH."collectionFile/resetCustomerStatus.php?cus_id=$cus_id");
     // echo $statusResponse;//in case of data not fetching, uncommend this to see the error in calling file
     $statusData = json_decode($statusResponse, true);
     $statusData = getfilteredCusData($statusData);
@@ -55,7 +56,7 @@ foreach ($customerIDs as $cus_id) {
 
     $payable = $statusData['payable'];
 
-    $finalResponse = file_get_contents("http://localhost/marudham/followupFiles/dueFollowup/ajaxDueFollowupFetch.php?cus_id=$cus_id&req_id=$req_id&follow_cus_sts=$follow_cus_sts&payable=$payable&userid=$user_id");
+    $finalResponse = file_get_contents(HOSTPATH."followupFiles/dueFollowup/ajaxDueFollowupFetch.php?cus_id=$cus_id&req_id=$req_id&follow_cus_sts=$follow_cus_sts&payable=$payable&userid=$user_id");
     // echo $finalResponse;//in case of data not fetching, uncommend this to see the error in calling file
     $finalData = json_decode($finalResponse, true);
 

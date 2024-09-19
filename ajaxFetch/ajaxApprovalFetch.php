@@ -62,7 +62,7 @@ if ($userid == 1) {
     JOIN branch_creation bc ON ag.branch_id = bc.branch_id
     JOIN area_line_mapping alm ON FIND_IN_SET(sa.sub_area_id, alm.sub_area_id)
     JOIN loan_category_creation lcc ON lcc.loan_category_creation_id = v.loan_category
-    WHERE v.status = 0 and v.cus_status IN(2,3,6,7,13)'; //2-in approval, 3-in ack,6-cancel approval, 7-cancel_ack,13-in issue.
+    WHERE v.status = 0 and v.cus_status IN(2,3,13)'; //2-in approval, 3-in ack,6-cancel approval, 7-cancel_ack,13-in issue.
 } else {
     $query = "SELECT v.*,a.area_name, sa.sub_area_name, ag.group_name, bc.branch_name, alm.line_name,lcc.loan_category_creation_name
     FROM in_verification v
@@ -72,7 +72,7 @@ if ($userid == 1) {
     JOIN branch_creation bc ON ag.branch_id = bc.branch_id
     JOIN area_line_mapping alm ON FIND_IN_SET(sa.sub_area_id, alm.sub_area_id)
     JOIN loan_category_creation lcc ON lcc.loan_category_creation_id = v.loan_category
-    WHERE v.status = 0 and v.cus_status IN(2,3,6,7,13) and v.sub_area IN ($sub_area_list) "; //show only moved to Approval list and Approve the verification.
+    WHERE v.status = 0 and v.cus_status IN(2,3,13) and v.sub_area IN ($sub_area_list) "; //show only moved to Approval list and Approve the verification.
 }
 
 if (isset($_POST['search']) && $_POST['search'] != "") {
@@ -157,10 +157,11 @@ foreach ($result as $row) {
 
     $sub_array[] = $row['cus_data'];
     $id = $row['req_id'];
+    $cus_id = $row['cus_id'];
 
     $cus_status = $row['cus_status'];
     $statusLabels = [
-        '2' => "<button class='btn btn-outline-secondary move_acknowledgement' value='$id'><span class='icon-arrow_forward'></span></button>",
+        '2' => "<button class='btn btn-outline-secondary move_acknowledgement' value='$id' data-cusid = '$cus_id'><span class='icon-arrow_forward'></span></button>",
         '3' => 'In Acknowledgement',
         '13' => 'In Issue',
         '6' => 'Cancel - Approval',
@@ -172,7 +173,6 @@ foreach ($result as $row) {
 
     $id          = $row['req_id'];
     $user_type = $row['user_type'];
-    $cus_id = $row['cus_id'];
 
     $action = "<div class='dropdown'>
     <button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button>

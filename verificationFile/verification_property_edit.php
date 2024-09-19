@@ -5,7 +5,7 @@ $id = $_POST['id'];
 
 $prptyEditRes = array();
 
-$grpInfo = $connect -> query("SELECT * FROM `verification_property_info` WHERE id='$id' ");
+$grpInfo = $connect->query("SELECT * FROM `verification_property_info` WHERE id='$id' ");
 $group = $grpInfo->fetch();
 
 $prptyEditRes['id'] = $group['id'];
@@ -15,4 +15,7 @@ $prptyEditRes['pVal'] = $group['property_value'];
 $prptyEditRes['holder'] = $group['property_holder'];
 
 echo json_encode($prptyEditRes);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

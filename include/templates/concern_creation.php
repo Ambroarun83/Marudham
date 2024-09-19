@@ -98,7 +98,7 @@ if (isset($_POST['submit_concern']) && $_POST['submit_concern'] != '') {
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
                                     <div class="form-group">
                                         <label for="staff_name">Staff Name</label><span class="required">&nbsp;*</span>
-                                        <input type="text" class="form-control" id="staff_name" name="staff_name" tabindex='5'>
+                                        <input type="text" class="form-control" id="staff_name" name="staff_name" tabindex='5' placeholder="Enter Staff Name">
                                         <span class="text-danger" style='display:none' id='staffnameCheck'>Please Enter Staff Name</span>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@ if (isset($_POST['submit_concern']) && $_POST['submit_concern'] != '') {
                                     </div>
                                 </div>
 
-                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
+                                <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                                     <div class="form-group">
                                         <label for="comsub">Concern Subject</label><span class="required">&nbsp;*</span>
                                         <select type="text" class="form-control" id="com_sub" name="com_sub" tabindex='16'>
@@ -267,7 +267,7 @@ if (isset($_POST['submit_concern']) && $_POST['submit_concern'] != '') {
                                     </div>
                                 </div>
 
-                                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2 col-12">
+                                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
                                     <div class="form-group">
                                         <button type="button" class="btn btn-primary" id="add_complaint" name="add_complaint" data-toggle="modal" data-target=".addComplaint" style="padding: 5px 35px; margin-top: 20px;" tabindex='16'><span class="icon-add"></span></button>
                                     </div>

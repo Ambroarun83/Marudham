@@ -26,7 +26,7 @@ function moneyFormatIndia($num)
 
 <table class="table custom-table" id="gold_table">
     <thead>
-    <tr>
+        <tr>
             <th width="15%"> S.No </th>
             <th> Gold Status </th>
             <th> Gold Type </th>
@@ -53,9 +53,13 @@ function moneyFormatIndia($num)
             $goldVal = $goldVal + intval($gold["gold_Value"]);
 
         ?>
-             <tr>
+            <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php if($gold["gold_sts"] == '0'){ echo 'Old';}else if($gold["gold_sts"] == '1'){echo 'New'; } ?></td>
+                <td><?php if ($gold["gold_sts"] == '0') {
+                        echo 'Old';
+                    } else if ($gold["gold_sts"] == '1') {
+                        echo 'New';
+                    } ?></td>
                 <td> <?php echo $gold["gold_type"]; ?></td>
                 <td> <?php echo $gold["Purity"]; ?></td>
                 <td><?php echo $gold["gold_Count"]; ?></td>
@@ -65,17 +69,18 @@ function moneyFormatIndia($num)
 
             </tr>
 
-        <?php $i++; } ?>
+        <?php $i++;
+        } ?>
     </tbody>
     <tr>
-         <td> <b> Total </b> </td>
-         <td> </td>
-         <td> </td>
-         <td> </td>
-         <td> <b> <?php echo $cnt; ?> </b> </td>
-         <td> <b> <?php echo $weight; ?> </b> </td>
-         <td> <b> <?php echo moneyFormatIndia($goldVal); ?> </b> </td>
-     </tr>
+        <td> <b> Total </b> </td>
+        <td> </td>
+        <td> </td>
+        <td> </td>
+        <td> <b> <?php echo $cnt; ?> </b> </td>
+        <td> <b> <?php echo $weight; ?> </b> </td>
+        <td> <b> <?php echo moneyFormatIndia($goldVal); ?> </b> </td>
+    </tr>
 </table>
 
 
@@ -83,7 +88,7 @@ function moneyFormatIndia($num)
 <script type="text/javascript">
     $(function() {
         $('#gold_table').DataTable({
-           // "order": [[0,'desc']],
+            // "order": [[0,'desc']],
             'processing': true,
             'iDisplayLength': 5,
             "lengthMenu": [
@@ -100,6 +105,15 @@ function moneyFormatIndia($num)
                     collectionLayout: 'fixed four-column',
                 }
             ],
+            "drawCallback": function(settings) {
+                searchFunction('gold_table');
+            }
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

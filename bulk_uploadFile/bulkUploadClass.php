@@ -117,7 +117,11 @@ class bulkUploadClass
             'cash' => isset($Row[89]) ? mysqli_real_escape_string($con, $Row[89]) : "",
             'balance_amt' => isset($Row[90]) ? mysqli_real_escape_string($con, $Row[90]) : "",
             'cash_guarantor_id' => isset($Row[91]) ? mysqli_real_escape_string($con, $Row[91]) : "",
-            'cash_guarantor_rel' => isset($Row[92]) ? mysqli_real_escape_string($con, $Row[92]) : ""
+            'cash_guarantor_rel' => isset($Row[92]) ? mysqli_real_escape_string($con, $Row[92]) : "",
+            'closed_status' => isset($Row[93]) ? mysqli_real_escape_string($con, $Row[93]) : "",
+            'consider_level' => isset($Row[94]) ? mysqli_real_escape_string($con, $Row[94]) : "",
+            'closed_remark' => isset($Row[95]) ? mysqli_real_escape_string($con, $Row[95]) : "",
+            'closed_date' => isset($Row[96]) ? mysqli_real_escape_string($con, $Row[96]) : ""
         );
 
         $dataArray['cus_id'] = strlen($dataArray['cus_id']) == 12 ? $dataArray['cus_id'] : 'Invalid';
@@ -222,6 +226,14 @@ class bulkUploadClass
 
         $dataArray['cash_guarantor_id'] = strlen($dataArray['cash_guarantor_id']) == 12 ? $dataArray['cash_guarantor_id'] : 'Invalid';
 
+        $closed_statusArray = ['' => '0', 'Consider' => '1', 'Waiting List' => '2', 'Block List' => '3'];
+        $dataArray['closed_status'] = $this->arrayItemChecker($closed_statusArray, $dataArray['closed_status']);
+
+        $consider_levelArray = ['Bronze' => '1', 'Silver' => '2', 'Gold' => '3', 'Platinum' => '4', 'Diamond' => '5'];
+        $dataArray['consider_level'] = $this->arrayItemChecker($consider_levelArray, $dataArray['consider_level']);
+
+        $dataArray['closed_date'] = $this->dateFormatChecker($dataArray['closed_date']);
+
         return $dataArray;
     }
 
@@ -310,18 +322,15 @@ class bulkUploadClass
     }
     function getLoanCode($con)
     {
-        $myStr = "LID";
         $selectIC = $con->query("SELECT loan_id FROM in_issue WHERE loan_id != '' ");
         if ($selectIC->num_rows > 0) {
             $codeAvailable = $con->query("SELECT loan_id FROM in_issue WHERE (loan_id != '' or loan_id != NULL) ORDER BY id DESC LIMIT 1");
             while ($row = $codeAvailable->fetch_assoc()) {
                 $ac2 = $row["loan_id"];
             }
-            $appno2 = ltrim(strstr($ac2, '-'), '-');
-            $appno2 = $appno2 + 1;
-            $loan_id = $myStr . "-" . "$appno2";
+            $loan_id = intval($ac2) + 1;
         } else {
-            $initialapp = $myStr . "-101";
+            $initialapp = "101";
             $loan_id = $initialapp;
         }
         return $loan_id;
@@ -355,9 +364,9 @@ class bulkUploadClass
         }
         return $area_id;
     }
-    function getSubAreaId($con, $sub_area_name,$area_id)
+    function getSubAreaId($con, $sub_area_name, $area_id)
     {
-        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $sub_area_name . "' and area_id_ref = '".$area_id."' ";
+        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $sub_area_name . "' and area_id_ref = '" . $area_id . "' ";
         $result1 = $con->query($query) or die("Error ");
         if ($con->affected_rows > 0) {
             $row = $result1->fetch_assoc();
@@ -540,6 +549,22 @@ class bulkUploadClass
         } else {
             $insert_li = $con->query("INSERT INTO `loan_issue` (`req_id`, `cus_id`, `issued_to`, `agent_id`, `cash`, `balance_amount`, `loan_amt`, `net_cash`, `insert_login_id`,`created_date`) VALUES ('$req_id', '" . $data['cus_id'] . "', 'Agent', '" . $data['agent_id'] . "', '" . $data['cash'] . "', '0', '" . $data['loan_amt_cal'] . "', '" . $data['net_cash_cal'] . "', '" . $userData['user_id'] . "', '" . $data['loan_date'] . "') ");
         }
+    }
+    function closedTables($con, $data, $userData, $req_id)
+    {
+        $con->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`,`created_date`) VALUES ('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['closed_status']) . "','" . strip_tags($data['consider_level']) . "','" . strip_tags($data['closed_remark']) . "', '" . $data['cus_status'] . "'," . $userData['user_id'] . ",'" . $data['closed_date'] . "' )");
+
+        $con->query("UPDATE request_creation SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+        $con->query("UPDATE in_verification SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+        $con->query("UPDATE in_acknowledgement SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+        $con->query("UPDATE in_approval SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+
+        $con->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','3'," . $userData['user_id'] . ", '" . $data['closed_date'] . "') ");
+    }
+
+    function NOCTables($con, $data, $userData, $req_id)
+    {
+        $con->query("INSERT INTO `noc`(`req_id`,`cus_id`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('$req_id'," . $data['cus_id'] . ", '" . $data['closed_date'] . "','1'," . $data['cus_name'] . ",'" . $data['cus_status'] . "'," . $userData['user_id'] . "," . $data['closed_date'] . "') ");
     }
 
 
@@ -860,6 +885,26 @@ class bulkUploadClass
             $errcolumns[] = 'Cash Guarantor Relationship';
         }
 
+        if ($data['closed_status'] != '0') { //0 means closed status is empty in excel so no need to verify others
+
+            if ($data['closed_status'] == 'Not Found') {
+                $errcolumns[] = 'Closed Status';
+            }
+            if ($data['closed_status'] == '1') {
+
+                if ($data['consider_level']  == 'Not Found') {
+                    $errcolumns[] = 'Consider Level';
+                }
+
+                if ($data['closed_remark'] == '') {
+                    $errcolumns[] = 'Closed Remark';
+                }
+
+                if ($data['closed_date'] == 'Invalid Date') {
+                    $errcolumns[] = 'Closed Date';
+                }
+            }
+        }
 
         return $errcolumns;
     }

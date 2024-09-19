@@ -219,6 +219,9 @@ $months = generateMonths($startDate, $endDate);
                     collectionLayout: 'fixed four-column',
                 }
             ],
+            'drawCallback': function() {
+                searchFunction('monthly_table');
+            }
         });
     });
 </script>

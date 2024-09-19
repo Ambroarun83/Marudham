@@ -90,7 +90,7 @@ if ($result->num_rows > 0) {
             $consider_level = ['', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']; // first one is empty because select value of consider sts is starting at 1
             $runqry = $Qry->fetch_assoc();
             $substatuslocal = $closed_status[$runqry['closed_sts']];
-            if($runqry['closed_sts'] == '1'){
+            if ($runqry['closed_sts'] == '1') {
                 $substatuslocal .= ' - ' . $consider_level[$runqry['consider_level']];
             }
             $records[$i]['sub_status'] = $substatuslocal;
@@ -167,7 +167,7 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
     $due_nil_sts = isset($_POST["due_nil_sts"]) ? explode(',', $_POST["due_nil_sts"]) : null;
     $closed_sts = isset($_POST["closed_sts"]) ? explode(',', $_POST["closed_sts"]) : null;
     $bal_amt = isset($_POST["bal_amt"]) ? explode(',', $_POST["bal_amt"]) : null;
-    $consider_lvl_arr = [1=>'Bronze',2=>'Silver',3=>'Gold',4=>'Platinum',5=>'Diamond'];
+    $consider_lvl_arr = [1 => 'Bronze', 2 => 'Silver', 3 => 'Gold', 4 => 'Platinum', 5 => 'Diamond'];
 
     $retVal = '';
 
@@ -247,4 +247,8 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
     }
     return $retVal;
 }
+
+$con->close();
+$mysqli->close();
+$connect = null;
 ?>

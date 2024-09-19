@@ -71,12 +71,12 @@ function getDetails($con, $where)
 
     $response['expense'] = intval($expense);
 
-    
+
 
 
     $response['issued'] = moneyFormatIndia($response['issued']);
     $response['expense'] = moneyFormatIndia($response['expense']);
-    
+
 
     echo json_encode($response);
 }
@@ -110,3 +110,4 @@ function moneyFormatIndia($num)
 
     return $isNegative ? "-" . $thecash : $thecash;
 }
+$con->close();

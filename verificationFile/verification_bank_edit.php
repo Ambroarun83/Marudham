@@ -5,7 +5,7 @@ $id = $_POST['id'];
 
 $bank = array();
 
-$BANKInfo = $connect -> query("SELECT * FROM `verification_bank_info` WHERE id='$id' ");
+$BANKInfo = $connect->query("SELECT * FROM `verification_bank_info` WHERE id='$id' ");
 $bank_details = $BANKInfo->fetch();
 
 $bank['id'] = $bank_details['id'];
@@ -16,4 +16,7 @@ $bank['acc_no'] = $bank_details['acc_no'];
 $bank['ifsc'] = $bank_details['ifsc_code'];
 
 echo json_encode($bank);
-?>
+
+$con->close();
+$mysqli->close();
+$connect = null;

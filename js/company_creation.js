@@ -20,8 +20,8 @@ $(document).ready(function () {
 
     $('#submit_company_creation').click(function () {
         //Validation
-        var company_name = $('#company_name').val(); var address1 = $('#address1').val();/*var address2 = $('#address2').val();*/ var state = $('#state').val(); var district = $('#district1').val(); var taluk = $('#taluk1').val(); var pincode = $('#pincode').val();
-        if (company_name === '' || address1 === '' || state === '' || district === '' || taluk === '' || pincode === '') {
+        var company_name = $('#company_name').val(); var address1 = $('#address1').val();/*var address2 = $('#address2').val();*/ var state = $('#state').val(); var district = $('#district1').val(); var taluk = $('#taluk1').val(); var pincode = $('#pincode').val(); var mobile = $('#mobile').val();
+        if (company_name === '' || address1 === '' || state === '' || district === '' || taluk === '' || pincode === '' || (mobile != '' && mobile.length < 10)) {
             Swal.fire({
                 timerProgressBar: true,
                 timer: 2000,

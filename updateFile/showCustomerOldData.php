@@ -1,7 +1,7 @@
 <?php
 require '../ajaxconfig.php';
 
-$qry = $con->query("SELECT * From cus_old_data where cus_id = '".$_POST['cus_id']."' ");
+$qry = $con->query("SELECT * From cus_old_data where cus_id = '" . $_POST['cus_id'] . "' ");
 
 ?>
 
@@ -22,29 +22,29 @@ $qry = $con->query("SELECT * From cus_old_data where cus_id = '".$_POST['cus_id'
     </thead>
     <tbody>
 
-<?php
-$i=1;
-while($row = $qry->fetch_assoc()){
-?>
+        <?php
+        $i = 1;
+        while ($row = $qry->fetch_assoc()) {
+        ?>
 
-<tr>
-    <td><?php echo $i++;?></td>
-    <td><?php echo $row['cus_id'];?></td>
-    <td><?php echo $row['cus_name'];?></td>
-    <td><?php echo $row['mobile'];?></td>
-    <td><?php echo $row['area'];?></td>
-    <td><?php echo $row['sub_area'];?></td>
-    <td><?php echo $row['loan_cat'];?></td>
-    <td><?php echo $row['sub_cat'];?></td>
-    <td><?php echo moneyFormatIndia($row['loan_amt']);?></td>
-    <td><a href="uploads/updateFile/cus_data_old/<?php echo $row['due_chart_file'];?>" target="_blank">Show File</a></td>
-</tr>
+            <tr>
+                <td><?php echo $i++; ?></td>
+                <td><?php echo $row['cus_id']; ?></td>
+                <td><?php echo $row['cus_name']; ?></td>
+                <td><?php echo $row['mobile']; ?></td>
+                <td><?php echo $row['area']; ?></td>
+                <td><?php echo $row['sub_area']; ?></td>
+                <td><?php echo $row['loan_cat']; ?></td>
+                <td><?php echo $row['sub_cat']; ?></td>
+                <td><?php echo moneyFormatIndia($row['loan_amt']); ?></td>
+                <td><a href="uploads/updateFile/cus_data_old/<?php echo $row['due_chart_file']; ?>" target="_blank">Show File</a></td>
+            </tr>
 
 
-<?php
-}
+        <?php
+        }
 
-?>
+        ?>
 
     </tbody>
 </table>
@@ -66,14 +66,19 @@ while($row = $qry->fetch_assoc()){
                 {
                     extend: 'colvis',
                     collectionLayout: 'fixed four-column',
-                }],
+                }
+            ],
+            'drawCallback': function() {
+                searchFunction('oldCusData_table');
+            }
         });
     });
 </script>
 
 
 <?php
-function moneyFormatIndia($num){
+function moneyFormatIndia($num)
+{
     $explrestunits = "";
     if (strlen($num) > 3) {
         $lastthree = substr($num, strlen($num) - 3, strlen($num));

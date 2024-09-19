@@ -12,14 +12,15 @@ class NocClass
     {
         $response = array();
         $today = date('Y-m-d');
+        $month = (isset($_POST['month']) || $_POST['month'] != '') ? date('Y-m-01', strtotime($_POST['month'])) : date('Y-m-01');
         $sub_area_list = $_POST['sub_area_list'];
 
         $tot_noc = "SELECT COUNT(*) as tot_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 ";
         $noc_issueqry = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 21 ";
-        $month_noc = "SELECT COUNT(*) as month_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND month(req.updated_date) = month('$today') and year(req.updated_date) = year('$today') ";
-        $month_noc_bal = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND month(req.updated_date) = month('$today') and year(req.updated_date) = year('$today') ";
+        $month_noc = "SELECT COUNT(*) as month_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND month(req.updated_date) = month('$month') and year(req.updated_date) = year('$month') ";
+        $month_noc_bal = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND month(req.updated_date) = month('$month') and year(req.updated_date) = year('$month') ";
         $month_noc_issueqry = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 21 ";
-        $today_noc = "SELECT COUNT(*) as today_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND date(req.updated_date) = '$today' ";
+        $today_noc = "SELECT COUNT(*) as today_noc FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status >= 21 AND date(req.updated_date) = '$month' ";
         $today_noc_issueqry = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 21  ";
 
         if (empty($sub_area_list)) {
@@ -151,12 +152,12 @@ class NocClass
             if ($document_count > 0) {
                 //if the request has documents given then compare the dates
                 //else the request is not having any document to issue so it will marked as issued
-                
+
                 if ($dater == 'month') {
                     //check for the call type and set the limit checker accordingly
-                    
+
                     $noc_date = date('Y-m', strtotime($noc_date));
-                    
+
                     //if the date is not in current month, then that noc issue cannot be calculated
                     if ($noc_date != date('Y-m', strtotime($today))) {
                         $nocstatus = 0; //not completed

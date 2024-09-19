@@ -13,7 +13,7 @@ if ($userid != 1) {
     }
 }
 
-$columns = array(
+$column = array(
     'dt.id',
     'dt.cus_id',
     'cr.customer_name',
@@ -51,7 +51,7 @@ if (isset($_POST['search']) && $_POST['search'] != "") {
 }
 
 if (isset($_POST['order'])) {
-    $query .= 'ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
+    $query .= ' ORDER BY ' . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'] . ' ';
 } else {
     $query .= ' ';
 }

@@ -1,7 +1,7 @@
 <?php
 include '../../ajaxconfig.php';
 
-if(isset($_POST['req_id'])){
+if (isset($_POST['req_id'])) {
     $req_id = $_POST['req_id'];
 }
 
@@ -26,19 +26,29 @@ if(isset($_POST['req_id'])){
 
         $i = 1;
         while ($row = $qry->fetch()) {
-            if($row["holder_name"] == ''){
-                $qry1 = $con->query("SELECT * FROM verification_family_info where id = '".$row['relation_name']."' ");
+            if ($row["holder_name"] == '') {
+                $qry1 = $con->query("SELECT * FROM verification_family_info where id = '" . $row['relation_name'] . "' ");
                 $holder_name = $qry1->fetch_assoc()['famname'];
-            }else{
+            } else {
                 $holder_name = $row["holder_name"];
             }
         ?>
-             <tr>
+            <tr>
                 <td></td>
                 <td><?php echo $row["doc_name"]; ?></td>
                 <td><?php echo $row["doc_detail"]; ?></td>
-                <td><?php if($row["doc_type"] == '0'){ echo 'Original';}else if($row["doc_type"] == '1'){echo 'Xerox'; } ?></td>
-                <td><?php if($row["doc_holder"] == '0'){ echo 'Customer';}else if($row["doc_holder"] == '1'){echo 'Guarentor'; }elseif($row["doc_holder"] == '2'){echo 'Family Member';} ?></td>
+                <td><?php if ($row["doc_type"] == '0') {
+                        echo 'Original';
+                    } else if ($row["doc_type"] == '1') {
+                        echo 'Xerox';
+                    } ?></td>
+                <td><?php if ($row["doc_holder"] == '0') {
+                        echo 'Customer';
+                    } else if ($row["doc_holder"] == '1') {
+                        echo 'Guarentor';
+                    } elseif ($row["doc_holder"] == '2') {
+                        echo 'Family Member';
+                    } ?></td>
                 <td><?php echo $holder_name; ?></td>
                 <td><?php echo $row["relation"]; ?></td>
             </tr>
@@ -65,6 +75,7 @@ if(isset($_POST['req_id'])){
                 this.api().column(0).nodes().each(function(cell, i) {
                     cell.innerHTML = i + 1;
                 });
+                searchFunction('document_table');
             },
             dom: 'lBfrtip',
             buttons: [{
@@ -78,3 +89,9 @@ if(isset($_POST['req_id'])){
         });
     });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null;
+?>

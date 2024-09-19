@@ -50,7 +50,7 @@ $(document).ready(function () {
     })
 
     $('#close_btn').click(function () {
-        $('.loanlist_card').hide(); $('#loanTrackDiv table tbody').empty()
+        $('.loanlist_card, #close_btn').hide(); $('#loanTrackDiv table tbody').empty()
         $('#customer_list_card, #search_card').show();
     })
 })
@@ -58,7 +58,7 @@ $(document).ready(function () {
 function validate() {
     let cus_id = $('#cus_id').val(); cus_id = cus_id.replace(/\s+/g, '');//removes spaces in adhar number
     let cus_name = $('#cus_name').val(); let mobile = $('#mobile').val(); let loan_id = $('#loan_id').val();
-    let response = true; let pattern = /^LID-\d{3,}$/; // '\d' matches any digit, '{3,}' matches at least 3 digits
+    let response = true; let pattern = /\d{3,}$/; // '\d' matches any digit, '{3,}' matches at least 3 digits
 
     if (cus_id == '' && cus_name == '' && mobile == '' && loan_id == '') {
         response = false;

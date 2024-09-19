@@ -27,7 +27,7 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                 $data['doc_code'] = $obj->getDocumentCode($con);
                 $data['loan_id'] = $obj->getLoanCode($con);
                 $data['area_id'] = $obj->getAreaId($con, $data['area']);
-                $data['sub_area_id'] = $obj->getSubAreaId($con, $data['sub_area'],$data['area_id']);
+                $data['sub_area_id'] = $obj->getSubAreaId($con, $data['sub_area'], $data['area_id']);
                 $data['loan_cat_id'] = $obj->getLoanCategoryId($con, $data['loan_category']);
                 $data['sub_categoryCheck'] = $obj->checkSubCategory($con, $data['sub_category']);
                 $data['group_name'] = $obj->getAreaGroup($con, $data['sub_area_id']) == $data['area_group'] ? $data['area_group'] : 'Invalid';
@@ -37,18 +37,23 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                 $data['cus_data'] = $checkCustomerData['cus_data'];
                 $data['cus_reg_id'] = $checkCustomerData['cus_reg_id'];
                 $data['scheme_id'] = $obj->getSchemeId($con, $data['scheme_name']);
+
                 $data['cus_status'] = '14';
+                if ($data['closed_status'] != '0') { //other than 0 means closed status is not empty in excel so need to change customer status to NOC
+                    $data['cus_status'] = '21'; //if then change the customer status to 21 for that request
+                }
 
                 $err_columns = $obj->handleError($data);
                 if (empty($err_columns)) {
-
                     $req_id = $obj->raiseRequest($con, $data, $userData);
                     $obj->verificationTables($con, $data, $userData, $req_id);
                     $obj->approvalTables($con, $req_id);
-                    $obj->acknowledgementTables($con,$data, $req_id,$userData);
+                    $obj->acknowledgementTables($con, $data, $req_id, $userData);
                     $obj->loanIssueTables($con, $data, $userData, $req_id);
 
-                    // echo $insertQry;
+                    if ($data['closed_status'] != '0') {
+                        $obj->closedTables($con, $data, $userData, $req_id);
+                    }
                 } else {
                     $errtxt = "Please Check the input given in Serial No: " . ($rowChange) . " on below. <br><br>";
                     $errtxt .= "<ul>";
@@ -56,7 +61,7 @@ if (in_array($_FILES["excelFile"]["type"], $allowedFileType)) {
                         $errtxt .= "<li>$columns</li>";
                     }
                     $errtxt .= "</ul><br>";
-                    $errtxt .= "Insertion completed till Seiral No: " . ($rowChange - 1);   
+                    $errtxt .= "Insertion completed till Seiral No: " . ($rowChange - 1);
                     echo $errtxt;
                     exit();
                 }

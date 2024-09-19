@@ -8,26 +8,35 @@ include '../ajaxconfig.php';
         <tr>
             <th width='50'>S.No</th>
             <th>Customer ID</th>
-            <th>Customer Name</th>            
+            <th>Customer Name</th>
             <th>Mobile Number</th>
         </tr>
     </thead>
     <tbody>
         <?php
-        if(isset($_POST['category'])){
-        $category = $_POST['category'];
-        if($category == '0'){ $category = "customer_name"; $category1 ="customer_name";}
-        if($category == '1'){ $category = "cus_id"; $category1 = 'cus_id';}
-        if($category == '2'){ $category = "mobile1"; $category1 = 'mobile2';}
+        if (isset($_POST['category'])) {
+            $category = $_POST['category'];
+            if ($category == '0') {
+                $category = "customer_name";
+                $category1 = "customer_name";
+            }
+            if ($category == '1') {
+                $category = "cus_id";
+                $category1 = 'cus_id';
+            }
+            if ($category == '2') {
+                $category = "mobile1";
+                $category1 = 'mobile2';
+            }
         }
-        if(isset($_POST['name'])){
-        $name = $_POST['name'];
+        if (isset($_POST['name'])) {
+            $name = $_POST['name'];
         }
-        if(isset($_POST['req_id'])){
-        $req_id = $_POST['req_id'];
+        if (isset($_POST['req_id'])) {
+            $req_id = $_POST['req_id'];
         }
 
-        $cusInfo = $connect->query("SELECT cus_id,customer_name,mobile1 FROM `customer_register` where ($category = '".strip_tags($name)."' or $category1 = '".strip_tags($name)."') && req_ref_id != '".strip_tags($req_id)."' order by cus_reg_id desc");
+        $cusInfo = $connect->query("SELECT cus_id,customer_name,mobile1 FROM `customer_register` where ($category = '" . strip_tags($name) . "' or $category1 = '" . strip_tags($name) . "') && req_ref_id != '" . strip_tags($req_id) . "' order by cus_reg_id desc");
 
         $i = 1;
         while ($cus = $cusInfo->fetch()) {
@@ -64,3 +73,8 @@ include '../ajaxconfig.php';
     //     });
     // });
 </script>
+<?php
+
+$con->close();
+$mysqli->close();
+$connect = null; ?>

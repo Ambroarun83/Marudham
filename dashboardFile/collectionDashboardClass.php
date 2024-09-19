@@ -11,16 +11,17 @@ class collectionClass
     {
         $response = array();
         $today = date('Y-m-d');
+        $month = (isset($_POST['month']) && $_POST['month'] != '') ? date('Y-m-01', strtotime($_POST['month'])) : date('Y-m-01');
         $sub_area_list = $_POST['sub_area_list'];
 
-        $total_paid = "SELECT COALESCE(sum(c.due_amt_track +  c.princ_amt_track + c.int_amt_track ),0) as paid from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where ( ( MONTH(coll_date)= MONTH('$today') && YEAR(coll_date)= YEAR('$today') ) || ( MONTH(trans_date)= MONTH('$today') && YEAR(trans_date)= YEAR('$today') ) ) ";
-        $total_penalty = "SELECT COALESCE(sum(c.penalty_track), 0) as penalty from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where ( ( MONTH(coll_date)= MONTH('$today') && YEAR(coll_date)= YEAR('$today') ) || ( MONTH(trans_date)= MONTH('$today') && YEAR(trans_date)= YEAR('$today') ) ) ";
-        $total_fine = "SELECT COALESCE(sum(c.coll_charge_track), 0) as fine from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where ( ( MONTH(coll_date)= MONTH('$today') && YEAR(coll_date)= YEAR('$today') ) || ( MONTH(trans_date)= MONTH('$today') && YEAR(trans_date)= YEAR('$today') ) ) ";
+        $total_paid = "SELECT COALESCE(sum(c.due_amt_track +  c.princ_amt_track + c.int_amt_track ),0) as paid from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where ( ( MONTH(coll_date)= MONTH('$month') && YEAR(coll_date)= YEAR('$month') ) || ( MONTH(trans_date)= MONTH('$month') && YEAR(trans_date)= YEAR('$month') ) ) ";
+        $total_penalty = "SELECT COALESCE(sum(c.penalty_track), 0) as penalty from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where ( ( MONTH(coll_date)= MONTH('$month') && YEAR(coll_date)= YEAR('$month') ) || ( MONTH(trans_date)= MONTH('$month') && YEAR(trans_date)= YEAR('$month') ) ) ";
+        $total_fine = "SELECT COALESCE(sum(c.coll_charge_track), 0) as fine from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where ( ( MONTH(coll_date)= MONTH('$month') && YEAR(coll_date)= YEAR('$month') ) || ( MONTH(trans_date)= MONTH('$month') && YEAR(trans_date)= YEAR('$month') ) ) ";
 
         $today_paid = "SELECT COALESCE(sum(c.due_amt_track +  c.princ_amt_track + c.int_amt_track ),0) as paid from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where date(c.coll_date) = '$today' AND ( DATE(c.coll_date) = '$today' || DATE(c.trans_date) = '$today' )";
         $today_penalty = "SELECT COALESCE(sum(c.penalty_track), 0) as penalty from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where date(c.coll_date) = '$today' AND ( DATE(c.coll_date) = '$today' || DATE(c.trans_date) = '$today' )";
         $today_fine = "SELECT COALESCE(sum(c.coll_charge_track), 0) as fine from `collection` c JOIN acknowlegement_customer_profile cp ON cp.req_id = c.req_id where date(c.coll_date) = '$today' AND ( DATE(c.coll_date) = '$today' || DATE(c.trans_date) = '$today' )";
-        
+
         if (!empty($sub_area_list)) {
             $total_paid .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END )";
             $total_penalty .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END )";
@@ -43,13 +44,13 @@ class collectionClass
         $today_paidQry = $con->query($today_paid);
         $today_penaltyQry = $con->query($today_penalty);
         $today_fineQry = $con->query($today_fine);
-        
-        $response['tot_col_paid'] = number_format($total_paidQry->fetch_assoc()['paid'],0,'',',');
-        $response['tot_col_pen'] = number_format($total_penaltyQry->fetch_assoc()['penalty'],0,'',',');
-        $response['tot_col_fine'] = number_format($total_fineQry->fetch_assoc()['fine'],0,'',',');
-        $response['today_col_paid'] = number_format($today_paidQry->fetch_assoc()['paid'],0,'',',');
-        $response['today_col_pen'] = number_format($today_penaltyQry->fetch_assoc()['penalty'],0,'',',');
-        $response['today_col_fine'] = number_format($today_fineQry->fetch_assoc()['fine'],0,'',',');
+
+        $response['tot_col_paid'] = number_format($total_paidQry->fetch_assoc()['paid'], 0, '', ',');
+        $response['tot_col_pen'] = number_format($total_penaltyQry->fetch_assoc()['penalty'], 0, '', ',');
+        $response['tot_col_fine'] = number_format($total_fineQry->fetch_assoc()['fine'], 0, '', ',');
+        $response['today_col_paid'] = number_format($today_paidQry->fetch_assoc()['paid'], 0, '', ',');
+        $response['today_col_pen'] = number_format($today_penaltyQry->fetch_assoc()['penalty'], 0, '', ',');
+        $response['today_col_fine'] = number_format($today_fineQry->fetch_assoc()['fine'], 0, '', ',');
 
         return $response;
     }
@@ -61,13 +62,13 @@ class collectionClass
         $sub_area_list = $_POST['sub_area_list'];
         $pid = $_POST['pid'];
 
-        $split_arr = ['tot_col_paid'=>'Total Paid Split','today_col_paid'=>'Today Paid Split','tot_col_pen'=>'Total Penalty Split','today_col_pen'=>'Today Penalty Split','tot_col_fine'=>'Total Fine Split','today_col_fine'=>'Today Fine Split'];
+        $split_arr = ['tot_col_paid' => 'Total Paid Split', 'today_col_paid' => 'Today Paid Split', 'tot_col_pen' => 'Total Penalty Split', 'today_col_pen' => 'Today Penalty Split', 'tot_col_fine' => 'Total Fine Split', 'today_col_fine' => 'Today Fine Split'];
 
-        if($pid == 'today_col_paid' || $pid == 'tot_col_paid'){
+        if ($pid == 'today_col_paid' || $pid == 'tot_col_paid') {
             $fields = "c.due_amt_track +  c.princ_amt_track + c.int_amt_track";
-        }else if($pid == 'today_col_pen' || $pid == 'tot_col_pen'){
+        } else if ($pid == 'today_col_pen' || $pid == 'tot_col_pen') {
             $fields = "c.penalty_track";
-        }else if($pid == 'today_col_fine' || $pid == 'tot_col_fine'){
+        } else if ($pid == 'today_col_fine' || $pid == 'tot_col_fine') {
             $fields = "c.coll_charge_track";
         }
 
