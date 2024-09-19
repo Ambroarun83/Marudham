@@ -83,7 +83,8 @@ $query = "SELECT
     lc.maturity_month,
     cs.created_date,
     cs.closed_sts,
-    cs.consider_level
+    cs.consider_level,
+    coll_most_frequent.coll_location
 FROM 
     in_issue ii
 JOIN 
@@ -98,6 +99,22 @@ LEFT JOIN
     loan_category_creation lcc ON lcc.loan_category_creation_id = lc.loan_category
 LEFT JOIN 
     closed_status cs ON ii.req_id = cs.req_id
+LEFT JOIN (
+    SELECT 
+        req_id, 
+        coll_location
+    FROM (
+        SELECT 
+            req_id, 
+            coll_location, 
+            ROW_NUMBER() OVER (PARTITION BY req_id ORDER BY COUNT(coll_location) DESC) AS row_num
+        FROM 
+            collection
+        GROUP BY 
+            req_id, coll_location
+    ) AS ranked_coll
+    WHERE row_num = 1
+) AS coll_most_frequent ON ii.req_id = coll_most_frequent.req_id
 WHERE 
     ii.cus_status >= 20 
     AND cp.area_confirm_subarea IN ($sub_area_list) $where ";
@@ -133,10 +150,10 @@ $statement->execute();
 
 $number_filter_row = $statement->rowCount();
 
-$statement = $connect->prepare($query . $query1);
-
-$statement->execute();
-
+if ($_POST['length'] != -1) {
+    $statement = $connect->prepare($query . $query1);
+    $statement->execute();
+}
 $result = $statement->fetchAll();
 
 $data = array();
@@ -157,17 +174,8 @@ foreach ($result as $row) {
     $sub_array[] = date('d-m-Y', strtotime($row['maturity_month']));
     $sub_array[] = date('d-m-Y', strtotime($row['created_date']));
 
-    $qry = $con->query("SELECT coll_location FROM collection where req_id = '" . $row['req_id'] . "' GROUP BY coll_location ORDER BY COUNT(coll_location) DESC LIMIT 1");
-    if ($qry->num_rows > 0) {
-        $coll_format = $qry->fetch_assoc()['coll_location'];
-        if ($coll_format == '1') {
-            $sub_array[] = 'By Self';
-        } elseif ($coll_format == '2') {
-            $sub_array[] = 'On Spot';
-        }
-    } else {
-        $sub_array[] = '';
-    }
+    $coll_location_arr = ['1' => 'By Self', '2' => 'On Spot'];
+    $sub_array[] = $coll_location_arr[$row['coll_location']];
 
     $sub_array[] = $closed_sts_arr[$row['closed_sts']];
     $sub_array[] = $closed_lvl_arr[$row['consider_level']] ?? '';
