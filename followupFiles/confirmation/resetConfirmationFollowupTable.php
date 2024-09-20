@@ -105,6 +105,7 @@ WHERE
 $result = $con->query($sql);
 $data = [];
 $sno = $start + 1;
+$status_arr = [1 => 'Completed', 2 => 'Unavailable', 3 => 'Reconfirmation'];
 
 while ($row = $result->fetch_assoc()) {
     $req_id = $row['req_id'];
@@ -112,7 +113,6 @@ while ($row = $result->fetch_assoc()) {
     $rst = $qry->fetch_assoc()['remove_status'] ?? null;
     if (mysqli_num_rows($qry) == 0 || $rst != 1) { // show below contents only if confirmation of the request id is not removed from table already
         $statusQry = $con->query("SELECT status FROM confirmation_followup WHERE req_id = '" . $req_id . "' ORDER BY created_date DESC limit 1");
-        $status = $statusQry->num_rows > 0 ? $statusQry->fetch_assoc()['status'] : 'In Confirmation';
 
         $action = "<div class='dropdown'><button class='btn btn-outline-secondary' onclick='event.preventDefault();'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>
                         <a class='conf-chart' data-cusid='" . $row['cus_id'] . "' data-reqid='" . $row['req_id'] . "' data-toggle='modal' data-target='#confChartModal'><span>Confirmation Chart</span></a>
@@ -133,6 +133,7 @@ while ($row = $result->fetch_assoc()) {
                 $actionEdit .= "<a class='conf-edit' data-cusid='" . $row['cus_id'] . "' data-cusname='" . $row['cus_name'] . "' data-reqid='" . $row['req_id'] . "' data-toggle='modal' data-target='#addConfimation'><span>Confirmation</span></a>";
             }
         } else {
+            $status = NULL;
             $actionEdit .= "<a class='conf-edit' data-cusid='" . $row['cus_id'] . "' data-cusname='" . $row['cus_name'] . "' data-reqid='" . $row['req_id'] . "' data-toggle='modal' data-target='#addConfimation'><span>Confirmation</span></a>";
         }
         $actionEdit .= "</div></div>";

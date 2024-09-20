@@ -117,9 +117,9 @@ foreach ($result as $row) {
     // When in_issue and closed status count is equal then move to noc button will be shown. //if multiple request completed the collection means then complete closed for one time only so we check whether the request closed submit or not.. Move to Noc button wil not be show until all closed status submit.
     $ii_cus_id          = $row['ii_cus_id'];
 
-    $ii_count = $mysqli->query("SELECT * FROM `in_issue` WHERE `cus_status` = '20' && `cus_id`='" . $ii_cus_id . "' ");
+    $ii_count = $mysqli->query("SELECT id FROM `in_issue` WHERE `cus_status` = '20' && `cus_id`='" . $ii_cus_id . "' ");
     $ii_cnt = mysqli_num_rows($ii_count);
-    $closed_sts_count = $mysqli->query("SELECT * FROM `closed_status` WHERE `cus_sts` ='20' && `cus_id`='" . $ii_cus_id . "'");
+    $closed_sts_count = $mysqli->query("SELECT id FROM `closed_status` WHERE `cus_sts` ='20' && `cus_id`='" . $ii_cus_id . "'");
     $close_cnt = mysqli_num_rows($closed_sts_count);
 
     // if($ii_cnt == $close_cnt){// if all request present in closed loan list are closed, then only it will allow to move that customer to closed
@@ -140,7 +140,7 @@ function count_all_data($connect)
 {
     $query     = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
     acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and ii.cus_status = 14 GROUP BY ii.cus_id ";
+    where ii.status = 0 and ii.cus_status = 20 GROUP BY ii.cus_id ";
     $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();
