@@ -1071,3 +1071,7 @@ function checkStatusOfCustomer($response, $loan_arr, $cus_id, $con)
 
 
 echo json_encode($response);
+
+$con->close();
+$mysqli->close();
+$connect = NULL;

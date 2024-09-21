@@ -25,23 +25,7 @@ if ($userid != 1) {
     $sub_area_list = array();
     $sub_area_list = implode(',', $sub_area_ids);
 }
-$columns = array(
-    'rc.req_id',
-    'rc.updated_date',
-    'rc.cus_id',
-    'rc.cus_name',
-    'alc.area_name',
-    'salc.sub_area_name',
-    'lcc.loan_category_creation_name',
-    'rc.sub_category',
-    'ac.ag_name',
-    'bc.branch_name',
-    'agm.group_name',
-    'alm.line_name',
-    'rc.req_id',
-    'rc.req_id',
-    'rc.req_id'
-);
+
 $stage_arr = [
     0 => 'Request',
     1 => 'Verification',
@@ -103,8 +87,7 @@ UNION ALL
     AND rc.cus_status NOT IN (4, 5, 6, 7, 8, 9, 10, 11) 
     AND rc.cus_status < 14 
     AND cp.area_confirm_subarea IN ($sub_area_list) $search
-)
-";
+)";
 
 
 // Apply ordering if set
@@ -177,56 +160,6 @@ foreach ($result as $row) {
     $sno = $sno + 1;
 }
 
-
-// $statement = $connect->prepare($sql2 . $query1);
-
-// $statement->execute();
-
-// $result = $statement->fetchAll();
-
-
-// foreach ($result as $row) {
-//     $sub_array   = array();
-
-//     $sub_array[] = $sno;
-//     $sub_array[] = date('d-m-Y', strtotime($row['updated_date']));
-//     $sub_array[] = $row['cus_id'];
-//     $sub_array[] = $row['cus_name'];
-//     $sub_array[] = $row['area_name'];
-//     $sub_array[] = $row['sub_area_name'];
-//     $sub_array[] = $row['loan_category_creation_name'];
-//     $sub_array[] = $row['sub_category'];
-//     $sub_array[] = $row['ag_name'];
-//     $sub_array[] = $row['branch_name'];
-//     $sub_array[] = $row['group_name'];
-//     $sub_array[] = $row['line_name'];
-
-//     $action = "<div class='dropdown'><button class='btn btn-outline-secondary'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'> ";
-//     $action .= "<a class='loan-follow-chart' data-cusid='" . $row['cus_id'] . "' data-toggle='modal' data-target='#loanFollowChartModal'><span>Loan Followup Chart</span></a>
-//                         <a class='personal-info' data-toggle='modal' data-target='#personalInfoModal' data-cusid='" . $row['cus_id'] . "'><span>Personal Info</span></a>
-//                         <a class='cust-profile' data-reqid='" . $row['req_id'] . "' data-cusid='" . $row['cus_id'] . "'><span>Customer Profile</span></a>
-//                         <a class='loan-history' data-reqid='" . $row['req_id'] . "' data-cusid='" . $row['cus_id'] . "'><span>Loan History</span></a>
-//                         <a class='doc-history' data-reqid='" . $row['req_id'] . "' data-cusid='" . $row['cus_id'] . "'><span>Document History</span></a>";
-//     $action .= "</div></div>";
-//     $sub_array[] = $action;
-
-//     //for Loan Followup edit
-//     $sub_array[] = "<input type='button' class='btn btn-primary loan-follow-edit' data-cusid='" . $row['cus_id'] . "' data-stage='" . $stage_arr[$row['cus_status']] . "' data-toggle='modal' data-target='#addLoanFollow' value='Follow' />";
-
-//     $qry = $con->query("SELECT follow_date FROM loan_followup WHERE cus_id = '" . $row['cus_id'] . "' ORDER BY created_date DESC limit 1");
-//     //take last promotion follow up date inserted from new promotion table
-//     if ($qry->num_rows > 0) {
-//         $fdate = $qry->fetch_assoc()['follow_date'];
-//         $sub_array[] = date('d-m-Y', strtotime($fdate));
-//     } else {
-//         $sub_array[] = '';
-//     }
-
-//     $data[]      = $sub_array;
-//     $sno = $sno + 1;
-// }
-
-
 function count_all_data($connect)
 {
     $query     = "SELECT * FROM request_creation";
@@ -243,3 +176,7 @@ $output = array(
 );
 
 echo json_encode($output);
+
+$con->close();
+$mysqli->close();
+$connect = NULL;
