@@ -66,7 +66,7 @@ if ($payable > 0) {
         if ($sql->num_rows > 0) {
             $row1 = $sql->fetch_assoc();
             $hint = $row1['hint'];
-            $comm_err = ($row1['comm_err'] == '1') ? 'Yes' : (($row1['comm_err'] == '2') ? 'No' : 'Clear');
+            $comm_err = ($row1['comm_err'] == '1') ? 'Error' : (($row1['comm_err'] == '2') ? 'Clear' : '');
             $comm_date = ($row1['comm_date'] != '0000-00-00') ? date('d-m-Y', strtotime($row1['comm_date'])) : '';
         }
 
