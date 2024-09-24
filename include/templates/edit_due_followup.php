@@ -56,7 +56,7 @@
 								<th>Action</th>
 								<th>Last Paid Date</th>
 								<th>Hint</th>
-								<th>Communication Error</th>
+								<th>Communication Status</th>
 								<th>Commitment Date</th>
 							</tr>
 						</thead>

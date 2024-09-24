@@ -336,14 +336,13 @@ if($idupd>0)
 									<span class="text-danger" id='comm_hintCheck' style="display: none;">Please Enter Hint</span>
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" >
-									<label for="comm_err">Communication Error</label><span class="required">&nbsp;*</span>
+									<label for="comm_err">Communication Status</label><span class="required">&nbsp;*</span>
 									<select name="comm_err" id="comm_err" class='form-control' tabindex="12" >
-										<option value="">Select Communication Error</option>
-										<option value="1">Yes</option>
-										<option value="2">No</option>
-										<option value="3">Clear</option>
+										<option value="">Select Communication Status</option>
+										<option value="1">Error</option>
+										<option value="2">Clear</option>
 									</select>
-									<span class="text-danger" id='comm_errCheck' style="display: none;">Please Enter Communication Error</span>
+									<span class="text-danger" id='comm_errCheck' style="display: none;">Please Enter Communication Status</span>
 							</div>
 
 						</div>

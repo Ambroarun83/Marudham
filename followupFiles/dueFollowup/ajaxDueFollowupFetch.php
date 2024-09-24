@@ -1,33 +1,6 @@
 <?php
 include('../../ajaxconfig.php');
 
-// if (isset($_GET['userid'])) {
-//     $user_id = $_GET['userid'];
-// }
-
-// if ($user_id != 1) {
-
-//     $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
-//     while ($rowuser = $userQry->fetch_assoc()) {
-//         $group_id = $rowuser['group_id'];
-//         $line_id = $rowuser['line_id'];
-//     }
-
-//     $line_id = explode(',', $line_id);
-//     $sub_area_list = array();
-//     foreach ($line_id as $line) {
-//         $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-//         $row_sub = $lineQry->fetch_assoc();
-//         $sub_area_list[] = $row_sub['sub_area_id'];
-//     }
-//     $sub_area_ids = array();
-//     foreach ($sub_area_list as $subarray) {
-//         $sub_area_ids = array_merge($sub_area_ids, explode(',', $subarray));
-//     }
-//     $sub_area_list = array();
-//     $sub_area_list = implode(',', $sub_area_ids);
-// }
-
 $data = [];
 $filter = '';
 if (isset($_GET['cus_id']) && isset($_GET['req_id'])  && isset($_GET['payable'])) {
@@ -93,7 +66,7 @@ if ($payable > 0) {
         if ($sql->num_rows > 0) {
             $row1 = $sql->fetch_assoc();
             $hint = $row1['hint'];
-            $comm_err = ($row1['comm_err'] == '1') ? 'Yes' : (($row1['comm_err'] == '2') ? 'No' : 'Clear');
+            $comm_err = ($row1['comm_err'] == '1') ? 'Error' : (($row1['comm_err'] == '2') ? 'Clear' : '');
             $comm_date = ($row1['comm_date'] != '0000-00-00') ? date('d-m-Y', strtotime($row1['comm_date'])) : '';
         }
 
@@ -117,3 +90,7 @@ if ($payable > 0) {
     }
 }
 echo json_encode($data);
+
+$con->close();
+$mysqli->close();
+$connect = NULL;

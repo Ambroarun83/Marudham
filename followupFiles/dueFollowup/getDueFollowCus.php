@@ -42,7 +42,7 @@ $customerIDs = fetchCustomerIDs($con, $start, $length, $searchValue, $sub_area_l
 $data = [];
 foreach ($customerIDs as $cus_id) {
     // Process the customer ID
-    $statusResponse = file_get_contents(HOSTPATH."collectionFile/resetCustomerStatus.php?cus_id=$cus_id");
+    $statusResponse = file_get_contents(HOSTPATH . "collectionFile/resetCustomerStatus.php?cus_id=$cus_id");
     // echo $statusResponse;//in case of data not fetching, uncommend this to see the error in calling file
     $statusData = json_decode($statusResponse, true);
     $statusData = getfilteredCusData($statusData);
@@ -56,7 +56,7 @@ foreach ($customerIDs as $cus_id) {
 
     $payable = $statusData['payable'];
 
-    $finalResponse = file_get_contents(HOSTPATH."followupFiles/dueFollowup/ajaxDueFollowupFetch.php?cus_id=$cus_id&req_id=$req_id&follow_cus_sts=$follow_cus_sts&payable=$payable&userid=$user_id");
+    $finalResponse = file_get_contents(HOSTPATH . "followupFiles/dueFollowup/ajaxDueFollowupFetch.php?cus_id=$cus_id&req_id=$req_id&follow_cus_sts=$follow_cus_sts&payable=$payable&userid=$user_id");
     // echo $finalResponse;//in case of data not fetching, uncommend this to see the error in calling file
     $finalData = json_decode($finalResponse, true);
 
@@ -91,6 +91,7 @@ echo json_encode([
 function getfilteredCusData($statusData)
 {
     $keys_to_filter = ['follow_cus_sts', 'req_id', 'payable'];
+    $result = array();
     foreach ($keys_to_filter as $key) {
         if (isset($statusData[$key])) {
             // Flatten the array if it contains only one element
@@ -106,7 +107,12 @@ function fetchCustomerIDs($con, $start, $length, $searchValue, $sub_area_list)
     // For example:
     // $query = "SELECT cus_id FROM customers WHERE ... LIMIT $start, $length";
     // Execute the query and return the result
-    $query = $con->query("SELECT cp.cus_id as cp_cus_id FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and (ii.cus_id LIKE '$searchValue%' or cp.mobile1 LIKE '$searchValue%' ) and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id LIMIT $start, $length"); // 14 and 17 means collection entries, 17 removed from issue list
+    $columns = ['cp.id', 'cp.cus_id', 'cp.cus_name'];
+    $orderDir = $_POST['order'][0]['dir'];
+    $order = $columns[$_POST['order'][0]['column']] ? "ORDER BY " . $columns[$_POST['order'][0]['column']] . " $orderDir" : "";
+    $search = $searchValue != '' ? "and (cp.cus_name LIKE '%$searchValue%' or ii.cus_id LIKE '$searchValue%' or cp.mobile1 LIKE '$searchValue%' )" : '';
+
+    $query = $con->query("SELECT cp.cus_id as cp_cus_id FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) $search and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id $order LIMIT $start, $length"); // 14 and 17 means collection entries, 17 removed from issue list
     $response = array();
     while ($row = $query->fetch_assoc()) {
         array_push($response, $row['cp_cus_id']);
@@ -131,11 +137,16 @@ function getFilteredRecords($con, $data, $searchValue, $sub_area_list)
     // For example:
     // $query = "SELECT COUNT(*) FROM customers WHERE ... LIKE '%$searchValue%'";
     // Execute the query and return the result
+    $search = $searchValue != '' ? "and (cp.cus_name LIKE '%$searchValue%' or ii.cus_id LIKE '$searchValue%' or cp.mobile1 LIKE '$searchValue%' )" : '';
     if (count($data) > 0) {
-        $query = $con->query("SELECT COUNT(*) as total FROM (SELECT cp.cus_id as cp_cus_id FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and (ii.cus_id LIKE '$searchValue%' or cp.mobile1 LIKE '$searchValue%' ) and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id) as subquery ");
+        $query = $con->query("SELECT COUNT(*) as total FROM (SELECT cp.cus_id as cp_cus_id FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) $search and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id) as subquery ");
         $total = $query->fetch_assoc()['total'];
         return $total;
     } else {
         return 0;
     }
 }
+
+$con->close();
+$mysqli->close();
+$connect = NULL;

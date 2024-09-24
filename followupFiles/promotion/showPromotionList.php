@@ -46,34 +46,80 @@ if ($_POST['length'] != -1) {
 if ($type == 'existing') {
     //only closed customers who dont have any loans in current.
 
-    $sql = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cp.area_confirm_subarea IN ($sub_area_list) and cs.closed_sts = 1 $search $order $limit");
-    $num_qry = $con->query("SELECT cs.cus_id,cs.consider_level,cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id WHERE cs.cus_sts >= '20' and cp.area_confirm_subarea IN ($sub_area_list) and cs.closed_sts = 1 $search $order");
+    // Simplified main query to fetch closed customers without loans
+    $sql = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date 
+        FROM closed_status cs
+        JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id
+        LEFT JOIN (
+            SELECT cus_id 
+            FROM request_creation 
+            WHERE (cus_status NOT BETWEEN 4 AND 9) 
+            AND cus_status < 20
+            ORDER BY req_id DESC
+        ) rc ON cs.cus_id = rc.cus_id
+        WHERE cs.cus_sts >= '20'  AND cp.area_confirm_subarea IN ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL $search  $order  $limit ");
+
+    // Count query for filtering (use the same logic but without limit)
+    $num_qry = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date 
+        FROM closed_status cs
+        JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id
+        LEFT JOIN (
+            SELECT cus_id 
+            FROM request_creation 
+            WHERE (cus_status NOT BETWEEN 4 AND 9) 
+            AND cus_status < 20
+            ORDER BY req_id DESC
+        ) rc ON cs.cus_id = rc.cus_id
+        WHERE cs.cus_sts >= '20'  AND cp.area_confirm_subarea IN ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL $search  $order ");
+
     $number_filter_row = $num_qry->num_rows;
 
+    $arr = [];
     while ($row = $sql->fetch_assoc()) {
-
         $last_closed_date = date('Y-m-d', strtotime($row['updated_date']));
-
-        $check_req = $con->query("SELECT req_id from request_creation where (cus_status NOT between 4 and 9) and cus_status < 20 and cus_id = '" . $row['cus_id'] . "' ORDER By req_id DESC LIMIT 1 ");
-        if ($check_req->num_rows == 0) {
-            $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['consider_level'], 'last_updated_date' => $last_closed_date);
-        }
+        $arr[] = array(
+            'cus_id' => $row['cus_id'],
+            'sub_status' => $row['consider_level'],
+            'last_updated_date' => $last_closed_date
+        );
     }
 } else {
 
-    $sql = $con->query("SELECT req.cus_id, req.cus_status, req.updated_date FROM request_creation req LEFT JOIN customer_profile cp ON req.req_id = cp.req_id WHERE req.cus_status BETWEEN 4 AND 9 AND ( req.sub_area IN ($sub_area_list) OR cp.area_confirm_subarea IN ($sub_area_list) ) $search GROUP BY req.cus_id $order $limit;");
-    $num_qry = $con->query("SELECT req.cus_id, req.cus_status, req.updated_date FROM request_creation req LEFT JOIN customer_profile cp ON req.req_id = cp.req_id WHERE req.cus_status BETWEEN 4 AND 9 AND ( req.sub_area IN ($sub_area_list) OR cp.area_confirm_subarea IN ($sub_area_list) ) $search GROUP BY req.cus_id $order;");
+    // Main query to fetch customers with specific status and filter those without recent loan requests
+    $sql = $con->query("SELECT req.cus_id, req.cus_status, req.updated_date 
+        FROM request_creation req
+        LEFT JOIN customer_profile cp ON req.req_id = cp.req_id
+        LEFT JOIN (
+            SELECT cus_id 
+            FROM request_creation 
+            WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20
+            ORDER BY req_id DESC
+        ) rc ON req.cus_id = rc.cus_id
+        WHERE req.cus_status BETWEEN 4 AND 9  AND (req.sub_area IN ($sub_area_list) OR cp.area_confirm_subarea IN ($sub_area_list)) AND rc.cus_id IS NULL $search GROUP BY req.cus_id $order $limit ");
+
+    // Count query for filtered rows
+    $num_qry = $con->query("SELECT req.cus_id, req.cus_status, req.updated_date 
+        FROM request_creation req
+        LEFT JOIN customer_profile cp ON req.req_id = cp.req_id
+        LEFT JOIN (
+            SELECT cus_id 
+            FROM request_creation 
+            WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20
+            ORDER BY req_id DESC
+        ) rc ON req.cus_id = rc.cus_id
+        WHERE req.cus_status BETWEEN 4 AND 9 AND (req.sub_area IN ($sub_area_list) OR cp.area_confirm_subarea IN ($sub_area_list)) AND rc.cus_id IS NULL $search GROUP BY req.cus_id  $order");
+
     $number_filter_row = $num_qry->num_rows;
 
+    // Process results
+    $arr = [];
     while ($row = $sql->fetch_assoc()) {
-
         $last_updated_date = date('Y-m-d', strtotime($row['updated_date']));
-        $last_closed_date = '';
-
-        $check_req = $con->query("SELECT req_id from request_creation where (cus_status NOT between 4 and 9) and cus_status < 20 and cus_id = '" . $row['cus_id'] . "' ORDER By req_id DESC LIMIT 1 ");
-        if ($check_req->num_rows == 0) {
-            $arr[] = array('cus_id' => $row['cus_id'], 'sub_status' => $row['cus_status'], 'last_updated_date' => $last_updated_date);
-        }
+        $arr[] = array(
+            'cus_id' => $row['cus_id'],
+            'sub_status' => $row['cus_status'],
+            'last_updated_date' => $last_updated_date
+        );
     }
 }
 
