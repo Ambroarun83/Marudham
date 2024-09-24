@@ -729,7 +729,7 @@ input[type="radio"]{
         <div class="modal-content" style="background-color: white">
             <div class="modal-header">
                 <h5 class="modal-title" id="myLargeModalLabel"> Name Creation </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNameDetailDropdown()">
+                <button type="button" class="close name-model-close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -758,6 +758,7 @@ input[type="radio"]{
                     <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-12">
                         <div class="form-group">
                             <label class="label">Name</label><span class="text-danger">&nbsp;*</span>
+                            <input type="hidden" name="opt_for" id="opt_for">
                             <input type="hidden" name="name_id" id="name_id">
                             <input type="text" name="name_" id="name_" class="form-control" placeholder="Enter Name">
                             <span class="text-danger" id="name_Check">Enter Name</span>
@@ -809,7 +810,7 @@ input[type="radio"]{
             </div>
 
 			<div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id='' data-dismiss="modal" onclick="resetNameDetailDropdown()">Close</button>
+                <button type="button" class="btn btn-secondary name-model-close" id='' data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

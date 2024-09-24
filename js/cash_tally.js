@@ -217,35 +217,47 @@ $(document).ready(function () {
             $('#blncSheetDiv').empty()
             $('#IDE_Div').show()
 
-            // to get name detail creation table 
-            $.ajax({
-                url: 'accountsFile/cashtally/getNameBasedDetails.php',
-                data: {},
-                dataType: 'json',
-                type: 'post',
-                cache: false,
-                success: function (response) {
-                    $('#IDE_name_list').empty();
-                    $('#IDE_name_list').append("<option value=''>Select Name</option>");
-                    $.each(response, function (index, item) {
-                        $("#IDE_name_list").append("<option value='" + item['name_id'] + "'>" + item['name'] + "</option>");
-                    });
+            $('#IDE_type').off().change(function () {
+                let IDE_type_arr = { 1: 'inv', 2: 'dep', 3: 'el' };
+                let IDE_type = $(this).val();
+                let opt_for = IDE_type_arr[IDE_type];
+                $("#opt_for").val(opt_for);
 
-                    $('#IDE_name_list').change(function () {
-                        var name_id = $(this).val();// get the name table id
+                // to get name detail creation table 
+                $.ajax({
+                    url: 'accountsFile/cashtally/getNameBasedDetails.php',
+                    data: { opt_for },
+                    dataType: 'json',
+                    type: 'post',
+                    cache: false,
+                    success: function (response) {
+                        $('#IDE_name_list').empty();
+                        $('#IDE_name_list').append("<option value=''>Select Name</option>");
                         $.each(response, function (index, item) {
-                            if (name_id == item['name_id']) {
-                                $('#IDE_name_area').val(item['area']);
-                            }
+                            $("#IDE_name_list").append("<option value='" + item['name_id'] + "'>" + item['name'] + "</option>");
+                        });
+
+                        $('#IDE_name_list').off().change(function () {
+                            var name_id = $(this).val();// get the name table id
+                            $.each(response, function (index, item) {
+                                if (name_id == item['name_id']) {
+                                    $('#IDE_name_area').val(item['area']);
+                                }
+                            })
                         })
-                    })
-                }
+                    }
+                })
             })
         } else if (sheet_type == 7) {
             $('#blncSheetDiv').empty()
             $('#ag_typeDiv').show()
 
         }
+    })
+
+    $('.name-model-close').click(function () {
+        let opt_for = $('#opt_for').val();
+        resetNameDetailDropdown(opt_for);
     })
 
     $('#exp_view_type').change(function () {
@@ -440,7 +452,7 @@ function getClosingBalance() {
         dataType: 'json',
         cache: false,
         success: function (response) {
-            var closing = parseInt(response[0]['closing_balance']) + parseInt(opening_balance==''?0:opening_balance);
+            var closing = parseInt(response[0]['closing_balance']) + parseInt(opening_balance == '' ? 0 : opening_balance);
             $('#closing_balance').text(closing)
             $('#hand_closing').text(response[0]['hand_closing'])
             var i = 0;
@@ -1877,7 +1889,7 @@ function getBankExchangeInputs() {
 
             $('#to_bank_bex').empty();
             $('#to_bank_bex').append("<option value=''>Select Bank Name</option>");
-            for (var i = 0; i < response.length; i++) {
+            for (var i = 1; i < response.length; i++) {
                 $('#to_bank_bex').append("<option value='" + response[i]['to_bank_id'] + "'>" + response[i]['to_bank_name'] + "</option>");
             }
 
@@ -1885,7 +1897,7 @@ function getBankExchangeInputs() {
             $('#to_bank_bex').change(function () {
                 var to_bank_id = $(this).val();
                 if (to_bank_id != '') {
-                    for (var i = 0; i < response.length; i++) {
+                    for (var i = 1; i < response.length; i++) {
                         if (to_bank_id == response[i]['to_bank_id']) {
                             $('#user_id_bex').val(response[i]['bank_user_id'])
                             $('#user_name_bex').val(response[i]['bank_user_name'])
@@ -2908,7 +2920,7 @@ function getCHinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -2949,7 +2961,7 @@ function getCHinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
 
     $('#submit_hinv').click(function () {
         if (hinvvalidation() == 0) {
@@ -2996,7 +3008,7 @@ function getDHinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3037,7 +3049,7 @@ function getDHinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
 
     $('#submit_hinv').click(function () {
         if (hinvvalidation() == 0) {
@@ -3102,7 +3114,7 @@ function getCBinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3150,7 +3162,7 @@ function getCBinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
     getBinvestRefcode();//to get the reference code for bank investment
 
     $('#submit_binv').click(function () {
@@ -3207,7 +3219,7 @@ function getDBinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3255,7 +3267,7 @@ function getDBinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
     getBinvestRefcode();// to get ref code
 
     $('#submit_binv').click(function () {
@@ -3332,7 +3344,7 @@ function getCHdepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3373,7 +3385,7 @@ function getCHdepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
 
     $('#submit_hdep').click(function () {
         if (hdepvalidation() == 0) {
@@ -3419,7 +3431,7 @@ function getDHdepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3460,7 +3472,7 @@ function getDHdepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
 
     $('#submit_hdep').click(function () {
         if (hdepvalidation() == 0) {
@@ -3523,7 +3535,7 @@ function getCBDepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3571,7 +3583,7 @@ function getCBDepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
     getBdepositRefcode();//to get the reference code for bank Deposit
 
     $('#submit_bdeposit').click(function () {
@@ -3628,7 +3640,7 @@ function getDBDepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3676,7 +3688,7 @@ function getDBDepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
     getBdepositRefcode();// to get ref code
 
     $('#submit_bdeposit').click(function () {
@@ -3752,7 +3764,7 @@ function getCHelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3793,7 +3805,7 @@ function getCHelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
 
     $('#submit_hel').click(function () {
         if (helvalidation() == 0) {
@@ -3839,7 +3851,7 @@ function getDHelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3880,7 +3892,7 @@ function getDHelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
 
     $('#submit_hel').click(function () {
         if (helvalidation() == 0) {
@@ -3944,7 +3956,7 @@ function getCBelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3992,7 +4004,7 @@ function getCBelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
     getBelRefcode();//to get the reference code for bank Deposit
 
     $('#submit_bel').click(function () {
@@ -4049,7 +4061,7 @@ function getDBelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -4097,7 +4109,7 @@ function getDBelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
     getBelRefcode();// to get ref code
 
     $('#submit_bel').click(function () {
@@ -4171,11 +4183,12 @@ function getBelRefcode() {
         var name_ = $("#name_").val();
         var area_ = $("#area_").val();
         var ident_ = $("#ident_").val();
+        var opt_for = $("#opt_for").val();
         if (name_ != "" && area_ != '' && ident_ != '') {
             $.ajax({
                 url: 'accountsFile/cashtally/nameDetailModal/ajaxInsertNameDetail.php',
                 type: 'POST',
-                data: { "name": name_, "name_id": name_id, "area": area_, "ident": ident_ },
+                data: { "name": name_, "name_id": name_id, "area": area_, "ident": ident_, "opt_for": opt_for },
                 cache: false,
                 success: function (response) {
                     var insresult = response.includes("Exists");
@@ -4191,7 +4204,7 @@ function getBelRefcode() {
                             $('#nameUpdateOk').fadeOut('fast');
                         }, 2000);
                         $("#coursecategoryTable").remove();
-                        resetNameDetailTable();
+                        resetNameDetailTable(opt_for);
                         $("#name_").val('');
                         $("#area_").val('');
                         $("#ident_").val('');
@@ -4203,7 +4216,7 @@ function getBelRefcode() {
                             $('#nameInsertOk').fadeOut('fast');
                         }, 2000);
                         $("#coursecategoryTable").remove();
-                        resetNameDetailTable();
+                        resetNameDetailTable(opt_for);
                         $("#name_").val('');
                         $("#area_").val('');
                         $("#ident_").val('');
@@ -4219,10 +4232,11 @@ function getBelRefcode() {
         }
     });
 
-    function resetNameDetailDropdown() {
+    function resetNameDetailDropdown(opt_for) {
+        $("#opt_for").val(opt_for);
         $.ajax({
             url: 'accountsFile/cashtally/nameDetailModal/resetNameDetailDropdown.php',
-            data: {},
+            data: { opt_for },
             dataType: 'json',
             type: 'POST',
             cache: false,
@@ -4264,11 +4278,11 @@ function getBelRefcode() {
         $("#name_Check,#area_Check,#ident_Check").hide();
     }
 
-    function resetNameDetailTable() {
+    function resetNameDetailTable(opt_for) {
         $.ajax({
             url: 'accountsFile/cashtally/nameDetailModal/ajaxResetNameDetailTable.php',
             type: 'POST',
-            data: {},
+            data: { opt_for },
             cache: false,
             success: function (html) {
                 $("#updateNameDetailDiv").empty();
