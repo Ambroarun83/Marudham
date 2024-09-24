@@ -1027,7 +1027,7 @@ function getBankDepositDetails() {
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
             <div class="form-group">
                 <label for="amt_bdep">Amount</label>
-                <input type="number" id="amt_bdep" name="amt_bdep" class="form-control" placeholder="Please Enter Amount">
+                <input type="number" id="amt_bdep" name="amt_bdep" class="form-control" placeholder="Please Enter Amount" onkeydown="validateHandCash(this)">
                 <span class="text-danger" id='amt_bdepCheck' style="display:none">Please Enter Amount</span>
             </div>
         </div>
@@ -1585,7 +1585,7 @@ function getHandExchangeInputs() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
         <div class="form-group">
             <label for="amt_hed">Amount</label>
-            <input type="number" id="amt_hed" name="amt_hed" class="form-control" placeholder="Enter Amount">
+            <input type="number" id="amt_hed" name="amt_hed" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
             <span class="text-danger" id='amt_hedCheck' style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -2497,7 +2497,7 @@ function hexpenseModalBtnClick() {
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
                         <div class="form-group">
                             <label for="amt_hexp">Amount</label><span class='text-danger'>&nbsp;*</span>
-                            <input type="number" id="amt_hexp" name="amt_hexp" class="form-control" placeholder="Enter Amount">
+                            <input type="number" id="amt_hexp" name="amt_hexp" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
                             <span id='amt_hexpCheck' class="text-danger" style="display:none">Please Enter Amount</span>
                         </div>
                     </div>
@@ -3033,7 +3033,7 @@ function getDHinvDetails() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
         <div class="form-group">
             <label for="amt_hinv">Amount</label><span class="text-danger">&nbsp;*</span>
-            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount">
+            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
             <span id='amt_hinvCheck' class="text-danger" style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -3456,7 +3456,7 @@ function getDHdepDetails() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
         <div class="form-group">
             <label for="amt_hdep">Amount</label><span class="text-danger">&nbsp;*</span>
-            <input type="number" id="amt_hdep" name="amt_hdep" class="form-control" placeholder="Enter Amount">
+            <input type="number" id="amt_hdep" name="amt_hdep" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
             <span id='amt_hdepCheck' class="text-danger" style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -3876,7 +3876,7 @@ function getDHelDetails() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
         <div class="form-group">
             <label for="amt_hel">Amount</label><span class="text-danger">&nbsp;*</span>
-            <input type="number" id="amt_hel" name="amt_hel" class="form-control" placeholder="Enter Amount">
+            <input type="number" id="amt_hel" name="amt_hel" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
             <span id='amt_helCheck' class="text-danger" style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -4631,7 +4631,7 @@ function getDHagDetails() {
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
                 <div class="form-group">
                     <label for="amt_ag">Amount</label><span class='text-danger'>&nbsp;*</span>
-                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount">
+                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
                     <span id='amt_agCheck' class="text-danger" style="display:none">Please Enter Amount</span>
                 </div>
             </div>
@@ -4899,6 +4899,18 @@ function getDBagDetails() {
             })
         }
     })
+}
+
+//this function will check the amount entered were lesser or equal to hand closing balance
+function validateHandCash(amt) {
+    let hand_cl = $('#hand_closing').text()
+    if (parseInt(hand_cl) <= parseInt(amt.value)) {
+        alert('Enter Lesser Amount !');
+        $(amt).val('');
+        return false;
+    } else {
+        return true;
+    }
 }
 
 // Validation for Bank Agent 
