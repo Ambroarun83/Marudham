@@ -1,6 +1,6 @@
 <?php
 session_start();
-$user_id = $_SESSION['userid'];
+$user_id = $_SESSION['userid'] ?? die('Session Expired');
 
 $op_date = date('Y-m-d', strtotime($_POST['op_date']));
 if ($op_date == date('Y-m-d')) { // check whether opening date is current date
@@ -45,7 +45,7 @@ if ($op_date != date('Y-m-d')) {
 }
 
 //now reassign latest closing date to returing variable.
-$records[0]['closing_balance'] = $closing_balance;
+$records[0]['closing_balance'] = $records[0]['closing_balance'] + $closing_balance;
 $records[0]['hand_closing'] = $records[0]['hand_closing'] + $old_hand;
 $records[0]['agent_closing'] = $records[0]['agent_closing'] + $old_agent;
 $records[0]['bank_closing'] = $records[0]['bank_closing'] + $old_bank;
@@ -257,3 +257,6 @@ function getClosingBalace($con, $closing_date, $bank_detail, $user_id)
 
     return $records;
 }
+$con->close();
+$mysqli->close();
+$connect = null;
