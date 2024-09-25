@@ -63,7 +63,7 @@ if ($userid == 1) {
     JOIN branch_creation bc ON ag.branch_id = bc.branch_id
     JOIN area_line_mapping alm ON FIND_IN_SET(sa.sub_area_id, alm.sub_area_id)
     JOIN loan_category_creation lcc ON lcc.loan_category_creation_id = b.loan_category
-    WHERE a.status = 0 and (a.cus_status = 13 or a.cus_status = 14) "; // Move To Issue
+    WHERE a.status = 0 and (a.cus_status = 13) "; // Move To Issue
 } else {
     $query = "SELECT a.dor,a.cus_id,a.cus_name,a.user_type,a.user_name,a.agent_id,a.responsible,a.cus_data,a.req_id,a.cus_status,a.req_id,b.sub_category,b.loan_amt,ac.area_name, sa.sub_area_name, ag.group_name, bc.branch_name, alm.line_name,lcc.loan_category_creation_name 
     FROM in_verification a 
@@ -74,7 +74,7 @@ if ($userid == 1) {
     JOIN branch_creation bc ON ag.branch_id = bc.branch_id
     JOIN area_line_mapping alm ON FIND_IN_SET(sa.sub_area_id, alm.sub_area_id)
     JOIN loan_category_creation lcc ON lcc.loan_category_creation_id = b.loan_category
-    WHERE a.status = 0 and (a.cus_status = 13 or a.cus_status = 14) and a.sub_area IN ($sub_area_list) ";  //show only Approved Verification in Acknowledgement. // 13 Move to Issue. // 14 Move To Collection.
+    WHERE a.status = 0 and (a.cus_status = 13) and a.sub_area IN ($sub_area_list) ";  //show only Approved Verification in Acknowledgement. // 13 Move to Issue. // 14 Move To Collection.
 }
 
 if (isset($_POST['search']) && $_POST['search'] != "") {

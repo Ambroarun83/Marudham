@@ -72,7 +72,7 @@ if ($runSql->num_rows > 0) {
 
 if (!empty($cus_id_fetched)) {
     foreach ($cus_id_fetched as $cus_id) {
-        $sql = $con->query("SELECT req_id,cus_id,cus_status From request_creation where cus_id = $cus_id ORDER BY req_id DESC LIMIT 1 ");
+        $sql = $con->query("SELECT req_id,cus_id,cus_status From request_creation where cus_id = $cus_id ORDER BY dor DESC LIMIT 1 ");
         $row = $sql->fetch_assoc();
         $req_id[] = $row['req_id'];
         $cus_status[] = $row['cus_status'];
