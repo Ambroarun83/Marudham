@@ -465,6 +465,30 @@ function getClosingBalance() {
         }
     })
 }
+function getAllClosingBalance() {
+    var op_date = $('#op_date').text();
+    var opening_balance = $('#opening_balance').text()
+    var bank_detail = $('#all_bank_details').val();
+    $.ajax({
+        url: 'accountsFile/cashtally/getAllClosingBalance.php',
+        data: { 'op_date': op_date, 'bank_detail': bank_detail },
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            var closing = parseInt(response[0]['closing_balance']);
+            $('#all_closing_balance').text(closing)
+            $('#all_hand_closing').text(response[0]['hand_closing'])
+            var i = 0;
+            $.each(response, function (index, item) {
+                $('#all_bank_closing' + i).text(item['bank_closing'] ?? 0)
+                i++;
+            })
+            $('#all_agent_closing').text(response[0]['agent_closing'])
+            // submitCashTally(i);
+        }
+    })
+}
 
 function submitCashTally(i) {
     var op_date = $('#op_date').text();

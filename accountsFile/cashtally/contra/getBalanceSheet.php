@@ -1414,37 +1414,37 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $qry = $con->query("SELECT u.ag_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
     FROM collection cl JOIN user u ON cl.insert_login_id = u.user_id
-    WHERE cl.total_paid_track != '' AND date(cl.created_date) = date(CURRENT_DATE()) and FIND_IN_SET(cl.insert_login_id,'$ag_user_id')
+    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(cl.insert_login_id,'$ag_user_id')
     
     UNION ALL
 
     SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
     FROM loan_issue li JOIN user u ON u.user_id = '$user_id'
-    WHERE date(li.created_date) = date(CURRENT_DATE()) and FIND_IN_SET(li.agent_id,u.agentforstaff)
+    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(li.agent_id,u.agentforstaff)
 
     UNION ALL 
 
     SELECT ag_id, created_date AS tdate, '' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_hag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND insert_login_id = '$user_id'
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id'
     
     UNION ALL 
     
     SELECT ag_id, created_date AS tdate,'' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_bag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id')
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id')
     
     UNION ALL 
     
     SELECT ag_id, created_date AS tdate,'' AS coll_amt,'' AS netcash, amt AS Credit, '' AS Debit
     FROM ct_cr_hag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND insert_login_id = '$user_id'
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id'
     
     UNION ALL 
     
     SELECT ag_id, created_date AS tdate,'' AS coll_amt,'' AS netcash, amt AS Credit, '' AS Debit
     FROM ct_cr_bag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id')
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id')
     
     ORDER BY tdate
     ");
@@ -1567,38 +1567,38 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
     $qry = $con->query("SELECT $ag_name AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
     FROM collection cl JOIN user us 
     ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
-    WHERE cl.total_paid_track != '' AND date(cl.created_date) = date(CURRENT_DATE()) and cl.insert_login_id = '$ag_user_id'
+    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and cl.insert_login_id = '$ag_user_id'
     
     UNION ALL
 
     SELECT li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
     FROM loan_issue li JOIN user us 
     ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
-    WHERE date(li.created_date) = date(CURRENT_DATE()) and li.agent_id = '$ag_name'
+    WHERE MONTH(li.created_date) = MONTH(CURRENT_DATE()) AND YEAR(li.created_date) = YEAR(CURRENT_DATE()) and li.agent_id = '$ag_name'
 
     UNION ALL
 
     SELECT ag_id, created_date AS tdate, '' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_hag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND insert_login_id = '$user_id' and ag_id = '$ag_name'
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id' and ag_id = '$ag_name'
     
     UNION ALL 
     
     SELECT ag_id, created_date AS tdate,'' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit
     FROM ct_db_bag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id') and ag_id = '$ag_name'
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id') and ag_id = '$ag_name'
     
     UNION ALL 
     
     SELECT ag_id, created_date AS tdate,'' AS coll_amt,'' AS netcash, amt AS Credit, '' AS Debit
     FROM ct_cr_hag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND insert_login_id = '$user_id' and ag_id = '$ag_name'
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id' and ag_id = '$ag_name'
     
     UNION ALL 
     
     SELECT ag_id, created_date AS tdate,'' AS coll_amt,'' AS netcash, amt AS Credit, '' AS Debit
     FROM ct_cr_bag 
-    WHERE date(created_date) = date(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id') and ag_id = '$ag_name'
+    WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id') and ag_id = '$ag_name'
     
     ORDER BY tdate
     ");
