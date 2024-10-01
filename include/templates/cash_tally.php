@@ -22,12 +22,15 @@ if ($bank_details != null) {
 }
 $all_bank_name_arr = [];
 $all_bank_id_arr = [];
+$all_bank_id = '';
 $bank_qry = $mysqli->query("SELECT id, short_name, acc_no from bank_creation ");
-while ($bank_row = $bank_qry->fetch_assoc()) {
-	$all_bank_name_arr[] = $bank_row['short_name'] . ' - ' . substr($bank_row['acc_no'], -5);
-	$all_bank_id_arr[] = $bank_row['id'];
+if ($bank_qry->num_rows > 0) {
+	while ($bank_row = $bank_qry->fetch_assoc()) {
+		$all_bank_name_arr[] = $bank_row['short_name'] . ' - ' . substr($bank_row['acc_no'], -5);
+		$all_bank_id_arr[] = $bank_row['id'];
+	}
+	$all_bank_id = implode(',', $all_bank_id_arr);
 }
-$all_bank_id = implode(',', $all_bank_id_arr);
 
 ?>
 
@@ -899,7 +902,7 @@ $all_bank_id = implode(',', $all_bank_id_arr);
 
 <!-- /////////////////////////////////////////////////////////////////// Super Closing modal Start ////////////////////////////////////////////////////////////////////// -->
 <div class="modal fade super_closing" id="" tabindex="-1" role="dialog" aria-labelledby="vCenterModalTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
+	<div class="modal-dialog" role="document">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="vCenterModalTitle">All Closing Balance</h5>

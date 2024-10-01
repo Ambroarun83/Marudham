@@ -452,7 +452,7 @@ function getClosingBalance() {
         dataType: 'json',
         cache: false,
         success: function (response) {
-            var closing = parseInt(response[0]['closing_balance']) + parseInt(opening_balance == '' ? 0 : opening_balance);
+            var closing = parseInt(response[0]['closing_balance']);
             $('#closing_balance').text(closing)
             $('#hand_closing').text(response[0]['hand_closing'])
             var i = 0;
@@ -485,16 +485,19 @@ function getAllClosingBalance() {
                 i++;
             })
             $('#all_agent_closing').text(response[0]['agent_closing'])
-            // submitCashTally(i);
         }
     })
 }
 
 function submitCashTally(i) {
-    var op_date = $('#op_date').text();
-    var currentDate = new Date();
-    var currentDateStr = currentDate.getDate() + "-0" + (currentDate.getMonth() + 1) + "-" + currentDate.getFullYear();
-    if (op_date <= currentDateStr) {
+    // Assuming op_date is in the format "DD-MM-YYYY"
+    let op_date_str = $('#op_date').text();
+    let op_date_parts = op_date_str.split("-");
+    let op_date = new Date(op_date_parts[2], op_date_parts[1] - 1, op_date_parts[0]);
+
+    let currentDate = new Date();
+
+    if (op_date <= currentDate) {
         $('#submit_cash_tally').off('click');
         $('#submit_cash_tally').click(function () {
             event.preventDefault();
@@ -2988,7 +2991,7 @@ function getCHinvDetails() {
     resetNameDetailDropdown('inv');// to get dropdown details of Name filed
 
     $('#submit_hinv').click(function () {
-        if (hinvvalidation() == 0) {
+        if (hinvvalidation('cr') == 0) {
             var name = $('#name_hinv').val(); var area = $('#area_hinv').val(); var ident = $('#ident_hinv').val(); var remark = $('#remark_hinv').val(); var amt = $('#amt_hinv').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -3057,7 +3060,7 @@ function getDHinvDetails() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
         <div class="form-group">
             <label for="amt_hinv">Amount</label><span class="text-danger">&nbsp;*</span>
-            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
+            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount" >
             <span id='amt_hinvCheck' class="text-danger" style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -3076,7 +3079,7 @@ function getDHinvDetails() {
     resetNameDetailDropdown('inv');// to get dropdown details of Name filed
 
     $('#submit_hinv').click(function () {
-        if (hinvvalidation() == 0) {
+        if (hinvvalidation('db') == 0) {
             var name = $('#name_hinv').val(); var area = $('#area_hinv').val(); var ident = $('#ident_hinv').val(); var remark = $('#remark_hinv').val(); var amt = $('#amt_hinv').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -3109,11 +3112,12 @@ function getDHinvDetails() {
 }
 
 //validation for hand investment Credit //Same validation can be used for Cr/Db due to same inputs
-function hinvvalidation() {
+function hinvvalidation(type) {
     var name = $('#name_hinv').val(); var remark = $('#remark_hinv').val(); var amt = $('#amt_hinv').val(); var response = 0;
     if (name == '') { event.preventDefault(); $('#name_hinvCheck').show(); response = 1; } else { $('#name_hinvCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_hinvCheck').show(); response = 1; } else { $('#remark_hinvCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_hinvCheck').show(); response = 1; } else { $('#amt_hinvCheck').hide(); }
+    if (amt == '') { event.preventDefault(); $('#amt_hinvCheck').show(); response = 1; } else { $('#amt_hinvCheck').hide(); if (type == 'db' && name != '') { response = validateNamedHandCash(name, amt, 'amt_hinv', 'inv') } }
+
     return response;
 }
 
@@ -3412,7 +3416,7 @@ function getCHdepDetails() {
     resetNameDetailDropdown('dep');// to get dropdown details of Name filed
 
     $('#submit_hdep').click(function () {
-        if (hdepvalidation() == 0) {
+        if (hdepvalidation('cr') == 0) {
             var name = $('#name_hdep').val(); var area = $('#area_hdep').val(); var ident = $('#ident_hdep').val(); var remark = $('#remark_hdep').val(); var amt = $('#amt_hdep').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -3480,7 +3484,7 @@ function getDHdepDetails() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
         <div class="form-group">
             <label for="amt_hdep">Amount</label><span class="text-danger">&nbsp;*</span>
-            <input type="number" id="amt_hdep" name="amt_hdep" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
+            <input type="number" id="amt_hdep" name="amt_hdep" class="form-control" placeholder="Enter Amount">
             <span id='amt_hdepCheck' class="text-danger" style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -3499,7 +3503,7 @@ function getDHdepDetails() {
     resetNameDetailDropdown('dep');// to get dropdown details of Name filed
 
     $('#submit_hdep').click(function () {
-        if (hdepvalidation() == 0) {
+        if (hdepvalidation('db') == 0) {
             var name = $('#name_hdep').val(); var area = $('#area_hdep').val(); var ident = $('#ident_hdep').val(); var remark = $('#remark_hdep').val(); var amt = $('#amt_hdep').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -3532,11 +3536,11 @@ function getDHdepDetails() {
 }
 
 //validation for hand Deposit Credit //Same validation can be used for Cr/Db due to same inputs
-function hdepvalidation() {
+function hdepvalidation(type) {
     var name = $('#name_hdep').val(); var remark = $('#remark_hdep').val(); var amt = $('#amt_hdep').val(); var response = 0;
     if (name == '') { event.preventDefault(); $('#name_hdepCheck').show(); response = 1; } else { $('#name_hdepCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_hdepCheck').show(); response = 1; } else { $('#remark_hdepCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_hdepCheck').show(); response = 1; } else { $('#amt_hdepCheck').hide(); }
+    if (amt == '') { event.preventDefault(); $('#amt_hdepCheck').show(); response = 1; } else { $('#amt_hdepCheck').hide(); if (type == 'db' && name != '') { response = validateNamedHandCash(name, amt, 'amt_hdep', 'dep') } }
     return response;
 }
 
@@ -3900,7 +3904,7 @@ function getDHelDetails() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
         <div class="form-group">
             <label for="amt_hel">Amount</label><span class="text-danger">&nbsp;*</span>
-            <input type="number" id="amt_hel" name="amt_hel" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
+            <input type="number" id="amt_hel" name="amt_hel" class="form-control" placeholder="Enter Amount">
             <span id='amt_helCheck' class="text-danger" style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -3954,9 +3958,10 @@ function getDHelDetails() {
 //validation for hand EL Credit //Same validation can be used for Cr/Db due to same inputs
 function helvalidation() {
     var name = $('#name_hel').val(); var remark = $('#remark_hel').val(); var amt = $('#amt_hel').val(); var response = 0;
+    let cash_type = $('#credit_type').val() != '' ? 'crel' : 'dbel';
     if (name == '') { event.preventDefault(); $('#name_helCheck').show(); response = 1; } else { $('#name_helCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_helCheck').show(); response = 1; } else { $('#remark_helCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_helCheck').show(); response = 1; } else { $('#amt_helCheck').hide(); }
+    if (amt == '') { event.preventDefault(); $('#amt_helCheck').show(); response = 1; } else { $('#amt_helCheck').hide(); response = validateNamedHandCash(name, amt, 'amt_hel', cash_type) }
     return response;
 }
 
@@ -4935,6 +4940,42 @@ function validateHandCash(amt) {
     } else {
         return true;
     }
+}
+
+//Validate credit and debit based on the names
+function validateNamedHandCash(name, amt, source, cash_type) {
+    var retval = 0;
+    $.ajax({
+        url: 'accountsFile/cashtally/validateNamedHandCash.php',
+        data: { name, amt, cash_type },
+        type: 'post',
+        dataType: 'JSON',
+        cache: false,
+        success: function (response) {
+            if (cash_type != 'crel' && cash_type != 'dbel') {
+                if (response['info'] != 1) {
+                    event.preventDefault();
+                    alert('Enter Smaller value !');
+                    $(`#${source}`).val('')
+                    retval = 1;
+                }
+            } else {
+                if (cash_type == 'crel' && response['creditable'] > 0 && response['creditable'] < amt) {
+                    event.preventDefault();
+                    alert('Enter value between 1 and ' + response['creditable'])
+                    $(`#${source}`).val('')
+                    retval = 1;
+                } else if (cash_type == 'dbel' && response['debitable'] > 0 && response['debitable'] < amt) {
+                    event.preventDefault();
+                    alert('Enter value between 1 and ' + response['debitable'])
+                    $(`#${source}`).val('')
+                    retval = 1;
+                }
+            }
+        }
+    }).then(() => {
+        return retval;
+    })
 }
 
 // Validation for Bank Agent 
