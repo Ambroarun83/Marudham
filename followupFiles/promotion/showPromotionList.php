@@ -57,7 +57,7 @@ if ($type == 'existing') {
             AND cus_status < 20
             ORDER BY req_id DESC
         ) rc ON cs.cus_id = rc.cus_id
-        WHERE cs.cus_sts >= '20'  AND cp.area_confirm_subarea IN ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL $search  $order  $limit ");
+        WHERE cs.cus_sts >= '20'  AND cp.area_confirm_subarea IN ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL $search GROUP BY rc.cus_id  $order  $limit ");
 
     // Count query for filtering (use the same logic but without limit)
     $num_qry = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date 
@@ -70,7 +70,7 @@ if ($type == 'existing') {
             AND cus_status < 20
             ORDER BY req_id DESC
         ) rc ON cs.cus_id = rc.cus_id
-        WHERE cs.cus_sts >= '20'  AND cp.area_confirm_subarea IN ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL $search  $order ");
+        WHERE cs.cus_sts >= '20'  AND cp.area_confirm_subarea IN ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL $search GROUP BY rc.cus_id $order ");
 
     $number_filter_row = $num_qry->num_rows;
 

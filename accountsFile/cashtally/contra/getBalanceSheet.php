@@ -1345,6 +1345,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     //get agent user id to get data from collection
     $ag_userid_qry = $con->query("SELECT `user_id` from user where FIND_IN_SET( `ag_id`, (SELECT `agentforstaff` from user where `user_id` = '$user_id')) ");
+    $ids = array();
     while ($row = $ag_userid_qry->fetch_assoc()) {
         $ids[] = $row['user_id'];
     }
@@ -1498,7 +1499,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     //get agent user id to get data from collection
     $ag_userid_qry = $con->query("SELECT `user_id` from user where ag_id = '$ag_name' ");
-    $ag_user_id = $ag_userid_qry->fetch_assoc()['user_id'];
+    $ag_user_id = $ag_userid_qry->fetch_assoc()['user_id'] ?? '';
 
     $tableHeaders = "<th width='50'>S.No</th><th>Agent</th><th>Date</th><th>Coll Amount</th><th>Net Cash</th><th>Credit</th><th>Debit</th>"; {
         $opening_qry = $con->query("SELECT
