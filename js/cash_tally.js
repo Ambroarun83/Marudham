@@ -217,35 +217,47 @@ $(document).ready(function () {
             $('#blncSheetDiv').empty()
             $('#IDE_Div').show()
 
-            // to get name detail creation table 
-            $.ajax({
-                url: 'accountsFile/cashtally/getNameBasedDetails.php',
-                data: {},
-                dataType: 'json',
-                type: 'post',
-                cache: false,
-                success: function (response) {
-                    $('#IDE_name_list').empty();
-                    $('#IDE_name_list').append("<option value=''>Select Name</option>");
-                    $.each(response, function (index, item) {
-                        $("#IDE_name_list").append("<option value='" + item['name_id'] + "'>" + item['name'] + "</option>");
-                    });
+            $('#IDE_type').off().change(function () {
+                let IDE_type_arr = { 1: 'inv', 2: 'dep', 3: 'el' };
+                let IDE_type = $(this).val();
+                let opt_for = IDE_type_arr[IDE_type];
+                $("#opt_for").val(opt_for);
 
-                    $('#IDE_name_list').change(function () {
-                        var name_id = $(this).val();// get the name table id
+                // to get name detail creation table 
+                $.ajax({
+                    url: 'accountsFile/cashtally/getNameBasedDetails.php',
+                    data: { opt_for },
+                    dataType: 'json',
+                    type: 'post',
+                    cache: false,
+                    success: function (response) {
+                        $('#IDE_name_list').empty();
+                        $('#IDE_name_list').append("<option value=''>Select Name</option>");
                         $.each(response, function (index, item) {
-                            if (name_id == item['name_id']) {
-                                $('#IDE_name_area').val(item['area']);
-                            }
+                            $("#IDE_name_list").append("<option value='" + item['name_id'] + "'>" + item['name'] + "</option>");
+                        });
+
+                        $('#IDE_name_list').off().change(function () {
+                            var name_id = $(this).val();// get the name table id
+                            $.each(response, function (index, item) {
+                                if (name_id == item['name_id']) {
+                                    $('#IDE_name_area').val(item['area']);
+                                }
+                            })
                         })
-                    })
-                }
+                    }
+                })
             })
         } else if (sheet_type == 7) {
             $('#blncSheetDiv').empty()
             $('#ag_typeDiv').show()
 
         }
+    })
+
+    $('.name-model-close').click(function () {
+        let opt_for = $('#opt_for').val();
+        resetNameDetailDropdown(opt_for);
     })
 
     $('#exp_view_type').change(function () {
@@ -440,7 +452,7 @@ function getClosingBalance() {
         dataType: 'json',
         cache: false,
         success: function (response) {
-            var closing = parseInt(response[0]['closing_balance']) + parseInt(opening_balance==''?0:opening_balance);
+            var closing = parseInt(response[0]['closing_balance']);
             $('#closing_balance').text(closing)
             $('#hand_closing').text(response[0]['hand_closing'])
             var i = 0;
@@ -453,12 +465,39 @@ function getClosingBalance() {
         }
     })
 }
+function getAllClosingBalance() {
+    var op_date = $('#op_date').text();
+    var opening_balance = $('#opening_balance').text()
+    var bank_detail = $('#all_bank_details').val();
+    $.ajax({
+        url: 'accountsFile/cashtally/getAllClosingBalance.php',
+        data: { 'op_date': op_date, 'bank_detail': bank_detail },
+        type: 'post',
+        dataType: 'json',
+        cache: false,
+        success: function (response) {
+            var closing = parseInt(response[0]['closing_balance']);
+            $('#all_closing_balance').text(closing)
+            $('#all_hand_closing').text(response[0]['hand_closing'])
+            var i = 0;
+            $.each(response, function (index, item) {
+                $('#all_bank_closing' + i).text(item['bank_closing'] ?? 0)
+                i++;
+            })
+            $('#all_agent_closing').text(response[0]['agent_closing'])
+        }
+    })
+}
 
 function submitCashTally(i) {
-    var op_date = $('#op_date').text();
-    var currentDate = new Date();
-    var currentDateStr = currentDate.getDate() + "-0" + (currentDate.getMonth() + 1) + "-" + currentDate.getFullYear();
-    if (op_date <= currentDateStr) {
+    // Assuming op_date is in the format "DD-MM-YYYY"
+    let op_date_str = $('#op_date').text();
+    let op_date_parts = op_date_str.split("-");
+    let op_date = new Date(op_date_parts[2], op_date_parts[1] - 1, op_date_parts[0]);
+
+    let currentDate = new Date();
+
+    if (op_date <= currentDate) {
         $('#submit_cash_tally').off('click');
         $('#submit_cash_tally').click(function () {
             event.preventDefault();
@@ -1015,7 +1054,7 @@ function getBankDepositDetails() {
         <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
             <div class="form-group">
                 <label for="amt_bdep">Amount</label>
-                <input type="number" id="amt_bdep" name="amt_bdep" class="form-control" placeholder="Please Enter Amount">
+                <input type="number" id="amt_bdep" name="amt_bdep" class="form-control" placeholder="Please Enter Amount" onkeydown="validateHandCash(this)">
                 <span class="text-danger" id='amt_bdepCheck' style="display:none">Please Enter Amount</span>
             </div>
         </div>
@@ -1573,7 +1612,7 @@ function getHandExchangeInputs() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
         <div class="form-group">
             <label for="amt_hed">Amount</label>
-            <input type="number" id="amt_hed" name="amt_hed" class="form-control" placeholder="Enter Amount">
+            <input type="number" id="amt_hed" name="amt_hed" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
             <span class="text-danger" id='amt_hedCheck' style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -1877,7 +1916,7 @@ function getBankExchangeInputs() {
 
             $('#to_bank_bex').empty();
             $('#to_bank_bex').append("<option value=''>Select Bank Name</option>");
-            for (var i = 0; i < response.length; i++) {
+            for (var i = 1; i < response.length; i++) {
                 $('#to_bank_bex').append("<option value='" + response[i]['to_bank_id'] + "'>" + response[i]['to_bank_name'] + "</option>");
             }
 
@@ -1885,7 +1924,7 @@ function getBankExchangeInputs() {
             $('#to_bank_bex').change(function () {
                 var to_bank_id = $(this).val();
                 if (to_bank_id != '') {
-                    for (var i = 0; i < response.length; i++) {
+                    for (var i = 1; i < response.length; i++) {
                         if (to_bank_id == response[i]['to_bank_id']) {
                             $('#user_id_bex').val(response[i]['bank_user_id'])
                             $('#user_name_bex').val(response[i]['bank_user_name'])
@@ -2485,7 +2524,7 @@ function hexpenseModalBtnClick() {
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
                         <div class="form-group">
                             <label for="amt_hexp">Amount</label><span class='text-danger'>&nbsp;*</span>
-                            <input type="number" id="amt_hexp" name="amt_hexp" class="form-control" placeholder="Enter Amount">
+                            <input type="number" id="amt_hexp" name="amt_hexp" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
                             <span id='amt_hexpCheck' class="text-danger" style="display:none">Please Enter Amount</span>
                         </div>
                     </div>
@@ -2908,7 +2947,7 @@ function getCHinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -2949,10 +2988,10 @@ function getCHinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
 
     $('#submit_hinv').click(function () {
-        if (hinvvalidation() == 0) {
+        if (hinvvalidation('cr') == 0) {
             var name = $('#name_hinv').val(); var area = $('#area_hinv').val(); var ident = $('#ident_hinv').val(); var remark = $('#remark_hinv').val(); var amt = $('#amt_hinv').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -2996,7 +3035,7 @@ function getDHinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3021,7 +3060,7 @@ function getDHinvDetails() {
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
         <div class="form-group">
             <label for="amt_hinv">Amount</label><span class="text-danger">&nbsp;*</span>
-            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount">
+            <input type="number" id="amt_hinv" name="amt_hinv" class="form-control" placeholder="Enter Amount" >
             <span id='amt_hinvCheck' class="text-danger" style="display:none">Please Enter Amount</span>
         </div>
     </div>
@@ -3037,10 +3076,10 @@ function getDHinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
 
     $('#submit_hinv').click(function () {
-        if (hinvvalidation() == 0) {
+        if (hinvvalidation('db') == 0) {
             var name = $('#name_hinv').val(); var area = $('#area_hinv').val(); var ident = $('#ident_hinv').val(); var remark = $('#remark_hinv').val(); var amt = $('#amt_hinv').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -3073,11 +3112,12 @@ function getDHinvDetails() {
 }
 
 //validation for hand investment Credit //Same validation can be used for Cr/Db due to same inputs
-function hinvvalidation() {
+function hinvvalidation(type) {
     var name = $('#name_hinv').val(); var remark = $('#remark_hinv').val(); var amt = $('#amt_hinv').val(); var response = 0;
     if (name == '') { event.preventDefault(); $('#name_hinvCheck').show(); response = 1; } else { $('#name_hinvCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_hinvCheck').show(); response = 1; } else { $('#remark_hinvCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_hinvCheck').show(); response = 1; } else { $('#amt_hinvCheck').hide(); }
+    if (amt == '') { event.preventDefault(); $('#amt_hinvCheck').show(); response = 1; } else { $('#amt_hinvCheck').hide(); if (type == 'db' && name != '') { response = validateNamedHandCash(name, amt, 'amt_hinv', 'inv') } }
+
     return response;
 }
 
@@ -3102,7 +3142,7 @@ function getCBinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3150,7 +3190,7 @@ function getCBinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
     getBinvestRefcode();//to get the reference code for bank investment
 
     $('#submit_binv').click(function () {
@@ -3207,7 +3247,7 @@ function getDBinvDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('inv')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3255,7 +3295,7 @@ function getDBinvDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('inv');// to get dropdown details of Name filed
     getBinvestRefcode();// to get ref code
 
     $('#submit_binv').click(function () {
@@ -3332,7 +3372,7 @@ function getCHdepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3373,10 +3413,10 @@ function getCHdepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
 
     $('#submit_hdep').click(function () {
-        if (hdepvalidation() == 0) {
+        if (hdepvalidation('cr') == 0) {
             var name = $('#name_hdep').val(); var area = $('#area_hdep').val(); var ident = $('#ident_hdep').val(); var remark = $('#remark_hdep').val(); var amt = $('#amt_hdep').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -3419,7 +3459,7 @@ function getDHdepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3460,10 +3500,10 @@ function getDHdepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
 
     $('#submit_hdep').click(function () {
-        if (hdepvalidation() == 0) {
+        if (hdepvalidation('db') == 0) {
             var name = $('#name_hdep').val(); var area = $('#area_hdep').val(); var ident = $('#ident_hdep').val(); var remark = $('#remark_hdep').val(); var amt = $('#amt_hdep').val();
             var op_date = $('#op_date').text();
             $.ajax({
@@ -3496,11 +3536,11 @@ function getDHdepDetails() {
 }
 
 //validation for hand Deposit Credit //Same validation can be used for Cr/Db due to same inputs
-function hdepvalidation() {
+function hdepvalidation(type) {
     var name = $('#name_hdep').val(); var remark = $('#remark_hdep').val(); var amt = $('#amt_hdep').val(); var response = 0;
     if (name == '') { event.preventDefault(); $('#name_hdepCheck').show(); response = 1; } else { $('#name_hdepCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_hdepCheck').show(); response = 1; } else { $('#remark_hdepCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_hdepCheck').show(); response = 1; } else { $('#amt_hdepCheck').hide(); }
+    if (amt == '') { event.preventDefault(); $('#amt_hdepCheck').show(); response = 1; } else { $('#amt_hdepCheck').hide(); if (type == 'db' && name != '') { response = validateNamedHandCash(name, amt, 'amt_hdep', 'dep') } }
     return response;
 }
 
@@ -3523,7 +3563,7 @@ function getCBDepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3571,7 +3611,7 @@ function getCBDepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
     getBdepositRefcode();//to get the reference code for bank Deposit
 
     $('#submit_bdeposit').click(function () {
@@ -3628,7 +3668,7 @@ function getDBDepDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('dep')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3676,7 +3716,7 @@ function getDBDepDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('dep');// to get dropdown details of Name filed
     getBdepositRefcode();// to get ref code
 
     $('#submit_bdeposit').click(function () {
@@ -3752,7 +3792,7 @@ function getCHelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3793,7 +3833,7 @@ function getCHelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
 
     $('#submit_hel').click(function () {
         if (helvalidation() == 0) {
@@ -3839,7 +3879,7 @@ function getDHelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3880,7 +3920,7 @@ function getDHelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
 
     $('#submit_hel').click(function () {
         if (helvalidation() == 0) {
@@ -3918,9 +3958,10 @@ function getDHelDetails() {
 //validation for hand EL Credit //Same validation can be used for Cr/Db due to same inputs
 function helvalidation() {
     var name = $('#name_hel').val(); var remark = $('#remark_hel').val(); var amt = $('#amt_hel').val(); var response = 0;
+    let cash_type = $('#credit_type').val() != '' ? 'crel' : 'dbel';
     if (name == '') { event.preventDefault(); $('#name_helCheck').show(); response = 1; } else { $('#name_helCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_helCheck').show(); response = 1; } else { $('#remark_helCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_helCheck').show(); response = 1; } else { $('#amt_helCheck').hide(); }
+    if (amt == '') { event.preventDefault(); $('#amt_helCheck').show(); response = 1; } else { $('#amt_helCheck').hide(); response = validateNamedHandCash(name, amt, 'amt_hel', cash_type) }
     return response;
 }
 
@@ -3944,7 +3985,7 @@ function getCBelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -3992,7 +4033,7 @@ function getCBelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
     getBelRefcode();//to get the reference code for bank Deposit
 
     $('#submit_bel').click(function () {
@@ -4049,7 +4090,7 @@ function getDBelDetails() {
     <div class="col-xl-1 col-lg-1 col-md-1 col-sm-1 col-12">
         <div class="form-group ">
             <label style="visibility:hidden"></label><br>
-            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable()"><span class="icon-add"></span></button>
+            <button type="button" class="btn btn-primary" id="add_nameDetails" name="add_nameDetails" data-toggle="modal" data-target=".add_nameDetails" style="padding: 8px 27px;position: relative;top: 4px;" onclick="resetNameDetailTable('el')"><span class="icon-add"></span></button>
         </div>
     </div>
     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -4097,7 +4138,7 @@ function getDBelDetails() {
     $('#invDiv').empty()
     $('#invDiv').html(appendText);
 
-    resetNameDetailDropdown();// to get dropdown details of Name filed
+    resetNameDetailDropdown('el');// to get dropdown details of Name filed
     getBelRefcode();// to get ref code
 
     $('#submit_bel').click(function () {
@@ -4171,11 +4212,12 @@ function getBelRefcode() {
         var name_ = $("#name_").val();
         var area_ = $("#area_").val();
         var ident_ = $("#ident_").val();
+        var opt_for = $("#opt_for").val();
         if (name_ != "" && area_ != '' && ident_ != '') {
             $.ajax({
                 url: 'accountsFile/cashtally/nameDetailModal/ajaxInsertNameDetail.php',
                 type: 'POST',
-                data: { "name": name_, "name_id": name_id, "area": area_, "ident": ident_ },
+                data: { "name": name_, "name_id": name_id, "area": area_, "ident": ident_, "opt_for": opt_for },
                 cache: false,
                 success: function (response) {
                     var insresult = response.includes("Exists");
@@ -4191,7 +4233,7 @@ function getBelRefcode() {
                             $('#nameUpdateOk').fadeOut('fast');
                         }, 2000);
                         $("#coursecategoryTable").remove();
-                        resetNameDetailTable();
+                        resetNameDetailTable(opt_for);
                         $("#name_").val('');
                         $("#area_").val('');
                         $("#ident_").val('');
@@ -4203,7 +4245,7 @@ function getBelRefcode() {
                             $('#nameInsertOk').fadeOut('fast');
                         }, 2000);
                         $("#coursecategoryTable").remove();
-                        resetNameDetailTable();
+                        resetNameDetailTable(opt_for);
                         $("#name_").val('');
                         $("#area_").val('');
                         $("#ident_").val('');
@@ -4219,10 +4261,11 @@ function getBelRefcode() {
         }
     });
 
-    function resetNameDetailDropdown() {
+    function resetNameDetailDropdown(opt_for) {
+        $("#opt_for").val(opt_for);
         $.ajax({
             url: 'accountsFile/cashtally/nameDetailModal/resetNameDetailDropdown.php',
-            data: {},
+            data: { opt_for },
             dataType: 'json',
             type: 'POST',
             cache: false,
@@ -4264,11 +4307,11 @@ function getBelRefcode() {
         $("#name_Check,#area_Check,#ident_Check").hide();
     }
 
-    function resetNameDetailTable() {
+    function resetNameDetailTable(opt_for) {
         $.ajax({
             url: 'accountsFile/cashtally/nameDetailModal/ajaxResetNameDetailTable.php',
             type: 'POST',
-            data: {},
+            data: { opt_for },
             cache: false,
             success: function (html) {
                 $("#updateNameDetailDiv").empty();
@@ -4617,7 +4660,7 @@ function getDHagDetails() {
             <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-8">
                 <div class="form-group">
                     <label for="amt_ag">Amount</label><span class='text-danger'>&nbsp;*</span>
-                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount">
+                    <input type="number" id="amt_ag" name="amt_ag" class="form-control" placeholder="Enter Amount" onkeydown="validateHandCash(this)">
                     <span id='amt_agCheck' class="text-danger" style="display:none">Please Enter Amount</span>
                 </div>
             </div>
@@ -4884,6 +4927,54 @@ function getDBagDetails() {
                 }
             })
         }
+    })
+}
+
+//this function will check the amount entered were lesser or equal to hand closing balance
+function validateHandCash(amt) {
+    let hand_cl = $('#hand_closing').text()
+    if (parseInt(hand_cl) <= parseInt(amt.value)) {
+        alert('Enter Lesser Amount !');
+        $(amt).val('');
+        return false;
+    } else {
+        return true;
+    }
+}
+
+//Validate credit and debit based on the names
+function validateNamedHandCash(name, amt, source, cash_type) {
+    var retval = 0;
+    $.ajax({
+        url: 'accountsFile/cashtally/validateNamedHandCash.php',
+        data: { name, amt, cash_type },
+        type: 'post',
+        dataType: 'JSON',
+        cache: false,
+        success: function (response) {
+            if (cash_type != 'crel' && cash_type != 'dbel') {
+                if (response['info'] != 1) {
+                    event.preventDefault();
+                    alert('Enter Smaller value !');
+                    $(`#${source}`).val('')
+                    retval = 1;
+                }
+            } else {
+                if (cash_type == 'crel' && response['creditable'] > 0 && response['creditable'] < amt) {
+                    event.preventDefault();
+                    alert('Enter value between 1 and ' + response['creditable'])
+                    $(`#${source}`).val('')
+                    retval = 1;
+                } else if (cash_type == 'dbel' && response['debitable'] > 0 && response['debitable'] < amt) {
+                    event.preventDefault();
+                    alert('Enter value between 1 and ' + response['debitable'])
+                    $(`#${source}`).val('')
+                    retval = 1;
+                }
+            }
+        }
+    }).then(() => {
+        return retval;
     })
 }
 
