@@ -339,6 +339,11 @@ define('DACC', $getuserdetails['download_access']);
 				<?php include "include/templates/document_track.php" ?>
 			<?php } else ?>
 
+			<!-- update customer status Screen -->
+			<?php if ($current_page == 'update_customer_status') { ?>
+				<?php include "include/templates/update_customer_status.php" ?>
+			<?php } else ?>
+
 			<!-- Update Screen -->
 			<?php if ($current_page == 'edit_update') { ?>
 				<?php include "include/templates/edit_update.php" ?>

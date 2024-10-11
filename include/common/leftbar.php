@@ -696,6 +696,13 @@ if (sizeof($getUser) > 0) {
 										<a href="document_track"><i class='icon-broken_image'></i>Document Track</a>
 									</li>
 								<?php  } ?>
+
+								<?php if ($doctrack == 0) { ?>
+									<li>
+										<a href="update_customer_status"><i class='icon-broken_image'></i>Update Customer Status</a>
+									</li>
+								<?php  } ?>
+
 							</ul>
 						</div>
 					</li>

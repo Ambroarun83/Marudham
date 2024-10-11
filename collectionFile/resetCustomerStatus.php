@@ -4,16 +4,26 @@ include('../ajaxconfig.php');
 
 if (isset($_POST['cus_id'])) {
     $cus_id = preg_replace('/\D/', '', $_POST['cus_id']);
-    // $cus_id = $_POST['cus_id'];
 }
 if (isset($_GET['cus_id'])) {
     $cus_id = preg_replace('/\D/', '', $_GET['cus_id']);
 }
 
 $req_arr = array();
-$qry = $con->query("SELECT req_id FROM in_issue where cus_id = $cus_id and (cus_status >= 14 and cus_status < 20) ORDER BY CAST(req_id AS UNSIGNED) ASC ");
-while ($row = $qry->fetch_assoc()) {
-    $req_arr[] = $row['req_id'];
+if(isset($cus_id)){
+    $qry = $con->query("SELECT req_id FROM in_issue where cus_id = $cus_id and (cus_status >= 14 and cus_status < 20) ORDER BY CAST(req_id AS UNSIGNED) ASC ");
+    while ($row = $qry->fetch_assoc()) {
+        $req_arr[] = $row['req_id'];
+    }
+}
+
+if(isset($_POST['reqID'])){
+    $reqid = $_POST['reqID'];
+    $req_arr[] = $reqid;
+    
+    $qry = $con->query("SELECT cus_id FROM in_issue where req_id = $reqid ");
+        $row = $qry->fetch_assoc();
+        $cus_id = $row['cus_id'];
 }
 
 

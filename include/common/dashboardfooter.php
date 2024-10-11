@@ -1194,6 +1194,11 @@
         <script src="js/document_track.js"></script>
     <?php }
 
+    //Update Customer Status Screen
+    if ($current_page == 'update_customer_status') { ?>
+        <script src="js/update_customer_status.js"></script>
+    <?php }
+
 
     //Update Screen
     if ($current_page == 'update') { ?>
