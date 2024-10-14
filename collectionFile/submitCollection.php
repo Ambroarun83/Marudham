@@ -176,6 +176,14 @@ if ($check == 0 && $penalty_check == 0 && $coll_charge_check == 0) {
     $mysqli->query("UPDATE `in_issue` SET `cus_status`= $cus_status, `update_login_id` = $userid where req_id = '" . $req_id . "' ") or die('Error on in_issue Table');
     $mysqli->query("INSERT INTO `closing_customer` (req_id,cus_id,closing_date) VALUES ($req_id, $cus_id, DATE(now()) ) ") or die('Error on closing_customer Table');
 }
+
+$qry = $connect->query("SELECT * FROM customer_status WHERE req_id = '$req_id' ");
+if($qry->rowCount() > 0){
+    $query = $connect->query("UPDATE `customer_status` SET `cus_id`='$cus_id',`sub_status`='$sub_status',`bal_amnt`='$bal_amt',`insert_login_id`='$userid',`created_date`=now() WHERE `req_id`='$req_id' ");
+}else{
+    $query = $connect->query("INSERT INTO `customer_status`( `req_id`, `cus_id`, `sub_status`, `bal_amnt`, `insert_login_id`, `created_date`) VALUES ('$req_id','$cus_id','$sub_status','$bal_amt','$userid', now() )");
+}
+
 // $qry = $con->query("SELECT customer_name, mobile1 from customer_register where req_ref_id = '$req_id' ");
 // $row = $qry->fetch_assoc();
 // $customer_name = $row['customer_name'];
