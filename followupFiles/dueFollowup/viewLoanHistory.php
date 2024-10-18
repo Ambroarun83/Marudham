@@ -5,21 +5,7 @@ include '../../ajaxconfig.php';
 if(isset($_SESSION["userid"])){
     $user_id = $_SESSION["userid"];
 }
-if(isset($_POST["pending_sts"])){
-    $pending_sts = explode(',',$_POST["pending_sts"]);
-}
-if(isset($_POST["od_sts"])){
-    $od_sts = explode(',',$_POST["od_sts"]);
-}
-if(isset($_POST["due_nil_sts"])){
-    $due_nil_sts = explode(',',$_POST["due_nil_sts"]);
-}
-if(isset($_POST["closed_sts"])){
-    $closed_sts = explode(',',$_POST["closed_sts"]);
-}
-if(isset($_POST["bal_amt"])){
-    $bal_amt = explode(',',$_POST["bal_amt"]);
-}
+
 
 function moneyFormatIndia($num) {
     $explrestunits = "";
@@ -61,9 +47,10 @@ function moneyFormatIndia($num) {
         <?php
         $cus_id = $_POST['cus_id'];
         $run = $connect->query("SELECT lc.due_start_from,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
-        rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
+        rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access, cs.sub_status
         from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
+        LEFT JOIN customer_status cs ON ii.cus_id = cs.cus_id
         WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status <= 22)"); //Customer status greater than or equal to 14 because, after issued data only we need  
 
         $i = 1;
@@ -102,54 +89,10 @@ function moneyFormatIndia($num) {
             <td>
                 <?php 
                 if($row['cus_status'] <= 20){
-                    if(date('Y-m-d',strtotime($row['due_start_from'])) > date('Y-m-d',strtotime($curdate))  and $bal_amt[$i-1] != 0 ){ //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
-                        if($row['cus_status'] == '15'){
-                            echo 'Error';
-                        }elseif($row['cus_status']== '16'){
-                            echo 'Legal';
-                        }else{
-                            echo 'Current';
-                        }
-                    }else{
-                        if($pending_sts[$i-1] == 'true' && $od_sts[$i-1] == 'false'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'Pending';
-                            }
-                        }else if($od_sts[$i-1] == 'true'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'OD';
-                            }
-                        }elseif($due_nil_sts[$i-1] == 'true'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                echo 'Due Nil';
-                            }
-                        }elseif($pending_sts[$i-1] == 'false'){
-                            if($row['cus_status'] == '15'){
-                                echo 'Error';
-                            }elseif($row['cus_status']== '16'){
-                                echo 'Legal';
-                            }else{
-                                if($closed_sts[$i-1] == 'true'){
-                                    echo "In Closed";
-                                }else{
-                                    echo 'Current';
-                                }
-                            }
-                        } 
-                    } 
+                    echo $row['sub_status'];
+
                 }else if($row['cus_status'] > 20){// if status is closed(21) or more than that(22), then show closed status
+                    
                     $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
                     $rclosed = $closedSts->fetch_assoc()['closed_sts'];
                     if($rclosed == '1'){echo 'Consider';}

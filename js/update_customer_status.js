@@ -30,7 +30,7 @@ $(document).ready(function () {
         let promises = [];
         batch.forEach(element => {
             // Declare these variables outside the success callback to avoid scoping issues
-            let pending_sts, od_sts, due_nil_sts, closed_sts, balAmnt;
+            let pendingSts, odSts, dueNilSts, closedSts, balAmnt, payableAmnt;
 
             // Push each AJAX request to the promises array
             promises.push(
@@ -43,11 +43,12 @@ $(document).ready(function () {
                     success: function (response) {
                         //To get loan sub Status
                         if (response.length != 0) {
-                            pending_sts = response['pending_customer'];
-                            od_sts = response['od_customer'];
-                            due_nil_sts = response['due_nil_customer'];
-                            closed_sts = response['closed_customer'];
+                            pendingSts = response['pending_customer'];
+                            odSts = response['od_customer'];
+                            dueNilSts = response['due_nil_customer'];
+                            closedSts = response['closed_customer'];
                             balAmnt = response['balAmnt'];
+                            payableAmnt = response['payable_as_req'];
                         }
                     }
                 }).then(function () {
@@ -55,7 +56,7 @@ $(document).ready(function () {
                         type: 'POST',
                         dataType: 'json',
                         url: 'updateCustomerStatusFile/updateCustomerStatus.php',
-                        data: { 'req_id': element, 'pending_sts': pending_sts, 'od_sts': od_sts, 'due_nil_sts': due_nil_sts, 'closed_sts': closed_sts, 'bal_amt': balAmnt },
+                        data: { 'req_id': element, 'pending_sts': pendingSts, 'od_sts': odSts, 'due_nil_sts': dueNilSts, 'closed_sts': closedSts, 'bal_amt': balAmnt, 'payable': payableAmnt },
                         cache: false
                     });
                 })

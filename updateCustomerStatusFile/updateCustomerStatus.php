@@ -29,6 +29,10 @@ if (isset($_POST['bal_amt'])) {
     $bal_amt = implode(',', $_POST['bal_amt']);
 }
 
+if (isset($_POST['payable'])) {
+    $payable_amnts = implode(',', $_POST['payable']);
+}
+
 $curdate = date('Y-m-d');
 $qry = $connect->query("SELECT lc.cus_id_loan, lc.due_start_from, ii.cus_status
         FROM acknowlegement_loan_calculation lc 
@@ -86,9 +90,9 @@ if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($
 
 $qry = $connect->query("SELECT * FROM customer_status WHERE req_id = '$req_id' ");
 if($qry->rowCount() > 0){
-    $query = $connect->query("UPDATE `customer_status` SET `cus_id`='$cus_id',`sub_status`='$sub_sts',`bal_amnt`='$bal_amt',`insert_login_id`='$userid',`created_date`=now() WHERE `req_id`='$req_id' ");
+    $query = $connect->query("UPDATE `customer_status` SET `cus_id`='$cus_id',`sub_status`='$sub_sts',`payable_amnt` = '$payable_amnts', `bal_amnt`='$bal_amt',`insert_login_id`='$userid',`created_date`=now() WHERE `req_id`='$req_id' ");
 }else{
-    $query = $connect->query("INSERT INTO `customer_status`( `req_id`, `cus_id`, `sub_status`, `bal_amnt`, `insert_login_id`, `created_date`) VALUES ('$req_id','$cus_id','$sub_sts','$bal_amt','$userid', now() )");
+    $query = $connect->query("INSERT INTO `customer_status`( `req_id`, `cus_id`, `sub_status`, `payable_amnt`, `bal_amnt`, `insert_login_id`, `created_date`) VALUES ('$req_id','$cus_id','$sub_sts','$payable_amnts','$bal_amt','$userid', now() )");
 }
 
 if($query){
