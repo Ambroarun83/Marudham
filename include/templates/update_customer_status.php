@@ -8,6 +8,7 @@
 
 <!-- Main container start -->
 <div class="main-container">
+	<input type="hidden" id="upd_value" value='<?php if(isset($_GET['upd_value'])) echo $_GET['upd_value'];?>'>
 	<!-- Row start -->
 	<div class="row gutters">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

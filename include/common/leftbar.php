@@ -48,7 +48,7 @@ if (
 } else if ($current_page == 'edit_noc' || $current_page == 'noc') {
 
 	$current_module = 'noc';
-} else if ($current_page == 'edit_update' || $current_page == 'update' || $current_page == 'document_track') {
+} else if ($current_page == 'edit_update' || $current_page == 'update' || $current_page == 'document_track' || $current_page == 'update_customer_status') {
 
 	$current_module = 'update';
 } //else if($current_page == 'document_track'){

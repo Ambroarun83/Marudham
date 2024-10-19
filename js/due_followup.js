@@ -119,7 +119,7 @@ function OnLoadFunctions(req_id, cus_id) {
             type: 'post',
             cache: false,
             success: function (response) {
-                $('.overlay').remove();
+                // $('.overlay').remove();
                 $('#loanListTableDiv').empty()
                 $('#loanListTableDiv').html(response);
                 // searchFunction();//this will call search function repair module
