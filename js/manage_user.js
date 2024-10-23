@@ -35,6 +35,12 @@ const bankMultiselect = new Choices('#bank_details1', {
     allowHTML: true
 
 });
+const subStatusMultiselect = new Choices('#sub_status_mapping', {
+    removeItemButton: true,
+    noChoicesText: 'Select Sub Status',
+    allowHTML: true
+
+});
 
 // Document is ready
 $(document).ready(function () {

@@ -19,6 +19,7 @@ $branch_id           = '';
 $line_id           = '';
 $group_id           = '';
 $download_access = '';
+$sub_status_mapping = '';
 $mastermodule    = '';
 $company_creation      = '';
 $branch_creation = '';
@@ -149,6 +150,7 @@ if($idupd>0)
 			$line_id          		     = $getUser['line_id'];
 			$group_id          		     = $getUser['group_id'];
 			$download_access          		     = $getUser['download_access'];
+			$sub_status_mapping          		     = $getUser['sub_status_mapping'];
 			$mastermodule          		     = $getUser['mastermodule'];
 			$company_creation          		     = $getUser['company_creation'];
 			$branch_creation          		     = $getUser['branch_creation'];
@@ -494,6 +496,19 @@ if($idupd>0)
 													<label class="form-check-label" for="download_access2">No</label>
 										<!-- <input type="checkbox" value="Yes"  tabindex="10" id="downloan_access" name="downloan_access">&nbsp;&nbsp; -->
 										<!-- <label class="custom-control-label" for="downloan_access">Download Access</label> -->
+                                        </div>
+                                    </div>
+									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                                        <div class="form-group">
+                                            <label for="sub_status_mapping">Sub Status Mapping</label>
+											<select tabindex="10" type="text" class="form-control" id="sub_status_mapping" name="sub_status_mapping" multiple>
+												<option value="">Select Sub Status</option>   
+												<!-- <option value="Legal" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Legal') echo 'selected'; ?>>Legal</option>   
+												<option value="Error" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Error') echo 'selected'; ?>>Error</option>   
+												<option value="OD" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'OD') echo 'selected'; ?>>OD</option>   
+												<option value="Pending" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Pending') echo 'selected'; ?>>Pending</option>   
+												<option value="Current" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Current') echo 'selected'; ?>>Current</option>    -->
+											</select> 
                                         </div>
                                     </div>
 								</div>

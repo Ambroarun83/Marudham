@@ -7,12 +7,15 @@ if (isset($_SESSION['userid'])) {
     $user_id = $_SESSION['userid'];
 }
 
+$sub_status_mapping ='';
+
 if ($user_id != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
+    $userQry = $con->query("SELECT group_id, line_id, sub_status_mapping FROM USER WHERE user_id = $user_id ");
     while ($rowuser = $userQry->fetch_assoc()) {
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
+        $sub_status_mapping = $rowuser['sub_status_mapping'];
     }
 
     $line_id = explode(',', $line_id);
@@ -42,7 +45,7 @@ $orderDir = $_POST['order'][0]['dir'];
 $order = $columns[$_POST['order'][0]['column']] ? "ORDER BY " . $columns[$_POST['order'][0]['column']] . " $orderDir" : "";
 $search = $searchValue != '' ? "and (cp.cus_name LIKE '%$searchValue%' or ii.cus_id LIKE '$searchValue%' or cp.mobile1 LIKE '$searchValue%' )" : '';
 
-$query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id, cs.sub_status FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN customer_status cs ON cp.cus_id = cs.cus_id WHERE cs.payable_amnt > 0 AND ii.status = 0 AND (ii.cus_status >= 14 AND ii.cus_status <= 17) $search AND cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id, cs.cus_id $order LIMIT $start, $length"; // 14 and 17 means collection entries, 17 removed from issue list
+$query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id, cs.sub_status FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN customer_status cs ON cp.cus_id = cs.cus_id WHERE cs.payable_amnt > 0 AND cs.sub_status = '$sub_status_mapping' AND ii.status = 0 AND (ii.cus_status >= 14 AND ii.cus_status <= 17) $search AND cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id, cs.cus_id $order LIMIT $start, $length"; // 14 and 17 means collection entries, 17 removed from issue list
 
 //this will only take selected req_ids which is payable > 0
 $statement = $connect->prepare($query);
