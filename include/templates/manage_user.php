@@ -498,19 +498,6 @@ if($idupd>0)
 										<!-- <label class="custom-control-label" for="downloan_access">Download Access</label> -->
                                         </div>
                                     </div>
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                                        <div class="form-group">
-                                            <label for="sub_status_mapping">Sub Status Mapping</label>
-											<select tabindex="10" type="text" class="form-control" id="sub_status_mapping" name="sub_status_mapping" multiple>
-												<option value="">Select Sub Status</option>   
-												<!-- <option value="Legal" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Legal') echo 'selected'; ?>>Legal</option>   
-												<option value="Error" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Error') echo 'selected'; ?>>Error</option>   
-												<option value="OD" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'OD') echo 'selected'; ?>>OD</option>   
-												<option value="Pending" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Pending') echo 'selected'; ?>>Pending</option>   
-												<option value="Current" <?php if(isset($sub_status_mapping)) if($sub_status_mapping == 'Current') echo 'selected'; ?>>Current</option>    -->
-											</select> 
-                                        </div>
-                                    </div>
 								</div>
 							</div>
 						</div>
@@ -951,6 +938,19 @@ if($idupd>0)
                                 <label class="custom-control-label" for="due_followup">Due Followup</label>
                             </div>
                         </div>
+					</div>
+						</br></br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 sub_status" style='display:none'>
+							<div class="custom-control custom-checkbox">
+								<label for="sub_status_mapping">Sub Status Mapping</label>
+								<input type='hidden' class='form-control' id='edit_sub_status_mapping' name='edit_sub_status_mapping' value="<?php echo $sub_status_mapping; ?>">
+								<select tabindex="10" type="text" class="form-control" id="sub_status_mapping" name="sub_status_mapping" multiple>
+									<option value="">Select Sub Status</option>   
+								</select> 
+								<span class='text-danger subStatusCheck' style="display:none">Please Select Sub Status Mapping</span>
+							</div>
+						</div>
 					</div>
 
 					<hr>

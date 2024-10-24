@@ -2227,8 +2227,8 @@ class admin
 			$download_access = $_POST['download_access'];
 		}
 		$sub_status_mapping = '';
-		if (isset($_POST['sub_status_mapping'])) {
-			$sub_status_mapping = $_POST['sub_status_mapping'];
+		if (isset($_POST['edit_sub_status_mapping'])) {
+			$sub_status_mapping = $_POST['edit_sub_status_mapping'];
 		}
 		if (isset($_POST['mastermodule']) &&    $_POST['mastermodule'] == 'Yes') {
 			$mastermodule = 0;
@@ -2677,8 +2677,8 @@ class admin
 			$download_access = $_POST['download_access'];
 		}
 		$sub_status_mapping = '';
-		if (isset($_POST['sub_status_mapping'])) {
-			$sub_status_mapping = $_POST['sub_status_mapping'];
+		if (isset($_POST['edit_sub_status_mapping'])) {
+			$sub_status_mapping = $_POST['edit_sub_status_mapping'];
 		}
 		if (isset($_POST['mastermodule']) &&    $_POST['mastermodule'] == 'Yes') {
 			$mastermodule = 0;
