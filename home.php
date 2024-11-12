@@ -444,6 +444,11 @@ define('DACC', $getuserdetails['download_access']);
 				<?php include "include/templates/balance_report.php" ?>
 			<?php } else ?>
 
+			<!-- Agent Report -->
+			<?php if ($current_page == 'agent_report') { ?>
+				<?php include "include/templates/agent_report.php" ?>
+			<?php } else ?>
+
 
 			<!-- Search Module -->
 			<?php if ($current_page == 'search_module') { ?>
