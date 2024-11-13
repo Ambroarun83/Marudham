@@ -42,7 +42,7 @@ $(document).ready(function () {
             };
 
             // Array of column indices to sum
-            var columnsToSum = [10];
+            var columnsToSum = [3,4,5,6];
 
             // Loop through each column index
             columnsToSum.forEach(function (colIndex) {

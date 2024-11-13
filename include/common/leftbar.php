@@ -181,6 +181,7 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$agent_report = '';
 $search_module = '';
 $search = '';
 $bulk_upload_module = '';
@@ -266,6 +267,7 @@ if (sizeof($getUser) > 0) {
 		$balance_report          		     = $getUser['balance_report'];
 		$due_list_report          		     = $getUser['due_list_report'];
 		$closed_report          		     = $getUser['closed_report'];
+		$agent_report          		     = $getUser['agent_report'];
 
 		$search_module          		     = $getUser['search_module'];
 		$search          		     = $getUser['search'];
@@ -836,7 +838,7 @@ if (sizeof($getUser) > 0) {
 										<a href="closed_report"><i class='icon-area-graph'></i>Closed</a>
 									</li>
 								<?php  } ?>
-								<?php if ($closed_report == 0) { ?>
+								<?php if ($agent_report == 0) { ?>
 									<li>
 										<a href="agent_report"><i class='icon-area-graph'></i>Agent</a>
 									</li>
@@ -999,6 +1001,7 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$agent_report = '';
 $search_module = '';
 $search = '';
 $bulk_upload_module = '';

@@ -1099,7 +1099,8 @@ function getRoleTypeBasedDetails(role, role_type) {
 function getSubStatusMapping() {
     let subStatus =['Legal','Error','OD','Pending','Current'];
     let editSubStatus = $('#edit_sub_status_mapping').val();
-    if (editSubStatus != '') {
+    let dueFollowUp = document.querySelector('#due_followup');
+    if (dueFollowUp.checked) {
         $('.sub_status').show();
     }
 

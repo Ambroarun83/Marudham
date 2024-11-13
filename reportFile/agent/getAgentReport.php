@@ -8,7 +8,7 @@ $where = "";
 if (isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date'] != '' && $_POST['to_date'] != '') {
     $from_date = date('Y-m-d', strtotime($_POST['from_date']));
     $to_date = date('Y-m-d', strtotime($_POST['to_date']));
-    $where  = "and (date(cs.created_date) >= '" . $from_date . "') and (date(cs.created_date) <= '" . $to_date . "') ";
+    $where  = "AND (date(c.created_date) >= '" . $from_date . "') AND (date(c.created_date) <= '" . $to_date . "') ";
 }
 
 $bankqry = $con->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
@@ -24,67 +24,127 @@ $ag_user_id = implode(',', $ids);
 
 $column = array(
     'tdate',
-    'u.ag_id',
-    'cl.created_date',
-    'cl.total_paid_track'
+    'ag_name',
+    'created_date',
+    'total_paid_track'
 );
 
-$query = "SELECT ac.ag_name, u.ag_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
-    FROM collection cl JOIN user u ON cl.insert_login_id = u.user_id
-    JOIN agent_creation ac ON u.ag_id = ac.ag_id
-    WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) <= MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) <= YEAR(CURRENT_DATE()) and FIND_IN_SET(cl.insert_login_id,'$ag_user_id')
-    
+$query = "SELECT * FROM (
+    SELECT 
+        ac.ag_name, 
+        u.ag_id AS ag_id, 
+        DATE(c.created_date) as tdate, 
+        c.total_paid_track as coll_amt, 
+        '' AS netcash, 
+        '' AS Credit, 
+        '' AS Debit
+    FROM 
+        collection c 
+    JOIN 
+        user u ON c.insert_login_id = u.user_id
+    JOIN 
+        agent_creation ac ON u.ag_id = ac.ag_id
+    WHERE 
+        c.total_paid_track != '' 
+        AND FIND_IN_SET(c.insert_login_id,'$ag_user_id') $where
+
     UNION ALL
 
-    SELECT ac.ag_name, li.agent_id AS ag_id, date(li.created_date) as tdate,'' as coll_amt, li.cash + li.cheque_value + li.transaction_value AS netcash, '' AS Credit, '' AS Debit 
-    FROM loan_issue li JOIN user u ON u.user_id = '$user_id'
-    JOIN agent_creation ac ON li.agent_id = ac.ag_id
-    WHERE MONTH(li.created_date) <= MONTH(CURRENT_DATE()) AND YEAR(li.created_date) <= YEAR(CURRENT_DATE()) and FIND_IN_SET(li.agent_id,u.agentforstaff)
+    SELECT 
+        ac.ag_name, 
+        c.agent_id AS ag_id, 
+        DATE(c.created_date) as tdate, 
+        '' AS coll_amt, 
+        c.cash + c.cheque_value + c.transaction_value AS netcash, 
+        '' AS Credit, 
+        '' AS Debit 
+    FROM 
+        loan_issue c 
+    JOIN 
+        user u ON u.user_id = '$user_id'
+    JOIN 
+        agent_creation ac ON c.agent_id = ac.ag_id
+    WHERE 
+        FIND_IN_SET(c.agent_id, u.agentforstaff) $where
 
     UNION ALL 
 
-    SELECT ac.ag_name, cdh.ag_id, cdh.created_date AS tdate, '' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit 
-    FROM ct_db_hag cdh
-    JOIN agent_creation ac ON cdh.ag_id = ac.ag_id
-    WHERE MONTH(cdh.created_date) <= MONTH(CURRENT_DATE()) AND YEAR(cdh.created_date) <= YEAR(CURRENT_DATE()) AND cdh.insert_login_id = '$user_id'
-    
-    UNION ALL 
-    
-    SELECT ac.ag_name, cdb.ag_id, cdb.created_date AS tdate,'' AS coll_amt,'' AS netcash, '' AS Credit, amt AS Debit 
-    FROM ct_db_bag cdb
-    JOIN agent_creation ac ON cdb.ag_id = ac.ag_id
-    WHERE MONTH(cdb.created_date) <= MONTH(CURRENT_DATE()) AND YEAR(cdb.created_date) <= YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id')
-    
-    UNION ALL 
-    
-    SELECT ac.ag_name, cch.ag_id, cch.created_date AS tdate,'' AS coll_amt,'' AS netcash, amt AS Credit, '' AS Debit 
-    FROM ct_cr_hag cch
-    JOIN agent_creation ac ON cch.ag_id = ac.ag_id
-    WHERE MONTH(cch.created_date) <= MONTH(CURRENT_DATE()) AND YEAR(cch.created_date) <= YEAR(CURRENT_DATE()) AND cch.insert_login_id = '$user_id'
-    
-    UNION ALL 
-    
-    SELECT ac.ag_name, ccb.ag_id, ccb.created_date AS tdate,'' AS coll_amt,'' AS netcash, amt AS Credit, '' AS Debit 
-    FROM ct_cr_bag ccb
-    JOIN agent_creation ac ON ccb.ag_id = ac.ag_id
-    WHERE MONTH(ccb.created_date) <= MONTH(CURRENT_DATE()) AND YEAR(ccb.created_date) <= YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id')
-    
-    ";
+    SELECT 
+        ac.ag_name, 
+        c.ag_id, 
+        c.created_date AS tdate, 
+        '' AS coll_amt, 
+        '' AS netcash, 
+        '' AS Credit, 
+        amt AS Debit 
+    FROM 
+        ct_db_hag c
+    JOIN 
+        agent_creation ac ON c.ag_id = ac.ag_id
+    WHERE 
+        c.insert_login_id = '$user_id' $where
 
-// ORDER BY tdate
+    UNION ALL 
+    
+    SELECT 
+        ac.ag_name, 
+        c.ag_id, 
+        c.created_date AS tdate, 
+        '' AS coll_amt, 
+        '' AS netcash, 
+        '' AS Credit, 
+        amt AS Debit 
+    FROM 
+        ct_db_bag c
+    JOIN 
+        agent_creation ac ON c.ag_id = ac.ag_id
+    WHERE 
+        FIND_IN_SET(bank_id, '$bank_id') $where
 
-if (isset($_POST['search'])) {
-    if ($_POST['search'] != "") {
-        $query .= " and (u.ag_id LIKE '%" . $_POST['search'] . "%' OR
-            cl.created_date LIKE '%" . $_POST['search'] . "%' OR
-            cl.total_paid_track LIKE '%" . $_POST['search'] . "%' ) ";
-    }
+    UNION ALL 
+    
+    SELECT 
+        ac.ag_name, 
+        c.ag_id, 
+        c.created_date AS tdate, 
+        '' AS coll_amt, 
+        '' AS netcash, 
+        amt AS Credit, 
+        '' AS Debit 
+    FROM 
+        ct_cr_hag c
+    JOIN 
+        agent_creation ac ON c.ag_id = ac.ag_id
+    WHERE 
+        c.insert_login_id = '$user_id' $where
+
+    UNION ALL 
+    
+    SELECT 
+        ac.ag_name, 
+        c.ag_id, 
+        c.created_date AS tdate, 
+        '' AS coll_amt, 
+        '' AS netcash, 
+        amt AS Credit, 
+        '' AS Debit 
+    FROM 
+        ct_cr_bag c
+    JOIN 
+        agent_creation ac ON c.ag_id = ac.ag_id
+    WHERE 
+        FIND_IN_SET(bank_id, '$bank_id') $where
+) AS temp";
+
+if (isset($_POST['search']) && $_POST['search'] != "") {
+    $query .= " WHERE (ag_name LIKE '%" . $_POST['search'] . "%' OR 
+        tdate LIKE '%" . $_POST['search'] . "%')";
 }
 
 if (isset($_POST['order'])) {
-    $query .= " ORDER BY " . $column[$_POST['order']['0']['column']] . ' ' . $_POST['order']['0']['dir'];
+    $query .= " ORDER BY " . $column[$_POST['order']['0']['column']] . " " . $_POST['order']['0']['dir'];
 } else {
-    $query .= ' ';
+    $query .= " ORDER BY tdate DESC"; // Default ordering
 }
 
 $query1 = "";
@@ -109,10 +169,10 @@ foreach ($result as $row) {
     $sub_array[] = $sno;
     $sub_array[] = $row['ag_name'];
     $sub_array[] = date('d-m-Y', strtotime($row['tdate']));
-    $sub_array[] = moneyFormatIndia($row['coll_amt']);
-    $sub_array[] = moneyFormatIndia($row['netcash']);
-    $sub_array[] = moneyFormatIndia($row['Credit']);
-    $sub_array[] = moneyFormatIndia($row['Debit']);
+    $sub_array[] = ($row['coll_amt'] !='') ? moneyFormatIndia($row['coll_amt']) : 0;
+    $sub_array[] = ($row['netcash'] !='') ? moneyFormatIndia($row['netcash']) : 0;
+    $sub_array[] = ($row['Credit'] !='') ? moneyFormatIndia($row['Credit']) : 0;
+    $sub_array[] = ($row['Debit'] !='') ? moneyFormatIndia($row['Debit']) : 0;
 
     $data[]      = $sub_array;
     $sno = $sno + 1;
@@ -120,7 +180,19 @@ foreach ($result as $row) {
 
 function count_all_data($mysqli)
 {
-    $query = $mysqli->query("SELECT count(ag_id) as ag_count FROM agent_creation where status = 0 ");
+    $query = $mysqli->query("SELECT COUNT(*) AS ag_count FROM (
+            SELECT 1 FROM collection
+            UNION ALL
+            SELECT 1 FROM loan_issue
+            UNION ALL
+            SELECT 1 FROM ct_db_hag
+            UNION ALL
+            SELECT 1 FROM ct_db_bag
+            UNION ALL
+            SELECT 1 FROM ct_cr_hag
+            UNION ALL
+            SELECT 1 FROM ct_cr_bag
+        ) AS temp");
     $statement = $query->fetch_assoc();
     return $statement['ag_count'];
 }
