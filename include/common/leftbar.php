@@ -48,7 +48,7 @@ if (
 } else if ($current_page == 'edit_noc' || $current_page == 'noc') {
 
 	$current_module = 'noc';
-} else if ($current_page == 'edit_update' || $current_page == 'update' || $current_page == 'document_track') {
+} else if ($current_page == 'edit_update' || $current_page == 'update' || $current_page == 'document_track' || $current_page == 'update_customer_status') {
 
 	$current_module = 'update';
 } //else if($current_page == 'document_track'){
@@ -67,7 +67,7 @@ else if ($current_page == 'edit_concern_creation' || $current_page == 'edit_conc
 	$current_module = 'followup';
 } else if (
 	$current_page == 'ledger_report' || $current_page == 'request_report' || $current_page == 'cus_profile_report' || $current_page == 'loan_issue_report'
-	|| $current_page == 'collection_report' || $current_page == 'balance_report' || $current_page == 'due_list_report' || $current_page == 'closed_report'
+	|| $current_page == 'collection_report' || $current_page == 'balance_report' || $current_page == 'due_list_report' || $current_page == 'closed_report' || $current_page == 'agent_report'
 ) {
 
 	$current_module = 'report';
@@ -181,6 +181,7 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$agent_report = '';
 $search_module = '';
 $search = '';
 $bulk_upload_module = '';
@@ -266,6 +267,7 @@ if (sizeof($getUser) > 0) {
 		$balance_report          		     = $getUser['balance_report'];
 		$due_list_report          		     = $getUser['due_list_report'];
 		$closed_report          		     = $getUser['closed_report'];
+		$agent_report          		     = $getUser['agent_report'];
 
 		$search_module          		     = $getUser['search_module'];
 		$search          		     = $getUser['search'];
@@ -696,6 +698,13 @@ if (sizeof($getUser) > 0) {
 										<a href="document_track"><i class='icon-broken_image'></i>Document Track</a>
 									</li>
 								<?php  } ?>
+
+								<?php if ($doctrack == 0) { ?>
+									<li>
+										<a href="update_customer_status"><i class='icon-broken_image'></i>Update Customer Status</a>
+									</li>
+								<?php  } ?>
+
 							</ul>
 						</div>
 					</li>
@@ -827,6 +836,11 @@ if (sizeof($getUser) > 0) {
 								<?php if ($closed_report == 0) { ?>
 									<li>
 										<a href="closed_report"><i class='icon-area-graph'></i>Closed</a>
+									</li>
+								<?php  } ?>
+								<?php if ($agent_report == 0) { ?>
+									<li>
+										<a href="agent_report"><i class='icon-area-graph'></i>Agent</a>
 									</li>
 								<?php  } ?>
 							</ul>
@@ -987,6 +1001,7 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$agent_report = '';
 $search_module = '';
 $search = '';
 $bulk_upload_module = '';

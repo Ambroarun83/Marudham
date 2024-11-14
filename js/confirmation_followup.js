@@ -259,9 +259,8 @@ function historyTableContents(req_id, cus_id, type) {
                 balAmnt = balAmnt.join(',');
             }
         }
-    })
+    }).then(() => {
     showOverlay();//loader start
-    setTimeout(() => {
 
         var pending_sts = $('#pending_sts').val()
         var od_sts = $('#od_sts').val()
@@ -329,7 +328,7 @@ function historyTableContents(req_id, cus_id, type) {
             $('#close_history_card').hide();// Hides the close button
         })
         hideOverlay();//loader stop
-    }, 2000)
+    })
 
 }
 function removeConfirmation(req_id) {

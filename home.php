@@ -339,6 +339,11 @@ define('DACC', $getuserdetails['download_access']);
 				<?php include "include/templates/document_track.php" ?>
 			<?php } else ?>
 
+			<!-- update customer status Screen -->
+			<?php if ($current_page == 'update_customer_status') { ?>
+				<?php include "include/templates/update_customer_status.php" ?>
+			<?php } else ?>
+
 			<!-- Update Screen -->
 			<?php if ($current_page == 'edit_update') { ?>
 				<?php include "include/templates/edit_update.php" ?>
@@ -437,6 +442,11 @@ define('DACC', $getuserdetails['download_access']);
 			<!-- Balance Report -->
 			<?php if ($current_page == 'balance_report') { ?>
 				<?php include "include/templates/balance_report.php" ?>
+			<?php } else ?>
+
+			<!-- Agent Report -->
+			<?php if ($current_page == 'agent_report') { ?>
+				<?php include "include/templates/agent_report.php" ?>
 			<?php } else ?>
 
 

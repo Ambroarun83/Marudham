@@ -19,6 +19,7 @@ $branch_id           = '';
 $line_id           = '';
 $group_id           = '';
 $download_access = '';
+$sub_status_mapping = '';
 $mastermodule    = '';
 $company_creation      = '';
 $branch_creation = '';
@@ -81,6 +82,7 @@ $collection_report = '';
 $balance_report = '';
 $due_list_report = '';
 $closed_report = '';
+$agent_report = '';
 $search_module = '';
 $search_screen = '';
 $bulk_upload_module = '';
@@ -149,6 +151,7 @@ if($idupd>0)
 			$line_id          		     = $getUser['line_id'];
 			$group_id          		     = $getUser['group_id'];
 			$download_access          		     = $getUser['download_access'];
+			$sub_status_mapping          		     = $getUser['sub_status_mapping'];
 			$mastermodule          		     = $getUser['mastermodule'];
 			$company_creation          		     = $getUser['company_creation'];
 			$branch_creation          		     = $getUser['branch_creation'];
@@ -213,6 +216,7 @@ if($idupd>0)
 			$balance_report          		     = $getUser['balance_report'];
 			$due_list_report          		     = $getUser['due_list_report'];
 			$closed_report          		     = $getUser['closed_report'];
+			$agent_report          		     = $getUser['agent_report'];
 
 			$search_module = $getUser['search_module'];
 			$search_screen = $getUser['search'];
@@ -937,6 +941,19 @@ if($idupd>0)
                             </div>
                         </div>
 					</div>
+						</br></br>
+					<div class="row">
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 sub_status" style='display:none'>
+							<div class="custom-control custom-checkbox">
+								<label for="sub_status_mapping">Sub Status Mapping</label>
+								<input type='hidden' class='form-control' id='edit_sub_status_mapping' name='edit_sub_status_mapping' value="<?php echo $sub_status_mapping; ?>">
+								<select tabindex="10" type="text" class="form-control" id="sub_status_mapping" name="sub_status_mapping" multiple>
+									<option value="">Select Sub Status</option>   
+								</select> 
+								<span class='text-danger subStatusCheck' style="display:none">Please Select Sub Status Mapping</span>
+							</div>
+						</div>
+					</div>
 
 					<hr>
 
@@ -994,6 +1011,12 @@ if($idupd>0)
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($closed_report==0){ echo'checked'; }} ?> tabindex="69" class="report-checkbox" id="closed_report" name="closed_report" disabled>&nbsp;&nbsp;
                                 <label class="custom-control-label" for="closed_report">Closed</label>
+                            </div>
+                        </div>
+						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" value="Yes" <?php if($idupd > 0){ if($agent_report==0){ echo'checked'; }} ?> tabindex="69" class="report-checkbox" id="agent_report" name="agent_report" disabled>&nbsp;&nbsp;
+                                <label class="custom-control-label" for="agent_report">Agent</label>
                             </div>
                         </div>
 					</div>

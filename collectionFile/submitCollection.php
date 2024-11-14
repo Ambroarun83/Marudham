@@ -156,11 +156,13 @@ if ($cheque_no != '') {
 }
 
 $check = intval($due_amt_track) + intval($pre_close_waiver) - intval($bal_amt);
+$collected_amnt = intval($due_amt_track) + intval($pre_close_waiver);
 
 if (($princ_amt_track != '' or $int_amt_track != '') and ($due_amt_track == '' or $due_amt_track == 0 or $due_amt_track == null)) {
     // if this condition is true then it will be the interest based loan. coz thats where we able to give princ/int amt track and not able to give due amt track
     //if yes then $check variable should check with principal amt
     $check = intVal($princ_amt_track) + intVal($pre_close_waiver) - intval($bal_amt);
+    $collected_amnt = intval($princ_amt_track) + intval($pre_close_waiver);
 }
 
 $penalty_check = intval($penalty_track) + intval($penalty_waiver) - intval($penalty);
@@ -176,6 +178,58 @@ if ($check == 0 && $penalty_check == 0 && $coll_charge_check == 0) {
     $mysqli->query("UPDATE `in_issue` SET `cus_status`= $cus_status, `update_login_id` = $userid where req_id = '" . $req_id . "' ") or die('Error on in_issue Table');
     $mysqli->query("INSERT INTO `closing_customer` (req_id,cus_id,closing_date) VALUES ($req_id, $cus_id, DATE(now()) ) ") or die('Error on closing_customer Table');
 }
+
+$pending_amount = intval($pending_amt) - $collected_amnt;
+$pending_amnts = ($pending_amount > 0) ? $pending_amount : 0;
+
+$payable_amount = intval($payable_amt) - $collected_amnt;
+$payable_amnts = ($payable_amount > 0) ? $payable_amount : 0;
+
+$bal_amount = intval($bal_amt) - $collected_amnt;
+$bal_amnts = ($bal_amount > 0) ? $bal_amount : 0;
+
+if ($sub_status == 'OD') {
+    if ($check == 0 && $penalty_check == 0 && $coll_charge_check == 0) {
+        $substs = 'Closed';
+    } else {
+        $substs = ($check == 0 && ($penalty_check > 0 || $coll_charge_check > 0)) ? 'Due Nil' : 'OD';
+    }
+    
+} elseif ($sub_status == 'Pending') {
+    $substs = ($pending_amnts == 0) ? 'Current' : 'Pending';
+
+    $result = $con->query("SELECT maturity_month, due_method_calc, due_method_scheme FROM `acknowlegement_loan_calculation` WHERE req_id = $req_id ");
+    $row = $result->fetch_assoc();
+
+    if($row['due_method_calc'] == 'Monthly' || $row['due_method_scheme'] == '1'){
+        $maturity_month = date('Y-m', strtotime($row['maturity_month']));
+        $date_format = 'Y-m';
+        $current_date = date('Y-m');
+    }else{
+        $maturity_month = $row['maturity_month'];
+        $date_format = 'Y-m-d';
+        $current_date = date('Y-m-d');
+
+    }
+
+    $end_date_obj = DateTime::createFromFormat($date_format, $maturity_month);
+    $current_date_obj = DateTime::createFromFormat($date_format, $current_date);
+
+    if ($current_date_obj > $end_date_obj) {
+        $substs = 'OD';
+    }
+
+} else {    
+    $substs = 'Current';
+}
+
+$qry = $connect->query("SELECT * FROM customer_status WHERE req_id = '$req_id' ");
+if($qry->rowCount() > 0){
+    $query = $connect->query("UPDATE `customer_status` SET `cus_id`='$cus_id',`sub_status`='$substs',`payable_amnt` = '$payable_amnts', `bal_amnt`='$bal_amnts',`insert_login_id`='$userid',`created_date`=now() WHERE `req_id`='$req_id' ");
+}else{
+    $query = $connect->query("INSERT INTO `customer_status`( `req_id`, `cus_id`, `sub_status`, `payable_amnt`, `bal_amnt`, `insert_login_id`, `created_date`) VALUES ('$req_id','$cus_id','$substs','$payable_amnts','$bal_amnts','$userid', now() )");
+}
+
 // $qry = $con->query("SELECT customer_name, mobile1 from customer_register where req_ref_id = '$req_id' ");
 // $row = $qry->fetch_assoc();
 // $customer_name = $row['customer_name'];

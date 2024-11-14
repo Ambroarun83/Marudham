@@ -35,6 +35,12 @@ const bankMultiselect = new Choices('#bank_details1', {
     allowHTML: true
 
 });
+const subStatusMultiselect = new Choices('#sub_status_mapping', {
+    removeItemButton: true,
+    noChoicesText: 'Select Sub Status',
+    allowHTML: true
+
+});
 
 // Document is ready
 $(document).ready(function () {
@@ -264,6 +270,9 @@ $(document).ready(function () {
         const checkboxesToEnable = document.querySelectorAll("input.followup-checkbox");
         var followupmodule = document.querySelector('#followupmodule');
         checkbox(checkboxesToEnable, followupmodule);
+        if (!followupmodule.checked) {
+            $('.sub_status').hide()
+        }
     });
     $("#reportmodule").on("change", function () {
         const checkboxesToEnable = document.querySelectorAll("input.report-checkbox");
@@ -298,6 +307,16 @@ $(document).ready(function () {
             $('.bank_details').show()
         } else {
             $('.bank_details').hide()
+        }
+    })
+
+    $('#due_followup').click(function () {
+        var due_followup = document.querySelector('#due_followup');
+        if (due_followup.checked) {
+            getSubStatusMapping();
+            $('.sub_status').show()
+        } else {
+            $('.sub_status').hide()
         }
     })
 
@@ -340,6 +359,7 @@ $(function () {
         getGroupDropdown(branch_id_upd);
 
         getBankDetails();
+        getSubStatusMapping();
 
         var mastermodule = document.getElementById('mastermodule');
         var adminmodule = document.getElementById('adminmodule');
@@ -884,6 +904,19 @@ function multiselectValue() {
     var group = $('#group').val();
     if (group == '') { event.preventDefault(); $('#groupCheck').show(); } else { $('#groupCheck').hide(); }
     //////////////////////////////////////////////////
+    var subStatusMapping = subStatusMultiselect.getValue();
+    var subSts = '';
+    for (var i = 0; i < subStatusMapping.length; i++) {
+        if (i > 0) {
+            subSts += ',';
+        }
+        subSts += subStatusMapping[i].value;
+    }
+    var arr = subSts.split(",");
+    arr.sort(function (a, b) { return a - b });
+    var sortedStr = arr.join(",");
+    $('#edit_sub_status_mapping').val(sortedStr);
+    //////////////////////////////////////////////////
 }
 
 function validation() {
@@ -982,6 +1015,18 @@ function validation() {
         //     $('.bankdetailsCheck').hide();
         // }
     }
+    var due_followup = document.querySelector('#due_followup');
+    var subSts = subStatusMultiselect.getValue();
+    if (!due_followup.checked) {
+        $('#edit_sub_status_mapping').val('')
+    } else {
+        if(subSts.length == 0){
+            event.preventDefault();
+            $('.subStatusCheck').show();
+        }else{
+            $('.subStatusCheck').hide();
+        }
+    }
 }
 
 
@@ -1048,4 +1093,28 @@ function getRoleTypeBasedDetails(role, role_type) {
         $('.staff').show();
         getStaffName(role_type);
     }
+}
+
+//Sub status Mapping
+function getSubStatusMapping() {
+    let subStatus =['Legal','Error','OD','Pending','Current'];
+    let editSubStatus = $('#edit_sub_status_mapping').val();
+    let dueFollowUp = document.querySelector('#due_followup');
+    if (dueFollowUp.checked) {
+        $('.sub_status').show();
+    }
+
+    subStatusMultiselect.clearStore();
+    $.each(subStatus, function(index, val){
+        let selected = '';
+        if(editSubStatus.includes(val)){
+            selected = 'selected';
+        }
+        let items = [
+            {value: val, label: val, selected: selected},
+        ]
+        subStatusMultiselect.setChoices(items);
+        subStatusMultiselect.init();
+    });
+
 }

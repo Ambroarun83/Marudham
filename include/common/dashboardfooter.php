@@ -1194,6 +1194,11 @@
         <script src="js/document_track.js"></script>
     <?php }
 
+    //Update Customer Status Screen
+    if ($current_page == 'update_customer_status') { ?>
+        <script src="js/update_customer_status.js"></script>
+    <?php }
+
 
     //Update Screen
     if ($current_page == 'update') { ?>
@@ -1264,6 +1269,9 @@
     <?php }
     if ($current_page == 'balance_report') { ?>
         <script src="js/balance_report.js"></script>
+    <?php }
+    if ($current_page == 'agent_report') { ?>
+        <script src="js/agent_report.js"></script>
     <?php }
     if ($current_page == 'search_module') { ?>
         <script src="js/search_module.js"></script>

@@ -123,8 +123,10 @@ $(document).ready(function () {
         let submit_btn = $(this);
         submit_btn.attr('disabled', true);
         if (validations()) {
+            let totAmt = $('#paid_amt').val();
             Swal.fire({
-                title: 'Are you sure to Submit?',
+                title: `The Total Paid Amount is  ${totAmt}`,
+                text: 'Are you sure to Submit?',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#009688',
