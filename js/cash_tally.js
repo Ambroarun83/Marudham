@@ -3116,7 +3116,11 @@ function hinvvalidation(type) {
     var name = $('#name_hinv').val(); var remark = $('#remark_hinv').val(); var amt = $('#amt_hinv').val(); var response = 0;
     if (name == '') { event.preventDefault(); $('#name_hinvCheck').show(); response = 1; } else { $('#name_hinvCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_hinvCheck').show(); response = 1; } else { $('#remark_hinvCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_hinvCheck').show(); response = 1; } else { $('#amt_hinvCheck').hide(); if (type == 'db' && name != '') { response = validateNamedHandCash(name, amt, 'amt_hinv', 'inv') } }
+    if (amt == '') { event.preventDefault(); $('#amt_hinvCheck').show(); response = 1; } else { $('#amt_hinvCheck').hide(); if (type == 'db' && name != '') { var validateResponse = validateNamedHandCash(name, amt, 'amt_hinv', 'inv') 
+        setTimeout(() => {
+            response = validateResponse;
+        }, 1000);    
+    } }
 
     return response;
 }
@@ -3540,7 +3544,11 @@ function hdepvalidation(type) {
     var name = $('#name_hdep').val(); var remark = $('#remark_hdep').val(); var amt = $('#amt_hdep').val(); var response = 0;
     if (name == '') { event.preventDefault(); $('#name_hdepCheck').show(); response = 1; } else { $('#name_hdepCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_hdepCheck').show(); response = 1; } else { $('#remark_hdepCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_hdepCheck').show(); response = 1; } else { $('#amt_hdepCheck').hide(); if (type == 'db' && name != '') { response = validateNamedHandCash(name, amt, 'amt_hdep', 'dep') } }
+    if (amt == '') { event.preventDefault(); $('#amt_hdepCheck').show(); response = 1; } else { $('#amt_hdepCheck').hide(); if (type == 'db' && name != '') { var validateResponse = validateNamedHandCash(name, amt, 'amt_hdep', 'dep');
+        setTimeout(() => {
+            response = validateResponse;
+        }, 1000);
+     } }
     return response;
 }
 
@@ -3961,7 +3969,11 @@ function helvalidation() {
     let cash_type = $('#credit_type').val() != '' ? 'crel' : 'dbel';
     if (name == '') { event.preventDefault(); $('#name_helCheck').show(); response = 1; } else { $('#name_helCheck').hide(); }
     if (remark == '') { event.preventDefault(); $('#remark_helCheck').show(); response = 1; } else { $('#remark_helCheck').hide(); }
-    if (amt == '') { event.preventDefault(); $('#amt_helCheck').show(); response = 1; } else { $('#amt_helCheck').hide(); response = validateNamedHandCash(name, amt, 'amt_hel', cash_type) }
+    if (amt == '') { event.preventDefault(); $('#amt_helCheck').show(); response = 1; } else { $('#amt_helCheck').hide(); var validateResponse = validateNamedHandCash(name, amt, 'amt_hel', cash_type);
+        setInterval(() => {
+            response = validateResponse;
+        }, 1000);
+     }
     return response;
 }
 
