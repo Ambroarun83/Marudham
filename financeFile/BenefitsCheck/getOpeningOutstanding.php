@@ -5,14 +5,14 @@ include('../../ajaxconfig.php');
 $user_id = ($_POST['user_id'] != '') ? $_POST['user_id'] : '';
 if ($user_id != '') { //to get user's sub area id based on user's branch assigned if user selected
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
+    $userQry = $con->query("SELECT group_id FROM USER WHERE user_id = $user_id ");
     while ($rowuser = $userQry->fetch_assoc()) {
         $group_id = $rowuser['group_id'];
     }
     $group_id = explode(',', $group_id);
     $sub_area_list = array();
     foreach ($group_id as $group) {
-        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
+        $groupQry = $con->query("SELECT sub_area_id FROM area_group_mapping where map_id = $group ");
         $row_sub = $groupQry->fetch_assoc();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
@@ -28,20 +28,17 @@ if ($user_id != '') { //to get user's sub area id based on user's branch assigne
 $type = $_POST['type'];
 
 if ($type == 'today') {
-    $where = " DATE(updated_date) < CURRENT_DATE and cus_status IN (14,15,16,17) ";
+    $where = " DATE(iv.updated_date) < CURRENT_DATE and iv.cus_status IN (14,15,16,17) ";
+    $coll_where = " DATE(c.updated_date) < CURRENT_DATE and iv.cus_status IN (14,15,16,17) ";
 
-    $condition = ($user_id != '') ? " and FIND_IN_SET(sub_area ,'" . $sub_area_list . "') " : ''; //this condition will check user based request ids in in_verification table
-
-    getDetials($con, $condition, $where);
 } else if ($type == 'day') {
 
     $from_date = $_POST['from_date'];
     $to_date = $_POST['to_date'];
 
-    $where = " (DATE(updated_date) < '$from_date' ) and cus_status IN (14,15,16,17) ";
-    $condition = ($user_id != '') ? " and FIND_IN_SET(sub_area ,'" . $sub_area_list . "') " : ''; //this condition will check user based request ids in in_verification table
+    $where = " (DATE(iv.updated_date) < '$from_date' ) and iv.cus_status IN (14,15,16,17) ";
+    $coll_where = " (DATE(c.updated_date) < '$from_date' ) and iv.cus_status IN (14,15,16,17) ";
 
-    getDetials($con, $condition, $where);
 } else if ($type == 'month') {
 
     $month = date('m', strtotime($_POST['month']));
@@ -54,47 +51,44 @@ if ($type == 'today') {
         $year = date('Y', strtotime($_POST['month']));
     }
 
-    $where = " (MONTH(updated_date) < '$month' && YEAR(updated_date) <= '$year') and cus_status IN (14,15,16,17) ";
-    $condition = ($user_id != '') ? " and FIND_IN_SET(sub_area ,'" . $sub_area_list . "') " : ''; //this condition will check user based request ids in in_verification table
-
-    getDetials($con, $condition, $where);
+    $where = " (MONTH(iv.updated_date) < '$month' && YEAR(iv.updated_date) <= '$year') and iv.cus_status IN (14,15,16,17) ";
+    $coll_where = " (MONTH(c.updated_date) < '$month' && YEAR(c.updated_date) <= '$year') and iv.cus_status IN (14,15,16,17) ";
+    
 }
 
+$condition = ($user_id != '') ? " and FIND_IN_SET(iv.sub_area ,'" . $sub_area_list . "') " : ''; //this condition will check user based request ids in in_verification table
+getDetials($con, $condition, $where, $coll_where);
 
-function getDetials($con, $condition, $where)
+
+function getDetials($con, $condition, $where, $coll_where)
 {
-
-    $total_outstanding = 0; //Total outstanding amount
-    $collected_outstanding = 0; //collected outstanding amount
-
-
-    $qry1 = $con->query("SELECT req_id from in_acknowledgement where $where "); // >13 means entries moved to collection from issue
-
-    // $where = str_replace('>','',rtrim($where,'and cus_status IN (14,15,16,17)'));
-    $pattern = '/and cus_status IN \(14,15,16,17\)/';
-    $where = preg_replace($pattern, '', $where);
-
+    // >13 means entries moved to collection from issue
     //removeing customer status and greater than symbol fo collection table//replace will only work for day type
     //reason to use where condition in collection is , we only need collection on particular date for calculating outstanding amt
+    //will check based on user's branch if user selected
+    //will show only interest amunt under user's branch not others also
+    $qry = $con->query("SELECT 
+                        SUM(
+                            CASE 
+                                WHEN COALESCE(alc.tot_amt_cal, 0) != 0 THEN COALESCE(alc.tot_amt_cal, 0)
+                                ELSE COALESCE(alc.principal_amt_cal, 0)
+                            END
+                        ) AS calculated_amount
+                        FROM in_verification iv
+                        JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id
+                        WHERE $where $condition ");
+    //fetching overall collection amount to be get from customers
+    $row = $qry->fetch_assoc();
+    $total_outstanding = $row['calculated_amount']; //Total outstanding amount
 
-    while ($row1 = $qry1->fetch_assoc()) {
-
-        $qry = $con->query("SELECT req_id from in_verification where req_id = '" . $row1['req_id'] . "' $condition "); //will check based on user's branch if user selected
-        //will show only interest amunt under user's branch not others also
-        if ($qry->num_rows > 0) {
-
-
-            $qry = $con->query("SELECT tot_amt_cal, principal_amt_cal from acknowlegement_loan_calculation where req_id = '" . $row1['req_id'] . "' ");
-            //fetching overall collection amount to be get from customers
-            $row = $qry->fetch_assoc();
-            $total_outstanding += intVal($row['tot_amt_cal'] != '' ? $row['tot_amt_cal'] : $row['principal_amt_cal']);
-
-            $qry = $con->query("SELECT sum(due_amt_track) as due_amt_track,sum(princ_amt_track) as princ_amt_track from collection where req_id = '" . $row1['req_id'] . "' and $where ");
-            //getting collected amount till mentioned date
-            $row = $qry->fetch_assoc();
-            $collected_outstanding += intVal($row['due_amt_track'] ?? 0) + intVal($row['princ_amt_track'] ?? 0);
-        }
-    }
+    $qry = $con->query("SELECT 
+                        COALESCE((sum(due_amt_track) + sum(princ_amt_track)), 0 ) as coll_amt_track 
+                        FROM in_verification iv
+                        JOIN collection c ON iv.req_id = c.req_id
+                        WHERE $coll_where $condition ");
+    //getting collected amount till mentioned date
+    $row = $qry->fetch_assoc();
+    $collected_outstanding = $row['coll_amt_track']; //collected outstanding amount
 
     $response['opening_outstanding'] = intval($total_outstanding) - intval($collected_outstanding);
     $response['opening_outstanding'] = moneyFormatIndia($response['opening_outstanding']);

@@ -51,8 +51,8 @@ function getDetails($con, $where, $where2)
 {
 
     $records['closing_bal'] = 0;
-
-    $qry = $con->query("SELECT ct1.insert_login_id, ct1.cl_date AS last_entered_date, ct1.closing_bal
+//ct1.insert_login_id, ct1.cl_date AS last_entered_date, 
+    $qry = $con->query("SELECT ct1.closing_bal
     FROM cash_tally ct1
     WHERE $where and NOT EXISTS (
         SELECT 1
