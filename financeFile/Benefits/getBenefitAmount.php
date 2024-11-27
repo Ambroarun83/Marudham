@@ -1,64 +1,46 @@
 <?php
-
 include('../../ajaxconfig.php');
 $user_id = ($_POST['user_id'] != '') ? $_POST['user_id'] : '';
-
 
 $type = $_POST['type'];
 
 if ($type == 'today') {
+    $where = " DATE(iv.updated_date) = CURRENT_DATE and iv.cus_status > 13 ";
 
-    $where = " DATE(updated_date) = CURRENT_DATE and cus_status > 13 ";
-    $condition = getSubareaList($con, $user_id); //condition will be returned if user id selected
-
-    getDetials($con, $where, $condition);
 } else if ($type == 'day') {
-
     $from_date = $_POST['from_date'];
     $to_date = $_POST['to_date'];
 
-    $where = " (DATE(updated_date) >= DATE('$from_date') && DATE(updated_date) <= DATE('$to_date')) and cus_status > 13 ";
-    $condition = getSubareaList($con, $user_id); //condition will be returned if user id selected
+    $where = " (DATE(iv.updated_date) >= DATE('$from_date') && DATE(iv.updated_date) <= DATE('$to_date')) and iv.cus_status > 13 ";
 
-    getDetials($con, $where, $condition);
 } else if ($type == 'month') {
-
     $month = date('m', strtotime($_POST['month']));
     $year = date('Y', strtotime($_POST['month']));
 
-    $where = " (MONTH(updated_date) = '$month' && YEAR(updated_date) = '$year') and cus_status > 13 ";
-    $condition = getSubareaList($con, $user_id); //condition will be returned if user id selected
-
-    getDetials($con, $where, $condition);
+    $where = " (MONTH(iv.updated_date) = '$month' && YEAR(iv.updated_date) = '$year') and iv.cus_status > 13 ";
 }
 
+$condition = getSubareaList($con, $user_id); //condition will be returned if user id selected
+
+getDetials($con, $where, $condition);
 
 function getDetials($con, $where, $condition)
 {
+    // >13 means entries moved to collection from issue
+    //will show only interest amunt under user's branch not others also
+    //excluding due type interest , coz interest loans will be sepately calculated. those interest will be collected every month as due amount
+    $qry = $con->query("SELECT COALESCE(SUM(alc.int_amt_cal), 0) AS int_amt_cal from in_verification iv
+    JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id  
+    where due_type != 'Interest' AND $where $condition ");
+    $row = $qry->fetch_assoc();
+    $benefit_amount = $row['int_amt_cal']; //interest amount
 
-    $benefit_amount = 0; //interest amount
-    $interest_amount = 0; //interest amount on interest type loans
-
-    $qry1 = $con->query("SELECT req_id from in_acknowledgement where $where "); // >13 means entries moved to collection from issue
-    if ($qry1->num_rows > 0) {
-        while ($row1 = $qry1->fetch_assoc()) {
-
-            $qry = $con->query("SELECT req_id from in_verification where req_id = '" . $row1['req_id'] . "' $condition "); //will check based on user's branch if user selected
-            //will show only interest amunt under user's branch not others also
-            if ($qry->num_rows > 0) {
-                $qry = $con->query("SELECT int_amt_cal from acknowlegement_loan_calculation where req_id = '" . $row1['req_id'] . "' and due_type != 'Interest' ");
-                //excluding due type interest , coz interest loans will be sepately calculated. those interest will be collected every month as due amount
-                $row = $qry->fetch_assoc();
-                $benefit_amount += intVal($row['int_amt_cal'] ?? 0);
-
-                $qry = $con->query("SELECT int_amt_cal from acknowlegement_loan_calculation where req_id = '" . $row1['req_id'] . "' and due_type = 'Interest' ");
-                //getting only due type interest 
-                $row = $qry->fetch_assoc();
-                $interest_amount += intVal($row['int_amt_cal'] ?? 0);
-            }
-        }
-    }
-
+    //getting only due type interest 
+    $qry = $con->query("SELECT COALESCE(SUM(alc.int_amt_cal), 0) AS int_amt_cal from in_verification iv
+    JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id  
+    where due_type = 'Interest' AND $where $condition ");
+    $row = $qry->fetch_assoc();
+    $interest_amount = $row['int_amt_cal']; //interest amount on interest type loans
 
     $response['benefit_amount'] = moneyFormatIndia($benefit_amount);
     $response['interest_amount'] = moneyFormatIndia($interest_amount);
@@ -101,14 +83,14 @@ function getSubareaList($con, $user_id)
 
     if ($user_id != '') { //to get user's sub area id based on user's branch assigned
 
-        $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
+        $userQry = $con->query("SELECT line_id FROM USER WHERE user_id = $user_id ");
         while ($rowuser = $userQry->fetch_assoc()) {
             $group_id = $rowuser['line_id'];
         }
         $group_id = explode(',', $group_id);
         $sub_area_list = array();
         foreach ($group_id as $group) {
-            $groupQry = $con->query("SELECT * FROM area_line_mapping where map_id = $group ");
+            $groupQry = $con->query("SELECT sub_area_id FROM area_line_mapping where map_id = $group ");
             $row_sub = $groupQry->fetch_assoc();
             $sub_area_list[] = $row_sub['sub_area_id'];
         }
@@ -121,7 +103,7 @@ function getSubareaList($con, $user_id)
     } else {
         $sub_area_list = '';
     }
-    $condition = ($sub_area_list != '') ? " and FIND_IN_SET(sub_area ,'" . $sub_area_list . "')" : '';
+    $condition = ($sub_area_list != '') ? " and FIND_IN_SET(iv.sub_area ,'" . $sub_area_list . "')" : '';
     return $condition;
 }
 

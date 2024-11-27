@@ -44,8 +44,8 @@ function getDetials($con, $where)
 {
 
 
-    // to get overall penalty paid till now to show pending penalty amount
-    $result = $con->query("SELECT SUM(penalty_track) as penalty,SUM(penalty_waiver) as penalty_waiver FROM `collection` WHERE $where ");
+    // to get overall penalty paid till now to show pending penalty amount //,SUM(penalty_waiver) as penalty_waiver
+    $result = $con->query("SELECT SUM(penalty_track) as penalty FROM `collection` WHERE $where ");
     $row = $result->fetch_assoc();
     if ($row['penalty'] == null) {
         $row['penalty'] = 0;
@@ -53,8 +53,8 @@ function getDetials($con, $where)
     $response['penalty'] = $row['penalty']; // - $row['penalty_waiver'];
 
 
-    //To get the collection charges
-    $result = $con->query("SELECT SUM(coll_charge_track) as coll_charge_track,SUM(coll_charge_waiver) as coll_charge_waiver FROM `collection` WHERE $where ");
+    //To get the collection charges //,SUM(coll_charge_waiver) as coll_charge_waiver
+    $result = $con->query("SELECT SUM(coll_charge_track) as coll_charge_track FROM `collection` WHERE $where ");
     $row = $result->fetch_assoc();
     $coll_charge_track = $row['coll_charge_track'] ?? 0;
     $response['fine'] = $coll_charge_track; // - $coll_charge_waiver;

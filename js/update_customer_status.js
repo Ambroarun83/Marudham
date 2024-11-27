@@ -14,14 +14,7 @@ $(function () {
     }
 });
 
-function getCustomerIDs(){
-    console.log('aaaaa');
-    debugger;
-
-    console.log('vbbbbbbbbb');
-
-    return;
-    
+function getCustomerIDs(){    
     $.ajax({
         type: 'POST',
         dataType: 'json',
