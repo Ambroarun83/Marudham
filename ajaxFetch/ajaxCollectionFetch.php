@@ -42,20 +42,24 @@ $column = array(
     'cp.mobile1',
     'cp.id'
 );
+$Cus_sts = $_POST['Customer_status'];
+$CustomerStatus = "'" . implode("','", $Cus_sts) . "'";
 
 if ($userid == 1) {
     $query = 'SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
-    acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-    where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17)'; // Only Issued and all lines not relying on sub area// 14 and 17 means collection entries, 17 removed from issue list
+    acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN customer_status cs
+    ON cp.cus_id = cs.cus_id
+    where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17)  and cs.sub_status IN ($CustomerStatus)'; // Only Issued and all lines not relying on sub area// 14 and 17 means collection entries, 17 removed from issue list
 } else {
     if ($role != '2') {
-        $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
-        acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id
-        where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and cp.area_confirm_subarea IN ($sub_area_list) "; //show only issued customers within the same lines of user. // 14 and 17 means collection entries, 17 removed from issue list
+         //show only issued customers within the same lines of user. // 14 and 17 means collection entries, 17 removed from issue list
+        $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1,ii.cus_id as ii_cus_id,ii.req_id FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN customer_status cs ON cp.cus_id = cs.cus_id WHERE ii.status = 0
+  AND (ii.cus_status >= 14 AND ii.cus_status <= 17) AND cp.area_confirm_subarea IN ($sub_area_list) AND cs.sub_status IN ($CustomerStatus)";
     } else { // if agent then check the possibilities
         $query = "SELECT cp.cus_id as cp_cus_id,cp.cus_name,cp.area_confirm_area,cp.area_confirm_subarea,cp.area_line,cp.mobile1, ii.cus_id as ii_cus_id, ii.req_id FROM 
-        acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN request_creation rc ON ii.req_id = rc.req_id 
-        where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and (rc.user_type = 'Agent' or (rc.agent_id != '' or rc.agent_id != null)  or rc.insert_login_id = '$userid' ) "; // 14 and 17 means collection entries, 17 removed from issue list
+        acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id JOIN request_creation rc ON ii.req_id = rc.req_id JOIN customer_status cs
+    ON cp.cus_id = cs.cus_id
+        where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) and (rc.user_type = 'Agent' or (rc.agent_id != '' or rc.agent_id != null)  or rc.insert_login_id = '$userid' ) AND cs.sub_status IN ($CustomerStatus) "; // 14 and 17 means collection entries, 17 removed from issue list
     }
 }
 if (isset($_POST['search'])) {
@@ -64,13 +68,17 @@ if (isset($_POST['search'])) {
         $query .= " and (cp.cus_id LIKE '" . $_POST['search'] . "%'
             OR cp.cus_name LIKE '%" . $_POST['search'] . "%' ";
 
-        $qry = $mysqli->query("SELECT area_id FROM area_list_creation where area_name LIKE '%".$_POST['search']."%' ");
-        $search1 = $qry->fetch_assoc()['area_id']??'';
-        $qry = $mysqli->query("SELECT sub_area_id FROM sub_area_list_creation where sub_area_name LIKE '%".$_POST['search']."%' ");
-        $search2 = $qry->fetch_assoc()['sub_area_id']??'';
+        $qry = $mysqli->query("SELECT area_id FROM area_list_creation where area_name LIKE '%" . $_POST['search'] . "%' ");
+        $search1 = $qry->fetch_assoc()['area_id'] ?? '';
+        $qry = $mysqli->query("SELECT sub_area_id FROM sub_area_list_creation where sub_area_name LIKE '%" . $_POST['search'] . "%' ");
+        $search2 = $qry->fetch_assoc()['sub_area_id'] ?? '';
 
-        if($search1 !=''){$query .= " OR cp.area_confirm_area LIKE '%" . $search1 . "%' ";}
-        if($search2 !=''){$query .= " OR cp.area_confirm_subarea LIKE '%" . $search2 . "%' ";}
+        if ($search1 != '') {
+            $query .= " OR cp.area_confirm_area LIKE '%" . $search1 . "%' ";
+        }
+        if ($search2 != '') {
+            $query .= " OR cp.area_confirm_subarea LIKE '%" . $search2 . "%' ";
+        }
 
         $query .= " OR cp.mobile1 LIKE '%" . $_POST['search'] . "%' ) ";
     }
@@ -104,6 +112,8 @@ $statement->execute();
 
 $result = $statement->fetchAll();
 
+$customer_statuss = $_POST['Customer_status'];
+$Customer_Statuss = implode(',', $customer_statuss); 
 $data = array();
 $sno = 1;
 foreach ($result as $row) {
@@ -143,7 +153,7 @@ foreach ($result as $row) {
     $cus_id = $row['cp_cus_id'];
     $id          = $row['req_id'];
 
-    $action = "<a href='collection&upd=$id&cusidupd=$cus_id' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>View 
+    $action = "<a href='collection&upd=$id&cusidupd=$cus_id&customerStatus=$Customer_Statuss' title='Edit details' ><button class='btn btn-success' style='background-color:#009688;'>View 
     <!--<span class='icon-attach_money' style='font-size: 17px;position: relative;top: 2px;'></span>--></button></a>";
 
 
