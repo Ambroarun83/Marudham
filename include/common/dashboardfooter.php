@@ -678,39 +678,6 @@
                     callOnClickEvents();
                 }
             });
-            // Collection List
-            var collection_table = $('#collection_table').DataTable({
-                "order": [
-                    [0, "desc"]
-                ],
-                'processing': true,
-                'serverSide': true,
-                'serverMethod': 'post',
-                'ajax': {
-                    'url': 'ajaxFetch/ajaxCollectionFetch.php',
-                    'data': function(data) {
-                        var search = $('input[type=search]').val();
-                        data.search = search;
-                    }
-                },
-                dom: 'lBfrtip',
-                buttons: [{
-                        extend: 'excel',
-                        title: "Collection List"
-                    },
-                    {
-                        extend: 'colvis',
-                        collectionLayout: 'fixed four-column',
-                    }
-                ],
-                "lengthMenu": [
-                    [10, 25, 50, -1],
-                    [10, 25, 50, "All"]
-                ],
-                'drawCallback': function() {
-                    searchFunction('collection_table');
-                }
-            });
 
             // Closed
             var closed_table = $('#closed_table').DataTable({
@@ -1157,6 +1124,10 @@
 
     if ($current_page == 'loan_issue') { ?>
         <script src="js/loan_issue.js"></script>
+    <?php }
+
+    if ($current_page == 'edit_collection') { ?>
+        <script src="js/edit_collection.js"></script>
     <?php }
 
     if ($current_page == 'collection') { ?>
