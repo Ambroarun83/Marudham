@@ -1,49 +1,69 @@
-$(document).ready(function () {
-
-    OnLoadFunctions();
+const subStatusMultiselect = new Choices('#sub_status_mapping', {
+    removeItemButton: true,
+    noChoicesText: 'Select Customer Status',
+    allowHTML: true
 });
 
-function OnLoadFunctions() {
+$(document).ready(function () {
 
-
-    $('#due_followup_table').DataTable({
-        "order": [[0, "desc"]],
-        "processing": true,
-        "serverSide": true,
-        "serverMethod": 'post',
-        "ajax": {
-            "url": 'followupFiles/dueFollowup/getDueFollowCus.php',
-            "data": function (data) {
-                var search = $('input[type=search]').val();
-                data.search = search;
-            }
-        },
-        dom: 'lBfrtip',
-        buttons: [
-            {
-                extend: 'excel',
-                title: "Due Followup List"
-            },
-            {
-                extend: 'colvis',
-                collectionLayout: 'fixed four-column',
-            }
-        ],
-        "lengthMenu": [
-            [10, 10, 25, 50, -1],
-            [10, 10, 25, 50, "All"]
-        ],
-        "createdRow": function (row, data, dataIndex) {
-            // Add serial number in the first column
-            $('td', row).eq(0).html(dataIndex + 1);
-        },
-        "drawCallback": function () {
-            enableDateColoring();
-            searchFunction('due_followup_table')
-        }
+    $('#show_due_followup').click(function(){
+        let cusSts = $("#sub_status_mapping").val();
+        OnLoadFunctions(cusSts);
     });
+});
 
+$(function(){
+    getSubStsMapping(); //Call Customer status dropdown.
 
+    let cus_Sts=$("#customer_status").val();
+    let cusSts = cus_Sts.split(',');
+    
+    if(cusSts!=''){
+        OnLoadFunctions(cusSts);
+    }
+});
+
+function OnLoadFunctions(cusSts) {
+    if(cusSts){
+        $('#due_followup_table').DataTable().destroy();
+        $('#due_followup_table').DataTable({
+            "order": [[0, "desc"]],
+            "processing": true,
+            "serverSide": true,
+            "serverMethod": 'post',
+            "ajax": {
+                "url": 'followupFiles/dueFollowup/getDueFollowCus.php',
+                "data": function (data) {
+                    var search = $('input[type=search]').val();
+                    data.search = search;
+                    data.cus_sts=cusSts;
+                }
+            },
+            dom: 'lBfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    title: "Due Followup List"
+                },
+                {
+                    extend: 'colvis',
+                    collectionLayout: 'fixed four-column',
+                }
+            ],
+            "lengthMenu": [
+                [10, 10, 25, 50, -1],
+                [10, 10, 25, 50, "All"]
+            ],
+            "createdRow": function (row, data, dataIndex) {
+                // Add serial number in the first column
+                $('td', row).eq(0).html(dataIndex + 1);
+            },
+            "drawCallback": function () {
+                enableDateColoring();
+                searchFunction('due_followup_table')
+            }
+        });
+    }
 }
 
 function enableDateColoring() {
@@ -70,4 +90,23 @@ function enableDateColoring() {
             }
         }
     });
+}
+
+function getSubStsMapping() {
+    let subStatus =['Legal','Error','OD','Pending','Current'];
+    let editSubStatus = $('#customer_status').val()||'';
+
+    subStatusMultiselect.clearStore();
+    $.each(subStatus, function(index, val){
+        let selected = '';
+        if(editSubStatus.includes(val)){
+            selected = 'selected';
+        }
+        let items = [
+            {value: val, label: val, selected: selected},
+        ]
+        subStatusMultiselect.setChoices(items);
+        subStatusMultiselect.init();
+    });
+
 }

@@ -39,7 +39,21 @@
 	<!-- Row start -->
 	<div class="row gutters">
 		<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-			<div class="table-container"><br>
+			<div class="table-container">
+				<div class="row">
+					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
+						<label for="sub_status_mapping">Customer Status</label><span class="required">&nbsp;*</span>
+						<input type="hidden" name="customer_status"  id="customer_status" value="<?php echo isset($_GET['cussts']) ? $_GET['cussts'] : '';?>">
+						<select class="form-control" id="sub_status_mapping" name="sub_status_mapping" multiple>
+							<option value="">Select Customer Status</option>
+						</select>
+						<span class='text-danger subStatusCheck' style="display:none">Please Select Customer Status </span>
+					</div>
+					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top:24px">
+						<button type="button" class="btn btn-primary" id="show_due_followup">proceed</button>
+					</div>
+				</div>	
+			<br>
 				<div class="table-responsive" id='dueFollwupDiv'>
 					<table id='due_followup_table' class="table custom-table">
 						<thead>

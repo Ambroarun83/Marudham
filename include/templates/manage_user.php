@@ -19,7 +19,6 @@ $branch_id           = '';
 $line_id           = '';
 $group_id           = '';
 $download_access = '';
-$sub_status_mapping = '';
 $mastermodule    = '';
 $company_creation      = '';
 $branch_creation = '';
@@ -151,7 +150,6 @@ if($idupd>0)
 			$line_id          		     = $getUser['line_id'];
 			$group_id          		     = $getUser['group_id'];
 			$download_access          		     = $getUser['download_access'];
-			$sub_status_mapping          		     = $getUser['sub_status_mapping'];
 			$mastermodule          		     = $getUser['mastermodule'];
 			$company_creation          		     = $getUser['company_creation'];
 			$branch_creation          		     = $getUser['branch_creation'];
@@ -942,19 +940,6 @@ if($idupd>0)
                         </div>
 					</div>
 						</br></br>
-					<div class="row">
-						<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 sub_status" style='display:none'>
-							<div class="custom-control custom-checkbox">
-								<label for="sub_status_mapping">Sub Status Mapping</label>
-								<input type='hidden' class='form-control' id='edit_sub_status_mapping' name='edit_sub_status_mapping' value="<?php echo $sub_status_mapping; ?>">
-								<select tabindex="10" type="text" class="form-control" id="sub_status_mapping" name="sub_status_mapping" multiple>
-									<option value="">Select Sub Status</option>   
-								</select> 
-								<span class='text-danger subStatusCheck' style="display:none">Please Select Sub Status Mapping</span>
-							</div>
-						</div>
-					</div>
-
 					<hr>
 
 					<div class="custom-control custom-checkbox">

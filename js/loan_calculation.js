@@ -9,23 +9,23 @@ $(document).ready(function () {
 	}
 
 	//Show Reference No  Field
-	$('#due_type').on('change', function () {
+	// $('#due_type').on('change', function () {
 
-		var due_type = $('#due_type').val();
-		if (due_type == 'emi') {
-			$("#intrest_method").hide();
-			$("#emi_method").show();
-		} else if (due_type == 'intrest') {
-			$("#emi_method").hide();
-			$("#intrest_method").show();
-		} else if (due_type == 'emi,intrest') {
-			$("#emi_method").show();
-			$("#intrest_method").show();
-		} else if (due_type == null) {
-			$("#emi_method").hide();
-			$("#intrest_method").hide();
-		}
-	});
+	// 	var due_type = $('#due_type').val();
+	// 	if (due_type == 'emi') {
+	// 		$("#intrest_method").hide();
+	// 		$("#emi_method").show();
+	// 	} else if (due_type == 'intrest') {
+	// 		$("#emi_method").hide();
+	// 		$("#intrest_method").show();
+	// 	} else if (due_type == 'emi,intrest') {
+	// 		$("#emi_method").show();
+	// 		$("#intrest_method").show();
+	// 	} else if (due_type == null) {
+	// 		$("#emi_method").hide();
+	// 		$("#intrest_method").hide();
+	// 	}
+	// });
 
 	//change sub category based on Loan category
 	$('#loan_category').change(function () {
@@ -33,15 +33,15 @@ $(document).ready(function () {
 		getSubCategory(loan_cat);
 	})
 
-	$('#submitloan_calculation').click(function () {
-		//Validations
-		var due_type = $('#due_type').val();
-		if (due_type == 'emi') {
-			$("#calculate_method").val('');
-		} else if (due_type == 'intrest') {
-			$("#profit_method").val('');
-		}
-	})
+	// $('#submitloan_calculation').click(function () {
+	// 	//Validations
+	// 	var due_type = $('#due_type').val();
+	// 	if (due_type == 'emi') {
+	// 		$("#calculate_method").val('');
+	// 	} else if (due_type == 'intrest') {
+	// 		$("#profit_method").val('');
+	// 	}
+	// })
 
 });
 
