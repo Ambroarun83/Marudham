@@ -123,7 +123,7 @@ $(document).ready(function () {
         let submit_btn = $(this);
         submit_btn.attr('disabled', true);
         if (validations()) {
-            let totAmt = $('#paid_amt').val();
+            let totAmt = $('#total_paid_track').val();
             Swal.fire({
                 title: `The Total Paid Amount is  ${totAmt}`,
                 text: 'Are you sure to Submit?',

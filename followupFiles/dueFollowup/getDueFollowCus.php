@@ -8,14 +8,16 @@ if (isset($_SESSION['userid'])) {
 }
 
 $sub_status_mapping ='';
+if(isset($_POST['cus_sts'])){
+    $sub_status_mapping = implode(',',$_POST['cus_sts']);
+}
 
 if ($user_id != 1) {
 
-    $userQry = $con->query("SELECT group_id, line_id, sub_status_mapping FROM USER WHERE user_id = $user_id ");
+    $userQry = $con->query("SELECT group_id, line_id FROM USER WHERE user_id = $user_id ");
     while ($rowuser = $userQry->fetch_assoc()) {
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
-        $sub_status_mapping = $rowuser['sub_status_mapping'];
     }
 
     $line_id = explode(',', $line_id);
@@ -111,7 +113,7 @@ foreach ($result as $row) {
         $finalData['line'] = $row['area_line'],
         $finalData['mobile'] = $row['mobile1'],
         $finalData['sub_status'] = $row['sub_status'],
-        $finalData['action'] = "<a href='due_followup&upd={$row['req_id']}&cusidupd=$cus_id' title='Edit details'><button class='btn btn-success' style='background-color:#009688;'>View Loans</button></a>",
+        $finalData['action'] = "<a href='due_followup&upd={$row['req_id']}&cusidupd=$cus_id&cussts=$sub_status_mapping' title='Edit details'><button class='btn btn-success' style='background-color:#009688;'>View Loans</button></a>",
         $finalData['last_paid_date'] = $date_range,
         $finalData['hint'] = $hint,
         $finalData['comm_err'] = $comm_err,

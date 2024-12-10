@@ -6,8 +6,8 @@ if (isset($_SESSION["userid"])) {
 $loanCategoryList = $userObj->getloanCategoryList($mysqli);
 
 $id = 0;
-$emicheck = 0;
-$calcheck = 0;
+// $emicheck = 0;
+// $calcheck = 0;
 if (isset($_POST['submitloan_calculation']) && $_POST['submitloan_calculation'] != '') {
     if (isset($_POST['id']) && $_POST['id'] > 0 && is_numeric($_POST['id'])) {
         $id = $_POST['id'];
@@ -71,8 +71,8 @@ if ($idupd > 0) {
             $collection_info        = $getLoanCalculation['collection_info'];
         }
     }
-    $emicheck = strpos($due_type, 'emi') !== false;
-    $calcheck = strpos($due_type, 'intrest') !== false;
+    // $emicheck = strpos($due_type, 'emi') !== false;
+    // $calcheck = strpos($due_type, 'intrest') !== false;
 
 
     $profit_method = explode(',', $profit_method);
@@ -133,18 +133,16 @@ if ($idupd > 0) {
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="disabledInput">Due Type</label><span class="required">&nbsp;*</span>
-                                <select tabindex="4" type="text" class="form-control" id="due_type" name="due_type" title="Select Due Type" required>
+                                <input type="hidden" class="form-control" id="due_type" name="due_type" value="emi">
+                                <input tabindex="4" type="text" class="form-control" id="duetype" name="duetype" value="EMI" title="Select Due Type" readonly>
+                                <!-- <select tabindex="4" type="text" class="form-control" id="due_type" name="due_type" title="Select Due Type" required>
                                     <option value=''>Select Due Type</option>
-                                    <option <?php if (isset($due_type)) {
-                                                if ($due_type == "emi") echo 'selected';
-                                            } ?> value="emi">EMI</option>
-                                    <option <?php if (isset($due_type)) {
-                                                if ($due_type == "intrest") echo 'selected';
-                                            } ?> value="intrest">Interest</option>
-                                </select>
+                                    <option <?php #if (isset($due_type)) {if ($due_type == "emi") echo 'selected';} ?> value="emi">EMI</option>
+                                    <option <?php #if (isset($due_type)) {if ($due_type == "intrest") echo 'selected';} ?> value="intrest">Interest</option>
+                                </select> -->
                             </div>
                         </div>
-                        <div id="emi_method" <?php if (!$emicheck) { ?>style="display: none" <?php } ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                        <div id="emi_method" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="disabledInput">Profit Method</label>
                                 <select tabindex="5" type="text" class="form-control selectpicker" id="profit_method" name="profit_method[]" data-live-search="true" multiple data-actions-box="true" title="Select Profit Method">
@@ -162,12 +160,12 @@ if ($idupd > 0) {
                                 </select>
                             </div>
                         </div>
-                        <div id="intrest_method" <?php if (!$calcheck) { ?>style="display: none" <?php } ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                        <!-- <div id="intrest_method" <?php #if (!$calcheck) { ?>style="display: none" <?php #} ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="inputReadOnly">Calculate Method</label>
                                 <input tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" value="Monthly" readonly>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="card-header">Condition Info</div>
                     <div class="card-body row">

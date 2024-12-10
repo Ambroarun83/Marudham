@@ -17,6 +17,7 @@ if(isset($_GET['upd']))
 {
 $idupd=$_GET['upd'];
 $cusidupd=$_GET['cusidupd'];
+$cus_sts = $_GET['cussts'];  
 }
 if($idupd>0)
 {
@@ -63,6 +64,7 @@ if($idupd>0)
 	<!--form start-->
 	<form id="cus_Profiles" name="cus_Profiles" action="" method="post" enctype="multipart/form-data">
 		<!-- for js purposes -->
+		<input type="hidden" name="cus_sts" id="cus_sts" value="<?php if (isset($cus_sts)) {echo $cus_sts;} ?>" />
 		<input type="hidden" name="idupd" id="idupd" value="<?php if (isset($idupd)) {echo $idupd;} ?>" />
 		<input type="hidden" name="req_id" id="req_id" value="<?php if (isset($req_id)) {echo $req_id;} ?>" />
 		<input type="hidden" name="cusidupd" id="cusidupd" value="<?php if (isset($cusidupd)) {echo $cusidupd;} ?>" />

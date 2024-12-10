@@ -1,7 +1,10 @@
 $(document).ready(function () {
 
     $('.back-button').click(function () {
-        window.history.back();
+        event.preventDefault();
+        // window.history.back();
+        let cusSts = $('#cus_sts').val();
+        window.location = 'edit_due_followup&cussts='+cusSts;
     })
 
     $('#comm_ftype').change(function () {
