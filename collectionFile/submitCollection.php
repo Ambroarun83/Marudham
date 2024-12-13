@@ -81,7 +81,7 @@ if (isset($_POST['trans_id'])) {
     $trans_id = $_POST['trans_id'];
 }
 if (isset($_POST['trans_date'])) {
-    $trans_date = $_POST['trans_date'];
+    $trans_date = ($_POST['trans_date'] !='') ? $_POST['trans_date'] : '0000-00-00';
 }
 if (isset($_POST['collection_loc'])) {
     $collection_loc = $_POST['collection_loc'];
