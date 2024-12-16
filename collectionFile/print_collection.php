@@ -32,9 +32,48 @@ $user_id = $row['insert_login_id'];
 $qry = $con->query("SELECT fullname from `user` where `user_id` = $user_id ");
 $user_name = $qry->fetch_assoc()['fullname'];
 ?>
+<style>
+    @media print {
+        * {
+            margin: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box;
+        }
+        @page {
+            margin: 0; /* Remove default print margin */
+        }
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        #dettable {
+            margin: 0;
+            padding: 0;
+            width: 58mm; /* Width of thermal printer roll */
+            font-size: 8px;
+            line-height: 1.2;
+            text-align: left;
+        }
+        .overlap-group {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .captions, .data {
+            width: 50%;
+            word-wrap: break-word;
+            text-align: left;
+        }
+        .mar-logo {
+            width: 100px;
+            margin: 0 auto; /* Center align logo */
+            display: block;
+        }
+    }
+</style>
 
 
-<div class="frame" id="dettable" style="background-color: #ffffff; font-size: 12px; display: flex;flex-direction: column; align-items: flex-start;">
+<div class="frame" id="dettable" style="background-color: #ffffff; font-size: 8px; display: flex;flex-direction: column; align-items: flex-start;">
 
     <div style="display: flex; justify-content: center;padding-bottom:10px;"><img class="mar-logo" alt="Marudham Capitals" src="img/logo.png" style="width: 224px; height: auto;" /></div>
     <div class="overlap-group" style="display: flex; justify-content: center; gap: 10px;">
@@ -43,7 +82,8 @@ $user_name = $qry->fetch_assoc()['fullname'];
             <b>
                 <div>Receipt No :</div>
             </b>
-            <div>Date / Time :</div>
+            <div>Date :</div>
+            <div>Time :</div>
             <div>Line / Area :</div>
             <div>Customer ID :</div>
             <b>
@@ -65,7 +105,8 @@ $user_name = $qry->fetch_assoc()['fullname'];
             <b>
                 <div><?php echo $coll_code; ?></div>
             </b>
-            <div><?php echo date('d-m-Y H:s A', strtotime($coll_date)); ?></div>
+            <div><?php echo date('d-m-Y', strtotime($coll_date)); ?></div>
+            <div><?php echo date('H:s A', strtotime($coll_date)); ?></div>
             <div><?php echo $line_name; ?></div>
             <div><?php echo $cus_id; ?></div>
             <b>
