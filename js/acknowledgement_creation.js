@@ -2161,7 +2161,7 @@ function doc_submit_validation(submit_btn) {
     var vehicle_reg_no = $('#vehicle_reg_no').val();
     var endorsement_name = $('#endorsement_name').val(); var en_RC = $('#en_RC').val(); var en_Key = $('#en_Key').val();
 
-    var fingerprint = $('#fingerprint').val(); var submitted = $('#submitted').val();
+    // var fingerprint = $('#fingerprint').val(); var submitted = $('#submitted').val();
 
     if (cus_id_doc == '') {
         Swal.fire({
@@ -2322,14 +2322,14 @@ function doc_submit_validation(submit_btn) {
         }
     }
 
-    if (submitted == undefined || submitted == '' || submitted == null) {
-        if (fingerprint == '') {
-            event.preventDefault();
-            $('.fingerSpan').show();
-        } else {
-            $('.fingerSpan').hide();
-        }
-    }
+    // if (submitted == undefined || submitted == '' || submitted == null) {
+    //     if (fingerprint == '') {
+    //         event.preventDefault();
+    //         $('.fingerSpan').show();
+    //     } else {
+    //         $('.fingerSpan').hide();
+    //     }
+    // }
     submit_btn.removeAttr('disabled');
 
 }

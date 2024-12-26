@@ -4233,6 +4233,7 @@ class admin
 		if (isset($_POST['sub_category'])) {
 			$sub_category = $_POST['sub_category'];
 		}
+		$category_info =[];
 		if (isset($_POST['category_info'])) {
 			$category_info = $_POST['category_info'];
 		}

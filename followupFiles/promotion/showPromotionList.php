@@ -47,10 +47,10 @@ if ($type == 'existing') {
     //only closed customers who dont have any loans in current.
 
     // Simplified main query to fetch closed customers without loans
-    $sql = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.req_id = rc.req_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL  $order  $limit ");
+    $sql = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.req_id = rc.req_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL GROUP BY cp.cus_id $order  $limit ");
 
     // Count query for filtering (use the same logic but without limit)
-    $num_qry = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.req_id = rc.req_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL $order ");
+    $num_qry = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.req_id = rc.req_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL GROUP BY cp.cus_id $order ");
 
     $number_filter_row = $num_qry->num_rows;
 
@@ -121,7 +121,7 @@ foreach ($arr as $val) {
     $sub_array = array();
     $sql = $con->query("SELECT cp.req_id,cp.cus_id,cp.cus_name,cp.area_group,cp.area_line,cp.mobile1,al.area_name,sl.sub_area_name,bc.branch_name from customer_profile cp LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id) LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id WHERE cp.cus_id = " . $val['cus_id'] . " ORDER BY cp.id DESC LIMIT 1");
     if ($sql->num_rows == '0') {
-        $sql = $con->query("SELECT cp.req_id,cp.cus_id,cp.cus_name,cp.area_group,cp.area_line,cp.mobile1,al.area_name,sl.sub_area_name,bc.branch_name,agm.group_name,alm.line_name from customer_register cp LEFT JOIN area_list_creation al ON cp.area = al.area_id  LEFT JOIN sub_area_list_creation sl ON cp.sub_area = sl.sub_area_id  LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id) LEFT JOIN area_line_mapping alm ON FIND_IN_SET(sl.sub_area_id,alm.sub_area_id) LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id WHERE cp.cus_id = " . $val['cus_id'] . " ORDER BY cp.cus_reg_id DESC LIMIT 1");
+        $sql = $con->query("SELECT cp.req_ref_id AS req_id,cp.cus_id,cp.customer_name AS cus_name,cp.area_group,cp.area_line,cp.mobile1,al.area_name,sl.sub_area_name,bc.branch_name,agm.group_name,alm.line_name from customer_register cp LEFT JOIN area_list_creation al ON cp.area = al.area_id  LEFT JOIN sub_area_list_creation sl ON cp.sub_area = sl.sub_area_id  LEFT JOIN area_group_mapping agm ON FIND_IN_SET(sl.sub_area_id,agm.sub_area_id) LEFT JOIN area_line_mapping alm ON FIND_IN_SET(sl.sub_area_id,alm.sub_area_id) LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id WHERE cp.cus_id = " . $val['cus_id'] . " ORDER BY cp.cus_reg_id DESC LIMIT 1");
     }
 
     $row = $sql->fetch_assoc();

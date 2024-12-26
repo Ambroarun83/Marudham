@@ -611,7 +611,8 @@ function checkBalance() {
 
 //Submit Validation
 function loanIssueSumitValidation() {
-    var issueMode = $('#issued_mode').val(); var paymenType = $('#payment_type').val(); var cash = $('#cash').val(); var chequeNum = $('#chequeno').val(); var chequeVal = $('#chequeValue').val(); var chequeRemark = $('#chequeRemark').val(); var transactionID = $('#transaction_id').val(); var transactionVal = $('#transaction_value').val(); var transactionRemark = $('#transaction_remark').val(); var guarentorName = $('#cash_guarentor_name').val(); var fingerMatch = $('#fingerValidation').val();
+    var issueMode = $('#issued_mode').val(); var paymenType = $('#payment_type').val(); var cash = $('#cash').val(); var chequeNum = $('#chequeno').val(); var chequeVal = $('#chequeValue').val(); var chequeRemark = $('#chequeRemark').val(); var transactionID = $('#transaction_id').val(); var transactionVal = $('#transaction_value').val(); var transactionRemark = $('#transaction_remark').val(); var guarentorName = $('#cash_guarentor_name').val(); 
+    // var fingerMatch = $('#fingerValidation').val();
     var ag_id = $('#agent_id').val(); var bank_id = $('#bank_id').val();
     //Check Issue Mode
     if (issueMode == '') {
@@ -777,12 +778,12 @@ function loanIssueSumitValidation() {
                 $('#cash_guarentor').hide();
             }
 
-            if (fingerMatch != '1') {
-                event.preventDefault();
-                $('#finger_check').show();
-            } else {
-                $('#finger_check').hide();
-            }
+            // if (fingerMatch != '1') {
+            //     event.preventDefault();
+            //     $('#finger_check').show();
+            // } else {
+            //     $('#finger_check').hide();
+            // }
         }
     }
 
