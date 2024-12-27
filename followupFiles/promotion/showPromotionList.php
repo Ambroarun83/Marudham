@@ -47,10 +47,10 @@ if ($type == 'existing') {
     //only closed customers who dont have any loans in current.
 
     // Simplified main query to fetch closed customers without loans
-    $sql = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.req_id = rc.req_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL GROUP BY cp.cus_id $order  $limit ");
+    $sql = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.cus_id = rc.cus_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL GROUP BY cp.cus_id $order  $limit ");
 
     // Count query for filtering (use the same logic but without limit)
-    $num_qry = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.req_id = rc.req_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL GROUP BY cp.cus_id $order ");
+    $num_qry = $con->query("SELECT cs.cus_id, cs.consider_level, cs.updated_date FROM closed_status cs JOIN acknowlegement_customer_profile cp ON cs.req_id = cp.req_id LEFT JOIN ( SELECT cus_id,req_id FROM request_creation WHERE (cus_status NOT BETWEEN 4 AND 9) AND cus_status < 20 ORDER BY req_id DESC ) rc ON cs.cus_id = rc.cus_id WHERE cs.cus_sts >= '20' AND cp.area_confirm_subarea IN  ($sub_area_list)  AND cs.closed_sts = 1  AND rc.cus_id IS NULL GROUP BY cp.cus_id $order ");
 
     $number_filter_row = $num_qry->num_rows;
 

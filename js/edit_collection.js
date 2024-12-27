@@ -7,7 +7,6 @@ const subStatusMultiselect = new Choices('#sub_status_mapping', {
 $(document).ready(function () {
     let Cus_Sts=$("#customer_status").val();
     let Customer_Sts = Cus_Sts.split(',');
-    console.log("values"+Customer_Sts);
     
     if(Customer_Sts!=''){
         getcustomerStatustable(Customer_Sts);
@@ -42,7 +41,7 @@ function getcustomerStatustable(Customer_status){
                 'ajax': {
                     'url': 'ajaxFetch/ajaxCollectionFetch.php',
                     'data': function(data) {
-                        var search = $('input[type=search]').val();
+                        var search = $('#search').val();
                         data.search = search;
                         data.Customer_status=Customer_status;
                     }

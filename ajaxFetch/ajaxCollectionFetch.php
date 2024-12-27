@@ -38,7 +38,7 @@ $column = array(
     'cp.area_confirm_area',
     'cp.area_confirm_subarea',
     'cp.id',
-    'cp.id',
+    'cp.area_line',
     'cp.mobile1',
     'cp.id'
 );

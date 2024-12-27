@@ -1563,8 +1563,8 @@
         }
 
         //Document Track on click function 
-        function getDocOnClickFunction(){
-            $('.view-track').click(function () {
+    function getDocOnClickFunction(){
+        $('.view-track').click(function () {
             var cus_id = $(this).data('cusid');
             var cus_name = $(this).data('cusname');
             var req_id = $(this).data('reqid');
@@ -1580,7 +1580,6 @@
             }).then(function () {
                 getAllDocumentList(req_id, cus_name, cus_id);
             });//then function end
-
         });//click function end
 
         $('.receive-track').click(function () {
@@ -1639,7 +1638,5 @@
                 });
             }
         });
-
-        console.log('ON click events created in dashboard');
-        }
+    }
     </script>

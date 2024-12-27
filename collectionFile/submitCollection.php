@@ -87,7 +87,9 @@ if (isset($_POST['collection_loc'])) {
     $collection_loc = $_POST['collection_loc'];
 }
 if (isset($_POST['collection_date'])) {
-    $collection_date = date('Y-m-d', strtotime($_POST['collection_date']));
+    $current_time = date('H:i:s');
+    $collctn_date = date('Y-m-d', strtotime($_POST['collection_date'])); 
+    $collection_date = $collctn_date.' '.$current_time; 
 }
 if (isset($_POST['collection_id'])) {
     $collection_id = $_POST['collection_id'];
@@ -143,11 +145,11 @@ $insertQry = "INSERT INTO `collection`(  `coll_code`, `req_id`, `cus_id`, `cus_n
 $insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
 
 if ($penalty_track != '' or $penalty_waiver != '') {
-    $qry = $mysqli->query("INSERT INTO penalty_charges (`req_id`,`paid_date`,`paid_amnt`,`waiver_amnt`)VALUES('" . strip_tags($req_id) . "','" . strip_tags($collection_date) . "',
+    $qry = $mysqli->query("INSERT INTO penalty_charges (`req_id`,`paid_date`,`paid_amnt`,`waiver_amnt`)VALUES('" . strip_tags($req_id) . "','" . strip_tags($collctn_date) . "',
         '" . strip_tags($penalty_track) . "','" . strip_tags($penalty_waiver) . "')");
 }
 if ($coll_charge_track != '' or $coll_charge_waiver != '') {
-    $qry = $mysqli->query("INSERT INTO collection_charges (`req_id`,`paid_date`,`paid_amnt`,`waiver_amnt`)VALUES('" . strip_tags($req_id) . "','" . strip_tags($collection_date) . "',
+    $qry = $mysqli->query("INSERT INTO collection_charges (`req_id`,`paid_date`,`paid_amnt`,`waiver_amnt`)VALUES('" . strip_tags($req_id) . "','" . strip_tags($collctn_date) . "',
         '" . strip_tags($coll_charge_track) . "','" . strip_tags($coll_charge_waiver) . "')");
 }
 

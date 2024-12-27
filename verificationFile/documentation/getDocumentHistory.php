@@ -145,7 +145,7 @@ function moneyFormatIndia($num)
                     }
                     ?>
                 </td> <!-- Agent -->
-                <td><?php echo date('d-m-Y', strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
+                <td><?php if(isset($row["updated_date"])) echo date('d-m-Y', strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
                 <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td> <!-- Loan Amount -->
 
                 <td><?php

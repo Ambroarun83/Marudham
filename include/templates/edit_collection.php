@@ -30,7 +30,7 @@
 
 					</div>
 					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 sub_status" style="margin-top:24px">
-						<button type="button" class="btn btn-primary" id="get_cus_sts_btn">proceed</button>
+						<button type="button" class="btn btn-primary" id="get_cus_sts_btn">Proceed</button>
 					</div>
 				</div>
 
