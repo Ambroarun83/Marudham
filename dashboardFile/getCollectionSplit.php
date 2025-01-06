@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $collectionClass = new collectionClass($user_id);
 
-$response = $collectionClass->getCollectionSplit($con);
+$response = $collectionClass->getCollectionSplit($connect);
 
 echo json_encode($response);

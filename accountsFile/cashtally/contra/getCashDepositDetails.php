@@ -7,7 +7,7 @@ $user_id = $_SESSION['userid'];
 
 $bank_id = $_POST['bank_id'];
 
-$qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposit bdep LEFT JOIN bank_creation bc on bdep.to_bank_id = bc.id where bdep.received = 1 
+$qry = $connect->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposit bdep LEFT JOIN bank_creation bc on bdep.to_bank_id = bc.id where bdep.received = 1 
     and bdep.to_bank_id = $bank_id  ");
 // 0 means recevied or entered in credit bank deposit. not used current date because any time can be cash deposited to bank 
 
@@ -30,10 +30,10 @@ $qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposi
     </thead>
     <tbody>
         <?php
-            while($row = $qry->fetch_assoc()){
-                $qry1 = $con->query("SELECT * from ct_cr_cash_deposit where db_ref_id = '".$row['id']."' ");
-                if($qry1->num_rows > 0){
-                    $row1 = $qry1->fetch_assoc();
+            while($row = $qry->fetch()){
+                $qry1 = $connect->query("SELECT * from ct_cr_cash_deposit where db_ref_id = '".$row['id']."' ");
+                if($qry1->rowCount() > 0){
+                    $row1 = $qry1->fetch();
                     $ref_id = $row1['ref_code'];
                     $trans_id = $row1['trans_id'];
                 }else{$ref_id = '';$trans_id = '';}
@@ -48,7 +48,7 @@ $qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposi
                 <td><?php echo $row['remark'];?></td>
                 <td><?php echo moneyFormatIndia($row['amount']);?></td>
                 <td>
-                    <?php if($qry1->num_rows == 0){ ?>
+                    <?php if($qry1->rowCount() == 0){ ?>
                         <input type='button' id='' name='' class="btn btn-primary receive_cd" data-value = '<?php echo $row['id']; ?>' data-toggle="modal" data-target=".cd_modal" value='Receive' onclick="receivecdBtnClick(this)">
                     <?php } ?>
                 </td>
@@ -113,4 +113,7 @@ function moneyFormatIndia($num) {
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;
 ?>

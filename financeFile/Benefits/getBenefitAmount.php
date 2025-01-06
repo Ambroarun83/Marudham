@@ -20,26 +20,26 @@ if ($type == 'today') {
     $where = " (MONTH(iv.updated_date) = '$month' && YEAR(iv.updated_date) = '$year') and iv.cus_status > 13 ";
 }
 
-$condition = getSubareaList($con, $user_id); //condition will be returned if user id selected
+$condition = getSubareaList($connect, $user_id); //condition will be returned if user id selected
 
-getDetials($con, $where, $condition);
+getDetials($connect, $where, $condition);
 
-function getDetials($con, $where, $condition)
+function getDetials($connect, $where, $condition)
 {
     // >13 means entries moved to collection from issue
     //will show only interest amunt under user's branch not others also
     //excluding due type interest , coz interest loans will be sepately calculated. those interest will be collected every month as due amount
-    $qry = $con->query("SELECT COALESCE(SUM(alc.int_amt_cal), 0) AS int_amt_cal from in_verification iv
+    $qry = $connect->query("SELECT COALESCE(SUM(alc.int_amt_cal), 0) AS int_amt_cal from in_verification iv
     JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id  
     where due_type != 'Interest' AND $where $condition ");
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $benefit_amount = $row['int_amt_cal']; //interest amount
 
     //getting only due type interest 
-    $qry = $con->query("SELECT COALESCE(SUM(alc.int_amt_cal), 0) AS int_amt_cal from in_verification iv
+    $qry = $connect->query("SELECT COALESCE(SUM(alc.int_amt_cal), 0) AS int_amt_cal from in_verification iv
     JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id  
     where due_type = 'Interest' AND $where $condition ");
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $interest_amount = $row['int_amt_cal']; //interest amount on interest type loans
 
     $response['benefit_amount'] = moneyFormatIndia($benefit_amount);
@@ -78,20 +78,20 @@ function moneyFormatIndia($num)
     return $isNegative ? "-" . $thecash : $thecash;
 }
 
-function getSubareaList($con, $user_id)
+function getSubareaList($connect, $user_id)
 {
 
     if ($user_id != '') { //to get user's sub area id based on user's branch assigned
 
-        $userQry = $con->query("SELECT line_id FROM USER WHERE user_id = $user_id ");
-        while ($rowuser = $userQry->fetch_assoc()) {
+        $userQry = $connect->query("SELECT line_id FROM USER WHERE user_id = $user_id ");
+        while ($rowuser = $userQry->fetch()) {
             $group_id = $rowuser['line_id'];
         }
         $group_id = explode(',', $group_id);
         $sub_area_list = array();
         foreach ($group_id as $group) {
-            $groupQry = $con->query("SELECT sub_area_id FROM area_line_mapping where map_id = $group ");
-            $row_sub = $groupQry->fetch_assoc();
+            $groupQry = $connect->query("SELECT sub_area_id FROM area_line_mapping where map_id = $group ");
+            $row_sub = $groupQry->fetch();
             $sub_area_list[] = $row_sub['sub_area_id'];
         }
         $sub_area_ids = array();
@@ -107,4 +107,5 @@ function getSubareaList($con, $user_id)
     return $condition;
 }
 
-$con->close();
+// Close the database connection
+$connect = null;

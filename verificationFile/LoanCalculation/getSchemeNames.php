@@ -18,15 +18,17 @@ if(isset($_POST['due_method'])){
 $detailrecords = array();
 
 //Fetched where selected sub category and due method matches
-$result=$con->query("SELECT * FROM loan_scheme where sub_category = '".strip_tags($sub_cat)."' and due_method = '".strip_tags($due_method)."' "); 
+$result=$connect->query("SELECT * FROM loan_scheme where sub_category = '".strip_tags($sub_cat)."' and due_method = '".strip_tags($due_method)."' "); 
 $i=0;
-while($row = $result->fetch_assoc()){
+while($row = $result->fetch()){
     $detailrecords[$i]['scheme_id'] = $row['scheme_id'];
     $detailrecords[$i]['scheme_name'] = $row['scheme_name'];
     $detailrecords[$i]['short_name'] = $row['short_name'];
     $i++;
 }
 
-
 echo json_encode($detailrecords);
+
+// Close the database connection
+$connect = null;
 ?>

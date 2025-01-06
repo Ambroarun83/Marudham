@@ -7,7 +7,7 @@ class collectionClass
     {
         $this->user_id = $user_id;
     }
-    function getCollectionCounts($con)
+    function getCollectionCounts($connect)
     {
         $response = array();
         $today = date('Y-m-d');
@@ -38,23 +38,23 @@ class collectionClass
             $today_fine .= " AND c.insert_login_id = '$this->user_id' ";
         }
 
-        $total_paidQry = $con->query($total_paid);
-        $total_penaltyQry = $con->query($total_penalty);
-        $total_fineQry = $con->query($total_fine);
-        $today_paidQry = $con->query($today_paid);
-        $today_penaltyQry = $con->query($today_penalty);
-        $today_fineQry = $con->query($today_fine);
+        $total_paidQry = $connect->query($total_paid);
+        $total_penaltyQry = $connect->query($total_penalty);
+        $total_fineQry = $connect->query($total_fine);
+        $today_paidQry = $connect->query($today_paid);
+        $today_penaltyQry = $connect->query($today_penalty);
+        $today_fineQry = $connect->query($today_fine);
 
-        $response['tot_col_paid'] = number_format($total_paidQry->fetch_assoc()['paid'], 0, '', ',');
-        $response['tot_col_pen'] = number_format($total_penaltyQry->fetch_assoc()['penalty'], 0, '', ',');
-        $response['tot_col_fine'] = number_format($total_fineQry->fetch_assoc()['fine'], 0, '', ',');
-        $response['today_col_paid'] = number_format($today_paidQry->fetch_assoc()['paid'], 0, '', ',');
-        $response['today_col_pen'] = number_format($today_penaltyQry->fetch_assoc()['penalty'], 0, '', ',');
-        $response['today_col_fine'] = number_format($today_fineQry->fetch_assoc()['fine'], 0, '', ',');
+        $response['tot_col_paid'] = number_format($total_paidQry->fetch()['paid'], 0, '', ',');
+        $response['tot_col_pen'] = number_format($total_penaltyQry->fetch()['penalty'], 0, '', ',');
+        $response['tot_col_fine'] = number_format($total_fineQry->fetch()['fine'], 0, '', ',');
+        $response['today_col_paid'] = number_format($today_paidQry->fetch()['paid'], 0, '', ',');
+        $response['today_col_pen'] = number_format($today_penaltyQry->fetch()['penalty'], 0, '', ',');
+        $response['today_col_fine'] = number_format($today_fineQry->fetch()['fine'], 0, '', ',');
 
         return $response;
     }
-    function getCollectionSplit($con)
+    function getCollectionSplit($connect)
     {
 
         $response = array();
@@ -95,10 +95,10 @@ class collectionClass
             $qry .= " AND c.insert_login_id = '$this->user_id' ";
         }
 
-        $runQry = $con->query($qry);
-        $response = $runQry->fetch_assoc();
+        $runQry = $connect->query($qry);
+        $response = $runQry->fetch();
         $response['split_name'] = $split_arr[$pid];
-        // $row = $runQry->fetch_assoc();
+        // $row = $runQry->fetch();
         // $response['cur_amt'] = number_format($row['cur_amt'], 0, '', ', ');
         // $response['cur_point'] = $row['cur_point'];
         // $response['pend_amt'] = number_format($row['pend_amt'], 0, '', ', ');

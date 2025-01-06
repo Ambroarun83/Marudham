@@ -5,11 +5,11 @@ include('../ajaxconfig.php');
 // }
 
 $myStr = "AG";
-$selectIC = $con->query("SELECT ag_code FROM agent_creation WHERE ag_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ag_code FROM agent_creation WHERE ag_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT ag_code FROM agent_creation WHERE ag_code != '' ORDER BY ag_id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ag_code FROM agent_creation WHERE ag_code != '' ORDER BY ag_id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ag_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -21,4 +21,7 @@ else
     $ag_code = $initialapp;
 }
 echo json_encode($ag_code);
+
+// Close the database connection
+$connect = null;
 ?>

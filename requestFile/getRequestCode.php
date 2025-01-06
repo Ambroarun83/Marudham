@@ -3,10 +3,10 @@ include('../ajaxconfig.php');
 
 
 $myStr = "REQ";
-$selectIC = $con->query("SELECT req_code FROM request_creation WHERE req_code != '' ");
-if ($selectIC->num_rows > 0) {
-    $codeAvailable = $con->query("SELECT req_code FROM request_creation WHERE req_code != '' ORDER BY req_id DESC LIMIT 1");
-    while ($row = $codeAvailable->fetch_assoc()) {
+$selectIC = $connect->query("SELECT req_code FROM request_creation WHERE req_code != '' ");
+if ($selectIC->rowCount() > 0) {
+    $codeAvailable = $connect->query("SELECT req_code FROM request_creation WHERE req_code != '' ORDER BY req_id DESC LIMIT 1");
+    while ($row = $codeAvailable->fetch()) {
         $ac2 = $row["req_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-');
@@ -18,6 +18,5 @@ if ($selectIC->num_rows > 0) {
 }
 echo json_encode($req_code);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

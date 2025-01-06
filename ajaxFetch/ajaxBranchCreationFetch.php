@@ -65,8 +65,8 @@ foreach ($result as $row) {
     // Fetch Company Name
     $CompanyName = $row['company_name'];
     $getqry = "SELECT company_name FROM company_creation WHERE company_id ='" . strip_tags($CompanyName) . "' and status = 0";
-    $res12 = $con->query($getqry);
-    while ($row12 = $res12->fetch_assoc()) {
+    $res12 = $connect->query($getqry);
+    while ($row12 = $res12->fetch()) {
         $company_name = $row12["company_name"];
     }
 
@@ -110,3 +110,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

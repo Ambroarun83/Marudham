@@ -8,8 +8,8 @@ if (isset($_POST['table'])) {
 }
 
 $response = '';
-$selectIC = $con->query("SELECT * FROM $table WHERE cus_id = '" . $cus_id . "' ") or die('Error on Family Table');
-if ($selectIC->num_rows > 0) {
+$selectIC = $connect->query("SELECT * FROM $table WHERE cus_id = '" . $cus_id . "' ") or die('Error on Family Table');
+if ($selectIC->rowCount() > 0) {
     $response = 1;
 } else {
     $response = 0;
@@ -17,6 +17,5 @@ if ($selectIC->num_rows > 0) {
 
 echo $response;
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

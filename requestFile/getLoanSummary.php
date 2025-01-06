@@ -9,9 +9,9 @@ if (isset($_POST['req_id'])) {
 
 $records = array();
 
-$result = $con->query("SELECT lsf.feedback_label,lsf.cus_feedback,lsf.feedback_remark,ii.loan_id FROM loan_summary_feedback lsf JOIN in_issue ii ON ii.req_id = lsf.req_id where lsf.cus_id='$cus_id' ");
+$result = $connect->query("SELECT lsf.feedback_label,lsf.cus_feedback,lsf.feedback_remark,ii.loan_id FROM loan_summary_feedback lsf JOIN in_issue ii ON ii.req_id = lsf.req_id where lsf.cus_id='$cus_id' ");
 
-if ($result->num_rows > 0) {
+if ($result->rowCount() > 0) {
     $feedbackLabels = [
         '1' => 'Bad',
         '2' => 'Poor',
@@ -20,7 +20,7 @@ if ($result->num_rows > 0) {
         '5' => 'Excellent'
     ];
     $i = 0;
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch()) {
 
         $records[$i]['loan_id'] = $row['loan_id'];
         $records[$i]['feedback_label'] = $row['feedback_label'];
@@ -82,8 +82,6 @@ if ($result->num_rows > 0) {
     });
 </script>
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

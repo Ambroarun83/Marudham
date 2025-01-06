@@ -27,6 +27,5 @@ if ($insert_qry) {
 
 echo json_encode($result);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

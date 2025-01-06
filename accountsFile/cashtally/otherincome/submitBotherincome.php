@@ -13,7 +13,7 @@ $amt = $_POST['amt'];
 $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
-$qry = $con->query("INSERT INTO `ct_cr_boti`(`ref_code`,`to_bank_id`,`category`,`trans_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_cr_boti`(`ref_code`,`to_bank_id`,`category`,`trans_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
 VALUES ('$ref_code','$bank_id','$cat_info','$trans_id','$remark','$amt','$user_id','$op_date' )");
 
 if($qry){
@@ -24,4 +24,6 @@ if($qry){
 
 echo $response;
 
+// Close the database connection
+$connect = null;
 ?>

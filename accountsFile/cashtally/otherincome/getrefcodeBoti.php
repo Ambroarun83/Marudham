@@ -3,11 +3,11 @@ include('../../../ajaxconfig.php');
 
 //////////////////////// To get Exchange reference Code once again /////////////////////////
 $myStr = "OTI";
-$selectIC = $con->query("SELECT ref_code FROM ct_cr_boti WHERE ref_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ref_code FROM ct_cr_boti WHERE ref_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT ref_code FROM ct_cr_boti WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ref_code FROM ct_cr_boti WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ref_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -22,4 +22,7 @@ else
 
 
 echo json_encode($ref_code);
+
+// Close the database connection
+$connect = null;
 ?>

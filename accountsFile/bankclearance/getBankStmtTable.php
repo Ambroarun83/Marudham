@@ -5,20 +5,14 @@ include("../../ajaxconfig.php");
 
 if(isset($_SESSION['userid'])){ //fetch bank account id from user table
     $user_id = $_SESSION['userid'];
-    $qry = $con->query("SELECT bank_details from user where user_id = $user_id");
-    $bank_details = $qry->fetch_assoc()['bank_details'];
+    $qry = $connect->query("SELECT bank_details from user where user_id = $user_id");
+    $bank_details = $qry->fetch()['bank_details'];
 }
-
-
 
 $i= 1;
 
-
-$qry = $con->query("SELECT * from bank_stmt where bank_id = '$bank_id' and (date(trans_date) >= date('$from_date') and date(trans_date) <= date('$to_date') ) and insert_login_id = '$user_id' ");
+$qry = $connect->query("SELECT * from bank_stmt where bank_id = '$bank_id' and (date(trans_date) >= date('$from_date') and date(trans_date) <= date('$to_date') ) and insert_login_id = '$user_id' ");
 // fetching details of bank statement where same user id and bank id,transaction date should be in range of from date and to date which is user selected last
-
-
-
 ?>
 
 
@@ -36,7 +30,7 @@ $qry = $con->query("SELECT * from bank_stmt where bank_id = '$bank_id' and (date
     </thead>
     <tbody>
         <?php
-        while($row = $qry->fetch_assoc()){ ?>
+        while($row = $qry->fetch()){ ?>
             <tr>
                 <td><?php echo $i;?></td>
                 <td><?php echo date('d-m-Y',strtotime($row['trans_date']));?></td>
@@ -44,7 +38,7 @@ $qry = $con->query("SELECT * from bank_stmt where bank_id = '$bank_id' and (date
                 <td><?php echo $row['credit'];?></td>
                 <td><?php echo $row['debit'];?></td>
                 <td><?php echo $row['balance'];?></td>
-                <td><?php if($row['credit'] != ''){ echo runcreditCategories($con,$admin_access); }elseif($row['debit'] !=''){echo rundebitCategories($con,$admin_access); } ?></td>
+                <td><?php if($row['credit'] != ''){ echo runcreditCategories($connect,$admin_access); }elseif($row['debit'] !=''){echo rundebitCategories($connect,$admin_access); } ?></td>
                 <td><?php echo "<select class='form-control ref-id' ><option value=''>Select Ref ID</option></select>"; ?></td>
                 <td><?php echo "<input type='text' class='form-control clr-status' readonly placeholder='Please Choose Ref ID' value=''>"; ?></td>
             </tr>
@@ -57,17 +51,17 @@ $qry = $con->query("SELECT * from bank_stmt where bank_id = '$bank_id' and (date
 
 <?php
 
-function runcreditCategories($con,$admin_access){
+function runcreditCategories($connect,$admin_access){
 
     $catqry = "SELECT * from cash_tally_modes where bankcredit = 0  ";
     if($admin_access == '1'){
         $catqry .= "and admin_access = 1 ";
     }
     
-    $runqry = $con->query($catqry);
+    $runqry = $connect->query($catqry);
     
     $selectTxt = "<select class='form-control clr_cat' ><option value=''>Select Category</option>";
-    while($catrow = $runqry->fetch_assoc()){
+    while($catrow = $runqry->fetch()){
         $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
     }
     $selectTxt .= "</select>";
@@ -75,17 +69,17 @@ function runcreditCategories($con,$admin_access){
     return $selectTxt;
 }
 
-function rundebitCategories($con,$admin_access){
+function rundebitCategories($connect,$admin_access){
 
     $catqry = "SELECT * from cash_tally_modes where bankdebit = 0  ";
     if($admin_access == '1'){
         $catqry .= "and admin_access = 1 ";
     }
     
-    $runqry = $con->query($catqry);
+    $runqry = $connect->query($catqry);
     
     $selectTxt = "<select class='form-control clr_cat' ><option value=''>Select Category</option>";
-    while($catrow = $runqry->fetch_assoc()){
+    while($catrow = $runqry->fetch()){
         $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
     }
     $selectTxt .= "</select>";
@@ -93,4 +87,6 @@ function rundebitCategories($con,$admin_access){
     return $selectTxt;
 }
 
+// Close the database connection
+$connect = null;
 ?>

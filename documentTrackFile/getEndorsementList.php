@@ -19,8 +19,8 @@ if(isset($_POST['cus_name'])){
 
         <?php
         $i=1;
-        $qry = $con->query("SELECT * from acknowlegement_documentation  where req_id=$req_id");
-        $row = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * from acknowlegement_documentation  where req_id=$req_id");
+        $row = $qry->fetch();
         ?>
                 <?php if($row['en_RC'] == '0' && $row['Rc_document_pending'] != 'YES' ){
                     ?>
@@ -43,3 +43,8 @@ if(isset($_POST['cus_name'])){
 
     </tbody>
 </table>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

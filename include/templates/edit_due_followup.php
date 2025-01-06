@@ -50,7 +50,7 @@
 						<span class='text-danger subStatusCheck' style="display:none">Please Select Customer Status </span>
 					</div>
 					<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12" style="margin-top:24px">
-						<button type="button" class="btn btn-primary" id="show_due_followup">proceed</button>
+						<button type="button" class="btn btn-primary" id="show_due_followup">Proceed</button>
 					</div>
 				</div>	
 			<br>

@@ -14,8 +14,8 @@ if (isset($_SESSION["userid"])) {
 	$userid = $_SESSION["userid"];
 }
 
-$userQry = $con->query("SELECT 1 FROM USER WHERE user_id = '$userid' && role ='3'"); // Check Whether the user is staff or not ,if not means concern screen will not be show.
-$rowuser = mysqli_num_rows($userQry);
+$userQry = $connect->query("SELECT 1 FROM USER WHERE user_id = '$userid' && role ='3'"); // Check Whether the user is staff or not ,if not means concern screen will not be show.
+$rowuser = $userQry->rowCount();
 if ($rowuser > 0) {
 ?>
 
@@ -95,4 +95,7 @@ if ($rowuser > 0) {
 		</div>
 	</div>
 
-<?php } ?>
+<?php } 
+// Close the database connection
+$connect = null;
+?>

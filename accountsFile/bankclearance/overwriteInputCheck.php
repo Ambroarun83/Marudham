@@ -18,10 +18,10 @@ $balance = $_POST['bal'];
 
 
 
-$qry = $con->query("SELECT trans_date from bank_stmt where insert_login_id = '$user_id' and bank_id = '$bank_id' and trans_date = '$trans_date' and created_date < now() ");
+$qry = $connect->query("SELECT trans_date from bank_stmt where insert_login_id = '$user_id' and bank_id = '$bank_id' and trans_date = '$trans_date' and created_date < now() ");
 
 
-if($qry->num_rows > 0){
+if($qry->rowCount() > 0){
     // if true then table has data of this transaction date
     $response = 1;
 }else{
@@ -30,4 +30,7 @@ if($qry->num_rows > 0){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

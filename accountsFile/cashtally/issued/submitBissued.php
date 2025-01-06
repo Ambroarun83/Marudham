@@ -16,7 +16,7 @@ $netcash = str_replace(',','',$_POST['netcash']);
 $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
-$qry = $con->query("INSERT INTO `ct_db_bissued`(`ref_code`, `li_id`, `li_user_id`,`li_bank_id`, `username`, `usertype`, `cheque_no`, `trans_id`, `netcash`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_db_bissued`(`ref_code`, `li_id`, `li_user_id`,`li_bank_id`, `username`, `usertype`, `cheque_no`, `trans_id`, `netcash`, `insert_login_id`, `created_date`) 
 VALUES ('$ref_code','$li_id','$li_user_id','$li_bank_id','$username','$usertype','$cheque_no','$trans_id','$netcash','$user_id','$op_date')");
 
 if($qry){
@@ -27,4 +27,6 @@ if($qry){
 
 echo $response;
 
+// Close the database connection
+$connect = null;
 ?>

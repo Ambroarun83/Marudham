@@ -95,8 +95,8 @@ foreach ($result as $row) {
         $sub_array[] = 'Agent';
     } else if ($role_type_id > 0 and $role_id == '3') {
         $getQry = "SELECT * from staff_type_creation where staff_type_id = '" . $role_type_id . "' and status = 0 ";
-        $res = $con->query($getQry);
-        $row1 = $res->fetch_assoc();
+        $res = $connect->query($getQry);
+        $row1 = $res->fetch();
         $sub_array[] = $row1["staff_type_name"];
     }
 
@@ -140,3 +140,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

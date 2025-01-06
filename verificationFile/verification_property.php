@@ -11,6 +11,5 @@ while ($row = $result->fetch()) {
 
 echo json_encode($propertydrpdwn_arr);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

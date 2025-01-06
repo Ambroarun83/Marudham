@@ -5,8 +5,8 @@ include('../../../ajaxconfig.php');
 $user_id = $_POST['user_id'];
 $li_id = $_POST['li_id'];
 
-$qry = $con->query("SELECT id,cheque_no,cheque_value,transaction_id,transaction_value,issued_to,req_id,insert_login_id,bank_id FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((cheque_value!= '' or transaction_value !='') or (cheque_value!= '' and transaction_value !='')) and id='$li_id' and insert_login_id = '$user_id' ");
-$row = $qry->fetch_assoc();
+$qry = $connect->query("SELECT id,cheque_no,cheque_value,transaction_id,transaction_value,issued_to,req_id,insert_login_id,bank_id FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((cheque_value!= '' or transaction_value !='') or (cheque_value!= '' and transaction_value !='')) and id='$li_id' and insert_login_id = '$user_id' ");
+$row = $qry->fetch();
 
 if($row['cheque_value'] != '' and $row['transaction_value'] == ''){
             
@@ -31,18 +31,18 @@ $req_id = $row['req_id'];
 $user_id = $row['insert_login_id'];
 $bank_id = $row['bank_id'];
 
-$qry1 = $con->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
-$row1 = $qry1->fetch_assoc();
+$qry1 = $connect->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
+$row1 = $qry1->fetch();
 $role = $row1['role'];if($role == 1){$usertype = 'Director';}else if($role==3){$usertype = 'Staff';}
 $username = $row1['fullname'];
 
 ///////////////////////////////////////// To get Exchange reference Code once again /////////////////////////////////////////////////
 $myStr = "ISS";
-$selectIC = $con->query("SELECT ref_code FROM ct_db_bissued WHERE ref_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ref_code FROM ct_db_bissued WHERE ref_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT ref_code FROM ct_db_bissued WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_bissued WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ref_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -55,6 +55,8 @@ else
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// Close the database connection
+$connect = null;
 ?>
 <form id="db_bissued_form" name="db_bissued_form" method="post" enctype="multipart/form-data">
     <div class="col-md-12">

@@ -4,17 +4,17 @@ include('../ajaxconfig.php');
 // $id  = $_POST['id'];
 
 // if($id !=''){
-//     $select = $con->query("SELECT doc_id FROM verification_documentation WHERE id = '$id' ");
+//     $select = $connect->query("SELECT doc_id FROM verification_documentation WHERE id = '$id' ");
 //     $code = $select ->fetch_assoc();
 //     $doc_id = $code['doc_id'];
 
 // }else{
 $myStr = "CC";
-$selectIC = $con->query("SELECT com_code FROM concern_creation WHERE com_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT com_code FROM concern_creation WHERE com_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT com_code FROM concern_creation WHERE com_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT com_code FROM concern_creation WHERE com_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["com_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -27,4 +27,7 @@ else
 }
 // }
 echo json_encode($doc_id);
+
+// Close the database connection
+$connect = null;
 ?>

@@ -9,8 +9,8 @@ if (isset($_POST['table'])) {
 }
 
 $response = '';
-$selectIC = $con->query("SELECT * FROM $table WHERE req_id = '" . $req_id . "' ") or die('Error on the Table');
-if ($selectIC->num_rows > 0) {
+$selectIC = $connect->query("SELECT * FROM $table WHERE req_id = '" . $req_id . "' ") or die('Error on the Table');
+if ($selectIC->rowCount() > 0) {
     $response = 1;
 } else {
     $response = 0;
@@ -18,6 +18,5 @@ if ($selectIC->num_rows > 0) {
 
 echo $response;
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

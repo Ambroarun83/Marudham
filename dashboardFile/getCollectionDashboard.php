@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $collectionClass = new collectionClass($user_id);
 
-$response = $collectionClass->getCollectionCounts($con);
+$response = $collectionClass->getCollectionCounts($connect);
 
 echo json_encode($response);

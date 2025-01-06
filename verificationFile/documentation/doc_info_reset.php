@@ -29,8 +29,8 @@ if (isset($_POST['pages'])) {
 
         while ($row = $qry->fetch()) {
             if ($row["holder_name"] == '') {
-                $qry1 = $con->query("SELECT * FROM verification_family_info where id = '" . $row['relation_name'] . "' ");
-                $holder_name = $qry1->fetch_assoc()['famname'];
+                $qry1 = $connect->query("SELECT * FROM verification_family_info where id = '" . $row['relation_name'] . "' ");
+                $holder_name = $qry1->fetch()['famname'];
             } else {
                 $holder_name = $row["holder_name"];
             }
@@ -104,8 +104,6 @@ if (isset($_POST['pages'])) {
     });
 </script>
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

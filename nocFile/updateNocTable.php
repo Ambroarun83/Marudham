@@ -2,7 +2,7 @@
 session_start();
 include('../ajaxconfig.php');
 
-$obj = new updateNocTable($con);
+$obj = new updateNocTable($connect);
 
 if ($obj->response == "Success" ) {
     $response = "Success";
@@ -14,7 +14,7 @@ echo $response;
 
 class updateNocTable{
     public $response;
-    function __construct($con){
+    function __construct($connect){
         
         // Check if the request is made using POST method
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,20 +32,20 @@ class updateNocTable{
             $mem_name = $_POST['mem_name'];
             
             // Sanitize the input data to prevent SQL injection
-            $cus_id = $con->real_escape_string($cus_id);
-            $sign_checklist = $con->real_escape_string($sign_checklist);
-            $cheque_checklist = $con->real_escape_string($cheque_checklist);
-            $gold_checklist = $con->real_escape_string($gold_checklist);
-            $mort_checklist = $con->real_escape_string($mort_checklist);
-            $endorse_checklist = $con->real_escape_string($endorse_checklist);
-            $doc_checklist = $con->real_escape_string($doc_checklist);
-            $noc_date = $con->real_escape_string($noc_date);
-            $noc_member = $con->real_escape_string($noc_member);
-            $mem_name = $con->real_escape_string($mem_name);
+            $cus_id = $connect->real_escape_string($cus_id);
+            $sign_checklist = $connect->real_escape_string($sign_checklist);
+            $cheque_checklist = $connect->real_escape_string($cheque_checklist);
+            $gold_checklist = $connect->real_escape_string($gold_checklist);
+            $mort_checklist = $connect->real_escape_string($mort_checklist);
+            $endorse_checklist = $connect->real_escape_string($endorse_checklist);
+            $doc_checklist = $connect->real_escape_string($doc_checklist);
+            $noc_date = $connect->real_escape_string($noc_date);
+            $noc_member = $connect->real_escape_string($noc_member);
+            $mem_name = $connect->real_escape_string($mem_name);
             $user_id = $_SESSION['userid'];
             
             // Perform the query
-            $qry = $con->query("INSERT INTO `noc`(`req_id`,`cus_id`, `sign_checklist`, `cheque_checklist`, `gold_checklist`, `mort_checklist`, `endorse_checklist`, `doc_checklist`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('$req_id','$cus_id','$sign_checklist','$cheque_checklist','$gold_checklist','$mort_checklist','$endorse_checklist','$doc_checklist','$noc_date','$noc_member','$mem_name','21','$user_id',now()) ");
+            $qry = $connect->query("INSERT INTO `noc`(`req_id`,`cus_id`, `sign_checklist`, `cheque_checklist`, `gold_checklist`, `mort_checklist`, `endorse_checklist`, `doc_checklist`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('$req_id','$cus_id','$sign_checklist','$cheque_checklist','$gold_checklist','$mort_checklist','$endorse_checklist','$doc_checklist','$noc_date','$noc_member','$mem_name','21','$user_id',now()) ");
             
             // Check if the query was successful
             if ($qry) {
@@ -53,7 +53,7 @@ class updateNocTable{
                 $response =  "Success";
             } else {
                 // Query execution failed
-                $response =  "Error: " . $con->error;
+                $response =  "Error: " . $connect->error;
             }
         } else {
             // If the request method is not POST, show an error message
@@ -63,4 +63,7 @@ class updateNocTable{
         $this->response = $response;
     }
 }
+
+// Close the database connection
+$connect = null;
 

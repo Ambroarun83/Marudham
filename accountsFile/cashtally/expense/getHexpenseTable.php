@@ -10,9 +10,9 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
 
-$qry = $con->query("SELECT hexp.*,excat.category from ct_db_hexpense hexp JOIN expense_category excat ON hexp.cat = excat.id where date(hexp.created_date) = '$op_date' and hexp.insert_login_id = '$user_id' ");
+$qry = $connect->query("SELECT hexp.*,excat.category from ct_db_hexpense hexp JOIN expense_category excat ON hexp.cat = excat.id where date(hexp.created_date) = '$op_date' and hexp.insert_login_id = '$user_id' ");
 //
-while($row = $qry->fetch_assoc()){
+while($row = $qry->fetch()){
 
     $records[$i]['id'] = $row['id'];
     $records[$i]['username'] = $row['username'];
@@ -29,6 +29,8 @@ while($row = $qry->fetch_assoc()){
     
 }
 
+// Close the database connection
+$connect = null;
 ?>
 
 

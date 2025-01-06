@@ -17,11 +17,11 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 //////////////////////// To get Exchange reference Code once again /////////////////////////
 $myStr = "EXD";
-$selectIC = $con->query("SELECT ref_code FROM ct_db_bexchange WHERE ref_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ref_code FROM ct_db_bexchange WHERE ref_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT ref_code FROM ct_db_bexchange WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_bexchange WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ref_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -34,7 +34,7 @@ else
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-$qry = $con->query("INSERT INTO `ct_db_bexchange`(`ref_code`, `from_acc_id`, `to_bank_id`, `to_user_id`, `trans_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_db_bexchange`(`ref_code`, `from_acc_id`, `to_bank_id`, `to_user_id`, `trans_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
 VALUES ('$ref_code','$from_acc_id','$to_bank_id','$to_user_id','$trans_id','$remark','$amt','$user_id','$op_date')");
 
 if($qry){
@@ -44,4 +44,7 @@ if($qry){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

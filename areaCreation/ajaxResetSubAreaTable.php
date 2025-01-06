@@ -16,10 +16,10 @@ if (isset($_POST['area'])) {
     <tbody>
         <?php
         $ctselect = "SELECT * FROM sub_area_list_creation WHERE area_id_ref = '" . $area . "' AND status=0 ORDER BY sub_area_id DESC";
-        $ctresult = $con->query($ctselect);
-        if ($ctresult->num_rows > 0) {
+        $ctresult = $connect->query($ctselect);
+        if ($ctresult->rowCount() > 0) {
             $i = 1;
-            while ($ct = $ctresult->fetch_assoc()) {
+            while ($ct = $ctresult->fetch()) {
         ?>
                 <tr>
                     <td><?php echo $i; ?></td>
@@ -72,3 +72,8 @@ if (isset($_POST['area'])) {
         });
     });
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

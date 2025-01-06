@@ -80,21 +80,21 @@ include '../ajaxconfig.php';
             $relationship = 'NIL';
             if ($kyc['proofOf'] == '2') {
                 $fam_mem = $kyc['fam_mem'];
-                $sql = $con->query("SELECT relationship FROM `verification_family_info` where famname = '$fam_mem'");
-                $relationship = $sql->fetch_assoc()['relationship'];
+                $sql = $connect->query("SELECT relationship FROM `verification_family_info` where famname = '$fam_mem'");
+                $relationship = $sql->fetch()['relationship'];
             } elseif ($kyc['proofOf'] == '1') {
-                $qry = $con->query("SELECT a.famname,a.relationship from verification_family_info a 
+                $qry = $connect->query("SELECT a.famname,a.relationship from verification_family_info a 
                 LEFT JOIN customer_profile b ON a.id = b.guarentor_name
                 where b.req_id = '$req_id' ");
-                $rw = $qry->fetch_assoc();
+                $rw = $qry->fetch();
                 $fam_mem = $rw['famname'] ?? '';
                 $relationship = $rw['relationship'] ?? '';
-                mysqli_next_result($con); // Move to the next query
+                // mysqli_next_result($connect); // Move to the next query
             } elseif ($kyc['proofOf'] == '0') {
-                $qry = $con->query("CALL get_cus_name('$cus_id')");
-                $fam_mem = $qry->fetch_assoc()['customer_name'] ?? '';
+                $qry = $connect->query("CALL get_cus_name($cus_id)");
+                $fam_mem = $qry->fetch()['customer_name'] ?? '';
                 $relationship = 'NIL';
-                mysqli_next_result($con); // Move to the next query
+                // mysqli_next_result($connect); // Move to the next query
             }
         ?>
             <tr>
@@ -110,8 +110,6 @@ include '../ajaxconfig.php';
         <?php  } ?>
     </tbody>
 </table>
-
-
 
 <script type="text/javascript">
     $(function() {
@@ -144,7 +142,6 @@ include '../ajaxconfig.php';
     });
 </script>
 <?php
-
-$con->close();
-$mysqli->close();
-$connect = null; ?>
+// Close the database connection
+$connect = null;
+?>

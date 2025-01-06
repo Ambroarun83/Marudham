@@ -36,6 +36,5 @@ if ($cnt > 0) {
 
 echo json_encode($KYCProof);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

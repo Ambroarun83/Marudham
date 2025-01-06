@@ -8,7 +8,7 @@ class LoanIssueClass
     {
         $this->user_id = $user_id;
     }
-    function getLoanIssueCounts($con)
+    function getLoanIssueCounts($connect)
     {
 
         $response = array();
@@ -36,7 +36,7 @@ class LoanIssueClass
         $today_issued_amt = "SELECT COALESCE(SUM(li.cash + li.cheque_value + li.transaction_value),0) as today_issued_amt from loan_issue li JOIN acknowlegement_customer_profile cp ON cp.req_id = li.req_id where date(li.created_date) = '$today' ";
 
         if (empty($sub_area_list)) {
-            $sub_area_list = $this->getUserGroupBasedSubArea($con, $this->user_id);
+            $sub_area_list = $this->getUserGroupBasedSubArea($connect, $this->user_id);
         }
 
         $tot_li .= " AND sub_area IN ($sub_area_list) ";
@@ -59,63 +59,63 @@ class LoanIssueClass
         $today_issued_amt .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END )";
 
 
-        $tot_liQry = $con->query($tot_li);
-        $today_liQry = $con->query($today_li);
-        $tot_li_issueQry = $con->query($tot_li_issue);
-        $today_li_issueQry = $con->query($today_li_issue);
-        $tot_li_balQry = $con->query($tot_li_bal);
-        $today_li_balQry = $con->query($today_li_bal);
-        $tot_cashQry = $con->query($tot_cash);
-        $today_cashQry = $con->query($today_cash);
-        $tot_chequeQry = $con->query($tot_cheque);
-        $today_chequeQry = $con->query($today_cheque);
-        $tot_transactionQry = $con->query($tot_transaction);
-        $today_transactionQry = $con->query($today_transaction);
-        $tot_newQry = $con->query($tot_new);
-        $today_newQry = $con->query($today_new);
-        $tot_existingQry = $con->query($tot_existing);
-        $today_existingQry = $con->query($today_existing);
+        $tot_liQry = $connect->query($tot_li);
+        $today_liQry = $connect->query($today_li);
+        $tot_li_issueQry = $connect->query($tot_li_issue);
+        $today_li_issueQry = $connect->query($today_li_issue);
+        $tot_li_balQry = $connect->query($tot_li_bal);
+        $today_li_balQry = $connect->query($today_li_bal);
+        $tot_cashQry = $connect->query($tot_cash);
+        $today_cashQry = $connect->query($today_cash);
+        $tot_chequeQry = $connect->query($tot_cheque);
+        $today_chequeQry = $connect->query($today_cheque);
+        $tot_transactionQry = $connect->query($tot_transaction);
+        $today_transactionQry = $connect->query($today_transaction);
+        $tot_newQry = $connect->query($tot_new);
+        $today_newQry = $connect->query($today_new);
+        $tot_existingQry = $connect->query($tot_existing);
+        $today_existingQry = $connect->query($today_existing);
 
-        $today_li_amtQry = $con->query($today_li_amt);
-        $today_issued_amtQry = $con->query($today_issued_amt);
+        $today_li_amtQry = $connect->query($today_li_amt);
+        $today_issued_amtQry = $connect->query($today_issued_amt);
 
 
-        $response['tot_li'] = $tot_liQry->fetch_assoc()['tot_li'];
-        $response['today_li'] = $today_liQry->fetch_assoc()['today_li'];
-        $response['tot_li_issue'] = $tot_li_issueQry->fetch_assoc()['tot_li_issue'];
-        $response['today_li_issue'] = $today_li_issueQry->fetch_assoc()['today_li_issue'];
-        $response['tot_li_bal'] = $tot_li_balQry->fetch_assoc()['tot_li_bal'];
-        $response['today_li_bal'] = $today_li_balQry->fetch_assoc()['today_li_bal'];
-        $response['tot_cash'] = $tot_cashQry->fetch_assoc()['tot_cash'] ?? 0;
-        $response['today_cash'] = $today_cashQry->fetch_assoc()['today_cash'] ?? 0;
-        $response['tot_cheque'] = $tot_chequeQry->fetch_assoc()['tot_cheque'] ?? 0;
-        $response['today_cheque'] = $today_chequeQry->fetch_assoc()['today_cheque'] ?? 0;
-        $response['tot_transaction'] = $tot_transactionQry->fetch_assoc()['tot_transaction'] ?? 0;
-        $response['today_transaction'] = $today_transactionQry->fetch_assoc()['today_transaction'] ?? 0;
-        $response['tot_new'] = $tot_newQry->fetch_assoc()['tot_new'];
-        $response['today_new'] = $today_newQry->fetch_assoc()['today_new'];
-        $response['tot_existing'] = $tot_existingQry->fetch_assoc()['tot_existing'];
-        $response['today_existing'] = $today_existingQry->fetch_assoc()['today_existing'];
+        $response['tot_li'] = $tot_liQry->fetch()['tot_li'];
+        $response['today_li'] = $today_liQry->fetch()['today_li'];
+        $response['tot_li_issue'] = $tot_li_issueQry->fetch()['tot_li_issue'];
+        $response['today_li_issue'] = $today_li_issueQry->fetch()['today_li_issue'];
+        $response['tot_li_bal'] = $tot_li_balQry->fetch()['tot_li_bal'];
+        $response['today_li_bal'] = $today_li_balQry->fetch()['today_li_bal'];
+        $response['tot_cash'] = $tot_cashQry->fetch()['tot_cash'] ?? 0;
+        $response['today_cash'] = $today_cashQry->fetch()['today_cash'] ?? 0;
+        $response['tot_cheque'] = $tot_chequeQry->fetch()['tot_cheque'] ?? 0;
+        $response['today_cheque'] = $today_chequeQry->fetch()['today_cheque'] ?? 0;
+        $response['tot_transaction'] = $tot_transactionQry->fetch()['tot_transaction'] ?? 0;
+        $response['today_transaction'] = $today_transactionQry->fetch()['today_transaction'] ?? 0;
+        $response['tot_new'] = $tot_newQry->fetch()['tot_new'];
+        $response['today_new'] = $today_newQry->fetch()['today_new'];
+        $response['tot_existing'] = $tot_existingQry->fetch()['tot_existing'];
+        $response['today_existing'] = $today_existingQry->fetch()['today_existing'];
 
-        $response['today_li_amt'] = $today_li_amtQry->fetch_assoc()['today_li_amt'];
-        $response['today_issued_amt'] = $today_issued_amtQry->fetch_assoc()['today_issued_amt'];
+        $response['today_li_amt'] = $today_li_amtQry->fetch()['today_li_amt'];
+        $response['today_issued_amt'] = $today_issued_amtQry->fetch()['today_issued_amt'];
 
 
 
         return $response;
     }
-    function getUserGroupBasedSubArea($con, $user_id)
+    function getUserGroupBasedSubArea($connect, $user_id)
     {
         $sub_area_list = array();
 
-        $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
-        while ($rowuser = $userQry->fetch_assoc()) {
+        $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $user_id ");
+        while ($rowuser = $userQry->fetch()) {
             $group_id = $rowuser['group_id'];
         }
         $group_id = explode(',', $group_id);
         foreach ($group_id as $group) {
-            $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-            $row_sub = $groupQry->fetch_assoc();
+            $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+            $row_sub = $groupQry->fetch();
             $sub_area_list[] = $row_sub['sub_area_id'];
         }
         $sub_area_ids = array();

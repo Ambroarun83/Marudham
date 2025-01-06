@@ -19,6 +19,5 @@ $gold['gold_upload'] = $goldDetails['gold_upload'];
 
 echo json_encode($gold);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

@@ -18,49 +18,47 @@ echo json_encode($obj->response);
 
 class ValidateNamedHandCash
 {
-    private $con, $mysqli, $connect;
+    private $connect;
     public $response;
     function __construct()
     {
         include '../../ajaxconfig.php';
-        $this->con = $con;
-        $this->mysqli = $mysqli;
         $this->connect = $connect;
     }
     function checkDebitInvestment($name_id, $amt)
     {
-        $crqry = $this->con->query("SELECT SUM(amt) FROM ct_cr_hinvest WHERE name_id = '$name_id' ");
-        $dbqry = $this->con->query("SELECT SUM(amt) FROM ct_db_hinvest WHERE name_id = '$name_id' ");
-        $cr = $crqry->fetch_array()[0];
-        $db = $dbqry->fetch_array()[0];
+        $crqry = $this->connect->query("SELECT SUM(amt) FROM ct_cr_hinvest WHERE name_id = '$name_id' ");
+        $dbqry = $this->connect->query("SELECT SUM(amt) FROM ct_db_hinvest WHERE name_id = '$name_id' ");
+        $cr = $crqry->fetch(PDO::FETCH_NUM)[0];
+        $db = $dbqry->fetch(PDO::FETCH_NUM)[0];
         $total_debitable = $cr - $db;
         $this->response['info'] = $total_debitable >= $amt;
     }
     function checkDebitDeposit($name_id, $amt)
     {
-        $crqry = $this->con->query("SELECT SUM(amt) FROM ct_cr_hdeposit WHERE name_id = '$name_id' ");
-        $dbqry = $this->con->query("SELECT SUM(amt) FROM ct_db_hdeposit WHERE name_id = '$name_id' ");
-        $cr = $crqry->fetch_array()[0];
-        $db = $dbqry->fetch_array()[0];
+        $crqry = $this->connect->query("SELECT SUM(amt) FROM ct_cr_hdeposit WHERE name_id = '$name_id' ");
+        $dbqry = $this->connect->query("SELECT SUM(amt) FROM ct_db_hdeposit WHERE name_id = '$name_id' ");
+        $cr = $crqry->fetch(PDO::FETCH_NUM)[0];
+        $db = $dbqry->fetch(PDO::FETCH_NUM)[0];
         $total_debitable = $cr - $db;
         $this->response['info'] = $total_debitable >= $amt;
     }
     function checkCreditEL($name_id, $amt)
     {
-        $crqry = $this->con->query("SELECT SUM(amt) FROM ct_cr_hel WHERE name_id = '$name_id' ");
-        $dbqry = $this->con->query("SELECT SUM(amt) FROM ct_db_hel WHERE name_id = '$name_id' ");
-        $cr = $crqry->fetch_array()[0];
-        $db = $dbqry->fetch_array()[0];
+        $crqry = $this->connect->query("SELECT SUM(amt) FROM ct_cr_hel WHERE name_id = '$name_id' ");
+        $dbqry = $this->connect->query("SELECT SUM(amt) FROM ct_db_hel WHERE name_id = '$name_id' ");
+        $cr = $crqry->fetch(PDO::FETCH_NUM)[0];
+        $db = $dbqry->fetch(PDO::FETCH_NUM)[0];
         $total_creditable = $db - $cr;
         $this->response['creditable'] = $total_creditable;
         $this->response['info'] = '';
     }
     function checkDebitEL($name_id, $amt)
     {
-        $crqry = $this->con->query("SELECT SUM(amt) FROM ct_cr_hel WHERE name_id = '$name_id' ");
-        $dbqry = $this->con->query("SELECT SUM(amt) FROM ct_db_hel WHERE name_id = '$name_id' ");
-        $cr = $crqry->fetch_array()[0];
-        $db = $dbqry->fetch_array()[0];
+        $crqry = $this->connect->query("SELECT SUM(amt) FROM ct_cr_hel WHERE name_id = '$name_id' ");
+        $dbqry = $this->connect->query("SELECT SUM(amt) FROM ct_db_hel WHERE name_id = '$name_id' ");
+        $cr = $crqry->fetch(PDO::FETCH_NUM)[0];
+        $db = $dbqry->fetch(PDO::FETCH_NUM)[0];
         $total_debitable = $cr - $db;
         $this->response['debitable'] = $total_debitable;
         $this->response['info'] = '';
@@ -68,8 +66,6 @@ class ValidateNamedHandCash
     //Close Connection
     function __destruct()
     {
-        $this->con->close();
-        $this->mysqli->close();
         $this->connect = null;
     }
 }

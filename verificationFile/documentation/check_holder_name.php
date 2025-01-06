@@ -29,6 +29,5 @@ if ($type == '1') {
 
 echo json_encode($holder_name);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

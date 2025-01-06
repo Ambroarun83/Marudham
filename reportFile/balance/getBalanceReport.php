@@ -17,14 +17,14 @@ $userid = $_SESSION["userid"] ?? null;
 
 $sub_area_list = '';
 if ($userid && $userid != 1) {
-    $userQry = $con->query("SELECT group_id, line_id FROM USER WHERE user_id = $userid");
-    $user = $userQry->fetch_assoc();
+    $userQry = $connect->query("SELECT group_id, line_id FROM USER WHERE user_id = $userid");
+    $user = $userQry->fetch();
     if ($user) {
         $line_id = explode(',', $user['line_id']);
         $sub_area_list = [];
         foreach ($line_id as $line) {
-            $lineQry = $con->query("SELECT sub_area_id FROM area_line_mapping WHERE map_id = $line");
-            while ($row = $lineQry->fetch_assoc()) {
+            $lineQry = $connect->query("SELECT sub_area_id FROM area_line_mapping WHERE map_id = $line");
+            while ($row = $lineQry->fetch()) {
                 $sub_area_list = array_merge($sub_area_list, explode(',', $row['sub_area_id']));
             }
         }
@@ -76,9 +76,9 @@ $qry = "SELECT req.req_id FROM request_creation req
 
     SELECT cc.req_id FROM closing_customer cc JOIN loan_issue li ON cc.req_id = li.req_id WHERE date(cc.closing_date) > date('$to_date') AND date(li.created_date) <= date('$to_date')  ";
 
-$run = $mysqli->query($qry);
+$run = $connect->query($qry);
 $req_id_list = [];
-while ($row = $run->fetch_assoc()) {
+while ($row = $run->fetch()) {
     $req_id_list[] = $row['req_id'];
 }
 $req_id_list = implode(',', $req_id_list);
@@ -220,10 +220,10 @@ foreach ($result as $row) {
     $sno++;
 }
 
-function count_all_data($con)
+function count_all_data($connect)
 {
     $query = "SELECT req_id FROM request_creation WHERE cus_status BETWEEN 14 AND 18";
-    $statement = $con->prepare($query);
+    $statement = $connect->prepare($query);
     $statement->execute();
     return $statement->rowCount();
 }

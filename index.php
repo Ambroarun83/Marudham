@@ -11,7 +11,8 @@ if($userid!=""){
 
 
 $id=0;
-include("api/main.php");
+include "./api/config-file.php";
+include "ajaxconfig.php";
 $msg="";
 
 /* Log In Start  */
@@ -23,10 +24,9 @@ if(isset($_POST['lusername'])) {
 
 	$qry     = "SELECT * FROM user WHERE user_name = '".$username."' AND user_password = '".$password."' and status=0"; 
 	
-	$res = mysqli_query($mysqli, $qry)or die("Error in Get All Records"); 
-	$result = mysqli_fetch_array($res);
-	if ($mysqli->affected_rows>0)
-	{  
+	$res = ($connect->query($qry)) or die("Error in Get All Records"); 
+	if ($res->rowCount() > 0){  
+		$result = $res->fetch();
 		$_SESSION['username']    = $result['user_name']; 
 		$_SESSION['userid']      = $result['user_id']; 
 		$_SESSION['fullname']    = $result['fullname']; 
@@ -39,6 +39,8 @@ if(isset($_POST['lusername'])) {
 	{ 
 		$msg="Enter Valid Email Id and Password";
 	} 
+	// Close the database connection
+	$connect = null;
 }
 
 ?>
@@ -79,7 +81,8 @@ if(isset($_POST['lusername'])) {
 					</div>
 				</div>
 			</form>
-			<?php $current_page = isset($_GET['page']) ? $_GET['page'] : null; ?>
-	
-<?php include("include/common/dashboardfooter.php"); ?>
+
+<?php #$current_page = isset($_GET['page']) ? $_GET['page'] : null; ?>
+	 
+<?php #include("include/common/dashboardfooter.php"); ?>
 		

@@ -75,7 +75,6 @@ include '../ajaxconfig.php';
     // });
 </script>
 <?php
-
-$con->close();
-$mysqli->close();
-$connect = null; ?>
+// Close the database connection
+$connect = null;
+?>

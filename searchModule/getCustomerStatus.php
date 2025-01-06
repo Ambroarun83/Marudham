@@ -10,7 +10,7 @@ if (isset($_POST['cus_id'])) {
 
 $records = array();
 
-$result = $con->query("SELECT req.req_id,req.prompt_remark,req.cus_status,
+$result = $connect->query("SELECT req.req_id,req.prompt_remark,req.cus_status,
     CASE WHEN req.cus_status >= 14 THEN ii.updated_date ELSE req.dor END AS `updated_date`,
     CASE WHEN req.cus_status >= 14 THEN ii.loan_id ELSE req.req_code END AS `code`,
     CASE WHEN req.cus_status IN (12,2,6,7) THEN vlc.loan_category WHEN req.cus_status IN (3,13,14,15,16,17,20,21) THEN alc.loan_category ELSE req.loan_category END AS loan_category,
@@ -24,9 +24,9 @@ $result = $con->query("SELECT req.req_id,req.prompt_remark,req.cus_status,
     LEFT JOIN in_issue ii ON req.req_id = ii.req_id
     where req.cus_id = $cus_id and (req.cus_status <= 21) ORDER BY req.created_date DESC");
 
-if ($result->num_rows > 0) {
+if ($result->rowCount() > 0) {
     $i = 0;
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch()) {
 
         $records[$i]['updated_date'] = date('d-m-Y', strtotime($row['updated_date']));
         $records[$i]['code'] = $row['code'];
@@ -35,8 +35,8 @@ if ($result->num_rows > 0) {
         $cus_name = $row['cus_name'];
 
         $loan_category = $row['loan_category'] ?? '';
-        $qry = $con->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
-        $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
+        $row1 = $qry->fetch();
         $records[$i]['loan_category'] = $row1['loan_category_creation_name'];
 
         $records[$i]['sub_category'] = $row['sub_category'];
@@ -58,10 +58,10 @@ if ($result->num_rows > 0) {
             '11' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
             '12' => ['status' => 'Verification', 'sub_status' => 'In Verification'],
             '13' => ['status' => 'Loan Issue', 'sub_status' => 'In Issue'],
-            '14' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
-            '15' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
-            '16' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
-            '17' => ['status' => 'Present', 'sub_status' => getCollectionStatus($con, $cus_id, $user_id, $req_id)],
+            '14' => ['status' => 'Present', 'sub_status' => getCollectionStatus($connect, $cus_id, $user_id, $req_id)],
+            '15' => ['status' => 'Present', 'sub_status' => getCollectionStatus($connect, $cus_id, $user_id, $req_id)],
+            '16' => ['status' => 'Present', 'sub_status' => getCollectionStatus($connect, $cus_id, $user_id, $req_id)],
+            '17' => ['status' => 'Present', 'sub_status' => getCollectionStatus($connect, $cus_id, $user_id, $req_id)],
             '20' => ['status' => 'Closed', 'sub_status' => 'In Closed'],
             '21' => ['status' => 'Closed', 'sub_status' => 'In Closed']
         ];
@@ -72,18 +72,18 @@ if ($result->num_rows > 0) {
             $records[$i]['sub_status'] = $statusMapping[$cus_status]['sub_status'];
 
             if ($cus_status == '21') {
-                $Qry = $con->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
+                $Qry = $connect->query("SELECT closed_sts from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
                 $closed_status = ['', 'Consider', 'Waiting List', 'Block List'];
-                $records[$i]['sub_status'] = $closed_status[$Qry->fetch_assoc()['closed_sts'] ?? 0];
+                $records[$i]['sub_status'] = $closed_status[$Qry->fetch()['closed_sts'] ?? 0];
             }
         }
         // }
 
         //for document status
         if ($cus_status >= 14 && $cus_status < 21) {
-            $records[$i]['doc_status'] = getDocumentStatus($con, $req_id) == 'pending' ? 'Document Pending' : 'Document Completed';
+            $records[$i]['doc_status'] = getDocumentStatus($connect, $req_id) == 'pending' ? 'Document Pending' : 'Document Completed';
         } elseif ($cus_status >= 21) {
-            $records[$i]['doc_status'] = getNOCDocDetails($con, $req_id, $cus_id) == 'pending' ? 'NOC Pending' : 'NOC Completed';
+            $records[$i]['doc_status'] = getNOCDocDetails($connect, $req_id, $cus_id) == 'pending' ? 'NOC Pending' : 'NOC Completed';
         } else {
             $records[$i]['doc_status'] = '';
         }
@@ -169,7 +169,7 @@ if ($result->num_rows > 0) {
 <input type="hidden" name="docSts" id="docSts">
 <div id="printcollection" style="display: none"></div>
 <?php
-function getCollectionStatus($con, $cus_id, $user_id, $req_id)
+function getCollectionStatus($connect, $cus_id, $user_id, $req_id)
 {
 
     $pending_sts = isset($_POST["pending_sts"]) ? explode(',', $_POST["pending_sts"]) : null;
@@ -181,14 +181,14 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
 
     $retVal = '';
 
-    $run = $con->query("SELECT lc.due_start_from,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
+    $run = $connect->query("SELECT lc.due_start_from,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
         rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
         from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
         WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status < 20)"); //Customer status greater than or equal to 14 because, after issued data only we need
 
     $curdate = date('Y-m-d');
-    while ($row = $run->fetch_assoc()) {
+    while ($row = $run->fetch()) {
         $i = 1;
         if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate)) and $bal_amt[$i - 1] != 0) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
             if ($row['cus_status'] == '15') {
@@ -238,8 +238,8 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
                     }
                 }
             } else if ($row['cus_status'] > 20) { // if status is closed(21) or more than that(22), then show closed status
-                $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($req_id) . "' ");
-                $closedStsrow = $closedSts->fetch_assoc();
+                $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($req_id) . "' ");
+                $closedStsrow = $closedSts->fetch();
                 $rclosed = $closedStsrow['closed_sts'];
                 $consider_lvl = $closedStsrow['consider_level'];
                 if ($rclosed == '1') {
@@ -258,17 +258,17 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
     return $retVal;
 }
 
-function getDocumentStatus($con, $req_id)
+function getDocumentStatus($connect, $req_id)
 {
 
     $response1 = 'completed';
 
-    // $sts_qry = $con->query("SELECT id, doc_Count FROM signed_doc_info WHERE req_id = '$req_id'");
-    // if ($sts_qry->num_rows > 0) {
-    //     while ($sts_row = $sts_qry->fetch_assoc()) {
-    //         $sts_qry1 = $con->query("SELECT * FROM signed_doc WHERE req_id = '$req_id' AND signed_doc_id = '" . $sts_row['id'] .
+    // $sts_qry = $connect->query("SELECT id, doc_Count FROM signed_doc_info WHERE req_id = '$req_id'");
+    // if ($sts_qry->rowCount() > 0) {
+    //     while ($sts_row = $sts_qry->fetch()) {
+    //         $sts_qry1 = $connect->query("SELECT * FROM signed_doc WHERE req_id = '$req_id' AND signed_doc_id = '" . $sts_row['id'] .
     //             "'");
-    //         if ($sts_qry1->num_rows == $sts_row['doc_Count'] && $response1 != 'pending') {
+    //         if ($sts_qry1->rowCount() == $sts_row['doc_Count'] && $response1 != 'pending') {
     //             $response1 = 'completed';
     //         } else {
     //             $response1 = 'pending';
@@ -277,12 +277,12 @@ function getDocumentStatus($con, $req_id)
     // }
 
     $response2 = 'completed';
-    // $sts_qry = $con->query("SELECT id, cheque_count FROM cheque_info WHERE req_id = '$req_id'");
-    // if ($sts_qry->num_rows > 0) {
-    //     while ($sts_row = $sts_qry->fetch_assoc()) {
-    //         $sts_qry1 = $con->query("SELECT * FROM cheque_upd WHERE req_id = '$req_id' AND cheque_table_id = '" . $sts_row['id'] .
+    // $sts_qry = $connect->query("SELECT id, cheque_count FROM cheque_info WHERE req_id = '$req_id'");
+    // if ($sts_qry->rowCount() > 0) {
+    //     while ($sts_row = $sts_qry->fetch()) {
+    //         $sts_qry1 = $connect->query("SELECT * FROM cheque_upd WHERE req_id = '$req_id' AND cheque_table_id = '" . $sts_row['id'] .
     //             "'");
-    //         if ($sts_qry1->num_rows == $sts_row['cheque_count'] && $response2 != 'pending') {
+    //         if ($sts_qry1->rowCount() == $sts_row['cheque_count'] && $response2 != 'pending') {
     //             $response2 = 'completed';
     //         } else {
     //             $response2 = 'pending';
@@ -291,9 +291,9 @@ function getDocumentStatus($con, $req_id)
     // }
 
     $response3 = 'completed';
-    $sts_qry = $con->query("SELECT mortgage_process, mortgage_document_pending, endorsement_process, Rc_document_pending FROM acknowlegement_documentation WHERE req_id = '$req_id'");
-    if ($sts_qry->num_rows > 0) {
-        while ($sts_row = $sts_qry->fetch_assoc()) {
+    $sts_qry = $connect->query("SELECT mortgage_process, mortgage_document_pending, endorsement_process, Rc_document_pending FROM acknowlegement_documentation WHERE req_id = '$req_id'");
+    if ($sts_qry->rowCount() > 0) {
+        while ($sts_row = $sts_qry->fetch()) {
             if ($sts_row['mortgage_process'] == '0') {
                 if ($sts_row['mortgage_document_pending'] == 'YES') {
                     $response3 = 'pending';
@@ -308,9 +308,9 @@ function getDocumentStatus($con, $req_id)
     }
 
     $response4 = 'completed';
-    // $sts_qry = $con->query("SELECT * FROM document_info WHERE req_id = '$req_id'");
-    // if ($sts_qry->num_rows > 0) {
-    //     while ($sts_row = $sts_qry->fetch_assoc()) {
+    // $sts_qry = $connect->query("SELECT * FROM document_info WHERE req_id = '$req_id'");
+    // if ($sts_qry->rowCount() > 0) {
+    //     while ($sts_row = $sts_qry->fetch()) {
     //         if ($sts_row['doc_upload'] == '' || $sts_row['doc_upload'] == null) {
     //             $response4 = 'pending';
     //         }
@@ -326,33 +326,33 @@ function getDocumentStatus($con, $req_id)
     return $response;
 }
 
-function getNOCDocDetails($con, $req_id, $cus_id)
+function getNOCDocDetails($connect, $req_id, $cus_id)
 {
 
     $response = 'completed';
 
-    $qry = $con->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then signed doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then signed doc any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM cheque_no_list where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then Cheque doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM cheque_no_list where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then Cheque doc any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' and (mortgage_process_noc = 0 or mortgage_document_noc = 0 or endorsement_process_noc = 0 or en_RC_noc = 0 or en_Key_noc = 0 ) ");
-    if ($qry->num_rows > 0) { // if condition true, then acknowlegement documentation any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' and (mortgage_process_noc = 0 or mortgage_document_noc = 0 or endorsement_process_noc = 0 or en_RC_noc = 0 or en_Key_noc = 0 ) ");
+    if ($qry->rowCount() > 0) { // if condition true, then acknowlegement documentation any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM gold_info where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then Gold doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM gold_info where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then Gold doc any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' and doc_info_upload_noc = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then Document doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' and doc_info_upload_noc = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then Document doc any one is given other may be pending to give
         $response = 'pending';
     }
 
@@ -397,3 +397,8 @@ function getNOCDocDetails($con, $req_id, $cus_id)
     });
     customerStatusOnClickEvents();
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

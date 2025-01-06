@@ -6,17 +6,17 @@ if (isset($_POST["coll_id"])) {
     $coll_id = $_POST["coll_id"];
 }
 
-$qry = $con->query("SELECT * FROM `collection` WHERE coll_code='" . strip_tags($coll_id) . "'");
-$row = $qry->fetch_assoc();
+$qry = $connect->query("SELECT * FROM `collection` WHERE coll_code='" . strip_tags($coll_id) . "'");
+$row = $qry->fetch();
 
 extract($row); // Extracts the array values into variables
 
-$sql = $con->query("SELECT alm.line_name FROM `acknowlegement_customer_profile` cp JOIN area_line_mapping alm ON FIND_IN_SET(cp.area_confirm_subarea,alm.sub_area_id) WHERE cp.req_id='" . strip_tags($req_id) . "'");
-$rowSql = $sql->fetch_assoc();
+$sql = $connect->query("SELECT alm.line_name FROM `acknowlegement_customer_profile` cp JOIN area_line_mapping alm ON FIND_IN_SET(cp.area_confirm_subarea,alm.sub_area_id) WHERE cp.req_id='" . strip_tags($req_id) . "'");
+$rowSql = $sql->fetch();
 $line_name = $rowSql['line_name'];
 
-$sql = $con->query("SELECT alc.due_type, lcc.loan_category_creation_name, ii.loan_id FROM `acknowlegement_loan_calculation` alc LEFT JOIN loan_category_creation lcc ON alc.loan_category = lcc.loan_category_creation_id LEFT JOIN in_issue ii ON alc.req_id = ii.req_id WHERE alc.req_id='" . strip_tags($req_id) . "'");
-$rowSql = $sql->fetch_assoc();
+$sql = $connect->query("SELECT alc.due_type, lcc.loan_category_creation_name, ii.loan_id FROM `acknowlegement_loan_calculation` alc LEFT JOIN loan_category_creation lcc ON alc.loan_category = lcc.loan_category_creation_id LEFT JOIN in_issue ii ON alc.req_id = ii.req_id WHERE alc.req_id='" . strip_tags($req_id) . "'");
+$rowSql = $sql->fetch();
 $loan_category = $rowSql['loan_category_creation_name'];
 $loan_id = $rowSql['loan_id'];
 
@@ -26,11 +26,11 @@ $penalty_track = intVal($penalty_track != '' ? $penalty_track : 0);
 $coll_charge_track = intVal($coll_charge_track != '' ? $coll_charge_track : 0);
 $net_received = $due_amt_track + $penalty_track + $coll_charge_track;
 $due_balance = ($due_amt - $due_amt_track) < 0 ? 0 : $due_amt - $due_amt_track;
-$loan_balance = getBalance($con, $req_id, $coll_date);
+$loan_balance = getBalance($connect, $req_id, $coll_date);
 
 $user_id = $row['insert_login_id'];
-$qry = $con->query("SELECT fullname from `user` where `user_id` = $user_id ");
-$user_name = $qry->fetch_assoc()['fullname'];
+$qry = $connect->query("SELECT fullname from `user` where `user_id` = $user_id ");
+$user_name = $qry->fetch()['fullname'];
 ?>
 <style>
     @media print {
@@ -168,11 +168,11 @@ function moneyFormatIndia($num)
     return $thecash;
 }
 
-function getBalance($con, $req_id, $coll_date)
+function getBalance($connect, $req_id, $coll_date)
 {
-    $result = $con->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id = $req_id ");
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
+    $result = $connect->query("SELECT * FROM `acknowlegement_loan_calculation` WHERE req_id = $req_id ");
+    if ($result->rowCount() > 0) {
+        $row = $result->fetch();
         $loan_arr = $row;
 
         if ($loan_arr['tot_amt_cal'] == '' || $loan_arr['tot_amt_cal'] == null) {
@@ -187,9 +187,9 @@ function getBalance($con, $req_id, $coll_date)
         }
     }
     $coll_arr = array();
-    $result = $con->query("SELECT * FROM `collection` WHERE req_id ='" . $req_id . "' and date(coll_date) <= date('" . $coll_date . "') ");
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
+    $result = $connect->query("SELECT * FROM `collection` WHERE req_id ='" . $req_id . "' and date(coll_date) <= date('" . $coll_date . "') ");
+    if ($result->rowCount() > 0) {
+        while ($row = $result->fetch()) {
             $coll_arr[] = $row;
         }
         $total_paid = 0;
@@ -215,4 +215,7 @@ function getBalance($con, $req_id, $coll_date)
 
     return $response['balance'];
 }
+
+// Close the database connection
+$connect = null;
 ?>

@@ -40,11 +40,11 @@ if(isset($_FILES['upd'])){
 
 //////////////////////// To get Expense reference Code once again /////////////////////////
 $myStr = "EXP";
-$selectIC = $con->query("SELECT ref_code FROM ct_db_bexpense WHERE ref_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ref_code FROM ct_db_bexpense WHERE ref_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT ref_code FROM ct_db_bexpense WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_bexpense WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ref_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -62,7 +62,7 @@ else
 
 
 
-$qry = $con->query("INSERT INTO `ct_db_bexpense`(`username`, `usertype`,`ref_code`,`bank_id`, `cat`, `part`, `vou_id`,`trans_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_db_bexpense`(`username`, `usertype`,`ref_code`,`bank_id`, `cat`, `part`, `vou_id`,`trans_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `created_date`) 
 VALUES ('$username','$usertype','$ref_code','$bank_id','$cat','$part','$vou_id','$trans_id','$rec_per','$remark','$amt','$upd','$user_id','$op_date')");
 
 
@@ -74,5 +74,6 @@ if($qry){
 
 echo $response;
 
-
+// Close the database connection
+$connect = null;
 ?>

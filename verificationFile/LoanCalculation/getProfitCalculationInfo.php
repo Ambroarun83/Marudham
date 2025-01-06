@@ -11,9 +11,9 @@ if(isset($_POST['sub_cat'])){
 $detailrecords = array();
 
 
-$result=$con->query("SELECT * FROM loan_calculation where sub_category = '".strip_tags($sub_cat)."' ");
+$result=$connect->query("SELECT * FROM loan_calculation where sub_category = '".strip_tags($sub_cat)."' ");
 $i=0;
-while($row = $result->fetch_assoc()){
+while($row = $result->fetch()){
     $detailrecords['due_type'] = $row['due_type'];
     $detailrecords['profit_method'] = $row['profit_method'];
     $detailrecords['calculate_method'] = $row['calculate_method'];
@@ -28,6 +28,8 @@ while($row = $result->fetch_assoc()){
     $i++;
 }
 
-
 echo json_encode($detailrecords);
+
+// Close the database connection
+$connect = null;
 ?>

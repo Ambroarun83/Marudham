@@ -62,9 +62,9 @@ if ($cus_id != '') {
 }
 
 // echo $sql;
-$runSql = $con->query($sql);
-if ($runSql->num_rows > 0) {
-    while ($row = $runSql->fetch_assoc())
+$runSql = $connect->query($sql);
+if ($runSql->rowCount() > 0) {
+    while ($row = $runSql->fetch())
         $cus_id_fetched[] = $row['cus_id'];
 } else {
     $cus_id_fetched = [];
@@ -72,8 +72,8 @@ if ($runSql->num_rows > 0) {
 
 if (!empty($cus_id_fetched)) {
     foreach ($cus_id_fetched as $cus_id) {
-        $sql = $con->query("SELECT req_id,cus_id,cus_status From request_creation where cus_id = $cus_id ORDER BY req_id DESC LIMIT 1 ");
-        $row = $sql->fetch_assoc();
+        $sql = $connect->query("SELECT req_id,cus_id,cus_status From request_creation where cus_id = $cus_id ORDER BY req_id DESC LIMIT 1 ");
+        $row = $sql->fetch();
         $req_id[] = $row['req_id'];
         $cus_status[] = $row['cus_status'];
     }
@@ -84,7 +84,7 @@ $data = array();
 if (!empty($req_id)) {
     foreach ($req_id as $req) {
         if ($cus_status[$x] == '0' || $cus_status[$x] == '1' || $cus_status[$x] == '4' || $cus_status[$x] == '5' || $cus_status[$x] == '8' || $cus_status[$x] == '9') {
-            $req_sql = $con->query("SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
+            $req_sql = $connect->query("SELECT req.cus_id,req.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,req.mobile1,req.mobile2 
                         From request_creation req 
                         LEFT JOIN area_list_creation ac ON req.area = ac.area_id 
                         LEFT JOIN sub_area_list_creation sac ON req.sub_area = sac.sub_area_id 
@@ -93,7 +93,7 @@ if (!empty($req_id)) {
                         LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id 
                         where req.req_id = $req ");
         } else {
-            $req_sql = $con->query("SELECT cp.cus_id,cp.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,cp.mobile1,cp.mobile2 
+            $req_sql = $connect->query("SELECT cp.cus_id,cp.cus_name,ac.area_name,sac.sub_area_name,bc.branch_name,alm.line_name,agm.group_name,cp.mobile1,cp.mobile2 
                     FROM customer_profile cp
                     LEFT JOIN area_list_creation ac ON cp.area_confirm_area = ac.area_id 
                     LEFT JOIN sub_area_list_creation sac ON cp.area_confirm_subarea = sac.sub_area_id 
@@ -103,7 +103,7 @@ if (!empty($req_id)) {
                     WHERE cp.req_id = $req  ");
         }
         $x++;
-        while ($req_row = $req_sql->fetch_assoc()) {
+        while ($req_row = $req_sql->fetch()) {
             $sub_array = array();
             $sub_array['sno'] = $i++;
             $sub_array['cus_id'] = $req_row['cus_id'];
@@ -127,10 +127,10 @@ if (!empty($req_id)) {
 //for family data fetching
 if ($fam_sql != '') {
 
-    $runSql = $con->query($fam_sql);
+    $runSql = $connect->query($fam_sql);
     $fam_id_arr = [];
-    if ($runSql->num_rows > 0) {
-        while ($row = $runSql->fetch_assoc()) {
+    if ($runSql->rowCount() > 0) {
+        while ($row = $runSql->fetch()) {
             $fam_id_arr[] = $row['id'];
         }
     }
@@ -138,8 +138,8 @@ if ($fam_sql != '') {
     if (!empty($fam_id_arr)) {
         $i = 1;
         foreach ($fam_id_arr as $id) {
-            $qry = $con->query("SELECT fam.cus_id,cr.customer_name,fam.famname,fam.relationship,fam.relation_aadhar,fam.relation_Mobile FROM verification_family_info fam JOIN customer_register cr ON fam.cus_id = cr.cus_id WHERE fam.id = '$id' ");
-            while ($row = $qry->fetch_assoc()) {
+            $qry = $connect->query("SELECT fam.cus_id,cr.customer_name,fam.famname,fam.relationship,fam.relation_aadhar,fam.relation_Mobile FROM verification_family_info fam JOIN customer_register cr ON fam.cus_id = cr.cus_id WHERE fam.id = '$id' ");
+            while ($row = $qry->fetch()) {
                 $sub_array = array();
                 $sub_array['sno'] = $i++;
                 $sub_array['name'] = $row['famname'];
@@ -157,3 +157,6 @@ if ($fam_sql != '') {
 
 
 echo json_encode($data);
+
+// Close the database connection
+$connect = null;

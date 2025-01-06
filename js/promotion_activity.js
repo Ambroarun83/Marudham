@@ -1,7 +1,4 @@
 $(document).ready(function () {
-
-
-
     const toggleButtons = $(".toggle-button");
     toggleButtons.on("click", function () {
         // Reset active class for all buttons
@@ -29,9 +26,10 @@ $(document).ready(function () {
         $(this).val(value);
     });
 
-    $('button').click(function (e) { e.preventDefault(); })
+    // $('button').click(function (e) { e.preventDefault(); })
 
-    $('#search_cus').click(function () {
+    $('#search_cus').click(function (e) {
+        e.preventDefault();
         if (validateCustSearch() == true) {
             searchCustomer();
         } else {
@@ -39,13 +37,15 @@ $(document).ready(function () {
         }
     });
 
-    $('#submit_new_cus').click(function () {
+    $('#submit_new_cus').click(function (e) {
+        e.preventDefault();
         if (validateNewCusAdd() == true) {
             submitNewCustomer();
         }
     });
 
-    $('#sumit_add_promo').click(function () {
+    $('#sumit_add_promo').click(function (e) {
+        e.preventDefault();
         if (validatePromoAdd() == true) {
             submitPromotion();
         }
@@ -53,13 +53,9 @@ $(document).ready(function () {
 
 });
 
-
 $(function () {
-
+    $(".toggle-button[value='Existing']").trigger('click');
 })
-
-
-
 
 function searchCustomer() {
     let cus_id = $('#cus_id_search').val(); let cus_name = $('#cus_name_search').val(); let cus_mob = $('#cus_mob_search').val();
@@ -89,10 +85,8 @@ function searchCustomer() {
         }
 
     }, 'json')
-
-
-
 }
+
 function validateCustSearch() {
     let response = true;
     let cus_id = $('#cus_id_search').val(); let cus_name = $('#cus_name_search').val(); let cus_mob = $('#cus_mob_search').val();
@@ -124,7 +118,6 @@ function validateCustSearch() {
     return response;
 }
 
-
 function resetNewPromotionTable() {
     $.post('followupFiles/promotion/resetNewPromotionTable.php', {}, function (html) {
         $('#new_promo_div').empty().html(html);
@@ -135,8 +128,6 @@ function resetNewPromotionTable() {
         promoChartOnclick();
     })
 }
-
-
 
 function submitNewCustomer() {
     let cus_id = $('#cus_id').val(); let cus_name = $('#cus_name').val(); let cus_mob = $('#cus_mob').val();
@@ -149,11 +140,14 @@ function submitNewCustomer() {
             // if this true then it will ask for confirmation to update customer details in new promotion table
             swarlInfoAlert(response, 'Do You want to Update?');
         } else {
-            swarlSuccessAlert(response);
+            swarlSuccessAlert(response, function(){
+                $('#closeNewPromotionModal').trigger('click');
+            });
             $('#addnewcus').find('.modal-body input').val('');
         }
     });
 }
+
 function validateNewCusAdd() {
     let response = true;
     let cus_id = $('#cus_id').val(); let cus_name = $('#cus_name').val(); let cus_mob = $('#cus_mob').val();
@@ -187,7 +181,6 @@ function validateNewCusAdd() {
     return response;
 }
 
-
 function submitPromotion() {
     let cus_id = $('#promo_cus_id').val();
     let status = $('#promo_status').val(); let label = $('#promo_label').val(); let remark = $('#promo_remark').val(); let follow_date = $('#promo_fdate').val();
@@ -197,11 +190,14 @@ function submitPromotion() {
         if (response.includes('Error')) {
             swarlErrorAlert(response);
         } else {
-            swarlSuccessAlert(response);
+            swarlSuccessAlert(response, function(){
+                $('#closeAddPromotionModal').trigger('click');
+            });
             $('#addPromotion').find('.modal-body input').not('[readonly]').not('#orgin_table').val('');
         }
     })
 }
+
 function validatePromoAdd() {
     let response = true;
     let status = $('#promo_status').val(); let label = $('#promo_label').val(); let remark = $('#promo_remark').val();
@@ -226,7 +222,6 @@ function validatePromoAdd() {
     return response;
 }
 
-
 function update() {//this function will update customer details of after confirmation
     let cus_id = $('#cus_id').val(); let cus_name = $('#cus_name').val(); let cus_mob = $('#cus_mob').val();
     let area = $('#area').val(); let sub_area = $('#sub_area').val();
@@ -235,11 +230,14 @@ function update() {//this function will update customer details of after confirm
         if (response.includes('Error')) {
             swarlErrorAlert(response);
         } else {
-            swarlSuccessAlert(response);
+            swarlSuccessAlert(response, function(){
+                $('#closeNewPromotionModal').trigger('click');
+            });
             $('#addnewcus').find('.modal-body input').val('');
         }
     })
 }
+
 function promoChartOnclick() {//function of on click event for promo chart
     $('.promo-chart').off('click').click(function () {
         let cus_id = $(this).data('id');
@@ -250,6 +248,7 @@ function promoChartOnclick() {//function of on click event for promo chart
 
     })
 }
+
 function intNotintOnclick() {
     $('.intrest, .not-intrest').off('click').click(function () {//onclick for add promotion modal
 
@@ -276,7 +275,6 @@ function intNotintOnclick() {
         }
     })
 }
-
 
 function showPromotionList(type, tableid) {
     let table = $(`#${tableid}`).DataTable();
@@ -320,6 +318,7 @@ function showPromotionList(type, tableid) {
         }
     });
 }
+
 function promotionListOnclick() {
 
     //on click for customer profile showing in next page
@@ -340,6 +339,7 @@ function promotionListOnclick() {
         getPersonalInfo(cus_id);
     })
 }
+
 function promotionChartColor(tableid) {
     $(`#${tableid} tbody tr`).not('th').each(function () {
         if (tableid == 'expromotion_list') var element = $(this).find('td:eq(14)'); // Get the text content of the 14th td element (Follow date)
@@ -380,7 +380,6 @@ function promotionChartColor(tableid) {
         }
     });
 }
-
 
 //Code snippet from c:\xampp\htdocs\marudham\js\due_followup.js
 function historyTableContents(req_id, cus_id, type) {
@@ -495,14 +494,11 @@ function historyTableContents(req_id, cus_id, type) {
 
 }
 
-
 function getPersonalInfo(cus_id) {
     $.post('followupFiles/promotion/getPersonalInfo.php', { cus_id }, function (html) {
         $('#personalInfoDiv').empty().html(html);
     })
 }
-
-
 
 // Improved code snippet
 function swarlErrorAlert(response) {
@@ -532,16 +528,15 @@ function swarlInfoAlert(title, text) {
     });
 }
 
-function swarlSuccessAlert(response) {
+function swarlSuccessAlert(response, callback) {
     Swal.fire({
         title: response,
         icon: 'success',
         confirmButtonText: 'Ok',
         confirmButtonColor: '#009688'
+    }).then((result) => {
+        if(result.isConfirmed && typeof callback === 'function'){
+            callback();
+        }
     });
 }
-
-
-
-
-

@@ -47,31 +47,31 @@ foreach ($result as $row) {
     $sub_array[] = '<input type="text" class="cusName" name="cus_name[]" value="'.$row['customer_name'].'" style="border: none; outline: 0; background: inherit;" readonly>';
     $sub_array[] = '<input type="text" name="cus_mobileno[]" value="'.$row['mobile1'].'" style="border: none; outline: 0; background: inherit;" readonly>';
     
-    $areaqry = $con->query("SELECT CASE 
+    $areaqry = $connect->query("SELECT CASE 
     WHEN ( SELECT COUNT(*) FROM customer_profile WHERE cus_id = $cus_id ) > 0 
     THEN ( SELECT area_name FROM area_list_creation WHERE area_id = ( SELECT area_confirm_area FROM customer_profile WHERE cus_id = $cus_id ORDER BY `id` DESC LIMIT 1 ) ) 
     ELSE ( SELECT area_name FROM area_list_creation WHERE area_id = ( SELECT `area` FROM request_creation WHERE cus_id = $cus_id ORDER BY `req_id` DESC LIMIT 1 ) ) END AS `area_name`
     ");
-    $sub_array[] = $areaqry->fetch_assoc()['area_name'];
+    $sub_array[] = $areaqry->fetch()['area_name'];
     
-    $branchqry = $con->query("SELECT bc.branch_name FROM area_group_mapping agm JOIN branch_creation bc ON agm.branch_id = bc.branch_id where  FIND_IN_SET('".$row['area']."' , agm.area_id) ");
-    $sub_array[] = $branchqry->fetch_assoc()['branch_name'];
+    $branchqry = $connect->query("SELECT bc.branch_name FROM area_group_mapping agm JOIN branch_creation bc ON agm.branch_id = bc.branch_id where  FIND_IN_SET('".$row['area']."' , agm.area_id) ");
+    $sub_array[] = $branchqry->fetch()['branch_name'];
     
-    $lineqry = $con->query("SELECT CASE 
+    $lineqry = $connect->query("SELECT CASE 
     WHEN ( SELECT COUNT(*) FROM customer_profile WHERE cus_id = $cus_id ) > 0 
     THEN ( SELECT line_name FROM area_line_mapping WHERE FIND_IN_SET( ( SELECT area_confirm_subarea FROM customer_profile WHERE cus_id = $cus_id ORDER BY `id` DESC LIMIT 1 ) , sub_area_id) ) 
     ELSE ( SELECT line_name FROM area_line_mapping WHERE FIND_IN_SET( ( SELECT sub_area FROM request_creation WHERE cus_id = $cus_id ORDER BY `req_id` DESC LIMIT 1 ), sub_area_id ) )
     END AS `line_name`
     ");
-    $sub_array[] = $lineqry->fetch_assoc()['line_name'];
+    $sub_array[] = $lineqry->fetch()['line_name'];
     
-    $grpqry = $con->query("SELECT CASE 
+    $grpqry = $connect->query("SELECT CASE 
     WHEN ( SELECT COUNT(*) FROM customer_profile WHERE cus_id = $cus_id ) > 0 
     THEN ( SELECT group_name FROM area_group_mapping WHERE FIND_IN_SET( ( SELECT area_confirm_subarea FROM customer_profile WHERE cus_id = $cus_id ORDER BY `id` DESC LIMIT 1 ) , sub_area_id) ) 
     ELSE ( SELECT group_name FROM area_group_mapping WHERE FIND_IN_SET( ( SELECT sub_area FROM request_creation WHERE cus_id = $cus_id ORDER BY `req_id` DESC LIMIT 1 ), sub_area_id ) )
     END AS `group_name`
     ");
-    $sub_array[] = $grpqry->fetch_assoc()['group_name'];
+    $sub_array[] = $grpqry->fetch()['group_name'];
 
     // $action = "<a href='' title='Update'>  <span class='icon-mail'></span> </a>";
     
@@ -96,4 +96,7 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;
 ?>

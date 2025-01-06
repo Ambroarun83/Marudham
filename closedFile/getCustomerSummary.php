@@ -16,9 +16,9 @@ $how_to_know_obj = [
     '5' => 'Other Reference'
 ];
 
-$qry = $con->query("SELECT * FROM customer_register where cus_id = $cus_id");
-if($qry->num_rows > 0){
-    $row = $qry->fetch_assoc();
+$qry = $connect->query("SELECT * FROM customer_register where cus_id = $cus_id");
+if($qry->rowCount() > 0){
+    $row = $qry->fetch();
     $records['how_to_know'] = $how_to_know_obj[$row['how_to_know']];
     $records['monthly_income'] = $row['monthly_income'];
     $records['other_income'] = $row['other_income'];
@@ -32,5 +32,6 @@ if($qry->num_rows > 0){
 
 echo json_encode($records);
 
-
+// Close the database connection
+$connect = null;
 ?>

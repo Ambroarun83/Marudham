@@ -26,18 +26,18 @@ if(isset($_POST['update'])){
 
 
 
-$sql = $con->query("SELECT * FROM customer_register WHERE cus_id = '$cus_id'");
+$sql = $connect->query("SELECT * FROM customer_register WHERE cus_id = '$cus_id'");
 // insert only if the customer id is not present in the customer register table
-if($sql->num_rows == 0){
+if($sql->rowCount() == 0){
 
-    $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id = '$cus_id'");
+    $sql = $connect->query("SELECT * FROM new_cus_promo WHERE cus_id = '$cus_id'");
 
-    if($sql->num_rows > 0){
+    if($sql->rowCount() > 0){
 
         if($update == 'yes'){
             //this update query will run only when user confirmed updating 
 
-            $sql = $con->query("UPDATE new_cus_promo SET cus_name = '$cus_name', mobile = '$cus_mob', area = '$area', sub_area = '$sub_area', update_login_id = '$userid' WHERE cus_id = '$cus_id' ");
+            $sql = $connect->query("UPDATE new_cus_promo SET cus_name = '$cus_name', mobile = '$cus_mob', area = '$area', sub_area = '$sub_area', update_login_id = '$userid' WHERE cus_id = '$cus_id' ");
             //update customer details if customer id is already present in the table
             if($sql){
                 $response = 'Customer Updated Successfully';
@@ -53,7 +53,7 @@ if($sql->num_rows == 0){
 
     }else{
 
-        $sql = $con->query("INSERT INTO new_cus_promo(cus_id, cus_name, mobile, area, sub_area, insert_login_id,created_date) 
+        $sql = $connect->query("INSERT INTO new_cus_promo(cus_id, cus_name, mobile, area, sub_area, insert_login_id,created_date) 
             VALUES('$cus_id', '$cus_name', '$cus_mob', '$area', '$sub_area','$userid',now())");
         //insert customer details if customer id is not present in the table
         if($sql){
@@ -69,4 +69,7 @@ if($sql->num_rows == 0){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

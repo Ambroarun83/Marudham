@@ -6,16 +6,16 @@ include("ajaxconfig.php");
 
 $search_content = $_POST["search_content"];
 
-$sql = $con->query("SELECT * from modules where screens LIKE '%".$search_content."%' ");
+$sql = $connect->query("SELECT * from modules where screens LIKE '%".$search_content."%' ");
 $response['status'] = '';
 $i=0;
 
-if($sql->num_rows > 0){
+if($sql->rowCount() > 0){
 
-    while ($row = $sql->fetch_assoc()) {
+    while ($row = $sql->fetch()) {
         $user_col_name = $row['access'];
-        $qry = $con->query("SELECT * From user where user_id = $user_id ");
-        $access_from_user = $qry->fetch_assoc()[$user_col_name];
+        $qry = $connect->query("SELECT * From user where user_id = $user_id ");
+        $access_from_user = $qry->fetch()[$user_col_name];
         
         if($access_from_user == 0){
             $response['status'] = 'Fetched';
@@ -33,4 +33,7 @@ if($sql->num_rows > 0){
 }
 
 echo json_encode($response);
+
+// Close the database connection
+$connect = null;
 ?>

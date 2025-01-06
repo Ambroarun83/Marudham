@@ -7,9 +7,9 @@ if(isset($_POST['cus_name'])){
     $cus_name = $_POST['cus_name'];
 }
 
-function getfamName($con,$rel_id){
-    $qry1=$con->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
-    $run=$qry1->fetch_assoc();
+function getfamName($connect,$rel_id){
+    $qry1=$connect->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
+    $run=$qry1->fetch();
     return $run['famname'];
 }
 ?>
@@ -31,12 +31,12 @@ function getfamName($con,$rel_id){
     <tbody>
         <?php
         $i=1;
-        $qry = $con->query("SELECT a.id,a.cheque_holder_type,a.cheque_holder_name,a.cheque_no,a.noc_given,a.noc_date,a.noc_person,a.noc_name,a.temp_sts,b.cheque_relation,b.chequebank_name from `cheque_no_list` a JOIN cheque_info b on a.cheque_table_id = b.id where a.req_id = $req_id && a.used_status != '1' ");
-        while($row = $qry->fetch_assoc()){
+        $qry = $connect->query("SELECT a.id,a.cheque_holder_type,a.cheque_holder_name,a.cheque_no,a.noc_given,a.noc_date,a.noc_person,a.noc_name,a.temp_sts,b.cheque_relation,b.chequebank_name from `cheque_no_list` a JOIN cheque_info b on a.cheque_table_id = b.id where a.req_id = $req_id && a.used_status != '1' ");
+        while($row = $qry->fetch()){
 
             if(is_numeric($row['cheque_holder_name'])){
-                $qry1 = $con->query("SELECT famname from verification_family_info where id = '".$row['cheque_holder_name']."' ");
-                $row1 = $qry1->fetch_assoc();
+                $qry1 = $connect->query("SELECT famname from verification_family_info where id = '".$row['cheque_holder_name']."' ");
+                $row1 = $qry1->fetch();
                 $holder_name = $row1['famname'];
             }else{$holder_name = $row['cheque_holder_name'];}
 
@@ -59,7 +59,7 @@ function getfamName($con,$rel_id){
                 </td>
                 <td>
                     <?php if(isset($row['noc_name']) && $row['noc_name'] != null){?>
-                        <input type="text" class="form-control" value='<?php if(!is_numeric($row['noc_name'])){echo $row['noc_name'];}else{echo getfamName($con, $row['noc_name']);}?>' readonly>
+                        <input type="text" class="form-control" value='<?php if(!is_numeric($row['noc_name'])){echo $row['noc_name'];}else{echo getfamName($connect, $row['noc_name']);}?>' readonly>
                     <?php } ?>
                 </td>
 
@@ -108,3 +108,8 @@ function getfamName($con,$rel_id){
         // });
     });
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

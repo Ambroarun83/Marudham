@@ -7,7 +7,7 @@ class ClosedDashboardClass
     {
         $this->user_id = $user_id;
     }
-    public function getClosedCounts($con)
+    public function getClosedCounts($connect)
     {
         $response = array();
         $today = date('Y-m-d');
@@ -31,7 +31,7 @@ class ClosedDashboardClass
 
 
         if (empty($sub_area_list)) {
-            $sub_area_list = $this->getUserGroupBasedSubArea($con, $this->user_id);
+            $sub_area_list = $this->getUserGroupBasedSubArea($connect, $this->user_id);
         }
 
         $tot_in_cl .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
@@ -49,51 +49,51 @@ class ClosedDashboardClass
         $platinum .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
         $diamond .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
 
-        $tot_in_clQry = $con->query($tot_in_cl);
-        $month_in_clQry = $con->query($month_in_cl);
-        $month_cl_statusQry = $con->query($month_cl_status);
-        $month_cl_balQry = $con->query($month_cl_bal);
-        $today_in_clQry = $con->query($today_in_cl);
-        $today_cl_statusQry = $con->query($today_cl_status);
-        $considerQry = $con->query($consider);
-        $waitingQry = $con->query($waiting);
-        $blockedQry = $con->query($blocked);
-        $bronzeQry = $con->query($bronze);
-        $silverQry = $con->query($silver);
-        $goldQry = $con->query($gold);
-        $platinumQry = $con->query($platinum);
-        $diamondQry = $con->query($diamond);
+        $tot_in_clQry = $connect->query($tot_in_cl);
+        $month_in_clQry = $connect->query($month_in_cl);
+        $month_cl_statusQry = $connect->query($month_cl_status);
+        $month_cl_balQry = $connect->query($month_cl_bal);
+        $today_in_clQry = $connect->query($today_in_cl);
+        $today_cl_statusQry = $connect->query($today_cl_status);
+        $considerQry = $connect->query($consider);
+        $waitingQry = $connect->query($waiting);
+        $blockedQry = $connect->query($blocked);
+        $bronzeQry = $connect->query($bronze);
+        $silverQry = $connect->query($silver);
+        $goldQry = $connect->query($gold);
+        $platinumQry = $connect->query($platinum);
+        $diamondQry = $connect->query($diamond);
 
-        $response['tot_in_cl'] = $tot_in_clQry->fetch_assoc()['tot_in_cl'];
-        $response['month_in_cl'] = $month_in_clQry->fetch_assoc()['month_in_cl'];
-        $response['month_cl_status'] = $month_cl_statusQry->fetch_assoc()['month_cl_status'];
-        $response['month_cl_bal'] = $month_cl_balQry->fetch_assoc()['month_cl_bal'];
-        $response['today_in_cl'] = $today_in_clQry->fetch_assoc()['today_in_cl'];
-        $response['today_cl_status'] = $today_cl_statusQry->fetch_assoc()['today_cl_status'];
-        $response['cl_cn'] = $considerQry->fetch_assoc()['consider'];
-        $response['cl_wl'] = $waitingQry->fetch_assoc()['waiting'];
-        $response['cl_bl'] = $blockedQry->fetch_assoc()['blocked'];
-        $response['cl_bronze'] = $bronzeQry->fetch_assoc()['bronze'];
-        $response['cl_silver'] = $silverQry->fetch_assoc()['silver'];
-        $response['cl_gold'] = $goldQry->fetch_assoc()['gold'];
-        $response['cl_platinum'] = $platinumQry->fetch_assoc()['platinum'];
-        $response['cl_diamond'] = $diamondQry->fetch_assoc()['diamond'];
+        $response['tot_in_cl'] = $tot_in_clQry->fetch()['tot_in_cl'];
+        $response['month_in_cl'] = $month_in_clQry->fetch()['month_in_cl'];
+        $response['month_cl_status'] = $month_cl_statusQry->fetch()['month_cl_status'];
+        $response['month_cl_bal'] = $month_cl_balQry->fetch()['month_cl_bal'];
+        $response['today_in_cl'] = $today_in_clQry->fetch()['today_in_cl'];
+        $response['today_cl_status'] = $today_cl_statusQry->fetch()['today_cl_status'];
+        $response['cl_cn'] = $considerQry->fetch()['consider'];
+        $response['cl_wl'] = $waitingQry->fetch()['waiting'];
+        $response['cl_bl'] = $blockedQry->fetch()['blocked'];
+        $response['cl_bronze'] = $bronzeQry->fetch()['bronze'];
+        $response['cl_silver'] = $silverQry->fetch()['silver'];
+        $response['cl_gold'] = $goldQry->fetch()['gold'];
+        $response['cl_platinum'] = $platinumQry->fetch()['platinum'];
+        $response['cl_diamond'] = $diamondQry->fetch()['diamond'];
 
         return $response;
     }
 
-    function getUserGroupBasedSubArea($con, $user_id)
+    function getUserGroupBasedSubArea($connect, $user_id)
     {
         $sub_area_list = array();
 
-        $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
-        while ($rowuser = $userQry->fetch_assoc()) {
+        $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $user_id ");
+        while ($rowuser = $userQry->fetch()) {
             $group_id = $rowuser['group_id'];
         }
         $group_id = explode(',', $group_id);
         foreach ($group_id as $group) {
-            $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-            $row_sub = $groupQry->fetch_assoc();
+            $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+            $row_sub = $groupQry->fetch();
             $sub_area_list[] = $row_sub['sub_area_id'];
         }
         $sub_area_ids = array();

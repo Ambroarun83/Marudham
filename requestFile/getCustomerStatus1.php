@@ -9,11 +9,11 @@ if (isset($_POST['req_id'])) {
 
 $records = array();
 
-$result = $con->query("SELECT * FROM request_creation where cus_id = '" . strip_tags($cus_id) . "' and cus_status <= 8 ORDER BY created_date DESC ");
+$result = $connect->query("SELECT * FROM request_creation where cus_id = '" . strip_tags($cus_id) . "' and cus_status <= 8 ORDER BY created_date DESC ");
 
-if ($result->num_rows > 0) {
+if ($result->rowCount() > 0) {
     $i = 0;
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch()) {
 
 
         $cus_status = $row['cus_status'];
@@ -39,6 +39,5 @@ if ($result->num_rows > 0) {
 
 echo $response;
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

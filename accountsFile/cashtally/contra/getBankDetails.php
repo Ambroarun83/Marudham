@@ -9,8 +9,8 @@ $bank_id_arr=array();
 $records=array();
 $i =0;
 
-$qry = $con->query("SELECT bank_details from `user` where `user_id` = $user_id ");
-$values = $qry->fetch_assoc()['bank_details'];
+$qry = $connect->query("SELECT bank_details from `user` where `user_id` = $user_id ");
+$values = $qry->fetch()['bank_details'];
 
 if($values != ''){
 
@@ -18,8 +18,8 @@ if($values != ''){
 
     foreach ($bank_id_arr as $val){
 
-        $qry = $con->query("SELECT id,bank_name,short_name,acc_no from bank_creation where id=$val");
-        while($row = $qry->fetch_assoc()){
+        $qry = $connect->query("SELECT id,bank_name,short_name,acc_no from bank_creation where id=$val");
+        while($row = $qry->fetch()){
             $records[$i]['bank_id'] = $row['id'];
             $records[$i]['bank_fullname'] = $row['bank_name'];
             $records[$i]['acc_no'] = $row['acc_no'];
@@ -30,4 +30,7 @@ if($values != ''){
 }
 
 echo json_encode($records);
+
+// Close the database connection
+$connect = null;
 ?>

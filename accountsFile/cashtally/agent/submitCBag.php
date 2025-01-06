@@ -14,7 +14,7 @@ $amt = $_POST['amt'];
 $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
-$qry = $con->query("INSERT INTO `ct_cr_bag`(`ag_id`,`bank_id`,`ref_code`,`trans_id`,`remark`, `amt`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_cr_bag`(`ag_id`,`bank_id`,`ref_code`,`trans_id`,`remark`, `amt`, `insert_login_id`, `created_date`) 
 VALUES ('$ag_id','$bank_id','$ref_code','$trans_id','$remark','$amt','$user_id','$op_date')");
 
 if($qry){
@@ -25,5 +25,6 @@ if($qry){
 
 echo $response;
 
-
+// Close the database connection
+$connect = null;
 ?>

@@ -1,11 +1,11 @@
 <?php
 include('..\ajaxconfig.php');
 
-    $qry = $mysqli->query("SELECT * from bank_creation where 1");
+    $qry = $connect->query("SELECT * from bank_creation where 1");
     $records = array();
-    if($qry->num_rows > 0){
+    if($qry->rowCount() > 0){
         $i=0;
-        while($row = $qry->fetch_assoc()){
+        while($row = $qry->fetch()){
             $records[$i]['id'] = $row['id'];
             $records[$i]['bank_name'] = $row['bank_name'];
             $records[$i]['short_name'] = $row['short_name'];
@@ -20,4 +20,7 @@ include('..\ajaxconfig.php');
         }
     }	
     echo json_encode($records);
+
+// Close the database connection
+$connect = null;
 ?>

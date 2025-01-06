@@ -21,23 +21,23 @@ if ($type == 'today') {
     
 }
 
-$condition = getSubareaList($con, $user_id); //condition will be returned if user id selected
-getDetials($con, $where, $condition);
+$condition = getSubareaList($connect, $user_id); //condition will be returned if user id selected
+getDetials($connect, $where, $condition);
 
-function getDetials($con, $where, $condition)
+function getDetials($connect, $where, $condition)
 {
 
     //will check based on user's branch if user selected
     //will show only interest amunt under user's branch not others also
     //excluding due type interest , coz interest loans will be sepately calculated. those interest will be collected every month as due amount
     //, COALESCE(ROUND(SUM( CASE WHEN c.due_amt_track > alc.principal_amt_cal / alc.due_period THEN c.due_amt_track - (alc.principal_amt_cal / alc.due_period) ELSE 0 END )), 0) AS total_interest_paid
-    $qry = $con->query("SELECT COALESCE(SUM(c.due_amt_track), 0) AS due_amt_track, COALESCE(ROUND(SUM( CASE WHEN c.due_amt_track <= alc.principal_amt_cal / alc.due_period THEN c.due_amt_track ELSE alc.principal_amt_cal / alc.due_period END )), 0) AS total_principal_paid FROM in_verification iv JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id JOIN collection c ON iv.req_id = c.req_id WHERE iv.cus_status > 13 AND due_type != 'Interest' and $where $condition");
-    $row = $qry->fetch_assoc();
+    $qry = $connect->query("SELECT COALESCE(SUM(c.due_amt_track), 0) AS due_amt_track, COALESCE(ROUND(SUM( CASE WHEN c.due_amt_track <= alc.principal_amt_cal / alc.due_period THEN c.due_amt_track ELSE alc.principal_amt_cal / alc.due_period END )), 0) AS total_principal_paid FROM in_verification iv JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id JOIN collection c ON iv.req_id = c.req_id WHERE iv.cus_status > 13 AND due_type != 'Interest' and $where $condition");
+    $row = $qry->fetch();
     $res['principal_paid'] = $row['total_principal_paid'];
     $res['due_amt_track'] = $row['due_amt_track'];
 
-    $qry = $con->query("SELECT COALESCE(sum(int_amt_track), 0) as int_amt_track FROM in_verification iv JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id JOIN collection c ON iv.req_id = c.req_id WHERE iv.cus_status > 13 AND due_type = 'Interest' and $where $condition");
-    $row = $qry->fetch_assoc();
+    $qry = $connect->query("SELECT COALESCE(sum(int_amt_track), 0) as int_amt_track FROM in_verification iv JOIN acknowlegement_loan_calculation alc ON iv.req_id = alc.req_id JOIN collection c ON iv.req_id = c.req_id WHERE iv.cus_status > 13 AND due_type = 'Interest' and $where $condition");
+    $row = $qry->fetch();
     $res['interest_amount'] = $row['int_amt_track'];
 
     $response['split_interest'] = moneyFormatIndia($res['due_amt_track'] - $res['principal_paid']);
@@ -46,20 +46,20 @@ function getDetials($con, $where, $condition)
     echo json_encode($response);
 }
 
-function getSubareaList($con, $user_id)
+function getSubareaList($connect, $user_id)
 {
 
     if ($user_id != '') { //to get user's sub area id based on user's branch assigned
 
-        $userQry = $con->query("SELECT line_id FROM USER WHERE user_id = $user_id ");
-        while ($rowuser = $userQry->fetch_assoc()) {
+        $userQry = $connect->query("SELECT line_id FROM USER WHERE user_id = $user_id ");
+        while ($rowuser = $userQry->fetch()) {
             $line_id = $rowuser['line_id'];
         }
         $line_id = explode(',', $line_id);
         $sub_area_list = array();
         foreach ($line_id as $line) {
-            $groupQry = $con->query("SELECT sub_area_id FROM area_line_mapping where map_id = $line ");
-            $row_sub = $groupQry->fetch_assoc();
+            $groupQry = $connect->query("SELECT sub_area_id FROM area_line_mapping where map_id = $line ");
+            $row_sub = $groupQry->fetch();
             $sub_area_list[] = $row_sub['sub_area_id'];
         }
         $sub_area_ids = array();
@@ -104,4 +104,6 @@ function moneyFormatIndia($num)
 
     return $isNegative ? "-" . $thecash : $thecash;
 }
-$con->close();
+
+// Close the database connection
+$connect = null;

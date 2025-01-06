@@ -15,10 +15,10 @@ $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 $response = '';
 
 //set bedit table as amount credited/ received
-$qry = $con->query("UPDATE ct_db_hexchange set received = 0 where id = '$hex_id' ");
+$qry = $connect->query("UPDATE ct_db_hexchange set received = 0 where id = '$hex_id' ");
 
-if($con->affected_rows > 0){
-    $qry = $con->query("INSERT INTO `ct_cr_hexchange`(`db_ref_id`,`to_user_id`,`from_user_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
+if($qry->rowCount() > 0){
+    $qry = $connect->query("INSERT INTO `ct_cr_hexchange`(`db_ref_id`,`to_user_id`,`from_user_id`, `remark`, `amt`, `insert_login_id`, `created_date`) 
         VALUES ('$hex_id','$to_user_id','$from_user_id','$remark','$amt','$user_id','$op_date')");
 
     if($qry){
@@ -31,4 +31,7 @@ if($con->affected_rows > 0){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

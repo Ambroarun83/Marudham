@@ -27,9 +27,9 @@ function moneyFormatIndia($num)
     }
     return $thecash;
 }
-function getfamName($con,$rel_id){
-    $qry1=$con->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
-    $run=$qry1->fetch_assoc();
+function getfamName($connect,$rel_id){
+    $qry1=$connect->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
+    $run=$qry1->fetch();
     return $run['famname'];
 }
 ?>
@@ -52,11 +52,11 @@ function getfamName($con,$rel_id){
     <tbody>
         <?php
         $i=1;
-        $qry = $con->query("SELECT * FROM `gold_info` where req_id = $req_id and used_status != '1' ");
+        $qry = $connect->query("SELECT * FROM `gold_info` where req_id = $req_id and used_status != '1' ");
         $cnt = 0;
         $weight = 0;
         $goldVal = 0;
-        while($row = $qry->fetch_assoc()){
+        while($row = $qry->fetch()){
             $cnt = $cnt + intval($row['gold_Count']);
             $weight = $weight + intval($row["gold_Weight"]);
             $goldVal = $goldVal + intval($row["gold_Value"]);
@@ -80,7 +80,7 @@ function getfamName($con,$rel_id){
                 </td>
                 <td>
                     <?php if(isset($row['noc_name']) && $row['noc_name'] != null){?>
-                        <input type="text" class="form-control" value='<?php if(!is_numeric($row['noc_name'])){echo $row['noc_name'];}else{echo getfamName($con, $row['noc_name']);}?>' readonly>
+                        <input type="text" class="form-control" value='<?php if(!is_numeric($row['noc_name'])){echo $row['noc_name'];}else{echo getfamName($connect, $row['noc_name']);}?>' readonly>
                     <?php } ?>
                 </td>
 
@@ -127,3 +127,8 @@ function getfamName($con,$rel_id){
         // });
     });
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

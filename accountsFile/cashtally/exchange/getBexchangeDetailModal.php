@@ -10,11 +10,11 @@ if(isset($_POST['bex_id'])){
 
 $records = array();
     
-// $qry = $con->query("SELECT dbex.* from ct_db_bexchange dbex JOIN user us on us.user_id = dbex.insert_login_id where dbex.id = '$bex_id' ");
-$qry = $con->query("SELECT bex.*,bc.short_name,bc.acc_no from ct_db_bexchange bex LEFT JOIN bank_creation bc on bc.id = bex.from_acc_id where bex.id = '$bex_id'");
+// $qry = $connect->query("SELECT dbex.* from ct_db_bexchange dbex JOIN user us on us.user_id = dbex.insert_login_id where dbex.id = '$bex_id' ");
+$qry = $connect->query("SELECT bex.*,bc.short_name,bc.acc_no from ct_db_bexchange bex LEFT JOIN bank_creation bc on bc.id = bex.from_acc_id where bex.id = '$bex_id'");
 
 
-$row = $qry->fetch_assoc();
+$row = $qry->fetch();
 foreach($row as $key=>$val){
     $$key = $val;
 }
@@ -23,11 +23,11 @@ $from_bank = $short_name .' - '.substr($acc_no,-5);
 
 //////////////////////// To get Exchange reference Code once again /////////////////////////
 $myStr = "EXC";
-$selectIC = $con->query("SELECT ref_code FROM ct_cr_bexchange WHERE ref_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ref_code FROM ct_cr_bexchange WHERE ref_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT ref_code FROM ct_cr_bexchange WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ref_code FROM ct_cr_bexchange WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ref_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -40,6 +40,8 @@ else
 }
 ///////////////////////////////////////////////////////////////////////////////////////////
 
+// Close the database connection
+$connect = null;
 ?>
 <form id="cr_bex_form" name="cr_bex_form" method="post" enctype="multipart/form-data">
     <div class="col-md-12">

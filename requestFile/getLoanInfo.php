@@ -8,10 +8,10 @@ if (isset($_POST['cus_id'])) {
 }
 
 $response = array();
-$result = $con->query("SELECT lc.collection_info,lcat.loan_limit FROM loan_calculation lc JOIN loan_category lcat ON lcat.sub_category_name = lc.sub_category where lc.status=0 and lc.sub_category = '" . strip_tags($sub_cat_id) . "' ");
-if ($result->num_rows > 0) {
+$result = $connect->query("SELECT lc.collection_info,lcat.loan_limit FROM loan_calculation lc JOIN loan_category lcat ON lcat.sub_category_name = lc.sub_category where lc.status=0 and lc.sub_category = '" . strip_tags($sub_cat_id) . "' ");
+if ($result->rowCount() > 0) {
 
-    $row = $result->fetch_assoc();
+    $row = $result->fetch();
     $response['advance'] = $row['collection_info'];
     // $response['loan_limit'] = $row['loan_limit'];
     $loan_limit = intVal($row['loan_limit']);
@@ -22,23 +22,23 @@ if ($result->num_rows > 0) {
 
 // to set loan imit
 // take customer loan limit if customer is exist
-$qry = $con->query("SELECT loan_limit from customer_register where cus_id = '$cus_id' and (cus_status >= 14 and cus_status <= 20) ");
-if ($qry->num_rows > 0) {
-    $row = $qry->fetch_assoc();
+$qry = $connect->query("SELECT loan_limit from customer_register where cus_id = '$cus_id' and (cus_status >= 14 and cus_status <= 20) ");
+if ($qry->rowCount() > 0) {
+    $row = $qry->fetch();
     // $response['cus_limit'] = $row['loan_limit'];
     $cus_limit = intVal($row['loan_limit']);
 
     // take customer's loan amount that he started to pay
-    $qry01 = $con->query("SELECT SUM(alc.tot_amt_cal) as tot_amt_cal, due_type from in_issue ii JOIN acknowlegement_loan_calculation alc ON alc.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)  ");
+    $qry01 = $connect->query("SELECT SUM(alc.tot_amt_cal) as tot_amt_cal, due_type from in_issue ii JOIN acknowlegement_loan_calculation alc ON alc.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)  ");
     // echo "SELECT SUM(alc.tot_amt_cal) as tot_amt_cal from in_issue ii JOIN acknowlegement_loan_calculation alc ON alc.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)  ";
-    $row01 = $qry01->fetch_assoc();
+    $row01 = $qry01->fetch();
     $tot_amt_cal = $row01['tot_amt_cal'];
     $loan_type = ($row01['due_type'] == 'Interest') ? 'interest' : 'emi';
 
     // take the amount which he paid till now
-    $qry02 = $con->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(c.pre_close_waiver) as pre_close_waiver, SUM(c.princ_amt_track) as princ_amt_track, SUM(c.int_amt_track) as int_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)");
+    $qry02 = $connect->query("SELECT SUM(c.due_amt_track) as due_amt_track, SUM(c.pre_close_waiver) as pre_close_waiver, SUM(c.princ_amt_track) as princ_amt_track, SUM(c.int_amt_track) as int_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20)");
     // echo "SELECT SUM(c.due_amt_track) as due_amt_track from in_issue ii JOIN collection c ON c.req_id = ii.req_id where ii.cus_id = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status <= 20);";
-    $row02 = $qry02->fetch_assoc();
+    $row02 = $qry02->fetch();
     $due_amt_track = $row02['due_amt_track'];
     $pre_close_waiver = $row02['pre_close_waiver'];
     $princ_amt_track = $row02['princ_amt_track'];
@@ -75,7 +75,5 @@ if ($cus_limit != 0) {
 
 echo json_encode($response);
 
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

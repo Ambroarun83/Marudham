@@ -74,9 +74,9 @@ function moneyFormatIndia($num)
         while ($row = $run->fetch()) {
             //Show NOC button until closed_status submit so we check the count of closed status against the request id.
             $ii_req_id = $row["req_id"];
-            $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
-            $closed_row = $closedSts->fetch_assoc();
-            $closed_cnt = $closedSts->num_rows;
+            $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
+            $closed_row = $closedSts->fetch();
+            $closed_cnt = $closedSts->rowCount();
 
         ?>
             <tr>
@@ -156,8 +156,8 @@ function moneyFormatIndia($num)
                                 }
                             }
                         } else if ($row['cus_status'] > 20) { // if status is closed(21) or more than that(22), then show closed status
-                            $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
-                            $rclosed = $closedSts->fetch_assoc()['closed_sts'];
+                            $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
+                            $rclosed = $closedSts->fetch()['closed_sts'];
                             if ($rclosed == '1') {
                                 echo 'Consider';
                             }
@@ -231,3 +231,8 @@ function moneyFormatIndia($num)
         }
     });
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

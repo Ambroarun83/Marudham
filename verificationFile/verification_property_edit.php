@@ -16,6 +16,5 @@ $prptyEditRes['holder'] = $group['property_holder'];
 
 echo json_encode($prptyEditRes);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

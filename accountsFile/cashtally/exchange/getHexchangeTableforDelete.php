@@ -5,8 +5,8 @@ $user_id = $_SESSION['userid'];
 include('../../../ajaxconfig.php');
 
 $i=0;$records = array();
-$qry = $con->query("SELECT hex.*,us.fullname,us.role from ct_db_hexchange hex LEFT JOIN user us on us.user_id = hex.to_user_id where hex.insert_login_id = '$user_id' and received = 1 "); //1 means not received and 0 means already received
-while($row = $qry->fetch_assoc()){
+$qry = $connect->query("SELECT hex.*,us.fullname,us.role from ct_db_hexchange hex LEFT JOIN user us on us.user_id = hex.to_user_id where hex.insert_login_id = '$user_id' and received = 1 "); //1 means not received and 0 means already received
+while($row = $qry->fetch()){
     $records[$i]['id'] = $row['id'];
     $records[$i]['to_user_id'] = $row['to_user_id'];
     $records[$i]['from_user_id'] = $row['insert_login_id'];
@@ -17,6 +17,8 @@ while($row = $qry->fetch_assoc()){
     $i++;
 }
 
+// Close the database connection
+$connect = null;
 ?>
 
 

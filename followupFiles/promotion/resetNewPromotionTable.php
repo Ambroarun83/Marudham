@@ -2,8 +2,8 @@
 
 include('../../ajaxconfig.php');
 
-// $sql = $con->query("SELECT a.*,b.area_name,c.sub_area_name  FROM new_promotion a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE 1 ");
-$sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_id from customer_register) ");
+// $sql = $connect->query("SELECT a.*,b.area_name,c.sub_area_name  FROM new_promotion a JOIN area_list_creation b ON a.area = b.area_id JOIN sub_area_list_creation c ON a.sub_area = c.sub_area_id WHERE 1 ");
+$sql = $connect->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_id from customer_register) ");
 
 ?>
 
@@ -21,7 +21,7 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
         <th>Follow Date</th>
     </thead>
     <tbody>
-        <?php while ($row =  $sql->fetch_assoc()) { ?>
+        <?php while ($row =  $sql->fetch()) { ?>
             <tr>
                 <td><?php echo date('d-m-Y', strtotime($row['created_date'])); ?></td>
                 <td><?php echo $row['cus_id']; ?></td>
@@ -54,10 +54,10 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
                 </td>
                 <td>
                     <?php
-                    $qry = $con->query("SELECT follow_date FROM new_promotion WHERE cus_id = '" . $row['cus_id'] . "' ORDER BY created_date DESC limit 1");
+                    $qry = $connect->query("SELECT follow_date FROM new_promotion WHERE cus_id = '" . $row['cus_id'] . "' ORDER BY created_date DESC limit 1");
                     //take last promotion follow up date inserted from new promotion table
-                    if ($qry->num_rows > 0) {
-                        $fdate = $qry->fetch_assoc()['follow_date'];
+                    if ($qry->rowCount() > 0) {
+                        $fdate = $qry->fetch()['follow_date'];
                         echo date('d-m-Y', strtotime($fdate));
                     } else {
                         echo '';
@@ -138,3 +138,8 @@ $sql = $con->query("SELECT * FROM new_cus_promo WHERE cus_id NOT IN (select cus_
         }
     }
 </style>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

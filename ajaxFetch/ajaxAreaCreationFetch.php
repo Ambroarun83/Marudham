@@ -59,8 +59,8 @@ foreach ($result as $row) {
     $sub_area_name = '';
     foreach ($sub_area_id as $id) {
         $getsubareaQry = "SELECT * from sub_area_list_creation where sub_area_id = '" . $id . "' and status = 0 ";
-        $res = $con->query($getsubareaQry);
-        $row1 = $res->fetch_assoc();
+        $res = $connect->query($getsubareaQry);
+        $row1 = $res->fetch();
         $sub_area_name .= $row1["sub_area_name"] . ', ';
     }
     $sub_area_name = rtrim($sub_area_name, ' , '); // will remove the last comma from string
@@ -102,3 +102,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

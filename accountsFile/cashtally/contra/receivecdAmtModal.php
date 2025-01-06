@@ -10,20 +10,20 @@ if(isset($_POST['bdep_id'])){
 
 $records = array();
     
-$qry = $con->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposit bdep LEFT JOIN bank_creation bc on bdep.to_bank_id = bc.id where bdep.received = 1 and bdep.id = $bdep_id ");
+$qry = $connect->query("SELECT bdep.*,bc.short_name,bc.acc_no from ct_db_bank_deposit bdep LEFT JOIN bank_creation bc on bdep.to_bank_id = bc.id where bdep.received = 1 and bdep.id = $bdep_id ");
 // 0 means recevied or entered in credit bank deposit. not used current date because any time can be cash deposited to bank 
 
-$row = $qry->fetch_assoc();
+$row = $qry->fetch();
 foreach($row as $key=>$val){
     $$key = $val;
 }
 
 $myStr = "DEP";
-$selectIC = $con->query("SELECT ref_code FROM ct_cr_cash_deposit WHERE ref_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ref_code FROM ct_cr_cash_deposit WHERE ref_code != '' ");
+if($selectIC->rowCount() > 0)
 {
-    $codeAvailable = $con->query("SELECT ref_code FROM ct_cr_cash_deposit WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ref_code FROM ct_cr_cash_deposit WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ref_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -119,4 +119,7 @@ function moneyFormatIndia($num) {
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;
 ?>

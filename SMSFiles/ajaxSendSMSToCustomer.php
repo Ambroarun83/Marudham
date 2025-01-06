@@ -5,8 +5,8 @@ if(isset($_POST['cus_id'])){
 echo    $cus_id = $_POST['cus_id'];
 }
 
-    // $qry = $con->query("SELECT customer_name, mobile1 from customer_register where req_ref_id = '$req_id' ");
-    // $row = $qry->fetch_assoc();
+    // $qry = $connect->query("SELECT customer_name, mobile1 from customer_register where req_ref_id = '$req_id' ");
+    // $row = $qry->fetch();
     // $customer_name = $row['customer_name'];
     // $cus_mobile1 = $row['mobile1'];
 
@@ -24,4 +24,6 @@ echo    $cus_id = $_POST['cus_id'];
     // // Process your response here
     // return $response; 
     
+// Close the database connection
+// $connect = null;
 ?>

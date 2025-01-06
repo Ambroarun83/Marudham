@@ -27,9 +27,9 @@ function moneyFormatIndia($num)
     }
     return $thecash;
 }
-function getfamName($con,$rel_id){
-    $qry1=$con->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
-    $run=$qry1->fetch_assoc();
+function getfamName($connect,$rel_id){
+    $qry1=$connect->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
+    $run=$qry1->fetch();
     return $run['famname'];
 }
 ?>
@@ -47,10 +47,10 @@ function getfamName($con,$rel_id){
         <?php
         $k=1;
             
-            $qry = $con->query("SELECT ac.id as doc_id,ac.doc_name,ac.doc_type,ac.doc_upload,ac.doc_holder,ac.holder_name,ac.`relation_name`,ac.`doc_info_upload_noc`,ac.noc_date,ac.noc_person,ac.noc_name,fam.famname,fam.id
+            $qry = $connect->query("SELECT ac.id as doc_id,ac.doc_name,ac.doc_type,ac.doc_upload,ac.doc_holder,ac.holder_name,ac.`relation_name`,ac.`doc_info_upload_noc`,ac.noc_date,ac.noc_person,ac.noc_name,fam.famname,fam.id
             from document_info ac Left JOIN verification_family_info fam ON ac.relation_name = fam.id where ac.req_id = $req_id AND ac.doc_upload !=''");
 
-            while($row = $qry->fetch_assoc()){
+            while($row = $qry->fetch()){
                 $upd_arr = explode(',',$row['doc_upload']);
                 for($i=0;$i<sizeof($upd_arr);$i++){
                     ?>
@@ -70,3 +70,7 @@ function getfamName($con,$rel_id){
     
 </table>
 
+<?php
+// Close the database connection
+$connect = null;
+?>

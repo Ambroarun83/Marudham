@@ -7,7 +7,7 @@ if(isset($_POST['req_id'])){
 }
 
 
-    $sql = $con->query(" UPDATE confirmation_followup set remove_status = 1 where req_id = '$req_id' ORDER BY id DESC LIMIT 1 ");
+    $sql = $connect->query(" UPDATE confirmation_followup set remove_status = 1 where req_id = '$req_id' ORDER BY id DESC LIMIT 1 ");
     
     if($sql){
         $response = 'Removed Successfully';
@@ -16,4 +16,7 @@ if(isset($_POST['req_id'])){
     }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

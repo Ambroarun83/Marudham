@@ -12,17 +12,17 @@ $records = array();
 $j=0;
 foreach($area_array as $area1){
     $i=0;
-    $result=$con->query("SELECT * FROM sub_area_list_creation where area_id_ref='".$area1."' and status=0");
-    if($result->num_rows > 0){
-        while( $row = $result->fetch_assoc()){
+    $result=$connect->query("SELECT * FROM sub_area_list_creation where area_id_ref='".$area1."' and status=0");
+    if($result->rowCount() > 0){
+        while( $row = $result->fetch()){
             $sub_area_id = $row['sub_area_id'];
             $sub_area_name = $row['sub_area_name'];
             $records[$j][$i]['sub_area_id'] = $row['sub_area_id'];
             $records[$j][$i]['sub_area_name'] = $row['sub_area_name'];
         
             if($map == 'line'){
-                $checkQry=$con->query("SELECT * FROM area_line_mapping where status=0 and FIND_IN_SET($sub_area_id,sub_area_id) ");
-                if ($checkQry->num_rows>0){
+                $checkQry=$connect->query("SELECT * FROM area_line_mapping where status=0 and FIND_IN_SET($sub_area_id,sub_area_id) ");
+                if ($checkQry->rowCount()>0){
                     $disabled = true;
                     
                 }
@@ -31,8 +31,8 @@ foreach($area_array as $area1){
                 }
                 $records[$j][$i]['disabled'] = $disabled;
             }else if($map == 'group'){
-                $checkQry=$con->query("SELECT * FROM area_group_mapping where status=0 and FIND_IN_SET($sub_area_id,sub_area_id)");
-                if ($checkQry->num_rows>0){
+                $checkQry=$connect->query("SELECT * FROM area_group_mapping where status=0 and FIND_IN_SET($sub_area_id,sub_area_id)");
+                if ($checkQry->rowCount()>0){
                     $disabled = true;
                 }
                 else{
@@ -40,7 +40,7 @@ foreach($area_array as $area1){
                 }
                 $records[$j][$i]['disabled'] = $disabled;
             }
-            $checkres = $checkQry->fetch_assoc();
+            $checkres = $checkQry->fetch();
             $i++;
         }
         $j++;
@@ -48,4 +48,7 @@ foreach($area_array as $area1){
 
 }
 echo json_encode($records);
+
+// Close the database connection
+$connect = null;
 ?>

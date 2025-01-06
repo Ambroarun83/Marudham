@@ -8,8 +8,8 @@ $bank_id = $_POST['bank_id'];
 
 $i=0;$records = array();
 
-$qry = $con->query("SELECT bex.*,bc.short_name,bc.acc_no from ct_db_bexchange bex LEFT JOIN bank_creation bc on bc.id = bex.from_acc_id where bex.to_bank_id = '$bank_id' and received = 1 "); //1 means not received and 0 means already received
-while($row = $qry->fetch_assoc()){
+$qry = $connect->query("SELECT bex.*,bc.short_name,bc.acc_no from ct_db_bexchange bex LEFT JOIN bank_creation bc on bc.id = bex.from_acc_id where bex.to_bank_id = '$bank_id' and received = 1 "); //1 means not received and 0 means already received
+while($row = $qry->fetch()){
     $records[$i]['id'] = $row['id'];
     $records[$i]['ref_code'] = $row['ref_code'];
     $records[$i]['from_bank_id'] = $row['from_acc_id'];
@@ -113,4 +113,7 @@ function moneyFormatIndia($num) {
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;
 ?>

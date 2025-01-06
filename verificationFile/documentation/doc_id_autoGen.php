@@ -4,15 +4,15 @@ include('../../ajaxconfig.php');
 $id  = $_POST['id'];
 
 if ($id != '') {
-    $select = $con->query("SELECT doc_id FROM verification_documentation WHERE id = '$id' ");
-    $code = $select->fetch_assoc();
+    $select = $connect->query("SELECT doc_id FROM verification_documentation WHERE id = '$id' ");
+    $code = $select->fetch();
     $doc_id = $code['doc_id'];
 } else {
     $myStr = "DOC";
-    $selectIC = $con->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ");
-    if ($selectIC->num_rows > 0) {
-        $codeAvailable = $con->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ORDER BY id DESC LIMIT 1");
-        while ($row = $codeAvailable->fetch_assoc()) {
+    $selectIC = $connect->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ");
+    if ($selectIC->rowCount() > 0) {
+        $codeAvailable = $connect->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ORDER BY id DESC LIMIT 1");
+        while ($row = $codeAvailable->fetch()) {
             $ac2 = $row["doc_id"];
         }
         $appno2 = ltrim(strstr($ac2, '-'), '-');
@@ -25,6 +25,5 @@ if ($id != '') {
 }
 echo json_encode($doc_id);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

@@ -11,9 +11,9 @@ $response = '';
 
 foreach($bank_id as $val){
 
-    $qry=$con->query("SELECT created_date from ct_bank_collection where bank_id = '$val' and date(created_date) = '$op_date' ");
+    $qry=$connect->query("SELECT created_date from ct_bank_collection where bank_id = '$val' and date(created_date) = '$op_date' ");
     // check whether today's date has been already entered
-    if($qry->num_rows != 0 && $response != "Today's Collection Not Submitted"){
+    if($qry->rowCount() != 0 && $response != "Today's Collection Not Submitted"){
         $response = "Today's Collection Already Submitted";
     
     }else{
@@ -22,4 +22,7 @@ foreach($bank_id as $val){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

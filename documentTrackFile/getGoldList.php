@@ -27,9 +27,9 @@ function moneyFormatIndia($num)
     }
     return $thecash;
 }
-function getfamName($con,$rel_id){
-    $qry1=$con->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
-    $run=$qry1->fetch_assoc();
+function getfamName($connect,$rel_id){
+    $qry1=$connect->query("SELECT famname FROM `verification_family_info` where id=$rel_id");
+    $run=$qry1->fetch();
     return $run['famname'];
 }
 ?>
@@ -48,11 +48,11 @@ function getfamName($con,$rel_id){
     <tbody>
         <?php
         $i=1;
-        $qry = $con->query("SELECT * FROM `gold_info` where req_id = $req_id and used_status != '1' ");
+        $qry = $connect->query("SELECT * FROM `gold_info` where req_id = $req_id and used_status != '1' ");
         $cnt = 0;
         $weight = 0;
         $goldVal = 0;
-        while($row = $qry->fetch_assoc()){
+        while($row = $qry->fetch()){
             $cnt = $cnt + intval($row['gold_Count']);
             $weight = $weight + intval($row["gold_Weight"]);
             $goldVal = $goldVal + intval($row["gold_Value"]);
@@ -82,3 +82,7 @@ function getfamName($con,$rel_id){
     </tr>
 </table>
 
+<?php
+// Close the database connection
+$connect = null;
+?>

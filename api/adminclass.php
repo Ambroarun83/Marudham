@@ -1,6 +1,7 @@
 <?php
 require 'PHPMailerAutoload.php';
 require 'moneyFormatIndia.php';
+include("iedit-config.php");
 class admin
 {
 

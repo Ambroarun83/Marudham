@@ -34,7 +34,7 @@ if(isset($_FILES['upd'])){
     $upd='';
 }
     
-$qry = $con->query("INSERT INTO `ct_db_hexpense`(`username`, `usertype`, `cat`, `part`, `vou_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_db_hexpense`(`username`, `usertype`, `cat`, `part`, `vou_id`, `rec_per`, `remark`, `amt`, `upload`, `insert_login_id`, `created_date`) 
 VALUES ('$username','$usertype','$cat','$part','$vou_id','$rec_per','$remark','$amt','$upd','$user_id','$op_date')");
 
 
@@ -46,5 +46,6 @@ if($qry){
 
 echo $response;
 
-
+// Close the database connection
+$connect = null;
 ?>

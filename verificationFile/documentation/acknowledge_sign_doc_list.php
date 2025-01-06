@@ -76,8 +76,6 @@ include '../../ajaxconfig.php';
     </tbody>
 </table>
 
-
-
 <script type="text/javascript">
     $(function() {
         $('#signed_table').DataTable({
@@ -108,8 +106,6 @@ include '../../ajaxconfig.php';
     });
 </script>
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

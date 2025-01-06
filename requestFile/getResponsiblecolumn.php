@@ -5,13 +5,12 @@ if (isset($_POST['ag_id'])) {
 }
 
 
-$result = $con->query("SELECT * FROM agent_creation where status=0 and ag_id = $ag_id ");
-while ($row = $result->fetch_assoc()) {
+$result = $connect->query("SELECT * FROM agent_creation where status=0 and ag_id = $ag_id ");
+while ($row = $result->fetch()) {
     $responsible = $row['responsible'];
 }
 
 echo json_encode($responsible);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

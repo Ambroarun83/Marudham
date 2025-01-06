@@ -10,14 +10,17 @@ if(isset($_POST['family'])){
 
 $records = array();
 if($family == 'true'){
-    $qry = $con->query("SELECT fp.ansi_template FROM verification_family_info fam JOIN fingerprints fp on fam.relation_aadhar = fp.adhar_num  WHERE fam.id='$id' ");
-    $row = $qry->fetch_assoc();
+    $qry = $connect->query("SELECT fp.ansi_template FROM verification_family_info fam JOIN fingerprints fp on fam.relation_aadhar = fp.adhar_num  WHERE fam.id='$id' ");
+    $row = $qry->fetch();
     $records['fingerprint'] = $row['ansi_template'];
 }else{
-    $qry = $con->query("SELECT ansi_template FROM fingerprints WHERE adhar_num='$id' ");
-    $row = $qry->fetch_assoc();
+    $qry = $connect->query("SELECT ansi_template FROM fingerprints WHERE adhar_num='$id' ");
+    $row = $qry->fetch();
     $records['fingerprint'] = $row['ansi_template'];
 }
 
 echo json_encode($records);
+
+// Close the database connection
+$connect = null;
 ?>

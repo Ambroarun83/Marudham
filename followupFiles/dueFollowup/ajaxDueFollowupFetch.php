@@ -34,37 +34,37 @@ if ($payable > 0) {
 
         // Fetch area name
         $area_id = $row['area_confirm_area'];
-        $qry = $mysqli->query("SELECT * FROM area_list_creation WHERE area_id = $area_id");
-        if ($qry->num_rows > 0) {
-            $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * FROM area_list_creation WHERE area_id = $area_id");
+        if ($qry->rowCount() > 0) {
+            $row1 = $qry->fetch();
             $area_name = $row1['area_name'];
         }
 
         // Fetch sub-area name
         $sub_area_id = $row['area_confirm_subarea'];
-        $qry = $mysqli->query("SELECT * FROM sub_area_list_creation WHERE sub_area_id = $sub_area_id");
-        if ($qry->num_rows > 0) {
-            $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * FROM sub_area_list_creation WHERE sub_area_id = $sub_area_id");
+        if ($qry->rowCount() > 0) {
+            $row1 = $qry->fetch();
             $sub_area_name = $row1['sub_area_name'];
         }
 
         // Fetch branch name
         $line_name = $row['area_line'];
-        $qry = $mysqli->query("SELECT b.branch_name FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id WHERE l.line_name = '$line_name'");
-        if ($qry->num_rows > 0) {
-            $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT b.branch_name FROM branch_creation b JOIN area_line_mapping l ON l.branch_id = b.branch_id WHERE l.line_name = '$line_name'");
+        if ($qry->rowCount() > 0) {
+            $row1 = $qry->fetch();
             $branch_name = $row1['branch_name'];
         }
 
         // Fetch collection date range
-        $collDate = $mysqli->query("SELECT CASE WHEN DAYOFMONTH(coll_date) BETWEEN 26 AND 31 THEN '26-30' WHEN DAYOFMONTH(coll_date) BETWEEN 21 AND 25 THEN '21-25' WHEN DAYOFMONTH(coll_date) BETWEEN 16 AND 20 THEN '16-20' WHEN DAYOFMONTH(coll_date) BETWEEN 11 AND 15 THEN '11-15' ELSE '1-10' END AS date_range FROM collection WHERE cus_id='$cus_id' ORDER BY coll_id DESC LIMIT 1");
-        $coll_date_qry = $collDate->fetch_assoc();
+        $collDate = $connect->query("SELECT CASE WHEN DAYOFMONTH(coll_date) BETWEEN 26 AND 31 THEN '26-30' WHEN DAYOFMONTH(coll_date) BETWEEN 21 AND 25 THEN '21-25' WHEN DAYOFMONTH(coll_date) BETWEEN 16 AND 20 THEN '16-20' WHEN DAYOFMONTH(coll_date) BETWEEN 11 AND 15 THEN '11-15' ELSE '1-10' END AS date_range FROM collection WHERE cus_id='$cus_id' ORDER BY coll_id DESC LIMIT 1");
+        $coll_date_qry = $collDate->fetch();
         $date_range = isset($coll_date_qry['date_range']) ? $coll_date_qry['date_range'] : '';
 
         // Fetch commitment details
-        $sql = $con->query("SELECT comm_date, hint, comm_err FROM commitment WHERE cus_id='$cus_id' ORDER BY id DESC LIMIT 1");
-        if ($sql->num_rows > 0) {
-            $row1 = $sql->fetch_assoc();
+        $sql = $connect->query("SELECT comm_date, hint, comm_err FROM commitment WHERE cus_id='$cus_id' ORDER BY id DESC LIMIT 1");
+        if ($sql->rowCount() > 0) {
+            $row1 = $sql->fetch();
             $hint = $row1['hint'];
             $comm_err = ($row1['comm_err'] == '1') ? 'Error' : (($row1['comm_err'] == '2') ? 'Clear' : '');
             $comm_date = ($row1['comm_date'] != '0000-00-00') ? date('d-m-Y', strtotime($row1['comm_date'])) : '';
@@ -91,6 +91,5 @@ if ($payable > 0) {
 }
 echo json_encode($data);
 
-$con->close();
-$mysqli->close();
-$connect = NULL;
+// Close the database connection
+$connect = null;

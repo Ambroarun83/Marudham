@@ -3,23 +3,23 @@ session_start();
 $user_id = $_SESSION['userid'];
 include('../../../ajaxconfig.php');
 
-
 if(isset($_POST['hex_id'])){
     $hex_id = $_POST['hex_id'];
 }
 
 $records = array();
     
-$qry = $con->query("SELECT dhex.*,us.fullname, us.role from ct_db_hexchange dhex JOIN user us on us.user_id = dhex.insert_login_id where dhex.id = '$hex_id' ");
+$qry = $connect->query("SELECT dhex.*,us.fullname, us.role from ct_db_hexchange dhex JOIN user us on us.user_id = dhex.insert_login_id where dhex.id = '$hex_id' ");
 
-
-$row = $qry->fetch_assoc();
+$row = $qry->fetch();
 foreach($row as $key=>$val){
     $$key = $val;
 }
 
 if($role == '1') {$rolename =  "Director"; }else if($role == '3') { $rolename = "Staff"; }else{ $rolename = '';}
 
+// Close the database connection
+$connect = null;
 ?>
 <form id="cr_hex_form" name="cr_hex_form" method="post" enctype="multipart/form-data">
     <div class="col-md-12">

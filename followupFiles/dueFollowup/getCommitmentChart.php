@@ -6,7 +6,7 @@ include('../../ajaxconfig.php');
 $req_id = $_POST['req_id'];
 $cus_id = $_POST['cus_id'];
 
-$sql = $con->query("SELECT a.*,b.fullname, CASE b.role WHEN 1 then 'Director' when 2 then 'Agent' when 3 then 'Staff' end as role FROM commitment a 
+$sql = $connect->query("SELECT a.*,b.fullname, CASE b.role WHEN 1 then 'Director' when 2 then 'Agent' when 3 then 'Staff' end as role FROM commitment a 
         JOIN user b ON a.insert_login_id = b.user_id WHERE a.req_id = '$req_id'  ORDER BY a.id DESC "); //order by desc will show last entered data of confirmation table
 
 //this query will take Confirmation followup data from that table with username and user type according to inserted login id and using switch case in query for output
@@ -16,15 +16,15 @@ $fstatus = [1=>'Commitment',2=>'Unavailable',3=>'RNR',4=>'Not Reachable',5=>'Swi
 $per_type_arr = [1=>'Customer',2=>'Garentor',3=>'Family Member'];
 $sno = 1;
 
-function getCustomer($con,$cus_id){
-    $result = $con->query("SELECT customer_name from customer_register where cus_id = '$cus_id' ");
-    $cus_name = $result->fetch_assoc()['customer_name'];
+function getCustomer($connect,$cus_id){
+    $result = $connect->query("SELECT customer_name from customer_register where cus_id = '$cus_id' ");
+    $cus_name = $result->fetch()['customer_name'];
     return $cus_name;
 }
-function getGarentor($con,$cus_id){
+function getGarentor($connect,$cus_id){
     $query = "SELECT cp.guarentor_name, vfi.famname, vfi.relationship FROM customer_profile cp JOIN verification_family_info vfi ON cp.guarentor_name = vfi.id WHERE cp.cus_id = '$cus_id' ORDER BY cp.id DESC LIMIT 1 ";
-    $result = $con->query($query);
-    $row = $result->fetch_assoc();
+    $result = $connect->query($query);
+    $row = $result->fetch();
     
     $response = [
         "name" => $row['famname'],
@@ -33,11 +33,11 @@ function getGarentor($con,$cus_id){
     return $response;
 }
 
-function getFamilyMember($con,$fam_id){
+function getFamilyMember($connect,$fam_id){
     
-    $result = $con->query("SELECT id,famname,relationship FROM `verification_family_info` where id='$fam_id'");
+    $result = $connect->query("SELECT id,famname,relationship FROM `verification_family_info` where id='$fam_id'");
 
-    $row = $result->fetch_assoc();
+    $row = $result->fetch();
     $fam_name = $row['famname'];
     $relationship = $row['relationship'];
     $response = array("name" => $fam_name, "relationship" => $relationship);
@@ -64,7 +64,7 @@ function getFamilyMember($con,$fam_id){
         <th>Communication Status</th>
     </thead>
     <tbody>
-        <?php while($row =  $sql->fetch_assoc()){?>
+        <?php while($row =  $sql->fetch()){?>
             <tr>
                 <td><?php echo $sno;$sno++; ?></td>
                 <td><?php echo date('d-m-Y',strtotime($row['created_date'])); ?></td>
@@ -73,9 +73,9 @@ function getFamilyMember($con,$fam_id){
                 <td><?php echo $per_type_arr[$row['person_type']]??''; ?></td>
                 <td>
                     <?php 
-                        if($row['person_type'] == 1){$person_name = getCustomer($con,$cus_id); echo $person_name; }else
-                        if($row['person_type'] == 2){$person_name = getGarentor($con,$cus_id); echo $person_name['name']; }else
-                        if($row['person_type'] == 3){$person_name = getFamilyMember($con,$row['person_name']); echo $person_name['name'];}
+                        if($row['person_type'] == 1){$person_name = getCustomer($connect,$cus_id); echo $person_name; }else
+                        if($row['person_type'] == 2){$person_name = getGarentor($connect,$cus_id); echo $person_name['name']; }else
+                        if($row['person_type'] == 3){$person_name = getFamilyMember($connect,$row['person_name']); echo $person_name['name'];}
                     ?>
                 </td>
                 <td>
@@ -126,3 +126,8 @@ function getFamilyMember($con,$fam_id){
         }
     }
 </style>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

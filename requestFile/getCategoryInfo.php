@@ -6,14 +6,14 @@ if (isset($_POST['sub_cat'])) {
 
 $detailrecords = array();
 
-$result = $con->query("SELECT * FROM loan_category where status=0 and sub_category_name = '" . strip_tags($sub_cat) . "' ");
-while ($row = $result->fetch_assoc()) {
+$result = $connect->query("SELECT * FROM loan_category where status=0 and sub_category_name = '" . strip_tags($sub_cat) . "' ");
+while ($row = $result->fetch()) {
     $loan_category_id = $row['loan_category_id'];
 }
 
 $i = 0;
-$qry = $con->query("SELECT * From  loan_category_ref where loan_category_id = '" . $loan_category_id . "' ");
-while ($row = $qry->fetch_assoc()) {
+$qry = $connect->query("SELECT * From  loan_category_ref where loan_category_id = '" . $loan_category_id . "' ");
+while ($row = $qry->fetch()) {
 
     $detailrecords[$i]['loan_category_ref_name'] = $row['loan_category_ref_name'];
     $i++;
@@ -21,6 +21,5 @@ while ($row = $qry->fetch_assoc()) {
 
 echo json_encode($detailrecords);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

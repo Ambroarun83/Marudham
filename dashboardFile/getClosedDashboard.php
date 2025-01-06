@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $closedClass = new ClosedDashboardClass($user_id);
 
-$response = $closedClass->getClosedCounts($con);
+$response = $closedClass->getClosedCounts($connect);
 
 echo json_encode($response);

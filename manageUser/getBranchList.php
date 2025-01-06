@@ -7,8 +7,8 @@ if(isset($_POST['company_id'])){
 
 $staffArr = array();
 
-$result=$con->query("SELECT * FROM branch_creation where status=0 and company_name = '".$company_id."' ");
-while( $row = $result->fetch_assoc()){
+$result=$connect->query("SELECT * FROM branch_creation where status=0 and company_name = '".$company_id."' ");
+while( $row = $result->fetch()){
     $branch_id = $row['branch_id'];
     $branch_name = $row['branch_name'];
     
@@ -16,4 +16,7 @@ while( $row = $result->fetch_assoc()){
 }
 
 echo json_encode($staffArr);
+
+// Close the database connection
+$connect = null;
 ?>

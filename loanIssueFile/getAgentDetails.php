@@ -7,8 +7,8 @@ if(isset($_POST['req_id'])){
 
 $detailrecords = array();
 
-    $qry = $con->query("SELECT count(*) as rowcnt,a.ag_name,a.loan_payment,b.agent_id FROM `agent_creation` a left join request_creation b on a.ag_id = b.agent_id  WHERE  b.req_id='".$req_id."' ");
-    $row = $qry->fetch_assoc();
+    $qry = $connect->query("SELECT count(*) as rowcnt,a.ag_name,a.loan_payment,b.agent_id FROM `agent_creation` a left join request_creation b on a.ag_id = b.agent_id  WHERE  b.req_id='".$req_id."' ");
+    $row = $qry->fetch();
     if($row['rowcnt']>0){
     $detailrecords['ag_name'] = $row['ag_name'];
     $detailrecords['loan_payment'] = $row['loan_payment'];
@@ -20,4 +20,7 @@ $detailrecords = array();
     }
     
 echo json_encode($detailrecords);
+
+// Close the database connection
+$connect = null;
 ?>

@@ -4,8 +4,8 @@ $user_id = $_SESSION['userid'];
 
 include('../../../ajaxconfig.php');
 
-$bankqry = $con->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
-$bank_id = $bankqry->fetch_assoc()['bank_details'];
+$bankqry = $connect->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
+$bank_id = $bankqry->fetch()['bank_details'];
 
 $sheet_type = $_POST['sheet_type'];
 
@@ -51,7 +51,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
-    $qry = $con->query("SELECT created_date AS 'tdate', from_bank_id AS 'ctype', '' AS 'Credit', amt AS 'Debit', amt AS 'Amount' FROM ct_db_cash_withdraw WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(from_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', 'Hand Cash' AS 'ctype', '' AS 'Credit', amount AS 'Debit', amount AS 'Amount' FROM ct_db_bank_deposit WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(to_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', 'Hand Cash' AS 'ctype', amt AS 'Credit', '' AS 'Debit', amt AS 'Amount' FROM ct_cr_bank_withdraw WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(from_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', to_bank_id AS 'ctype', amt AS 'Credit', '' AS 'Debit', amt AS 'Amount' FROM ct_cr_cash_deposit WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(to_bank_id,'$bank_id') ORDER BY 1");
+    $qry = $connect->query("SELECT created_date AS 'tdate', from_bank_id AS 'ctype', '' AS 'Credit', amt AS 'Debit', amt AS 'Amount' FROM ct_db_cash_withdraw WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(from_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', 'Hand Cash' AS 'ctype', '' AS 'Credit', amount AS 'Debit', amount AS 'Amount' FROM ct_db_bank_deposit WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(to_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', 'Hand Cash' AS 'ctype', amt AS 'Credit', '' AS 'Debit', amt AS 'Amount' FROM ct_cr_bank_withdraw WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(from_bank_id,'$bank_id') UNION ALL SELECT created_date AS 'tdate', to_bank_id AS 'ctype', amt AS 'Credit', '' AS 'Debit', amt AS 'Amount' FROM ct_cr_cash_deposit WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(to_bank_id,'$bank_id') ORDER BY 1");
 
 
     $i = 1;
@@ -60,15 +60,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -95,7 +95,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Exchange Entry</th><th>Credit</th><th>Debit</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, insert_login_id AS from_user_id, '' AS Credit, amt AS Debit, amt AS Amount 
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, insert_login_id AS from_user_id, '' AS Credit, amt AS Debit, amt AS Amount 
     FROM ct_db_hexchange 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND to_user_id = '$user_id'
     
@@ -126,15 +126,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -142,8 +142,8 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
 
-            $usernameqry = $con->query("SELECT fullname from user where user_id = '" . $row['from_user_id'] . "' ");
-            $username = $usernameqry->fetch_assoc()['fullname'];
+            $usernameqry = $connect->query("SELECT fullname from user where user_id = '" . $row['from_user_id'] . "' ");
+            $username = $usernameqry->fetch()['fullname'];
             $tabBody .= "<td>" . $username . "</td>";
 
 
@@ -169,7 +169,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Credit Amount</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, category , amt AS Credit
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, category , amt AS Credit
     FROM ct_cr_hoti 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id'
     
@@ -188,15 +188,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -224,7 +224,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 } else if ($sheet_type == 4 and $exp_cat_type == '') { //4 Means Expense Balance Sheet
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Debit Amount</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
     FROM ct_db_hexpense 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id'
     
@@ -243,15 +243,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -259,8 +259,8 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
 
-            $catqry = $con->query("SELECT category from expense_category where id = '" . $row['cat'] . "' ");
-            $category = $catqry->fetch_assoc()['category'];
+            $catqry = $connect->query("SELECT category from expense_category where id = '" . $row['cat'] . "' ");
+            $category = $catqry->fetch()['category'];
 
             $tabBody .= "<td>" . $category . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
@@ -280,7 +280,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 } else if ($sheet_type == 4 and $exp_cat_type != '') { //4 Means Expense Balance Sheet and exp_cat type if has values then show category wise
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Category</th><th>Debit Amount</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, cat , amt AS Debit
     FROM ct_db_hexpense 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id' and cat = $exp_cat_type
     
@@ -297,17 +297,17 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
     $creditSum = 0;
     $debitSum = 0;
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
         $tabBody = '<tr>';
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -315,8 +315,8 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                 $tabBody .= "<td>" . $row['ctype'] . "</td>";
             }
 
-            $catqry = $con->query("SELECT category from expense_category where id = '" . $row['cat'] . "' ");
-            $category = $catqry->fetch_assoc()['category'];
+            $catqry = $connect->query("SELECT category from expense_category where id = '" . $row['cat'] . "' ");
+            $category = $catqry->fetch()['category'];
 
             $tabBody .= "<td>" . $category . "</td>";
             $tabBody .= "<td>" . moneyFormatIndia($row['Debit']) . "</td>";
@@ -337,7 +337,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
     FROM ct_db_hinvest 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id'
     
@@ -368,15 +368,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -407,7 +407,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
     FROM ct_db_hinvest 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id' and name_id = '$IDE_name_id'
     
@@ -438,15 +438,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -475,7 +475,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
     $tabBodyEnd .= "<tr><td colspan='3'><b>Difference</b></td><td colspan='2'>" . moneyFormatIndia($difference) . "</td></tr>";
 } else if ($sheet_type == 5 and $IDEtype == 2 and $IDEview_type == 1 and $IDE_name_id == '') { //5 Means IDE Balance Sheet, 2 Means Deposit Balance Sheet, 1 Means Overall Balance sheet
     {
-        $opening_qry = $con->query("SELECT
+        $opening_qry = $connect->query("SELECT
         IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
         FROM (
             SELECT
@@ -517,9 +517,9 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                 AND insert_login_id = '$user_id'
         ) AS opening
     ");
-        $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
+        $opening_bal = $opening_qry->fetch()['opening_balance'];
 
-        $closing_qry = $con->query("SELECT
+        $closing_qry = $connect->query("SELECT
         IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
         FROM (
             SELECT
@@ -605,12 +605,12 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                 AND insert_login_id = '$user_id'
         ) AS closing
     ");
-        $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
+        $closing_bal = $closing_qry->fetch()['closing_balance'];
     }
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
     FROM ct_db_hdeposit 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id'
     
@@ -641,15 +641,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -679,7 +679,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
     $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>" . moneyFormatIndia($closing_bal) . "</td></tr>";
 } else if ($sheet_type == 5 and $IDEtype == 2 and $IDEview_type == 2 and $IDE_name_id != '') { //5 Means IDE Balance Sheet, 2 Means Deposit Balance Sheet, 2 Means Individual Balance sheet
     {
-        $opening_qry = $con->query("SELECT
+        $opening_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
             FROM (
                 SELECT
@@ -721,9 +721,9 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id' and name_id = '$IDE_name_id'
             ) AS opening
         ");
-        $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
+        $opening_bal = $opening_qry->fetch()['opening_balance'];
 
-        $closing_qry = $con->query("SELECT
+        $closing_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
             FROM (
                 SELECT
@@ -809,12 +809,12 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id' and name_id = '$IDE_name_id'
             ) AS closing
         ");
-        $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
+        $closing_bal = $closing_qry->fetch()['closing_balance'];
     }
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
     FROM ct_db_hdeposit 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id' and name_id = '$IDE_name_id'
     
@@ -845,15 +845,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -883,7 +883,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
     $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>" . moneyFormatIndia($closing_bal) . "</td></tr>";
 } else if ($sheet_type == 5 and $IDEtype == 3 and $IDEview_type == 1 and $IDE_name_id == '') { //5 Means IDE Balance Sheet, 3 Means EL Balance Sheet, 1 Means Overall Balance sheet
     {
-        $opening_qry = $con->query("SELECT
+        $opening_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
             FROM (
                 SELECT
@@ -925,9 +925,9 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id' 
             ) AS opening
         ");
-        $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
+        $opening_bal = $opening_qry->fetch()['opening_balance'];
 
-        $closing_qry = $con->query("SELECT
+        $closing_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
             FROM (
                 SELECT
@@ -1013,12 +1013,12 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id' 
             ) AS closing
         ");
-        $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
+        $closing_bal = $closing_qry->fetch()['closing_balance'];
     }
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
     FROM ct_db_hel 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id'
     
@@ -1049,15 +1049,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -1087,7 +1087,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
     $tabBodyEnd .= "<tr><td colspan='3'><b>Closing Balance</b></td><td colspan='2'>" . moneyFormatIndia($closing_bal) . "</td></tr>";
 } else if ($sheet_type == 5 and $IDEtype == 3 and $IDEview_type == 2 and $IDE_name_id != '') { //5 Means IDE Balance Sheet, 3 Means EL Balance Sheet, 2 Means Individual Balance sheet
     {
-        $opening_qry = $con->query("SELECT
+        $opening_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
             FROM (
                 SELECT
@@ -1129,9 +1129,9 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id' and name_id = '$IDE_name_id'
             ) AS opening
         ");
-        $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
+        $opening_bal = $opening_qry->fetch()['opening_balance'];
 
-        $closing_qry = $con->query("SELECT
+        $closing_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS closing_balance
             FROM (
                 SELECT
@@ -1217,12 +1217,12 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id' and name_id = '$IDE_name_id'
             ) AS closing
         ");
-        $closing_bal = $closing_qry->fetch_assoc()['closing_balance'];
+        $closing_bal = $closing_qry->fetch()['closing_balance'];
     }
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Cash Type</th><th>Credit</th><th>Debit</th>";
 
-    $qry = $con->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
+    $qry = $connect->query("SELECT created_date AS tdate, 'Hand Cash' AS ctype, '' AS Credit, amt AS Debit, amt AS Amount 
     FROM ct_db_hel 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND insert_login_id = '$user_id' and name_id = '$IDE_name_id'
     
@@ -1253,15 +1253,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -1293,7 +1293,7 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tableHeaders = "<th width='50'>S.No</th><th>Date</th><th>Bank</th><th>Ref ID</th><th>Remark</th><th>Transaction ID</th><th>Amount</th>";
 
-    $qry = $con->query(" SELECT created_date AS tdate, bank_id AS ctype, ref_code, remark, trans_id, amt AS Debit
+    $qry = $connect->query(" SELECT created_date AS tdate, bank_id AS ctype, ref_code, remark, trans_id, amt AS Debit
     FROM ct_db_exf 
     WHERE MONTH(created_date) = MONTH(CURRENT_DATE()) AND YEAR(created_date) = YEAR(CURRENT_DATE()) AND FIND_IN_SET(bank_id, '$bank_id')
     
@@ -1306,15 +1306,15 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
             $tabBody .= "<td>" . date('d-m-Y', strtotime($row['tdate'])) . "</td>";
 
             if ($row['ctype'] != 'Hand Cash') {
-                $bnameqry = $con->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
-                $bnamerun = $bnameqry->fetch_assoc();
+                $bnameqry = $connect->query("SELECT short_name,acc_no from bank_creation where id = '" . $row['ctype'] . "' ");
+                $bnamerun = $bnameqry->fetch();
                 $bname = $bnamerun['short_name'] . ' - ' . substr($bnamerun['acc_no'], -5);
 
                 $tabBody .= "<td>" . $bname . "</td>";
@@ -1344,16 +1344,16 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
 
     //get agent user id to get data from collection
-    $ag_userid_qry = $con->query("SELECT `user_id` from user where FIND_IN_SET( `ag_id`, (SELECT `agentforstaff` from user where `user_id` = '$user_id')) ");
+    $ag_userid_qry = $connect->query("SELECT `user_id` from user where FIND_IN_SET( `ag_id`, (SELECT `agentforstaff` from user where `user_id` = '$user_id')) ");
     $ids = array();
-    while ($row = $ag_userid_qry->fetch_assoc()) {
+    while ($row = $ag_userid_qry->fetch()) {
         $ids[] = $row['user_id'];
     }
     $ag_user_id = implode(',', $ids);
 
 
     $tableHeaders = "<th width='50'>S.No</th><th>Agent</th><th>Date</th><th>Coll Amount</th><th>Net Cash</th><th>Credit</th><th>Debit</th>"; {
-        $opening_qry = $con->query("SELECT
+        $opening_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
             FROM (
                 SELECT cl.total_paid_track as Credit, '' AS Debit
@@ -1409,10 +1409,10 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id'
             ) AS opening
         ");
-        $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
+        $opening_bal = $opening_qry->fetch()['opening_balance'];
     }
 
-    $qry = $con->query("SELECT u.ag_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
+    $qry = $connect->query("SELECT u.ag_id AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
     FROM collection cl JOIN user u ON cl.insert_login_id = u.user_id
     WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and FIND_IN_SET(cl.insert_login_id,'$ag_user_id')
     
@@ -1459,13 +1459,13 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
 
-            $agqry = $con->query("SELECT ag_name from agent_creation where ag_id = '" . $row['ag_id'] . "' ");
-            $ag_name = $agqry->fetch_assoc()['ag_name'];
+            $agqry = $connect->query("SELECT ag_name from agent_creation where ag_id = '" . $row['ag_id'] . "' ");
+            $ag_name = $agqry->fetch()['ag_name'];
 
             $tabBody .= "<td>" . $ag_name . "</td>";
 
@@ -1498,11 +1498,11 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 } else if ($sheet_type == 7 && $ag_view_type == 2 && $ag_name != '') { //7 Means Agent Balance Sheet and 2 means individual and agent id
 
     //get agent user id to get data from collection
-    $ag_userid_qry = $con->query("SELECT `user_id` from user where ag_id = '$ag_name' ");
-    $ag_user_id = $ag_userid_qry->fetch_assoc()['user_id'] ?? '';
+    $ag_userid_qry = $connect->query("SELECT `user_id` from user where ag_id = '$ag_name' ");
+    $ag_user_id = $ag_userid_qry->fetch()['user_id'] ?? '';
 
     $tableHeaders = "<th width='50'>S.No</th><th>Agent</th><th>Date</th><th>Coll Amount</th><th>Net Cash</th><th>Credit</th><th>Debit</th>"; {
-        $opening_qry = $con->query("SELECT
+        $opening_qry = $connect->query("SELECT
             IFNULL(SUM(Credit), 0) - IFNULL(SUM(Debit), 0) AS opening_balance
             FROM (
                 SELECT cl.total_paid_track as Credit, '' AS Debit
@@ -1560,11 +1560,11 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
                     AND insert_login_id = '$user_id' and ag_id = '$ag_name'
             ) AS opening
         ");
-        $opening_bal = $opening_qry->fetch_assoc()['opening_balance'];
+        $opening_bal = $opening_qry->fetch()['opening_balance'];
     }
 
 
-    $qry = $con->query("SELECT $ag_name AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
+    $qry = $connect->query("SELECT $ag_name AS ag_id, date(cl.created_date) as tdate, cl.total_paid_track as coll_amt,'' AS netcash, '' AS Credit, '' AS Debit
     FROM collection cl JOIN user us 
     ON us.user_id = '$user_id' and FIND_IN_SET('$ag_name',us.agentforstaff)
     WHERE cl.total_paid_track != '' AND MONTH(cl.created_date) = MONTH(CURRENT_DATE()) AND YEAR(cl.created_date) = YEAR(CURRENT_DATE()) and cl.insert_login_id = '$ag_user_id'
@@ -1614,13 +1614,13 @@ if ($sheet_type == 1) { //1 Means contra balance sheet
 
     $tabBody = '<tr>';
 
-    if ($qry->num_rows > 0) { //check wheather query returning values or not
+    if ($qry->rowCount() > 0) { //check wheather query returning values or not
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $tabBody .= "<td>$i</td>";
 
-            $agqry = $con->query("SELECT ag_name from agent_creation where ag_id = '" . $row['ag_id'] . "' ");
-            $ag_name = $agqry->fetch_assoc()['ag_name'];
+            $agqry = $connect->query("SELECT ag_name from agent_creation where ag_id = '" . $row['ag_id'] . "' ");
+            $ag_name = $agqry->fetch()['ag_name'];
 
             $tabBody .= "<td>" . $ag_name . "</td>";
 
@@ -1769,4 +1769,7 @@ if ($sheet_type == 4) { //4 Means Expense Balance Sheet so show/hide view types
 } else {
     echo "<script>$('#exp_typeDiv').hide()</script>";
 }
+
+// Close the database connection
+$connect = null;
 ?>

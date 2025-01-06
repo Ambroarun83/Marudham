@@ -19,7 +19,7 @@ if ($type == 'today') {
         $where .= " and ct1.insert_login_id = $user_id ";
     } //for user based
 
-    getDetails($con, $where, $where2);
+    getDetails($connect, $where, $where2);
 } else if ($type == 'day') {
 
     $from_date = $_POST['from_date'];
@@ -32,7 +32,7 @@ if ($type == 'today') {
         $where .= " and ct1.insert_login_id = $user_id ";
     } //for user based
 
-    getDetails($con, $where, $where2);
+    getDetails($connect, $where, $where2);
 } else if ($type == 'month') {
 
     $month = date('m', strtotime($_POST['month']));
@@ -44,15 +44,15 @@ if ($type == 'today') {
         $where .= " and ct1.insert_login_id = $user_id ";
     } //for user based
 
-    getDetails($con, $where, $where2);
+    getDetails($connect, $where, $where2);
 }
 
-function getDetails($con, $where, $where2)
+function getDetails($connect, $where, $where2)
 {
 
     $records['closing_bal'] = 0;
 //ct1.insert_login_id, ct1.cl_date AS last_entered_date, 
-    $qry = $con->query("SELECT ct1.closing_bal
+    $qry = $connect->query("SELECT ct1.closing_bal
     FROM cash_tally ct1
     WHERE $where and NOT EXISTS (
         SELECT 1
@@ -60,9 +60,9 @@ function getDetails($con, $where, $where2)
         WHERE ct1.insert_login_id = ct2.insert_login_id 
     AND ct1.cl_date < ct2.cl_date and $where2 ) "); // then fetch the last updated date
 
-    if ($qry->num_rows != 0) {
+    if ($qry->rowCount() != 0) {
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
 
             $records['closing_bal'] += intVal($row['closing_bal']);
         }
@@ -105,4 +105,5 @@ function moneyFormatIndia($num)
     return $isNegative ? "-" . $thecash : $thecash;
 }
 
-$con->close();
+// Close the database connection
+$connect = null;

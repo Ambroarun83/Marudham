@@ -23,105 +23,105 @@ class bulkUploadClass
         move_uploaded_file($excel_temp, "../uploads/bulk_upload/" . $excel);
         return $excelfolder;
     }
-    function fetchAllRowData($con, $Row)
+    function fetchAllRowData($connect, $Row)
     {
         $dataArray = array(
-            'dor' => isset($Row[1]) ? mysqli_real_escape_string($con, $Row[1]) : "",
-            'cus_id' => isset($Row[2]) ? mysqli_real_escape_string($con, $Row[2]) : "",
-            'cus_data' => isset($Row[3]) ? mysqli_real_escape_string($con, $Row[3]) : "",
-            'cus_exist_type' => isset($Row[4]) ? mysqli_real_escape_string($con, $Row[4]) : "",
-            'cus_name' => isset($Row[5]) ? mysqli_real_escape_string($con, $Row[5]) : "",
-            'dob' => isset($Row[6]) ? mysqli_real_escape_string($con, $Row[6]) : "",
-            'age' => isset($Row[7]) ? mysqli_real_escape_string($con, $Row[7]) : "",
-            'gender' => isset($Row[8]) ? mysqli_real_escape_string($con, $Row[8]) : "",
-            'state' => isset($Row[9]) ? mysqli_real_escape_string($con, $Row[9]) : "",
-            'district' => isset($Row[10]) ? mysqli_real_escape_string($con, $Row[10]) : "",
-            'taluk' => isset($Row[11]) ? mysqli_real_escape_string($con, $Row[11]) : "",
-            'area' => isset($Row[12]) ? mysqli_real_escape_string($con, $Row[12]) : "",
-            'sub_area' => isset($Row[13]) ? mysqli_real_escape_string($con, $Row[13]) : "",
-            'address' => isset($Row[14]) ? mysqli_real_escape_string($con, $Row[14]) : "",
-            'mobile1' => isset($Row[15]) ? mysqli_real_escape_string($con, $Row[15]) : "",
-            'father_name' => isset($Row[16]) ? mysqli_real_escape_string($con, $Row[16]) : "",
-            'mother_name' => isset($Row[17]) ? mysqli_real_escape_string($con, $Row[17]) : "",
-            'marital' => isset($Row[18]) ? mysqli_real_escape_string($con, $Row[18]) : "",
-            'spouse' => isset($Row[19]) ? mysqli_real_escape_string($con, $Row[19]) : "",
-            'guarantor_name' => isset($Row[20]) ? mysqli_real_escape_string($con, $Row[20]) : "",
-            'guarantor_relationship' => isset($Row[21]) ? mysqli_real_escape_string($con, $Row[21]) : "",
-            'guarantor_adhar' => isset($Row[22]) ? mysqli_real_escape_string($con, $Row[22]) : "",
-            'guarantor_age' => isset($Row[23]) ? mysqli_real_escape_string($con, $Row[23]) : "",
-            'guarantor_mobile' => isset($Row[24]) ? mysqli_real_escape_string($con, $Row[24]) : "",
-            'guarantor_occupation' => isset($Row[25]) ? mysqli_real_escape_string($con, $Row[25]) : "",
-            'guarantor_income' => isset($Row[26]) ? mysqli_real_escape_string($con, $Row[26]) : "",
-            'loan_category' => isset($Row[27]) ? mysqli_real_escape_string($con, $Row[27]) : "",
-            'sub_category' => isset($Row[28]) ? mysqli_real_escape_string($con, $Row[28]) : "",
-            'tot_amt' => isset($Row[29]) ? mysqli_real_escape_string($con, $Row[29]) : "",
-            'adv_amt' => isset($Row[30]) ? mysqli_real_escape_string($con, $Row[30]) : "",
-            'loan_amt' => isset($Row[31]) ? mysqli_real_escape_string($con, $Row[31]) : "",
-            'poss_type' => isset($Row[32]) ? mysqli_real_escape_string($con, $Row[32]) : "",
-            'poss_due_amt' => isset($Row[33]) ? mysqli_real_escape_string($con, $Row[33]) : "",
-            'poss_due_period' => isset($Row[34]) ? mysqli_real_escape_string($con, $Row[34]) : "",
-            'cal_category1' => isset($Row[35]) ? mysqli_real_escape_string($con, $Row[35]) : "",
-            'cal_category2' => isset($Row[36]) ? mysqli_real_escape_string($con, $Row[36]) : "",
-            'cal_category3' => isset($Row[37]) ? mysqli_real_escape_string($con, $Row[37]) : "",
-            'how_to_know' => isset($Row[38]) ? mysqli_real_escape_string($con, $Row[38]) : "",
-            'loan_count' => isset($Row[39]) ? mysqli_real_escape_string($con, $Row[39]) : "",
-            'first_loan_date' => isset($Row[40]) ? mysqli_real_escape_string($con, $Row[40]) : "",
-            'travel_with_company' => isset($Row[41]) ? mysqli_real_escape_string($con, $Row[41]) : "",
-            'monthly_income' => isset($Row[42]) ? mysqli_real_escape_string($con, $Row[42]) : "",
-            'other_income' => isset($Row[43]) ? mysqli_real_escape_string($con, $Row[43]) : "",
-            'support_income' => isset($Row[44]) ? mysqli_real_escape_string($con, $Row[44]) : "",
-            'commitment' => isset($Row[45]) ? mysqli_real_escape_string($con, $Row[45]) : "",
-            'monthly_due_capacity' => isset($Row[46]) ? mysqli_real_escape_string($con, $Row[46]) : "",
-            'loan_limit' => isset($Row[47]) ? mysqli_real_escape_string($con, $Row[47]) : "",
-            'about_customer' => isset($Row[48]) ? mysqli_real_escape_string($con, $Row[48]) : "",
-            'residential_type' => isset($Row[49]) ? mysqli_real_escape_string($con, $Row[49]) : "",
-            'residential_details' => isset($Row[50]) ? mysqli_real_escape_string($con, $Row[50]) : "",
-            'residential_address' => isset($Row[51]) ? mysqli_real_escape_string($con, $Row[51]) : "",
-            'residential_native_address' => isset($Row[52]) ? mysqli_real_escape_string($con, $Row[52]) : "",
-            'occupation_type' => isset($Row[53]) ? mysqli_real_escape_string($con, $Row[53]) : "",
-            'occupation_details' => isset($Row[54]) ? mysqli_real_escape_string($con, $Row[54]) : "",
-            'area_confirm_type' => isset($Row[55]) ? mysqli_real_escape_string($con, $Row[55]) : "",
-            'area_group' => isset($Row[56]) ? mysqli_real_escape_string($con, $Row[56]) : "",
-            'area_line' => isset($Row[57]) ? mysqli_real_escape_string($con, $Row[57]) : "",
-            'mortgage_process' => isset($Row[58]) ? mysqli_real_escape_string($con, $Row[58]) : "",
-            'endorsement_process' => isset($Row[59]) ? mysqli_real_escape_string($con, $Row[59]) : "",
-            'loan_date' => isset($Row[60]) ? mysqli_real_escape_string($con, $Row[60]) : "",
-            'profit_type' => isset($Row[61]) ? mysqli_real_escape_string($con, $Row[61]) : "",
-            'due_method_calc' => isset($Row[62]) ? mysqli_real_escape_string($con, $Row[62]) : "",
-            'due_type' => isset($Row[63]) ? mysqli_real_escape_string($con, $Row[63]) : "",
-            'profit_method' => isset($Row[64]) ? mysqli_real_escape_string($con, $Row[64]) : "",
-            'due_method_scheme' => isset($Row[65]) ? mysqli_real_escape_string($con, $Row[65]) : "",
-            'scheme_name' => isset($Row[66]) ? mysqli_real_escape_string($con, $Row[66]) : "",
-            'int_rate' => isset($Row[67]) ? mysqli_real_escape_string($con, $Row[67]) : "",
-            'due_period' => isset($Row[68]) ? mysqli_real_escape_string($con, $Row[68]) : "",
-            'doc_charge' => isset($Row[69]) ? mysqli_real_escape_string($con, $Row[69]) : "",
-            'proc_fee' => isset($Row[70]) ? mysqli_real_escape_string($con, $Row[70]) : "",
-            'loan_amt_cal' => isset($Row[71]) ? mysqli_real_escape_string($con, $Row[71]) : "",
-            'principal_amt_cal' => isset($Row[72]) ? mysqli_real_escape_string($con, $Row[72]) : "",
-            'int_amt_cal' => isset($Row[73]) ? mysqli_real_escape_string($con, $Row[73]) : "",
-            'tot_amt_cal' => isset($Row[74]) ? mysqli_real_escape_string($con, $Row[74]) : "",
-            'due_amt_cal' => isset($Row[75]) ? mysqli_real_escape_string($con, $Row[75]) : "",
-            'doc_charge_cal' => isset($Row[76]) ? mysqli_real_escape_string($con, $Row[76]) : "",
-            'proc_fee_cal' => isset($Row[77]) ? mysqli_real_escape_string($con, $Row[77]) : "",
-            'net_cash_cal' => isset($Row[78]) ? mysqli_real_escape_string($con, $Row[78]) : "",
-            'due_start_from' => isset($Row[79]) ? mysqli_real_escape_string($con, $Row[79]) : "",
-            'maturity_month' => isset($Row[80]) ? mysqli_real_escape_string($con, $Row[80]) : "",
-            'collection_method' => isset($Row[81]) ? mysqli_real_escape_string($con, $Row[81]) : "",
-            'communication' => isset($Row[82]) ? mysqli_real_escape_string($con, $Row[82]) : "",
-            'verification_person' => isset($Row[83]) ? mysqli_real_escape_string($con, $Row[83]) : "",
-            'verification_location' => isset($Row[84]) ? mysqli_real_escape_string($con, $Row[84]) : "",
-            'issued_to' => isset($Row[85]) ? mysqli_real_escape_string($con, $Row[85]) : "",
-            'agent_id' => isset($Row[86]) ? mysqli_real_escape_string($con, $Row[86]) : "",
-            'issued_mode' => isset($Row[87]) ? mysqli_real_escape_string($con, $Row[87]) : "",
-            'payment_type' => isset($Row[88]) ? mysqli_real_escape_string($con, $Row[88]) : "",
-            'cash' => isset($Row[89]) ? mysqli_real_escape_string($con, $Row[89]) : "",
-            'balance_amt' => isset($Row[90]) ? mysqli_real_escape_string($con, $Row[90]) : "",
-            'cash_guarantor_id' => isset($Row[91]) ? mysqli_real_escape_string($con, $Row[91]) : "",
-            'cash_guarantor_rel' => isset($Row[92]) ? mysqli_real_escape_string($con, $Row[92]) : "",
-            'closed_status' => isset($Row[93]) ? mysqli_real_escape_string($con, $Row[93]) : "",
-            'consider_level' => isset($Row[94]) ? mysqli_real_escape_string($con, $Row[94]) : "",
-            'closed_remark' => isset($Row[95]) ? mysqli_real_escape_string($con, $Row[95]) : "",
-            'closed_date' => isset($Row[96]) ? mysqli_real_escape_string($con, $Row[96]) : ""
+            'dor' => isset($Row[1]) ? mysqli_real_escape_string($connect, $Row[1]) : "",
+            'cus_id' => isset($Row[2]) ? mysqli_real_escape_string($connect, $Row[2]) : "",
+            'cus_data' => isset($Row[3]) ? mysqli_real_escape_string($connect, $Row[3]) : "",
+            'cus_exist_type' => isset($Row[4]) ? mysqli_real_escape_string($connect, $Row[4]) : "",
+            'cus_name' => isset($Row[5]) ? mysqli_real_escape_string($connect, $Row[5]) : "",
+            'dob' => isset($Row[6]) ? mysqli_real_escape_string($connect, $Row[6]) : "",
+            'age' => isset($Row[7]) ? mysqli_real_escape_string($connect, $Row[7]) : "",
+            'gender' => isset($Row[8]) ? mysqli_real_escape_string($connect, $Row[8]) : "",
+            'state' => isset($Row[9]) ? mysqli_real_escape_string($connect, $Row[9]) : "",
+            'district' => isset($Row[10]) ? mysqli_real_escape_string($connect, $Row[10]) : "",
+            'taluk' => isset($Row[11]) ? mysqli_real_escape_string($connect, $Row[11]) : "",
+            'area' => isset($Row[12]) ? mysqli_real_escape_string($connect, $Row[12]) : "",
+            'sub_area' => isset($Row[13]) ? mysqli_real_escape_string($connect, $Row[13]) : "",
+            'address' => isset($Row[14]) ? mysqli_real_escape_string($connect, $Row[14]) : "",
+            'mobile1' => isset($Row[15]) ? mysqli_real_escape_string($connect, $Row[15]) : "",
+            'father_name' => isset($Row[16]) ? mysqli_real_escape_string($connect, $Row[16]) : "",
+            'mother_name' => isset($Row[17]) ? mysqli_real_escape_string($connect, $Row[17]) : "",
+            'marital' => isset($Row[18]) ? mysqli_real_escape_string($connect, $Row[18]) : "",
+            'spouse' => isset($Row[19]) ? mysqli_real_escape_string($connect, $Row[19]) : "",
+            'guarantor_name' => isset($Row[20]) ? mysqli_real_escape_string($connect, $Row[20]) : "",
+            'guarantor_relationship' => isset($Row[21]) ? mysqli_real_escape_string($connect, $Row[21]) : "",
+            'guarantor_adhar' => isset($Row[22]) ? mysqli_real_escape_string($connect, $Row[22]) : "",
+            'guarantor_age' => isset($Row[23]) ? mysqli_real_escape_string($connect, $Row[23]) : "",
+            'guarantor_mobile' => isset($Row[24]) ? mysqli_real_escape_string($connect, $Row[24]) : "",
+            'guarantor_occupation' => isset($Row[25]) ? mysqli_real_escape_string($connect, $Row[25]) : "",
+            'guarantor_income' => isset($Row[26]) ? mysqli_real_escape_string($connect, $Row[26]) : "",
+            'loan_category' => isset($Row[27]) ? mysqli_real_escape_string($connect, $Row[27]) : "",
+            'sub_category' => isset($Row[28]) ? mysqli_real_escape_string($connect, $Row[28]) : "",
+            'tot_amt' => isset($Row[29]) ? mysqli_real_escape_string($connect, $Row[29]) : "",
+            'adv_amt' => isset($Row[30]) ? mysqli_real_escape_string($connect, $Row[30]) : "",
+            'loan_amt' => isset($Row[31]) ? mysqli_real_escape_string($connect, $Row[31]) : "",
+            'poss_type' => isset($Row[32]) ? mysqli_real_escape_string($connect, $Row[32]) : "",
+            'poss_due_amt' => isset($Row[33]) ? mysqli_real_escape_string($connect, $Row[33]) : "",
+            'poss_due_period' => isset($Row[34]) ? mysqli_real_escape_string($connect, $Row[34]) : "",
+            'cal_category1' => isset($Row[35]) ? mysqli_real_escape_string($connect, $Row[35]) : "",
+            'cal_category2' => isset($Row[36]) ? mysqli_real_escape_string($connect, $Row[36]) : "",
+            'cal_category3' => isset($Row[37]) ? mysqli_real_escape_string($connect, $Row[37]) : "",
+            'how_to_know' => isset($Row[38]) ? mysqli_real_escape_string($connect, $Row[38]) : "",
+            'loan_count' => isset($Row[39]) ? mysqli_real_escape_string($connect, $Row[39]) : "",
+            'first_loan_date' => isset($Row[40]) ? mysqli_real_escape_string($connect, $Row[40]) : "",
+            'travel_with_company' => isset($Row[41]) ? mysqli_real_escape_string($connect, $Row[41]) : "",
+            'monthly_income' => isset($Row[42]) ? mysqli_real_escape_string($connect, $Row[42]) : "",
+            'other_income' => isset($Row[43]) ? mysqli_real_escape_string($connect, $Row[43]) : "",
+            'support_income' => isset($Row[44]) ? mysqli_real_escape_string($connect, $Row[44]) : "",
+            'commitment' => isset($Row[45]) ? mysqli_real_escape_string($connect, $Row[45]) : "",
+            'monthly_due_capacity' => isset($Row[46]) ? mysqli_real_escape_string($connect, $Row[46]) : "",
+            'loan_limit' => isset($Row[47]) ? mysqli_real_escape_string($connect, $Row[47]) : "",
+            'about_customer' => isset($Row[48]) ? mysqli_real_escape_string($connect, $Row[48]) : "",
+            'residential_type' => isset($Row[49]) ? mysqli_real_escape_string($connect, $Row[49]) : "",
+            'residential_details' => isset($Row[50]) ? mysqli_real_escape_string($connect, $Row[50]) : "",
+            'residential_address' => isset($Row[51]) ? mysqli_real_escape_string($connect, $Row[51]) : "",
+            'residential_native_address' => isset($Row[52]) ? mysqli_real_escape_string($connect, $Row[52]) : "",
+            'occupation_type' => isset($Row[53]) ? mysqli_real_escape_string($connect, $Row[53]) : "",
+            'occupation_details' => isset($Row[54]) ? mysqli_real_escape_string($connect, $Row[54]) : "",
+            'area_confirm_type' => isset($Row[55]) ? mysqli_real_escape_string($connect, $Row[55]) : "",
+            'area_group' => isset($Row[56]) ? mysqli_real_escape_string($connect, $Row[56]) : "",
+            'area_line' => isset($Row[57]) ? mysqli_real_escape_string($connect, $Row[57]) : "",
+            'mortgage_process' => isset($Row[58]) ? mysqli_real_escape_string($connect, $Row[58]) : "",
+            'endorsement_process' => isset($Row[59]) ? mysqli_real_escape_string($connect, $Row[59]) : "",
+            'loan_date' => isset($Row[60]) ? mysqli_real_escape_string($connect, $Row[60]) : "",
+            'profit_type' => isset($Row[61]) ? mysqli_real_escape_string($connect, $Row[61]) : "",
+            'due_method_calc' => isset($Row[62]) ? mysqli_real_escape_string($connect, $Row[62]) : "",
+            'due_type' => isset($Row[63]) ? mysqli_real_escape_string($connect, $Row[63]) : "",
+            'profit_method' => isset($Row[64]) ? mysqli_real_escape_string($connect, $Row[64]) : "",
+            'due_method_scheme' => isset($Row[65]) ? mysqli_real_escape_string($connect, $Row[65]) : "",
+            'scheme_name' => isset($Row[66]) ? mysqli_real_escape_string($connect, $Row[66]) : "",
+            'int_rate' => isset($Row[67]) ? mysqli_real_escape_string($connect, $Row[67]) : "",
+            'due_period' => isset($Row[68]) ? mysqli_real_escape_string($connect, $Row[68]) : "",
+            'doc_charge' => isset($Row[69]) ? mysqli_real_escape_string($connect, $Row[69]) : "",
+            'proc_fee' => isset($Row[70]) ? mysqli_real_escape_string($connect, $Row[70]) : "",
+            'loan_amt_cal' => isset($Row[71]) ? mysqli_real_escape_string($connect, $Row[71]) : "",
+            'principal_amt_cal' => isset($Row[72]) ? mysqli_real_escape_string($connect, $Row[72]) : "",
+            'int_amt_cal' => isset($Row[73]) ? mysqli_real_escape_string($connect, $Row[73]) : "",
+            'tot_amt_cal' => isset($Row[74]) ? mysqli_real_escape_string($connect, $Row[74]) : "",
+            'due_amt_cal' => isset($Row[75]) ? mysqli_real_escape_string($connect, $Row[75]) : "",
+            'doc_charge_cal' => isset($Row[76]) ? mysqli_real_escape_string($connect, $Row[76]) : "",
+            'proc_fee_cal' => isset($Row[77]) ? mysqli_real_escape_string($connect, $Row[77]) : "",
+            'net_cash_cal' => isset($Row[78]) ? mysqli_real_escape_string($connect, $Row[78]) : "",
+            'due_start_from' => isset($Row[79]) ? mysqli_real_escape_string($connect, $Row[79]) : "",
+            'maturity_month' => isset($Row[80]) ? mysqli_real_escape_string($connect, $Row[80]) : "",
+            'collection_method' => isset($Row[81]) ? mysqli_real_escape_string($connect, $Row[81]) : "",
+            'communication' => isset($Row[82]) ? mysqli_real_escape_string($connect, $Row[82]) : "",
+            'verification_person' => isset($Row[83]) ? mysqli_real_escape_string($connect, $Row[83]) : "",
+            'verification_location' => isset($Row[84]) ? mysqli_real_escape_string($connect, $Row[84]) : "",
+            'issued_to' => isset($Row[85]) ? mysqli_real_escape_string($connect, $Row[85]) : "",
+            'agent_id' => isset($Row[86]) ? mysqli_real_escape_string($connect, $Row[86]) : "",
+            'issued_mode' => isset($Row[87]) ? mysqli_real_escape_string($connect, $Row[87]) : "",
+            'payment_type' => isset($Row[88]) ? mysqli_real_escape_string($connect, $Row[88]) : "",
+            'cash' => isset($Row[89]) ? mysqli_real_escape_string($connect, $Row[89]) : "",
+            'balance_amt' => isset($Row[90]) ? mysqli_real_escape_string($connect, $Row[90]) : "",
+            'cash_guarantor_id' => isset($Row[91]) ? mysqli_real_escape_string($connect, $Row[91]) : "",
+            'cash_guarantor_rel' => isset($Row[92]) ? mysqli_real_escape_string($connect, $Row[92]) : "",
+            'closed_status' => isset($Row[93]) ? mysqli_real_escape_string($connect, $Row[93]) : "",
+            'consider_level' => isset($Row[94]) ? mysqli_real_escape_string($connect, $Row[94]) : "",
+            'closed_remark' => isset($Row[95]) ? mysqli_real_escape_string($connect, $Row[95]) : "",
+            'closed_date' => isset($Row[96]) ? mysqli_real_escape_string($connect, $Row[96]) : ""
         );
 
         $dataArray['cus_id'] = strlen($dataArray['cus_id']) == 12 ? $dataArray['cus_id'] : 'Invalid';
@@ -266,13 +266,13 @@ class bulkUploadClass
     }
 
     //Data collection from DB Part
-    function getUserDetails($con)
+    function getUserDetails($connect)
     {
 
         //get User Data
         $data['user_id'] = $_SESSION["userid"];
-        $qry = $con->query("SELECT fullname,role from user where user_id = '" . $data['user_id'] . "' ");
-        $row = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT fullname,role from user where user_id = '" . $data['user_id'] . "' ");
+        $row = $qry->fetch();
         $data['user_name'] = $row['fullname'];
         if ($row['role'] == '1') {
             $data['user_type'] = 'Director';
@@ -284,13 +284,13 @@ class bulkUploadClass
 
         return $data;
     }
-    function getRequestCode($con)
+    function getRequestCode($connect)
     {
         $myStr = "REQ";
-        $selectIC = $con->query("SELECT req_code FROM request_creation WHERE req_code != '' ");
-        if ($selectIC->num_rows > 0) {
-            $codeAvailable = $con->query("SELECT req_code FROM request_creation WHERE req_code != '' ORDER BY req_id DESC LIMIT 1");
-            while ($row = $codeAvailable->fetch_assoc()) {
+        $selectIC = $connect->query("SELECT req_code FROM request_creation WHERE req_code != '' ");
+        if ($selectIC->rowCount() > 0) {
+            $codeAvailable = $connect->query("SELECT req_code FROM request_creation WHERE req_code != '' ORDER BY req_id DESC LIMIT 1");
+            while ($row = $codeAvailable->fetch()) {
                 $ac2 = $row["req_code"];
             }
             $appno2 = ltrim(strstr($ac2, '-'), '-');
@@ -302,13 +302,13 @@ class bulkUploadClass
         }
         return $req_code;
     }
-    function getDocumentCode($con)
+    function getDocumentCode($connect)
     {
         $myStr = "DOC";
-        $selectIC = $con->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ");
-        if ($selectIC->num_rows > 0) {
-            $codeAvailable = $con->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ORDER BY id DESC LIMIT 1");
-            while ($row = $codeAvailable->fetch_assoc()) {
+        $selectIC = $connect->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ");
+        if ($selectIC->rowCount() > 0) {
+            $codeAvailable = $connect->query("SELECT doc_id FROM verification_documentation WHERE doc_id != '' ORDER BY id DESC LIMIT 1");
+            while ($row = $codeAvailable->fetch()) {
                 $ac2 = $row["doc_id"];
             }
             $appno2 = ltrim(strstr($ac2, '-'), '-');
@@ -320,12 +320,12 @@ class bulkUploadClass
         }
         return $doc_code;
     }
-    function getLoanCode($con)
+    function getLoanCode($connect)
     {
-        $selectIC = $con->query("SELECT loan_id FROM in_issue WHERE loan_id != '' ");
-        if ($selectIC->num_rows > 0) {
-            $codeAvailable = $con->query("SELECT loan_id FROM in_issue WHERE (loan_id != '' or loan_id != NULL) ORDER BY id DESC LIMIT 1");
-            while ($row = $codeAvailable->fetch_assoc()) {
+        $selectIC = $connect->query("SELECT loan_id FROM in_issue WHERE loan_id != '' ");
+        if ($selectIC->rowCount() > 0) {
+            $codeAvailable = $connect->query("SELECT loan_id FROM in_issue WHERE (loan_id != '' or loan_id != NULL) ORDER BY id DESC LIMIT 1");
+            while ($row = $codeAvailable->fetch()) {
                 $ac2 = $row["loan_id"];
             }
             $loan_id = intval($ac2) + 1;
@@ -337,99 +337,99 @@ class bulkUploadClass
     }
 
     //Data Checking Part
-    function checkCustomerData($con, $cus_id)
+    function checkCustomerData($connect, $cus_id)
     {
 
-        $new_cus_check = $con->query("SELECT cus_reg_id from customer_register where cus_id = '" . strip_tags($cus_id) . "' ");
+        $new_cus_check = $connect->query("SELECT cus_reg_id from customer_register where cus_id = '" . strip_tags($cus_id) . "' ");
 
-        if ($new_cus_check->num_rows == 0) {
+        if ($new_cus_check->rowCount() == 0) {
             $response['cus_data'] = 'New';
             $response['cus_reg_id'] = '';
         } else {
-            $row = $new_cus_check->fetch_assoc();
+            $row = $new_cus_check->fetch();
             $response['cus_data'] = 'Existing';
             $response['cus_reg_id'] = $row['cus_reg_id'];
         }
         return $response;
     }
-    function getAreaId($con, $area_name)
+    function getAreaId($connect, $area_name)
     {
         $query = "SELECT * FROM area_list_creation where area_name = '" . $area_name . "' ";
-        $result1 = $con->query($query) or die("Error ");
-        if ($con->affected_rows > 0) {
-            $row = $result1->fetch_assoc();
+        $result1 = $connect->query($query) or die("Error ");
+        if ($connect->rowCount() > 0) {
+            $row = $result1->fetch();
             $area_id = $row["area_id"];
         } else {
             $area_id = 'Not Found';
         }
         return $area_id;
     }
-    function getSubAreaId($con, $sub_area_name, $area_id)
+    function getSubAreaId($connect, $sub_area_name, $area_id)
     {
         $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $sub_area_name . "' and area_id_ref = '" . $area_id . "' ";
-        $result1 = $con->query($query) or die("Error ");
-        if ($con->affected_rows > 0) {
-            $row = $result1->fetch_assoc();
+        $result1 = $connect->query($query) or die("Error ");
+        if ($connect->rowCount() > 0) {
+            $row = $result1->fetch();
             $sub_area_id = $row["sub_area_id"];
         } else {
             $sub_area_id = 'Not Found';
         }
         return $sub_area_id;
     }
-    function getLoanCategoryId($con, $loan_category_name)
+    function getLoanCategoryId($connect, $loan_category_name)
     {
         $query = "SELECT * FROM loan_category_creation where loan_category_creation_name = '" . $loan_category_name . "' ";
-        $result1 = $con->query($query) or die("Error ");
-        if ($con->affected_rows > 0) {
-            $row = $result1->fetch_assoc();
+        $result1 = $connect->query($query) or die("Error ");
+        if ($connect->rowCount() > 0) {
+            $row = $result1->fetch();
             $loan_cat_id = $row["loan_category_creation_id"];
         } else {
             $loan_cat_id = 'Not Found';
         }
         return $loan_cat_id;
     }
-    function checkSubCategory($con, $sub_cat_name)
+    function checkSubCategory($connect, $sub_cat_name)
     {
         $query = "SELECT * FROM loan_category where sub_category_name = '" . $sub_cat_name . "' ";
-        $result1 = $con->query($query) or die("Error ");
-        if ($con->affected_rows > 0) {
+        $result1 = $connect->query($query) or die("Error ");
+        if ($connect->rowCount() > 0) {
             $sub_categoryCheck = 'Available';
         } else {
             $sub_categoryCheck = 'Not Found';
         }
         return $sub_categoryCheck;
     }
-    function getAreaGroup($con, $sub_area_id)
+    function getAreaGroup($connect, $sub_area_id)
     {
         $group_name = 'Invalid';
         if ($sub_area_id != 'Not Found') {
-            $qry = $con->query("SELECT group_name FROM area_group_mapping WHERE FIND_IN_SET($sub_area_id, sub_area_id) ");
-            if ($qry->num_rows > 0) {
-                $group_name = $qry->fetch_assoc()['group_name'];
+            $qry = $connect->query("SELECT group_name FROM area_group_mapping WHERE FIND_IN_SET($sub_area_id, sub_area_id) ");
+            if ($qry->rowCount() > 0) {
+                $group_name = $qry->fetch()['group_name'];
             }
         }
         return $group_name;
     }
-    function getAreaLine($con, $sub_area_id)
+    function getAreaLine($connect, $sub_area_id)
     {
         $line_name = 'Invalid';
         if ($sub_area_id != 'Not Found') {
-            $qry = $con->query("SELECT line_name FROM area_line_mapping WHERE FIND_IN_SET( $sub_area_id, sub_area_id ) ");
-            if ($qry->num_rows > 0) {
-                $line_name = $qry->fetch_assoc()['line_name'];
+            $qry = $connect->query("SELECT line_name FROM area_line_mapping WHERE FIND_IN_SET( $sub_area_id, sub_area_id ) ");
+            if ($qry->rowCount() > 0) {
+                $line_name = $qry->fetch()['line_name'];
             }
         }
         return $line_name;
     }
-    function checkAgent($con, $agent_name)
+    function checkAgent($connect, $agent_name)
     {
         //check if agent available
         if ($agent_name != '') { //because its not mandatory
 
             $query = "SELECT * FROM agent_creation where ag_name = '" . $agent_name . "' ";
-            $result1 = $con->query($query) or die("Error ");
-            if ($con->affected_rows > 0) {
-                $row = $result1->fetch_assoc();
+            $result1 = $connect->query($query) or die("Error ");
+            if ($connect->rowCount() > 0) {
+                $row = $result1->fetch();
                 $agentCheck = $row["ag_id"];
             } else {
                 $agentCheck = 'Not Found';
@@ -440,11 +440,11 @@ class bulkUploadClass
         return $agentCheck;
     }
 
-    function getSchemeId($con, $scheme_name)
+    function getSchemeId($connect, $scheme_name)
     {
-        $qry = $con->query("SELECT scheme_id from loan_scheme where scheme_name = '$scheme_name' ");
-        if ($qry->num_rows > 0) {
-            $scheme_id = $qry->fetch_assoc()['scheme_id'];
+        $qry = $connect->query("SELECT scheme_id from loan_scheme where scheme_name = '$scheme_name' ");
+        if ($qry->rowCount() > 0) {
+            $scheme_id = $qry->fetch()['scheme_id'];
         } else {
             $scheme_id = '';
         }
@@ -453,118 +453,121 @@ class bulkUploadClass
 
 
     //Query Part
-    function raiseRequest($con, $data, $userData)
+    function raiseRequest($connect, $data, $userData)
     {
         $reqQry = "INSERT INTO `request_creation`(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`, `prompt_remark`, `status`, `insert_login_id`, `update_login_id`, `created_date`, `updated_date` ) VALUES ( '" . $userData['user_type'] . "', '" . $userData['user_name'] . "', '" . $data['agent_id'] . "', '', '' , '' , '" . $data['req_code'] . "', '" . $data['dor'] . "', '',  '" . $data['cus_id'] . "', '" . $data['cus_data'] . "', '" . $data['cus_name'] . "', '" . $data['dob'] . "', '" . $data['age'] . "', '" . $data['gender'] . "', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['address'] . "', '" . $data['mobile1'] . "', '', '" . $data['father_name'] . "', '" . $data['mother_name'] . "', '" . $data['marital'] . "', '" . $data['spouse'] . "', '" . $data['occupation_type'] . "', '" . $data['occupation_details'] . "', '', '" . $data['loan_cat_id'] . "', '" . $data['sub_category'] . "', '" . $data['tot_amt'] . "', '" . $data['adv_amt'] . "', '', '" . $data['loan_amt'] . "', '" . $data['poss_type'] . "', '" . $data['poss_due_amt'] . "', '" . $data['poss_due_period'] . "', '" . $data['cus_status'] . "', '', '0', '" . $userData['user_id'] . "','" . $userData['user_id'] . "', '" . $data['dor'] . "', '" . $data['dor'] . "'  ) ";
-        $con->query($reqQry);
-        $req_id = $con->insert_id;
+        $connect->query($reqQry);
+        $req_id = $connect->lastInsertId();
 
         //store calculation category if anyone present(min 1)
         $req_cat_qry1 = "INSERT INTO `request_category_info`( `req_ref_id`, `category_info`) VALUES ('$req_id','" . $data['cal_category1'] . "')";
         $req_cat_qry2 = "INSERT INTO `request_category_info`( `req_ref_id`, `category_info`) VALUES ('$req_id','" . $data['cal_category2'] . "')";
         $req_cat_qry3 = "INSERT INTO `request_category_info`( `req_ref_id`, `category_info`) VALUES ('$req_id','" . $data['cal_category3'] . "')";
         if ($data['cal_category1'] != '') {
-            $con->query($req_cat_qry1);
+            $connect->query($req_cat_qry1);
         }
         if ($data['cal_category2'] != '') {
-            $con->query($req_cat_qry2);
+            $connect->query($req_cat_qry2);
         }
         if ($data['cal_category3'] != '') {
-            $con->query($req_cat_qry3);
+            $connect->query($req_cat_qry3);
         }
 
 
         if ($data['cus_data'] == 'New') {
             $crQry = "INSERT INTO `customer_register`( `req_ref_id`, `cus_id`, `customer_name`, `dob`, `age`, `gender`, `blood_group`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`, `pic`, `how_to_know`, `loan_count`, `first_loan_date`, `travel_with_company`, `monthly_income`, `other_income`, `support_income`, `commitment`, `monthly_due_capacity`, `loan_limit`, `about_customer`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_info_occ_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`, `area_group`, `area_line`, `cus_status`, `create_time`,`updated_date` ) VALUES ('$req_id','" . $data['cus_id'] . "', '" . $data['cus_name'] . "', '" . $data['dob'] . "', '" . $data['age'] . "', '" . $data['gender'] . "', '', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['address'] . "', '" . $data['mobile1'] . "', '', '" . $data['father_name'] . "', '" . $data['mother_name'] . "', '" . $data['marital'] . "', '" . $data['spouse'] . "', '" . $data['occupation_type'] . "', '" . $data['occupation_details'] . "', '','" . $data['how_to_know'] . "','" . $data['loan_count'] . "','" . $data['first_loan_date'] . "','" . $data['travel_with_company'] . "','" . $data['monthly_income'] . "','" . $data['other_income'] . "','" . $data['support_income'] . "','" . $data['commitment'] . "','" . $data['monthly_due_capacity'] . "','" . $data['loan_limit'] . "','" . $data['about_customer'] . "','" . $data['residential_type'] . "','" . $data['residential_details'] . "','" . $data['residential_address'] . "','" . $data['residential_native_address'] . "','" . $data['occupation_type'] . "','" . $data['occupation_details'] . "', '', '', '', '','" . $data['area_confirm_type'] . "', '" . $data['state'] . "',  '" . $data['district'] . "',  '" . $data['taluk'] . "', '" . $data['area_id'] . "', '" . $data['sub_area_id'] . "', '" . $data['area_group'] . "', '" . $data['area_line'] . "', '" . $data['cus_status'] . "', '" . $data['dor'] . "', '" . $data['dor'] . "' )";
 
-            $con->query($crQry);
-            $data['cus_reg_id'] = $con->insert_id;
+            $connect->query($crQry);
+            $data['cus_reg_id'] = $connect->lastInsertId();
         }
 
         $updateQry = "UPDATE `request_creation` SET `cus_reg_id`='" . $data['cus_reg_id'] . "' where req_id = '$req_id' ";
-        $con->query($updateQry);
+        $connect->query($updateQry);
 
         return $req_id;
     }
 
-    function verificationTables($con, $data, $userData, $req_id)
+    function verificationTables($connect, $data, $userData, $req_id)
     {
-        $insert_inv = $con->query("INSERT INTO in_verification (`req_id`,`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`,`req_code`, `dor`,`cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`,`mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`,`prompt_remark`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date` ) SELECT * from request_creation where req_id = '" . $req_id . "' ");
+        $insert_inv = $connect->query("INSERT INTO in_verification (`req_id`,`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`,`req_code`, `dor`,`cus_reg_id`, `cus_id`, `cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`,`mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, `loan_amt`, `poss_type`, `due_amt`, `due_period`, `cus_status`,`prompt_remark`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date` ) SELECT * from request_creation where req_id = '" . $req_id . "' ");
 
-        $insert_fam = $con->query("INSERT INTO `verification_family_info`(`cus_id`,`req_id`, `famname`, `relationship`, `relation_age`, `relation_aadhar`, `relation_Mobile`, `relation_Occupation`, `relation_Income`, `relation_Blood`) VALUES ('" . $data['cus_id'] . "','$req_id','" . $data['guarantor_name'] . "','" . $data['guarantor_relationship'] . "','" . $data['guarantor_age'] . "','" . $data['guarantor_adhar'] . "','" . $data['guarantor_mobile'] . "','" . $data['guarantor_occupation'] . "','" . $data['guarantor_income'] . "','')");
-        $guarantor_id = $con->insert_id;
+        $insert_fam = $connect->query("INSERT INTO `verification_family_info`(`cus_id`,`req_id`, `famname`, `relationship`, `relation_age`, `relation_aadhar`, `relation_Mobile`, `relation_Occupation`, `relation_Income`, `relation_Blood`) VALUES ('" . $data['cus_id'] . "','$req_id','" . $data['guarantor_name'] . "','" . $data['guarantor_relationship'] . "','" . $data['guarantor_age'] . "','" . $data['guarantor_adhar'] . "','" . $data['guarantor_mobile'] . "','" . $data['guarantor_occupation'] . "','" . $data['guarantor_income'] . "','')");
+        $guarantor_id = $connect->lastInsertId();
 
-        $insert_cp = $con->query("INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`, `cus_status`, `insert_login_id`,`created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['cus_name']) . "','" . strip_tags($data['gender']) . "','" . strip_tags($data['dob']) . "', '" . strip_tags($data['age']) . "', '', '" . strip_tags($data['mobile1']) . "','','" . strip_tags($data['mobile1']) . "','','" . strip_tags($guarantor_id) . "', '" . strip_tags($data['guarantor_relationship']) . "', '', '" . strip_tags($data['cus_data']) . "','" . strip_tags($data['cus_exist_type']) . "','" . strip_tags($data['residential_type']) . "','" . strip_tags($data['residential_details']) . "','" . strip_tags($data['residential_address']) . "', '', '" . strip_tags($data['occupation_type']) . "','" . strip_tags($data['occupation_details']) . "','','','','','" . strip_tags($data['area_confirm_type']) . "','" . strip_tags($data['state']) . "','" . strip_tags($data['district']) . "','" . strip_tags($data['taluk']) . "','" . strip_tags($data['area_id']) . "','" . strip_tags($data['sub_area_id']) . "','" . strip_tags($data['group_name']) . "','" . strip_tags($data['line_name']) . "','10','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "' )");
-        $cus_profile_id = $con->insert_id;
+        $insert_cp = $connect->query("INSERT INTO `customer_profile`( `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`,`cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`, `dow`, `abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea` , `area_group`, `area_line`, `cus_status`, `insert_login_id`,`created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['cus_name']) . "','" . strip_tags($data['gender']) . "','" . strip_tags($data['dob']) . "', '" . strip_tags($data['age']) . "', '', '" . strip_tags($data['mobile1']) . "','','" . strip_tags($data['mobile1']) . "','','" . strip_tags($guarantor_id) . "', '" . strip_tags($data['guarantor_relationship']) . "', '', '" . strip_tags($data['cus_data']) . "','" . strip_tags($data['cus_exist_type']) . "','" . strip_tags($data['residential_type']) . "','" . strip_tags($data['residential_details']) . "','" . strip_tags($data['residential_address']) . "', '', '" . strip_tags($data['occupation_type']) . "','" . strip_tags($data['occupation_details']) . "','','','','','" . strip_tags($data['area_confirm_type']) . "','" . strip_tags($data['state']) . "','" . strip_tags($data['district']) . "','" . strip_tags($data['taluk']) . "','" . strip_tags($data['area_id']) . "','" . strip_tags($data['sub_area_id']) . "','" . strip_tags($data['group_name']) . "','" . strip_tags($data['line_name']) . "','10','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "' )");
+        $cus_profile_id = $connect->lastInsertId();
 
-        $insert_vdoc = $con->query("INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `endorsement_process`, `cus_status`, `insert_login_id`,`update_login_id`,`created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['cus_name']) . "','" . strip_tags($cus_profile_id) . "','" . strip_tags($data['doc_code']) . "', '" . strip_tags($data['mortgage_process']) . "', '" . strip_tags($data['endorsement_process']) . "', '11','" . $userData['user_id'] . "','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "' )");
+        $insert_vdoc = $connect->query("INSERT INTO `verification_documentation`( `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `endorsement_process`, `cus_status`, `insert_login_id`,`update_login_id`,`created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['cus_name']) . "','" . strip_tags($cus_profile_id) . "','" . strip_tags($data['doc_code']) . "', '" . strip_tags($data['mortgage_process']) . "', '" . strip_tags($data['endorsement_process']) . "', '11','" . $userData['user_id'] . "','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "' )");
 
         //checking verification person if its customer or not //if yes directly can place cus_id into table else need to set the fam_id from veri_fam_info
         $verification_person = $data['verification_person'] == $data['cus_id'] ? $data['verification_person'] : $guarantor_id;
 
-        $insert_vlc = $con->query("INSERT INTO verification_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`,  `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`,`update_login_id`,`create_date`, `update_date`)  VALUES ('" . strip_tags($req_id) . "', '" . strip_tags($data['cus_id']) . "',  '" . strip_tags($data['cus_name']) . "', '" . strip_tags($data['cus_data']) . "','" . strip_tags($data['mobile1']) . "', '', '" . strip_tags($data['loan_cat_id']) . "',  '" . strip_tags($data['sub_category']) . "', '" . strip_tags($data['tot_amt']) . "', '" . strip_tags($data['adv_amt']) . "', '" . strip_tags($data['loan_amt']) . "', '" . strip_tags($data['profit_type']) . "',  '" . strip_tags($data['due_method_calc']) . "', '" . strip_tags($data['due_type']) . "', '" . strip_tags($data['profit_method']) . "', '', '" . strip_tags($data['due_method_scheme']) . "',  '', '" . strip_tags($data['scheme_id']) . "', '" . strip_tags($data['int_rate']) . "', '" . strip_tags($data['due_period']) . "', '" . strip_tags($data['doc_charge']) . "',  '" . strip_tags($data['proc_fee']) . "', '" . strip_tags($data['loan_amt_cal']) . "', '" . strip_tags($data['principal_amt_cal']) . "', '" . strip_tags($data['int_amt_cal']) . "', '" . strip_tags($data['tot_amt_cal']) . "',  '" . strip_tags($data['due_amt_cal']) . "', '" . strip_tags($data['doc_charge_cal']) . "', '" . strip_tags($data['proc_fee_cal']) . "', '" . strip_tags($data['net_cash_cal']) . "', '" . strip_tags($data['due_start_from']) . "',  '" . strip_tags($data['maturity_month']) . "', '" . strip_tags($data['collection_method']) . "', '" . strip_tags($data['communication']) . "','','" . strip_tags($verification_person) . "','" . strip_tags($data['verification_location']) . "', 12, '" . $userData['user_id'] . "','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "'  ) ");
+        $insert_vlc = $connect->query("INSERT INTO verification_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`,  `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`,`update_login_id`,`create_date`, `update_date`)  VALUES ('" . strip_tags($req_id) . "', '" . strip_tags($data['cus_id']) . "',  '" . strip_tags($data['cus_name']) . "', '" . strip_tags($data['cus_data']) . "','" . strip_tags($data['mobile1']) . "', '', '" . strip_tags($data['loan_cat_id']) . "',  '" . strip_tags($data['sub_category']) . "', '" . strip_tags($data['tot_amt']) . "', '" . strip_tags($data['adv_amt']) . "', '" . strip_tags($data['loan_amt']) . "', '" . strip_tags($data['profit_type']) . "',  '" . strip_tags($data['due_method_calc']) . "', '" . strip_tags($data['due_type']) . "', '" . strip_tags($data['profit_method']) . "', '', '" . strip_tags($data['due_method_scheme']) . "',  '', '" . strip_tags($data['scheme_id']) . "', '" . strip_tags($data['int_rate']) . "', '" . strip_tags($data['due_period']) . "', '" . strip_tags($data['doc_charge']) . "',  '" . strip_tags($data['proc_fee']) . "', '" . strip_tags($data['loan_amt_cal']) . "', '" . strip_tags($data['principal_amt_cal']) . "', '" . strip_tags($data['int_amt_cal']) . "', '" . strip_tags($data['tot_amt_cal']) . "',  '" . strip_tags($data['due_amt_cal']) . "', '" . strip_tags($data['doc_charge_cal']) . "', '" . strip_tags($data['proc_fee_cal']) . "', '" . strip_tags($data['net_cash_cal']) . "', '" . strip_tags($data['due_start_from']) . "',  '" . strip_tags($data['maturity_month']) . "', '" . strip_tags($data['collection_method']) . "', '" . strip_tags($data['communication']) . "','','" . strip_tags($verification_person) . "','" . strip_tags($data['verification_location']) . "', 12, '" . $userData['user_id'] . "','" . $userData['user_id'] . "','" . $data['dor'] . "','" . $data['dor'] . "'  ) ");
 
-        $loan_cal_id = $con->insert_id;
+        $loan_cal_id = $connect->lastInsertId();
 
         $categoryArray = [$data['cal_category1'], $data['cal_category2'], $data['cal_category3']];
 
         foreach ($categoryArray as $category) {
             if (!empty($category)) {
-                $insert_vcat = $con->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('" . strip_tags($req_id) . "','" . strip_tags($loan_cal_id) . "','" . strip_tags($category) . "' )");
+                $insert_vcat = $connect->query("INSERT INTO `verif_loan_cal_category`(`req_id`, `loan_cal_id`, `category`) VALUES ('" . strip_tags($req_id) . "','" . strip_tags($loan_cal_id) . "','" . strip_tags($category) . "' )");
             }
         }
     }
 
-    function approvalTables($con, $req_id)
+    function approvalTables($connect, $req_id)
     {
-        $insert_inap = $con->query("INSERT INTO in_approval (`req_id`, `cus_id`, `cus_status`, `status`,`insert_login_id`,`update_login_id` ) SELECT req_id,cus_id,cus_status,status,insert_login_id,update_login_id from in_verification where req_id = '" . $req_id . "' ");
+        $insert_inap = $connect->query("INSERT INTO in_approval (`req_id`, `cus_id`, `cus_status`, `status`,`insert_login_id`,`update_login_id` ) SELECT req_id,cus_id,cus_status,status,insert_login_id,update_login_id from in_verification where req_id = '" . $req_id . "' ");
     }
 
-    function acknowledgementTables($con, $data, $req_id, $userData)
+    function acknowledgementTables($connect, $data, $req_id, $userData)
     {
-        $insert_inack = $con->query("INSERT INTO `in_acknowledgement`(`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`,`update_login_id`,`created_on`,`updated_date`) SELECT req_id,cus_id,cus_status,status,insert_login_id,update_login_id,created_date,'" . $data['loan_date'] . "' from in_verification where req_id = '" . $req_id . "' ") or die('Error in in_acknowledgement');
-        $ack_id = $con->insert_id;
-        $qry = $con->query("UPDATE in_acknowledgement set inserted_user = '" . $userData['user_id'] . "', inserted_date = '" . $data['dor'] . "' where id = '$ack_id' ");
+        $insert_inack = $connect->query("INSERT INTO `in_acknowledgement`(`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`,`update_login_id`,`created_on`,`updated_date`) SELECT req_id,cus_id,cus_status,status,insert_login_id,update_login_id,created_date,'" . $data['loan_date'] . "' from in_verification where req_id = '" . $req_id . "' ") or die('Error in in_acknowledgement');
+        $ack_id = $connect->lastInsertId();
+        $qry = $connect->query("UPDATE in_acknowledgement set inserted_user = '" . $userData['user_id'] . "', inserted_date = '" . $data['dor'] . "' where id = '$ack_id' ");
 
-        $insert_ackcp = $con->query("INSERT INTO `acknowlegement_customer_profile`(`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`,`dow`,`abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`,`latlong`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT * FROM `customer_profile` WHERE `req_id`='$req_id' ") or die('Error in acknowlegement_customer_profile');
+        $insert_ackcp = $connect->query("INSERT INTO `acknowlegement_customer_profile`(`id`, `req_id`, `cus_id`, `cus_name`, `gender`, `dob`, `age`, `blood_group`, `mobile1`, `mobile2`, `whatsapp`, `cus_pic`, `guarentor_name`, `guarentor_relation`, `guarentor_photo`, `cus_type`, `cus_exist_type`, `residential_type`, `residential_details`, `residential_address`, `residential_native_address`, `occupation_type`, `occupation_details`, `occupation_income`, `occupation_address`,`dow`,`abt_occ`, `area_confirm_type`, `area_confirm_state`, `area_confirm_district`, `area_confirm_taluk`, `area_confirm_area`, `area_confirm_subarea`,`latlong`, `area_group`, `area_line`, `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT * FROM `customer_profile` WHERE `req_id`='$req_id' ") or die('Error in acknowlegement_customer_profile');
 
-        $insert_ackdoc = $con->query("INSERT INTO `acknowlegement_documentation`(`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`,`document_name`, `document_details`, `document_type`,  `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT `id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`,`document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date` FROM `verification_documentation` WHERE `req_id` ='$req_id'") or die('Error in acknowlegement_documentation');
+        $insert_ackdoc = $connect->query("INSERT INTO `acknowlegement_documentation`(`id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`,`document_name`, `document_details`, `document_type`,  `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date`) SELECT `id`, `req_id`, `cus_id_doc`, `customer_name`, `cus_profile_id`, `doc_id`, `mortgage_process`, `Propertyholder_type`, `Propertyholder_name`, `Propertyholder_relationship_name`, `doc_property_relation`, `doc_property_type`, `doc_property_measurement`, `doc_property_location`, `doc_property_value`, `mortgage_name`, `mortgage_dsgn`, `mortgage_nuumber`, `reg_office`, `mortgage_value`, `mortgage_document`, `mortgage_document_upd`, `mortgage_document_pending`, `endorsement_process`, `owner_type`, `owner_name`, `ownername_relationship_name`, `en_relation`, `vehicle_type`, `vehicle_process`, `en_Company`, `en_Model`, `vehicle_reg_no`, `endorsement_name`, `en_RC`, `Rc_document_upd`, `Rc_document_pending`, `en_Key`,`document_name`, `document_details`, `document_type`, `document_holder`, `docholder_name`, `docholder_relationship_name`, `doc_relation`, `cus_status`, `status`, `insert_login_id`, `update_login_id`, `delete_login_id`, `created_date`, `updated_date` FROM `verification_documentation` WHERE `req_id` ='$req_id'") or die('Error in acknowlegement_documentation');
 
-        $insert_acklc = $con->query("INSERT INTO `acknowlegement_loan_calculation`(`loan_cal_id`, `req_id`, `cus_id_loan`, `cus_name_loan`, `cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`,`communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`, `update_login_id`, `create_date`, `update_date`) SELECT * FROM `verification_loan_calculation` WHERE `req_id`='$req_id' ") or die('Error in acknowlegement_loan_calculation');
+        $insert_acklc = $connect->query("INSERT INTO `acknowlegement_loan_calculation`(`loan_cal_id`, `req_id`, `cus_id_loan`, `cus_name_loan`, `cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, `int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`, `due_start_from`, `maturity_month`, `collection_method`,`communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`, `update_login_id`, `create_date`, `update_date`) SELECT * FROM `verification_loan_calculation` WHERE `req_id`='$req_id' ") or die('Error in acknowlegement_loan_calculation');
 
-        $insert_ackcat = $con->query("INSERT INTO `acknowledgement_loan_cal_category`( `req_id`, `loan_cal_id`, `category`) SELECT `req_id`, `loan_cal_id`, `category` FROM `verif_loan_cal_category` WHERE `req_id`='$req_id'") or die('Error in acknowledgement_loan_cal_category');
+        $insert_ackcat = $connect->query("INSERT INTO `acknowledgement_loan_cal_category`( `req_id`, `loan_cal_id`, `category`) SELECT `req_id`, `loan_cal_id`, `category` FROM `verif_loan_cal_category` WHERE `req_id`='$req_id'") or die('Error in acknowledgement_loan_cal_category');
     }
 
-    function loanIssueTables($con, $data, $userData, $req_id)
+    function loanIssueTables($connect, $data, $userData, $req_id)
     {
-        $insert_ii = $con->query("INSERT INTO `in_issue`(`loan_id`,`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`,`update_login_id`, `created_date`, `updated_date`)  SELECT '" . $data['loan_id'] . "', req_id,cus_id,cus_status,status,insert_login_id,update_login_id,created_date,'" . $data['loan_date'] . "' from in_verification where req_id = '" . $req_id . "' ");
-        $ii_id = $con->insert_id;
-        $qry = $con->query("UPDATE in_issue set inserted_user = '" . $userData['user_id'] . "', inserted_date = '" . $data['dor'] . "' where `id` = '$ii_id' ");
+        $insert_ii = $connect->query("INSERT INTO `in_issue`(`loan_id`,`req_id`, `cus_id`, `cus_status`, `status`, `insert_login_id`,`update_login_id`, `created_date`, `updated_date`)  SELECT '" . $data['loan_id'] . "', req_id,cus_id,cus_status,status,insert_login_id,update_login_id,created_date,'" . $data['loan_date'] . "' from in_verification where req_id = '" . $req_id . "' ");
+        $ii_id = $connect->lastInsertId();
+        $qry = $connect->query("UPDATE in_issue set inserted_user = '" . $userData['user_id'] . "', inserted_date = '" . $data['dor'] . "' where `id` = '$ii_id' ");
 
-        $insert_dt = $con->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','1','" . $userData['user_id'] . "', '" . $data['dor'] . "','" . $data['dor'] . "' ) ");
+        $insert_dt = $connect->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`,`updated_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','1','" . $userData['user_id'] . "', '" . $data['dor'] . "','" . $data['dor'] . "' ) ");
 
         if ($data['agent_id'] == '') {
 
-            $insert_li = $con->query("INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`,`bank_id`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`, `created_date`)  VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['issued_to']) . "','','" . strip_tags($data['issued_mode']) . "', '" . strip_tags($data['payment_type']) . "', '" . strip_tags($data['cash']) . "','', '','','','','', '', '0', '" . strip_tags($data['loan_amt_cal']) . "','" . strip_tags($data['net_cash_cal']) . "','" . strip_tags($data['cash_guarantor_id']) . "','" . strip_tags($data['cash_guarantor_rel']) . "','0','" . $userData['user_id'] . "', '" . $data['loan_date'] . "' )");
+            $insert_li = $connect->query("INSERT INTO `loan_issue`( `req_id`, `cus_id`, `issued_to`, `agent_id`, `issued_mode`, `payment_type`, `cash`,`bank_id`, `cheque_no`, `cheque_value`, `cheque_remark`, `transaction_id`, `transaction_value`, `transaction_remark`, `balance_amount`,`loan_amt`, `net_cash`,`cash_guarentor_name`,`relationship`, `status`, `insert_login_id`, `created_date`)  VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['issued_to']) . "','','" . strip_tags($data['issued_mode']) . "', '" . strip_tags($data['payment_type']) . "', '" . strip_tags($data['cash']) . "','', '','','','','', '', '0', '" . strip_tags($data['loan_amt_cal']) . "','" . strip_tags($data['net_cash_cal']) . "','" . strip_tags($data['cash_guarantor_id']) . "','" . strip_tags($data['cash_guarantor_rel']) . "','0','" . $userData['user_id'] . "', '" . $data['loan_date'] . "' )");
         } else {
-            $insert_li = $con->query("INSERT INTO `loan_issue` (`req_id`, `cus_id`, `issued_to`, `agent_id`, `cash`, `balance_amount`, `loan_amt`, `net_cash`, `insert_login_id`,`created_date`) VALUES ('$req_id', '" . $data['cus_id'] . "', 'Agent', '" . $data['agent_id'] . "', '" . $data['cash'] . "', '0', '" . $data['loan_amt_cal'] . "', '" . $data['net_cash_cal'] . "', '" . $userData['user_id'] . "', '" . $data['loan_date'] . "') ");
+            $insert_li = $connect->query("INSERT INTO `loan_issue` (`req_id`, `cus_id`, `issued_to`, `agent_id`, `cash`, `balance_amount`, `loan_amt`, `net_cash`, `insert_login_id`,`created_date`) VALUES ('$req_id', '" . $data['cus_id'] . "', 'Agent', '" . $data['agent_id'] . "', '" . $data['cash'] . "', '0', '" . $data['loan_amt_cal'] . "', '" . $data['net_cash_cal'] . "', '" . $userData['user_id'] . "', '" . $data['loan_date'] . "') ");
         }
+
+        $current_date = date('Y-m-d');
+        $connect->query(" INSERT INTO `customer_status`( `req_id`, `cus_id`, `sub_status`, `payable_amnt`, `bal_amnt`, `insert_login_id`, `created_date`) VALUES ('$req_id', '".$data['cus_id']."', 'Current', '" . strip_tags($data['tot_amt_cal']) . "', '" . strip_tags($data['tot_amt_cal']) . "', '" . $userData['user_id'] . "', '$current_date' ) ");
     }
-    function closedTables($con, $data, $userData, $req_id)
+    function closedTables($connect, $data, $userData, $req_id)
     {
-        $con->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`,`created_date`) VALUES ('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['closed_status']) . "','" . strip_tags($data['consider_level']) . "','" . strip_tags($data['closed_remark']) . "', '" . $data['cus_status'] . "'," . $userData['user_id'] . ",'" . $data['closed_date'] . "' )");
+        $connect->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`,`created_date`) VALUES ('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','" . strip_tags($data['closed_status']) . "','" . strip_tags($data['consider_level']) . "','" . strip_tags($data['closed_remark']) . "', '" . $data['cus_status'] . "'," . $userData['user_id'] . ",'" . $data['closed_date'] . "' )");
 
-        $con->query("UPDATE request_creation SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
-        $con->query("UPDATE in_verification SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
-        $con->query("UPDATE in_acknowledgement SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
-        $con->query("UPDATE in_approval SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+        $connect->query("UPDATE request_creation SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+        $connect->query("UPDATE in_verification SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+        $connect->query("UPDATE in_acknowledgement SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
+        $connect->query("UPDATE in_approval SET updated_date = " . $data['closed_date'] . " WHERE req_id = '" . $req_id . "' ");
 
-        $con->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','3'," . $userData['user_id'] . ", '" . $data['closed_date'] . "') ");
+        $connect->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`) VALUES('" . strip_tags($req_id) . "','" . strip_tags($data['cus_id']) . "','3'," . $userData['user_id'] . ", '" . $data['closed_date'] . "') ");
     }
 
-    function NOCTables($con, $data, $userData, $req_id)
+    function NOCTables($connect, $data, $userData, $req_id)
     {
-        $con->query("INSERT INTO `noc`(`req_id`,`cus_id`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('$req_id'," . $data['cus_id'] . ", '" . $data['closed_date'] . "','1'," . $data['cus_name'] . ",'" . $data['cus_status'] . "'," . $userData['user_id'] . "," . $data['closed_date'] . "') ");
+        $connect->query("INSERT INTO `noc`(`req_id`,`cus_id`, `noc_date`, `noc_member`, `mem_name`, `cus_status`, `insert_login_id`, `created_date`) VALUES('$req_id'," . $data['cus_id'] . ", '" . $data['closed_date'] . "','1'," . $data['cus_name'] . ",'" . $data['cus_status'] . "'," . $userData['user_id'] . "," . $data['closed_date'] . "') ");
     }
 
 

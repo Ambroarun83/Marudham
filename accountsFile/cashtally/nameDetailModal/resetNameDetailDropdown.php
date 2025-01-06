@@ -3,10 +3,10 @@ include '../../../ajaxconfig.php';
 $opt_for = $_POST['opt_for'];
 
 $qry = "SELECT * FROM name_detail_creation WHERE opt_for = '$opt_for' and status=0 ";
-$res = $mysqli->query($qry) or die("Error in Get All Records");
+$res = $connect->query($qry) or die("Error in Get All Records");
 $i = 0;
 $detailrecords = array();
-while ($row = $res->fetch_object()) {
+while ($row = $res->fetchObject()) {
     $detailrecords[$i]     = [
         'name_id'   => $row->name_id,
         'name'   => $row->name,
@@ -18,6 +18,5 @@ while ($row = $res->fetch_object()) {
 
 echo json_encode($detailrecords);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

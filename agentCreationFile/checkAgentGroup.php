@@ -5,11 +5,14 @@ if(isset($_POST["ag_name"])){
 }
 
 $message = "";
-$selectIC = $con->query("SELECT * FROM agent_group_creation WHERE agent_group_name = '".$ag_name."' and status=0 ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT * FROM agent_group_creation WHERE agent_group_name = '".$ag_name."' and status=0 ");
+if($selectIC->rowCount()>0)
 {
     $message="Already Exist";
 }
 
 echo $message;
+
+// Close the database connection
+$connect = null;
 ?>

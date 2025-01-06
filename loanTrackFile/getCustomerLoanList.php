@@ -10,7 +10,7 @@ if (isset($_POST['cus_id'])) {
 
 $records = array();
 
-$result = $con->query("SELECT req.req_id,req.prompt_remark,req.cus_status,
+$result = $connect->query("SELECT req.req_id,req.prompt_remark,req.cus_status,
     CASE WHEN req.cus_status >= 14 THEN ii.updated_date ELSE req.dor END AS `updated_date`,
     CASE WHEN req.cus_status >= 14 THEN ii.loan_id ELSE req.req_code END AS `code`,
     CASE WHEN req.cus_status IN (12,2,6,7) THEN vlc.loan_category WHEN req.cus_status IN (3,13,14,15,16,17,20,21) THEN alc.loan_category ELSE req.loan_category END AS loan_category,
@@ -24,9 +24,9 @@ $result = $con->query("SELECT req.req_id,req.prompt_remark,req.cus_status,
     LEFT JOIN in_issue ii ON req.req_id = ii.req_id
     where req.cus_id = $cus_id and (req.cus_status <= 21) ORDER BY req.created_date DESC");
 
-if ($result->num_rows > 0) {
+if ($result->rowCount() > 0) {
     $i = 0;
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch()) {
 
         $records[$i]['updated_date'] = date('d-m-Y', strtotime($row['updated_date']));
         $records[$i]['code'] = $row['code'];
@@ -35,8 +35,8 @@ if ($result->num_rows > 0) {
         $cus_name = $row['cus_name'];
 
         $loan_category = $row['loan_category'] ?? '';
-        $qry = $con->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
-        $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
+        $row1 = $qry->fetch();
         $records[$i]['loan_category'] = $row1['loan_category_creation_name'];
 
         $records[$i]['sub_category'] = $row['sub_category'];
@@ -127,3 +127,8 @@ if ($result->num_rows > 0) {
     });
     customerStatusOnClickEvents();
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

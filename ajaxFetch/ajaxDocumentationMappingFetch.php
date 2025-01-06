@@ -72,8 +72,8 @@ foreach ($result as $row) {
     //Company name Fetch
     $loan_category = $row['loan_category'];
     $getQry = "SELECT * from loan_category_creation where loan_category_creation_id = '".$loan_category."' and status = 0 ";
-    $res=$con->query($getQry);
-    while($row1=$res->fetch_assoc())
+    $res=$connect->query($getQry);
+    while($row1=$res->fetch())
     {
         $sub_array[] = $row1["loan_category_creation_name"];        
     }
@@ -131,4 +131,7 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;
 ?>

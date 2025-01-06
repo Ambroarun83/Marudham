@@ -1,7 +1,7 @@
 <?php
 require '../ajaxconfig.php';
 
-$qry = $con->query("SELECT * From cus_old_data where cus_id = '" . $_POST['cus_id'] . "' ");
+$qry = $connect->query("SELECT * From cus_old_data where cus_id = '" . $_POST['cus_id'] . "' ");
 
 ?>
 
@@ -24,7 +24,7 @@ $qry = $con->query("SELECT * From cus_old_data where cus_id = '" . $_POST['cus_i
 
         <?php
         $i = 1;
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
         ?>
 
             <tr>
@@ -98,4 +98,7 @@ function moneyFormatIndia($num)
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;
 ?>
