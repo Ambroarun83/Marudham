@@ -82,7 +82,7 @@ if ($idupd > 0) {
 <br><br>
 <div class="page-header">
     <div style="background-color:#009688; width:100%; padding:10px; color: #ffff; font-size: 20px;">
-        Marudham - Loan Calculation
+        Marudham Capitals - Loan Calculation
     </div>
 </div><br>
 <div class="text-right" style="margin-right: 25px;">

@@ -344,7 +344,7 @@ if (sizeof($getLoanCalculation) > 0) {
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Loan Issue
+		Marudham Capitals - Loan Issue
 	</div>
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">
