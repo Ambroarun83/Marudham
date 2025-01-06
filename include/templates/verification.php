@@ -323,7 +323,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - <?php if (isset($pge) && $pge == '1') { ?>Verification <?php } else { ?> Approval <?php } ?>
+		Marudham Capitals - <?php if (isset($pge) && $pge == '1') { ?>Verification <?php } else { ?> Approval <?php } ?>
 	</div>
 </div><br>
 <div class="page-header sticky-top" id="navbar" style="display: none;" data-toggle="toggle">

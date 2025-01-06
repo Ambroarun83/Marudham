@@ -2,7 +2,7 @@
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Closed Report
+		Marudham Capitals - Closed Report
 	</div>
 
 </div><br>

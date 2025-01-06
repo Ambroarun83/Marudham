@@ -56,7 +56,7 @@ if(isset($_POST['send_scheme_daily_reminder']) AND $_POST['send_scheme_daily_rem
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - SMS Generation
+		Marudham Capitals - SMS Generation
 	</div>
 </div><br>
 

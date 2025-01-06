@@ -52,7 +52,7 @@ if(isset($_POST['lusername'])) {
 						<div class="login-screen">
 							<div class="login-box">
 								<a href="#" class="login-logo">
-									<h3 style="color: #009688; position: relative;left: 41px;font-weight: bolder;">MARUDHAM SOFTWARE</h3>
+									<h3 style="color: #009688; position: relative;left: 41px;font-weight: bolder;">MARUDHAM CAPITALS</h3>
 									<!-- <img src="img/logo.png" alt="Auction Dashboard" /> -->
 								</a>
 								<span class="text-danger" id="cinnocheck">

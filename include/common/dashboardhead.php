@@ -9,7 +9,7 @@
 	<link rel="shortcut icon" href="img/fav.png" />
 
 	<!-- Title -->
-	<title>Marudham </title>
+	<title>Marudham Capitals </title>
 
 
 	<!-- *************
