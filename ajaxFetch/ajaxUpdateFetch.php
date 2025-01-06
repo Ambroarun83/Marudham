@@ -161,7 +161,7 @@ function getDocumentStatus($connect, $cus_id)
 
     $sts_qry = $connect->query("SELECT mortgage_process,mortgage_document_pending,endorsement_process,Rc_document_pending FROM acknowlegement_documentation where cus_id_doc = '$cus_id' ");
 
-    if ($sts_qry->num_rows > 0) {
+    if ($sts_qry->rowCount() > 0) {
         while ($sts_row = $sts_qry->fetch()) { //check any one of document for mortgage or endorsement is pending then response will be pending
 
             if ($sts_row['mortgage_process'] == '0') {

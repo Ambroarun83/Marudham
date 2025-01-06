@@ -74,7 +74,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Hand_Credit_Opening
     ");
 
-    $handCredit = $handCreditQry->fetch_assoc()['hand_credits'];
+    $handCredit = $handCreditQry->fetch()['hand_credits'];
 
     $handDebitQry = $connect->query("SELECT
         SUM(amt) AS hand_debits
@@ -95,7 +95,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Hand_Debit_Opening
     ");
 
-    $handDebit = $handDebitQry->fetch_assoc()['hand_debits'];
+    $handDebit = $handDebitQry->fetch()['hand_debits'];
 
     $records[0]['hand_opening'] = intVal($handCredit) - intVal($handDebit);
 
@@ -124,7 +124,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
                 ) AS Bank_Credit_Opening
             ");
 
-        $bankCredit = $bankCreditQry->fetch_assoc()['bank_credit'];
+        $bankCredit = $bankCreditQry->fetch()['bank_credit'];
 
         $bankDebitQry = $connect->query("SELECT
                 SUM(amt) AS bank_debit
@@ -147,7 +147,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
                 ) AS Bank_Credit_Opening
             ");
 
-        $bankDebit = $bankDebitQry->fetch_assoc()['bank_debit'];
+        $bankDebit = $bankDebitQry->fetch()['bank_debit'];
 
         $records[$i]['bank_opening'] = intVal($bankCredit) - intVal($bankDebit);
         $bank_opening_all = $bank_opening_all + $records[$i]['bank_opening'];
@@ -159,7 +159,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
     $qry = $connect->query("SELECT `user_id` from `user` where ag_id IN (SELECT ag.ag_id FROM agent_creation ag JOIN `user` us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id')  ");
     //without while it will not give all the agent ids
     $ag_ids = [];
-    while ($rww = $qry->fetch_assoc()) {
+    while ($rww = $qry->fetch()) {
         $ag_ids[] = $rww["user_id"];
     }
     $ag_ids = implode(',', $ag_ids);
@@ -174,12 +174,12 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Agent_Collection_Credit_Opening
     ");
 
-    $agentCollCredit = $agentCollQry->fetch_assoc()['agent_coll'];
+    $agentCollCredit = $agentCollQry->fetch()['agent_coll'];
 
     //only for collections we need user ids of agents
     $qry = $connect->query("SELECT ag.ag_id FROM agent_creation ag JOIN user us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id'");
     $ag_ids = [];
-    while ($rww = $qry->fetch_assoc()) {
+    while ($rww = $qry->fetch()) {
         $ag_ids[] = $rww["ag_id"];
     }
     $ag_ids = implode(',', $ag_ids);
@@ -194,7 +194,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Agent_Issue_Debit_Opening
     ");
 
-    $agentIssueDebit = $agentIssueQry->fetch_assoc()['agent_issue'];
+    $agentIssueDebit = $agentIssueQry->fetch()['agent_issue'];
 
     $agent_CL_op = intVal($agentCollCredit) - intVal($agentIssueDebit);
 
@@ -208,7 +208,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Agent_Credit_Opening
     ");
 
-    $agentCredit = $agentCreditQry->fetch_assoc()['agent_credit'];
+    $agentCredit = $agentCreditQry->fetch()['agent_credit'];
 
     $agentDebitQry = $connect->query("SELECT
         SUM(amt) AS agent_debit
@@ -218,7 +218,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Agent_Debit_Opening
     ");
 
-    $agentDebit = $agentDebitQry->fetch_assoc()['agent_debit'];
+    $agentDebit = $agentDebitQry->fetch()['agent_debit'];
 
     $agent_hand_op = intVal($agentDebit) - intVal($agentCredit);
 
@@ -232,7 +232,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Agent_Credit_Opening
     ");
 
-    $agentCredit = $agentCreditQry->fetch_assoc()['agent_credit'];
+    $agentCredit = $agentCreditQry->fetch()['agent_credit'];
 
     $agentDebitQry = $connect->query("SELECT
         SUM(amt) AS agent_debit
@@ -242,7 +242,7 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
         ) AS Agent_Debit_Opening
     ");
 
-    $agentDebit = $agentDebitQry->fetch_assoc()['agent_debit'];
+    $agentDebit = $agentDebitQry->fetch()['agent_debit'];
 
     $agent_bank_op = intVal($agentDebit) - intVal($agentCredit);
 
@@ -257,8 +257,8 @@ function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
 
 
     $qry = $connect->query("SELECT bank_untrkd from cash_tally where date(created_date) = '$op_date' and insert_login_id = '$user_id' ");
-    if ($qry->num_rows > 0) {
-        $records[0]['bank_untrkd'] = $qry->fetch_assoc()['bank_untrkd'];
+    if ($qry->rowCount() > 0) {
+        $records[0]['bank_untrkd'] = $qry->fetch()['bank_untrkd'];
     } else {
         $records[0]['bank_untrkd'] = '';
     }

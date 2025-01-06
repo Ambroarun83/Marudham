@@ -93,7 +93,7 @@ function runcreditCategories($connect,$admin_access,$bank_id){
     $runqry = $connect->query($catqry);
 
     $selectTxt = "<input type='hidden' value='$bank_id'><select class='form-control clr_cat' ><option value=''>Select Category</option>";
-    while($catrow = $runqry->fetch_assoc()){
+    while($catrow = $runqry->fetch()){
         $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
     }
     $selectTxt .= "<option value='15'>Uncleared</option></select><input type='hidden' value='Credit'>";
@@ -111,7 +111,7 @@ function rundebitCategories($connect,$admin_access,$bank_id){
     $runqry = $connect->query($catqry);
 
     $selectTxt = "<input type='hidden' value='$bank_id'><select class='form-control clr_cat' ><option value=''>Select Category</option>";
-    while($catrow = $runqry->fetch_assoc()){
+    while($catrow = $runqry->fetch()){
         $selectTxt .= "<option value='".$catrow['id']."'>".$catrow['modes']."</option>";
     }
     $selectTxt .= "</select><input type='hidden' value='Debit'>";

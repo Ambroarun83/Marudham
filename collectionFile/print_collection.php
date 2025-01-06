@@ -11,9 +11,10 @@ $row = $qry->fetch();
 
 extract($row); // Extracts the array values into variables
 
-$sql = $connect->query("SELECT alm.line_name FROM `acknowlegement_customer_profile` cp JOIN area_line_mapping alm ON FIND_IN_SET(cp.area_confirm_subarea,alm.sub_area_id) WHERE cp.req_id='" . strip_tags($req_id) . "'");
+$sql = $connect->query("SELECT alm.line_name, alc.area_name FROM `acknowlegement_customer_profile` cp JOIN area_line_mapping alm ON FIND_IN_SET(cp.area_confirm_subarea,alm.sub_area_id) JOIN area_list_creation alc ON cp.area_confirm_area = alc.area_id WHERE cp.req_id='" . strip_tags($req_id) . "'");
 $rowSql = $sql->fetch();
 $line_name = $rowSql['line_name'];
+$area_name = $rowSql['area_name'];
 
 $sql = $connect->query("SELECT alc.due_type, lcc.loan_category_creation_name, ii.loan_id FROM `acknowlegement_loan_calculation` alc LEFT JOIN loan_category_creation lcc ON alc.loan_category = lcc.loan_category_creation_id LEFT JOIN in_issue ii ON alc.req_id = ii.req_id WHERE alc.req_id='" . strip_tags($req_id) . "'");
 $rowSql = $sql->fetch();
@@ -84,7 +85,8 @@ $user_name = $qry->fetch()['fullname'];
             </b>
             <div>Date :</div>
             <div>Time :</div>
-            <div>Line / Area :</div>
+            <div>Line :</div>
+            <div>Area :</div>
             <div>Customer ID :</div>
             <b>
                 <div>Customer Name :</div>
@@ -97,7 +99,7 @@ $user_name = $qry->fetch()['fullname'];
             <b>
                 <div>Net Received :</div>
             </b><br>
-            <div>Due Balance :</div>
+            <!-- <div>Due Balance :</div> -->
             <div>Loan Balance :</div>
             <div>User Name :</div>
         </div>
@@ -108,6 +110,7 @@ $user_name = $qry->fetch()['fullname'];
             <div><?php echo date('d-m-Y', strtotime($coll_date)); ?></div>
             <div><?php echo date('H:s A', strtotime($coll_date)); ?></div>
             <div><?php echo $line_name; ?></div>
+            <div><?php echo $area_name; ?></div>
             <div><?php echo $cus_id; ?></div>
             <b>
                 <div><?php echo $cus_name; ?></div>
@@ -120,7 +123,7 @@ $user_name = $qry->fetch()['fullname'];
             <b>
                 <div><?php echo moneyFormatIndia($net_received); ?></div>
             </b><br>
-            <div><?php echo moneyFormatIndia($due_balance); ?></div>
+            <!-- <div><?php #echo moneyFormatIndia($due_balance); ?></div> -->
             <div><?php echo moneyFormatIndia($loan_balance); ?></div>
             <div><?php echo $user_name; ?></div>
         </div>

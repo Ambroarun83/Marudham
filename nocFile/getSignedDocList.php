@@ -43,7 +43,7 @@ function getGuarentorName($connect,$req_id){
         ?>
             <tr>
                 <td><?php echo $i;$i++;?></td>
-                <td><?php if($row['doc_name'] == '0'){echo 'Promissory Note';}elseif($row['doc_name'] == '1'){echo 'Stamp Paper';}elseif($row['doc_name'] == '2'){echo 'P Additional';}elseif($row['doc_name'] == '3'){echo 'S Additional';}?></td>
+                <td>Signed Document</td>
                 <td><?php if($row['sign_type'] == '0'){echo 'Customer'; $name=$cus_name;}elseif($row['sign_type'] == '1'){echo 'Guarentor';$name = getGuarentorName($connect,$req_id);}
                             elseif($row['sign_type'] == '2'){echo 'Combined';}elseif($row['sign_type'] == '3'){echo 'Family Member'; $name = getfamName($connect,$rel_id);} ?></td>
                 <td><?php echo $name;?></td>

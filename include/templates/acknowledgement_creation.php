@@ -2544,13 +2544,14 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="DocName "> Doc Name </label> <span class="required">&nbsp;*</span>
-								<select type="text" class="form-control" id="doc_name" name="doc_name" disabled tabindex='1'>
+								<input type="text" class="form-control" name="doc_name" id="doc_name" value="Signed Document" disabled tabindex='1'>
+								<!-- <select type="text" class="form-control" id="doc_name" name="doc_name" disabled tabindex='1'>
 									<option value=""> Select Doc Name </option>
 									<option value="0"> Promissory Note </option>
 									<option value="1"> Stamp Paper </option>
 									<option value="2"> P Additional </option>
 									<option value="3"> S Additional </option>
-								</select>
+								</select> -->
 								<span class="text-danger" id="docNameCheck"> Select Doc Name </span>
 							</div>
 						</div>
