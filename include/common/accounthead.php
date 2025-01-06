@@ -12,7 +12,7 @@
 		<link rel="shortcut icon" href="img/fav.png" />
 
 		<!-- Title -->
-		<title>Marudham - Login</title>
+		<title>Marudham Capitals - Login</title>
 		
 		<!-- *************
 			************ Common Css Files *************

@@ -18,7 +18,7 @@ if (sizeof($getUser) > 0) {
 <br><br>
 <div class="page-header">
 	<div style="background-color:#009688; width:100%; padding:12px; color: #ffff; font-size: 20px; border-radius:5px;">
-		Marudham - Promotion Activity
+		Marudham Capitals - Promotion Activity
 	</div>
 
 </div><br>
