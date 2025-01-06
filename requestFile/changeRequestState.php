@@ -16,8 +16,8 @@ if ($screen == 'request') {
         //set the status based on which screen
         $cus_status = $_POST['state'] == 'cancel' ? '4' : '8';
 
-        $qry1 = $mysqli->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
-        $qry2 = $mysqli->query("UPDATE customer_register SET cus_status = $cus_status, updated_date = '$currentDate' WHERE req_ref_id = '$req_id' ");
+        $qry1 = $connect->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
+        $qry2 = $connect->query("UPDATE customer_register SET cus_status = $cus_status, updated_date = '$currentDate' WHERE req_ref_id = '$req_id' ");
 
         if ($qry1 && $qry2) {
             $response = 'Success';
@@ -33,8 +33,8 @@ if ($screen == 'request') {
         //set the status based on which screen
         $cus_status = $_POST['state'] == 'cancel' ? '5' : '9';
 
-        $qry1 = $mysqli->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
-        $qry2 = $mysqli->query("UPDATE in_verification SET cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id' ");
+        $qry1 = $connect->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
+        $qry2 = $connect->query("UPDATE in_verification SET cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id' ");
 
         if ($qry1 && $qry2) {
             $response = 'Success';
@@ -52,8 +52,8 @@ if ($screen == 'request') {
         $cus_status = $_POST['state'] == 'cancel' ? '6' : '';
 
         if ($cus_status != '') {
-            $qry1 = $mysqli->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
-            $qry2 = $mysqli->query("UPDATE in_verification SET cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id' ");
+            $qry1 = $connect->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
+            $qry2 = $connect->query("UPDATE in_verification SET cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id' ");
         }
         if ($qry1 && $qry2) {
             $response = 'Success';
@@ -71,10 +71,10 @@ if ($screen == 'request') {
         $cus_status = $_POST['state'] == 'cancel' ? '7' : '';
 
         if ($cus_status != '') {
-            $qry1 = $mysqli->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
-            $qry2 = $mysqli->query("UPDATE in_verification SET cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id' ");
-            $qry3 = $mysqli->query("UPDATE in_approval set cus_status = $cus_status, update_login_id = $user_id where req_id = $req_id");
-            $qry4 = $mysqli->query("UPDATE in_acknowledgement set cus_status = $cus_status, updated_date='$currentDate' , update_login_id = $user_id where req_id = $req_id");
+            $qry1 = $connect->query("UPDATE request_creation set cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id'  ");
+            $qry2 = $connect->query("UPDATE in_verification SET cus_status = $cus_status, prompt_remark = '$remark', updated_date='$currentDate', update_login_id= $user_id where req_id = '$req_id' ");
+            $qry3 = $connect->query("UPDATE in_approval set cus_status = $cus_status, update_login_id = $user_id where req_id = $req_id");
+            $qry4 = $connect->query("UPDATE in_acknowledgement set cus_status = $cus_status, updated_date='$currentDate' , update_login_id = $user_id where req_id = $req_id");
         }
         if ($qry1 && $qry2 && $qry3 && $qry4) {
             $response = 'Success';
@@ -88,6 +88,5 @@ if ($screen == 'request') {
 
 echo $response;
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

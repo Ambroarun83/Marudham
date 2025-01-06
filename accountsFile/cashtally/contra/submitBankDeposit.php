@@ -11,7 +11,7 @@ $remark_bdep = $_POST['remark_bdep'];
 $amt_bdep = $_POST['amt_bdep'];
 $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
-$qry = $con->query("INSERT INTO `ct_db_bank_deposit`( `to_bank_id`, `location`, `remark`, `amount`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_db_bank_deposit`( `to_bank_id`, `location`, `remark`, `amount`, `insert_login_id`, `created_date`) 
     VALUES ('".$to_bank_bdep."','".$location_bdep."','".$remark_bdep."','".$amt_bdep."','".$user_id."','$op_date' )");
 
 if($qry){
@@ -22,4 +22,6 @@ if($qry){
 
 echo $response;
 
+// Close the database connection
+$connect = null;
 ?>

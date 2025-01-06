@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('button').click(function (e) { e.preventDefault(); })
+    // $('button').click(function (e) { e.preventDefault(); })
 
     $('#sumit_add_lfollow').click(() => {
         if (validateLoanfollowup() == true) {
@@ -10,8 +10,42 @@ $(document).ready(function () {
 
 });
 
-
-
+function resetLoanFollowupTable(){
+    $('#loan_follow_table').DataTable().destroy();
+    $('#loan_follow_table').DataTable({
+        "order": [
+            [0, "desc"]
+        ],
+        'processing': true,
+        'serverSide': true,
+        'serverMethod': 'post',
+        'ajax': {
+            'url': 'followupFiles/loanFollowup/resetLoanFollowupTable.php',
+            'data': function(data) {
+                var search = $('input[type=search]').val();
+                data.search = search;
+            }
+        },
+        dom: 'lBfrtip',
+        buttons: [{
+                extend: 'excel',
+                title: "Loan Followup List"
+            },
+            {
+                extend: 'colvis',
+                collectionLayout: 'fixed four-column',
+            }
+        ],
+        "lengthMenu": [
+            [10, 25, 50, -1],
+            [10, 25, 50, "All"]
+        ],
+        'drawCallback': function() {
+            searchFunction('loan_follow_table');
+            loanFollowupTableOnclick();
+        }
+    });
+}
 
 function submitLoanfollowup() {
     let cus_id = $('#lfollow_cus_id').val();
@@ -23,7 +57,11 @@ function submitLoanfollowup() {
         if (response.includes('Error')) {
             swarlErrorAlert(response);
         } else {
-            swarlSuccessAlert(response);
+            swarlSuccessAlert(response, function(){
+                $('#closeAddFollowupModal').trigger('click');
+                resetLoanFollowupTable();
+            });
+
             $('#addLoanFollow').find('.modal-body input').not('[readonly]').val('');
         }
     })
@@ -255,12 +293,16 @@ function swarlInfoAlert(title, text) {
         }
     });
 }
-function swarlSuccessAlert(response) {
+function swarlSuccessAlert(response, callback) {
     Swal.fire({
         title: response,
         icon: 'success',
         confirmButtonText: 'Ok',
         confirmButtonColor: '#009688'
+    }).then((result) => {
+        if(result.isConfirmed && typeof callback === 'function'){
+            callback();
+        }
     });
 }
 

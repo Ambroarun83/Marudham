@@ -2,9 +2,9 @@
 class ClosingBalanceClass
 {
     private $db;
-    public function __construct($con)
+    public function __construct($connect)
     {
-        $this->db = $con;
+        $this->db = $connect;
     }
 
     public function getClosingBalance($closing_date, $bank_detail, $user_id)
@@ -33,7 +33,7 @@ class ClosingBalanceClass
         ) AS Hand_Credit_Closing
     ");
 
-        $handCredit = $handCreditQry->fetch_assoc()['hand_credits'];
+        $handCredit = $handCreditQry->fetch()['hand_credits'];
 
         $handDebitQry = $this->db->query("SELECT
         SUM(amt) AS hand_debits
@@ -54,7 +54,7 @@ class ClosingBalanceClass
         ) AS Hand_Debit_Closing
     ");
 
-        $handDebit = $handDebitQry->fetch_assoc()['hand_debits'];
+        $handDebit = $handDebitQry->fetch()['hand_debits'];
         if ($handCredit == 0 && $handDebit == 0) {
             $records[0]['hand_closing'] = 0;
         } else {
@@ -86,7 +86,7 @@ class ClosingBalanceClass
                 ) AS Bank_Credit_Closing
             ");
 
-            $bankCredit = $bankCreditQry->fetch_assoc()['bank_credit'];
+            $bankCredit = $bankCreditQry->fetch()['bank_credit'];
 
             $bankDebitQry = $this->db->query("SELECT
                 SUM(amt) AS bank_debit
@@ -109,7 +109,7 @@ class ClosingBalanceClass
                 ) AS Bank_Credit_Closing
             ");
 
-            $bankDebit = $bankDebitQry->fetch_assoc()['bank_debit'];
+            $bankDebit = $bankDebitQry->fetch()['bank_debit'];
 
             if ($bankCredit == 0 && $bankDebit == 0) {
                 $records[$i]['bank_closing'] = 0;
@@ -126,7 +126,7 @@ class ClosingBalanceClass
             $qry = $this->db->query("SELECT `user_id` from `user` where ag_id IN (SELECT ag.ag_id FROM agent_creation ag JOIN `user` us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id')  ");
             $ag_ids = array();
             //without while it will not give all the agent ids
-            while ($rww = $qry->fetch_assoc()) {
+            while ($rww = $qry->fetch()) {
                 $ag_ids[] = $rww["user_id"];
             }
             $ag_ids = implode(',', $ag_ids);
@@ -144,7 +144,7 @@ class ClosingBalanceClass
         ) AS Agent_Collection_Credit_Closing
     ");
 
-        $agentCollCredit = $agentCollQry->fetch_assoc()['agent_coll'];
+        $agentCollCredit = $agentCollQry->fetch()['agent_coll'];
 
 
         //only for collections we need user ids of agents
@@ -154,7 +154,7 @@ class ClosingBalanceClass
             $qry = $this->db->query("SELECT ag_id FROM agent_creation where 1");
         }
         $ag_ids = [];
-        while ($rww = $qry->fetch_assoc()) {
+        while ($rww = $qry->fetch()) {
             $ag_ids[] = $rww["ag_id"];
         }
         $ag_ids = implode(',', $ag_ids);
@@ -169,7 +169,7 @@ class ClosingBalanceClass
         ) AS Agent_Issue_Debit_Closing
     ");
 
-        $agentIssueDebit = $agentIssueQry->fetch_assoc()['agent_issue'];
+        $agentIssueDebit = $agentIssueQry->fetch()['agent_issue'];
 
         $agent_CL_op = intVal($agentCollCredit) - intVal($agentIssueDebit);
 
@@ -182,7 +182,7 @@ class ClosingBalanceClass
         ) AS Agent_Credit_Closing
     ");
 
-        $agentCredit = $agentCreditQry->fetch_assoc()['agent_credit'];
+        $agentCredit = $agentCreditQry->fetch()['agent_credit'];
 
         $agentDebitQry = $this->db->query("SELECT
         SUM(amt) AS agent_debit
@@ -192,7 +192,7 @@ class ClosingBalanceClass
         ) AS Agent_Debit_Closing
     ");
 
-        $agentDebit = $agentDebitQry->fetch_assoc()['agent_debit'];
+        $agentDebit = $agentDebitQry->fetch()['agent_debit'];
 
         $agent_hand_op = intVal($agentDebit) - intVal($agentCredit);
 
@@ -207,7 +207,7 @@ class ClosingBalanceClass
         ) AS Agent_Credit_Closing
     ");
 
-        $agentCredit = $agentCreditQry->fetch_assoc()['agent_credit'];
+        $agentCredit = $agentCreditQry->fetch()['agent_credit'];
 
         $agentDebitQry = $this->db->query("SELECT
         SUM(amt) AS agent_debit
@@ -217,7 +217,7 @@ class ClosingBalanceClass
         ) AS Agent_Debit_Closing
     ");
 
-        $agentDebit = $agentDebitQry->fetch_assoc()['agent_debit'];
+        $agentDebit = $agentDebitQry->fetch()['agent_debit'];
 
         $agent_bank_op = intVal($agentDebit) - intVal($agentCredit);
 

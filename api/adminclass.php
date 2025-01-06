@@ -1,6 +1,7 @@
 <?php
 require 'PHPMailerAutoload.php';
 require 'moneyFormatIndia.php';
+include("iedit-config.php");
 class admin
 {
 
@@ -3184,9 +3185,9 @@ class admin
 		if (isset($_POST['declaration'])) {
 			$declaration = $_POST['declaration'];
 		}
-		if (isset($_POST['req_code'])) {
-			$req_code = $_POST['req_code'];
-		}
+		// if (isset($_POST['req_code'])) {
+		// 	$req_code = $_POST['req_code'];
+		// }
 		if (isset($_POST['dor'])) {
 			$dor = $_POST['dor'];
 		}
@@ -3304,7 +3305,22 @@ class admin
 			$category_info = $_POST['category_info'];
 		}
 
-
+		try{
+			// Disable autocommit to start a transaction
+			$mysqli->autocommit(FALSE);
+			$myStr = "REQ";
+			$selectIC = $mysqli->query("SELECT req_code FROM request_creation WHERE req_code != '' ORDER BY req_id DESC LIMIT 1 FOR UPDATE");
+			if ($selectIC->num_rows > 0) {
+				$row = $selectIC->fetch_assoc();
+				$ac2 = $row["req_code"];
+				
+				$appno2 = ltrim(strstr($ac2, '-'), '-');
+				$appno2 = $appno2 + 1;
+				$req_code = $myStr . "-" . "$appno2";
+			} else {
+				$initialapp = $myStr . "-101";
+				$req_code = $initialapp;
+			}
 
 		$insertQry = "INSERT INTO request_creation(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_id`,
 		`cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, 
@@ -3336,6 +3352,19 @@ class admin
 		for ($i = 0; $i < sizeof($category_info); $i++) {
 			$insertQry = "INSERT INTO `request_category_info`(`req_ref_id`, `category_info`) VALUES ('" . strip_tags($req_ref_id) . "','" . strip_tags($category_info[$i]) . "') ";
 			$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
+		}
+
+		// Commit the transaction
+		$mysqli->commit();
+
+		// Enable autocommit again
+		$mysqli->autocommit(TRUE);
+
+		}catch(Exception $e){
+			// Rollback the transaction in case of error
+			$mysqli->rollback();
+			$mysqli->autocommit(TRUE);
+			echo "Error: " . $e->getMessage();
 		}
 	}
 
@@ -4233,6 +4262,7 @@ class admin
 		if (isset($_POST['sub_category'])) {
 			$sub_category = $_POST['sub_category'];
 		}
+		$category_info =[];
 		if (isset($_POST['category_info'])) {
 			$category_info = $_POST['category_info'];
 		}

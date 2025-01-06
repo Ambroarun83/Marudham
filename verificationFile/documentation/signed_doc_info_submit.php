@@ -11,9 +11,9 @@ $cus_profile_id        = $_POST['cus_profile_id'];
 $signedID              = $_POST['signedID'];
 
 if ($sign_type == '1') {
-    $qry = $con->query("SELECT fam.id from verification_family_info fam JOIN customer_profile cp on cp.guarentor_name = fam.id where cp.req_id = $req_id");
-    // $qry = $con->query("SELECT fam.id from verification_family_info fam JOIN customer_profile cp on cp.req_id = fam.req_id where fam.req_id = $req_id"); 
-    $signType_relationship = $qry->fetch_assoc()['id'];
+    $qry = $connect->query("SELECT fam.id from verification_family_info fam JOIN customer_profile cp on cp.guarentor_name = fam.id where cp.req_id = $req_id");
+    // $qry = $connect->query("SELECT fam.id from verification_family_info fam JOIN customer_profile cp on cp.req_id = fam.req_id where fam.req_id = $req_id"); 
+    $signType_relationship = $qry->fetch()['id'];
 }
 
 if ($signedID == '') {
@@ -31,6 +31,5 @@ if ($insert_qry) {
 
 echo json_encode($result);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

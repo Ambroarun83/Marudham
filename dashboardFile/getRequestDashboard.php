@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $requestClass = new requestClass($user_id);
 
-$response = $requestClass->getRequestCounts($con);
+$response = $requestClass->getRequestCounts($connect);
 
 echo json_encode($response);

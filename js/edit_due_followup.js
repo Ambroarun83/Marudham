@@ -34,7 +34,7 @@ function OnLoadFunctions(cusSts) {
             "ajax": {
                 "url": 'followupFiles/dueFollowup/getDueFollowCus.php',
                 "data": function (data) {
-                    var search = $('input[type=search]').val();
+                    var search = $('#search').val();
                     data.search = search;
                     data.cus_sts=cusSts;
                 }
@@ -51,9 +51,10 @@ function OnLoadFunctions(cusSts) {
                 }
             ],
             "lengthMenu": [
-                [10, 10, 25, 50, -1],
-                [10, 10, 25, 50, "All"]
+                [10,25, 50, -1],
+                [10,25, 50, "All"]
             ],
+            "pageLength": 10,
             "createdRow": function (row, data, dataIndex) {
                 // Add serial number in the first column
                 $('td', row).eq(0).html(dataIndex + 1);

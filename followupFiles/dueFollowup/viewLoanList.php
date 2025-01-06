@@ -88,8 +88,8 @@ function moneyFormatIndia($num) {
 
                             }else if($row['cus_status'] > '20'){// if status is closed(21) or more than that(22), then show closed status
 
-                                $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
-                                $closedStsrow = $closedSts->fetch_assoc();
+                                $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($ii_req_id)."' ");
+                                $closedStsrow = $closedSts->fetch();
                                 $rclosed = $closedStsrow['closed_sts'];
                                 $consider_lvl = $closedStsrow['consider_level'];
                                 if($rclosed == '1'){echo 'Consider - '.$consider_lvl_arr[$consider_lvl]; } 
@@ -189,3 +189,8 @@ function moneyFormatIndia($num) {
 
     
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

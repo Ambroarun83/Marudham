@@ -16,8 +16,8 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
     }
@@ -25,8 +25,8 @@ if ($userid != 1) {
     $line_id = explode(',', $line_id);
     $sub_area_list = array();
     foreach ($line_id as $line) {
-        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
+        $lineQry = $connect->query("SELECT * FROM area_line_mapping where map_id = $line ");
+        $row_sub = $lineQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -184,16 +184,16 @@ foreach ($result as $row) {
     $sno = $sno + 1;
 }
 
-function count_all_data($mysqli)
+function count_all_data($connect)
 {
-    $query = $mysqli->query("SELECT count(req_id) as req_count FROM request_creation where cus_status >= 20 ");
-    $statement = $query->fetch_assoc();
+    $query = $connect->query("SELECT count(req_id) as req_count FROM request_creation where cus_status >= 20 ");
+    $statement = $query->fetch();
     return $statement['req_count'];
 }
 
 $output = array(
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => count_all_data($mysqli),
+    'recordsTotal' => count_all_data($connect),
     'recordsFiltered' => $number_filter_row,
     'data' => $data
 );
@@ -221,6 +221,5 @@ function moneyFormatIndia($num)
     return $thecash;
 }
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

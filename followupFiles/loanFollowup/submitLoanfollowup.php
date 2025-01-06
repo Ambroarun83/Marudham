@@ -20,7 +20,7 @@ if(isset($_POST['follow_date'])){
     $follow_date = $_POST['follow_date'];
 }
 
-    $sql = $con->query("INSERT INTO loan_followup(cus_id, stage, label, remark, follow_date, insert_login_id, created_date) 
+    $sql = $connect->query("INSERT INTO loan_followup(cus_id, stage, label, remark, follow_date, insert_login_id, created_date) 
         VALUES('$cus_id', '$stage', '$label', '$remark', '$follow_date', '$userid', now())");
     
     if($sql){
@@ -30,4 +30,7 @@ if(isset($_POST['follow_date'])){
     }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

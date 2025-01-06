@@ -13,10 +13,10 @@ include '../ajaxconfig.php';
     <tbody>
         <?php
         $ctselect = "SELECT * FROM concern_subject WHERE 1 AND status=0 ORDER BY concern_sub_id DESC";
-        $ctresult = $con->query($ctselect);
-        if ($ctresult->num_rows > 0) {
+        $ctresult = $connect->query($ctselect);
+        if ($ctresult->rowCount() > 0) {
             $i = 1;
-            while ($ct = $ctresult->fetch_assoc()) {
+            while ($ct = $ctresult->fetch()) {
         ?>
                 <tr>
                     <td><?php echo $i; ?></td>
@@ -69,3 +69,8 @@ include '../ajaxconfig.php';
         });
     });
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

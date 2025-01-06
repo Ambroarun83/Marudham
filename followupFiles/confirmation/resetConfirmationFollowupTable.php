@@ -30,15 +30,15 @@ if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
 }
 if ($userid != 1) {
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
     }
     $group_id = explode(',', $group_id);
     $sub_area_list = array();
     foreach ($group_id as $group) {
-        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-        $row_sub = $groupQry->fetch_assoc();
+        $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+        $row_sub = $groupQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -109,10 +109,10 @@ $status_arr = [1 => 'Completed', 2 => 'Unavailable', 3 => 'Reconfirmation'];
 
 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     $req_id = $row['req_id'];
-    $qry = $con->query("SELECT remove_status FROM confirmation_followup WHERE req_id = '" . $req_id . "' ORDER BY created_date DESC limit 1");
-    $rst = $qry->fetch_assoc()['remove_status'] ?? null;
-    if (mysqli_num_rows($qry) == 0 || $rst != 1) { // show below contents only if confirmation of the request id is not removed from table already
-        $statusQry = $con->query("SELECT status FROM confirmation_followup WHERE req_id = '" . $req_id . "' ORDER BY created_date DESC limit 1");
+    $qry = $connect->query("SELECT remove_status FROM confirmation_followup WHERE req_id = '" . $req_id . "' ORDER BY created_date DESC limit 1");
+    $rst = $qry->fetch()['remove_status'] ?? null;
+    if ($qry -> rowCount() == 0 || $rst != 1) { // show below contents only if confirmation of the request id is not removed from table already
+        $statusQry = $connect->query("SELECT status FROM confirmation_followup WHERE req_id = '" . $req_id . "' ORDER BY created_date DESC limit 1");
 
         $action = "<div class='dropdown'><button class='btn btn-outline-secondary' onclick='event.preventDefault();'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>
                         <a class='conf-chart' data-cusid='" . $row['cus_id'] . "' data-reqid='" . $row['req_id'] . "' data-toggle='modal' data-target='#confChartModal'><span>Confirmation Chart</span></a>
@@ -125,8 +125,8 @@ while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
                     </div></div>";
 
         $actionEdit = "<div class='dropdown'><button class='btn btn-outline-secondary' onclick='event.preventDefault();'><i class='fa'>&#xf107;</i></button><div class='dropdown-content'>";
-        if ($statusQry->num_rows > 0) {
-            $status = $statusQry->fetch_assoc()['status'];
+        if ($statusQry->rowCount() > 0) {
+            $status = $statusQry->fetch()['status'];
             if ($status == '1') { // 1 means completed
                 $actionEdit .= "<a class='conf-remove' data-cusid='" . $row['cus_id'] . "' data-reqid='" . $row['req_id'] . "' ><span>Remove</span></a>";
             } else {
@@ -156,7 +156,7 @@ while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     }
 }
 
-$totalRecordsQry = $con->query("WITH ConfirmedSubareas AS (
+$totalRecordsQry = $connect->query("WITH ConfirmedSubareas AS (
     SELECT
         req_id,
         area_confirm_subarea
@@ -165,9 +165,9 @@ $totalRecordsQry = $con->query("WITH ConfirmedSubareas AS (
     WHERE
         area_confirm_subarea IN (" . $sub_area_list . ")
 ) SELECT COUNT(*) AS total FROM request_creation rc JOIN ConfirmedSubareas cs ON rc.req_id = cs.req_id WHERE rc.cus_status >= 14 ");
-$totalRecords = $totalRecordsQry->fetch_assoc()['total'];
+$totalRecords = $totalRecordsQry->fetch()['total'];
 
-$totalFilteredRecordsQry = $mysqli->query("WITH ConfirmedSubareas AS (
+$totalFilteredRecordsQry = $connect->query("WITH ConfirmedSubareas AS (
     SELECT
         req_id,
         area_confirm_subarea
@@ -191,7 +191,7 @@ $totalFilteredRecordsQry = $mysqli->query("WITH ConfirmedSubareas AS (
     LEFT JOIN 
         area_line_mapping alm ON FIND_IN_SET(rc.sub_area, alm.sub_area_id)
     WHERE rc.cus_status >= 14 " . $searchQuery);
-$totalFilteredRecords = $totalFilteredRecordsQry->fetch_assoc()['total'];
+$totalFilteredRecords = $totalFilteredRecordsQry->fetch()['total'];
 
 $response = [
     "draw" => intval($draw),
@@ -202,6 +202,5 @@ $response = [
 
 echo json_encode($response);
 
-$con->close();
-$mysqli->close();
-$connect = NULL;
+// Close the database connection
+$connect = null;

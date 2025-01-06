@@ -8,7 +8,7 @@ class NocClass
     {
         $this->user_id = $user_id;
     }
-    public function getNOCCounts($con)
+    public function getNOCCounts($connect)
     {
         $response = array();
         $today = date('Y-m-d');
@@ -24,7 +24,7 @@ class NocClass
         $today_noc_issueqry = "SELECT req.req_id FROM request_creation req JOIN acknowlegement_customer_profile cp ON cp.req_id = req.req_id WHERE req.cus_status = 21  ";
 
         if (empty($sub_area_list)) {
-            $sub_area_list = $this->getUserGroupBasedSubArea($con, $this->user_id);
+            $sub_area_list = $this->getUserGroupBasedSubArea($connect, $this->user_id);
         }
 
         $tot_noc .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
@@ -36,35 +36,35 @@ class NocClass
         $today_noc_issueqry .= " AND ( CASE WHEN cp.area_confirm_subarea IS NOT NULL THEN cp.area_confirm_subarea IN ($sub_area_list) ELSE TRUE END ) ";
 
 
-        $tot_nocQry = $con->query($tot_noc);
+        $tot_nocQry = $connect->query($tot_noc);
         $this->date_limit = '';
-        $tot_noc_issued = $this->fetchdata($con, $noc_issueqry);
-        $month_nocQry = $con->query($month_noc);
+        $tot_noc_issued = $this->fetchdata($connect, $noc_issueqry);
+        $month_nocQry = $connect->query($month_noc);
         $this->date_limit = 'month';
-        $month_noc_bal = $this->fetchdata($con, $month_noc_bal);
+        $month_noc_bal = $this->fetchdata($connect, $month_noc_bal);
         $this->date_limit = 'month';
-        $month_noc_issued = $this->fetchdata($con, $month_noc_issueqry);
-        $today_nocQry = $con->query($today_noc);
+        $month_noc_issued = $this->fetchdata($connect, $month_noc_issueqry);
+        $today_nocQry = $connect->query($today_noc);
         $this->date_limit = 'today';
-        $today_noc_issued = $this->fetchdata($con, $today_noc_issueqry);
+        $today_noc_issued = $this->fetchdata($connect, $today_noc_issueqry);
 
 
-        $response['tot_noc'] = $tot_nocQry->fetch_assoc()['tot_noc'];
+        $response['tot_noc'] = $tot_nocQry->fetch()['tot_noc'];
         $response['tot_noc_issued'] = $tot_noc_issued;
-        $response['month_noc'] = $month_nocQry->fetch_assoc()['month_noc'];
+        $response['month_noc'] = $month_nocQry->fetch()['month_noc'];
         $response['month_noc_issued'] = $month_noc_issued;
         $response['month_noc_bal'] = $response['month_noc'] - $month_noc_bal;
-        $response['today_noc'] = $today_nocQry->fetch_assoc()['today_noc'];
+        $response['today_noc'] = $today_nocQry->fetch()['today_noc'];
         $response['today_noc_issued'] = $today_noc_issued;
 
         return $response;
     }
-    function fetchdata($con, $noc_issueqry)
+    function fetchdata($connect, $noc_issueqry)
     {
         //this function will get each request id and check whether each request has any pending noc using getNocDocStatus method
-        $noc_issueqryQry = $con->query($noc_issueqry);
+        $noc_issueqryQry = $connect->query($noc_issueqry);
         $req_id_arr = array();
-        while ($row = $noc_issueqryQry->fetch_assoc()) {
+        while ($row = $noc_issueqryQry->fetch()) {
             $req_id_arr[] = $row['req_id'];
         }
         $noc_status = array_map(array($this, 'getNocDocStatus'), $req_id_arr); //uses callback function of the class to process each data if array
@@ -76,7 +76,7 @@ class NocClass
     {
 
         $nocstatus = 1;
-        $con = $GLOBALS['con'];
+        $connect = $GLOBALS['connect'];
         $dater = $this->date_limit;
         $today = date('Y-m-d');
         //noc status will be 1 refering that noc is completed, and 0 means noc pending
@@ -84,7 +84,7 @@ class NocClass
         //if in all queries the noc status count is set to 1 then the count inside the query will return null or 0
         //if count is >0 then noc status is completed
 
-        $qry = $con->query("SELECT COUNT(*) as `count` FROM (
+        $qry = $connect->query("SELECT COUNT(*) as `count` FROM (
             SELECT 1 FROM `signed_doc_info` a JOIN signed_doc b ON a.id = b.signed_doc_id WHERE b.req_id = $req_id AND b.noc_given != '1'
             UNION ALL
             SELECT 1 FROM `cheque_no_list` a JOIN cheque_info b ON a.cheque_table_id = b.id WHERE a.req_id = $req_id AND a.noc_given != '1'
@@ -97,14 +97,14 @@ class NocClass
             UNION ALL
             SELECT 1 FROM document_info ac LEFT JOIN verification_family_info fam ON ac.relation_name = fam.id WHERE ac.req_id = $req_id AND ac.doc_info_upload_noc != '1'
         ) AS combined ");
-        if ($qry->fetch_assoc()['count'] > 0) {
+        if ($qry->fetch()['count'] > 0) {
             $nocstatus = 0;
         }
         // echo $req_id . '-' .$nocstatus.'|';
 
         if ($nocstatus == 1) {
             //below query will fetch the latest updated noc date from all tables if the current request id's noc is completed
-            $qry = $con->query("SELECT * from (
+            $qry = $connect->query("SELECT * from (
                 SELECT b.noc_date FROM `signed_doc_info` a JOIN signed_doc b ON a.id = b.signed_doc_id WHERE b.req_id = $req_id
                 UNION ALL
                 SELECT a.noc_date FROM `cheque_no_list` a JOIN cheque_info b ON a.cheque_table_id = b.id WHERE a.req_id = $req_id
@@ -124,7 +124,7 @@ class NocClass
                 SELECT ac.noc_date FROM document_info ac LEFT JOIN verification_family_info fam ON ac.relation_name = fam.id WHERE ac.req_id = $req_id 
             ) as noc_date ORDER BY noc_date DESC LIMIT 1");
 
-            $noc_date = $qry->fetch_assoc()['noc_date'];
+            $noc_date = $qry->fetch()['noc_date'];
 
             if ($noc_date == NULL) {
                 //if the noc_date is null then there is two posibility
@@ -132,7 +132,7 @@ class NocClass
                 //2 is the request may not have documents given entirely
                 //so we need to check whether any of the document given by the request or no
                 //if not then no need to compare dates
-                $qry = $con->query("SELECT COUNT(*) as `count` FROM (
+                $qry = $connect->query("SELECT COUNT(*) as `count` FROM (
                     SELECT 1 FROM `signed_doc_info` a JOIN signed_doc b ON a.id = b.signed_doc_id WHERE b.req_id = $req_id
                     UNION ALL
                     SELECT 1 FROM `cheque_no_list` a JOIN cheque_info b ON a.cheque_table_id = b.id WHERE a.req_id = $req_id
@@ -145,7 +145,7 @@ class NocClass
                     UNION ALL
                     SELECT 1 FROM document_info ac LEFT JOIN verification_family_info fam ON ac.relation_name = fam.id WHERE ac.req_id = $req_id 
                 ) AS combined ");
-                $document_count = $qry->fetch_assoc()['count'];
+                $document_count = $qry->fetch()['count'];
             } else {
                 $document_count = 1;
             }
@@ -172,8 +172,8 @@ class NocClass
             } else {
                 //if no doc submitted by the reqest then noc moved date will be tha noc date of that request
                 //so check the noc moved date and compare with the current date to check whether noc is completed or not
-                $qry = $con->query("SELECT updated_date FROM request_creation where req_id = $req_id ");
-                $noc_moved_date = $qry->fetch_assoc()['updated_date'];
+                $qry = $connect->query("SELECT updated_date FROM request_creation where req_id = $req_id ");
+                $noc_moved_date = $qry->fetch()['updated_date'];
                 if ($dater == 'month') {
                     $noc_moved_date = date('Y-m', strtotime($noc_moved_date));
                     //if the date is not in current month, then that noc issue cannot be calculated
@@ -192,18 +192,18 @@ class NocClass
         }
         return $nocstatus;
     }
-    private function getUserGroupBasedSubArea($con, $user_id)
+    private function getUserGroupBasedSubArea($connect, $user_id)
     {
         $sub_area_list = array();
 
-        $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
-        while ($rowuser = $userQry->fetch_assoc()) {
+        $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $user_id ");
+        while ($rowuser = $userQry->fetch()) {
             $group_id = $rowuser['group_id'];
         }
         $group_id = explode(',', $group_id);
         foreach ($group_id as $group) {
-            $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-            $row_sub = $groupQry->fetch_assoc();
+            $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+            $row_sub = $groupQry->fetch();
             $sub_area_list[] = $row_sub['sub_area_id'];
         }
         $sub_area_ids = array();

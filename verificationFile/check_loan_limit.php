@@ -15,6 +15,5 @@ if ($cnt > 0) {
 }
 echo json_encode($limit);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

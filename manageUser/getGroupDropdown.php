@@ -10,15 +10,15 @@ $staffArr = array();
 $branch_id1 = explode(',',$branch_id);
 
 foreach($branch_id1 as $branch_id){
-    $result=$con->query("SELECT * FROM area_group_mapping where status=0 and branch_id = '".$branch_id."' ");
-    while( $row = $result->fetch_assoc()){
+    $result=$connect->query("SELECT * FROM area_group_mapping where status=0 and branch_id = '".$branch_id."' ");
+    while( $row = $result->fetch()){
         $map_id = $row['map_id'];
         $group_name = $row['group_name'];
         
         // $area_id = explode(',',$row['area_id']);
         // foreach($area_id as $area){
 
-        //     $runQry = $con->query("SELECT * From area_list_creation where area_id= $area and area_enable = 0");
+        //     $runQry = $connect->query("SELECT * From area_list_creation where area_id= $area and area_enable = 0");
         //     if($runQry ->num_rows >0){
 
         //     }
@@ -30,4 +30,7 @@ foreach($branch_id1 as $branch_id){
 }
 
 echo json_encode($staffArr);
+
+// Close the database connection
+$connect = null;
 ?>

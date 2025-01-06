@@ -2,11 +2,11 @@
 include('../../../ajaxconfig.php');
 
 $myStr = "WD";
-$selectIC = $con->query("SELECT ref_code FROM ct_db_cash_withdraw WHERE ref_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT ref_code FROM ct_db_cash_withdraw WHERE ref_code != '' ");
+if($selectIC->rowCount() > 0)
 {
-    $codeAvailable = $con->query("SELECT ref_code FROM ct_db_cash_withdraw WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_cash_withdraw WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["ref_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -20,4 +20,6 @@ else
 
 echo $ref_code;
 
+// Close the database connection
+$connect = null;
 ?>

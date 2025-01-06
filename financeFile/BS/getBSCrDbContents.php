@@ -12,7 +12,7 @@ if ($type == 'today') {
     if ($user_id != '') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
-    getDetails($con, $where); //passing where clause as arg
+    getDetails($connect, $where); //passing where clause as arg
 
 } else if ($type == 'day') {
 
@@ -23,7 +23,7 @@ if ($type == 'today') {
     if ($user_id != '') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
-    getDetails($con, $where); //passing where clause as arg
+    getDetails($connect, $where); //passing where clause as arg
 
 
 } else if ($type == 'month') {
@@ -35,132 +35,132 @@ if ($type == 'today') {
     if ($user_id != '') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
-    getDetails($con, $where); //passing where clause as arg
+    getDetails($connect, $where); //passing where clause as arg
 }
 
 
 
 
-function getDetails($con, $where)
+function getDetails($connect, $where)
 {
 
     // Investment Credit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_cr_binvest WHERE $where 
         UNION ALL
         SELECT amt FROM ct_cr_hinvest WHERE $where 
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $investment = $row['amt'] ?? 0;
 
     $response['cr_investment'] = intval($investment);
 
     // Investment Debit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_db_binvest WHERE $where
         UNION ALL
         SELECT amt FROM ct_db_hinvest WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $investment = $row['amt'] ?? 0;
 
     $response['db_investment'] = intval($investment);
 
 
     // Deposit Credit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_cr_bdeposit WHERE $where
         UNION ALL
         SELECT amt FROM ct_cr_hdeposit WHERE $where
         ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $deposit = $row['amt'] ?? 0;
 
     $response['cr_deposit'] = intval($deposit);
 
     // Deposit Debit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_db_bdeposit WHERE $where 
         UNION ALL
         SELECT amt FROM ct_db_hdeposit WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $deposit = $row['amt'] ?? 0;
 
     $response['db_deposit'] = intval($deposit);
 
     // EL Credit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_cr_bel WHERE $where
         UNION ALL
         SELECT amt FROM ct_cr_hel WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $el = $row['amt'] ?? 0;
 
     $response['cr_el'] = intval($el);
 
     // EL Debit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_db_bel WHERE $where
         UNION ALL
         SELECT amt FROM ct_db_hel WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $el = $row['amt'] ?? 0;
 
     $response['db_el'] = intval($el);
 
     // Exchange Credit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_cr_bexchange WHERE $where
         UNION ALL
         SELECT amt FROM ct_cr_hexchange WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $exchange = $row['amt'] ?? 0;
 
     $response['cr_exchange'] = intval($exchange);
 
     // Exchange Debit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_db_bexchange WHERE $where
         UNION ALL
         SELECT amt FROM ct_db_hexchange WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $exchange = $row['amt'] ?? 0;
 
     $response['db_exchange'] = intval($exchange);
 
     // Agent Credit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_cr_bag WHERE $where
         UNION ALL
         SELECT amt FROM ct_cr_hag WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $agent = $row['amt'] ?? 0;
 
     $response['cr_agent'] = intval($agent);
 
     // Agent Debit
-    $qry = $con->query("SELECT SUM(amt) as amt FROM (
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM (
         SELECT amt FROM ct_db_bag WHERE $where
         UNION ALL
         SELECT amt FROM ct_db_hag WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $agent = $row['amt'] ?? 0;
 
     $response['db_agent'] = intval($agent);
@@ -210,4 +210,6 @@ function moneyFormatIndia($num)
 
     return $isNegative ? "-" . $thecash : $thecash;
 }
-$con->close();
+
+// Close the database connection
+$connect = null;

@@ -7,8 +7,8 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
     }
@@ -16,8 +16,8 @@ if ($userid != 1) {
     $line_id = explode(',', $line_id);
     $sub_area_list = array();
     foreach ($line_id as $line) {
-        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
+        $lineQry = $connect->query("SELECT * FROM area_line_mapping where map_id = $line ");
+        $row_sub = $lineQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -117,10 +117,10 @@ foreach ($result as $row) {
     // When in_issue and closed status count is equal then move to noc button will be shown. //if multiple request completed the collection means then complete closed for one time only so we check whether the request closed submit or not.. Move to Noc button wil not be show until all closed status submit.
     $ii_cus_id          = $row['ii_cus_id'];
 
-    $ii_count = $mysqli->query("SELECT id FROM `in_issue` WHERE `cus_status` = '20' && `cus_id`='" . $ii_cus_id . "' ");
-    $ii_cnt = mysqli_num_rows($ii_count);
-    $closed_sts_count = $mysqli->query("SELECT id FROM `closed_status` WHERE `cus_sts` ='20' && `cus_id`='" . $ii_cus_id . "'");
-    $close_cnt = mysqli_num_rows($closed_sts_count);
+    $ii_count = $connect->query("SELECT id FROM `in_issue` WHERE `cus_status` = '20' && `cus_id`='" . $ii_cus_id . "' ");
+    $ii_cnt = $ii_count->rowCount();
+    $closed_sts_count = $connect->query("SELECT id FROM `closed_status` WHERE `cus_sts` ='20' && `cus_id`='" . $ii_cus_id . "'");
+    $close_cnt = $closed_sts_count->rowCount();
 
     // if($ii_cnt == $close_cnt){// if all request present in closed loan list are closed, then only it will allow to move that customer to closed
     if ($close_cnt > 0) { //if any one of the request got closed then that can be moved to noc straight
@@ -154,3 +154,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

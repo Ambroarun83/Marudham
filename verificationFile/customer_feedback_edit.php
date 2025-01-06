@@ -15,6 +15,5 @@ $feedback['feedback_remark'] = $cus_feedback['feedback_remark'];
 
 echo json_encode($feedback);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

@@ -32,7 +32,7 @@ if(isset($_POST['temp_remarks'])){
 
 
 
-$update = $con->query("UPDATE $table_name SET `temp_sts`='$temp_sts',`temp_date`=date(now()),`temp_person`='$temp_person',`temp_purpose`='$temp_purpose',`temp_remarks`='$temp_remarks',
+$update = $connect->query("UPDATE $table_name SET `temp_sts`='$temp_sts',`temp_date`=date(now()),`temp_person`='$temp_person',`temp_purpose`='$temp_purpose',`temp_remarks`='$temp_remarks',
     `update_login_id`= $userid,`updated_date`=now()  WHERE $table_col = '$table_id' ");
 
 if($update){
@@ -41,7 +41,8 @@ if($update){
     $result = "Error While Submitting!";
 }
 
-
-
 echo json_encode($result);
+
+// Close the database connection
+$connect = null;
 ?>

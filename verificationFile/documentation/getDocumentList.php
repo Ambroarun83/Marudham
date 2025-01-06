@@ -42,11 +42,11 @@ function moneyFormatIndia($num)
     </thead>
     <tbody>
         <?php
-        // $qry = $con->query("SELECT ac.id,ac.document_name,ac.document_type,ac.doc_info_upload,ac.document_holder,ac.docholder_name,ac.docholder_relationship_name,ac.doc_info_upload_noc,fam.famname from acknowlegement_documentation ac Left JOIN verification_family_info fam ON ac.docholder_relationship_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_used != '1' ");
-        $qry = $con->query("SELECT ac.id,ac.doc_name,ac.doc_type,ac.doc_upload,ac.doc_holder,ac.holder_name,ac.`relation_name`,ac.`doc_info_upload_noc`,fam.famname,fam.id
+        // $qry = $connect->query("SELECT ac.id,ac.document_name,ac.document_type,ac.doc_info_upload,ac.document_holder,ac.docholder_name,ac.docholder_relationship_name,ac.doc_info_upload_noc,fam.famname from acknowlegement_documentation ac Left JOIN verification_family_info fam ON ac.docholder_relationship_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_used != '1' ");
+        $qry = $connect->query("SELECT ac.id,ac.doc_name,ac.doc_type,ac.doc_upload,ac.doc_holder,ac.holder_name,ac.`relation_name`,ac.`doc_info_upload_noc`,fam.famname,fam.id
             from document_info ac Left JOIN verification_family_info fam ON ac.relation_name = fam.id where ac.req_id = $req_id and ac.doc_info_upload_used != '1' AND ac.doc_upload !=''");
 
-        while ($row = $qry->fetch_assoc()) {
+        while ($row = $qry->fetch()) {
             $upd_arr = explode(',', $row['doc_upload']);
             for ($i = 0; $i < sizeof($upd_arr); $i++) {
         ?>
@@ -107,8 +107,6 @@ function moneyFormatIndia($num)
 </script>
 
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

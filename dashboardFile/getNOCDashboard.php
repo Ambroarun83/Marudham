@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $NocClass = new NocClass($user_id);
 
-$response = $NocClass->getNOCCounts($con);
+$response = $NocClass->getNOCCounts($connect);
 
 echo json_encode($response);

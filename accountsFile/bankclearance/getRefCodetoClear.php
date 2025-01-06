@@ -74,25 +74,16 @@ if($crdb == 'Credit' ){
     }
 }
 
-$runQry = $con->query($qry);
-    if($runQry->num_rows >0 ){
+$runQry = $connect->query($qry);
+    if($runQry->rowCount() >0 ){
         $i=0;
-        while($row = $runQry->fetch_assoc()){
+        while($row = $runQry->fetch()){
             $records[$i]['ref_code'] = $row['ref_code'];
         }
     }
 
 echo json_encode($records);
 
-
-
-
-
-
-
-
-
-
-
-
+// Close the database connection
+$connect = null;
 ?>

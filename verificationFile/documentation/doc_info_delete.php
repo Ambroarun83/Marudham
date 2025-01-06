@@ -10,9 +10,7 @@ if ($delct) {
 	$message = " Document Info Deleted Successfully";
 }
 
-
 echo json_encode($message);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

@@ -84,7 +84,7 @@ function moneyFormatIndia($num)
         LEFT JOIN request_creation rc ON ii.req_id = rc.req_id 
         LEFT JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id 
         LEFT JOIN user us ON us.user_id = '$user_id'
-        WHERE lc.cus_id_loan = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status < 20)"); //Customer status greater than or equal to 14 because, after issued data only we need
+        WHERE lc.cus_id_loan = '$cus_id' and (ii.cus_status >= 14 and ii.cus_status < 20) ORDER BY CAST(ii.req_id AS UNSIGNED) ASC "); //Customer status greater than or equal to 14 because, after issued data only we need
 
         $i = 1;
         $curdate = date('Y-m-d');
@@ -119,51 +119,57 @@ function moneyFormatIndia($num)
                 <td><?php echo 'Present'; ?></td>
                 <td><?php if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate))  and $bal_amt[$i - 1] != 0) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
                         if ($row['cus_status'] == '15') {
-                            echo 'Error';
+                            echo $subStatus = 'Error';
                         } elseif ($row['cus_status'] == '16') {
-                            echo 'Legal';
+                            echo $subStatus = 'Legal';
                         } else {
-                            echo 'Current';
+                            echo $subStatus = 'Current';
                         }
                     } else {
                         if ($pending_sts[$i - 1] == 'true' && $od_sts[$i - 1] == 'false') { //using i as 1 so subract it with 1
                             if ($row['cus_status'] == '15') {
-                                echo 'Error';
+                                echo $subStatus = 'Error';
                             } elseif ($row['cus_status'] == '16') {
-                                echo 'Legal';
+                                echo $subStatus = 'Legal';
                             } else {
-                                echo 'Pending';
+                                echo $subStatus = 'Pending';
                             }
                         } else if ($od_sts[$i - 1] == 'true' && $due_nil_sts[$i - 1] == 'false') {
                             if ($row['cus_status'] == '15') {
-                                echo 'Error';
+                                echo $subStatus = 'Error';
                             } elseif ($row['cus_status'] == '16') {
-                                echo 'Legal';
+                                echo $subStatus = 'Legal';
                             } else {
-                                echo 'OD';
+                                echo $subStatus = 'OD';
                             }
                         } elseif ($due_nil_sts[$i - 1] == 'true') {
                             if ($row['cus_status'] == '15') {
-                                echo 'Error';
+                                echo $subStatus = 'Error';
                             } elseif ($row['cus_status'] == '16') {
-                                echo 'Legal';
+                                echo $subStatus = 'Legal';
                             } else {
-                                echo 'Due Nil';
+                                echo $subStatus = 'Due Nil';
                             }
                         } elseif ($pending_sts[$i - 1] == 'false') {
                             if ($row['cus_status'] == '15') {
-                                echo 'Error';
+                                echo $subStatus = 'Error';
                             } elseif ($row['cus_status'] == '16') {
-                                echo 'Legal';
+                                echo $subStatus = 'Legal';
                             } else {
                                 if ($closed_sts[$i - 1] == 'true') {
-                                    echo "Move To Close";
+                                    echo $subStatus = "Move To Close";
                                 } else {
-                                    echo 'Current';
+                                    echo $subStatus = 'Current';
                                 }
                             }
                         }
-                    } ?></td>
+                    } 
+                    //Need to update customer status so updating here with the live status.
+                    $balAmnt = $bal_amt[$i - 1];
+                    $current_date = date('Y-m-d');
+                    $connect->query("UPDATE `customer_status` SET `cus_id`='$cus_id',`sub_status`='$subStatus',`bal_amnt`='$balAmnt',`insert_login_id`='$user_id',`created_date`='$current_date' WHERE `req_id`='".$row['req_id']."' ");
+                    
+                    ?></td>
                 <td><?php echo "<span class='btn btn-success collection-window' style='font-size: 17px;position: relative;top: 0px; background-color:#009688;";
                     if ($row['cus_status'] == '16') {
                         echo 'display:none';

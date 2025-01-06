@@ -156,7 +156,7 @@ if (sizeof($getUser) > 0) {
 			<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 				<div class="card">
 					<div class="card-header">New Promotion
-						<button class="btn btn-primary add-new-btn" id="add_new_cus" name="add_new_cus" data-toggle="modal" data-target="#addnewcus" tabindex=""><span class="icon-add"></span></button>
+						<button type="button" class="btn btn-primary add-new-btn" id="add_new_cus" name="add_new_cus" data-toggle="modal" data-target="#addnewcus" tabindex=""><span class="icon-add"></span></button>
 					</div>
 					<div class="card-body">
 						<div id="new_promo_div" class="table-responsive">
@@ -202,16 +202,13 @@ if (sizeof($getUser) > 0) {
 	</form>
 </div>
 
-
-
-
 <!-- Modal for New promotion Customer -->
 <div class="modal fade" id="addnewcus" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-lg " role="document">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">New Promotion</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
+				<button type="button" class="close" id="closeNewPromotionModal" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -264,7 +261,7 @@ if (sizeof($getUser) > 0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Promotion</h5>
-				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetNewPromotionTable()">
+				<button type="button" class="close closeModal" id="closeAddPromotionModal" data-dismiss="modal" aria-label="Close" >
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -316,7 +313,7 @@ if (sizeof($getUser) > 0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="sumit_add_promo" id="sumit_add_promo" tabindex="8">Submit</button>
-				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" onclick="resetNewPromotionTable()">Close</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" >Close</button>
 			</div>
 		</div>
 	</div>

@@ -41,6 +41,5 @@ if ($records['loan_count'] > 0) {
 }
 echo json_encode($records);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

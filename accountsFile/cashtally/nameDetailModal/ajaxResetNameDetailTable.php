@@ -16,10 +16,10 @@ $opt_for = $_POST['opt_for'];
     <tbody>
         <?php
         $ctselect = "SELECT * FROM name_detail_creation WHERE opt_for = '$opt_for' AND status = 0 ORDER BY name_id DESC";
-        $ctresult = $con->query($ctselect);
-        if ($ctresult->num_rows > 0) {
+        $ctresult = $connect->query($ctselect);
+        if ($ctresult->rowCount() > 0) {
             $i = 1;
-            while ($ct = $ctresult->fetch_assoc()) {
+            while ($ct = $ctresult->fetch()) {
         ?>
                 <tr>
                     <td></td>
@@ -67,7 +67,6 @@ $opt_for = $_POST['opt_for'];
 </script>
 
 <?php
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

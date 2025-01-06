@@ -12,6 +12,5 @@ while ($row = $result->fetch()) {
 
 echo json_encode($famList_arr);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

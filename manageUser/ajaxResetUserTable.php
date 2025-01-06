@@ -4,8 +4,8 @@ if (isset($_POST['ag_id'])) {
     $ag_id = $_POST['ag_id'];
 }
 $staffArr = array();
-$result = $con->query("SELECT * FROM agent_creation where status=0 and ag_id = $ag_id ");
-while ($row = $result->fetch_assoc()) {
+$result = $connect->query("SELECT * FROM agent_creation where status=0 and ag_id = $ag_id ");
+while ($row = $result->fetch()) {
     $ag_code = $row['ag_code'];
     $ag_name = $row['ag_name'];
     $mail = $row['mail'];
@@ -13,8 +13,8 @@ while ($row = $result->fetch_assoc()) {
     $loan_category = array();
     foreach ($loan_category_id1 as $loan_category_id) {
         $qry = "SELECT * From loan_category_creation where loan_category_creation_id = $loan_category_id and status = 0";
-        $res = $con->query($qry);
-        $row1 = $res->fetch_assoc();
+        $res = $connect->query($qry);
+        $row1 = $res->fetch();
         $loan_category[] = $row1['loan_category_creation_name'];
     }
     $loan_category_name = implode(',', $loan_category);
@@ -27,8 +27,8 @@ while ($row = $result->fetch_assoc()) {
     if (count($scheme) != 0) {
         foreach ($scheme as $sh) {
             $qry = "SELECT * From loan_scheme where scheme_id = $sh and status = 0";
-            $res = $con->query($qry);
-            while ($row1 = $res->fetch_assoc()) {
+            $res = $connect->query($qry);
+            while ($row1 = $res->fetch()) {
                 $scheme_name1[] = $row1['scheme_name'];
             }
         }
@@ -54,8 +54,8 @@ while ($row = $result->fetch_assoc()) {
     $collection_point = $coll;
     $company_id = $row['company_id'];
     $qry = "SELECT * From company_creation where company_id = $company_id and status = 0";
-    $res = $con->query($qry);
-    $row1 = $res->fetch_assoc();
+    $res = $connect->query($qry);
+    $row1 = $res->fetch();
     $company_name = $row1['company_name'];
     $staffArr[] = array(
         "ag_code" => $ag_code,
@@ -72,6 +72,6 @@ while ($row = $result->fetch_assoc()) {
     );
 }
 echo json_encode($staffArr);
-$con->close();
-$mysqli->close();
+
+// Close the database connection
 $connect = null;

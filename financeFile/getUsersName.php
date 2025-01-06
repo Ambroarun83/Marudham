@@ -6,8 +6,8 @@ include('../ajaxconfig.php');
 
 $response = array();
 $i = 0;
-$qry = $con->query("SELECT * FROM user where user_id != '1' and cash_tally = '0' ");
-while ($row = $qry->fetch_assoc()) {
+$qry = $connect->query("SELECT * FROM user where user_id != '1' and cash_tally = '0' ");
+while ($row = $qry->fetch()) {
     $response[$i]['user_id'] = $row['user_id'];
     $response[$i]['username'] = $row['fullname'];
     $i++;
@@ -15,4 +15,5 @@ while ($row = $qry->fetch_assoc()) {
 
 echo json_encode($response);
 
-$con->close();
+// Close the database connection
+$connect = null;

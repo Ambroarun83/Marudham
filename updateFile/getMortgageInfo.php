@@ -14,9 +14,9 @@ if(isset($_POST['req_id'])){
 
 $records = array();
 
-$qry = $con->query("SELECT * from acknowlegement_documentation where req_id = '$req_id' ");
+$qry = $connect->query("SELECT * from acknowlegement_documentation where req_id = '$req_id' ");
 if($qry){
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $records['mort_process'] = $row['mortgage_process'];
     if($records['mort_process'] == '0'){
         
@@ -54,5 +54,8 @@ if($qry){
 }
 
 echo json_encode($records);
+
+// Close the database connection
+$connect = null;
 ?>
 

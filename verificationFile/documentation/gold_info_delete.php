@@ -13,6 +13,5 @@ if ($delct) {
 
 echo json_encode($message);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

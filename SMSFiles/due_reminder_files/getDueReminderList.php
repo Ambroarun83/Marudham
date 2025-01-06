@@ -10,8 +10,8 @@ if(isset($_SESSION["userid"])){
 
 if($userid != 1){
     
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while($rowuser = $userQry->fetch_assoc()){
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while($rowuser = $userQry->fetch()){
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
     }
@@ -19,8 +19,8 @@ if($userid != 1){
     $line_id = explode(',',$line_id);
     $sub_area_list = array();
     foreach($line_id as $line){
-        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
+        $lineQry = $connect->query("SELECT * FROM area_line_mapping where map_id = $line ");
+        $row_sub = $lineQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -79,7 +79,7 @@ $result = $statement->fetchAll();
             <td> <input type="text" class="m_cusName" name="m_cus_name[]" value="<?php echo $row['cus_name_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <input type="text" name="m_cus_no[]" value="<?php echo $row['mobile_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <?php echo $row['sub_category']; ?> </td>
-            <td> <?php $obj = new GetLoanDetails($con, $row['req_id'], date('Y-m-d')); ?>
+            <td> <?php $obj = new GetLoanDetails($connect, $row['req_id'], date('Y-m-d'),''); ?>
                 <input type="text" name="m_cus_due[]" value="<?php echo $obj->response['due_amt']; ?>" style="border: none; outline: 0; background: inherit;" readonly> 
             </td>
         </tr>
@@ -138,7 +138,7 @@ $result = $statement->fetchAll();
             <td> <input type="text" class="sm_cusName" name="m_cus_name[]" value="<?php echo $schemeMonthlyRow['cus_name_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <input type="text" name="m_cus_no[]" value="<?php echo $schemeMonthlyRow['mobile_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <?php echo $schemeMonthlyRow['sub_category']; ?> </td>
-            <td> <?php $obj = new GetLoanDetails($con, $schemeMonthlyRow['req_id'], date('Y-m-d')); ?> 
+            <td> <?php $obj = new GetLoanDetails($connect, $schemeMonthlyRow['req_id'], date('Y-m-d'),''); ?> 
                 <input type="text" name="m_cus_due[]" value="<?php echo $obj->response['due_amt']; ?>" style="border: none; outline: 0; background: inherit;" readonly>
             </td>
         </tr>
@@ -197,7 +197,7 @@ $result = $statement->fetchAll();
             <td> <input type="text" class="sw_cusName" name="m_cus_name[]" value="<?php echo $schemeWeeklyRow['cus_name_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <input type="text" name="m_cus_no[]" value="<?php echo $schemeWeeklyRow['mobile_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <?php echo $schemeWeeklyRow['sub_category']; ?> </td>
-            <td> <?php $obj = new GetLoanDetails($con, $schemeWeeklyRow['req_id'], date('Y-m-d')); ?> 
+            <td> <?php $obj = new GetLoanDetails($connect, $schemeWeeklyRow['req_id'], date('Y-m-d'),''); ?> 
                 <input type="text" name="m_cus_due[]" value="<?php echo $obj->response['due_amt']; ?>" style="border: none; outline: 0; background: inherit;" readonly>
             </td>
         </tr>
@@ -255,7 +255,7 @@ $result = $statement->fetchAll();
             <td> <input type="text" class="sd_cusName" name="m_cus_name[]" value="<?php echo $schemeDailyRow['cus_name_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <input type="text" name="m_cus_no[]" value="<?php echo $schemeDailyRow['mobile_loan']; ?>" style="border: none; outline: 0; background: inherit;" readonly> </td>
             <td> <?php echo $schemeDailyRow['sub_category']; ?> </td>
-            <td> <?php $obj = new GetLoanDetails($con, $schemeDailyRow['req_id'], date('Y-m-d'));?>
+            <td> <?php $obj = new GetLoanDetails($connect, $schemeDailyRow['req_id'], date('Y-m-d'),'');?>
                 <input type="text" name="m_cus_due[]" value="<?php echo $obj->response['due_amt']; ?>" style="border: none; outline: 0; background: inherit;" readonly> 
             </td>
         </tr>
@@ -376,3 +376,8 @@ $result = $statement->fetchAll();
 
     });
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

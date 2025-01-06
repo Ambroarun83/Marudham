@@ -14,7 +14,7 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetails($con, $where);
+    getDetails($connect, $where);
 } else if ($type == 'day') {
 
     $from_date = $_POST['from_date'];
@@ -25,7 +25,7 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetails($con, $where);
+    getDetails($connect, $where);
 } else if ($type == 'month') {
 
     $month = date('m', strtotime($_POST['month']));
@@ -36,22 +36,22 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetails($con, $where);
+    getDetails($connect, $where);
 }
 
 
 
 
-function getDetails($con, $where)
+function getDetails($connect, $where)
 {
     // other income
-    $qry = $con->query("SELECT SUM(amt) as other_income FROM (
+    $qry = $connect->query("SELECT SUM(amt) as other_income FROM (
         SELECT amt FROM ct_cr_hoti WHERE $where
         UNION ALL
         SELECT amt FROM ct_cr_boti WHERE $where
     ) AS combined_table");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $other_income = $row['other_income'] ?? 0;
 
     $response['other_income'] = intval($other_income);
@@ -90,4 +90,6 @@ function moneyFormatIndia($num)
 
     return $isNegative ? "-" . $thecash : $thecash;
 }
-$con->close();
+
+// Close the database connection
+$connect = null;

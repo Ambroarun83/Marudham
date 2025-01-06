@@ -1,6 +1,5 @@
 <?php
 include '../../ajaxconfig.php';
-
 function moneyFormatIndia($num)
 {
     $explrestunits = "";
@@ -83,8 +82,6 @@ function moneyFormatIndia($num)
     </tr>
 </table>
 
-
-
 <script type="text/javascript">
     $(function() {
         $('#gold_table').DataTable({
@@ -112,8 +109,6 @@ function moneyFormatIndia($num)
     });
 </script>
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

@@ -4,8 +4,8 @@ include('..\ajaxconfig.php');
 
 if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
-    $sql = $con->query("SELECT ag_id FROM user where user_id = '$userid'");
-    $login_user_type = $sql->fetch_assoc()['ag_id'];
+    $sql = $connect->query("SELECT ag_id FROM user where user_id = '$userid'");
+    $login_user_type = $sql->fetch()['ag_id'];
     if ($login_user_type == null or $login_user_type == '') {
         $login_user_type = 0;
     }
@@ -129,8 +129,8 @@ foreach ($result as $row) {
     $ag_id = $row['agent_id'];
     if ($ag_id != '') {
 
-        $qry = $mysqli->query("SELECT * FROM agent_creation where ag_id = $ag_id ");
-        $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * FROM agent_creation where ag_id = $ag_id ");
+        $row1 = $qry->fetch();
         $sub_array[] = $row1['ag_name'];
     } else {
         $sub_array[] = '';
@@ -231,3 +231,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

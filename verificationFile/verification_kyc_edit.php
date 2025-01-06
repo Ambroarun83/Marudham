@@ -15,9 +15,7 @@ $kyc['proofType'] = $bank_details['proof_type'];
 $kyc['proofNo'] = $bank_details['proof_no'];
 $kyc['upload'] = $bank_details['upload'];
 
-
 echo json_encode($kyc);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

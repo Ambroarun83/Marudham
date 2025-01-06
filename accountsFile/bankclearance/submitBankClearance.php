@@ -23,16 +23,16 @@ if(isset($_POST['mode'])){ //mode contains if the old data need to be deleted or
 }
 
 
-$qry = $con->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
 VALUES ('$bank_id','$trans_date','$narration','$trans_id','$credit','$debit','$balance','$user_id',now() )");
 
-$insert_id = $con->insert_id; //last inserted id
+$insert_id = $connect->lastInsertId(); //last inserted id
 
 if($mode != ''){
 
-    $selectqry = $con->query("SELECT trans_date from bank_stmt where insert_login_id = '$user_id' and id != '$insert_id' and trans_date = '$trans_date' ");
-    if($selectqry->num_rows > 0){
-        $deleteqry = $con->query("DELETE from bank_stmt where insert_login_id = '$user_id' and id != '$insert_id' and trans_date = '$trans_date' and created_date < now() ");
+    $selectqry = $connect->query("SELECT trans_date from bank_stmt where insert_login_id = '$user_id' and id != '$insert_id' and trans_date = '$trans_date' ");
+    if($selectqry->rowCount() > 0){
+        $deleteqry = $connect->query("DELETE from bank_stmt where insert_login_id = '$user_id' and id != '$insert_id' and trans_date = '$trans_date' and created_date < now() ");
     }
 }
 
@@ -43,4 +43,7 @@ if($qry ){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

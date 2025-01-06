@@ -6,7 +6,7 @@ $req_id = $_POST['req_id'];
 $cus_id = $_POST['cus_id'];
 
 
-$qry = $con->query("
+$qry = $connect->query("
     SELECT 
     cp.cus_name,
     req.father_name,
@@ -26,7 +26,7 @@ $qry = $con->query("
     
     where cp.req_id = $req_id");
 
-$row = $qry->fetch_assoc();
+$row = $qry->fetch();
 $cus_name = $row['cus_name'];
 $father_name = $row['famname'] ?? $row['father_name'];
 $area = $row['area_name'];
@@ -111,3 +111,8 @@ function moneyFormatIndia($num) {
     }
     document.getElementById("printletter").click();
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

@@ -63,8 +63,6 @@ $cus_id = $_POST['cus_id'];
     </tbody>
 </table>
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

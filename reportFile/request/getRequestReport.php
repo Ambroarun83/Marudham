@@ -16,15 +16,15 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
     }
     $group_id = explode(',', $group_id);
     $sub_area_list = array();
     foreach ($group_id as $group) {
-        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-        $row_sub = $groupQry->fetch_assoc();
+        $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+        $row_sub = $groupQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -198,3 +198,6 @@ function moneyFormatIndia($num)
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;

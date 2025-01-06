@@ -3,10 +3,10 @@
 
 // //////////////////////// To get Exchange reference Code once again /////////////////////////
 // $myStr = "INV";
-// $selectIC = $con->query("SELECT ref_code FROM ct_cr_binvest WHERE ref_code != '' ");
+// $selectIC = $connect->query("SELECT ref_code FROM ct_cr_binvest WHERE ref_code != '' ");
 // if($selectIC->num_rows>0)
 // {
-//     $codeAvailable = $con->query("SELECT ref_code FROM ct_cr_binvest WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+//     $codeAvailable = $connect->query("SELECT ref_code FROM ct_cr_binvest WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
 //     while($row = $codeAvailable->fetch_assoc()){
 //         $ac2 = $row["ref_code"];
 //     }
@@ -29,10 +29,10 @@ include('../../../ajaxconfig.php');
 
 //////////////////////// To get Exchange reference Code once again /////////////////////////
 $myStr = "INV";
-$codeAvailable = $con->query("SELECT ref_code FROM ct_cr_binvest WHERE ref_code != '' UNION SELECT ref_code FROM ct_db_binvest WHERE ref_code != '' ORDER BY ref_code DESC LIMIT 1");
+$codeAvailable = $connect->query("SELECT ref_code FROM ct_cr_binvest WHERE ref_code != '' UNION SELECT ref_code FROM ct_db_binvest WHERE ref_code != '' ORDER BY ref_code DESC LIMIT 1");
 
-if ($codeAvailable->num_rows > 0) {
-    $row = $codeAvailable->fetch_assoc();
+if ($codeAvailable->rowCount() > 0) {
+    $row = $codeAvailable->fetch();
     $latestRefCode = $row["ref_code"];
     $latestAppNo = ltrim(strstr($latestRefCode, '-'), '-');
     $appno2 = $latestAppNo + 1;
@@ -46,4 +46,7 @@ if ($codeAvailable->num_rows > 0) {
 $ref_code = str_replace(`"`,'',$ref_code);
 
 echo $ref_code;
+
+// Close the database connection
+$connect = null;
 ?>

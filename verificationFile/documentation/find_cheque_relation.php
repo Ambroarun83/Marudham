@@ -10,6 +10,5 @@ $relationship = $row['relationship'];
 
 echo json_encode($relationship);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

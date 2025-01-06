@@ -339,7 +339,10 @@ function submitCommitment() {
         if (response.includes('Error')) {
             swarlErrorAlert(response);
         } else {
-            swarlSuccessAlert(response);
+            swarlSuccessAlert(response, function(){
+                $('.closeModal').trigger('click');
+            });
+
             $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
             $('.person-div').hide();
         }
@@ -407,12 +410,16 @@ function swarlInfoAlert(title, text) {
         }
     });
 }
-function swarlSuccessAlert(response) {
+function swarlSuccessAlert(response, callback) {
     Swal.fire({
         title: response,
         icon: 'success',
         confirmButtonText: 'Ok',
         confirmButtonColor: '#009688'
+    }).then( (result) => {
+        if(result.isConfirmed && typeof callback === 'function'){
+            callback();
+        }
     });
 }
 

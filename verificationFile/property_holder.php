@@ -17,6 +17,5 @@ $Membername_arr[] = $row['customer_name'] . ' - Customer';
 
 echo json_encode($Membername_arr);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

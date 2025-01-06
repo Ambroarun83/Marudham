@@ -24,6 +24,5 @@ while ($cheque_details = $chequeInfo->fetch()) {
 
 echo json_encode($ChequeDoc);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

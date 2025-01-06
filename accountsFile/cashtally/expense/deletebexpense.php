@@ -4,13 +4,13 @@ include('../../../ajaxconfig.php');
 
 $bexp_id = $_POST['bexp_id'];
 
-$qry = $con->query("SELECT * from ct_db_bexpense where id='$bexp_id' ");
-$upd = $qry->fetch_assoc()['upload'];
+$qry = $connect->query("SELECT * from ct_db_bexpense where id='$bexp_id' ");
+$upd = $qry->fetch()['upload'];
 if($upd != ''){
     unlink('../../../uploads/expenseBill/'.$upd);
 }
 
-$qry = $con->query("DELETE  from ct_db_bexpense where id = '$bexp_id' ");
+$qry = $connect->query("DELETE  from ct_db_bexpense where id = '$bexp_id' ");
 if($qry){
     $response = "Deleted Successfully";
 }else{
@@ -18,4 +18,7 @@ if($qry){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

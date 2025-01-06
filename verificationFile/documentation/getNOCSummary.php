@@ -148,8 +148,6 @@ if (isset($_POST['cus_id'])) {
 <!-- Document Info End -->
 
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

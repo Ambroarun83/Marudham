@@ -14,7 +14,9 @@ if (isset($_GET['msc'])) {
 }
 $current_page = isset($_GET['page']) ? $_GET['page'] : null;
 include('api/main.php'); // Database Connection File   
-define('DACC', $getuserdetails['download_access']);
+if(isset($getuserdetails['download_access'])){
+	define('DACC', $getuserdetails['download_access']);
+}
 ?>
 
 <!doctype html>

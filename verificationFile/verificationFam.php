@@ -19,6 +19,5 @@ $famList_arr[] = array("fam_id" => $cus_id, "fam_name" => $cus_name, "relationsh
 
 echo json_encode($famList_arr);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

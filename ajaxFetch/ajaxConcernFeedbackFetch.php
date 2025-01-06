@@ -7,8 +7,8 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $staff_id = $rowuser['staff_id'];
     }
 }
@@ -114,3 +114,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

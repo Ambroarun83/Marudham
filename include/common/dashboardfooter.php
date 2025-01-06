@@ -813,6 +813,7 @@
                 ],
                 'drawCallback': function() {
                     searchFunction('doc_track_table');
+                    getDocOnClickFunction();
                 }
             });
             //Concern Table
@@ -1560,4 +1561,82 @@
                 }
             }
         }
+
+        //Document Track on click function 
+    function getDocOnClickFunction(){
+        $('.view-track').click(function () {
+            var cus_id = $(this).data('cusid');
+            var cus_name = $(this).data('cusname');
+            var req_id = $(this).data('reqid');
+            $.ajax({
+                url: 'documentTrackFile/viewTrack.php',
+                type: 'post',
+                data: { 'cus_id': cus_id, "req_id": req_id },
+                cache: false,
+                success: function (html) {
+                    $('#viewTrackDiv').empty();
+                    $('#viewTrackDiv').html(html);
+                }
+            }).then(function () {
+                getAllDocumentList(req_id, cus_name, cus_id);
+            });//then function end
+        });//click function end
+
+        $('.receive-track').click(function () {
+            var tableid = $(this).data('id');
+            event.preventDefault();
+            if (confirm('Are you sure to Mark this Track as Received?')) {
+                $.ajax({
+                    url: 'documentTrackFile/receiveTrack.php',
+                    type: 'post',
+                    data: { 'id': tableid },
+                    cache: false,
+                    success: function (response) {
+                        swalAlert(response);
+                        setTimeout(() => {
+                            window.location = 'document_track';
+                        }, 1500)
+                    }
+                });
+            }
+        });
+
+        $('.send-track').click(function () {
+            var tableid = $(this).data('id');
+            event.preventDefault();
+            if (confirm('Are you sure to Mark this Track as Sent?')) {
+                $.ajax({
+                    url: 'documentTrackFile/sendTrack.php',
+                    type: 'post',
+                    data: { 'id': tableid },
+                    cache: false,
+                    success: function (response) {
+                        swalAlert(response);
+                        setTimeout(() => {
+                            window.location = 'document_track';
+                        }, 1500)
+                    }
+                });
+            }
+        });
+
+        $('.remove-track').click(function () {
+            var tableid = $(this).data('id');
+            event.preventDefault();
+            if (confirm('Are you sure to Remove this Track from List?')) {
+                $.ajax({
+                    url: 'documentTrackFile/removeTrack.php',
+                    type: 'post',
+                    data: { 'id': tableid },
+                    cache: false,
+                    success: function (response) {
+                        swalAlert(response);
+                        setTimeout(() => {
+                            window.location = 'document_track';
+                        }, 1500)
+                    }
+                });
+            }
+        });
+    }
     </script>

@@ -8,8 +8,8 @@ if(isset($_POST["name_id"])){
 $records = array();
 
 $qry = "SELECT * FROM name_detail_creation WHERE name_id = '".$name_id."' AND status=0";
-$result = $con->query($qry);
-while($row=$result->fetch_assoc())
+$result = $connect->query($qry);
+while($row=$result->fetch())
 {
     $records['name'] = $row['name'];
     $records['area'] = $row['area'];
@@ -17,4 +17,7 @@ while($row=$result->fetch_assoc())
 }
 
 echo json_encode($records);
+
+// Close the database connection
+$connect = null;
 ?>

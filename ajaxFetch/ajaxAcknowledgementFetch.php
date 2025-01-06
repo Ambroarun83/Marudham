@@ -4,23 +4,23 @@ include('..\ajaxconfig.php');
 
 if (isset($_SESSION["userid"])) {
     $userid = $_SESSION["userid"];
-    $sql = $con->query("SELECT ag_id FROM user where user_id = '$userid'");
-    $login_user_type = $sql->fetch_assoc()['ag_id'];
+    $sql = $connect->query("SELECT ag_id FROM user where user_id = '$userid'");
+    $login_user_type = $sql->fetch()['ag_id'];
     if ($login_user_type == null or $login_user_type == '') {
         $login_user_type = 0;
     }
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
     }
     $group_id = explode(',', $group_id);
     $sub_area_list = array();
     foreach ($group_id as $group) {
-        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-        $row_sub = $groupQry->fetch_assoc();
+        $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+        $row_sub = $groupQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -143,8 +143,8 @@ foreach ($result as $row) {
     $ag_id = $row['agent_id'];
     if ($ag_id != '') {
 
-        $qry = $mysqli->query("SELECT * FROM agent_creation where ag_id = $ag_id ");
-        $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * FROM agent_creation where ag_id = $ag_id ");
+        $row1 = $qry->fetch();
         $sub_array[] = $row1['ag_name'];
     } else {
         $sub_array[] = '';
@@ -162,8 +162,8 @@ foreach ($result as $row) {
 
     $cus_status = $row['cus_status'];
     if ($cus_status == '3') {
-        $cus_doc = $mysqli->query("SELECT submitted FROM `acknowlegement_documentation` WHERE `req_id` ='$id'");
-        $cus_doc_row =  $cus_doc->fetch_assoc();
+        $cus_doc = $connect->query("SELECT submitted FROM `acknowlegement_documentation` WHERE `req_id` ='$id'");
+        $cus_doc_row =  $cus_doc->fetch();
 
         if (isset($cus_doc_row['submitted']) && $cus_doc_row['submitted'] == '1') {
             $sub_array[] = "<button class='btn btn-outline-secondary move_issue' value='$id' data-cusid='$cus_id'><span class = 'icon-arrow_forward'></span></button>";
@@ -247,3 +247,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

@@ -3,11 +3,11 @@ include('../ajaxconfig.php');
 
 
 $myStr = "ST";
-$selectIC = $con->query("SELECT staff_code FROM staff_creation WHERE staff_code != '' ");
-if($selectIC->num_rows>0)
+$selectIC = $connect->query("SELECT staff_code FROM staff_creation WHERE staff_code != '' ");
+if($selectIC->rowCount()>0)
 {
-    $codeAvailable = $con->query("SELECT staff_code FROM staff_creation WHERE staff_code != '' ORDER BY staff_id DESC LIMIT 1");
-    while($row = $codeAvailable->fetch_assoc()){
+    $codeAvailable = $connect->query("SELECT staff_code FROM staff_creation WHERE staff_code != '' ORDER BY staff_id DESC LIMIT 1");
+    while($row = $codeAvailable->fetch()){
         $ac2 = $row["staff_code"];
     }
     $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -19,4 +19,7 @@ else
     $staff_code = $initialapp;
 }
 echo json_encode($staff_code);
+
+// Close the database connection
+$connect = null;
 ?>

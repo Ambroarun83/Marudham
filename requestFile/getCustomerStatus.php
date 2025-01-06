@@ -10,18 +10,18 @@ if (isset($_POST['cus_id'])) {
 
 $records = array();
 
-$result = $con->query("SELECT * FROM request_creation where cus_id = '" . strip_tags($cus_id) . "' and cus_status <= 21 ORDER BY created_date DESC ");
+$result = $connect->query("SELECT * FROM request_creation where cus_id = '" . strip_tags($cus_id) . "' and cus_status <= 21 ORDER BY created_date DESC ");
 
-if ($result->num_rows > 0) {
+if ($result->rowCount() > 0) {
     $i = 0;
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $result->fetch()) {
 
         $records[$i]['dor'] = date('d-m-Y', strtotime($row['dor']));
 
         $loan_category = $row['loan_category'];
         $req_id = $row['req_id'];
-        $qry = $con->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
-        $row1 = $qry->fetch_assoc();
+        $qry = $connect->query("SELECT * FROM loan_category_creation where loan_category_creation_id = $loan_category");
+        $row1 = $qry->fetch();
         $records[$i]['loan_category'] = $row1['loan_category_creation_name'];
 
         $records[$i]['sub_category'] = $row['sub_category'];
@@ -75,7 +75,7 @@ if ($result->num_rows > 0) {
         }
         if ($cus_status >= '14' and $cus_status <= '17') {
             $records[$i]['status'] = 'Present';
-            $records[$i]['sub_status'] = getCollectionStatus($con, $cus_id, $user_id, $req_id);
+            $records[$i]['sub_status'] = getCollectionStatus($connect, $cus_id, $user_id, $req_id);
         }
         if ($cus_status == '20') {
             $records[$i]['status'] = 'Closed';
@@ -85,10 +85,10 @@ if ($result->num_rows > 0) {
             // if moved from Closed, then sub status will be consider level of closed window
             $records[$i]['status'] = 'Closed';
 
-            $Qry = $con->query("SELECT closed_sts,consider_level from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
+            $Qry = $connect->query("SELECT closed_sts,consider_level from closed_status where cus_id = $cus_id and req_id = '" . $req_id . "' ");
             $closed_status = ['', 'Consider', 'Waiting List', 'Block List']; // first one is empty because select value of consider sts is starting at 1
             $consider_level = ['', 'Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond']; // first one is empty because select value of consider sts is starting at 1
-            $runqry = $Qry->fetch_assoc();
+            $runqry = $Qry->fetch();
             $substatuslocal = $closed_status[$runqry['closed_sts']];
             if ($runqry['closed_sts'] == '1') {
                 $substatuslocal .= ' - ' . $consider_level[$runqry['consider_level']];
@@ -159,7 +159,7 @@ if ($result->num_rows > 0) {
     });
 </script>
 <?php
-function getCollectionStatus($con, $cus_id, $user_id, $req_id)
+function getCollectionStatus($connect, $cus_id, $user_id, $req_id)
 {
 
     $pending_sts = isset($_POST["pending_sts"]) ? explode(',', $_POST["pending_sts"]) : null;
@@ -171,14 +171,14 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
 
     $retVal = '';
 
-    $run = $con->query("SELECT lc.due_start_from,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
+    $run = $connect->query("SELECT lc.due_start_from,lc.loan_category,lc.sub_category,lc.loan_amt_cal,lc.due_amt_cal,lc.net_cash_cal,lc.collection_method,ii.loan_id,ii.req_id,ii.updated_date,ii.cus_status,
         rc.agent_id,lcc.loan_category_creation_name as loan_catrgory_name, us.collection_access
         from acknowlegement_loan_calculation lc JOIN in_issue ii ON lc.req_id = ii.req_id JOIN request_creation rc ON ii.req_id = rc.req_id 
         JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id JOIN user us ON us.user_id = $user_id
         WHERE lc.cus_id_loan = $cus_id and (ii.cus_status >= 14 and ii.cus_status < 20)"); //Customer status greater than or equal to 14 because, after issued data only we need
 
     $curdate = date('Y-m-d');
-    while ($row = $run->fetch_assoc()) {
+    while ($row = $run->fetch()) {
         $i = 1;
         if (date('Y-m-d', strtotime($row['due_start_from'])) > date('Y-m-d', strtotime($curdate))  and $bal_amt[$i - 1] != 0) { //If the start date is on upcoming date then the sub status is current, until current date reach due_start_from date.
             if ($row['cus_status'] == '15') {
@@ -228,8 +228,8 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
                     }
                 }
             } else if ($row['cus_status'] > 20) { // if status is closed(21) or more than that(22), then show closed status
-                $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($req_id) . "' ");
-                $closedStsrow = $closedSts->fetch_assoc();
+                $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($req_id) . "' ");
+                $closedStsrow = $closedSts->fetch();
                 $rclosed = $closedStsrow['closed_sts'];
                 $consider_lvl = $closedStsrow['consider_level'];
                 if ($rclosed == '1') {
@@ -248,7 +248,6 @@ function getCollectionStatus($con, $cus_id, $user_id, $req_id)
     return $retVal;
 }
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

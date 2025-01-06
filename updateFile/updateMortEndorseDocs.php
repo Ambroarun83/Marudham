@@ -54,7 +54,7 @@ if($id == 'update_mortgage'){
 
 $qry .= " WHERE req_id = '$req_id' ";
 
-$run = $con->query($qry);
+$run = $connect->query($qry);
 
 if($qry){
     $response = 'Updated Successfully';
@@ -62,6 +62,8 @@ if($qry){
     $response = 'Error While Updating';
 }
 
-
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

@@ -17,7 +17,6 @@ if (isset($_POST["closed_sts"])) {
 
 ?>
 
-
 <table class="table custom-table" id='dataCheckTable'>
 	<thead>
 		<tr>
@@ -92,8 +91,8 @@ if (isset($_POST["closed_sts"])) {
 						}
 					}
 				}else if($guarentor['ii_sts'] > 20){// if status is closed(21) or more than that(22), then show closed status
-					$closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($guarentor['req_id'])."' ");
-					$closedStsrow = $closedSts->fetch_assoc();
+					$closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='".strip_tags($guarentor['req_id'])."' ");
+					$closedStsrow = $closedSts->fetch();
 					$rclosed = $closedStsrow['closed_sts'];
 					$consider_lvl = $closedStsrow['consider_level'];
 					if($rclosed == '1'){echo 'Consider - '.$consider_lvl_arr[$consider_lvl]; } 
@@ -137,3 +136,8 @@ if (isset($_POST["closed_sts"])) {
 		});
 	});
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

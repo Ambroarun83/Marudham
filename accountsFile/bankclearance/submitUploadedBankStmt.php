@@ -69,33 +69,33 @@ if(isset($_FILES["file"]["type"])){
                     
                     $narration = "";
                     if(isset($Row[1])) {
-                        $narration = mysqli_real_escape_string($con,$Row[1]); 
+                        $narration = $connect->quote($Row[1]);  
                     }
 
                     $trans_id = "";
                     if(isset($Row[2])) {
-                        $trans_id = mysqli_real_escape_string($con,$Row[2]); 
+                        $trans_id = $connect->quote($Row[2]);  
                     }
                     
                     $credit = "";
                     if(isset($Row[3])) {
-                        $credit = mysqli_real_escape_string($con,$Row[3]); 
+                        $credit = $connect->quote($Row[3]);  
                     }
                     
                     $debit = "";
                     if(isset($Row[4])) {
-                        $debit = mysqli_real_escape_string($con,$Row[4]); 
+                        $debit = $connect->quote($Row[4]);  
                     }
                     
                     $balance = "";
                     if(isset($Row[5])) {
-                        $balance = mysqli_real_escape_string($con,$Row[5]); 
+                        $balance = $connect->quote($Row[5]);  
                     }
                     
                     
                     if($i==0 && $trans_date != "" && $trans_id != "" )
                     { 
-                        $insert=$con->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
+                        $insert=$connect->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
                         VALUES ('$bank_id','$trans_date','$narration','$trans_id','$credit','$debit','$balance','$user_id',now() )");
                     }
                     
@@ -103,7 +103,7 @@ if(isset($_FILES["file"]["type"])){
             }
         }
 
-        if($con->affected_rows > 0) {
+        if($insert->rowCount() > 0) {
             $message = 0; // if successfully inserted
         }
         else{
@@ -115,6 +115,9 @@ if(isset($_FILES["file"]["type"])){
 }
 
 echo $message;
+
+// Close the database connection
+$connect = null;
 ?>
 
     

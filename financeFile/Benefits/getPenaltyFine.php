@@ -14,7 +14,7 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetials($con, $where);
+    getDetials($connect, $where);
 } else if ($type == 'day') {
 
     $from_date = $_POST['from_date'];
@@ -25,7 +25,7 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetials($con, $where);
+    getDetials($connect, $where);
 } else if ($type == 'month') {
 
     $month = date('m', strtotime($_POST['month']));
@@ -36,17 +36,17 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetials($con, $where);
+    getDetials($connect, $where);
 }
 
 
-function getDetials($con, $where)
+function getDetials($connect, $where)
 {
 
 
     // to get overall penalty paid till now to show pending penalty amount //,SUM(penalty_waiver) as penalty_waiver
-    $result = $con->query("SELECT SUM(penalty_track) as penalty FROM `collection` WHERE $where ");
-    $row = $result->fetch_assoc();
+    $result = $connect->query("SELECT SUM(penalty_track) as penalty FROM `collection` WHERE $where ");
+    $row = $result->fetch();
     if ($row['penalty'] == null) {
         $row['penalty'] = 0;
     }
@@ -54,8 +54,8 @@ function getDetials($con, $where)
 
 
     //To get the collection charges //,SUM(coll_charge_waiver) as coll_charge_waiver
-    $result = $con->query("SELECT SUM(coll_charge_track) as coll_charge_track FROM `collection` WHERE $where ");
-    $row = $result->fetch_assoc();
+    $result = $connect->query("SELECT SUM(coll_charge_track) as coll_charge_track FROM `collection` WHERE $where ");
+    $row = $result->fetch();
     $coll_charge_track = $row['coll_charge_track'] ?? 0;
     $response['fine'] = $coll_charge_track; // - $coll_charge_waiver;
 
@@ -93,4 +93,6 @@ function moneyFormatIndia($num)
 
     return $isNegative ? "-" . $thecash : $thecash;
 }
-$con->close();
+
+// Close the database connection
+$connect = null;

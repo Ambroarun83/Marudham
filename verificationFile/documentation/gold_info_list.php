@@ -66,8 +66,6 @@ function moneyFormatIndia($num)
     </tbody>
 </table>
 
-
-
 <script type="text/javascript">
     $(function() {
         $('#gold_table').DataTable({
@@ -99,8 +97,6 @@ function moneyFormatIndia($num)
     });
 </script>
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

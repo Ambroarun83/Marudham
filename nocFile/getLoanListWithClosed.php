@@ -127,9 +127,9 @@ function moneyFormatIndia($num)
 
         $i = 1;
         while ($row = $run->fetch()) {
-            $qry = $con->query("SELECT closed_sts,consider_level,created_date FROM `closed_status` WHERE req_id = '" . $row['req_id'] . "' ");
+            $qry = $connect->query("SELECT closed_sts,consider_level,created_date FROM `closed_status` WHERE req_id = '" . $row['req_id'] . "' ");
 
-            $runqry = $qry->fetch_assoc();
+            $runqry = $qry->fetch();
         ?>
             <tr>
                 <td></td>
@@ -208,3 +208,8 @@ function moneyFormatIndia($num)
         });
     });
 </script>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

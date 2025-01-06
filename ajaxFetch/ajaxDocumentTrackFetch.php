@@ -7,8 +7,8 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $doc_rec_access = $rowuser['doc_rec_access'];
     }
 }
@@ -28,7 +28,7 @@ $column = array(
 );
 
 // Base query
-$query = "SELECT dt.*, cr.customer_name, bc.branch_name, al.area_name, sal.sub_area_name, agm.group_name, alm.line_name
+$query = "SELECT dt.*, cr.customer_name, bc.branch_name, al.area_name, sal.sub_area_name, agm.group_name, alm.line_name, cr.sub_area
         FROM document_track dt
         JOIN customer_register cr ON dt.cus_id = cr.cus_id
         JOIN area_list_creation al ON cr.area = al.area_id
@@ -45,7 +45,7 @@ if ($doc_rec_access != '0') {
 
 // Apply search filter
 if (isset($_POST['search']) && $_POST['search'] != "") {
-    $search = $con->real_escape_string($_POST['search']);
+    $search = $_POST['search'];
     $query .= " AND ( dt.cus_id LIKE '%$search%' OR
                 cr.customer_name LIKE '%$search%'  )";
 }
@@ -106,8 +106,8 @@ foreach ($result as $row) {
         //then document keeper will be inser login id
         $doc_keeper = $row['insert_login_id'];
 
-        $qry = $con->query("SELECT fullname FROM user WHERE user_id = $doc_keeper ");
-        $sub_array[] = $qry->fetch_assoc()['fullname']; //document keeper column
+        $qry = $connect->query("SELECT fullname FROM user WHERE user_id = $doc_keeper ");
+        $sub_array[] = $qry->fetch()['fullname']; //document keeper column
 
     } else if ($track_status == '2') {
 
@@ -121,8 +121,8 @@ foreach ($result as $row) {
 
     } elseif ($track_status == '4') {
 
-        $branchqry = $con->query("SELECT bc.branch_name FROM area_line_mapping lm JOIN branch_creation bc ON lm.branch_id = bc.branch_id where FIND_IN_SET('" . $sub_area_id . "' , lm.sub_area_id) ");
-        $sub_array[] = $branchqry->fetch_assoc()['branch_name'] . " Branch"; //document keeper column
+        $branchqry = $connect->query("SELECT bc.branch_name FROM area_line_mapping lm JOIN branch_creation bc ON lm.branch_id = bc.branch_id where FIND_IN_SET('" . $row['sub_area'] . "' , lm.sub_area_id) ");
+        $sub_array[] = $branchqry->fetch()['branch_name'] . " Branch"; //document keeper column
 
     }
 
@@ -181,3 +181,6 @@ $output = array(
 );
 
 echo json_encode($output);
+
+// Close the database connection
+$connect = null;

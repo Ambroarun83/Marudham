@@ -14,9 +14,9 @@ $signedDoc['sign_type'] = $sign_details['sign_type'];
 $signedDoc['signType_relationship'] = $sign_details['signType_relationship'];
 $signedDoc['doc_Count'] = $sign_details['doc_Count'];
 
-$qry = $con->query("SELECT famname from verification_family_info where id = '" . $sign_details['signType_relationship'] . "' ");
-if ($qry->num_rows > 0) {
-    $signedDoc['guar_name'] = $qry->fetch_assoc()['famname'];
+$qry = $connect->query("SELECT famname from verification_family_info where id = '" . $sign_details['signType_relationship'] . "' ");
+if ($qry->rowCount() > 0) {
+    $signedDoc['guar_name'] = $qry->fetch()['famname'];
 } else {
     $signedDoc['guar_name'] = '';
 }
@@ -24,6 +24,5 @@ if ($qry->num_rows > 0) {
 
 echo json_encode($signedDoc);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

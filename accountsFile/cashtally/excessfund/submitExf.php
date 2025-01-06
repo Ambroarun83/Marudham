@@ -17,10 +17,10 @@ $amt = $_POST['amt_exf'];
 $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
-$ref_code = refcodes($con);
-$ucl_ref_code = uclrefcode($con);
+$ref_code = refcodes($connect);
+$ucl_ref_code = uclrefcode($connect);
 
-$qry = $con->query("INSERT INTO `ct_db_exf`(`username`,`usertype`,`bank_id`,`ucl_ref_code`,`ref_code`,`ucl_trans_id`,`trans_id`,`remark`, `amt`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_db_exf`(`username`,`usertype`,`bank_id`,`ucl_ref_code`,`ref_code`,`ucl_trans_id`,`trans_id`,`remark`, `amt`, `insert_login_id`, `created_date`) 
 VALUES ('$username','$usertype','$bank_id','$ucl_ref_code','$ref_code','$ucl_trans_id','$trans_id','$remark','$amt','$user_id','$op_date')");
 
 if($qry){
@@ -32,13 +32,13 @@ if($qry){
 echo $response;
 
 
-function refcodes($con){
+function refcodes($connect){
     //////////////////////// To get Exchange reference Code once again /////////////////////////
     $myStr = "EXS";
-    $selectIC = $con->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ");
+    $selectIC = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ");
     if($selectIC->num_rows>0)
     {
-        $codeAvailable = $con->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+        $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
         while($row = $codeAvailable->fetch_assoc()){
             $ac2 = $row["ref_code"];
         }
@@ -54,13 +54,13 @@ function refcodes($con){
     return $ref_code;
 }
 
-function uclrefcode($con){
+function uclrefcode($connect){
     //////////////////////// To get Exchange reference Code once again /////////////////////////
     $myStr = "UCL";
-    $selectIC = $con->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ");
+    $selectIC = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ");
     if($selectIC->num_rows>0)
     {
-        $codeAvailable = $con->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
+        $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
         while($row = $codeAvailable->fetch_assoc()){
             $ac2 = $row["ref_code"];
         }
@@ -75,4 +75,7 @@ function uclrefcode($con){
     ///////////////////////////////////////////////////////////////////////////////////////////
     return $ucl_ref_code;
 }
+
+// Close the database connection
+$connect = null;
 ?>

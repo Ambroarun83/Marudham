@@ -7,15 +7,15 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
     }
     $group_id = explode(',', $group_id);
     $sub_area_list = array();
     foreach ($group_id as $group) {
-        $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-        $row_sub = $groupQry->fetch_assoc();
+        $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+        $row_sub = $groupQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -40,7 +40,7 @@ $stage_arr = [
 $search = "";
 // Apply search filter if set
 if (isset($_POST['search']) && $_POST['search'] != "") {
-    $search = $con->real_escape_string($_POST['search']);
+    $search = $_POST['search'];
     $search = " AND ( rc.updated_date LIKE '%" . $search . "%' OR
                     rc.cus_id LIKE '%" . $search . "%' OR
                     rc.cus_name LIKE '%" . $search . "%' OR
@@ -147,10 +147,10 @@ foreach ($result as $row) {
     //for Loan Followup edit
     $sub_array[] = "<input type='button' class='btn btn-primary loan-follow-edit' data-cusid='" . $row['cus_id'] . "' data-stage='" . $stage_arr[$row['cus_status']] . "' data-toggle='modal' data-target='#addLoanFollow' value='Follow' />";
 
-    $qry = $con->query("SELECT follow_date FROM loan_followup WHERE cus_id = '" . $row['cus_id'] . "' ORDER BY created_date DESC limit 1");
+    $qry = $connect->query("SELECT follow_date FROM loan_followup WHERE cus_id = '" . $row['cus_id'] . "' ORDER BY created_date DESC limit 1");
     //take last promotion follow up date inserted from new promotion table
-    if ($qry->num_rows > 0) {
-        $fdate = $qry->fetch_assoc()['follow_date'];
+    if ($qry->rowCount() > 0) {
+        $fdate = $qry->fetch()['follow_date'];
         $sub_array[] = date('d-m-Y', strtotime($fdate));
     } else {
         $sub_array[] = '';
@@ -177,6 +177,5 @@ $output = array(
 
 echo json_encode($output);
 
-$con->close();
-$mysqli->close();
-$connect = NULL;
+// Close the database connection
+$connect = null;

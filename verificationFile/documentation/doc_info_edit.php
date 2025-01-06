@@ -20,6 +20,5 @@ $response['relation'] = $row['relation'];
 
 echo json_encode($response);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

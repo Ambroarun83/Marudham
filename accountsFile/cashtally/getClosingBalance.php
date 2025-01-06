@@ -5,7 +5,7 @@ $user_id = $_SESSION['userid'] ?? die('Session Expired');
 include '../../ajaxconfig.php';
 include './closingBalanceClass.php';
 
-$CBObj = new ClosingBalanceClass($con);
+$CBObj = new ClosingBalanceClass($connect);
 
 $op_date = date('Y-m-d', strtotime($_POST['op_date']));
 $closing_date = $op_date;
@@ -57,6 +57,5 @@ $records[0]['bank_closing'] = $records[0]['bank_closing'] + $old_bank;
 
 echo json_encode($records);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

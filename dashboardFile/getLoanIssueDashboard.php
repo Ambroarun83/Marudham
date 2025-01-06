@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $LoanIssueClass = new LoanIssueClass($user_id);
 
-$response = $LoanIssueClass->getLoanIssueCounts($con);
+$response = $LoanIssueClass->getLoanIssueCounts($connect);
 
 echo json_encode($response);

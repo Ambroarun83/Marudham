@@ -4,10 +4,10 @@ session_start();
 include('../../../ajaxconfig.php');
 
 $user_id = $_SESSION['userid'];
-$bankqry = $con->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
-$bank_id = $bankqry->fetch_assoc()['bank_details'];
+$bankqry = $connect->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
+$bank_id = $bankqry->fetch()['bank_details'];
 
-$qry = $con->query("SELECT bwed.*,bc.short_name,bc.acc_no from ct_db_cash_withdraw bwed LEFT JOIN bank_creation bc on bwed.from_bank_id = bc.id where bwed.received = 1 and FIND_IN_SET(bwed.from_bank_id,'$bank_id')");
+$qry = $connect->query("SELECT bwed.*,bc.short_name,bc.acc_no from ct_db_cash_withdraw bwed LEFT JOIN bank_creation bc on bwed.from_bank_id = bc.id where bwed.received = 1 and FIND_IN_SET(bwed.from_bank_id,'$bank_id')");
 // 0 means recevied or entered in credit bank deposit. not used current date because any time can be cash deposited to bank 
 
 ?>
@@ -27,7 +27,7 @@ $qry = $con->query("SELECT bwed.*,bc.short_name,bc.acc_no from ct_db_cash_withdr
     </thead>
     <tbody>
         <?php
-            while($row = $qry->fetch_assoc()){
+            while($row = $qry->fetch()){
                 
         ?>
             <tr>
@@ -101,4 +101,7 @@ function moneyFormatIndia($num) {
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;
 ?>

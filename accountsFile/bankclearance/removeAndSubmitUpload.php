@@ -67,43 +67,43 @@ if(isset($_FILES["file"]["type"])){
                     
                     $narration = "";
                     if(isset($Row[1])) {
-                        $narration = mysqli_real_escape_string($con,$Row[1]); 
+                        $narration = $connect->quote($Row[1]);  
                     }
 
                     $trans_id = "";
                     if(isset($Row[2])) {
-                        $trans_id = mysqli_real_escape_string($con,$Row[2]); 
+                        $trans_id = $connect->quote($Row[2]);  
                     }
                     
                     $credit = "";
                     if(isset($Row[3])) {
-                        $credit = mysqli_real_escape_string($con,$Row[3]); 
+                        $credit = $connect->quote($Row[3]);  
                     }
                     
                     $debit = "";
                     if(isset($Row[4])) {
-                        $debit = mysqli_real_escape_string($con,$Row[4]); 
+                        $debit = $connect->quote($Row[4]);  
                     }
                     
                     $balance = "";
                     if(isset($Row[5])) {
-                        $balance = mysqli_real_escape_string($con,$Row[5]); 
+                        $balance = $connect->quote($Row[5]);  
                     }
                     
     
                     if($i==0 && $trans_date != "" && $trans_id != "" )
                     { 
                         //insert row of new transactions
-                        $insert=$con->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
+                        $insert=$connect->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
                         VALUES ('$bank_id','$trans_date','$narration','$trans_id','$credit','$debit','$balance','$user_id',now() )");
-                        $rowaff = $con->affected_rows;// to get affected rows of insert query
-                        $last_id = $con->insert_id;// to get last inserted id of insert query
+                        $rowaff = $insert->rowCount();// to get affected rows of insert query
+                        $last_id = $connect->lastInsertId();// to get last inserted id of insert query
                         
-                        $qry=$con->query("SELECT trans_date from bank_stmt where bank_id = '$bank_id' and trans_date = '$trans_date' and insert_login_id = '$user_id' and id != '$last_id' ");
+                        $qry=$connect->query("SELECT trans_date from bank_stmt where bank_id = '$bank_id' and trans_date = '$trans_date' and insert_login_id = '$user_id' and id != '$last_id' ");
                         //checking whether the date is already inserted by this user and excluding the data which is inserted now thru excel file
                         
-                        if($qry->num_rows > 0) {//delete row if transaction date is already exist
-                            $qry1 = $con->query("DELETE From bank_stmt where bank_id = '$bank_id' and trans_date = '$trans_date' and created_date < now() and insert_login_id = '$user_id' and id != '$last_id' ");
+                        if($qry->rowCount() > 0) {//delete row if transaction date is already exist
+                            $qry1 = $connect->query("DELETE From bank_stmt where bank_id = '$bank_id' and trans_date = '$trans_date' and created_date < now() and insert_login_id = '$user_id' and id != '$last_id' ");
                             // used less than created date because, have to delete only previous entires and omitting last inserted id to avoid conflicts
                         }
 
@@ -125,6 +125,9 @@ if(isset($_FILES["file"]["type"])){
 }
 
 echo $message;
+
+// Close the database connection
+$connect = null;
 ?>
 
     

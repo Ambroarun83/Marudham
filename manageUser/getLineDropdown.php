@@ -9,8 +9,8 @@ $staffArr = array();
 $branch_id1 = explode(',',$branch_id);
 
 foreach($branch_id1 as $branch_id){
-    $result=$con->query("SELECT * FROM area_line_mapping where status=0 and branch_id = '".$branch_id."' ");
-    while( $row = $result->fetch_assoc()){
+    $result=$connect->query("SELECT * FROM area_line_mapping where status=0 and branch_id = '".$branch_id."' ");
+    while( $row = $result->fetch()){
         $map_id = $row['map_id'];
         $line_name = $row['line_name'];
 
@@ -19,4 +19,7 @@ foreach($branch_id1 as $branch_id){
 }
 
 echo json_encode($staffArr);
+
+// Close the database connection
+$connect = null;
 ?>

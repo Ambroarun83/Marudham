@@ -14,9 +14,7 @@ $result = $connect->query("SELECT line_name FROM `area_line_mapping` where statu
 $row = $result->fetch();
 $records['line_name'] = $row['line_name'];
 
-
 echo json_encode($records);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

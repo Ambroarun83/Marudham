@@ -24,7 +24,7 @@ if ($op_date == date('Y-m-d')) { // check whether opening date is current date
     $old_bank = 0;
     $old_bank_unt = 0;
 
-    $records = getOpeningBalance($con, $op_date, $bank_detail, $user_id);
+    $records = getOpeningBalance($connect, $op_date, $bank_detail, $user_id);
 
     //if while loop gets true, then the function will load the old opening balance.. so store latest opening balance
     $opening_balance = $records[0]['opening_balance'];
@@ -36,7 +36,7 @@ if ($op_date == date('Y-m-d')) { // check whether opening date is current date
         $old_bank_unt += intVal($records[0]['bank_untrkd']);
 
         $op_date = date('Y-m-d', strtotime($op_date . '-1 day'));
-        $records = getOpeningBalance($con, $op_date, $bank_detail, $user_id);
+        $records = getOpeningBalance($connect, $op_date, $bank_detail, $user_id);
     }
 
     //now reassign latest opening date to returing variable.
@@ -49,13 +49,13 @@ if ($op_date == date('Y-m-d')) { // check whether opening date is current date
 echo json_encode($records);
 
 
-function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
+function getOpeningBalance($connect, $op_date, $bank_detail, $user_id)
 {
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    $handCreditQry = $con->query("SELECT
+    $handCreditQry = $connect->query("SELECT
         SUM(amt) AS hand_credits
         FROM (
             (SELECT COALESCE(SUM(rec_amt), 0) AS amt FROM ct_hand_collection WHERE date(created_date) = '$op_date' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -76,7 +76,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
     $handCredit = $handCreditQry->fetch_assoc()['hand_credits'];
 
-    $handDebitQry = $con->query("SELECT
+    $handDebitQry = $connect->query("SELECT
         SUM(amt) AS hand_debits
         FROM (
             (SELECT COALESCE(SUM(amount), 0) AS amt FROM ct_db_bank_deposit WHERE date(created_date) = '$op_date' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -105,7 +105,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
     $i = 0;
     $bank_opening_all = 0;
     foreach ($bank_details_arr as $val) {
-        $bankCreditQry = $con->query("SELECT
+        $bankCreditQry = $connect->query("SELECT
                 SUM(amt) AS bank_credit
                 FROM (
                     (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_cash_deposit WHERE date(created_date) = '$op_date' and to_bank_id = '$val' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -126,7 +126,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
         $bankCredit = $bankCreditQry->fetch_assoc()['bank_credit'];
 
-        $bankDebitQry = $con->query("SELECT
+        $bankDebitQry = $connect->query("SELECT
                 SUM(amt) AS bank_debit
                 FROM (
                     (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_cash_withdraw WHERE date(created_date) = '$op_date' and from_bank_id = '$val' and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -156,7 +156,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $qry = $con->query("SELECT `user_id` from `user` where ag_id IN (SELECT ag.ag_id FROM agent_creation ag JOIN `user` us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id')  ");
+    $qry = $connect->query("SELECT `user_id` from `user` where ag_id IN (SELECT ag.ag_id FROM agent_creation ag JOIN `user` us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id')  ");
     //without while it will not give all the agent ids
     $ag_ids = [];
     while ($rww = $qry->fetch_assoc()) {
@@ -165,7 +165,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
     $ag_ids = implode(',', $ag_ids);
 
 
-    $agentCollQry = $con->query("SELECT
+    $agentCollQry = $connect->query("SELECT
         SUM(amt) AS agent_coll
         FROM (
             (SELECT COALESCE(SUM(total_paid_track), 0) AS amt FROM collection
@@ -177,7 +177,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
     $agentCollCredit = $agentCollQry->fetch_assoc()['agent_coll'];
 
     //only for collections we need user ids of agents
-    $qry = $con->query("SELECT ag.ag_id FROM agent_creation ag JOIN user us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id'");
+    $qry = $connect->query("SELECT ag.ag_id FROM agent_creation ag JOIN user us ON FIND_IN_SET(ag.ag_id,us.agentforstaff) where us.user_id = '$user_id'");
     $ag_ids = [];
     while ($rww = $qry->fetch_assoc()) {
         $ag_ids[] = $rww["ag_id"];
@@ -185,7 +185,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
     $ag_ids = implode(',', $ag_ids);
 
 
-    $agentIssueQry = $con->query("SELECT
+    $agentIssueQry = $connect->query("SELECT
         SUM(amt) AS agent_issue
         FROM (
             (SELECT COALESCE(SUM(cash + cheque_value + transaction_value), 0) AS amt FROM loan_issue
@@ -200,7 +200,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
     //
 
-    $agentCreditQry = $con->query("SELECT
+    $agentCreditQry = $connect->query("SELECT
         SUM(amt) AS agent_credit
         FROM (
             (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_hag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -210,7 +210,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
     $agentCredit = $agentCreditQry->fetch_assoc()['agent_credit'];
 
-    $agentDebitQry = $con->query("SELECT
+    $agentDebitQry = $connect->query("SELECT
         SUM(amt) AS agent_debit
         FROM (
             (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_hag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -224,7 +224,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
     //
 
-    $agentCreditQry = $con->query("SELECT
+    $agentCreditQry = $connect->query("SELECT
         SUM(amt) AS agent_credit
         FROM (
             (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_cr_bag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -234,7 +234,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
     $agentCredit = $agentCreditQry->fetch_assoc()['agent_credit'];
 
-    $agentDebitQry = $con->query("SELECT
+    $agentDebitQry = $connect->query("SELECT
         SUM(amt) AS agent_debit
         FROM (
             (SELECT COALESCE(SUM(amt), 0) AS amt FROM ct_db_bag WHERE date(created_date) = '$op_date' AND FIND_IN_SET(ag_id,'$ag_ids') and insert_login_id = '$user_id' ORDER BY created_date DESC LIMIT 1)
@@ -256,7 +256,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
     $records[0]['opening_balance'] = $records[0]['hand_opening'] + $bank_opening_all + $records[0]['agent_opening'];
 
 
-    $qry = $con->query("SELECT bank_untrkd from cash_tally where date(created_date) = '$op_date' and insert_login_id = '$user_id' ");
+    $qry = $connect->query("SELECT bank_untrkd from cash_tally where date(created_date) = '$op_date' and insert_login_id = '$user_id' ");
     if ($qry->num_rows > 0) {
         $records[0]['bank_untrkd'] = $qry->fetch_assoc()['bank_untrkd'];
     } else {
@@ -265,3 +265,7 @@ function getOpeningBalance($con, $op_date, $bank_detail, $user_id)
 
     return $records;
 }
+
+
+// Close the database connection
+$connect = null;

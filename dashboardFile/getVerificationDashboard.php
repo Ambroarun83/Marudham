@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $verificaitonClass = new verificaitonClass($user_id);
 
-$response = $verificaitonClass->getverificaitonCounts($con);
+$response = $verificaitonClass->getverificaitonCounts($connect);
 
 echo json_encode($response);

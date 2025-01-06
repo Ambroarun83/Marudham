@@ -38,8 +38,8 @@ if(isset($_POST['req_id'])){
             $id = $row['id'];
 
             if($row["holder_name"] == ''){
-                $qry1 = $con->query("SELECT * FROM verification_family_info where id = '".$row['relation_name']."' ");
-                $holder_name = $qry1->fetch_assoc()['famname'];
+                $qry1 = $connect->query("SELECT * FROM verification_family_info where id = '".$row['relation_name']."' ");
+                $holder_name = $qry1->fetch()['famname'];
             }else{
                 $holder_name = $row["holder_name"];
             }
@@ -77,26 +77,8 @@ if(isset($_POST['req_id'])){
     </tbody>
 </table>
 
-
-
-<!-- <script type="text/javascript">
-    $(function() {
-        $('#document_table').DataTable({
-            'processing': true,
-            'iDisplayLength': 5,
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            "createdRow": function(row, data, dataIndex) {
-                $(row).find('td:first').html(dataIndex + 1);
-            },
-            "drawCallback": function(settings) {
-                this.api().column(0).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                });
-            },
-        });
-    });
-</script> -->
+<?php
+// Close the database connection
+$connect = null;
+?>
 

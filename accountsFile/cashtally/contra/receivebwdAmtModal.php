@@ -10,10 +10,10 @@ if(isset($_POST['bwd_id'])){
 
 $records = array();
     
-$qry = $con->query("SELECT bwd.*,bc.short_name,bc.acc_no from ct_db_cash_withdraw bwd LEFT JOIN bank_creation bc on bwd.from_bank_id = bc.id where bwd.received = 1 and bwd.id = $bwd_id ");
+$qry = $connect->query("SELECT bwd.*,bc.short_name,bc.acc_no from ct_db_cash_withdraw bwd LEFT JOIN bank_creation bc on bwd.from_bank_id = bc.id where bwd.received = 1 and bwd.id = $bwd_id ");
 // 0 means recevied or entered in credit bank deposit. not used current date because any time can be cash deposited to bank 
 
-$row = $qry->fetch_assoc();
+$row = $qry->fetch();
 foreach($row as $key=>$val){
     $$key = $val;
 }
@@ -103,4 +103,7 @@ function moneyFormatIndia($num) {
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;
 ?>

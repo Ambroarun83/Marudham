@@ -15,8 +15,8 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
     }
@@ -24,8 +24,8 @@ if ($userid != 1) {
     $line_id = explode(',', $line_id);
     $sub_area_list = array();
     foreach ($line_id as $line) {
-        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
+        $lineQry = $connect->query("SELECT * FROM area_line_mapping where map_id = $line ");
+        $row_sub = $lineQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();

@@ -665,22 +665,22 @@ function moneyFormatIndia($num)
                         if (date('Y-m', strtotime($cusDueMonth)) <=  date('Y-m')) { ?>
                             <td>
                                 <?php
-                                $LDObj = new GetLoanDetails($con, $req_id, $cusDueMonth,'Due Chart');
+                                $LDObj = new GetLoanDetails($connect, $req_id, $cusDueMonth,'Due Chart');
                                 echo $LDObj->response['pending']; ?>
                             </td>
                             <td>
                                 <?php
-                                $LDObj = new GetLoanDetails($con, $req_id, $cusDueMonth,'Due Chart');
+                                $LDObj = new GetLoanDetails($connect, $req_id, $cusDueMonth,'Due Chart');
                                 echo $LDObj->response['payable']; ?>
                             </td>
                         <?php } else if (date('Y-m', strtotime($cusDueMonth)) >  date('Y-m') && $curDateChecker == true) { ?>
                             <td>
-                                <?php //$response = getNextLoanDetails($con, $req_id, $cusDueMonth);
+                                <?php //$response = getNextLoanDetails($connect, $req_id, $cusDueMonth);
                                 //echo $response['pending']; 
                                 ?>
                             </td>
                             <td>
-                                <?php //$response = getNextLoanDetails($con, $req_id, $cusDueMonth);
+                                <?php //$response = getNextLoanDetails($connect, $req_id, $cusDueMonth);
                                 //echo $response['payable']; 
                                 ?>
                             </td>
@@ -695,21 +695,21 @@ function moneyFormatIndia($num)
                     } else {
                         if (date('Y-m-d', strtotime($cusDueMonth)) <=  date('Y-m-d')) { ?>
                             <td>
-                                <?php $LDObj = new GetLoanDetails($con, $req_id, $cusDueMonth,'Due Chart');
+                                <?php $LDObj = new GetLoanDetails($connect, $req_id, $cusDueMonth,'Due Chart');
                                 echo $LDObj->response['pending']; ?>
                             </td>
                             <td>
-                                <?php $LDObj = new GetLoanDetails($con, $req_id, $cusDueMonth,'Due Chart');
+                                <?php $LDObj = new GetLoanDetails($connect, $req_id, $cusDueMonth,'Due Chart');
                                 echo $LDObj->response['payable']; ?>
                             </td>
                         <?php } else if (date('Y-m-d', strtotime($cusDueMonth)) >  date('Y-m-d') && $curDateChecker == true) { ?>
                             <td>
-                                <?php //$response = getNextLoanDetails($con, $req_id, $cusDueMonth);
+                                <?php //$response = getNextLoanDetails($connect, $req_id, $cusDueMonth);
                                 // echo $response['pending']; 
                                 ?>
                             </td>
                             <td>
-                                <?php //$response = getNextLoanDetails($con, $req_id, $cusDueMonth);
+                                <?php //$response = getNextLoanDetails($connect, $req_id, $cusDueMonth);
                                 // echo $response['payable']; 
                                 ?>
                             </td>

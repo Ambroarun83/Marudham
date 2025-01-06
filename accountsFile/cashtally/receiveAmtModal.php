@@ -14,16 +14,16 @@ if(isset($_POST['op_date'])){
 // $user_id = '28';
 $records = array();
 
-    $qry = $con->query("SELECT sum(total_paid_track) as total_paid,branch, insert_login_id from collection where insert_login_id = '$user_id1' and date(created_date) = '$op_date' and coll_mode = '1' GROUP BY insert_login_id");
-    while($row = $qry->fetch_assoc()){
+    $qry = $connect->query("SELECT sum(total_paid_track) as total_paid,branch, insert_login_id from collection where insert_login_id = '$user_id1' and date(created_date) = '$op_date' and coll_mode = '1' GROUP BY insert_login_id");
+    while($row = $qry->fetch()){
         //get user id and total paid by user by cash
         $branch_id = $row['branch'];
         $user_id = $row['insert_login_id'];
         $collected_amt = $row['total_paid'];
 
         //get username by user id to shortlist
-        $usernameqry = $con->query("SELECT us.fullname,us.role,us.line_id,lm.line_name from user us JOIN area_line_mapping lm ON us.line_id = lm.map_id where us.user_id = '".strip_tags($row['insert_login_id'])."' ");
-        $row1 = $usernameqry->fetch_assoc();
+        $usernameqry = $connect->query("SELECT us.fullname,us.role,us.line_id,lm.line_name from user us JOIN area_line_mapping lm ON us.line_id = lm.map_id where us.user_id = '".strip_tags($row['insert_login_id'])."' ");
+        $row1 = $usernameqry->fetch();
         if($row1['role'] != '2'){
 
             $user_name = $row1['fullname'];
@@ -32,23 +32,23 @@ $records = array();
             $line_name = $row1['line_name'];
             
             //get branchname by branch id
-            $branchnameqry = $con->query("SELECT branch_name from branch_creation where branch_id = '".strip_tags($row['branch'])."' ");
-            $branch_name = $branchnameqry->fetch_assoc()['branch_name'];
+            $branchnameqry = $connect->query("SELECT branch_name from branch_creation where branch_id = '".strip_tags($row['branch'])."' ");
+            $branch_name = $branchnameqry->fetch()['branch_name'];
             
         }
     }
 
     // To get total collection amount till yesterday
-    $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$user_id."' and coll_mode='1' and date(created_date) <= '$op_date'");
+    $getcolltillys = $connect->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$user_id."' and coll_mode='1' and date(created_date) <= '$op_date'");
     if($getcolltillys){
-        $row2 = $getcolltillys->fetch_assoc();
+        $row2 = $getcolltillys->fetch();
         $total_collection_amt = $row2['coll_amt_ys'];
     }else{$total_collection_amt = 0;}
 
     //To get Total received amount till yesterday
-    $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$user_id."' and date(created_date) <= '$op_date' ");
+    $getrectillys = $connect->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$user_id."' and date(created_date) <= '$op_date' ");
     if($getrectillys){
-        $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
+        $total_rec_amt = $getrectillys->fetch()['rec_amt_ys'];
     }else{$total_rec_amt = 0;}
 
     $pre_bal = $total_collection_amt - $total_rec_amt;
@@ -56,15 +56,15 @@ $records = array();
 
 
     // To get total collection amount till today
-    $getcolltillys = $con->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$user_id."' and coll_mode='1' and date(created_date) <= '$op_date'");
+    $getcolltillys = $connect->query("SELECT sum(total_paid_track) as coll_amt_ys from collection where insert_login_id = '".$user_id."' and coll_mode='1' and date(created_date) <= '$op_date'");
     if($getcolltillys){
-        $row2 = $getcolltillys->fetch_assoc();
+        $row2 = $getcolltillys->fetch();
         $total_collection_amt = $row2['coll_amt_ys'];
     }else{$total_collection_amt = 0;}
     //To get Total received amount till today
-    $getrectillys = $con->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$user_id."' and date(created_date) <= '$op_date' ");
+    $getrectillys = $connect->query("SELECT sum(rec_amt) as rec_amt_ys from ct_hand_collection where user_id = '".$user_id."' and date(created_date) <= '$op_date' ");
     if($getrectillys){
-        $total_rec_amt = $getrectillys->fetch_assoc()['rec_amt_ys'];
+        $total_rec_amt = $getrectillys->fetch()['rec_amt_ys'];
     }else{$total_rec_amt = 0;}
 
     $tot_amt = $total_collection_amt - $total_rec_amt;
@@ -144,8 +144,8 @@ $records = array();
     <tbody>
         <?php
 
-            $qry=$con->query("SELECT `user_name`, `created_date`,`rec_amt` from `ct_hand_collection` where `user_id` = '$user_id1' ");
-            while($row = $qry->fetch_assoc()){
+            $qry=$connect->query("SELECT `user_name`, `created_date`,`rec_amt` from `ct_hand_collection` where `user_id` = '$user_id1' ");
+            while($row = $qry->fetch()){
         ?>
             <tr>
                 <td></td>
@@ -213,4 +213,7 @@ function moneyFormatIndia($num) {
     }
     return $thecash;
 }
+
+// Close the database connection
+$connect = null;
 ?>

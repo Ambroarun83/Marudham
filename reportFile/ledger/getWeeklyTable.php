@@ -9,8 +9,8 @@ if (isset($_SESSION["userid"])) {
 }
 if ($userid != 1) {
 
-    $userQry = $con->query("SELECT * FROM USER WHERE user_id = $userid ");
-    while ($rowuser = $userQry->fetch_assoc()) {
+    $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $userid ");
+    while ($rowuser = $userQry->fetch()) {
         $group_id = $rowuser['group_id'];
         $line_id = $rowuser['line_id'];
     }
@@ -18,8 +18,8 @@ if ($userid != 1) {
     $line_id = explode(',', $line_id);
     $sub_area_list = array();
     foreach ($line_id as $line) {
-        $lineQry = $con->query("SELECT * FROM area_line_mapping where map_id = $line ");
-        $row_sub = $lineQry->fetch_assoc();
+        $lineQry = $connect->query("SELECT * FROM area_line_mapping where map_id = $line ");
+        $row_sub = $lineQry->fetch();
         $sub_area_list[] = $row_sub['sub_area_id'];
     }
     $sub_area_ids = array();
@@ -36,7 +36,7 @@ $closing_balance_sum = 0;
 //below query will get all the data of the customer who has taken daily scheme loans
 //in that query, we will also have the opening balance for this current month based on last paid date
 //collection table takes lasst paid row and subract balance amt with paid amt to get the exact paid amt
-$qry = $con->query("
+$qry = $connect->query("
     SELECT 
         cp.req_id,
         cp.cus_name,
@@ -69,7 +69,7 @@ $qry = $con->query("
         and (select area_confirm_subarea from customer_profile where req_id = cp.req_id) IN ($sub_area_list) ");
 
 $rows = array();
-while ($row = $qry->fetch_assoc()) {
+while ($row = $qry->fetch()) {
     $rows[] = $row;
 }
 
@@ -139,7 +139,7 @@ $weeks = generateWeeks($startDate, $endDate);
         <?php
         $i = 1;
 
-        if ($qry->num_rows > 0) {
+        if ($qry->rowCount() > 0) {
             foreach ($rows as $row) {
                 $total_paid = 0;
         ?>
@@ -171,8 +171,8 @@ $weeks = generateWeeks($startDate, $endDate);
                             <?php
                             $dates = getMondayAndSunday($weeks[$j]);
                             //this query will get the all paid amt from collection table between the week dated given
-                            $coll_qry = $con->query("SELECT sum(due_amt_track) as due_amt_track FROM collection where req_id = '" . $row['req_id'] . "' and date(coll_date) >= '" . $dates['monday'] . "' and date(coll_date) <= '" . $dates['sunday'] . "' ");
-                            $coll_row = $coll_qry->fetch_assoc();
+                            $coll_qry = $connect->query("SELECT sum(due_amt_track) as due_amt_track FROM collection where req_id = '" . $row['req_id'] . "' and date(coll_date) >= '" . $dates['monday'] . "' and date(coll_date) <= '" . $dates['sunday'] . "' ");
+                            $coll_row = $coll_qry->fetch();
                             echo moneyFormatIndia($coll_row['due_amt_track'] ?? 0);
                             $total_paid += $coll_row['due_amt_track'];
                             ?>
@@ -277,5 +277,6 @@ function getMondayAndSunday($inputDate)
     return array('monday' => $monday, 'sunday' => $sunday);
 }
 
-
+// Close the database connection
+$connect = null;
 ?>

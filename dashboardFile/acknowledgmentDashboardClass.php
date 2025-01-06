@@ -7,7 +7,7 @@ class acknowledgmentClass
     {
         $this->user_id = $user_id;
     }
-    function getAcknowledgmentCounts($con)
+    function getAcknowledgmentCounts($connect)
     {
         $response = array();
         $today = date('Y-m-d');
@@ -28,7 +28,7 @@ class acknowledgmentClass
         $today_existing = "SELECT COUNT(*) as today_existing from request_creation where cus_status = 3 and cus_data = 'Existing' and date(updated_date) = '$today' ";
 
         if (empty($sub_area_list)) {
-            $sub_area_list = $this->getUserGroupBasedSubArea($con, $this->user_id);
+            $sub_area_list = $this->getUserGroupBasedSubArea($connect, $this->user_id);
         }
 
         $tot_in_ack .= " AND sub_area IN ($sub_area_list) ";
@@ -45,51 +45,51 @@ class acknowledgmentClass
         $today_existing .= " AND sub_area IN ($sub_area_list) ";
 
 
-        $tot_in_ackQry = $con->query($tot_in_ack);
-        $today_in_ackQry = $con->query($today_in_ack);
-        $tot_issueQry = $con->query($tot_issue);
-        $today_issueQry = $con->query($today_issue);
-        $tot_ack_balQry = $con->query($tot_ack_bal);
-        $today_ack_balQry = $con->query($today_ack_bal);
-        $tot_cancelQry = $con->query($tot_cancel);
-        $today_cancelQry = $con->query($today_cancel);
-        $tot_newQry = $con->query($tot_new);
-        $today_newQry = $con->query($today_new);
-        $tot_existingQry = $con->query($tot_existing);
-        $today_existingQry = $con->query($today_existing);
+        $tot_in_ackQry = $connect->query($tot_in_ack);
+        $today_in_ackQry = $connect->query($today_in_ack);
+        $tot_issueQry = $connect->query($tot_issue);
+        $today_issueQry = $connect->query($today_issue);
+        $tot_ack_balQry = $connect->query($tot_ack_bal);
+        $today_ack_balQry = $connect->query($today_ack_bal);
+        $tot_cancelQry = $connect->query($tot_cancel);
+        $today_cancelQry = $connect->query($today_cancel);
+        $tot_newQry = $connect->query($tot_new);
+        $today_newQry = $connect->query($today_new);
+        $tot_existingQry = $connect->query($tot_existing);
+        $today_existingQry = $connect->query($today_existing);
 
 
-        $response['tot_in_ack'] = $tot_in_ackQry->fetch_assoc()['tot_in_ack'];
-        $response['today_in_ack'] = $today_in_ackQry->fetch_assoc()['today_in_ack'];
-        $response['tot_issue'] = $tot_issueQry->fetch_assoc()['tot_issue'];
-        $response['today_issue'] = $today_issueQry->fetch_assoc()['today_issue'];
-        $response['tot_ack_bal'] = $tot_ack_balQry->fetch_assoc()['tot_ack_bal'];
-        $response['today_ack_bal'] = $today_ack_balQry->fetch_assoc()['today_ack_bal'];
-        $response['tot_cancel'] = $tot_cancelQry->fetch_assoc()['tot_cancel'];
-        $response['today_cancel'] = $today_cancelQry->fetch_assoc()['today_cancel'];
+        $response['tot_in_ack'] = $tot_in_ackQry->fetch()['tot_in_ack'];
+        $response['today_in_ack'] = $today_in_ackQry->fetch()['today_in_ack'];
+        $response['tot_issue'] = $tot_issueQry->fetch()['tot_issue'];
+        $response['today_issue'] = $today_issueQry->fetch()['today_issue'];
+        $response['tot_ack_bal'] = $tot_ack_balQry->fetch()['tot_ack_bal'];
+        $response['today_ack_bal'] = $today_ack_balQry->fetch()['today_ack_bal'];
+        $response['tot_cancel'] = $tot_cancelQry->fetch()['tot_cancel'];
+        $response['today_cancel'] = $today_cancelQry->fetch()['today_cancel'];
         $response['tot_revoke'] = 0;
         $response['today_revoke'] = 0;
-        $response['tot_new'] = $tot_newQry->fetch_assoc()['tot_new'];
-        $response['today_new'] = $today_newQry->fetch_assoc()['today_new'];
-        $response['tot_existing'] = $tot_existingQry->fetch_assoc()['tot_existing'];
-        $response['today_existing'] = $today_existingQry->fetch_assoc()['today_existing'];
+        $response['tot_new'] = $tot_newQry->fetch()['tot_new'];
+        $response['today_new'] = $today_newQry->fetch()['today_new'];
+        $response['tot_existing'] = $tot_existingQry->fetch()['tot_existing'];
+        $response['today_existing'] = $today_existingQry->fetch()['today_existing'];
 
 
         return $response;
     }
 
-    function getUserGroupBasedSubArea($con, $user_id)
+    function getUserGroupBasedSubArea($connect, $user_id)
     {
         $sub_area_list = array();
 
-        $userQry = $con->query("SELECT * FROM USER WHERE user_id = $user_id ");
-        while ($rowuser = $userQry->fetch_assoc()) {
+        $userQry = $connect->query("SELECT * FROM USER WHERE user_id = $user_id ");
+        while ($rowuser = $userQry->fetch()) {
             $group_id = $rowuser['group_id'];
         }
         $group_id = explode(',', $group_id);
         foreach ($group_id as $group) {
-            $groupQry = $con->query("SELECT * FROM area_group_mapping where map_id = $group ");
-            $row_sub = $groupQry->fetch_assoc();
+            $groupQry = $connect->query("SELECT * FROM area_group_mapping where map_id = $group ");
+            $row_sub = $groupQry->fetch();
             $sub_area_list[] = $row_sub['sub_area_id'];
         }
         $sub_area_ids = array();

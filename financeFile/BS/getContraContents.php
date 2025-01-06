@@ -14,7 +14,7 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetails($con, $where);
+    getDetails($connect, $where);
 } else if ($type == 'day') {
 
     $from_date = $_POST['from_date'];
@@ -25,7 +25,7 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetails($con, $where);
+    getDetails($connect, $where);
 } else if ($type == 'month') {
 
     $month = date('m', strtotime($_POST['month']));
@@ -36,37 +36,37 @@ if ($type == 'today') {
         $where .= " && insert_login_id = '" . $user_id . "' ";
     } //for user based
 
-    getDetails($con, $where);
+    getDetails($connect, $where);
 }
 
-function getDetails($con, $where)
+function getDetails($connect, $where)
 {
 
     // Bank Withdrawal
-    $qry = $con->query("SELECT SUM(amt) as bank_withdrawal FROM ct_cr_bank_withdraw WHERE $where ");
+    $qry = $connect->query("SELECT SUM(amt) as bank_withdrawal FROM ct_cr_bank_withdraw WHERE $where ");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $bank_withdrawal = $row['bank_withdrawal'] ?? 0;
 
 
     // Cash Deposit
-    $qry = $con->query("SELECT SUM(amt) as cash_deposit FROM ct_cr_cash_deposit WHERE $where ");
+    $qry = $connect->query("SELECT SUM(amt) as cash_deposit FROM ct_cr_cash_deposit WHERE $where ");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $cash_deposit = $row['cash_deposit'] ?? 0;
 
 
     // Bank Deposit
-    $qry = $con->query("SELECT SUM(amount) as amt FROM ct_db_bank_deposit WHERE $where ");
+    $qry = $connect->query("SELECT SUM(amount) as amt FROM ct_db_bank_deposit WHERE $where ");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $bank_deposit = $row['amt'] ?? 0;
 
 
     // Cash Withdrawal
-    $qry = $con->query("SELECT SUM(amt) as amt FROM ct_db_cash_withdraw WHERE $where ");
+    $qry = $connect->query("SELECT SUM(amt) as amt FROM ct_db_cash_withdraw WHERE $where ");
 
-    $row = $qry->fetch_assoc();
+    $row = $qry->fetch();
     $cash_withdrawal = $row['amt'] ?? 0;
 
     $response['credit_contra'] = intVal($bank_withdrawal) + intVal($cash_deposit);
@@ -78,4 +78,5 @@ function getDetails($con, $where)
     echo json_encode($response);
 }
 
-$con->close();
+// Close the database connection
+$connect = null;

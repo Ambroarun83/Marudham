@@ -41,8 +41,8 @@ if ($kycID == '') {
     if ($upload) {
         $kyc_upload = $uniqueFileName;
         // we need to unlink old files
-        $qry = $con->query("SELECT upload FROM `verification_kyc_info` where id='" . strip_tags($kycID) . "' ");
-        $old_pic = $qry->fetch_assoc()['upload'];
+        $qry = $connect->query("SELECT upload FROM `verification_kyc_info` where id='" . strip_tags($kycID) . "' ");
+        $old_pic = $qry->fetch()['upload'];
         unlink("kycUploads/" . $old_pic);
     } else {
         $kyc_upload = $_POST['kyc_upload'];
@@ -59,6 +59,5 @@ if ($qry) {
 
 echo json_encode($result);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

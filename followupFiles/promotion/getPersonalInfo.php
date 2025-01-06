@@ -6,7 +6,7 @@ $cus_id = $_POST['cus_id'];
 
 $sql = '';
 
-$query1 = $con->query("SELECT cp.cus_id,cp.cus_name,cp.cus_pic,cp.mobile1,al.area_name,sl.sub_area_name,alm.line_name as area_line,bc.branch_name from customer_profile cp 
+$query1 = $connect->query("SELECT cp.cus_id,cp.cus_name,cp.cus_pic,cp.mobile1,al.area_name,sl.sub_area_name,alm.line_name as area_line,bc.branch_name from customer_profile cp 
     LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id 
     LEFT JOIN sub_area_list_creation sl ON cp.area_confirm_subarea = sl.sub_area_id 
     LEFT JOIN area_line_mapping alm ON FIND_IN_SET( sl.sub_area_id, alm.sub_area_id ) 
@@ -14,7 +14,7 @@ $query1 = $con->query("SELECT cp.cus_id,cp.cus_name,cp.cus_pic,cp.mobile1,al.are
     LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
     WHERE cp.cus_id = " . $cus_id . " ORDER BY cp.id DESC LIMIT 1");
 
-$query2 = $con->query("SELECT rc.cus_id, rc.cus_name, rc.mobile1, rc.pic as cus_pic, al.area_name,sl.sub_area_name,alm.line_name as area_line,bc.branch_name FROM request_creation rc
+$query2 = $connect->query("SELECT rc.cus_id, rc.cus_name, rc.mobile1, rc.pic as cus_pic, al.area_name,sl.sub_area_name,alm.line_name as area_line,bc.branch_name FROM request_creation rc
     JOIN area_list_creation al ON rc.area = al.area_id
     JOIN sub_area_list_creation sl ON rc.sub_area = sl.sub_area_id
     LEFT JOIN area_line_mapping alm ON FIND_IN_SET( rc.sub_area, alm.sub_area_id ) 
@@ -22,12 +22,12 @@ $query2 = $con->query("SELECT rc.cus_id, rc.cus_name, rc.mobile1, rc.pic as cus_
     LEFT JOIN branch_creation bc ON agm.branch_id = bc.branch_id
     WHERE rc.cus_id = '$cus_id' ORDER BY rc.req_id DESC LIMIT 1");
 
-if ($query1->num_rows > 0) {
+if ($query1->rowCount() > 0) {
     $sql = $query1;
 } else {
     $sql = $query2;
 }
-$row = $sql->fetch_assoc();
+$row = $sql->fetch();
 ?>
 <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12">
     <div class="row">
@@ -67,3 +67,8 @@ $row = $sql->fetch_assoc();
         <img src='<?php echo 'uploads/request/customer/' . $row['cus_pic']; ?>' class='img-show' name="info_photo" id="info_photo">
     </div>
 </div>
+
+<?php
+// Close the database connection
+$connect = null;
+?>

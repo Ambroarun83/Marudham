@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $('button').click(function (e) { e.preventDefault(); })
+    // $('button').click(function (e) { e.preventDefault(); })
 
     $('#conf_person_type').change(function () {
         let type = $(this).val();
@@ -109,7 +109,9 @@ function submitConfirmation() {
             if (response.includes('Error')) {
                 swarlErrorAlert(response);
             } else {
-                swarlSuccessAlert(response);
+                swarlSuccessAlert(response, function(){
+                    $('.closeModal').trigger('click');
+                });
                 resetModalContents();
             }
         }
@@ -371,12 +373,16 @@ function swarlInfoAlert(title, text) {
         }
     });
 }
-function swarlSuccessAlert(response) {
+function swarlSuccessAlert(response, callback) {
     Swal.fire({
         title: response,
         icon: 'success',
         confirmButtonText: 'Ok',
         confirmButtonColor: '#009688'
+    }).then((result) => {
+        if( result.isConfirmed && typeof callback === 'function'){
+            callback();
+        }
     });
 }
 

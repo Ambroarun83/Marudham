@@ -11,13 +11,13 @@ if (isset($_POST['from_date']) && isset($_POST['to_date']) && $_POST['from_date'
     $where  = "AND (date(c.created_date) >= '" . $from_date . "') AND (date(c.created_date) <= '" . $to_date . "') ";
 }
 
-$bankqry = $con->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
-$bank_id = $bankqry->fetch_assoc()['bank_details'];
+$bankqry = $connect->query("SELECT `bank_details` FROM `user` WHERE `user_id`= $user_id");
+$bank_id = $bankqry->fetch()['bank_details'];
 
 //get agent user id to get data from collection
-$ag_userid_qry = $con->query("SELECT `user_id` from user where FIND_IN_SET( `ag_id`, (SELECT `agentforstaff` from user where `user_id` = '$user_id')) ");
+$ag_userid_qry = $connect->query("SELECT `user_id` from user where FIND_IN_SET( `ag_id`, (SELECT `agentforstaff` from user where `user_id` = '$user_id')) ");
 $ids = array();
-while ($row = $ag_userid_qry->fetch_assoc()) {
+while ($row = $ag_userid_qry->fetch()) {
     $ids[] = $row['user_id'];
 }
 $ag_user_id = implode(',', $ids);
@@ -178,9 +178,9 @@ foreach ($result as $row) {
     $sno = $sno + 1;
 }
 
-function count_all_data($mysqli)
+function count_all_data($connect)
 {
-    $query = $mysqli->query("SELECT COUNT(*) AS ag_count FROM (
+    $query = $connect->query("SELECT COUNT(*) AS ag_count FROM (
             SELECT 1 FROM collection
             UNION ALL
             SELECT 1 FROM loan_issue
@@ -193,13 +193,13 @@ function count_all_data($mysqli)
             UNION ALL
             SELECT 1 FROM ct_cr_bag
         ) AS temp");
-    $statement = $query->fetch_assoc();
+    $statement = $query->fetch();
     return $statement['ag_count'];
 }
 
 $output = array(
     'draw' => intval($_POST['draw']),
-    'recordsTotal' => count_all_data($mysqli),
+    'recordsTotal' => count_all_data($connect),
     'recordsFiltered' => $number_filter_row,
     'data' => $data
 );
@@ -227,7 +227,6 @@ function moneyFormatIndia($num)
     return $thecash;
 }
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

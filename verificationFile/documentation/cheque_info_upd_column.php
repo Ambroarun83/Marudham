@@ -1,6 +1,10 @@
 <?php
 $cnt = $_POST['count'];
-$nos = json_decode($_POST['cheque_nos'], true);
+if(isset($_POST['cheque_nos'])){
+    $nos = json_decode($_POST['cheque_nos'], true);
+}else{
+    $nos = [];
+}
 
 for ($i = 0; $i < $cnt; $i++) {
 ?>
@@ -14,7 +18,4 @@ for ($i = 0; $i < $cnt; $i++) {
     </div>
 
 <?php }
-$con->close();
-$mysqli->close();
-$connect = null;
 ?>

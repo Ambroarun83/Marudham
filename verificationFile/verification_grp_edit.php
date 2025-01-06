@@ -17,6 +17,5 @@ $grpEditRes['dgsn'] = $group['group_designation'];
 
 echo json_encode($grpEditRes);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

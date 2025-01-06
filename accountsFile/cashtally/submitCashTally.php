@@ -21,7 +21,7 @@ $bank_untrkd = str_replace(')','',$bank_untrkd);
 $agent_cl = $_POST['agent_cl'];
 
 
-$qry = $con->query("INSERT INTO `cash_tally`(`op_date`,`op_hand`, `op_bank`, `op_agent`, `opening_bal`,`cl_date`, `cl_hand`, `cl_bank`, `bank_untrkd`, `cl_agent`, `closing_bal`, `insert_login_id`,`created_date` ) 
+$qry = $connect->query("INSERT INTO `cash_tally`(`op_date`,`op_hand`, `op_bank`, `op_agent`, `opening_bal`,`cl_date`, `cl_hand`, `cl_bank`, `bank_untrkd`, `cl_agent`, `closing_bal`, `insert_login_id`,`created_date` ) 
 VALUES ('$op_date','$hand_op','$bank_op','$agent_op','$opening_bal','$cl_date','$hand_cl','$bank_cl','$bank_untrkd','$agent_cl','$closing_bal','$user_id',now() )");
 
     if($qry){
@@ -31,4 +31,7 @@ VALUES ('$op_date','$hand_op','$bank_op','$agent_op','$opening_bal','$cl_date','
     }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

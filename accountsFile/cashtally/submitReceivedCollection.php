@@ -17,7 +17,7 @@ $tot_amt = $_POST['tot_amt_rec'];
 $rec_amt = $_POST['rec_amt'];
 $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
-$qry = $con->query("INSERT INTO `ct_hand_collection`(`user_id`, `user_name`, `branch_id`, `line_id`, `pre_bal`, `coll_amt`, `tot_amt`, `rec_amt`, `insert_login_id`, `created_date`) 
+$qry = $connect->query("INSERT INTO `ct_hand_collection`(`user_id`, `user_name`, `branch_id`, `line_id`, `pre_bal`, `coll_amt`, `tot_amt`, `rec_amt`, `insert_login_id`, `created_date`) 
                 VALUES ('$user_id','$user_name','$branch_id','$line_id','$pre_bal','$collected_amt','$tot_amt','$rec_amt','$insert_login_id','$op_date')");
 if($qry){
     $response = "Submitted Successfully";
@@ -26,4 +26,7 @@ if($qry){
 }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

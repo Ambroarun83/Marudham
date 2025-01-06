@@ -7,6 +7,6 @@ $user_id = $_SESSION['userid'];
 
 $approvalClass = new approvalClass($user_id);
 
-$response = $approvalClass->getApprovalCounts($con);
+$response = $approvalClass->getApprovalCounts($connect);
 
 echo json_encode($response);

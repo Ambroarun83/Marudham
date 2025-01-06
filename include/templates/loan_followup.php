@@ -133,7 +133,7 @@ if (sizeof($getUser) > 0) {
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add Followup</h5>
-				<button type="button" class="close closeModal" data-dismiss="modal" aria-label="Close" onclick="resetLoanFollowupTable()">
+				<button type="button" class="close closeModal" id="closeAddFollowupModal" data-dismiss="modal" aria-label="Close" >
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -183,7 +183,7 @@ if (sizeof($getUser) > 0) {
 			</div>
 			<div class="modal-footer">
 				<button class='btn btn-primary' name="sumit_add_lfollow" id="sumit_add_lfollow" tabindex="8">Submit</button>
-				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9" onclick="resetLoanFollowupTable()">Close</button>
+				<button class="btn btn-secondary closeModal" data-dismiss="modal" tabindex="9">Close</button>
 			</div>
 		</div>
 	</div>

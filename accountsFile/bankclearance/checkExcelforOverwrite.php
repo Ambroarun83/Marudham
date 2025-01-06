@@ -46,35 +46,35 @@ if(isset($_FILES["file"]["type"])){
                     
                     $narration = "";
                     if(isset($Row[1])) {
-                        $narration = mysqli_real_escape_string($con,$Row[1]); 
+                        $narration = $connect->quote($Row[1]); 
                     }
 
                     $trans_id = "";
                     if(isset($Row[2])) {
-                        $trans_id = mysqli_real_escape_string($con,$Row[2]); 
+                        $trans_id = $connect->quote($Row[2]); 
                     }
                     
                     $credit = "";
                     if(isset($Row[3])) {
-                        $credit = mysqli_real_escape_string($con,$Row[3]); 
+                        $credit = $connect->quote($Row[3]); 
                     }
                     
                     $debit = "";
                     if(isset($Row[4])) {
-                        $debit = mysqli_real_escape_string($con,$Row[4]); 
+                        $debit = $connect->quote($Row[4]);  
                     }
                     
                     $balance = "";
                     if(isset($Row[5])) {
-                        $balance = mysqli_real_escape_string($con,$Row[5]); 
+                        $balance = $connect->quote($Row[5]);  
                     }
                     
     
                     if($i==0 && $trans_date != "" && $trans_id != "" )
                     { 
-                        $qry=$con->query("SELECT trans_date from bank_stmt where bank_id = '$bank_id' and date(trans_date) = date('$trans_date') and insert_login_id = '$user_id' and created_date < now() ");
+                        $qry=$connect->query("SELECT trans_date from bank_stmt where bank_id = '$bank_id' and date(trans_date) = date('$trans_date') and insert_login_id = '$user_id' and created_date < now() ");
                         
-                        if($qry->num_rows == 0 and $message != 1) {
+                        if($qry->rowCount() == 0 and $message != 1) {
                             $message = 0; // if date not existing
                         }
                         else{
@@ -93,6 +93,9 @@ if(isset($_FILES["file"]["type"])){
 }
 
 echo $message;
+
+// Close the database connection
+$connect = null;
 ?>
 
     

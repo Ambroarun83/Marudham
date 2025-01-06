@@ -21,6 +21,5 @@ $famEditRes['bg'] = $fam['relation_Blood'];
 
 echo json_encode($famEditRes);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

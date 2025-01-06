@@ -48,6 +48,49 @@ function moneyFormatIndia($num)
     return $thecash;
 }
 ?>
+<style>
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #F9F9F9;
+        min-width: 160px;
+        margin-top: -50px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 10px 10px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #fafafa;
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+    .dropdown:hover .dropbtn {
+        background-color: #3E8E41;
+    }
+
+    .btn-outline-secondary {
+        color: #383737;
+        border-color: #383737;
+        position: inherit;
+        left: -20px;
+    }
+</style>
 <table class="table custom-table" id='DocListTable'>
     <thead>
         <tr>
@@ -85,9 +128,9 @@ function moneyFormatIndia($num)
             //Show NOC button until closed_status submit so we check the count of closed status against the request id.
             $cus_name = $row["cus_name_loan"];
             $ii_req_id = $row["req_id"];
-            $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
-            $closed_row = $closedSts->fetch_assoc();
-            $closed_cnt = $closedSts->num_rows;
+            $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
+            $closed_row = $closedSts->fetch();
+            $closed_cnt = $closedSts->rowCount();
 
         ?>
             <tr>
@@ -102,7 +145,7 @@ function moneyFormatIndia($num)
                     }
                     ?>
                 </td> <!-- Agent -->
-                <td><?php echo date('d-m-Y', strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
+                <td><?php if(isset($row["updated_date"])) echo date('d-m-Y', strtotime($row["updated_date"])); ?></td> <!-- Loan date -->
                 <td><?php echo moneyFormatIndia($row["loan_amt_cal"]); ?></td> <!-- Loan Amount -->
 
                 <td><?php
@@ -167,8 +210,8 @@ function moneyFormatIndia($num)
                                 }
                             }
                         } else if ($row['cus_status'] > 20) { // if status is closed(21) or more than that(22), then show closed status
-                            $closedSts = $con->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
-                            $closedStsrow = $closedSts->fetch_assoc();
+                            $closedSts = $connect->query("SELECT * FROM `closed_status` WHERE `req_id` ='" . strip_tags($ii_req_id) . "' ");
+                            $closedStsrow = $closedSts->fetch();
                             $rclosed = $closedStsrow['closed_sts'];
                             $consider_lvl = $closedStsrow['consider_level'];
                             if ($rclosed == '1') {
@@ -188,7 +231,7 @@ function moneyFormatIndia($num)
                     <?php
                     $doc_status = '';
                     if ($row['cus_status'] <= 20) { //show for present contents and closed customer but not submitted in closed
-                        if (getDocumentStatus($con, $ii_req_id, $cus_id) == false) {
+                        if (getDocumentStatus($connect, $ii_req_id, $cus_id) == false) {
                             $doc_status =  'Document Pending';
                             echo 'Document Pending';
                         } else {
@@ -196,7 +239,7 @@ function moneyFormatIndia($num)
                             echo 'Document Completed';
                         }
                     } else if ($row['cus_status'] > 20 and $row['cus_status'] < 22) { // show for closed(which are submitted in closed) and noc contents 
-                        if (getNOCDocDetails($con, $ii_req_id, $cus_id) == 'completed') { // this function will be true when user started to give NOC to customer, then that will be in noc pending
+                        if (getNOCDocDetails($connect, $ii_req_id, $cus_id) == 'completed') { // this function will be true when user started to give NOC to customer, then that will be in noc pending
                             echo 'NOC Completed';
                         } else {
                             echo 'NOC Pending';
@@ -229,55 +272,55 @@ function moneyFormatIndia($num)
 </table>
 
 <?php
-function getNOCDocDetails($con, $req_id, $cus_id)
+function getNOCDocDetails($connect, $req_id, $cus_id)
 {
 
     $response = 'completed';
 
-    $qry = $con->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then signed doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM signed_doc where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then signed doc any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM cheque_no_list where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then Cheque doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM cheque_no_list where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then Cheque doc any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' and (mortgage_process_noc = 0 or mortgage_document_noc = 0 or endorsement_process_noc = 0 or en_RC_noc = 0 or en_Key_noc = 0 ) ");
-    if ($qry->num_rows > 0) { // if condition true, then acknowlegement documentation any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM acknowlegement_documentation where req_id ='$req_id' and cus_id_doc = '$cus_id' and (mortgage_process_noc = 0 or mortgage_document_noc = 0 or endorsement_process_noc = 0 or en_RC_noc = 0 or en_Key_noc = 0 ) ");
+    if ($qry->rowCount() > 0) { // if condition true, then acknowlegement documentation any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM gold_info where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then Gold doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM gold_info where req_id ='$req_id' and cus_id = '$cus_id' and noc_given = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then Gold doc any one is given other may be pending to give
         $response = 'pending';
     }
 
-    $qry = $con->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' and doc_info_upload_noc = 0 ");
-    if ($qry->num_rows > 0) { // if condition true, then Document doc any one is given other may be pending to give
+    $qry = $connect->query("SELECT * FROM document_info where req_id ='$req_id' and cus_id = '$cus_id' and doc_info_upload_noc = 0 ");
+    if ($qry->rowCount() > 0) { // if condition true, then Document doc any one is given other may be pending to give
         $response = 'pending';
     }
 
     return $response;
 }
 
-function getNOCSubmitted($con, $req_id, $cus_id)
+function getNOCSubmitted($connect, $req_id, $cus_id)
 {
     // should check whether all documents have been given to customer but not removed from list
 }
 
-function getDocumentStatus($con, $req_id, $cus_id)
+function getDocumentStatus($connect, $req_id, $cus_id)
 {
 
     $response1 = 'completed';
 
-    // $sts_qry = $con->query("SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' ");//echo "SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' "; 
-    // if($sts_qry->num_rows > 0){
-    //     while($sts_row=$sts_qry->fetch_assoc()){
+    // $sts_qry = $connect->query("SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' ");//echo "SELECT id,doc_Count FROM signed_doc_info where cus_id = '$cus_id' and req_id = '$req_id' "; 
+    // if($sts_qry->rowCount() > 0){
+    //     while($sts_row=$sts_qry->fetch()){
 
-    //         $sts_qry1 = $con->query("SELECT * FROM signed_doc where cus_id = '$cus_id' and req_id = '$req_id' and signed_doc_id='".$sts_row['id']."' "); //echo ' $sts_qry1->num_rows:',$sts_qry1->num_rows,' docCount:',$sts_row['doc_Count'],'---';
-    //         if($sts_qry1->num_rows == $sts_row['doc_Count'] && $response1 != 'pending' ){ // check whether mentioned count of signed document has been collected from customer or not
+    //         $sts_qry1 = $connect->query("SELECT * FROM signed_doc where cus_id = '$cus_id' and req_id = '$req_id' and signed_doc_id='".$sts_row['id']."' "); //echo ' $sts_qry1->rowCount():',$sts_qry1->rowCount(),' docCount:',$sts_row['doc_Count'],'---';
+    //         if($sts_qry1->rowCount() == $sts_row['doc_Count'] && $response1 != 'pending' ){ // check whether mentioned count of signed document has been collected from customer or not
     //             $response1 = 'completed';// if condition true then all documents are collected
     //             //completed
     //         }else{
@@ -288,13 +331,13 @@ function getDocumentStatus($con, $req_id, $cus_id)
 
 
     $response2 = 'completed';
-    // $sts_qry = $con->query("SELECT id,cheque_count FROM cheque_info where cus_id = '$cus_id' and req_id = '$req_id' ");
-    // if($sts_qry->num_rows > 0){
+    // $sts_qry = $connect->query("SELECT id,cheque_count FROM cheque_info where cus_id = '$cus_id' and req_id = '$req_id' ");
+    // if($sts_qry->rowCount() > 0){
 
-    //     while($sts_row=$sts_qry->fetch_assoc()){
+    //     while($sts_row=$sts_qry->fetch()){
 
-    //         $sts_qry1 = $con->query("SELECT * FROM cheque_upd where cus_id = '$cus_id' and req_id = '$req_id' and cheque_table_id='".$sts_row['id']."' ");
-    //         if($sts_qry1->num_rows == $sts_row['cheque_count'] && $response2 != 'pending'){ // check whether mentioned count of Cheque has been collected from customer or not
+    //         $sts_qry1 = $connect->query("SELECT * FROM cheque_upd where cus_id = '$cus_id' and req_id = '$req_id' and cheque_table_id='".$sts_row['id']."' ");
+    //         if($sts_qry1->rowCount() == $sts_row['cheque_count'] && $response2 != 'pending'){ // check whether mentioned count of Cheque has been collected from customer or not
     //             $response2 = 'completed';// if condition true then all documents are collected
     //         }else{
     //             $response2 = 'pending';
@@ -304,10 +347,10 @@ function getDocumentStatus($con, $req_id, $cus_id)
 
 
     $response3 = 'completed';
-    $sts_qry = $con->query("SELECT mortgage_process,mortgage_document_pending,endorsement_process,Rc_document_pending FROM acknowlegement_documentation where cus_id_doc = '$cus_id' and req_id = '$req_id' ");
+    $sts_qry = $connect->query("SELECT mortgage_process,mortgage_document_pending,endorsement_process,Rc_document_pending FROM acknowlegement_documentation where cus_id_doc = '$cus_id' and req_id = '$req_id' ");
 
-    if ($sts_qry->num_rows > 0) {
-        while ($sts_row = $sts_qry->fetch_assoc()) { //check any one of document for mortgage or endorsement is pending then response will be pending
+    if ($sts_qry->rowCount() > 0) {
+        while ($sts_row = $sts_qry->fetch()) { //check any one of document for mortgage or endorsement is pending then response will be pending
 
             if ($sts_row['mortgage_process'] == '0') {
                 if ($sts_row['mortgage_document_pending'] == 'YES') {
@@ -324,10 +367,10 @@ function getDocumentStatus($con, $req_id, $cus_id)
 
 
     $response4 = 'completed';
-    // $sts_qry = $con->query("SELECT * FROM document_info where cus_id = '$cus_id' and req_id = '$req_id' ");
+    // $sts_qry = $connect->query("SELECT * FROM document_info where cus_id = '$cus_id' and req_id = '$req_id' ");
 
-    // if($sts_qry->num_rows > 0){
-    //     while($sts_row = $sts_qry->fetch_assoc()){
+    // if($sts_qry->rowCount() > 0){
+    //     while($sts_row = $sts_qry->fetch()){
 
     //         if($sts_row['doc_upload'] == '' || $sts_row['doc_upload'] == null ){ // check any of document that are added in verification is not still uploaded
     //             $response4 = 'pending';
@@ -531,8 +574,6 @@ function getDocumentStatus($con, $req_id, $cus_id)
 </script>
 
 <?php
-
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;
 ?>

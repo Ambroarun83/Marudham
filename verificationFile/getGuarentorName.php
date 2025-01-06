@@ -13,6 +13,5 @@ while ($row = $result->fetch()) {
 
 echo $famname;
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

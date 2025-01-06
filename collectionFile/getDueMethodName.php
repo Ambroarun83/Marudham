@@ -5,8 +5,8 @@ if(isset($_POST['req_id'])){
     $req_id = $_POST['req_id'];
 }
 
-$qry = $mysqli->query("SELECT profit_type,due_method_scheme,due_type FROM acknowlegement_loan_calculation where req_id = $req_id ");
-$row = $qry->fetch_assoc();
+$qry = $connect->query("SELECT profit_type,due_method_scheme,due_type FROM acknowlegement_loan_calculation where req_id = $req_id ");
+$row = $qry->fetch();
 $profit_type = $row['profit_type'];
 $due_method_scheme = $row['due_method_scheme'];
 
@@ -22,4 +22,6 @@ if($profit_type == 1){
 
 echo json_encode($response);
 
+// Close the database connection
+$connect = null;
 ?>

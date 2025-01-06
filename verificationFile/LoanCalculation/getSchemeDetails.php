@@ -7,9 +7,9 @@ if(isset($_POST['scheme_id'])){
 $detailrecords = array();
 
 
-$result=$con->query("SELECT * FROM loan_scheme where scheme_id = '".strip_tags($scheme_id)."' ");
+$result=$connect->query("SELECT * FROM loan_scheme where scheme_id = '".strip_tags($scheme_id)."' ");
 $i=0;
-while($row = $result->fetch_assoc()){
+while($row = $result->fetch()){
     $detailrecords['intrest_rate'] = $row['intrest_rate'];
     $detailrecords['due_period'] = $row['due_period'];
     $detailrecords['doc_charge_type'] = $row['doc_charge_type'];
@@ -21,6 +21,8 @@ while($row = $result->fetch_assoc()){
     $i++;
 }
 
-
 echo json_encode($detailrecords);
+
+// Close the database connection
+$connect = null;
 ?>

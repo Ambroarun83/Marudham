@@ -45,7 +45,7 @@ if(isset($_FILES['file'])){
 
 
 
-    $sql = $con->query("INSERT INTO `confirmation_followup`(`req_id`, `cus_id`, `person_type`, `person_name`, `relationship`, `mobile`, `upload`, `status`, `sub_status`, `label`, `remark`, `insert_login_id`, `created_date`) 
+    $sql = $connect->query("INSERT INTO `confirmation_followup`(`req_id`, `cus_id`, `person_type`, `person_name`, `relationship`, `mobile`, `upload`, `status`, `sub_status`, `label`, `remark`, `insert_login_id`, `created_date`) 
             VALUES ('$req_id','$cus_id','$person_type','$person_name','$relationship','$mobile','$file','$status','$sub_status','$label','$remark','$userid',NOW())");
     
     if($sql){
@@ -55,4 +55,7 @@ if(isset($_FILES['file'])){
     }
 
 echo $response;
+
+// Close the database connection
+$connect = null;
 ?>

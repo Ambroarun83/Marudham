@@ -11,10 +11,10 @@ $j=0;
 foreach($sub_cat_array as $sub_cat){
 
     $loanCatSelect = "SELECT * FROM loan_scheme WHERE (sub_category = '".$sub_cat."' and sub_category !='') and status=0"; 
-    $res = $con->query($loanCatSelect) or die("Error in Get All Records");
-    if ($res->num_rows>0)
+    $res = $connect->query($loanCatSelect) or die("Error in Get All Records");
+    if ($res->rowCount()>0)
     {$i=0;
-        while($row = $res->fetch_object()){	
+        while($row = $res->fetchObject()){	
             $detailrecords[$j][$i]['scheme_id']      = $row->scheme_id; 
             $detailrecords[$j][$i]['scheme_name']      = $row->scheme_name; 
             $i++;
@@ -25,6 +25,8 @@ foreach($sub_cat_array as $sub_cat){
 echo json_encode($detailrecords);
 
 
+// Close the database connection
+$connect = null;
 
 
 
@@ -74,13 +76,13 @@ echo json_encode($detailrecords);
 //         foreach($sub_cat_array as $sub_cat){
 //             if($sub_cat != 0 and $sub_cat != ''){
                 
-//                 $checkloanQry = $con->query("SELECT * from loan_category where sub_category_name = '".$sub_cat."' and loan_category_name =$loan_cat and status = 0");
+//                 $checkloanQry = $connect->query("SELECT * from loan_category where sub_category_name = '".$sub_cat."' and loan_category_name =$loan_cat and status = 0");
 //                 if($checkloanQry->num_rows>0){
                     
 //                     print_r($loan_cat);
 //                     print_r($sub_cat);
 //                     $loanCatSelect = "SELECT * FROM loan_scheme WHERE sub_category = '".$sub_cat."' and status = 0 "; 
-//                     $res = $con->query($loanCatSelect) or die("Error in Get All Records");
+//                     $res = $connect->query($loanCatSelect) or die("Error in Get All Records");
 //                     if ($res->num_rows>0)
 //                     {$i=0;print_r($loanCatSelect);
 //                         while($row = $res->fetch_object()){	
@@ -98,7 +100,7 @@ echo json_encode($detailrecords);
 //                         print_r(' Loan Cat ID - '.$loan_cat);
 //                         $loanDoneID='';
 //                         $loanCatSelect = "SELECT * FROM loan_scheme WHERE loan_category = $loan_cat and status = 0 "; 
-//                         $res = $con->query($loanCatSelect) or die("Error in Get All Records");
+//                         $res = $connect->query($loanCatSelect) or die("Error in Get All Records");
 //                         if ($res->num_rows>0)
 //                         {$i=0;print_r($loanCatSelect);
 //                             while($row = $res->fetch_object()){	
@@ -112,7 +114,7 @@ echo json_encode($detailrecords);
 //                 }
 //             }else{
 //                 $loanCatSelect = "SELECT * FROM loan_scheme WHERE loan_category = $loan_cat and status = 0 "; 
-//                 $res = $con->query($loanCatSelect) or die("Error in Get All Records");
+//                 $res = $connect->query($loanCatSelect) or die("Error in Get All Records");
 //                 if ($res->num_rows>0)
 //                 {$i=0;
 //                     while($row = $res->fetch_object()){	
@@ -134,7 +136,7 @@ echo json_encode($detailrecords);
 //     $j=0;
 //     foreach($loan_cat_array as $loan_cat){
 //         $loanCatSelect = "SELECT * FROM loan_scheme WHERE loan_category = $loan_cat and status = 0 "; 
-//         $res = $con->query($loanCatSelect) or die("Error in Get All Records");
+//         $res = $connect->query($loanCatSelect) or die("Error in Get All Records");
 //         if ($res->num_rows>0)
 //         {$i=0;
 //             while($row = $res->fetch_object()){	
@@ -151,11 +153,11 @@ echo json_encode($detailrecords);
 //     foreach($loan_cat_array as $loan_cat){
 //         $k=0;
 //         foreach($sub_cat_array as $sub_cat){
-//             $checkloanQry = $con->query("SELECT * from loan_category where sub_category_name = $sub_cat and loan_category_name =$loan_cat and status = 0");
+//             $checkloanQry = $connect->query("SELECT * from loan_category where sub_category_name = $sub_cat and loan_category_name =$loan_cat and status = 0");
 //             if($checkloanQry->num_rows>0){
 
 //                 $loanCatSelect = "SELECT * FROM loan_scheme WHERE sub_category = $sub_cat and status = 0 "; 
-//                 $res = $con->query($loanCatSelect) or die("Error in Get All Records");
+//                 $res = $connect->query($loanCatSelect) or die("Error in Get All Records");
 //                 if ($res->num_rows>0)
 //                 {$i=0;
 //                     while($row = $res->fetch_object()){	
@@ -166,7 +168,7 @@ echo json_encode($detailrecords);
 //                 }
 //             }else{
 //                 $loanCatSelect = "SELECT * FROM loan_scheme WHERE loan_category = $loan_cat and status = 0 "; 
-//                 $res = $con->query($loanCatSelect) or die("Error in Get All Records");
+//                 $res = $connect->query($loanCatSelect) or die("Error in Get All Records");
 //                 if ($res->num_rows>0)
 //                 {$i=0;
 //                     while($row = $res->fetch_object()){	

@@ -17,6 +17,5 @@ $bank['ifsc'] = $bank_details['ifsc_code'];
 
 echo json_encode($bank);
 
-$con->close();
-$mysqli->close();
+// Close the database connection
 $connect = null;

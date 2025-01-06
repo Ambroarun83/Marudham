@@ -10,17 +10,17 @@ $netcash = 0;
 $op_date = date('Y-m-d',strtotime($_POST['op_date']));
 
 
-// $qry = $con->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
+// $qry = $connect->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
 // $row = $qry->fetch_assoc();
 // $role = $row['role'];if($role == 1){$usertype = 'Director';}else if($role==3){$usertype = 'Staff';}
 // $username = $row['fullname'];
 
 
-$qry = $con->query("SELECT req_id,sum(cash) as cash,issued_to,insert_login_id,created_date FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((issued_mode = 1 and payment_type = '0') or (issued_mode = 0 and cash != '')) and date(created_date) = '$op_date' GROUP BY insert_login_id ");
-while($row = $qry->fetch_assoc()){
+$qry = $connect->query("SELECT req_id,sum(cash) as cash,issued_to,insert_login_id,created_date FROM `loan_issue` where (agent_id = '' or agent_id = null) and ((issued_mode = 1 and payment_type = '0') or (issued_mode = 0 and cash != '')) and date(created_date) = '$op_date' GROUP BY insert_login_id ");
+while($row = $qry->fetch()){
 
-    $dbCheck = $con->query("SELECT * from ct_db_hissued where date(created_date) = '".date('Y-m-d',strtotime($row['created_date']))."' and li_user_id = '".$row['insert_login_id']."' ");
-    if($dbCheck->num_rows == 0){ 
+    $dbCheck = $connect->query("SELECT * from ct_db_hissued where date(created_date) = '".date('Y-m-d',strtotime($row['created_date']))."' and li_user_id = '".$row['insert_login_id']."' ");
+    if($dbCheck->rowCount() == 0){ 
         // to check whether created date of loan issue is already entered in hissued table. if done, no need to show bcoz submitted hissued no need to show in table
 
         // $netcash = $netcash + intVal($row['cash']);
@@ -30,14 +30,16 @@ while($row = $qry->fetch_assoc()){
         $records[$i]['user_id'] = $row['insert_login_id'];
         $user_id = $row['insert_login_id'];
 
-        $qry1 = $con->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
-        $row1 = $qry1->fetch_assoc();
+        $qry1 = $connect->query("SELECT role,fullname FROM `user` where user_id= '$user_id' ");
+        $row1 = $qry1->fetch();
         $role = $row1['role'];if($role == 1){$records[$i]['usertype'] = 'Director';}else if($role==3){$records[$i]['usertype'] = 'Staff';}
         $records[$i]['username'] = $row1['fullname'];
         $i++;
     }
 }
 
+// Close the database connection
+$connect = null;
 ?>
 
 

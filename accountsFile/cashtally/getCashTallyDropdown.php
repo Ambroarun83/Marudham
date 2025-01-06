@@ -4,8 +4,8 @@ include('..\..\ajaxconfig.php');
 
 if(isset($_SESSION['userid'])){
     $userid = $_SESSION['userid'];
-    $qry = $con->query("SELECT cash_tally_admin from user where user_id = $userid");
-    $admin_access = $qry->fetch_assoc()['cash_tally_admin'];
+    $qry = $connect->query("SELECT cash_tally_admin from user where user_id = $userid");
+    $admin_access = $qry->fetch()['cash_tally_admin'];
 }else{
     $admin_access = '1';
 }
@@ -41,10 +41,10 @@ else if($mode == 'bankdebit'){
 
 
 
-$run = $con->query($qry);
-if($run->num_rows > 0){
+$run = $connect->query($qry);
+if($run->rowCount() > 0){
     $i=0;
-    while($row = $run->fetch_assoc()){
+    while($row = $run->fetch()){
         $records[$i]['id'] = $row['id'];
         $records[$i]['modes'] = $row['modes'];
         $i++;
@@ -52,4 +52,7 @@ if($run->num_rows > 0){
 }
 
 echo json_encode($records);
+
+// Close the database connection
+$connect = null;
 ?>
