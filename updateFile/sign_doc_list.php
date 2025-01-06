@@ -50,7 +50,7 @@ include '../ajaxconfig.php';
             <tr>
                 <td> <?php echo $i++; ?></td>
 
-                <td> <?php if($signedDoc["doc_name"] == '0'){ echo 'Promissory Note';}elseif($signedDoc["doc_name"] == '1'){ echo 'Stamp Paper';}elseif($signedDoc["doc_name"] == '2'){ echo 'P Additional';}elseif($signedDoc["doc_name"] == '3'){ echo 'S Additional';} ?></td>
+                <td>Signed Document</td>
 
                 <td> <?php if($signedDoc["sign_type"] == '0'){ echo 'Customer';}elseif($signedDoc["sign_type"] == '1'){ echo 'Guarantor';}elseif($signedDoc["sign_type"] == '2'){ echo 'Combined';}elseif($signedDoc["sign_type"] == '3'){ echo 'Family Members';} ?></td>
 

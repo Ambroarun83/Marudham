@@ -36,10 +36,10 @@ function refcodes($connect){
     //////////////////////// To get Exchange reference Code once again /////////////////////////
     $myStr = "EXS";
     $selectIC = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ");
-    if($selectIC->num_rows>0)
+    if($selectIC->rowCount() > 0)
     {
         $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-        while($row = $codeAvailable->fetch_assoc()){
+        while($row = $codeAvailable->fetch()){
             $ac2 = $row["ref_code"];
         }
         $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;
@@ -58,10 +58,10 @@ function uclrefcode($connect){
     //////////////////////// To get Exchange reference Code once again /////////////////////////
     $myStr = "UCL";
     $selectIC = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ");
-    if($selectIC->num_rows>0)
+    if($selectIC->rowCount() > 0)
     {
         $codeAvailable = $connect->query("SELECT ref_code FROM ct_db_exf WHERE ref_code != '' ORDER BY id DESC LIMIT 1");
-        while($row = $codeAvailable->fetch_assoc()){
+        while($row = $codeAvailable->fetch()){
             $ac2 = $row["ref_code"];
         }
         $appno2 = ltrim(strstr($ac2, '-'), '-'); $appno2 = $appno2+1;

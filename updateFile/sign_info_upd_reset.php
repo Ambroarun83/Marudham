@@ -46,15 +46,7 @@ include '../ajaxconfig.php';
                 <td><?php echo $i;
                     $i++; ?></td>
 
-                <td><?php if ($signed["doc_name"] == '0') {
-                        echo 'Promissory Note';
-                    } elseif ($signed["doc_name"] == '1') {
-                        echo 'Stamp Paper';
-                    } elseif ($signed["doc_name"] == '2') {
-                        echo 'P Additional';
-                    } elseif ($signed["doc_name"] == '3') {
-                        echo 'S Additional';
-                    } ?></td>
+                <td>Signed Document</td>
 
                 <td><?php if ($signed["sign_type"] == '0') {
                         echo 'Customer';
