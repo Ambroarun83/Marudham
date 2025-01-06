@@ -964,7 +964,9 @@ function submitCommitment() {
         if (response.includes('Error')) {
             swarlErrorAlert(response);
         } else {
-            swarlSuccessAlert(response);
+            swarlSuccessAlert(response, function(){
+                $('.closeModal').trigger('click');
+            });
             $('#addCommitment').find('.modal-body input,select').not('#comm_fdate,#comm_user_type,#comm_user').val('');
             $('.person-div').hide();
         }
@@ -1099,7 +1101,7 @@ function swarlInfoAlert(title, text) {
         }
     });
 }
-function swarlSuccessAlert(response) {
+function swarlSuccessAlert(response, callback) {
     Swal.fire({
         title: response,
         icon: 'success',
@@ -1107,6 +1109,12 @@ function swarlSuccessAlert(response) {
         confirmButtonColor: '#009688',
         timerProgressBar: true,
         timer: 2000,
-        showConfirmButton: false
+        showConfirmButton: false,
+        willClose: () => {
+            // This will run after the timer completes
+            if (typeof callback === 'function') {
+                callback();
+            }
+        }
     });
 }

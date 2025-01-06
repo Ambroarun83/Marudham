@@ -202,6 +202,7 @@ function submitUpload() {
                     confirmButtonColor: '#009688',
                 }).then(function (result) {
                     if (result.isConfirmed) {
+                        $('#close_upd_modal').trigger('click');
                         // getBankClearanceTable();
                     }
                 })

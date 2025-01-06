@@ -266,8 +266,7 @@ $(function () {//For Update
         var loan_category_upd = $('#loan_category_upd').val();
         getSubCategory(loan_category_upd);
         var sub_category_upd = $('#sub_category_upd').val();
-        getLoaninfo(sub_category_upd);
-        setTimeout(() => {
+        getLoaninfo(sub_category_upd).then(function(){
             var tot_value_upd = $('#tot_value_upd').val();
             var ad_amt_upd = $('#ad_amt_upd').val();
             var ad_perc_upd = $('#ad_perc_upd').val();
@@ -276,7 +275,7 @@ $(function () {//For Update
             $('#ad_amt').val(ad_amt_upd);
             $('#ad_perc').val(ad_perc_upd);
             $('#loan_amt').val(loan_amt_upd);
-        }, 2000);
+        });
 
         getCategoryInfo(sub_category_upd);
 
@@ -760,7 +759,7 @@ function getSubCategory(loan_cat) {
 //Fetch loan Details based on category select
 function getLoaninfo(sub_cat_id) {
     let cus_id = $('#cus_id').val();
-    $.ajax({
+    return $.ajax({
         url: 'requestFile/getLoanInfo.php',
         data: { 'sub_cat_id': sub_cat_id, "cus_id": cus_id },
         dataType: 'json',

@@ -24,7 +24,7 @@ include '../ajaxconfig.php';
 
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php echo $charges["coll_date"]; ?></td>
+                <td><?php echo date('d-m-Y',strtotime($charges["coll_date"])); ?></td>
                 <td><?php echo $charges["coll_purpose"]; ?></td>
                 <td><?php echo $charges["coll_charge"]; ?></td>
                 <!-- <td>
