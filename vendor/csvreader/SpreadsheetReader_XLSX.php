@@ -1009,9 +1009,16 @@
 							$CurrentRowColumnCount = 0;
 						}
 
-						if ($CurrentRowColumnCount > 0)
-						{
-							$this -> CurrentRow = array_fill(0, $CurrentRowColumnCount, '');
+						// if ($CurrentRowColumnCount > 0)
+						// {
+						// 	$this -> CurrentRow = array_fill(0, $CurrentRowColumnCount, '');
+						// }
+
+						if (is_numeric($CurrentRowColumnCount) && $CurrentRowColumnCount > 0) {
+							$CurrentRowColumnCount = (int) $CurrentRowColumnCount; // Ensure it's an integer
+							$this->CurrentRow = array_fill(0, $CurrentRowColumnCount, '');
+						} else {
+							$this->CurrentRow = []; // Default to an empty array if $CurrentRowColumnCount is invalid
 						}
 
 						$this -> RowOpen = true;

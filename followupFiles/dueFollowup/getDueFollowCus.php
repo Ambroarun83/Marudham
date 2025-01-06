@@ -34,18 +34,10 @@ if ($user_id != 1) {
     $sub_area_list = array();
     $sub_area_list = implode(',', $sub_area_ids);
 }
-$start = isset($_POST['start']) ? intval($_POST['start']) : 0;
-$length = isset($_POST['length']) ? intval($_POST['length']) : 10;
-$searchValue = $_POST['search']['value'] ?? '';
 
-// $start = $_POST['start'];
-// $length = $_POST['length'];
-// $searchValue = $_POST['search'];
-// if ($length == -1) {
-//     $limit = ""; // No LIMIT if showing all records
-// } else {
-//     $limit = "LIMIT $start, $length";
-// }
+$start = $_POST['start'];
+$length = $_POST['length'];
+$searchValue = $_POST['search'];
 
 $data = [];
 
@@ -169,7 +161,7 @@ function getFilteredRecords($connect, $data, $searchValue, $sub_area_list, $sub_
     $search = $searchValue != '' ? "and (ii.cus_id LIKE '$searchValue%' or cp.cus_name LIKE '%$searchValue%' or alc.area_name LIKE '%$searchValue%' or salc.sub_area_name LIKE '%$searchValue%' or cp.mobile1 LIKE '$searchValue%' or cs.sub_status LIKE '%$searchValue%' )" : '';
     if (count($data) > 0) {
         // $query = $connect->query("SELECT COUNT(*) as total FROM (SELECT cp.cus_id as cp_cus_id FROM acknowlegement_customer_profile cp JOIN in_issue ii ON cp.cus_id = ii.cus_id where ii.status = 0 and (ii.cus_status >= 14 and ii.cus_status <= 17) $search and cp.area_confirm_subarea IN ($sub_area_list) GROUP BY ii.cus_id) as subquery ");
-        $query = $connect->query(" SELECT COUNT(*) AS total
+        $query = $connect->query(" SELECT COUNT(*) as total FROM ( SELECT cp.cus_id
         FROM
             acknowlegement_customer_profile cp
         JOIN in_issue ii ON
@@ -187,7 +179,7 @@ function getFilteredRecords($connect, $data, $searchValue, $sub_area_list, $sub_
             AND ii.status = 0 
             AND (ii.cus_status >= 14 AND ii.cus_status <= 17) $search 
             AND cp.area_confirm_subarea IN ($sub_area_list) 
-            GROUP BY ii.cus_id, cs.cus_id");
+            GROUP BY ii.cus_id, cs.cus_id ) as subquery");
 
         $total = $query->fetch()['total'];
 

@@ -64,9 +64,6 @@ if(isset($_FILES["file"]["type"])){
                         }
                     }
 
-                        // echo $trans_date;
-
-                    
                     $narration = "";
                     if(isset($Row[1])) {
                         $narration = $connect->quote($Row[1]);  
@@ -95,8 +92,7 @@ if(isset($_FILES["file"]["type"])){
                     
                     if($i==0 && $trans_date != "" && $trans_id != "" )
                     { 
-                        $insert=$connect->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) 
-                        VALUES ('$bank_id','$trans_date','$narration','$trans_id','$credit','$debit','$balance','$user_id',now() )");
+                        $insert = $connect->query("INSERT INTO `bank_stmt`(`bank_id`, `trans_date`, `narration`,`trans_id`, `credit`, `debit`, `balance`, `insert_login_id`, `created_date`) VALUES ('$bank_id', '$trans_date', $narration, $trans_id, $credit, $debit, $balance, '$user_id', now() )");
                     }
                     
                 }

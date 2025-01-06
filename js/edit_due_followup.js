@@ -36,7 +36,7 @@ function OnLoadFunctions(cusSts) {
                 "data": function (data) {
                     var search = $('#search').val();
                     data.search = search;
-                    data.cus_sts=cusSts;
+                    data.cus_sts = cusSts;
                 }
             },
             dom: 'lBfrtip',
@@ -51,10 +51,9 @@ function OnLoadFunctions(cusSts) {
                 }
             ],
             "lengthMenu": [
-                [10,25, 50, -1],
-                [10,25, 50, "All"]
+                [10, 10, 25, 50, -1],
+                [10, 10, 25, 50, "All"]
             ],
-            "pageLength": 10,
             "createdRow": function (row, data, dataIndex) {
                 // Add serial number in the first column
                 $('td', row).eq(0).html(dataIndex + 1);

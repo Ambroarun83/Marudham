@@ -45,13 +45,17 @@ $(document).ready(function () {
         if (verify == 'loan_calc') {
             $('#customer_profile').hide(); $('#cus_document').hide(); $('#customer_loan_calc').show();
             onLoadEditFunction();
-            getUserBasedLoanCategory();
-            setTimeout(() => {
-                getCategoryInfo();
+            getUserBasedLoanCategory().then(function () {
+                var loan_category = $('#loan_category').val(); // Get the selected loan category
+                return getSubCategory(loan_category); // Return the promise from getSubCategory
+            }).then(function () {
+                // After both functions are executed
                 var sub_cat_id = $('#sub_category').val();
+                getCategoryInfo();
                 getLoaninfo(sub_cat_id);
                 profitCalculationInfo();
-            }, 1000)
+            });
+
         }
     })
 
@@ -2468,7 +2472,7 @@ function getGroupandLine(sub_area_id) {
 function getUserBasedLoanCategory() {
     var loan_category = $('#loan_category_load').val();
     var loan_category_upd = $('#loan_category_upd').val();
-    $.ajax({
+    return $.ajax({
         url: 'verificationFile/LoanCalculation/getUserBasedLoanCategory.php',
         data: {},
         dataType: 'json',
@@ -2504,7 +2508,7 @@ function getUserBasedLoanCategory() {
 function getSubCategory(loan_cat) {
     var sub_category = $('#sub_category_load').val();
     var sub_categoryu_upd = $('#sub_category_upd').val();
-    $.ajax({
+    return $.ajax({
         url: 'requestFile/getSingleSubCategory.php',
         type: 'POST',
         dataType: 'json',
@@ -2666,7 +2670,6 @@ function getLoaninfo(sub_cat_id) {
     $.ajax({
         url: 'requestFile/getLoanInfo.php',
         data: { 'sub_cat_id': sub_cat_id ,"cus_id":cus_id},
-        data: { 'sub_cat_id': sub_cat_id },
         dataType: 'json',
         type: 'post',
         cache: false,
