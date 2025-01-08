@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Kolkata');
 $timeZoneQry = "SET time_zone = '+5:30' ";
 
 $host = "localhost";
@@ -14,4 +15,3 @@ try {
     die("Database connection failed: " . $e->getMessage());
 }
 
-date_default_timezone_set('Asia/Kolkata');
