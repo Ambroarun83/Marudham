@@ -748,8 +748,14 @@ function moneyFormatIndia($num)
         }
 
         $currentMonth = date('Y-m-d');
+        //The coll_date column is using datetime datatype if check only date it not return record.
+        //Using between is useful to check last year to current year. 
+        $startTime = '00:00:00'; //Set starting time of clock
+        $endTime = '23:59:59'; //set end time of clock 
+        $currentMonth = $currentMonth.' '.$endTime;
         if ($loanFrom['due_method_calc'] == 'Monthly' || $loanFrom['due_method_scheme'] == '1') {
             $maturity_month = $maturity_month_obj->modify('+1 month')->format('Y-m-01');
+            $maturity_month = $maturity_month.' '.$startTime;
             //Query for Monthly.
             $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.princ_amt_track,c.int_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.due_start_from, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
@@ -763,6 +769,7 @@ function moneyFormatIndia($num)
         } else
         if ($loanFrom['due_method_scheme'] == '2') {
             $maturity_month = $maturity_month_obj->modify('+1 week')->format('Y-m-d');
+            $maturity_month = $maturity_month.' '.$startTime;
             //Query For Weekly.
             $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
@@ -778,6 +785,7 @@ function moneyFormatIndia($num)
         } else
         if ($loanFrom['due_method_scheme'] == '3') {
             $maturity_month = $maturity_month_obj->modify('+1 day')->format('Y-m-d');
+            $maturity_month = $maturity_month.' '.$startTime;
             //Query For Day.
             $run = $connect->query("SELECT c.coll_code, c.due_amt, c.pending_amt, c.payable_amt, c.coll_date, c.trans_date, c.due_amt_track, c.bal_amt, c.coll_charge_track, c.coll_location, c.pre_close_waiver, alc.maturity_month, alc.maturity_month, alc.due_method_calc, u.fullname, u.role
             FROM `collection` c
@@ -786,7 +794,7 @@ function moneyFormatIndia($num)
             WHERE c.`req_id` = '$req_id' AND (c.due_amt_track != '' or c.pre_close_waiver!='')
             AND (
                 (c.coll_date BETWEEN '$maturity_month' AND '$currentMonth') OR
-                (c.trans_date BETWEEN '$maturity_month' AND '$currentMonth')
+                (c.trans_date BETWEEN '$maturity_month' AND '$currentMonth' AND c.trans_date != '0000-00-00')
             ) ");
         }
 
