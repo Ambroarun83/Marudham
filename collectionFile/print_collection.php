@@ -26,12 +26,13 @@ $due_amt_track = intVal($due_amt_track != '' ? $due_amt_track : 0);
 $penalty_track = intVal($penalty_track != '' ? $penalty_track : 0);
 $coll_charge_track = intVal($coll_charge_track != '' ? $coll_charge_track : 0);
 $net_received = $due_amt_track + $penalty_track + $coll_charge_track;
-$due_balance = ($due_amt - $due_amt_track) < 0 ? 0 : $due_amt - $due_amt_track;
+// $due_balance = ($due_amt - $due_amt_track) < 0 ? 0 : $due_amt - $due_amt_track;
 $loan_balance = getBalance($connect, $req_id, $coll_date);
 
 $user_id = $row['insert_login_id'];
 $qry = $connect->query("SELECT fullname from `user` where `user_id` = $user_id ");
 $user_name = $qry->fetch()['fullname'];
+$coll_modes = ['1' => 'Cash', '2' => 'Cheque', '3' => 'ECS', '4' => 'IMPS/NEFT/RTGS', '5' => 'UPI Transaction' ]
 ?>
 <style>
     @media print {
@@ -92,7 +93,7 @@ $user_name = $qry->fetch()['fullname'];
                 <div>Customer Name :</div>
             </b>
             <div>Loan Category :</div>
-            <div>Loan No :</div>
+            <div>Loan ID :</div>
             <div>Due Receipt :</div>
             <div>Penalty :</div>
             <div>Fine :</div><br>
@@ -101,6 +102,7 @@ $user_name = $qry->fetch()['fullname'];
             </b><br>
             <!-- <div>Due Balance :</div> -->
             <div>Loan Balance :</div>
+            <div>Collection Mode :</div>
             <div>User Name :</div>
         </div>
         <div class="data" style="display: flex; flex-direction: column; align-items: flex-start;">
@@ -125,6 +127,7 @@ $user_name = $qry->fetch()['fullname'];
             </b><br>
             <!-- <div><?php #echo moneyFormatIndia($due_balance); ?></div> -->
             <div><?php echo moneyFormatIndia($loan_balance); ?></div>
+            <div><?php echo $coll_modes[$coll_mode]; ?></div>
             <div><?php echo $user_name; ?></div>
         </div>
     </div>

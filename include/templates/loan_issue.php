@@ -856,7 +856,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 transaction" style="display:none">
 											<div class="form-group">
 												<label for="disabledInput">Transaction ID</label>
-												<input type="number" class="form-control" id="transaction_id" name="transaction_id" tabindex="38">
+												<input type="text" class="form-control" id="transaction_id" name="transaction_id" tabindex="38">
 												<span class="text-danger" style="display: none;" id="transact_id"> Please Enter Transaction ID </span>
 											</div>
 										</div>

@@ -1422,7 +1422,9 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 					<!-- Document History START -->
 					<div class="card">
-						<div class="card-header"> Documents History </div>
+						<div class="card-header"> Documents History 
+							<button type="button" class="btn btn-primary" name="show_document_history" id="show_document_history" style="padding: 5px 35px;  float: right;" tabindex="9" onclick="getDocumentHistory()">Show Document History</button>
+						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -2123,7 +2125,9 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 					<!--  Verification Info END -->
 					<!-- Loan History START -->
 					<div class="card">
-						<div class="card-header"> Loan History </div>
+						<div class="card-header"> Loan History 
+							<button type="button" class="btn btn-primary" name="show_loan_history" id="show_loan_history" style="padding: 5px 35px;  float: right;" tabindex="9" onclick="getLoanHistory()">Show Loan History</button>
+						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">

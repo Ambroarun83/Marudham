@@ -90,8 +90,10 @@ include '../ajaxconfig.php';
                 $relationship = $rw['relationship'] ?? '';
                 // mysqli_next_result($connect); // Move to the next query
             } elseif ($kyc['proofOf'] == '0') {
-                $qry = $connect->query("CALL get_cus_name('$cus_id')");
+                $qry = $connect->query("CALL get_cus_name($cus_id)");
                 $fam_mem = $qry->fetch()['customer_name'] ?? '';
+                // Close the cursor to free the connection
+                $qry->closeCursor();
                 $relationship = 'NIL';
                 // mysqli_next_result($connect); // Move to the next query
             }

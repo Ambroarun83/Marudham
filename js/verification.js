@@ -365,7 +365,7 @@ $(document).ready(function () {
         }
         if (verify == 'documentation') {
             $('#customer_profile').hide(); $('#cus_document').show(); $('#customer_loan_calc').hide();
-            getDocumentHistory();
+            // getDocumentHistory();
 
         }
         if (verify == 'loan_calc') {
@@ -3954,7 +3954,7 @@ function doc_submit_validation(submit_btn) {
 //////////////////////////////////////////////////////////////////// Loan Calculation Functions Start ///////////////////////////////////////////////////////////////////////////////
 function onLoadEditFunction() {//On load for Loan Calculation edit
     verificationPerson(); //To Select verification Person in Verification Info.////// 
-    getLoanHistory();//to get loan history, as same as document history but here action buttons are changing
+    // getLoanHistory();//to get loan history, as same as document history but here action buttons are changing
 }
 
 $('#loan_category').change(function () {
