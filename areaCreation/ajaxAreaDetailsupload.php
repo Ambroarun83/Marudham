@@ -41,13 +41,13 @@ if (isset($_FILES["file"]["type"])) {
                     $last_insert_id = 0;
                     if (isset($Row[3])) {
                         $area = $connect->quote($Row[3]); // Escape special characters for PDO
-                        $query = "SELECT * FROM area_list_creation where area_name = '" . $area . "' and status = 0";
+                        $query = "SELECT * FROM area_list_creation where area_name = " . $area . " and status = 0";
                         $result1 = $connect->query($query) or die("Error ");
                         if ($result1->rowCount() > 0) {
                             $row = $result1->fetch();
                             $area_list_creation_id = $row["area_id"];
                         } else {
-                            $query = "INSERT into area_list_creation (area_name, taluk) values('" . strip_tags($area) . "','" . strip_tags($taluk) . "')";
+                            $query = "INSERT into area_list_creation (area_name, taluk) values(" . strip_tags($area) . "," . strip_tags($taluk) . ")";
                             $result1 = $connect->query($query) or die("Error ");
                             $last_insert_id = $connect->lastInsertId();
                             $area_list_creation_id = $connect->lastInsertId();
@@ -58,13 +58,13 @@ if (isset($_FILES["file"]["type"])) {
                     $sub_area_list_creation_id = '';
                     if (isset($Row[4])) {
                         $subarea = $connect->quote($Row[4]); // Escape special characters for PDO
-                        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = '" . $subarea . "' and area_id_ref = '" . $area_list_creation_id . "' and status = 0";
+                        $query = "SELECT * FROM sub_area_list_creation where sub_area_name = " . $subarea . " and area_id_ref = '" . $area_list_creation_id . "' and status = 0";
                         $result1 = $connect->query($query) or die("Error ");
                         if ($result1->rowCount() > 0) {
                             $row = $result1->fetch();
                             $sub_area_list_creation_id = $row["sub_area_id"];
                         } else {
-                            $query = "INSERT into sub_area_list_creation (sub_area_name,area_id_ref) values('" . strip_tags($subarea) . "','" . $area_list_creation_id . "')";
+                            $query = "INSERT into sub_area_list_creation (sub_area_name,area_id_ref) values(" . strip_tags($subarea) . ",'" . $area_list_creation_id . "')";
                             $result1 = $connect->query($query) or die("Error ");
                             $sub_area_list_creation_id = $connect->lastInsertId();
                         }
@@ -85,10 +85,10 @@ if (isset($_FILES["file"]["type"])) {
 
                         $sub_area_list_creation_id = $sub_area . ',' . $sub_area_list_creation_id;
 
-                        $qry = $connect->query("UPDATE area_creation SET sub_area = '" . strip_tags($sub_area_list_creation_id) . "', taluk = '" . strip_tags($taluk) . "', district = '" . strip_tags($district) . "', state = '" . strip_tags($state) . "', pincode = '" . strip_tags($pincode) . "', updated_date = current_timestamp(), update_login_id = '" . $userid . "' WHERE area_creation_id = '" . strip_tags($area_creation_id) . "' ");
+                        $qry = $connect->query("UPDATE area_creation SET sub_area = '" . strip_tags($sub_area_list_creation_id) . "', taluk = " . strip_tags($taluk) . ", district = " . strip_tags($district) . ", state = " . strip_tags($state) . ", pincode = " . strip_tags($pincode) . ", updated_date = current_timestamp(), update_login_id = '" . $userid . "' WHERE area_creation_id = '" . strip_tags($area_creation_id) . "' ");
                     } else {
 
-                        $insert = $connect->query("INSERT INTO area_creation(area_name_id, sub_area, taluk, district,state,pincode,created_date,insert_login_id) VALUES('" . strip_tags($area_list_creation_id) . "', '" . strip_tags($sub_area_list_creation_id) . "', '" . strip_tags($taluk) . "', '" . strip_tags($district) . "','" . strip_tags($state) . "','" . strip_tags($pincode) . "', current_timestamp(), '" . $userid . "')");
+                        $insert = $connect->query("INSERT INTO area_creation(area_name_id, sub_area, taluk, district, state,  pincode, created_date, insert_login_id) VALUES('" . strip_tags($area_list_creation_id) . "', '" . strip_tags($sub_area_list_creation_id) . "', " . strip_tags($taluk) . ", " . strip_tags($district) . "," . strip_tags($state) . "," . strip_tags($pincode) . ", current_timestamp(), '" . $userid . "')");
                     }
                 }
             }

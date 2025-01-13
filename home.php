@@ -105,7 +105,7 @@ if(isset($getuserdetails['download_access'])){
 							<a href="#" id="userSettings" class="user-settings" data-toggle="dropdown" aria-haspopup="true">
 								<span class="user-name"><?php echo $fullname; ?></span>
 								<span class="avatar">
-									<img src="img/user22.png" alt="avatar">
+									<img src="img/avatar.png" alt="avatar">
 									<span class="status busy"></span>
 								</span>
 							</a>
@@ -113,7 +113,7 @@ if(isset($getuserdetails['download_access'])){
 								<div class="header-profile-actions">
 									<div class="header-user-profile">
 										<div class="header-user">
-											<img src="img/user22.png" alt="Admin Template">
+											<img src="img/avatar.png" alt="Admin Template">
 										</div>
 										<h5><?php echo $fullname; ?></h5>
 										<p><?php echo $fullname; ?></p>
