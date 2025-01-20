@@ -584,7 +584,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 																											echo $pic;
 																										} ?>">
 											<img id='imgshow' class="img_show" src='img/avatar.png' />
-											<input type="file" onchange="checkInputFileSize(this,200)" class="form-control" id="pic" name="pic" tabindex='18' value='<?php if (isset($pic)) {
+											<input type="file" onchange="compressImage(this,200)" class="form-control" id="pic" name="pic" tabindex='18' value='<?php if (isset($pic)) {
 																																											echo $pic;
 																																										} ?>'>
 											<span class="text-danger" style='display:none' id='picCheck'>Please Choose Image</span>
@@ -672,7 +672,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 																														echo $guarentor_photo;
 																													} ?>">
 											<img id='imgshows' class="img_show" src='img/avatar.png' />
-											<input type="file" onchange="checkInputFileSize(this,200)" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="22" value="<?php if (isset($guarentor_photo)) {
+											<input type="file" onchange="compressImage(this,200)" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="22" value="<?php if (isset($guarentor_photo)) {
 																																															echo $guarentor_photo;
 																																														} ?>">
 											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
@@ -2085,7 +2085,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 										<input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if (isset($com_audio)) {
 																																	echo $com_audio;
 																																} ?>">
-										<input type="file" onchange="checkInputFileSize(this,800)" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="14">
+										<input type="file" onchange="compressImage(this,800)" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="14">
 										<?php if (isset($communication)) {
 											if ($communication == '0') { ?>
 												<a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>
@@ -3036,7 +3036,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="upload"> Upload </label>
-							<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
+							<input type="file" onchange="compressImage(this,400)" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
 							<span class="text-danger" id="proofUploadCheck" style="display:none"> Upload </span>
 						</div>
 					</div>
@@ -3491,7 +3491,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 						<div class="form-group">
 							<label for="gold_upload"> Upload </label>
 							<input type="hidden" name="goldupload" id="goldupload">
-							<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
+							<input type="file" onchange="compressImage(this,400)" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
 							<span class="text-danger" id="gold_uploadCheck" style="display:none"> Please Upload file </span>
 						</div>
 					</div>

@@ -176,7 +176,7 @@ if (sizeof($getUser) > 0) {
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="conf_upload">Upload</label>
-								<input type="file" onchange="checkInputFileSize(this,800)" name="conf_upload" id="conf_upload" class='form-control' tabindex="6" title="Upload Call records">
+								<input type="file" onchange="compressImage(this,800)" name="conf_upload" id="conf_upload" class='form-control' tabindex="6" title="Upload Call records">
 							</div>
 							<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 								<label for="conf_status">Status</label><span class="required">&nbsp;*</span>

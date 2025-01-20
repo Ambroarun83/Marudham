@@ -495,7 +495,7 @@ if (sizeof($documentationInfo) > 0) {
 																																	echo $pic;
 																																} ?>'>
 											<img id='imgshow' class="imgshow" src='img/avatar.png' /><br>
-											<input type="file" onchange="checkInputFileSize(this,200)" class="form-control" id="pic" name="pic" tabindex='20' value='<?php if (isset($pic)) {
+											<input type="file" onchange="compressImage(this,200)" class="form-control" id="pic" name="pic" tabindex='20' value='<?php if (isset($pic)) {
 																																											echo $pic;
 																																										} ?>'>
 										</div>
@@ -579,7 +579,7 @@ if (sizeof($documentationInfo) > 0) {
 																														echo $guarentor_photo;
 																													} ?>">
 											<img id='imgshows' class="imgshow" src='img/avatar.png' />
-											<input type="file" onchange="checkInputFileSize(this,200)" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="24" value="<?php if (isset($guarentor_photo)) {
+											<input type="file" onchange="compressImage(this,200)" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="24" value="<?php if (isset($guarentor_photo)) {
 																																															echo $guarentor_photo;
 																																														} ?>">
 											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
@@ -1355,7 +1355,7 @@ if (sizeof($documentationInfo) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="mort_doc_upd" style="display: none;">
 										<div class="form-group">
 											<label for="mortgage_document_upd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
-											<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
+											<input type="file" onchange="compressImage(this,400)" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
 											<input type="hidden" id="mortgage_doc_upd" name="mortgage_doc_upd" value="">
 											<span class="text-danger" id="mortgagedocUpdCheck" style='display:none'> Upload Mortgage Document </span>
 										</div>
@@ -1524,7 +1524,7 @@ if (sizeof($documentationInfo) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="end_doc_upd" style="display: none;">
 									<div class="form-group">
 										<label for="RC_document_upd"> RC Uploads </label> <span class="required">&nbsp;*</span>
-										<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="38">
+										<input type="file" onchange="compressImage(this,400)" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="38">
 										<input type="hidden" id="rc_doc_upd" name="rc_doc_upd" value="">
 										<span class="text-danger" id="rcdocUpdCheck" style='display:none'> Upload RC </span>
 									</div>
@@ -2084,7 +2084,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="upd"> Uploads </label>
-								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()" tabindex='1'>
+								<input type="file" onchange="compressImage(this,400)" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()" tabindex='1'>
 								<span class="text-danger" id="docupdCheck" style="display: none;"> Upload Document </span>
 							</div>
 						</div>
@@ -2211,7 +2211,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="upd"> Uploads </label>
-								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple onchange="chequefilesCount()" tabindex='1'>
+								<input type="file" onchange="compressImage(this,400)" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple onchange="chequefilesCount()" tabindex='1'>
 								<span class="text-danger" id="chequeupdCheck" style='display:none'> Upload Cheque </span>
 							</div>
 						</div>
@@ -2444,7 +2444,7 @@ if (sizeof($documentationInfo) > 0) {
 							<div class="form-group">
 								<label for="gold_upload"> Upload </label>
 								<input type="hidden" name="goldupload" id="goldupload">
-								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
+								<input type="file" onchange="compressImage(this,400)" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
 								<span class="text-danger" id="gold_uploadCheck" style="display:none"> Please Upload files </span>
 							</div>
 						</div>
@@ -2581,7 +2581,7 @@ if (sizeof($documentationInfo) > 0) {
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="DocumentUpd"> Document Uploads </label>
-								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="1">
+								<input type="file" onchange="compressImage(this,400)" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="1">
 								<span class="text-danger" id="docinfoupdCheck" style='display:none'> Please Select Document </span>
 							</div>
 						</div>
@@ -2719,7 +2719,7 @@ if (sizeof($documentationInfo) > 0) {
 					<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 						<div class="form-group">
 							<label for="upload"> Upload </label>
-							<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
+							<input type="file" onchange="compressImage(this,400)" class="form-control" id="upload" name="upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
 							<span class="text-danger" id="proofUploadCheck" style="display:none"> Please Upload File </span>
 						</div>
 					</div>
