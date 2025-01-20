@@ -1001,8 +1001,8 @@ $(function () {
 
     getOldGuarentorImg();//gets the guarentor name if the customer is exist or already uploaded the guarentor pic
 
-    resetgroupInfo(); //Group Family Modal Table Reset 
-    resetGroupDetails()
+   // resetgroupInfo(); //Group Family Modal Table Reset 
+   // resetGroupDetails()
     // closeGroupModal()
 
     resetpropertyInfo() // Property Info Modal Table Reset.
@@ -1459,194 +1459,194 @@ $('#guarentor_name').change(function () { //Select Guarantor Name relationship w
 
 //////////////////////////////////Group Start///////////////////////////////////////
 
-$('#grpnameCheck').hide(); $('#grpageCheck').hide(); $('#grpaadharCheck').hide(); $('#grpmbleCheck').hide(); $('#grpgenCheck').hide(); $('#grpdesgnCheck').hide();
+//$('#grpnameCheck').hide(); $('#grpageCheck').hide(); $('#grpaadharCheck').hide(); $('#grpmbleCheck').hide(); $('#grpgenCheck').hide(); $('#grpdesgnCheck').hide();
 
-$(document).on("click", "#groupInfoBtn", function () {
-    let req_id = $('#req_id').val();
-    let cus_id = $('#cus_id').val();
-    let group_name = $("#group_name").val();
-    let group_age = $("#group_age").val();
-    let group_aadhar = $("#group_aadhar").val();
-    let group_mobile = $("#group_mobile").val();
-    let group_gender = $("#group_gender").val();
-    let group_designation = $("#group_designation").val();
-    let grpID = $("#grpID").val();
+// $(document).on("click", "#groupInfoBtn", function () {
+//     let req_id = $('#req_id').val();
+//     let cus_id = $('#cus_id').val();
+//     let group_name = $("#group_name").val();
+//     let group_age = $("#group_age").val();
+//     let group_aadhar = $("#group_aadhar").val();
+//     let group_mobile = $("#group_mobile").val();
+//     let group_gender = $("#group_gender").val();
+//     let group_designation = $("#group_designation").val();
+//     let grpID = $("#grpID").val();
 
-    if (group_name != "" && group_age != "" && group_aadhar != "" && group_mobile != "" && group_mobile.length === 10 && group_gender != "" && group_designation != "" && req_id != "") {
-        $.ajax({
-            url: 'verificationFile/verification_group_submit.php',
-            type: 'POST',
-            data: { "group_name": group_name, "group_age": group_age, "group_aadhar": group_aadhar, "group_mobile": group_mobile, "group_gender": group_gender, "group_designation": group_designation, "grpTableId": grpID, "req_id": req_id, "cus_id": cus_id },
-            cache: false,
-            success: function (response) {
+//     if (group_name != "" && group_age != "" && group_aadhar != "" && group_mobile != "" && group_mobile.length === 10 && group_gender != "" && group_designation != "" && req_id != "") {
+//         $.ajax({
+//             url: 'verificationFile/verification_group_submit.php',
+//             type: 'POST',
+//             data: { "group_name": group_name, "group_age": group_age, "group_aadhar": group_aadhar, "group_mobile": group_mobile, "group_gender": group_gender, "group_designation": group_designation, "grpTableId": grpID, "req_id": req_id, "cus_id": cus_id },
+//             cache: false,
+//             success: function (response) {
 
-                var insresult = response.includes("Inserted");
-                var updresult = response.includes("Updated");
-                if (insresult) {
-                    $('#grpInsertOk').show();
-                    setTimeout(function () {
-                        $('#grpInsertOk').fadeOut('fast');
-                    }, 2000);
-                }
-                else if (updresult) {
-                    $('#grpUpdateok').show();
-                    setTimeout(function () {
-                        $('#grpUpdateok').fadeOut('fast');
-                    }, 2000);
-                }
-                else {
-                    $('#NotOk').show();
-                    setTimeout(function () {
-                        $('#NotOk').fadeOut('fast');
-                    }, 2000);
-                }
+//                 var insresult = response.includes("Inserted");
+//                 var updresult = response.includes("Updated");
+//                 if (insresult) {
+//                     $('#grpInsertOk').show();
+//                     setTimeout(function () {
+//                         $('#grpInsertOk').fadeOut('fast');
+//                     }, 2000);
+//                 }
+//                 else if (updresult) {
+//                     $('#grpUpdateok').show();
+//                     setTimeout(function () {
+//                         $('#grpUpdateok').fadeOut('fast');
+//                     }, 2000);
+//                 }
+//                 else {
+//                     $('#NotOk').show();
+//                     setTimeout(function () {
+//                         $('#NotOk').fadeOut('fast');
+//                     }, 2000);
+//                 }
 
-                resetgroupInfo();
-                resetGroupDetails()
-                // closeGroupModal()
-            }
-        });
-    }
-    else {
+//                 resetgroupInfo();
+//                 resetGroupDetails()
+//                 // closeGroupModal()
+//             }
+//         });
+//     }
+//     else {
 
-        if (group_name == "") {
-            $('#grpnameCheck').show();
-        } else {
-            $('#grpnameCheck').hide();
-        }
+//         if (group_name == "") {
+//             $('#grpnameCheck').show();
+//         } else {
+//             $('#grpnameCheck').hide();
+//         }
 
-        if (group_age == "") {
-            $('#grpageCheck').show();
-        } else {
-            $('#grpageCheck').hide();
-        }
+//         if (group_age == "") {
+//             $('#grpageCheck').show();
+//         } else {
+//             $('#grpageCheck').hide();
+//         }
 
-        if (group_aadhar == "") {
-            $('#grpaadharCheck').show();
-        } else {
-            $('#grpaadharCheck').hide();
-        }
+//         if (group_aadhar == "") {
+//             $('#grpaadharCheck').show();
+//         } else {
+//             $('#grpaadharCheck').hide();
+//         }
 
-        if (group_mobile == "" || group_mobile.length < 10) {
-            $('#grpmbleCheck').show();
-        } else {
-            $('#grpmbleCheck').hide();
-        }
+//         if (group_mobile == "" || group_mobile.length < 10) {
+//             $('#grpmbleCheck').show();
+//         } else {
+//             $('#grpmbleCheck').hide();
+//         }
 
-        if (group_gender == "") {
-            $('#grpgenCheck').show();
-        } else {
-            $('#grpgenCheck').hide();
-        }
+//         if (group_gender == "") {
+//             $('#grpgenCheck').show();
+//         } else {
+//             $('#grpgenCheck').hide();
+//         }
 
-        if (group_designation == "") {
-            $('#grpdesgnCheck').show();
-        } else {
-            $('#grpdesgnCheck').hide();
-        }
+//         if (group_designation == "") {
+//             $('#grpdesgnCheck').show();
+//         } else {
+//             $('#grpdesgnCheck').hide();
+//         }
 
-    }
+//     }
 
-});
+// });
 
-function resetgroupInfo() {
-    let cus_id = $('#cus_id').val();
+// function resetgroupInfo() {
+//     let cus_id = $('#cus_id').val();
 
-    $.ajax({
-        url: 'verificationFile/verification_grp_reset.php',
-        type: 'POST',
-        data: { "cus_id": cus_id },
-        cache: false,
-        success: function (html) {
-            $("#GroupTable").empty();
-            $("#GroupTable").html(html);
+//     $.ajax({
+//         url: 'verificationFile/verification_grp_reset.php',
+//         type: 'POST',
+//         data: { "cus_id": cus_id },
+//         cache: false,
+//         success: function (html) {
+//             $("#GroupTable").empty();
+//             $("#GroupTable").html(html);
 
-            $("#group_name").val('');
-            $("#group_age").val('');
-            $("#group_aadhar").val('');
-            $("#group_mobile").val('');
-            $("#group_gender").val('');
-            $("#group_designation").val('');
-            $("#grpID").val('');
-        }
-    });
-}
+//             $("#group_name").val('');
+//             $("#group_age").val('');
+//             $("#group_aadhar").val('');
+//             $("#group_mobile").val('');
+//             $("#group_gender").val('');
+//             $("#group_designation").val('');
+//             $("#grpID").val('');
+//         }
+//     });
+// }
 
-function resetGroupDetails() {
-    let cus_id = $('#cus_id').val();
-    $.ajax({
-        url: 'verificationFile/verification_group_list.php',
-        type: 'POST',
-        data: { "cus_id": cus_id },
-        cache: false,
-        success: function (html) {
-            $("#GroupList").empty();
-            $("#GroupList").html(html);
-        }
-    });
-}
+// function resetGroupDetails() {
+//     let cus_id = $('#cus_id').val();
+//     $.ajax({
+//         url: 'verificationFile/verification_group_list.php',
+//         type: 'POST',
+//         data: { "cus_id": cus_id },
+//         cache: false,
+//         success: function (html) {
+//             $("#GroupList").empty();
+//             $("#GroupList").html(html);
+//         }
+//     });
+// }
 
-$("body").on("click", "#verification_grp_edit", function () {
-    let id = $(this).attr('value');
+// $("body").on("click", "#verification_grp_edit", function () {
+//     let id = $(this).attr('value');
 
-    $.ajax({
-        url: 'verificationFile/verification_grp_edit.php',
-        type: 'POST',
-        data: { "id": id },
-        dataType: 'json',
-        cache: false,
-        success: function (result) {
+//     $.ajax({
+//         url: 'verificationFile/verification_grp_edit.php',
+//         type: 'POST',
+//         data: { "id": id },
+//         dataType: 'json',
+//         cache: false,
+//         success: function (result) {
 
-            $("#grpID").val(result['id']);
-            $("#group_name").val(result['gname']);
-            $("#group_age").val(result['age']);
-            $("#group_aadhar").val(result['gaadhar']);
-            $("#group_mobile").val(result['gmobile']);
-            $("#group_gender").val(result['gGen']);
-            $("#group_designation").val(result['dgsn']);
+//             $("#grpID").val(result['id']);
+//             $("#group_name").val(result['gname']);
+//             $("#group_age").val(result['age']);
+//             $("#group_aadhar").val(result['gaadhar']);
+//             $("#group_mobile").val(result['gmobile']);
+//             $("#group_gender").val(result['gGen']);
+//             $("#group_designation").val(result['dgsn']);
 
 
 
-            // $('#famnameCheck').hide(); $('#famrelationCheck').hide(); $('#famremarkCheck').hide(); $('#famaddressCheck').hide(); $('#famageCheck').hide(); $('#famaadharCheck').hide(); $('#fammobileCheck').hide(); $('#famoccCheck').hide(); $('#famincomeCheck').hide(); $('#fambgCheck').hide();
-        }
-    });
+//             // $('#famnameCheck').hide(); $('#famrelationCheck').hide(); $('#famremarkCheck').hide(); $('#famaddressCheck').hide(); $('#famageCheck').hide(); $('#famaadharCheck').hide(); $('#fammobileCheck').hide(); $('#famoccCheck').hide(); $('#famincomeCheck').hide(); $('#fambgCheck').hide();
+//         }
+//     });
 
-});
+// });
 
-$("body").on("click", "#verification_grp_delete", function () {
-    var isok = confirm("Do you want delete this Group Info?");
-    if (isok == false) {
-        return false;
-    } else {
-        var Groupid = $(this).attr('value');
+// $("body").on("click", "#verification_grp_delete", function () {
+//     var isok = confirm("Do you want delete this Group Info?");
+//     if (isok == false) {
+//         return false;
+//     } else {
+//         var Groupid = $(this).attr('value');
 
-        $.ajax({
-            url: 'verificationFile/verification_grp_delete.php',
-            type: 'POST',
-            data: { "Groupid": Groupid },
-            cache: false,
-            success: function (response) {
-                var delresult = response.includes("Deleted");
-                if (delresult) {
-                    $('#GroupDeleteOk').show();
-                    setTimeout(function () {
-                        $('#GroupDeleteOk').fadeOut('fast');
-                    }, 2000);
-                }
-                else {
+//         $.ajax({
+//             url: 'verificationFile/verification_grp_delete.php',
+//             type: 'POST',
+//             data: { "Groupid": Groupid },
+//             cache: false,
+//             success: function (response) {
+//                 var delresult = response.includes("Deleted");
+//                 if (delresult) {
+//                     $('#GroupDeleteOk').show();
+//                     setTimeout(function () {
+//                         $('#GroupDeleteOk').fadeOut('fast');
+//                     }, 2000);
+//                 }
+//                 else {
 
-                    $('#GroupDeleteNotOk').show();
-                    setTimeout(function () {
-                        $('#GroupDeleteNotOk').fadeOut('fast');
-                    }, 2000);
-                }
+//                     $('#GroupDeleteNotOk').show();
+//                     setTimeout(function () {
+//                         $('#GroupDeleteNotOk').fadeOut('fast');
+//                     }, 2000);
+//                 }
 
-                resetgroupInfo();
-                resetGroupDetails()
-            }
-        });
-    }
-});
+//                 resetgroupInfo();
+//                 resetGroupDetails()
+//             }
+//         });
+//     }
+// });
 
 ///////////////////////// Property Info Starts /////////////////////////////////////
 

@@ -46,7 +46,8 @@ $statusObj = [
     '21' => 'Closed',
 ];
 $consider_lvl_arr = [1 => 'Bronze', 2 => 'Silver', 3 => 'Gold', 4 => 'Platinum', 5 => 'Diamond'];
-
+$role_arr = [1=>'Director',2=>'Agent',3=>'Staff'];
+$coll_arr = [1=>'Cash',2=>'Cheque',3=>'ECS',4=>'IMPS/NEFT/RTGS',5=>'UPI Transaction'];
 
 $column = array(
     'cp.id',
@@ -60,9 +61,10 @@ $column = array(
     'cp.id',
     'cp.id',
     'cp.id',
-    'req.user_type',
-    'req.user_name',
+    'u.role',
+    'u.fullname',
     'coll.coll_date',
+    'coll.coll_mode',
     'SUM(coll.due_amt_track)',
     'ii.id',
     'ii.id',
@@ -80,6 +82,7 @@ $query = "SELECT
                 coll.cus_id,
                 coll.req_id,
                 coll.cus_name,
+                coll.coll_mode,
                 al.area_name,
                 sal.sub_area_name,
                 lcc.loan_category_creation_name AS loan_cat_name,
@@ -89,8 +92,8 @@ $query = "SELECT
                 lc.principal_amt_cal,
                 lc.int_amt_cal,
                 ac.ag_name,
-                req.user_type,
-                req.user_name,
+                u.role,
+                u.fullname,
                 coll.coll_date,
                 coll.trans_date,
                 SUM(coll.due_amt_track) AS due_amt_track,
@@ -111,6 +114,7 @@ $query = "SELECT
             JOIN acknowlegement_loan_calculation lc ON coll.req_id = lc.req_id
             JOIN request_creation req ON coll.req_id = req.req_id
             JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
+             JOIN user u ON coll.insert_login_id = u.user_id
             LEFT JOIN agent_creation ac ON req.agent_id = ac.ag_id
             LEFT JOIN closed_status cls ON req.req_id = cls.req_id
 
@@ -126,8 +130,8 @@ if (isset($_POST['search'])) {
                     OR coll.cus_name LIKE '%" . $_POST['search'] . "%'
                     OR al.area_name LIKE '%" . $_POST['search'] . "%'
                     OR sal.sub_area_name LIKE '%" . $_POST['search'] . "%'
-                    OR req.user_type LIKE '%" . $_POST['search'] . "%'
-                    OR req.user_name LIKE '%" . $_POST['search'] . "%'
+                    OR u.role LIKE '%" . $_POST['search'] . "%'
+                    OR u.fullname LIKE '%" . $_POST['search'] . "%'
                     OR coll.coll_date LIKE '%" . $_POST['search'] . "%') ";
     }
 }
@@ -173,14 +177,14 @@ foreach ($result as $row) {
     $sub_array[] = $row['loan_cat_name'];
     $sub_array[] = $row['sub_category'];
     $sub_array[] = $row['ag_name'];
-    $sub_array[] = $row['user_type'];
-    $sub_array[] = $row['user_name'];
+    $sub_array[] = $role_arr[$row['role']];
+    $sub_array[] = $row['fullname'];
     if ($row['trans_date'] != '0000-00-00') {
         $sub_array[] = date('d-m-Y', strtotime($row['trans_date']));
     } else {
         $sub_array[] = date('d-m-Y', strtotime($row['coll_date']));
     }
-
+    $sub_array[] = $coll_arr[$row['coll_mode']];
     if ($row['due_type'] != 'Interest') {
         //to get the principal and interest amt separate in due amt paid
         $response = calculatePrincipalAndInterest(intVal($row['principal_amt_cal']) / $row['due_period'], intVal($row['int_amt_cal']) / $row['due_period'], intVal($row['due_amt_track']));

@@ -813,6 +813,11 @@ if (sizeof($getUser) > 0) {
 										<a href="request_report"><i class='icon-area-graph'></i>Request</a>
 									</li>
 								<?php  } ?>
+								<?php if ($request_report == 0) { ?>
+									<li>
+										<a href="cancel_revoke_report"><i class='icon-area-graph'></i>Cancel / Revoke</a>
+									</li>
+								<?php  } ?>
 								<?php if ($cus_profile_report == 0) { ?>
 									<li>
 										<a href="cus_profile_report"><i class='icon-area-graph'></i>Customer Profile</a>

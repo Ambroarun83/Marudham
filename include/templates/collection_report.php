@@ -44,6 +44,7 @@
 									<th>User Type</th>
 									<th>User</th>
 									<th>Receipt Date</th>
+									<th>Collection Mode</th>
 									<th>Due Amount</th>
 									<th>Principal Amount</th>
 									<th>Interest Amount</th>
@@ -58,6 +59,7 @@
 								<tfoot>
 									<tr>
 										<td colspan="14"></td>
+										<td></td>
 										<td></td>
 										<td></td>
 										<td></td>

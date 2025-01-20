@@ -14,7 +14,7 @@ if (isset($_GET['msc'])) {
 }
 $current_page = isset($_GET['page']) ? $_GET['page'] : null;
 include('api/main.php'); // Database Connection File   
-if(isset($getuserdetails['download_access'])){
+if (isset($getuserdetails['download_access'])) {
 	define('DACC', $getuserdetails['download_access']);
 }
 ?>
@@ -420,7 +420,10 @@ if(isset($getuserdetails['download_access'])){
 			<?php if ($current_page == 'request_report') { ?>
 				<?php include "include/templates/request_report.php" ?>
 			<?php } else ?>
-
+			<!-- Cancel and Revoke  Report -->
+			<?php if ($current_page == 'cancel_revoke_report') { ?>
+				<?php include "include/templates/cancel_revoke_report.php" ?>
+			<?php } else ?>
 			<!-- Customer Profile Report -->
 			<?php if ($current_page == 'cus_profile_report') { ?>
 				<?php include "include/templates/cus_profile_report.php" ?>

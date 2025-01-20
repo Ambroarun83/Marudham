@@ -731,7 +731,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 					<!-- Guarentor END -->
 
 					<!-- Group Info START -->
-					<div class="card">
+					<!-- <div class="card">
 						<div class="card-header"> Group Info <span style="font-weight:bold" class=""></span>
 						</div>
 						<div class="card-body">
@@ -761,7 +761,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 							</div>
 
 						</div>
-					</div>
+					</div> -->
 					<!-- Group Info END -->
 
 

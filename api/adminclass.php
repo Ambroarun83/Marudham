@@ -3906,7 +3906,6 @@ class admin
 			$cus_Tableid = $_POST['cus_Tableid'];
 		}
 
-
 		if ($cus_Tableid == '') {
 			$qry = $mysqli->query("SELECT * From customer_profile where req_id = $req_id");
 			if ($qry->num_rows == 0) {

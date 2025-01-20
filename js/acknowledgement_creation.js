@@ -784,7 +784,7 @@ $(function () {
 
     resetFamDetails(); //Family Table List
 
-    resetGroupDetails()    //Group Family Modal Table Reset 
+  //  resetGroupDetails()    //Group Family Modal Table Reset 
 
     resetPropertyinfoList() //Property Info List.
 
@@ -1058,19 +1058,19 @@ function verificationPerson() {
     });
 }
 
-function resetGroupDetails() {
-    let cus_id = $('#cus_id').val();
-    $.ajax({
-        url: 'verificationFile/verification_group_list.php',
-        type: 'POST',
-        data: { "cus_id": cus_id },
-        cache: false,
-        success: function (html) {
-            $("#GroupList").empty();
-            $("#GroupList").html(html);
-        }
-    });
-}
+// function resetGroupDetails() {
+//     let cus_id = $('#cus_id').val();
+//     $.ajax({
+//         url: 'verificationFile/verification_group_list.php',
+//         type: 'POST',
+//         data: { "cus_id": cus_id },
+//         cache: false,
+//         success: function (html) {
+//             $("#GroupList").empty();
+//             $("#GroupList").html(html);
+//         }
+//     });
+// }
 
 ///////////////////////// Property Info Starts /////////////////////////////////////
 function resetPropertyinfoList() {
