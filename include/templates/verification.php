@@ -686,7 +686,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 					<!-- Guarentor END -->
 
 					<!-- Group Info START -->
-					<div class="card">
+					<!-- <div class="card">
 						<div class="card-header"> Group Info <span style="font-weight:bold" class=""></span>
 							<button type="button" class="btn btn-primary" id="group_details_add" name="group_details_add" data-toggle="modal" data-target=".addGroupDetails" style="padding: 5px 35px; float: right; " tabindex='23'><span class="icon-add"></span></button>
 						</div>
@@ -718,7 +718,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 							</div>
 
 						</div>
-					</div>
+					</div> -->
 					<!-- Group Info END -->
 
 					<!-- Customer Data START -->
@@ -2618,7 +2618,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 
 <!-- Add Group Members Modal -->
-<div class="modal fade addGroupDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<!-- <div class="modal fade addGroupDetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content" style="background-color: white">
 			<div class="modal-header">
@@ -2627,9 +2627,9 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body"> -->
 				<!-- alert messages -->
-				<div id="grpInsertOk" class="successalert"> Group Details Added Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+				<!-- <div id="grpInsertOk" class="successalert"> Group Details Added Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
 				</div>
 
 				<div id="grpUpdateok" class="successalert"> Group Info Updated Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
@@ -2731,7 +2731,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 <!-- END  Add Group Members Modal -->
 
 <!-- Add Property Modal  START -->

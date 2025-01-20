@@ -1,7 +1,22 @@
 $(document).ready(function () {
 
-    //Collection Report Table
-    var collection_report_table = $('#collection_report_table').DataTable({
+    $('#sel_screen option').hide();
+    $('#sel_screen option[value=""]').show(); // Show the 'Select Screen' option
+
+
+    $('#type').change(function () {
+        let type = $(this).val();
+        
+        if(type == '1'){ // If Cancel is selected
+            $('#sel_screen .all-options').show(); 
+            $('#sel_screen .cancel-option').show(); 
+        } else {
+           
+            $('#sel_screen .all-options').hide();
+            $('#sel_screen .cancel-option').show(); 
+        }
+    });
+    var cancel_revoke_table = $('#cancel_revoke_table').DataTable({
         "order": [
             [0, "desc"]
         ],
@@ -9,18 +24,20 @@ $(document).ready(function () {
         'serverSide': true,
         'serverMethod': 'post',
         'ajax': {
-            'url': 'reportFile/collection/getCollectionReport.php',
+            'url': 'reportFile/cancel_revoke/getCancelRevokeReport.php',
             'data': function (data) {
                 var search = $('input[type=search]').val();
                 data.search = search;
                 data.from_date = $('#from_date').val();
                 data.to_date = $('#to_date').val();
+                data.type = $('#type').val();
+                data.sel_screen = $('#sel_screen').val();
             }
         },
         dom: 'lBfrtip',
         buttons: [{
             extend: 'excel',
-            title: "Collection Report List"
+            title: "Request Report List"
         },
         {
             extend: 'colvis',
@@ -31,6 +48,9 @@ $(document).ready(function () {
             [10, 25, 50, -1],
             [10, 25, 50, "All"]
         ],
+        'drawCallback': function () {
+            searchFunction('cancel_revoke_table');
+        },
         "footerCallback": function (row, data, start, end, display) {
             var api = this.api();
 
@@ -43,7 +63,7 @@ $(document).ready(function () {
             };
 
             // Array of column indices to sum
-            var columnsToSum = [15, 16, 17, 18, 19, 20];
+            var columnsToSum = [9];
 
             // Loop through each column index
             columnsToSum.forEach(function (colIndex) {
@@ -54,16 +74,37 @@ $(document).ready(function () {
                     .reduce(function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0);
+
                 // Update footer for the current column
                 $(api.column(colIndex).footer()).html(`<b>` + total.toLocaleString() + `</b>`);
             });
-        },
-        'drawCallback': function() {
-            searchFunction('collection_report_table');
         }
     });
     $('#reset_btn').click(function () {
-        collection_report_table.ajax.reload();
-    })
-});
+        // Get the values of the input fields
+        var from_date = $('#from_date').val();
+        var to_date = $('#to_date').val();
+        var type = $('#type').val();
+        var sel_screen = $('#sel_screen').val();
+    
+        // Check if all fields are selected
+        if (from_date === '' || to_date === '' || type === '' || sel_screen === '') {
+            // If any field is empty, show an alert
+            swalError('Warning','Please select all required fields')
+        } else {
+            // If all fields are filled, reload the table
+            cancel_revoke_table.ajax.reload();
+        }
+    });
 
+
+});
+//alert message
+function swalError(title, text) {
+	Swal.fire({
+		icon: 'error',
+		title: title,
+		text: text,
+        confirmButtonColor: '#009688',
+	})
+}

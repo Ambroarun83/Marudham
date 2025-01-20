@@ -681,7 +681,7 @@ if (sizeof($getLoanCalculation) > 0) {
 					<!-- Guarentor END -->
 
 					<!-- Group Info START -->
-					<div class="card">
+					<!-- <div class="card">
 						<div class="card-header"> Group Info <span style="font-weight:bold" class=""></span>
 						</div>
 						<div class="card-body">
@@ -711,7 +711,7 @@ if (sizeof($getLoanCalculation) > 0) {
 							</div>
 
 						</div>
-					</div>
+					</div> -->
 					<!-- Group Info END -->
 
 
