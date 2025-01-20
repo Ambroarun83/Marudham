@@ -1592,7 +1592,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="docUpd" style="display: none;">
 										<div class="form-group">
 											<label for="MortgageDocumentUpd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
-											<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="25">
+											<input type="file" onchange="compressImage(this,400)" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="25">
 											<input type="hidden" id="mortgage_doc_upd" name="mortgage_doc_upd" value="<?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?>">
 											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/" . $mortgage_document_upd; ?>" target="_blank" >  <?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?> </a> -->
 											<span class="text-danger" id="mortgagedocUpdCheck"> Upload Mortgage Document </span>
@@ -1758,7 +1758,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="RCdocUpd" style="display: none;">
 									<div class="form-group">
 										<label for="RCDocumentUpd"> RC Uploads </label> <span class="required">&nbsp;*</span>
-										<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="39">
+										<input type="file" onchange="compressImage(this,400)" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="39">
 										<input type="hidden" id="rc_doc_upd" name="rc_doc_upd" value="<?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>">
 										<!-- <a href="<?php echo "uploads/verification/endorsement_doc/" . $Rc_document_upd; ?>" target="_blank" > <?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>  </a> -->
 										<span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
@@ -2154,7 +2154,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 										<input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if (isset($com_audio)) {
 																																	echo $com_audio;
 																																} ?>">
-										<input type="file" onchange="checkInputFileSize(this,800)" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="13">
+										<input type="file" onchange="compressImage(this,800)" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="13">
 										<?php if (isset($communication)) {
 											if ($communication == '0') { ?>
 												<a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>
@@ -2596,7 +2596,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="upd"> Uploads </label>
-								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()" tabindex='1'>
+								<input type="file" onchange="compressImage(this,400)" class="form-control" id="signdoc_upd" name="signdoc_upd[]" multiple onchange="filesCount()" tabindex='1'>
 								<span class="text-danger" id="docupdCheck"> Upload Document </span>
 							</div>
 						</div>
@@ -2726,7 +2726,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="upd"> Uploads </label>
-								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple onchange="chequefilesCount()" tabindex='1'>
+								<input type="file" onchange="compressImage(this,400)" class="form-control" id="cheque_upd" name="cheque_upd[]" multiple onchange="chequefilesCount()" tabindex='1'>
 								<span class="text-danger" id="chequeupdCheck"> Upload Cheque </span>
 							</div>
 						</div>
@@ -2862,7 +2862,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 						<div class="form-group">
 							<label for="gold_upload"> Upload </label>
 							<input type="hidden" name="goldupload" id="goldupload">
-							<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
+							<input type="file" onchange="compressImage(this,400)" class="form-control" id="gold_upload" name="gold_upload" accept=".pdf,.jpg,.png,.jpeg" tabindex='1'>
 							<span class="text-danger" id="gold_uploadCheck" style="display:none"> Please Upload file </span>
 						</div>
 					</div>
@@ -2999,7 +2999,7 @@ $sub_area_topbar = isset($doc_sub_area_name) && $doc_sub_area_name != '' ? $doc_
 						<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
 							<div class="form-group">
 								<label for="DocumentUpd"> Document Uploads </label>
-								<input type="file" onchange="checkInputFileSize(this,400)" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="1">
+								<input type="file" onchange="compressImage(this,400)" class="form-control" id="document_info_upd" name="document_info_upd[]" multiple tabindex="1">
 							</div>
 						</div>
 

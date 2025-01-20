@@ -2611,7 +2611,7 @@ class admin
 			"',
 		'" . strip_tags($reportmodule) . "', '" . strip_tags($ledger_report) . "', '" . strip_tags($request_report) . "', '" . strip_tags($cus_profile_report) . "', '" . strip_tags($loan_issue_report) .
 			"',
-		'" . strip_tags($collection_report) . "', '" . strip_tags($balance_report) . "', '" . strip_tags($due_list_report) . "', '" . strip_tags($closed_report) . "', '". strip_tags($agent_report) ."',
+		'" . strip_tags($collection_report) . "', '" . strip_tags($balance_report) . "', '" . strip_tags($due_list_report) . "', '" . strip_tags($closed_report) . "', '" . strip_tags($agent_report) . "',
 		'" . strip_tags($searchmodule) . "', '" . strip_tags($search_screen) . "','" . strip_tags($bulk_upload_module) . "', '" . strip_tags($bulk_upload) . "',
 		'" . strip_tags($loan_track_module) . "', '" . strip_tags($loan_track) . "','" . strip_tags($sms_module) . "','" . strip_tags($sms_generation) . "','" . strip_tags($userid) . "',now() )";
 		// echo $insertQry;die;
@@ -3062,7 +3062,7 @@ class admin
 	`cus_profile_report` = '" . strip_tags($cus_profile_report) . "', `loan_issue_report` = '" . strip_tags($loan_issue_report) . "', 
 	`collection_report` = '" . strip_tags($collection_report) . "', `balance_report` = '" . strip_tags($balance_report) .
 			"', 
-	`due_list_report` = '" . strip_tags($due_list_report) . "', `closed_report` = '" . strip_tags($closed_report) ."', `agent_report` = '". strip_tags($agent_report) ."',
+	`due_list_report` = '" . strip_tags($due_list_report) . "', `closed_report` = '" . strip_tags($closed_report) . "', `agent_report` = '" . strip_tags($agent_report) . "',
 	`search_module` = '" . strip_tags($searchmodule) . "', `search` = '" . strip_tags($search_screen) . "',`bulk_upload_module` = '" . strip_tags($bulk_upload_module) . "', `bulk_upload` = '" . strip_tags($bulk_upload) .
 			"',
 	`loan_track_module` = '" . strip_tags($loan_track_module) . "', `loan_track` = '" . strip_tags($loan_track) . "', `sms_module` = '" . strip_tags($sms_module) . "', `sms_generation` = '" . strip_tags($sms_generation) . "',`status` = 0,`update_login_id` = '" . strip_tags($user_id) . "',`updated_date` = current_timestamp() WHERE user_id = '" . strip_tags($id) . "' ";
@@ -3305,7 +3305,7 @@ class admin
 			$category_info = $_POST['category_info'];
 		}
 
-		try{
+		try {
 			// Disable autocommit to start a transaction
 			$mysqli->autocommit(FALSE);
 			$myStr = "REQ";
@@ -3313,7 +3313,7 @@ class admin
 			if ($selectIC->num_rows > 0) {
 				$row = $selectIC->fetch_assoc();
 				$ac2 = $row["req_code"];
-				
+
 				$appno2 = ltrim(strstr($ac2, '-'), '-');
 				$appno2 = $appno2 + 1;
 				$req_code = $myStr . "-" . "$appno2";
@@ -3322,7 +3322,7 @@ class admin
 				$req_code = $initialapp;
 			}
 
-		$insertQry = "INSERT INTO request_creation(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_id`,
+			$insertQry = "INSERT INTO request_creation(`user_type`, `user_name`, `agent_id`, `responsible`, `remarks`, `declaration`, `req_code`, `dor`, `cus_id`,
 		`cus_data`, `cus_name`, `dob`, `age`, `gender`, `state`, `district`, `taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, 
 		`mother_name`, `marital`, `spouse_name`, `occupation_type`, `occupation`, `pic`, `loan_category`, `sub_category`, `tot_value`, `ad_amt`, `ad_perc`, 
 		`loan_amt`, `poss_type`, `due_amt`, `due_period`, `insert_login_id`,`created_date`) 
@@ -3335,24 +3335,24 @@ class admin
 		'" . strip_tags($ad_perc) . "', '" . strip_tags($loan_amt) . "','" . strip_tags($poss_type) . "','" . strip_tags($due_amt) . "','" . strip_tags($due_period) . "',
 		'" . strip_tags($userid) . "',current_timestamp )";
 
-		$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
-		$req_ref_id = $mysqli->insert_id;
+			$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
+			$req_ref_id = $mysqli->insert_id;
 
-		if ($cus_data == 'New') {
+			if ($cus_data == 'New') {
 
-			$CustomerInsert = "INSERT INTO customer_register (`cus_id`,`req_ref_id`, `customer_name`, `dob`, `age`, `gender`, `state`, `district`,
+				$CustomerInsert = "INSERT INTO customer_register (`cus_id`,`req_ref_id`, `customer_name`, `dob`, `age`, `gender`, `state`, `district`,
 				`taluk`, `area`, `sub_area`, `address`, `mobile1`, `mobile2`, `father_name`, `mother_name`, `marital`, `spouse`, `occupation_type`, `occupation`,`pic`)
 				VALUES('" . strip_tags($cus_id) . "','" . strip_tags($req_ref_id) . "','" . strip_tags($cus_name) . "','" . strip_tags($dob) . "', '" . strip_tags($age) . "', '" . strip_tags($gender) . "', '" . strip_tags($state) . "',
 				'" . strip_tags($district) . "','" . strip_tags($taluk) . "','" . strip_tags($area) . "', '" . strip_tags($sub_area) . "', '" . strip_tags($address) . "', '" . strip_tags($mobile1) . "',
 				'" . strip_tags($mobile2) . "','" . strip_tags($father_name) . "','" . strip_tags($mother_name) . "', '" . strip_tags($marital) . "', '" . strip_tags($spouse_name) . "',
 				'" . strip_tags($occupation_type) . "','" . strip_tags($occupation) . "','" . strip_tags($pic) . "' )";
-			$insresult = $mysqli->query($CustomerInsert) or die("Error " . $mysqli->error);
-		}
+				$insresult = $mysqli->query($CustomerInsert) or die("Error " . $mysqli->error);
+			}
 
-		for ($i = 0; $i < sizeof($category_info); $i++) {
-			$insertQry = "INSERT INTO `request_category_info`(`req_ref_id`, `category_info`) VALUES ('" . strip_tags($req_ref_id) . "','" . strip_tags($category_info[$i]) . "') ";
-			$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
-		}
+			for ($i = 0; $i < sizeof($category_info); $i++) {
+				$insertQry = "INSERT INTO `request_category_info`(`req_ref_id`, `category_info`) VALUES ('" . strip_tags($req_ref_id) . "','" . strip_tags($category_info[$i]) . "') ";
+				$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
+			}
 
 		// Commit the transaction
 		$mysqli->commit();
@@ -4262,7 +4262,7 @@ class admin
 		if (isset($_POST['sub_category'])) {
 			$sub_category = $_POST['sub_category'];
 		}
-		$category_info =[];
+		$category_info = [];
 		if (isset($_POST['category_info'])) {
 			$category_info = $_POST['category_info'];
 		}
@@ -5380,7 +5380,24 @@ class admin
 			$closed_Sts_remark = $_POST['closed_Sts_remark'];
 		}
 
-		$mysqli->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`,`created_date`) VALUES ('" . strip_tags($close_req_id) . "','" . strip_tags($cus_id) . "','" . strip_tags($closed_Sts) . "','" . strip_tags($closed_Sts_consider) . "','" . strip_tags($closed_Sts_remark) . "', '20','$userid',now() )");
+		$mysqli->query("INSERT INTO `closed_status`( `req_id`, `cus_id`, `closed_sts`, `consider_level`, `remark`,`cus_sts`,`insert_login_id`,`created_date`) VALUES ('" . strip_tags($close_req_id) . "','" . strip_tags($cus_id) . "','" . strip_tags($closed_Sts) . "','" . strip_tags($closed_Sts_consider) . "','" . strip_tags($closed_Sts_remark) . "', '21','$userid',now() )");
+
+		$mysqli->query("UPDATE request_creation set cus_status = 21,updated_date = now(), update_login_id = $userid WHERE  cus_id = '" . $cus_id . "' and req_id = '" .  $close_req_id . "' && cus_status = '20' ") or die('Error on Request Table');
+
+		$mysqli->query("UPDATE customer_register set cus_status = 21 WHERE cus_id = '" . $cus_id . "' and req_ref_id = '" .  $close_req_id . "' ") or die('Error on Customer Table');
+
+		$mysqli->query("UPDATE in_verification set cus_status = 21, update_login_id = $userid WHERE cus_id = '" . $cus_id . "' and req_id = '" .  $close_req_id . "' && cus_status = '20' ") or die('Error on inVerification Table');
+
+		$mysqli->query("UPDATE `in_approval` SET `cus_status`= 21,`update_login_id`= $userid WHERE  cus_id = '" . $cus_id . "' and req_id = '" .  $close_req_id . "' && cus_status = '20' ") or die('Error on in_approval Table');
+
+		$mysqli->query("UPDATE `in_acknowledgement` SET `cus_status`= 21,`update_login_id`= $userid and updated_date=now() WHERE  cus_id = '" . $cus_id . "' and req_id = '" .  $close_req_id . "' && cus_status = '20' ") or die('Error on in_acknowledgement Table');
+
+		$mysqli->query("UPDATE `in_issue` SET `cus_status`= 21,`update_login_id` = $userid where cus_id = '" . $cus_id . "' and req_id = '" .  $close_req_id . "' && cus_status = '20' ") or die('Error on in_issue Table');
+		
+		$mysqli->query("UPDATE `closed_status` SET `cus_sts`='21',`update_login_id`=$userid,`updated_date`= now() WHERE `cus_sts`='20' and req_id = '" .  $close_req_id . "' && `cus_id`='" . $cus_id . "' ") or die('Error on closed_status Table');
+
+		$mysqli->query("INSERT INTO `document_track`(`req_id`, `cus_id`, `track_status`, `insert_login_id`, `created_date`) 
+		VALUES('" . strip_tags($close_req_id) . "','" . strip_tags($cus_id) . "','3','$userid', now()) ");
 	}
 
 	//Get User Details for Consent Creation.

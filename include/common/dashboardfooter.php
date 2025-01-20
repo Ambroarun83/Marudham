@@ -1549,18 +1549,82 @@
             hideOverlay();
         });
 
-
-        function checkInputFileSize(input, allowdsize) {
+        function compressImage(input, targetSizeKB) {
             if (input.files.length > 0) {
                 const fileSize = input.files[0].size; // Get the size of the selected file
-                const maxSize = allowdsize * 1024; // Maximum size in bytes (200 KB)
-
+                const maxSize = targetSizeKB * 1024; // Maximum size in bytes (200 KB)
                 if (fileSize > maxSize) {
-                    alert("Maximum File Size " + allowdsize + " KB. Please select a smaller file.");
-                    input.value = ''; // Clear the selected file
+                    console.log("hjhhhh");
+                    const file = input.files[0];
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement("canvas");
+                            const ctx = canvas.getContext("2d");
+
+                            // Resize image if needed
+                            const maxSize = 800;
+                            let {
+                                width,
+                                height
+                            } = img;
+                            if (width > maxSize || height > maxSize) {
+                                const scale = Math.min(maxSize / width, maxSize / height);
+                                width *= scale;
+                                height *= scale;
+                            }
+
+                            // Set canvas dimensions and draw the image
+                            canvas.width = width;
+                            canvas.height = height;
+                            ctx.drawImage(img, 0, 0, width, height);
+
+                            // Compress and check size
+                            let quality = 0.9; // Start with high quality
+                            const targetSizeBytes = targetSizeKB * 1024;
+
+                            function compress() {
+                                canvas.toBlob((blob) => {
+                                    if (blob.size > targetSizeBytes && quality > 0.1) {
+                                        quality -= 0.1;
+                                        compress(); // Retry with lower quality
+                                    } else if (blob.size <= targetSizeBytes) {
+                                        const compressedFile = new File([blob], file.name, {
+                                            type: file.type,
+                                            lastModified: Date.now(),
+                                        });
+
+                                        // Replace the input file with the compressed file
+                                        const dataTransfer = new DataTransfer();
+                                        dataTransfer.items.add(compressedFile);
+                                        input.files = dataTransfer.files;
+                                    } else {
+                                        alert("Unable to compress below the target size.");
+                                    }
+                                }, file.type, quality);
+                            }
+
+                            compress();
+                        };
+                        img.src = event.target.result;
+                    };
+
+                    reader.readAsDataURL(file);
                 }
             }
         }
+        // function checkInputFileSize(input, allowdsize) {
+        //     if (input.files.length > 0) {
+        //         const fileSize = input.files[0].size; // Get the size of the selected file
+        //         const maxSize = allowdsize * 1024; // Maximum size in bytes (200 KB)
+
+        //         if (fileSize > maxSize) {
+        //             alert("Maximum File Size " + allowdsize + " KB. Please select a smaller file.");
+        //             input.value = ''; // Clear the selected file
+        //         }
+        //     }
+        // }
 
         //Document Track on click function 
     function getDocOnClickFunction(){

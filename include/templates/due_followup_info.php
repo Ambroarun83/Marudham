@@ -1535,7 +1535,7 @@ if (sizeof($getLoanCalculation) > 0) {
 									<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="docUpd" style="display: none;">
 										<div class="form-group">
 											<label for="MortgageDocumentUpd"> Mortgage Document Uploads </label> <span class="required">&nbsp;*</span>
-											<input type="file" onchange="checkInputFileSize(this,500)" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
+											<input type="file" onchange="compressImage(this,500)" class="form-control" id="mortgage_document_upd" name="mortgage_document_upd" tabindex="22">
 											<input type="hidden" id="mortgage_doc_upd" name="mortgage_doc_upd" value="<?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?>">
 											<!-- <a href="<?php echo "uploads/verification/mortgage_doc/" . $mortgage_document_upd; ?>" target="_blank" >  <?php if (isset($mortgage_document_upd)) echo $mortgage_document_upd; ?> </a> -->
 											<span class="text-danger" id="mortgagedocUpdCheck"> Upload Mortgage Document </span>
@@ -1689,7 +1689,7 @@ if (sizeof($getLoanCalculation) > 0) {
 								<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12" id="RCdocUpd" style="display: none;">
 									<div class="form-group">
 										<label for="RCDocumentUpd"> RC Uploads </label> <span class="required">&nbsp;*</span>
-										<input type="file" onchange="checkInputFileSize(this,500)" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="36">
+										<input type="file" onchange="compressImage(this,500)" class="form-control" id="RC_document_upd" name="Rc_document_upd" tabindex="36">
 										<input type="hidden" id="rc_doc_upd" name="rc_doc_upd" value="<?php if (isset($Rc_document_upd)) echo $Rc_document_upd; ?>">
 										<span class="text-danger" id="rcdocUpdCheck"> Upload RC </span>
 									</div>
@@ -1933,7 +1933,7 @@ if (sizeof($getLoanCalculation) > 0) {
 										<input type="hidden" id="verification_audio_upd" name="verification_audio_upd" value="<?php if (isset($com_audio)) {
 																																	echo $com_audio;
 																																} ?>">
-										<input type="file" onchange="checkInputFileSize(this,800)" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="57">
+										<input type="file" onchange="compressImage(this,800)" class="form-control" name="verification_audio" id="verification_audio" accept=".mp3,audio/*" tabindex="57">
 										<?php if (isset($communication)) {
 											if ($communication == '0') { ?>
 												<a href="<?php echo "uploads/verification/verifyInfo_audio/" . $com_audio; ?>" target="_blank" download>Click Here To Download Your <?php if (isset($com_audio)) echo $com_audio; ?> Audio </a>

@@ -559,7 +559,7 @@ if ($idupd > 0) {
 								<label for="pic" style="margin-left: -20px;">Photo</label><span class="required">&nbsp;*</span><br>
 								<input type='hidden' id='img_exist' name='img_exist' value=''>
 								<img id='imgshow' src='img/avatar.png' />
-								<input type="file" onchange="checkInputFileSize(this,200)" class="form-control" id="pic" name="pic" value='<?php if (isset($pic)) {
+								<input type="file" onchange="compressImage(this, 200)" class="form-control" id="pic" name="pic" value='<?php if (isset($pic)) {
 																																				echo $pic;
 																																			} ?>' tabindex='30'>
 								<span class="text-danger" style='display:none' id='picCheck'>Please Choose Image</span>

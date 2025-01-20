@@ -1,20 +1,22 @@
 
 // Todays Date
-$(function () {
-	var interval = setInterval(function () {
-		var momentNow = moment();
-		$('#today-date').html(momentNow.format('DD') + ' ' + ' '
-			+ momentNow.format('- dddd').substring(0, 12));
-	}, 100);
-});
+// $(function () {
+// 	var interval = setInterval(function () {
+// 		console.log("hlo");
+// 		var momentNow = moment();
+// 		$('#today-date').html(momentNow.format('DD') + ' ' + ' '
+// 			+ momentNow.format('- dddd').substring(0, 12));
+// 	}, 6000);
+// });
 
 
-$(function () {
-	var interval = setInterval(function () {
-		var momentNow = moment();
-		$('#todays-date').html(momentNow.format('DD MMMM YYYY'));
-	}, 100);
-});
+// $(function () {
+// 	console.log("hi");
+// 	var interval = setInterval(function () {
+// 		var momentNow = moment();
+// 		$('#todays-date').html(momentNow.format('DD MMMM YYYY'));
+// 	}, 100);
+// });
 
 
 
