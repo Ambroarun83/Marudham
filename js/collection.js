@@ -814,7 +814,7 @@ function getBankNames() {
             $('#bank_id').empty();
             $('#bank_id').append('<option value="">Select Bank Name</option>');
             $.each(response, function (ind, val) {
-                $('#bank_id').append('<option value="' + val['bank_id'] + '">' + val['bank_name'] + '</option>');
+                $('#bank_id').append('<option value="' + val['id'] + '">' + val['bank_name'] + '</option>');
             })
 
         }
