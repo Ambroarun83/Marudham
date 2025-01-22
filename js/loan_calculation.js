@@ -42,6 +42,25 @@ $(document).ready(function () {
 	// 		$("#profit_method").val('');
 	// 	}
 	// })
+	$(' #docamt,#docpercentage').click(function () {
+        var doc_charge_type = $('input[name=doc_charge_type]:checked').val();
+        if (doc_charge_type == 'amt') {
+            changeAmtinput('docmin', 'docmax', 'document_charge_min', 'document_charge_max');
+        }
+        if (doc_charge_type == 'percentage') {
+            changePercentinput('docmin', 'docmax', 'document_charge_min', 'document_charge_max');
+        }
+    })
+	 // Amount or percentage change on fields
+	 $('#procamt,#procpercentage').click(function () {
+        var proc_fee_type = $('input[name=proc_fee_type]:checked').val();
+        if (proc_fee_type == 'amt') {
+            changeAmtinput('procmin', 'procmax', 'processing_fee_min', 'processing_fee_max');
+        }
+        if (proc_fee_type == 'percentage') {
+            changePercentinput('procmin', 'procmax', 'processing_fee_min', 'processing_fee_max');
+        }
+    })
 
 });
 
@@ -49,9 +68,22 @@ $(document).ready(function () {
 $(function () {
 	getLoanCategory();
 	var loan_id_upd = $('#loan_id_upd').val()
+	var doc_charge_type = $('#doc_charge_type_upd').val();
+	var proc_fee_type = $('#pro_fees_type_upd').val();
 	if (loan_id_upd > 0) {
 		var loan_category_upd = $('#loan_category_upd').val()
 		getSubCategory(loan_category_upd);
+	}
+	if (doc_charge_type == 'amt') {
+		changeAmtinput('docmin', 'docmax', 'document_charge_min', 'document_charge_max');
+	} else if (doc_charge_type == 'percentage') {
+		changePercentinput('docmin', 'docmax', 'document_charge_min', 'document_charge_max');
+	}
+	//for processing fee
+	if (proc_fee_type == 'amt') {
+		changeAmtinput('procmin', 'procmax', 'processing_fee_min', 'processing_fee_max');
+	} else if (proc_fee_type == 'percentage') {
+		changePercentinput('procmin', 'procmax', 'processing_fee_min', 'processing_fee_max');
 	}
 })
 
@@ -124,3 +156,17 @@ function getSubCategory(loan_cat) {
 	})
 }
 
+//Change Document charge & Processing fee input field not readonly
+function changeAmtinput(docmin, docmax, document_charge_min, document_charge_max) {
+    $('#' + docmin).text('Min ₹');
+    $('#' + docmax).text('Max ₹');
+    $('#' + document_charge_min).attr('readonly', false);
+    $('#' + document_charge_max).attr('readonly', false);
+}
+//Change Document charge & Processing fee input field not readonly
+function changePercentinput(docmin, docmax, document_charge_min, document_charge_max) {
+    $('#' + docmin).text('Min %');
+    $('#' + docmax).text('Max %');
+    $('#' + document_charge_min).attr('readonly', false);
+    $('#' + document_charge_max).attr('readonly', false);
+}

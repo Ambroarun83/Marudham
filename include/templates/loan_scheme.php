@@ -342,7 +342,6 @@ if (isset($_GET['type'])) {
 											<input type="number" step="0.01" tabindex="14" id="doc_charge_max" name="doc_charge_max" readonly class="form-control" placeholder="Enter Document Charge Max" value="<?php if (isset($doc_charge_max)) echo $doc_charge_max; ?>">
 										</div>
 									</div>
-
 									<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group">
 											<label style="font-size:1.35em;padding-right:2%">Processing Fee: <span class="text-danger">*</span></label>
