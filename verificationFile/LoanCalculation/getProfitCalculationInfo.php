@@ -21,8 +21,10 @@ while($row = $result->fetch()){
     $detailrecords['intrest_rate_max'] = $row['intrest_rate_max'];
     $detailrecords['due_period_min'] = $row['due_period_min'];
     $detailrecords['due_period_max'] = $row['due_period_max'];
+    $detailrecords['doc_charge_type'] = $row['doc_charge_type'];
     $detailrecords['document_charge_min'] = $row['document_charge_min'];
     $detailrecords['document_charge_max'] = $row['document_charge_max'];
+    $detailrecords['proc_fee_type'] = $row['proc_fee_type'];
     $detailrecords['processing_fee_min'] = $row['processing_fee_min'];
     $detailrecords['processing_fee_max'] = $row['processing_fee_max'];
     $i++;

@@ -60,8 +60,10 @@ if ($idupd > 0) {
             $intrest_rate_max       = $getLoanCalculation['intrest_rate_max'];
             $due_period_min         = $getLoanCalculation['due_period_min'];
             $due_period_max         = $getLoanCalculation['due_period_max'];
+            $doc_charge_type         = $getLoanCalculation['doc_charge_type'];
             $document_charge_min    = $getLoanCalculation['document_charge_min'];
             $document_charge_max    = $getLoanCalculation['document_charge_max'];
+            $proc_fee_type    = $getLoanCalculation['proc_fee_type'];
             $processing_fee_min     = $getLoanCalculation['processing_fee_min'];
             $processing_fee_max     = $getLoanCalculation['processing_fee_max'];
             $due_date               = $getLoanCalculation['due_date'];
@@ -102,6 +104,8 @@ if ($idupd > 0) {
             <input type="hidden" name="loan_id_upd" id="loan_id_upd" class="form-control" value="<?php if (isset($loan_cal_id)) echo $loan_cal_id; ?>">
             <input type="hidden" name="loan_category_upd" id="loan_category_upd" class="form-control" value="<?php if (isset($loan_category)) echo $loan_category; ?>">
             <input type="hidden" name="sub_category_upd" id="sub_category_upd" class="form-control" value="<?php if (isset($sub_category)) echo $sub_category; ?>">
+            <input type="hidden" class="form-control" value="<?php if (isset($doc_charge_type)) echo $doc_charge_type; ?>" id="doc_charge_type_upd" name="doc_charge_type_upd" aria-describedby="id" placeholder="Enter id">
+            <input type="hidden" class="form-control" value="<?php if (isset($proc_fee_type)) echo $proc_fee_type; ?>" id="pro_fees_type_upd" name="pro_fees_type_upd" aria-describedby="id" placeholder="Enter id">
 
             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                 <div class="card">
@@ -137,8 +141,10 @@ if ($idupd > 0) {
                                 <input tabindex="4" type="text" class="form-control" id="duetype" name="duetype" value="EMI" title="Select Due Type" readonly>
                                 <!-- <select tabindex="4" type="text" class="form-control" id="due_type" name="due_type" title="Select Due Type" required>
                                     <option value=''>Select Due Type</option>
-                                    <option <?php #if (isset($due_type)) {if ($due_type == "emi") echo 'selected';} ?> value="emi">EMI</option>
-                                    <option <?php #if (isset($due_type)) {if ($due_type == "intrest") echo 'selected';} ?> value="intrest">Interest</option>
+                                    <option <?php #if (isset($due_type)) {if ($due_type == "emi") echo 'selected';} 
+                                            ?> value="emi">EMI</option>
+                                    <option <?php #if (isset($due_type)) {if ($due_type == "intrest") echo 'selected';} 
+                                            ?> value="intrest">Interest</option>
                                 </select> -->
                             </div>
                         </div>
@@ -160,7 +166,9 @@ if ($idupd > 0) {
                                 </select>
                             </div>
                         </div>
-                        <!-- <div id="intrest_method" <?php #if (!$calcheck) { ?>style="display: none" <?php #} ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                        <!-- <div id="intrest_method" <?php #if (!$calcheck) { 
+                                                        ?>style="display: none" <?php #} 
+                                                                                ?> class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="inputReadOnly">Calculate Method</label>
                                 <input tabindex="6" type="text" class="form-control" id="calculate_method" name="calculate_method" value="Monthly" readonly>
@@ -204,38 +212,42 @@ if ($idupd > 0) {
 
                             </div>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-6 col-12">
+                        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="form-group">
-                                <h5>Document Charge %</h5>
+                                <label style="font-size:1.35em;padding-right:2%">Document Charge: <span class="text-danger">*</span></label>
+                                <input type="radio" name="doc_charge_type" id="docamt" value="amt" <?php if (isset($doc_charge_type) and $doc_charge_type == 'amt') echo 'checked'; ?> tabindex='9'></input><label for='docamt'>&nbsp;&nbsp;<b>₹</b></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="doc_charge_type" id="docpercentage" value="percentage" <?php if (isset($doc_charge_type) and $doc_charge_type == 'percentage') echo 'checked'; ?> tabindex='11'></input><label for='docpercentage'>&nbsp;&nbsp;%</label>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="disabledInput">Min</label><span class="required">&nbsp;*</span>
-                                <input type="number" step="0.01" tabindex="11" id="document_charge_min" name="document_charge_min" class="form-control" placeholder="Document Charge Min" required value="<?php if (isset($document_charge_min)) echo $document_charge_min; ?>">
+                                <label for="disabledInput" id="docmin">Min</label><span class="required">&nbsp;*</span>
+                                <input type="number" step="0.01" tabindex="11" id="document_charge_min" name="document_charge_min" readonly class="form-control" placeholder="Document Charge Min" required value="<?php if (isset($document_charge_min)) echo $document_charge_min; ?>">
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="disabledInput">Max</label><span class="required">&nbsp;*</span>
-                                <input type="number" step="0.01" tabindex="12" id="document_charge_max" name="document_charge_max" class="form-control" placeholder="Document Charge Max" required value="<?php if (isset($document_charge_max)) echo $document_charge_max; ?>">
+                                <label for="disabledInput" id="docmax">Max</label><span class="required">&nbsp;*</span>
+                                <input type="number" step="0.01" tabindex="12" id="document_charge_max" name="document_charge_max" readonly class="form-control" placeholder="Document Charge Max" required value="<?php if (isset($document_charge_max)) echo $document_charge_max; ?>">
                             </div>
                         </div>
-                        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-6 col-12">
+                        <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="form-group">
-                                <h5>Processing Fee %</h5>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
-                            <div class="form-group">
-                                <label for="disabledInput">Min</label><span class="required">&nbsp;*</span>
-                                <input type="number" step="0.01" tabindex="13" id="processing_fee_min" name="processing_fee_min" class="form-control" placeholder="Processing Fee Min" required value="<?php if (isset($processing_fee_min)) echo $processing_fee_min; ?>">
+                                <label style="font-size:1.35em;padding-right:2%">Processing Fee: <span class="text-danger">*</span></label>
+                                <input type="radio" name="proc_fee_type" id="procamt" value="amt" tabindex="15" <?php if (isset($proc_fee_type) and $proc_fee_type == 'amt') echo 'checked'; ?>></input><label for='procamt'>&nbsp;&nbsp;<b>₹</b></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="radio" name="proc_fee_type" id="procpercentage" value="percentage" tabindex="16" <?php if (isset($proc_fee_type) and $proc_fee_type == 'percentage') echo 'checked'; ?>></input><label for='procpercentage'>&nbsp;&nbsp;%</label>
                             </div>
                         </div>
                         <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="disabledInput">Max</label><span class="required">&nbsp;*</span>
-                                <input type="number" step="0.01" tabindex="14" id="processing_fee_max" name="processing_fee_max" class="form-control" placeholder="Processing Fee Max" required value="<?php if (isset($processing_fee_max)) echo $processing_fee_max; ?>">
+                                <label for="disabledInput" id="procmin">Min</label><span class="required">&nbsp;*</span>
+                                <input type="number" step="0.01" tabindex="13" id="processing_fee_min" name="processing_fee_min" readonly class="form-control" placeholder="Processing Fee Min" required value="<?php if (isset($processing_fee_min)) echo $processing_fee_min; ?>">
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+                            <div class="form-group">
+                                <label for="disabledInput" id="procmax">Max</label><span class="required">&nbsp;*</span>
+                                <input type="number" step="0.01" tabindex="14" id="processing_fee_max" name="processing_fee_max" readonly class="form-control" placeholder="Processing Fee Max" required value="<?php if (isset($processing_fee_max)) echo $processing_fee_max; ?>">
 
                             </div>
                         </div>
