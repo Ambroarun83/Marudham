@@ -121,6 +121,7 @@ if ($idupd > 0) {
 				$overdue        		     = $getLoanScheme['overdue'];
 				$grace_period        		     = $getLoanScheme['grace_period'];
 				$penalty        		     = $getLoanScheme['penalty'];
+				$profit_method = explode(',', $profit_method);
 			} elseif ($type == 'weekly') {
 				$scheme_name1          		     = $getLoanScheme['scheme_name'];
 				$scheme_short1      			     = $getLoanScheme['short_name'];
@@ -141,6 +142,7 @@ if ($idupd > 0) {
 				$overdue1        		     = $getLoanScheme['overdue'];
 				$grace_period1        		     = $getLoanScheme['grace_period'];
 				$penalty1        		     = $getLoanScheme['penalty'];
+				$profit_method1 = explode(',', $profit_method1);
 			} elseif ($type == 'daily') {
 				$scheme_name2          		     = $getLoanScheme['scheme_name'];
 				$scheme_short2      			     = $getLoanScheme['short_name'];
@@ -161,6 +163,7 @@ if ($idupd > 0) {
 				$overdue2        		     = $getLoanScheme['overdue'];
 				$grace_period2        		     = $getLoanScheme['grace_period'];
 				$penalty2        		     = $getLoanScheme['penalty'];
+				$profit_method2 = explode(',', $profit_method2);
 			}
 		}
 	}
@@ -272,11 +275,22 @@ if (isset($_GET['type'])) {
 										</div>
 									</div>
 
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<div id="emi_method" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
-											<label for="disabledInput">Profit Method</label>
-											<input type="hidden" name="profit_method" id="profit_method" value="pre_intrest" class="form-control">
-											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Benefit" readonly class="form-control" tabindex="6">
+											<label for="disabledInput">Profit Method</label>&nbsp;<span class="text-danger">*</span>
+											<select tabindex="5" type="text" class="form-control selectpicker" id="profit_method" name="profit_method[]" data-live-search="true" multiple data-actions-box="true" title="Select Profit Method">
+												<option <?php if (isset($profit_method)) {
+															if ($profit_method[0] == "pre_intrest") echo 'selected';
+														} ?> value="pre_intrest">Pre Benefit</option>
+												<option <?php if (isset($profit_method)) {
+															if ($profit_method[0] == "after_intrest") {
+																echo 'selected';
+															} elseif (isset($profit_method[1]) and $profit_method[1] == "after_intrest") {
+																echo 'selected';
+															}
+														}
+														?> value="after_intrest">After Benefit</option>
+											</select>
 										</div>
 									</div>
 
@@ -445,14 +459,31 @@ if (isset($_GET['type'])) {
 										</div>
 									</div>
 
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Profit Method</label>
 											<input type="hidden" name="profit_method1" id="profit_method1" value="pre_intrest" class="form-control">
 											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Benefit" readonly class="form-control" tabindex="6">
 										</div>
+									</div> -->
+									<div id="emi_method" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Profit Method</label>&nbsp;<span class="text-danger">*</span>
+											<select tabindex="5" type="text" class="form-control selectpicker" id="profit_method1" name="profit_method1[]" data-live-search="true" multiple data-actions-box="true" title="Select Profit Method">
+												<option <?php if (isset($profit_method1)) {
+															if ($profit_method1[0] == "pre_intrest") echo 'selected';
+														} ?> value="pre_intrest">Pre Benefit</option>
+												<option <?php if (isset($profit_method1)) {
+															if ($profit_method1[0] == "after_intrest") {
+																echo 'selected';
+															} elseif (isset($profit_method1[1]) and $profit_method1[1] == "after_intrest") {
+																echo 'selected';
+															}
+														}
+														?> value="after_intrest">After Benefit</option>
+											</select>
+										</div>
 									</div>
-
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Interest Rate %</label>&nbsp;<span class="text-danger">*</span>
@@ -486,7 +517,7 @@ if (isset($_GET['type'])) {
 										<div class="form-group">
 											<label style="font-size:1.35em;padding-right:2%">Document Charge: <span class="text-danger">*</span></label>
 											<input type="radio" name="doc_charge_type1" id="docamt1" value="amt" <?php if (isset($doc_charge_type1) and $doc_charge_type1 == 'amt') echo 'checked'; ?> tabindex='9'></input><label for='docamt1'>&nbsp;&nbsp;<b>₹</b></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											<input type="radio" name="doc_charge_type1" id="docpercentage1" value="percentage" <?php if (isset($doc_charge_type1) and $doc_charge_type1 == 'percentage') echo 'checked'; ?>tabindex='10'></input><label for='docpercentage1'>&nbsp;&nbsp;%</label>
+											<input type="radio" name="doc_charge_type1" id="docpercentage1" value="percentage" <?php if (isset($doc_charge_type1) and $doc_charge_type1 == 'percentage') echo 'checked'; ?> tabindex='10'></input><label for='docpercentage1'>&nbsp;&nbsp;%</label>
 										</div>
 									</div>
 									<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
@@ -617,15 +648,32 @@ if (isset($_GET['type'])) {
 											<input type="text" name="due_method_dummy" id="due_method_dummy" value="Daily" readonly class="form-control" tabindex='5'>
 										</div>
 									</div>
-
+<!-- 
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Profit Method</label>
 											<input type="hidden" name="profit_method2" id="profit_method2" value="pre_intrest" class="form-control">
 											<input type="text" name="profit_method_dummy" id="profit_method_dummy" value="Pre Benefit" readonly class="form-control" tabindex='6'>
 										</div>
+									</div> -->
+									<div id="emi_method" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput">Profit Method</label>&nbsp;<span class="text-danger">*</span>
+											<select tabindex="5" type="text" class="form-control selectpicker" id="profit_method2" name="profit_method2[]" data-live-search="true" multiple data-actions-box="true" title="Select Profit Method">
+												<option <?php if (isset($profit_method2)) {
+															if ($profit_method2[0] == "pre_intrest") echo 'selected';
+														} ?> value="pre_intrest">Pre Benefit</option>
+												<option <?php if (isset($profit_method2)) {
+															if ($profit_method2[0] == "after_intrest") {
+																echo 'selected';
+															} elseif (isset($profit_method2[1]) and $profit_method2[1] == "after_intrest") {
+																echo 'selected';
+															}
+														}
+														?> value="after_intrest">After Benefit</option>
+											</select>
+										</div>
 									</div>
-
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Interest Rate %</label>&nbsp;<span class="text-danger">*</span>

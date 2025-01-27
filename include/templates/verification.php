@@ -271,6 +271,7 @@ if (sizeof($getLoanCalculation) > 0) {
 		$due_method_scheme_lc = $getLoanCalculation['due_method_scheme'];
 		$day_scheme_lc = $getLoanCalculation['day_scheme'];
 		$scheme_name_lc = $getLoanCalculation['scheme_name'];
+		$profit_method_scheme_lc = $getLoanCalculation['scheme_profit_method'];
 		$int_rate_lc = $getLoanCalculation['int_rate'];
 		$due_period_lc = $getLoanCalculation['due_period'];
 		$doc_charge_lc = $getLoanCalculation['doc_charge'];
@@ -585,8 +586,8 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 																										} ?>">
 											<img id='imgshow' class="img_show" src='img/avatar.png' />
 											<input type="file" onchange="compressImage(this,200)" class="form-control" id="pic" name="pic" tabindex='18' value='<?php if (isset($pic)) {
-																																											echo $pic;
-																																										} ?>'>
+																																									echo $pic;
+																																								} ?>'>
 											<span class="text-danger" style='display:none' id='picCheck'>Please Choose Image</span>
 										</div>
 									</div>
@@ -673,8 +674,8 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 																													} ?>">
 											<img id='imgshows' class="img_show" src='img/avatar.png' />
 											<input type="file" onchange="compressImage(this,200)" class="form-control" id="guarentorpic" name="guarentorpic" tabindex="22" value="<?php if (isset($guarentor_photo)) {
-																																															echo $guarentor_photo;
-																																														} ?>">
+																																														echo $guarentor_photo;
+																																													} ?>">
 											<span class="text-danger" style='display:none' id='guarentorpicCheck'>Please Choose Guarentor Image</span>
 										</div>
 									</div>
@@ -1422,7 +1423,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 
 					<!-- Document History START -->
 					<div class="card">
-						<div class="card-header"> Documents History 
+						<div class="card-header"> Documents History
 							<button type="button" class="btn btn-primary" name="show_document_history" id="show_document_history" style="padding: 5px 35px;  float: right;" tabindex="9" onclick="getDocumentHistory()">Show Document History</button>
 						</div>
 						<div class="card-body">
@@ -1847,6 +1848,9 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 			<input type="hidden" name="scheme_upd" id="scheme_upd" value="<?php if (isset($scheme_name_lc)) {
 																				echo $scheme_name_lc;
 																			} ?>" />
+			<input type="hidden" name="scheme_profit_method_upd" id="scheme_profit_method_upd" value="<?php if (isset($profit_method_scheme_lc)) {
+																				echo $profit_method_scheme_lc;
+																			} ?>" />
 			<input type="hidden" name="profit_method_upd" id="profit_method_upd" value="<?php if (isset($profit_method_lc)) {
 																							echo $profit_method_lc;
 																						} ?>" />
@@ -2125,7 +2129,7 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 					<!--  Verification Info END -->
 					<!-- Loan History START -->
 					<div class="card">
-						<div class="card-header"> Loan History 
+						<div class="card-header"> Loan History
 							<button type="button" class="btn btn-primary" name="show_loan_history" id="show_loan_history" style="padding: 5px 35px;  float: right;" tabindex="9" onclick="getLoanHistory()">Show Loan History</button>
 						</div>
 						<div class="card-body">
@@ -2297,6 +2301,15 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 													<option value="">Select Scheme Name</option>
 												</select>
 												<span class="text-danger" style='display:none' id='scheme_nameCheck'>Please Select Scheme Name</span>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 scheme-calculation" style="display:none">
+											<div class="form-group">
+												<label for="scheme_profit_method">Profit Method</label>&nbsp;<span class="text-danger">*</span>
+												<select tabindex="25" type="text" class="form-control" id="scheme_profit_method" name="scheme_profit_method">
+													<option value="">Select Profit Method</option>
+												</select>
+												<span class="text-danger" style='display:none' id='scheme_methodCheck'>Please Select Profit Method</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
@@ -2628,8 +2641,8 @@ $sub_area_topbar = isset($sub_area_name) && $sub_area_name != '' ? $sub_area_nam
 				</button>
 			</div>
 			<div class="modal-body"> -->
-				<!-- alert messages -->
-				<!-- <div id="grpInsertOk" class="successalert"> Group Details Added Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
+<!-- alert messages -->
+<!-- <div id="grpInsertOk" class="successalert"> Group Details Added Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
 				</div>
 
 				<div id="grpUpdateok" class="successalert"> Group Info Updated Succesfully!<span class="custclosebtn" onclick="this.parentElement.style.display='none';"><span class="icon-squared-cross"></span></span>
