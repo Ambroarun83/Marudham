@@ -3801,7 +3801,11 @@ class admin
 		if (!empty($_FILES['guarentorpic']['name'])) {
 			//to delete old pic
 			$goldpic = $_POST['guarentor_image'];
-			unlink("uploads/verification/guarentor/" . $goldpic);
+			$check_file_exts = "uploads/verification/guarentor/" . $goldpic;
+
+			if(file_exists($check_file_exts)){
+				unlink($check_file_exts);
+			}
 
 			$guarentor = $_FILES['guarentorpic']['name'];
 			$pic_temp = $_FILES['guarentorpic']['tmp_name'];

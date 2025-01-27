@@ -1011,13 +1011,13 @@ function validateCommitment() {
 function dueChartList(req_id, cus_id, callback) {
     // var req_id = $('#idupd').val()
     // const cus_id = $('#cusidupd').val()
+    $('#dueChartTableDiv').empty();
     $.ajax({
         url: 'collectionFile/getDueChartList.php',
         data: { 'req_id': req_id, 'cus_id': cus_id },
         type: 'post',
         cache: false,
         success: function (response) {
-            $('#dueChartTableDiv').empty()
             $('#dueChartTableDiv').html(response)
         }
     }).then(function () {
