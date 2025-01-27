@@ -241,6 +241,7 @@ if (sizeof($getLoanCalculation) > 0) {
 		$due_method_scheme_lc = $getLoanCalculation['due_method_scheme'];
 		$day_scheme_lc = $getLoanCalculation['day_scheme'];
 		$scheme_name_lc = $getLoanCalculation['scheme_name'];
+		$profit_method_scheme_lc = $getLoanCalculation['scheme_profit_method'];
 		$int_rate_lc = $getLoanCalculation['int_rate'];
 		$due_period_lc = $getLoanCalculation['due_period'];
 		$doc_charge_lc = $getLoanCalculation['doc_charge'];
@@ -1800,6 +1801,9 @@ if (sizeof($getLoanCalculation) > 0) {
 			<input type="hidden" name="scheme_upd" id="scheme_upd" value="<?php if (isset($scheme_name_lc)) {
 																				echo $scheme_name_lc;
 																			} ?>" />
+			<input type="hidden" name="scheme_profit_method_upd" id="scheme_profit_method_upd" value="<?php if (isset($profit_method_scheme_lc)) {
+																											echo $profit_method_scheme_lc;
+																										} ?>" />
 			<input type="hidden" name="profit_method_upd" id="profit_method_upd" value="<?php if (isset($profit_method_lc)) {
 																							echo $profit_method_lc;
 																						} ?>" />
@@ -2122,6 +2126,16 @@ if (sizeof($getLoanCalculation) > 0) {
 													<option value="">Select Scheme Name</option>
 												</select>
 												<span class="text-danger" style='display:none' id='scheme_nameCheck'>Please Select Scheme Name</span>
+											</div>
+										</div>
+										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 scheme-calculation" style="display:none">
+											<div class="form-group">
+												<label for="scheme_profit_method">Profit Method</label>&nbsp;<span class="text-danger">*</span>
+												<input type="hidden" class="form-control" id="profit_method_scheme_ack" name="profit_method_scheme_ack" value="<?php echo $profit_method_scheme_lc; ?>">
+												<select tabindex="25" type="text" class="form-control" id="scheme_profit_method" name="scheme_profit_method">
+													<option value="">Select Profit Method</option>
+												</select>
+												<span class="text-danger" style='display:none' id='scheme_methodCheck'>Please Select Profit Method</span>
 											</div>
 										</div>
 										<div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12">
