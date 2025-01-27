@@ -924,12 +924,13 @@ function getAgentBasedLoanCategory(ag_id) {
 //Category info based on sub category
 function getCategoryInfo(sub_cat) {
     var idupd = $('#id').val();
+    let loan_category = $('#loan_category').val()
     if (idupd > 0) {
         var getCategoryInfo = $('#getCategoryInfo_upd').val().split(',');
     } else { var getCategoryInfo = undefined; }
     $.ajax({
         url: 'requestFile/getCategoryInfo.php',
-        data: { 'sub_cat': sub_cat },
+        data: { 'sub_cat': sub_cat ,'loan_category':loan_category },
         dataType: 'json',
         type: 'post',
         cache: false,

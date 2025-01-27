@@ -568,11 +568,17 @@ class admin
 		if (isset($_POST['due_period_max'])) {
 			$due_period_max = $_POST['due_period_max'];
 		}
+		if (isset($_POST['doc_charge_type'])) {
+			$doc_charge_type = $_POST['doc_charge_type'];
+		}
 		if (isset($_POST['document_charge_min'])) {
 			$document_charge_min = $_POST['document_charge_min'];
 		}
 		if (isset($_POST['document_charge_max'])) {
 			$document_charge_max = $_POST['document_charge_max'];
+		}
+		if (isset($_POST['proc_fee_type'])) {
+			$proc_fee_type = $_POST['proc_fee_type'];
 		}
 		if (isset($_POST['processing_fee_min'])) {
 			$processing_fee_min = $_POST['processing_fee_min'];
@@ -605,11 +611,11 @@ class admin
 			$userid = $_POST['userid'];
 		}
 		$loanInsert = "INSERT INTO loan_calculation(loan_category, sub_category, due_method, due_type, profit_method, calculate_method, intrest_rate_min,
-		intrest_rate_max, due_period_min, due_period_max, document_charge_min, document_charge_max, processing_fee_min, processing_fee_max,
+		intrest_rate_max, due_period_min, due_period_max,doc_charge_type, document_charge_min, document_charge_max, proc_fee_type,processing_fee_min, processing_fee_max,
 		due_date, grace_period, penalty, overdue, collection_info, insert_login_id)
 		VALUES('" . strip_tags($loan_category) . "','" . strip_tags($sub_category) . "', '" . strip_tags($due_method) . "','" . strip_tags($due_type) . "', '" . strip_tags($profit_method) . "',
-		'" . strip_tags($calculate_method) . "', '" . strip_tags($intrest_rate_min) . "', '" . strip_tags($intrest_rate_max) . "',  '" . strip_tags($due_period_min) . "','" . strip_tags($due_period_max) . "', '" . strip_tags($document_charge_min) . "',
-		'" . strip_tags($document_charge_max) . "', '" . strip_tags($processing_fee_min) . "', '" . strip_tags($processing_fee_max) . "',
+		'" . strip_tags($calculate_method) . "', '" . strip_tags($intrest_rate_min) . "', '" . strip_tags($intrest_rate_max) . "',  '" . strip_tags($due_period_min) . "','" . strip_tags($due_period_max) . "', '" . strip_tags($doc_charge_type) . "','" . strip_tags($document_charge_min) . "',
+		'" . strip_tags($document_charge_max) . "','" . strip_tags($proc_fee_type) . "', '" . strip_tags($processing_fee_min) . "', '" . strip_tags($processing_fee_max) . "',
 		'" . strip_tags($due_date) . "','" . strip_tags($grace_period) . "', '" . strip_tags($penalty) . "', '" . strip_tags($overdue) . "', '" . strip_tags($collection_info) . "', '" . strip_tags($userid) . "' )";
 		$insresult = $mysqli->query($loanInsert) or die("Error " . $mysqli->error);
 	}
@@ -632,8 +638,10 @@ class admin
 			$detailrecords['intrest_rate_max']   = $row->intrest_rate_max;
 			$detailrecords['due_period_min']     = $row->due_period_min;
 			$detailrecords['due_period_max']     = $row->due_period_max;
+			$detailrecords['doc_charge_type']     = $row->doc_charge_type;
 			$detailrecords['document_charge_min'] = $row->document_charge_min;
 			$detailrecords['document_charge_max'] = $row->document_charge_max;
+			$detailrecords['proc_fee_type'] = $row->proc_fee_type;
 			$detailrecords['processing_fee_min'] = $row->processing_fee_min;
 			$detailrecords['processing_fee_max'] = $row->processing_fee_max;
 			// $detailrecords['loan_limit']           = $row->loan_limit;
@@ -681,11 +689,17 @@ class admin
 		if (isset($_POST['due_period_max'])) {
 			$due_period_max = $_POST['due_period_max'];
 		}
+		if (isset($_POST['doc_charge_type'])) {
+			$doc_charge_type = $_POST['doc_charge_type'];
+		}
 		if (isset($_POST['document_charge_min'])) {
 			$document_charge_min = $_POST['document_charge_min'];
 		}
 		if (isset($_POST['document_charge_max'])) {
 			$document_charge_max = $_POST['document_charge_max'];
+		}
+		if (isset($_POST['proc_fee_type'])) {
+			$proc_fee_type = $_POST['proc_fee_type'];
 		}
 		if (isset($_POST['processing_fee_min'])) {
 			$processing_fee_min = $_POST['processing_fee_min'];
@@ -720,8 +734,8 @@ class admin
 		$loanUpdaet = "UPDATE loan_calculation SET loan_category = '" . strip_tags($loan_category) . "', sub_category = '" . strip_tags($sub_category) . "', due_method='" . strip_tags($due_method) . "',
 	due_type = '" . strip_tags($due_type) . "', profit_method = '" . strip_tags($profit_method) . "', calculate_method = '" . strip_tags($calculate_method) . "',
 	intrest_rate_min = '" . strip_tags($intrest_rate_min) . "', intrest_rate_max = '" . strip_tags($intrest_rate_max) . "',  due_period_min = '" . strip_tags($due_period_min) . "',
-	due_period_max = '" . strip_tags($due_period_max) . "', document_charge_min = '" . strip_tags($document_charge_min) . "',
-	document_charge_max = '" . strip_tags($document_charge_max) . "', processing_fee_min = '" . strip_tags($processing_fee_min) . "',
+	due_period_max = '" . strip_tags($due_period_max) . "',doc_charge_type = '" . strip_tags($doc_charge_type) . "', document_charge_min = '" . strip_tags($document_charge_min) . "',
+	document_charge_max = '" . strip_tags($document_charge_max) . "',proc_fee_type = '" . strip_tags($proc_fee_type) . "', processing_fee_min = '" . strip_tags($processing_fee_min) . "',
 	processing_fee_max = '" . strip_tags($processing_fee_max) . "', due_date = '" . strip_tags($due_date) . "',
 	grace_period = '" . strip_tags($grace_period) . "', penalty = '" . strip_tags($penalty) . "', overdue = '" . strip_tags($overdue) . "', collection_info = '" . strip_tags($collection_info) . "',
 	update_login_id='" . strip_tags($userid) . "', status = '0' WHERE loan_cal_id= '" . strip_tags($id) . "' ";
@@ -935,7 +949,8 @@ class admin
 			$due_method = $_POST['due_method'];
 		}
 		if (isset($_POST['profit_method'])) {
-			$profit_method = $_POST['profit_method'];
+			$profit_methods = $_POST['profit_method'];
+			$profit_method = implode(",", $profit_methods);
 		}
 		if (isset($_POST['intrest_rate'])) {
 			$intrest_rate = $_POST['intrest_rate'];
@@ -1012,7 +1027,8 @@ class admin
 			$due_method1 = $_POST['due_method1'];
 		}
 		if (isset($_POST['profit_method1'])) {
-			$profit_method1 = $_POST['profit_method1'];
+			$profit_methods = $_POST['profit_method1'];
+			$profit_method1 = implode(",", $profit_methods);
 		}
 		if (isset($_POST['intrest_rate1'])) {
 			$intrest_rate1 = $_POST['intrest_rate1'];
@@ -1075,7 +1091,8 @@ class admin
 			$due_method2 = $_POST['due_method2'];
 		}
 		if (isset($_POST['profit_method2'])) {
-			$profit_method2 = $_POST['profit_method2'];
+			$profit_methods = $_POST['profit_method2'];
+			$profit_method2 = implode(",", $profit_methods);
 		}
 		if (isset($_POST['intrest_rate2'])) {
 			$intrest_rate2 = $_POST['intrest_rate2'];
@@ -1167,7 +1184,8 @@ class admin
 			$due_method = $_POST['due_method'];
 		}
 		if (isset($_POST['profit_method'])) {
-			$profit_method = $_POST['profit_method'];
+			$profit_methods = $_POST['profit_method'];
+			$profit_method = implode(",", $profit_methods);
 		}
 		if (isset($_POST['intrest_rate'])) {
 			$intrest_rate = $_POST['intrest_rate'];
@@ -1243,7 +1261,8 @@ class admin
 			$due_method1 = $_POST['due_method1'];
 		}
 		if (isset($_POST['profit_method1'])) {
-			$profit_method1 = $_POST['profit_method1'];
+			$profit_methods = $_POST['profit_method1'];
+			$profit_method1 = implode(",", $profit_methods);
 		}
 		if (isset($_POST['intrest_rate1'])) {
 			$intrest_rate1 = $_POST['intrest_rate1'];
@@ -1304,7 +1323,8 @@ class admin
 			$due_method2 = $_POST['due_method2'];
 		}
 		if (isset($_POST['profit_method2'])) {
-			$profit_method2 = $_POST['profit_method2'];
+			$profit_methods = $_POST['profit_method2'];
+			$profit_method2 = implode(",", $profit_methods);
 		}
 		if (isset($_POST['intrest_rate2'])) {
 			$intrest_rate2 = $_POST['intrest_rate2'];
@@ -3787,7 +3807,11 @@ class admin
 		if (!empty($_FILES['guarentorpic']['name'])) {
 			//to delete old pic
 			$goldpic = $_POST['guarentor_image'];
-			unlink("uploads/verification/guarentor/" . $goldpic);
+			$check_file_exts = "uploads/verification/guarentor/" . $goldpic;
+
+			if(file_exists($check_file_exts)){
+				unlink($check_file_exts);
+			}
 
 			$guarentor = $_FILES['guarentorpic']['name'];
 			$pic_temp = $_FILES['guarentorpic']['tmp_name'];
@@ -4314,6 +4338,13 @@ class admin
 				$due_method_scheme = '';
 			}
 		}
+		$scheme_profit_method = '';
+		if (isset($_POST['scheme_profit_method'])) {
+			$scheme_profit_method = $_POST['scheme_profit_method'];
+			if ($profit_type == '1') {
+				$scheme_profit_method = '';
+			}
+		}
 		$day_scheme = '';
 		if (isset($_POST['day_scheme'])) {
 			$day_scheme = $_POST['day_scheme'];
@@ -4415,7 +4446,7 @@ class admin
 				loan_category = '" . strip_tags($loan_category) . "', sub_category = '" . strip_tags($sub_category) . "', tot_value = '" . strip_tags($tot_value) . "', ad_amt = '" . strip_tags($ad_amt) . "',
 				loan_amt = '" . strip_tags($loan_amt) . "', profit_type = '" . strip_tags($profit_type) . "', due_method_calc = '" . strip_tags($due_method_calc) . "', 
 				due_type = '" . strip_tags($due_type) . "', profit_method = '" . strip_tags($profit_method) . "', calc_method = '" . strip_tags($calc_method) . "', 
-				due_method_scheme = '" . strip_tags($due_method_scheme) . "', day_scheme = '" . strip_tags($day_scheme) . "', scheme_name = '" . strip_tags($scheme_name) . "', 
+				due_method_scheme = '" . strip_tags($due_method_scheme) . "',profit_method_scheme = '" . strip_tags($scheme_profit_method) . "', day_scheme = '" . strip_tags($day_scheme) . "', scheme_name = '" . strip_tags($scheme_name) . "', 
 				int_rate = '" . strip_tags($int_rate) . "', due_period = '" . strip_tags($due_period) . "', doc_charge = '" . strip_tags($doc_charge) . "', proc_fee = '" . strip_tags($proc_fee) . "', 
 				loan_amt_cal = '" . strip_tags($loan_amt_cal) . "', principal_amt_cal = '" . strip_tags($principal_amt_cal) . "', int_amt_cal = '" . strip_tags($int_amt_cal) . "', 
 				tot_amt_cal = '" . strip_tags($tot_amt_cal) . "', due_amt_cal = '" . strip_tags($due_amt_cal) . "', doc_charge_cal = '" . strip_tags($doc_charge_cal) . "', 
@@ -4437,14 +4468,14 @@ class admin
 				//this will filter out duplication entry in customer profile table
 
 				$mysqli->query("INSERT INTO verification_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
-				`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
+				`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`,`profit_method_scheme`, `day_scheme`, `scheme_name`, 
 				`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
 				`due_start_from`, `maturity_month`, `collection_method`,  `communication`, `com_audio`, `verification_person`, `verification_location`, `cus_status`, `insert_login_id`,`create_date`) 
 				VALUES ('" . strip_tags($req_id) . "', '" . strip_tags($cus_id_loan) . "', 
 				'" . strip_tags($cus_name_loan) . "', '" . strip_tags($cus_data_loan) . "','" . strip_tags($mobile_loan) . "', '" . strip_tags($pic_loan) . "', '" . strip_tags($loan_category) . "', 
 				'" . strip_tags($sub_category) . "', '" . strip_tags($tot_value) . "', '" . strip_tags($ad_amt) . "', '" . strip_tags($loan_amt) . "', '" . strip_tags($profit_type) . "', 
 				'" . strip_tags($due_method_calc) . "', '" . strip_tags($due_type) . "', '" . strip_tags($profit_method) . "', '" . strip_tags($calc_method) . "', '" . strip_tags($due_method_scheme) . "', 
-				'" . strip_tags($day_scheme) . "', '" . strip_tags($scheme_name) . "', '" . strip_tags($int_rate) . "', '" . strip_tags($due_period) . "', '" . strip_tags($doc_charge) . "', 
+				'" . strip_tags($scheme_profit_method) . "','" . strip_tags($day_scheme) . "', '" . strip_tags($scheme_name) . "', '" . strip_tags($int_rate) . "', '" . strip_tags($due_period) . "', '" . strip_tags($doc_charge) . "', 
 				'" . strip_tags($proc_fee) . "', '" . strip_tags($loan_amt_cal) . "', '" . strip_tags($principal_amt_cal) . "', '" . strip_tags($int_amt_cal) . "', '" . strip_tags($tot_amt_cal) . "', 
 				'" . strip_tags($due_amt_cal) . "', '" . strip_tags($doc_charge_cal) . "', '" . strip_tags($proc_fee_cal) . "', '" . strip_tags($net_cash_cal) . "', '" . strip_tags($due_start_from) . "', 
 				'" . strip_tags($maturity_month) . "', '" . strip_tags($collection_method) . "',
@@ -4489,6 +4520,7 @@ class admin
 				$detailrecords['due_method_scheme'] = $row['due_method_scheme'];
 				$detailrecords['day_scheme'] = $row['day_scheme'];
 				$detailrecords['scheme_name'] = $row['scheme_name'];
+				$detailrecords['scheme_profit_method'] = $row['profit_method_scheme'];
 				$detailrecords['int_rate'] = $row['int_rate'];
 				$detailrecords['due_period'] = $row['due_period'];
 				$detailrecords['doc_charge'] = $row['doc_charge'];
@@ -5019,6 +5051,13 @@ class admin
 				$day_scheme = '';
 			}
 		}
+		$scheme_profit_method = '';
+		if (isset($_POST['profit_method_scheme_ack'])) {
+			$scheme_profit_method = $_POST['profit_method_scheme_ack'];
+			if ($profit_type == '1') {
+				$scheme_profit_method = '';
+			}
+		}
 		$scheme_name = '';
 		if (isset($_POST['scheme_name_ack'])) {
 			$scheme_name = $_POST['scheme_name_ack'];
@@ -5113,7 +5152,7 @@ class admin
 						loan_category = '" . strip_tags($loan_category) . "', sub_category = '" . strip_tags($sub_category) . "', tot_value = '" . strip_tags($tot_value) . "', ad_amt = '" . strip_tags($ad_amt) . "',
 						loan_amt = '" . strip_tags($loan_amt) . "', profit_type = '" . strip_tags($profit_type) . "', due_method_calc = '" . strip_tags($due_method_calc) . "', 
 						due_type = '" . strip_tags($due_type) . "', profit_method = '" . strip_tags($profit_method) . "', calc_method = '" . strip_tags($calc_method) . "', 
-						due_method_scheme = '" . strip_tags($due_method_scheme) . "', day_scheme = '" . strip_tags($day_scheme) . "', scheme_name = '" . strip_tags($scheme_name) . "', 
+						due_method_scheme = '" . strip_tags($due_method_scheme) . "', profit_method_scheme = '" . strip_tags($scheme_profit_method) . "', day_scheme = '" . strip_tags($day_scheme) . "', scheme_name = '" . strip_tags($scheme_name) . "', 
 						int_rate = '" . strip_tags($int_rate) . "', due_period = '" . strip_tags($due_period) . "', doc_charge = '" . strip_tags($doc_charge) . "', proc_fee = '" . strip_tags($proc_fee) . "', 
 						loan_amt_cal = '" . strip_tags($loan_amt_cal) . "', principal_amt_cal = '" . strip_tags($principal_amt_cal) . "', int_amt_cal = '" . strip_tags($int_amt_cal) . "', 
 						tot_amt_cal = '" . strip_tags($tot_amt_cal) . "', due_amt_cal = '" . strip_tags($due_amt_cal) . "', doc_charge_cal = '" . strip_tags($doc_charge_cal) . "', 
@@ -5128,14 +5167,23 @@ class admin
 						'" . strip_tags($category_info[$i]) . "' )");
 			}
 		} else {
-
-			$insertQry = $mysqli->query("INSERT INTO acknowlegement_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
-						`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `day_scheme`, `scheme_name`, 
+echo "INSERT INTO acknowlegement_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
+						`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `profit_method_scheme`,`day_scheme`, `scheme_name`, 
 						`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
 						`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('" . strip_tags($req_id) . "', '" . strip_tags($cus_id_loan) . "', 
 						'" . strip_tags($cus_name_loan) . "', '" . strip_tags($cus_data_loan) . "','" . strip_tags($mobile_loan) . "', '" . strip_tags($pic_loan) . "', '" . strip_tags($loan_category) . "', 
 						'" . strip_tags($sub_category) . "', '" . strip_tags($tot_value) . "', '" . strip_tags($ad_amt) . "', '" . strip_tags($loan_amt) . "', '" . strip_tags($profit_type) . "', 
-						'" . strip_tags($due_method_calc) . "', '" . strip_tags($due_type) . "', '" . strip_tags($profit_method) . "', '" . strip_tags($calc_method) . "', '" . strip_tags($due_method_scheme) . "', 
+						'" . strip_tags($due_method_calc) . "', '" . strip_tags($due_type) . "', '" . strip_tags($profit_method) . "', '" . strip_tags($calc_method) . "', '" . strip_tags($due_method_scheme) . "', '" . strip_tags($scheme_profit_method) . "', 
+						'" . strip_tags($day_scheme) . "', '" . strip_tags($scheme_name) . "', '" . strip_tags($int_rate) . "', '" . strip_tags($due_period) . "', '" . strip_tags($doc_charge) . "', 
+						'" . strip_tags($proc_fee) . "', '" . strip_tags($loan_amt_cal) . "', '" . strip_tags($principal_amt_cal) . "', '" . strip_tags($int_amt_cal) . "', '" . strip_tags($tot_amt_cal) . "', 
+						'" . strip_tags($due_amt_cal) . "', '" . strip_tags($doc_charge_cal) . "', '" . strip_tags($proc_fee_cal) . "', '" . strip_tags($net_cash_cal) . "', '" . strip_tags($due_start_from) . "', 
+						'" . strip_tags($maturity_month) . "', '" . strip_tags($collection_method) . "', 12, $userid, current_timestamp())  ";	$insertQry = $mysqli->query("INSERT INTO acknowlegement_loan_calculation (`req_id`, `cus_id_loan`, `cus_name_loan`,`cus_data_loan`, `mobile_loan`, `pic_loan`, `loan_category`, `sub_category`,
+						`tot_value`, `ad_amt`, `loan_amt`, `profit_type`, `due_method_calc`, `due_type`, `profit_method`, `calc_method`, `due_method_scheme`, `profit_method_scheme`,`day_scheme`, `scheme_name`, 
+						`int_rate`, `due_period`, `doc_charge`, `proc_fee`, `loan_amt_cal`, `principal_amt_cal`, `int_amt_cal`, `tot_amt_cal`, `due_amt_cal`, `doc_charge_cal`, `proc_fee_cal`, `net_cash_cal`,
+						`due_start_from`, `maturity_month`, `collection_method`, `cus_status`, `insert_login_id`,`create_date`) VALUES ('" . strip_tags($req_id) . "', '" . strip_tags($cus_id_loan) . "', 
+						'" . strip_tags($cus_name_loan) . "', '" . strip_tags($cus_data_loan) . "','" . strip_tags($mobile_loan) . "', '" . strip_tags($pic_loan) . "', '" . strip_tags($loan_category) . "', 
+						'" . strip_tags($sub_category) . "', '" . strip_tags($tot_value) . "', '" . strip_tags($ad_amt) . "', '" . strip_tags($loan_amt) . "', '" . strip_tags($profit_type) . "', 
+						'" . strip_tags($due_method_calc) . "', '" . strip_tags($due_type) . "', '" . strip_tags($profit_method) . "', '" . strip_tags($calc_method) . "', '" . strip_tags($due_method_scheme) . "', '" . strip_tags($scheme_profit_method) . "', 
 						'" . strip_tags($day_scheme) . "', '" . strip_tags($scheme_name) . "', '" . strip_tags($int_rate) . "', '" . strip_tags($due_period) . "', '" . strip_tags($doc_charge) . "', 
 						'" . strip_tags($proc_fee) . "', '" . strip_tags($loan_amt_cal) . "', '" . strip_tags($principal_amt_cal) . "', '" . strip_tags($int_amt_cal) . "', '" . strip_tags($tot_amt_cal) . "', 
 						'" . strip_tags($due_amt_cal) . "', '" . strip_tags($doc_charge_cal) . "', '" . strip_tags($proc_fee_cal) . "', '" . strip_tags($net_cash_cal) . "', '" . strip_tags($due_start_from) . "', 
@@ -5177,6 +5225,7 @@ class admin
 				$detailrecords['profit_method'] = $row['profit_method'];
 				$detailrecords['calc_method'] = $row['calc_method'];
 				$detailrecords['due_method_scheme'] = $row['due_method_scheme'];
+				$detailrecords['scheme_profit_method'] = $row['profit_method_scheme'];
 				$detailrecords['day_scheme'] = $row['day_scheme'];
 				$detailrecords['scheme_name'] = $row['scheme_name'];
 				$detailrecords['int_rate'] = $row['int_rate'];

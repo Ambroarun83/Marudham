@@ -86,7 +86,6 @@ if ($userid == 1) {
         $query .= "and v.loan_category IN ($loan_cat)"; // show only user's loan cat allocation
     }
 }
-// print_r($query);
 if (isset($_POST['search']) && $_POST['search'] != "") {
 
     $query .= " AND (v.dor LIKE '%" . $_POST['search'] . "%'

@@ -923,26 +923,24 @@ function OnLoadFunctions(req_id, cus_id) {
 function getChequeNoList() {}
 
 function getBankNames() {
-  $.ajax({
-    url: "manageUser/getBankDetails.php",
-    data: {},
-    dataType: "json",
-    type: "post",
-    cache: false,
-    success: function (response) {
-      $("#bank_id").empty();
-      $("#bank_id").append('<option value="">Select Bank Name</option>');
-      $.each(response, function (ind, val) {
-        $("#bank_id").append(
-          '<option value="' +
-            val["bank_id"] +
-            '">' +
-            val["bank_name"] +
-            "</option>"
-        );
-      });
-    },
-  });
+
+  
+    $.ajax({
+        url: 'manageUser/getBankDetails.php',
+        data: {},
+        dataType: 'json',
+        type: 'post',
+        cache: false,
+        success: function (response) {
+            $('#bank_id').empty();
+            $('#bank_id').append('<option value="">Select Bank Name</option>');
+            $.each(response, function (ind, val) {
+                $('#bank_id').append('<option value="' + val['id'] + '">' + val['bank_name'] + '</option>');
+            })
+
+        }
+    })
+
 }
 
 function validations() {
@@ -1177,35 +1175,27 @@ function validateCommitment() {
 
 //Due Chart List
 function dueChartList(req_id, cus_id, callback) {
-  // var req_id = $('#idupd').val()
-  // const cus_id = $('#cusidupd').val()
-  $.ajax({
-    url: "collectionFile/getDueChartList.php",
-    data: { req_id: req_id, cus_id: cus_id },
-    type: "post",
-    cache: false,
-    success: function (response) {
-      $("#dueChartTableDiv").empty();
-      $("#dueChartTableDiv").html(response);
-    },
-  }).then(function () {
-    $.post(
-      "collectionFile/getDueMethodName.php",
-      { req_id },
-      function (response) {
-        $("#dueChartTitle").text(
-          "Due Chart ( " +
-            response["due_method"] +
-            " - " +
-            response["loan_type"] +
-            " )"
-        );
-      },
-      "json"
-    );
 
-    callback();
-  });
+    // var req_id = $('#idupd').val()
+    // const cus_id = $('#cusidupd').val()
+    $('#dueChartTableDiv').empty();
+    $.ajax({
+        url: 'collectionFile/getDueChartList.php',
+        data: { 'req_id': req_id, 'cus_id': cus_id },
+        type: 'post',
+        cache: false,
+        success: function (response) {
+            $('#dueChartTableDiv').html(response)
+        }
+    }).then(function () {
+
+        $.post('collectionFile/getDueMethodName.php', { req_id }, function (response) {
+            $('#dueChartTitle').text('Due Chart ( ' + response['due_method'] + ' - ' + response['loan_type'] + ' )');
+        }, 'json');
+
+        callback();
+    })
+
 }
 //Penalty Chart List
 function penaltyChartList(req_id, cus_id) {

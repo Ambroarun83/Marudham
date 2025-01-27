@@ -100,6 +100,7 @@ $(document).ready(function () {
         var scheme_name = $('#scheme_name').val();
         var intrest_rate = $('#intrest_rate').val();
         var total_due = $('#total_due').val();
+        var profit_method = $('#profit_method').val();
         var doc_charge_type = $('#doc_charge_type').val();
         var doc_charge_min = $('#doc_charge_min').val();
         var doc_charge_max = $('#doc_charge_max').val();
@@ -109,7 +110,7 @@ $(document).ready(function () {
         var due_date = $('#due_date').val();
         var grace_period = $('#grace_period').val();
         var overdue = $('#overdue').val();
-        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && total_due != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_date != '' && grace_period != '' && overdue != '') {
+        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && total_due != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_date != '' && grace_period != '' && overdue != '' && profit_method != '' && profit_method != null) {
             return true;
         } else {
             Swal.fire({
@@ -163,6 +164,7 @@ $(document).ready(function () {
         var sub_category = $('#sub_category1').val();
         var scheme_name = $('#scheme_name1').val();
         var intrest_rate = $('#intrest_rate1').val();
+        var profit_method = $('#profit_method1').val();
         var due_period = $('#due_period1').val();
         var doc_charge_type = $('#doc_charge_type1').val();
         var doc_charge_min = $('#doc_charge_min1').val();
@@ -172,7 +174,7 @@ $(document).ready(function () {
         var proc_fee_max = $('#proc_fee_max1').val();
         var due_day = $('#due_day').val();
         var overdue = $('#overdue1').val();
-        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_day != '' && overdue != '') {
+        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_day != '' && overdue != '' && profit_method != '' && profit_method != null) {
             return true;
         } else {
             Swal.fire({
@@ -226,6 +228,7 @@ $(document).ready(function () {
         var sub_category = $('#sub_category2').val();
         var scheme_name = $('#scheme_name2').val();
         var intrest_rate = $('#intrest_rate2').val();
+        var profit_method = $('#profit_method2').val();
         var due_period = $('#due_period2').val();
         var doc_charge_type = $('#doc_charge_type2').val();
         var doc_charge_min = $('#doc_charge_min2').val();
@@ -234,7 +237,7 @@ $(document).ready(function () {
         var proc_fee_min = $('#proc_fee_min2').val();
         var proc_fee_max = $('#proc_fee_max2').val();
         var overdue = $('#overdue2').val();
-        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && overdue != '') {
+        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && overdue != ''&& profit_method != '' && profit_method != null) {
             return true;
         } else {
             Swal.fire({
