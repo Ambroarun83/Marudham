@@ -92,15 +92,27 @@ $(document).ready(function () {
             changePercentinput('procmin', 'procmax', 'proc_fee_min', 'proc_fee_max');
         }
     })
-
+    $('.monthly_scheme #interestamt,#interestpercentage').click(function () {
+        var intreset_type = $('input[name=intreset_type]:checked').val();
+        if (intreset_type == 'amt') {
+            changeAmtinput('intresetmin', 'intersetmax', 'intreset_min', 'intreset_max');
+        }
+        if (intreset_type == 'percentage') {
+            changePercentinput('intresetmin', 'intersetmax', 'intreset_min', 'intreset_max');
+        }
+    })
     //Validation on submit
     $('#submit_loan_scheme_monthly').click(function () {
         var loan_category = $('#loan_category').val();
         var sub_category = $('#sub_category').val();
         var scheme_name = $('#scheme_name').val();
-        var intrest_rate = $('#intrest_rate').val();
+        // var intrest_rate = $('#intrest_rate').val();
         var total_due = $('#total_due').val();
         var profit_method = $('#profit_method').val();
+        var profit_method = $('#profit_method').val();
+        var intreset_type = $('#intreset_type').val();
+        var intreset_min = $('#intreset_min').val();
+        var intreset_max = $('#intreset_max').val();
         var doc_charge_type = $('#doc_charge_type').val();
         var doc_charge_min = $('#doc_charge_min').val();
         var doc_charge_max = $('#doc_charge_max').val();
@@ -110,7 +122,7 @@ $(document).ready(function () {
         var due_date = $('#due_date').val();
         var grace_period = $('#grace_period').val();
         var overdue = $('#overdue').val();
-        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && total_due != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_date != '' && grace_period != '' && overdue != '' && profit_method != '' && profit_method != null) {
+        if (loan_category != '' && sub_category != '' && scheme_name != '' && intreset_type != '' && intreset_min != '' && intreset_max != '' && total_due != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_date != '' && grace_period != '' && overdue != '' && profit_method != '' && profit_method != null) {
             return true;
         } else {
             Swal.fire({
@@ -157,15 +169,26 @@ $(document).ready(function () {
             changePercentinput('procmin1', 'procmax1', 'proc_fee_min1', 'proc_fee_max1');
         }
     })
-
+    $('.weekly_scheme #interestamt1,#interestpercentage1').click(function () {
+        var intreset_type = $('input[name=intreset_type1]:checked').val();
+        if (intreset_type == 'amt') {
+            changeAmtinput('intresetmin1', 'intersetmax1', 'intreset_min1', 'intreset_max1');
+        }
+        if (intreset_type == 'percentage') {
+            changePercentinput('intresetmin1', 'intersetmax1', 'intreset_min1', 'intreset_max1');
+        }
+    })
     //Validation on submit
     $('#submit_loan_scheme_weekly').click(function () {
         var loan_category = $('#loan_category1').val();
         var sub_category = $('#sub_category1').val();
         var scheme_name = $('#scheme_name1').val();
-        var intrest_rate = $('#intrest_rate1').val();
+        // var intrest_rate = $('#intrest_rate1').val();
         var profit_method = $('#profit_method1').val();
         var due_period = $('#due_period1').val();
+        var intreset_type = $('#intreset_type1').val();
+        var intreset_min = $('#intreset_min1').val();
+        var intreset_max = $('#intreset_max1').val();
         var doc_charge_type = $('#doc_charge_type1').val();
         var doc_charge_min = $('#doc_charge_min1').val();
         var doc_charge_max = $('#doc_charge_max1').val();
@@ -174,7 +197,7 @@ $(document).ready(function () {
         var proc_fee_max = $('#proc_fee_max1').val();
         var due_day = $('#due_day').val();
         var overdue = $('#overdue1').val();
-        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_day != '' && overdue != '' && profit_method != '' && profit_method != null) {
+        if (loan_category != '' && sub_category != '' && scheme_name != '' && intreset_type != '' && intreset_min != '' && intreset_max != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && due_day != '' && overdue != '' && profit_method != '' && profit_method != null) {
             return true;
         } else {
             Swal.fire({
@@ -210,7 +233,15 @@ $(document).ready(function () {
             changePercentinput('docmin2', 'docmax2', 'doc_charge_min2', 'doc_charge_max2');
         }
     })
-
+    $('.daily_scheme #interestamt2,#interestpercentage2').click(function () {
+        var intreset_type = $('input[name=intreset_type2]:checked').val();
+        if (intreset_type == 'amt') {
+            changeAmtinput('intresetmin2', 'intersetmax2', 'intreset_min2', 'intreset_max2');
+        }
+        if (intreset_type == 'percentage') {
+            changePercentinput('intresetmin2', 'intersetmax2', 'intreset_min2', 'intreset_max2');
+        }
+    })
     // Amount or percentage change on fields
     $('.daily_scheme #procamt2,#procpercentage2').click(function () {
         var proc_fee_type = $('input[name=proc_fee_type2]:checked').val();
@@ -230,6 +261,9 @@ $(document).ready(function () {
         var intrest_rate = $('#intrest_rate2').val();
         var profit_method = $('#profit_method2').val();
         var due_period = $('#due_period2').val();
+        var intreset_type = $('#intreset_type2').val();
+        var intreset_min = $('#intreset_min2').val();
+        var intreset_max = $('#intreset_max2').val();
         var doc_charge_type = $('#doc_charge_type2').val();
         var doc_charge_min = $('#doc_charge_min2').val();
         var doc_charge_max = $('#doc_charge_max2').val();
@@ -237,7 +271,7 @@ $(document).ready(function () {
         var proc_fee_min = $('#proc_fee_min2').val();
         var proc_fee_max = $('#proc_fee_max2').val();
         var overdue = $('#overdue2').val();
-        if (loan_category != '' && sub_category != '' && scheme_name != '' && intrest_rate != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && overdue != ''&& profit_method != '' && profit_method != null) {
+        if (loan_category != '' && sub_category != '' && scheme_name != '' && intreset_type != '' && intreset_min != '' && intreset_max != '' && due_period != '' && doc_charge_type != '' && doc_charge_min != '' && doc_charge_max != '' && proc_fee_type != '' && proc_fee_min != '' && proc_fee_max != '' && overdue != ''&& profit_method != '' && profit_method != null) {
             return true;
         } else {
             Swal.fire({
@@ -266,6 +300,8 @@ $(function () {
     if (scheme_id_upd != '' && due_method_upd == 'monthly') {
         var loan_category_upd = $('#loan_category_upd').val();
         var doc_charge_type = $('#doc_charge_type_upd').val();
+        var intreset_type = $('#intreset_type_upd').val();
+        var proc_fee_type = $('#proc_type_upd').val();
         getSubCategory(loan_category_upd);
 
         //Scheme Type Change
@@ -278,15 +314,22 @@ $(function () {
             changePercentinput('docmin', 'docmax', 'doc_charge_min', 'doc_charge_max');
         }
         //for processing fee
-        if (doc_charge_type == 'amt') {
+        if (proc_fee_type == 'amt') {
             changeAmtinput('procmin', 'procmax', 'proc_fee_min', 'proc_fee_max');
-        } else if (doc_charge_type == 'percentage') {
+        } else if (proc_fee_type == 'percentage') {
             changePercentinput('procmin', 'procmax', 'proc_fee_min', 'proc_fee_max');
+        }
+        if (intreset_type == 'amt') {
+            changeAmtinput('intresetmin', 'intersetmax', 'intreset_min', 'intreset_max');
+        } else if (intreset_type == 'percentage') {
+            changePercentinput('intresetmin', 'intersetmax', 'intreset_min', 'intreset_max');
         }
     }
     if (scheme_id_upd != '' && due_method_upd == 'weekly') {
         var loan_category_upd = $('#loan_category1_upd').val();
         var doc_charge_type = $('#doc_charge_type1_upd').val();
+        var intreset_type = $('#intreset_type1_upd').val();
+        var proc_fee_type = $('#proc_type1_upd').val();
         getSubCategory1(loan_category_upd);
 
         //Scheme Type Change
@@ -299,15 +342,22 @@ $(function () {
             changePercentinput('docmin1', 'docmax1', 'doc_charge_min1', 'doc_charge_max1');
         }
         //for processing fee
-        if (doc_charge_type == 'amt') {
+        if (proc_fee_type == 'amt') {
             changeAmtinput('procmin1', 'procmax1', 'proc_fee_min1', 'proc_fee_max1');
-        } else if (doc_charge_type == 'percentage') {
+        } else if (proc_fee_type == 'percentage') {
             changePercentinput('procmin1', 'procmax1', 'proc_fee_min1', 'proc_fee_max1');
+        }
+        if (intreset_type == 'amt') {
+            changeAmtinput('intresetmin1', 'intersetmax1', 'intreset_min1', 'intreset_max1');
+        } else if (intreset_type == 'percentage') {
+            changePercentinput('intresetmin1', 'intersetmax1', 'intreset_min1', 'intreset_max1');
         }
     }
     if (scheme_id_upd != '' && due_method_upd == 'daily') {
         var loan_category_upd = $('#loan_category2_upd').val();
         var doc_charge_type = $('#doc_charge_type2_upd').val();
+        var intreset_type = $('#intreset_type2_upd').val();
+        var proc_fee_type = $('#proc_type2_upd').val();
         getSubCategory2(loan_category_upd);
 
         //Scheme Type Change
@@ -324,6 +374,11 @@ $(function () {
             changeAmtinput('procmin2', 'procmax2', 'proc_fee_min2', 'proc_fee_max2');
         } else if (doc_charge_type == 'percentage') {
             changePercentinput('procmin2', 'procmax2', 'proc_fee_min2', 'proc_fee_max2');
+        }
+        if (intreset_type == 'amt') {
+            changeAmtinput('intresetmin2', 'intersetmax2', 'intreset_min2', 'intreset_max2');
+        } else if (intreset_type == 'percentage') {
+            changePercentinput('intresetmin2', 'intersetmax2', 'intreset_min2', 'intreset_max2');
         }
     }
 });

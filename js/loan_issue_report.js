@@ -43,8 +43,7 @@ $(document).ready(function () {
             };
 
             // Array of column indices to sum
-            var columnsToSum = [12, 13, 14, 15, 16, 17, 18];
-
+            var columnsToSum = [14, 15, 16, 17, 18, 19, 20];
             // Loop through each column index
             columnsToSum.forEach(function (colIndex) {
                 // Total over all pages for the current column

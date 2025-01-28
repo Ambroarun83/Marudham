@@ -14,7 +14,6 @@ $column = array(
     'ls.due_method',
     'ls.scheme_id',
     'ls.scheme_id',
-    'ls.scheme_id',
     'ls.status'
 );
 $query = "SELECT ls.*,lcc.loan_category_creation_name as loan_category FROM loan_scheme ls JOIN loan_category_creation lcc ON ls.loan_category = lcc.loan_category_creation_id and lcc.status = 0 WHERE ls.due_method = 'weekly' ";
@@ -71,7 +70,7 @@ foreach ($result as $row) {
         $sub_array[] = 'Daily';
     }
 
-    $sub_array[] = $row["intrest_rate"] . '%';
+    // $sub_array[] = $row["intrest_rate"] . '%';
     $sub_array[] = $row["due_period"];
 
     $status      = $row['status'];

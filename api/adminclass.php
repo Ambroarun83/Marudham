@@ -952,9 +952,9 @@ class admin
 			$profit_methods = $_POST['profit_method'];
 			$profit_method = implode(",", $profit_methods);
 		}
-		if (isset($_POST['intrest_rate'])) {
-			$intrest_rate = $_POST['intrest_rate'];
-		}
+		// if (isset($_POST['intrest_rate'])) {
+		// 	$intrest_rate = $_POST['intrest_rate'];
+		// }
 		if (isset($_POST['total_due'])) {
 			$total_due = $_POST['total_due'];
 		}
@@ -963,6 +963,15 @@ class admin
 		}
 		if (isset($_POST['due_period'])) {
 			$due_period = $_POST['due_period'];
+		}
+		if (isset($_POST['intreset_type'])) {
+			$intreset_type = $_POST['intreset_type'];
+		}
+		if (isset($_POST['intreset_min'])) {
+			$intreset_min = $_POST['intreset_min'];
+		}
+		if (isset($_POST['intreset_max'])) {
+			$intreset_max = $_POST['intreset_max'];
 		}
 		if (isset($_POST['doc_charge_type'])) {
 			$doc_charge_type = $_POST['doc_charge_type'];
@@ -998,11 +1007,11 @@ class admin
 			$overdue = $_POST['overdue'];
 		}
 
-		$insertQry = "INSERT INTO loan_scheme(scheme_name, short_name, loan_category, sub_category, due_method, profit_method, intrest_rate,total_due,advance_due,due_period,doc_charge_type,
+		$insertQry = "INSERT INTO loan_scheme(scheme_name, short_name, loan_category, sub_category, due_method, profit_method,total_due,advance_due,due_period,intreset_type,intreset_min,intreset_max,doc_charge_type,
 		doc_charge_min,doc_charge_max,proc_fee_type,proc_fee_min,proc_fee_max,due_date,overdue,grace_period,penalty,insert_login_id,created_date)
 		VALUES('" . strip_tags($scheme_name) . "','" . strip_tags($short_name) . "', '" . strip_tags($loan_category) . "', '" . strip_tags($sub_category) . "',
-		'" . strip_tags($due_method) . "','" . strip_tags($profit_method) . "', '" . strip_tags($intrest_rate) . "', '" . strip_tags($total_due) . "',
-		'" . strip_tags($advance_due) . "','" . strip_tags($due_period) . "', '" . strip_tags($doc_charge_type) . "', '" . strip_tags($doc_charge_min) . "',
+		'" . strip_tags($due_method) . "','" . strip_tags($profit_method) . "', '" . strip_tags($total_due) . "',
+		'" . strip_tags($advance_due) . "','" . strip_tags($due_period) . "','" . strip_tags($intreset_type) . "', '" . strip_tags($intreset_min) . "','" . strip_tags($intreset_max) . "','" . strip_tags($doc_charge_type) . "', '" . strip_tags($doc_charge_min) . "',
 		'" . strip_tags($doc_charge_max) . "','" . strip_tags($proc_fee_type) . "', '" . strip_tags($proc_fee_min) . "', '" . strip_tags($proc_fee_max) . "',
 		'" . strip_tags($due_date) . "','" . strip_tags($overdue) . "', '" . strip_tags($grace_period) . "', '" . strip_tags($penalty) . "', '" . strip_tags($userid) . "',current_timestamp() )";
 		$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
@@ -1030,11 +1039,20 @@ class admin
 			$profit_methods = $_POST['profit_method1'];
 			$profit_method1 = implode(",", $profit_methods);
 		}
-		if (isset($_POST['intrest_rate1'])) {
-			$intrest_rate1 = $_POST['intrest_rate1'];
-		}
+		// if (isset($_POST['intrest_rate1'])) {
+		// 	$intrest_rate1 = $_POST['intrest_rate1'];
+		// }
 		if (isset($_POST['due_period1'])) {
 			$due_period1 = $_POST['due_period1'];
+		}
+		if (isset($_POST['intreset_type1'])) {
+			$intreset_type1 = $_POST['intreset_type1'];
+		}
+		if (isset($_POST['intreset_min1'])) {
+			$intreset_min1 = $_POST['intreset_min1'];
+		}
+		if (isset($_POST['intreset_max1'])) {
+			$intreset_max1 = $_POST['intreset_max1'];
 		}
 		if (isset($_POST['doc_charge_type1'])) {
 			$doc_charge_type1 = $_POST['doc_charge_type1'];
@@ -1062,10 +1080,10 @@ class admin
 			$overdue1 = $_POST['overdue1'];
 		}
 
-		$insertQry = "INSERT INTO loan_scheme(scheme_name, short_name, loan_category, sub_category, due_method, profit_method, intrest_rate,due_period,doc_charge_type,
+		$insertQry = "INSERT INTO loan_scheme(scheme_name, short_name, loan_category, sub_category, due_method, profit_method,due_period,intreset_type,intreset_min,intreset_max,doc_charge_type,
 		doc_charge_min,doc_charge_max,proc_fee_type,proc_fee_min,proc_fee_max,due_date,overdue,insert_login_id,created_date)
 		VALUES('" . strip_tags($scheme_name1) . "','" . strip_tags($short_name1) . "', '" . strip_tags($loan_category1) . "', '" . strip_tags($sub_category1) . "',
-		'" . strip_tags($due_method1) . "','" . strip_tags($profit_method1) . "', '" . strip_tags($intrest_rate1) . "', '" . strip_tags($due_period1) . "', 
+		'" . strip_tags($due_method1) . "','" . strip_tags($profit_method1) . "',  '" . strip_tags($due_period1) . "', '" . strip_tags($intreset_type1) . "','" . strip_tags($intreset_min1) . "','" . strip_tags($intreset_max1) . "',
 		'" . strip_tags($doc_charge_type1) . "', '" . strip_tags($doc_charge_min1) . "',
 		'" . strip_tags($doc_charge_max1) . "','" . strip_tags($proc_fee_type1) . "', '" . strip_tags($proc_fee_min1) . "', '" . strip_tags($proc_fee_max1) . "',
 		'" . strip_tags($due_day) . "','" . strip_tags($overdue1) . "', '" . strip_tags($userid) . "',current_timestamp() )";
@@ -1094,11 +1112,20 @@ class admin
 			$profit_methods = $_POST['profit_method2'];
 			$profit_method2 = implode(",", $profit_methods);
 		}
-		if (isset($_POST['intrest_rate2'])) {
-			$intrest_rate2 = $_POST['intrest_rate2'];
-		}
+		// if (isset($_POST['intrest_rate2'])) {
+		// 	$intrest_rate2 = $_POST['intrest_rate2'];
+		// }
 		if (isset($_POST['due_period2'])) {
 			$due_period2 = $_POST['due_period2'];
+		}
+		if (isset($_POST['intreset_type2'])) {
+			$intreset_type2 = $_POST['intreset_type2'];
+		}
+		if (isset($_POST['intreset_min2'])) {
+			$intreset_min2 = $_POST['intreset_min2'];
+		}
+		if (isset($_POST['intreset_max2'])) {	
+			$intreset_max2 = $_POST['intreset_max2'];
 		}
 		if (isset($_POST['doc_charge_type2'])) {
 			$doc_charge_type2 = $_POST['doc_charge_type2'];
@@ -1123,10 +1150,10 @@ class admin
 			$overdue2 = $_POST['overdue2'];
 		}
 
-		$insertQry = "INSERT INTO loan_scheme(scheme_name, short_name, loan_category, sub_category, due_method, profit_method, intrest_rate,due_period,doc_charge_type,
+		$insertQry = "INSERT INTO loan_scheme(scheme_name, short_name, loan_category, sub_category, due_method, profit_method,due_period,intreset_type,intreset_min,intreset_max,doc_charge_type,
 		doc_charge_min,doc_charge_max,proc_fee_type,proc_fee_min,proc_fee_max,overdue,insert_login_id,created_date)
 		VALUES('" . strip_tags($scheme_name2) . "','" . strip_tags($short_name2) . "', '" . strip_tags($loan_category2) . "', '" . strip_tags($sub_category2) . "',
-		'" . strip_tags($due_method2) . "','" . strip_tags($profit_method2) . "', '" . strip_tags($intrest_rate2) . "', '" . strip_tags($due_period2) . "', 
+		'" . strip_tags($due_method2) . "','" . strip_tags($profit_method2) . "', '" . strip_tags($due_period2) . "', '" . strip_tags($intreset_type2) . "','" . strip_tags($intreset_min2) . "','" . strip_tags($intreset_max2) . "',
 		'" . strip_tags($doc_charge_type2) . "', '" . strip_tags($doc_charge_min2) . "','" . strip_tags($doc_charge_max2) . "',
 		'" . strip_tags($proc_fee_type2) . "', '" . strip_tags($proc_fee_min2) . "', '" . strip_tags($proc_fee_max2) . "','" . strip_tags($overdue2) . "', '" . strip_tags($userid) . "',current_timestamp() )";
 		$insresult = $mysqli->query($insertQry) or die("Error " . $mysqli->error);
@@ -1151,6 +1178,9 @@ class admin
 			$detailrecords['total_due']       = $row->total_due;
 			$detailrecords['advance_due']       = $row->advance_due;
 			$detailrecords['due_period']       = $row->due_period;
+			$detailrecords['intreset_type']       = $row->intreset_type;
+			$detailrecords['intreset_min']       = $row->intreset_min;
+			$detailrecords['intreset_max']       = $row->intreset_max;
 			$detailrecords['doc_charge_type']       = $row->doc_charge_type;
 			$detailrecords['doc_charge_min']       = $row->doc_charge_min;
 			$detailrecords['doc_charge_max']       = $row->doc_charge_max;
@@ -1187,9 +1217,9 @@ class admin
 			$profit_methods = $_POST['profit_method'];
 			$profit_method = implode(",", $profit_methods);
 		}
-		if (isset($_POST['intrest_rate'])) {
-			$intrest_rate = $_POST['intrest_rate'];
-		}
+		// if (isset($_POST['intrest_rate'])) {
+		// 	$intrest_rate = $_POST['intrest_rate'];
+		// }
 		if (isset($_POST['total_due'])) {
 			$total_due = $_POST['total_due'];
 		}
@@ -1198,6 +1228,15 @@ class admin
 		}
 		if (isset($_POST['due_period'])) {
 			$due_period = $_POST['due_period'];
+		}
+		if (isset($_POST['intreset_type'])) {
+			$intreset_type = $_POST['intreset_type'];
+		}
+		if (isset($_POST['intreset_min'])) {
+			$intreset_min = $_POST['intreset_min'];
+		}
+		if (isset($_POST['intreset_max'])) {
+			$intreset_max = $_POST['intreset_max'];
 		}
 		if (isset($_POST['doc_charge_type'])) {
 			$doc_charge_type = $_POST['doc_charge_type'];
@@ -1234,8 +1273,8 @@ class admin
 		}
 
 		$updatetQry = "UPDATE loan_scheme set scheme_name = '" . strip_tags($scheme_name) . "', short_name='" . strip_tags($short_name) . "', loan_category='" . strip_tags($loan_category) . "',
-		sub_category='" . strip_tags($sub_category) . "', due_method='" . strip_tags($due_method) . "', profit_method='" . strip_tags($profit_method) . "', intrest_rate='" . strip_tags($intrest_rate) . "',
-		total_due='" . strip_tags($total_due) . "',advance_due ='" . strip_tags($advance_due) . "',due_period='" . strip_tags($due_period) . "',doc_charge_type= '" . strip_tags($doc_charge_type) . "',
+		sub_category='" . strip_tags($sub_category) . "', due_method='" . strip_tags($due_method) . "', profit_method='" . strip_tags($profit_method) . "',
+		total_due='" . strip_tags($total_due) . "',advance_due ='" . strip_tags($advance_due) . "',due_period='" . strip_tags($due_period) . "',intreset_type= '" . strip_tags($intreset_type) . "',intreset_min= '" . strip_tags($intreset_min) . "',intreset_max= '" . strip_tags($intreset_max) . "',doc_charge_type= '" . strip_tags($doc_charge_type) . "',
 		doc_charge_min='" . strip_tags($doc_charge_min) . "',doc_charge_max='" . strip_tags($doc_charge_max) . "',proc_fee_type='" . strip_tags($proc_fee_type) . "',proc_fee_min='" . strip_tags($proc_fee_min) . "',
 		proc_fee_max='" . strip_tags($proc_fee_max) . "',due_date='" . strip_tags($due_date) . "',overdue='" . strip_tags($overdue) . "',grace_period='" . strip_tags($grace_period) . "',penalty='" . strip_tags($penalty) . "',
 		update_login_id='" . strip_tags($userid) . "',updated_date= current_timestamp(), status=0 where scheme_id = '" . $id . "'";
@@ -1264,11 +1303,17 @@ class admin
 			$profit_methods = $_POST['profit_method1'];
 			$profit_method1 = implode(",", $profit_methods);
 		}
-		if (isset($_POST['intrest_rate1'])) {
-			$intrest_rate1 = $_POST['intrest_rate1'];
-		}
 		if (isset($_POST['due_period1'])) {
 			$due_period1 = $_POST['due_period1'];
+		}
+		if (isset($_POST['intreset_type1'])) {
+			$intreset_type1 = $_POST['intreset_type1'];
+		}
+		if (isset($_POST['intreset_min1'])) {
+			$intreset_min1 = $_POST['intreset_min1'];
+		}
+		if (isset($_POST['intreset_max1'])) {
+			$intreset_max1 = $_POST['intreset_max1'];
 		}
 		if (isset($_POST['doc_charge_type1'])) {
 			$doc_charge_type1 = $_POST['doc_charge_type1'];
@@ -1297,8 +1342,8 @@ class admin
 		}
 
 		$updatetQry = "UPDATE loan_scheme set scheme_name = '" . strip_tags($scheme_name1) . "', short_name='" . strip_tags($short_name1) . "', loan_category='" . strip_tags($loan_category1) . "',
-		sub_category='" . strip_tags($sub_category1) . "', due_method='" . strip_tags($due_method1) . "', profit_method='" . strip_tags($profit_method1) . "', intrest_rate='" . strip_tags($intrest_rate1) . "',
-		due_period='" . strip_tags($due_period1) . "',doc_charge_type= '" . strip_tags($doc_charge_type1) . "',
+		sub_category='" . strip_tags($sub_category1) . "', due_method='" . strip_tags($due_method1) . "', profit_method='" . strip_tags($profit_method1) . "',due_period='" . strip_tags($due_period1) . "',intreset_type= '" . strip_tags($intreset_type1) . "',intreset_min= '" . strip_tags($intreset_min1) . "',intreset_max= '" . strip_tags($intreset_max1) . "',
+		doc_charge_type= '" . strip_tags($doc_charge_type1) . "',
 		doc_charge_min='" . strip_tags($doc_charge_min1) . "',doc_charge_max='" . strip_tags($doc_charge_max1) . "',proc_fee_type='" . strip_tags($proc_fee_type1) . "',proc_fee_min='" . strip_tags($proc_fee_min1) . "',
 		proc_fee_max='" . strip_tags($proc_fee_max1) . "',due_date='" . strip_tags($due_day) . "',overdue='" . strip_tags($overdue1) . "',update_login_id='" . strip_tags($userid) . "',updated_date= current_timestamp(), status=0 where scheme_id = '" . $id . "'";
 		$result = $mysqli->query($updatetQry) or die("Error " . $mysqli->error);
@@ -1326,11 +1371,20 @@ class admin
 			$profit_methods = $_POST['profit_method2'];
 			$profit_method2 = implode(",", $profit_methods);
 		}
-		if (isset($_POST['intrest_rate2'])) {
-			$intrest_rate2 = $_POST['intrest_rate2'];
-		}
+		// if (isset($_POST['intrest_rate2'])) {
+		// 	$intrest_rate2 = $_POST['intrest_rate2'];
+		// }
 		if (isset($_POST['due_period2'])) {
 			$due_period2 = $_POST['due_period2'];
+		}
+		if (isset($_POST['intreset_type1'])) {
+			$intreset_type2 = $_POST['intreset_type1'];
+		}
+		if (isset($_POST['intreset_min1'])) {
+			$intreset_min2 = $_POST['intreset_min1'];
+		}
+		if (isset($_POST['intreset_max1'])) {
+			$intreset_max2 = $_POST['intreset_max1'];
 		}
 		if (isset($_POST['doc_charge_type2'])) {
 			$doc_charge_type2 = $_POST['doc_charge_type2'];
@@ -1356,8 +1410,8 @@ class admin
 		}
 
 		$updatetQry = "UPDATE loan_scheme set scheme_name = '" . strip_tags($scheme_name2) . "', short_name='" . strip_tags($short_name2) . "', loan_category='" . strip_tags($loan_category2) . "',
-		sub_category='" . strip_tags($sub_category2) . "', due_method='" . strip_tags($due_method2) . "', profit_method='" . strip_tags($profit_method2) . "', intrest_rate='" . strip_tags($intrest_rate2) . "',
-		due_period='" . strip_tags($due_period2) . "',doc_charge_type= '" . strip_tags($doc_charge_type2) . "',
+		sub_category='" . strip_tags($sub_category2) . "', due_method='" . strip_tags($due_method2) . "', profit_method='" . strip_tags($profit_method2) . "', 
+		due_period='" . strip_tags($due_period2) . "',intreset_type= '" . strip_tags($intreset_type2) . "',intreset_min= '" . strip_tags($intreset_min2) . "',intreset_max= '" . strip_tags($intreset_max2) . "'doc_charge_type= '" . strip_tags($doc_charge_type2) . "',
 		doc_charge_min='" . strip_tags($doc_charge_min2) . "',doc_charge_max='" . strip_tags($doc_charge_max2) . "',proc_fee_type='" . strip_tags($proc_fee_type2) . "',proc_fee_min='" . strip_tags($proc_fee_min2) . "',
 		proc_fee_max='" . strip_tags($proc_fee_max2) . "',overdue='" . strip_tags($overdue2) . "',update_login_id='" . strip_tags($userid) . "',updated_date= current_timestamp(),status=0 where scheme_id = '" . $id . "'";
 		$result = $mysqli->query($updatetQry) or die("Error " . $mysqli->error);
