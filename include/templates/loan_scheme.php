@@ -107,10 +107,13 @@ if ($idupd > 0) {
 				$loan_category      			 = $getLoanScheme['loan_category'];
 				$sub_category       			 = $getLoanScheme['sub_category'];
 				$profit_method        		     = $getLoanScheme['profit_method'];
-				$intrest_rate        		     = $getLoanScheme['intrest_rate'];
+				// $intrest_rate        		     = $getLoanScheme['intrest_rate'];
 				$total_due        		     = $getLoanScheme['total_due'];
 				$advance_due        		     = $getLoanScheme['advance_due'];
 				$due_period        		     = $getLoanScheme['due_period'];
+				$intreset_type        		     = $getLoanScheme['intreset_type'];
+				$intreset_min        		     = $getLoanScheme['intreset_min'];
+				$intreset_max        		     = $getLoanScheme['intreset_max'];
 				$doc_charge_type        		     = $getLoanScheme['doc_charge_type'];
 				$doc_charge_min        		     = $getLoanScheme['doc_charge_min'];
 				$doc_charge_max        		     = $getLoanScheme['doc_charge_max'];
@@ -128,10 +131,13 @@ if ($idupd > 0) {
 				$loan_category1      			 = $getLoanScheme['loan_category'];
 				$sub_category1       			 = $getLoanScheme['sub_category'];
 				$profit_method1        		     = $getLoanScheme['profit_method'];
-				$intrest_rate1        		     = $getLoanScheme['intrest_rate'];
+				// $intrest_rate1        		     = $getLoanScheme['intrest_rate'];
 				$total_due1        		     = $getLoanScheme['total_due'];
 				$advance_due1        		     = $getLoanScheme['advance_due'];
 				$due_period1        		     = $getLoanScheme['due_period'];
+				$intreset_type1        		     = $getLoanScheme['intreset_type'];
+				$intreset_min1        		     = $getLoanScheme['intreset_min'];
+				$intreset_max1        		     = $getLoanScheme['intreset_max'];
 				$doc_charge_type1        		     = $getLoanScheme['doc_charge_type'];
 				$doc_charge_min1        		     = $getLoanScheme['doc_charge_min'];
 				$doc_charge_max1        		     = $getLoanScheme['doc_charge_max'];
@@ -153,6 +159,9 @@ if ($idupd > 0) {
 				$total_due2        		     = $getLoanScheme['total_due'];
 				$advance_due2        		     = $getLoanScheme['advance_due'];
 				$due_period2        		     = $getLoanScheme['due_period'];
+				$intreset_type2        		     = $getLoanScheme['intreset_type'];
+				$intreset_min2        		     = $getLoanScheme['intreset_min'];
+				$intreset_max2        		     = $getLoanScheme['intreset_max'];
 				$doc_charge_type2        		     = $getLoanScheme['doc_charge_type'];
 				$doc_charge_min2        		     = $getLoanScheme['doc_charge_min'];
 				$doc_charge_max2        		     = $getLoanScheme['doc_charge_max'];
@@ -207,8 +216,14 @@ if (isset($_GET['type'])) {
 		<input type="hidden" class="form-control" value="<?php if (isset($sub_category2)) echo $sub_category2; ?>" id="sub_category2_upd" name="sub_category2_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if (isset($due_method)) echo $due_method; ?>" id="due_method_upd" name="due_method_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if (isset($doc_charge_type)) echo $doc_charge_type; ?>" id="doc_charge_type_upd" name="doc_charge_type_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if (isset($intreset_type)) echo $intreset_type; ?>" id="intreset_type_upd" name="intreset_type_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if (isset($proc_fee_type)) echo $proc_fee_type; ?>" id="proc_type_upd" name="proc_type_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if (isset($doc_charge_type1)) echo $doc_charge_type1; ?>" id="doc_charge_type1_upd" name="doc_charge_type1_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if (isset($intreset_type1)) echo $intreset_type1; ?>" id="intreset_type1_upd" name="intreset_type1_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if (isset($proc_fee_type1)) echo $proc_fee_type1; ?>" id="proc_type1_upd" name="proc_type1_upd" aria-describedby="id" placeholder="Enter id">
 		<input type="hidden" class="form-control" value="<?php if (isset($doc_charge_type2)) echo $doc_charge_type2; ?>" id="doc_charge_type2_upd" name="doc_charge_type2_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if (isset($intreset_type2)) echo $intreset_type2; ?>" id="intreset_type2_upd" name="intreset_type2_upd" aria-describedby="id" placeholder="Enter id">
+		<input type="hidden" class="form-control" value="<?php if (isset($proc_fee_type2)) echo $proc_fee_type2; ?>" id="proc_fee_type2_upd" name="proc_fee_type2_upd" aria-describedby="id" placeholder="Enter id">
 
 		<!-- Row start -->
 		<div class="row gutters">
@@ -294,12 +309,12 @@ if (isset($_GET['type'])) {
 										</div>
 									</div>
 
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Interest Rate %</label>&nbsp;<span class="text-danger">*</span>
 											<input type="text" step="0.01" name="intrest_rate" id="intrest_rate" value="<?php if (isset($intrest_rate)) echo $intrest_rate; ?>" placeholder="Enter Interest Rate %" class="form-control" tabindex="7">
 										</div>
-									</div>
+									</div> -->
 
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
@@ -337,6 +352,25 @@ if (isset($_GET['type'])) {
 							<!--Fields -->
 							<div class="col-md-12 ">
 								<div class="row">
+									<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+										<div class="form-group">
+											<label style="font-size:1.35em;padding-right:2%">Interest Rate: <span class="text-danger">*</span></label>
+											<input type="radio" tabindex="11" name="intreset_type" id="interestamt" value="amt" <?php if (isset($intreset_type) and $intreset_type == 'amt') echo 'checked'; ?>></input><label for='interestamt'>&nbsp;&nbsp;<b>₹</b></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="radio" tabindex="12" name="intreset_type" id="interestpercentage" value="percentage" <?php if (isset($intreset_type) and $intreset_type == 'percentage') echo 'checked'; ?>></input><label for='interestpercentage'>&nbsp;&nbsp;%</label>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput" id="intresetmin">Min</label>&nbsp;<span class="text-danger">*</span>
+											<input type="number" step="0.01" tabindex="13" id="intreset_min" name="intreset_min" readonly class="form-control" placeholder="Enter Minimum Interest" value="<?php if (isset($intreset_min)) echo $intreset_min; ?>">
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput" id="intersetmax">Max</label>&nbsp;<span class="text-danger">*</span>
+											<input type="number" step="0.01" tabindex="14" id="intreset_max" name="intreset_max" readonly class="form-control" placeholder="Enter Maximum Interest" value="<?php if (isset($intreset_max)) echo $intreset_max; ?>">
+										</div>
+									</div>
 									<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group">
 											<label style="font-size:1.35em;padding-right:2%">Document Charge: <span class="text-danger">*</span></label>
@@ -484,12 +518,12 @@ if (isset($_GET['type'])) {
 											</select>
 										</div>
 									</div>
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Interest Rate %</label>&nbsp;<span class="text-danger">*</span>
 											<input type="number" step="0.01" name="intrest_rate1" id="intrest_rate1" value="<?php if (isset($intrest_rate1)) echo $intrest_rate1; ?>" placeholder="Enter Interest Rate %" class="form-control" tabindex="7">
 										</div>
-									</div>
+									</div> -->
 
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
@@ -513,6 +547,25 @@ if (isset($_GET['type'])) {
 							<!--Fields -->
 							<div class="col-md-12 ">
 								<div class="row">
+									<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+										<div class="form-group">
+											<label style="font-size:1.35em;padding-right:2%">Interest Rate: <span class="text-danger">*</span></label>
+											<input type="radio" tabindex="11" name="intreset_type1" id="interestamt1" value="amt" <?php if (isset($intreset_type1) and $intreset_type1 == 'amt') echo 'checked'; ?>></input><label for='interestamt1'>&nbsp;&nbsp;<b>₹</b></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="radio" tabindex="12" name="intreset_type1" id="interestpercentage1" value="percentage" <?php if (isset($intreset_type1) and $intreset_type1 == 'percentage') echo 'checked'; ?>></input><label for='interestpercentage1'>&nbsp;&nbsp;%</label>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput" id="intresetmin1">Min</label>&nbsp;<span class="text-danger">*</span>
+											<input type="number" step="0.01" tabindex="13" id="intreset_min1" name="intreset_min1" readonly class="form-control" placeholder="Enter Minimum Interest" value="<?php if (isset($intreset_min1)) echo $intreset_min1; ?>">
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput" id="intersetmax1">Max</label>&nbsp;<span class="text-danger">*</span>
+											<input type="number" step="0.01" tabindex="14" id="intreset_max1" name="intreset_max1" readonly class="form-control" placeholder="Enter Maximum Interest" value="<?php if (isset($intreset_max1)) echo $intreset_max1; ?>">
+										</div>
+									</div>
 									<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group">
 											<label style="font-size:1.35em;padding-right:2%">Document Charge: <span class="text-danger">*</span></label>
@@ -648,7 +701,7 @@ if (isset($_GET['type'])) {
 											<input type="text" name="due_method_dummy" id="due_method_dummy" value="Daily" readonly class="form-control" tabindex='5'>
 										</div>
 									</div>
-<!-- 
+									<!-- 
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Profit Method</label>
@@ -674,12 +727,12 @@ if (isset($_GET['type'])) {
 											</select>
 										</div>
 									</div>
-									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
+									<!-- <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
 											<label for="disabledInput">Interest Rate %</label>&nbsp;<span class="text-danger">*</span>
 											<input type="number" step="0.01" name="intrest_rate2" id="intrest_rate2" value="<?php if (isset($intrest_rate2)) echo $intrest_rate2; ?>" placeholder="Enter Interest Rate %" class="form-control" tabindex='7'>
 										</div>
-									</div>
+									</div> -->
 
 									<div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
 										<div class="form-group">
@@ -704,6 +757,25 @@ if (isset($_GET['type'])) {
 							<!--Fields -->
 							<div class="col-md-12 ">
 								<div class="row">
+									<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
+										<div class="form-group">
+											<label style="font-size:1.35em;padding-right:2%">Interest Rate: <span class="text-danger">*</span></label>
+											<input type="radio" tabindex="11" name="intreset_type2" id="interestamt2" value="amt" <?php if (isset($intreset_type2) and $intreset_type2 == 'amt') echo 'checked'; ?>></input><label for='interestamt2'>&nbsp;&nbsp;<b>₹</b></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<input type="radio" tabindex="12" name="intreset_type2" id="interestpercentage2" value="percentage" <?php if (isset($intreset_type2) and $intreset_type2 == 'percentage') echo 'checked'; ?>></input><label for='interestpercentage2'>&nbsp;&nbsp;%</label>
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput" id="intresetmin2">Min</label>&nbsp;<span class="text-danger">*</span>
+											<input type="number" step="0.01" tabindex="13" id="intreset_min2" name="intreset_min2" readonly class="form-control" placeholder="Enter Minimum Interest" value="<?php if (isset($intreset_min2)) echo $intreset_min2; ?>">
+										</div>
+									</div>
+									<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
+										<div class="form-group">
+											<label for="disabledInput" id="intersetmax2">Max</label>&nbsp;<span class="text-danger">*</span>
+											<input type="number" step="0.01" tabindex="14" id="intreset_max2" name="intreset_max2" readonly class="form-control" placeholder="Enter Maximum Interest" value="<?php if (isset($intreset_max2)) echo $intreset_max2; ?>">
+										</div>
+									</div>
 									<div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12">
 										<div class="form-group">
 											<label style="font-size:1.35em;padding-right:2%">Document Charge: <span class="text-danger">*</span></label>

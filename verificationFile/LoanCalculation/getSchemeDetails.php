@@ -10,8 +10,10 @@ $detailrecords = array();
 $result=$connect->query("SELECT * FROM loan_scheme where scheme_id = '".strip_tags($scheme_id)."' ");
 $i=0;
 while($row = $result->fetch()){
-    $detailrecords['intrest_rate'] = $row['intrest_rate'];
     $detailrecords['due_period'] = $row['due_period'];
+    $detailrecords['intreset_type'] = $row['intreset_type'];
+    $detailrecords['intreset_min'] = $row['intreset_min'];
+    $detailrecords['intreset_max'] = $row['intreset_max'];
     $detailrecords['profit_method'] = $row['profit_method'];
     $detailrecords['doc_charge_type'] = $row['doc_charge_type'];
     $detailrecords['doc_charge_min'] = $row['doc_charge_min'];

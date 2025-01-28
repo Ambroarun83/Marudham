@@ -44,6 +44,8 @@ $column = array(
     'fam.relationship',
     'al.area_name',
     'sal.sub_area_name',
+    'alm.line_name',
+    'bc.branch_name',
     'lcc.loan_category_creation_name',
     'lc.sub_category',
     'ac.ag_name',
@@ -67,6 +69,8 @@ $query = "SELECT
         fam.relationship,
         al.area_name,
         sal.sub_area_name,
+        alm.line_name,
+        bc.branch_name,
         lcc.loan_category_creation_name as loan_cat_name,
         lc.sub_category,
         ac.ag_name,
@@ -88,6 +92,9 @@ $query = "SELECT
         LEFT JOIN verification_family_info fam ON cp.guarentor_name = fam.id
         LEFT JOIN area_list_creation al ON cp.area_confirm_area = al.area_id
         LEFT JOIN sub_area_list_creation sal ON cp.area_confirm_subarea = sal.sub_area_id
+        LEFT JOIN area_group_mapping ag ON FIND_IN_SET(sal.sub_area_id, ag.sub_area_id)
+   LEFT JOIN branch_creation bc ON ag.branch_id = bc.branch_id
+   LEFT JOIN area_line_mapping alm ON FIND_IN_SET(sal.sub_area_id, alm.sub_area_id)
         LEFT JOIN request_creation req ON ii.req_id = req.req_id
         LEFT JOIN loan_issue li ON li.req_id = ii.req_id
         LEFT JOIN loan_category_creation lcc ON lc.loan_category = lcc.loan_category_creation_id
@@ -107,6 +114,8 @@ if (isset($_POST['search'])) {
             OR fam.relationship LIKE '%" . $_POST['search'] . "%' 
             OR al.area_name LIKE '%" . $_POST['search'] . "%' 
             OR sal.sub_area_name LIKE '%" . $_POST['search'] . "%' 
+            OR alm.line_name LIKE '%" . $_POST['search'] . "%' 
+            OR bc.branch_name LIKE '%" . $_POST['search'] . "%' 
             OR loan_cat_name LIKE '%" . $_POST['search'] . "%' 
             OR sub_category LIKE '%" . $_POST['search'] . "%' 
             OR ag_name LIKE '%" . $_POST['search'] . "%' 
@@ -149,6 +158,8 @@ foreach ($result as $row) {
     $sub_array[] = $row['relationship'];
     $sub_array[] = $row['area_name'];
     $sub_array[] = $row['sub_area_name'];
+    $sub_array[] = $row['line_name'];
+    $sub_array[] = $row['branch_name'];
     $sub_array[] = $row['loan_cat_name'];
     $sub_array[] = $row['sub_category'];
     $sub_array[] = $row['ag_name'];

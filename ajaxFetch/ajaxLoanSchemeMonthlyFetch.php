@@ -14,7 +14,6 @@ $column = array(
     'ls.due_method',
     'ls.scheme_id',
     'ls.scheme_id',
-    'ls.scheme_id',
     'ls.status'
 );
 
@@ -71,7 +70,7 @@ foreach ($result as $row) {
         $sub_array[] = 'Daily';
     }
 
-    $sub_array[] = $row["intrest_rate"] . '%';
+    // $sub_array[] = $row["intrest_rate"] . '%';
     $sub_array[] = $row["due_period"];
 
     $status      = $row['status'];

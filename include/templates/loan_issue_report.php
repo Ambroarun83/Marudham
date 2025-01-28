@@ -38,6 +38,8 @@
 									<th>Relationship</th>
 									<th>Area</th>
 									<th>Sub Area</th>
+									<th>Line</th>
+									<th>Branch</th>
 									<th>Loan Category</th>
 									<th>Sub Category</th>
 									<th>Agent</th>
@@ -55,7 +57,7 @@
 								<tbody></tbody>
 								<tfoot>
 									<tr>
-										<td colspan="12"></td>
+										<td colspan="14"></td>
 										<td></td>
 										<td></td>
 										<td></td>

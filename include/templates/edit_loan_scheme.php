@@ -68,7 +68,7 @@
 								<th>Loan Category</th>
 								<th>Sub Category</th>
 								<th>Due Method</th>
-								<th>Interest Rate</th>
+								<!-- <th>Interest Rate</th> -->
 								<th>Due Period</th>
 								<th>Status</th>
 								<th>Action</th>
@@ -124,7 +124,7 @@
 								<th>Loan Category</th>
 								<th>Sub Category</th>
 								<th>Due Method</th>
-								<th>Interest Rate</th>
+								<!-- <th>Interest Rate</th> -->
 								<th>Due Period</th>
 								<th>Status</th>
 								<th>Action</th>
@@ -180,7 +180,7 @@
 								<th>Loan Category</th>
 								<th>Sub Category</th>
 								<th>Due Method</th>
-								<th>Interest Rate</th>
+								<!-- <th>Interest Rate</th> -->
 								<th>Due Period</th>
 								<th>Status</th>
 								<th>Action</th>
